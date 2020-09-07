@@ -3,6 +3,7 @@ carbon 是一个轻量级、语义化、易理解、对IDE友好的GO语言日�
 如果您觉得carbon对您有用的话，别忘了给点个赞哦^_^ ！
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
+
 gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
 #### 安装
