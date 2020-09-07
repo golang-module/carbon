@@ -24,31 +24,31 @@ carbon := carbon:New()
 ###### 设置时区（不设置默认为Local，即服务器所在时区）
 ```go
 // 设置中国时区
-carbon.Timezone(carbon.PRC);
+carbon.Timezone(carbon.PRC)
 
 // 设置上海时区
-carbon.Timezone(carbon.Shanghai);
+carbon.Timezone(carbon.Shanghai)
 
 // 设置重庆时区
-carbon.Timezone(carbon.Chongqing);
+carbon.Timezone(carbon.Chongqing)
 
 // 设置香港时区
-carbon.Timezone(carbon.HongKong);
+carbon.Timezone(carbon.HongKong)
 
 // 设置澳门时区
-carbon.Timezone(carbon.Macao);
+carbon.Timezone(carbon.Macao)
 
 // 设置台湾时区
-carbon.Timezone(carbon.Taipei);
+carbon.Timezone(carbon.Taipei)
 
 // 设置日本时区
-carbon.Timezone(carbon.Japan);
+carbon.Timezone(carbon.Japan)
 
 // 设置东京时区
-carbon.Timezone(carbon.Tokyo);
+carbon.Timezone(carbon.Tokyo)
 
 // 设置纽约时区
-carbon.Timezone(carbon.NewYork);
+carbon.Timezone(carbon.NewYork)
 ```
 
 ###### 获取当前时间
