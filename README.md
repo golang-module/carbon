@@ -55,7 +55,7 @@ carbon.Timezone(carbon.NewYork);
 ```go
 carbon.Now().Format("Y-m-d H:i:s") // 2020-09-05 13:20:30
 carbon.Now().Format("y-m-d h:i:s") // 20-09-05 01:20:30
-carbon.Now().Format("Y/m/d") // 2020/09/05 13:20:30
+carbon.Now().Format("Y/m/d") // 2020/09/05
 carbon.Now().ToDateTimeString() // 2020-09-05 13:20:30
 carbon.Now().ToDateString() // 2020-09-05
 carbon.Now().ToTimeString() // 13:20:30
@@ -83,8 +83,8 @@ carbon.CreateFromTime(13, 20, 30).Format("Y-m-d H:i:s") // 2020-09-05 13:20:30
 
 ###### 解析标准格式时间字符串
 ```go
-carbon.Parse("2020-09-05 13:20:30").Format("Y/m/d H:i:s") // 20200905132030
-carbon.Parse("2020-09-05 13:20:30").Format("Y/m/d") // 20200905
+carbon.Parse("2020-09-05 13:20:30").Format("YmdHis") // 20200905132030
+carbon.Parse("2020-09-05 13:20:30").Format("Y-m-d") // 2020-09-05
 carbon.Parse("2020-09-05").Format("Y/m/d H:i:s") // 2020/09/05 00:00:00
 carbon.Parse("2020-09-05").Format("Y/m/d") // 2020/09/05
 carbon.Parse("2020-09-05 13:20:30").ToDateTimeString() // 2020-09-05 13:20:30
