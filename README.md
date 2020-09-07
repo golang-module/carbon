@@ -1,12 +1,13 @@
-carbon 是一个轻量级、语义化、易理解、对IDE友好的GO语言日期时间链式操作处理库
+carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
 gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
 #### 安装
-
-    go get gitee.com/go-package/carbon
+```go
+go get gitee.com/go-package/carbon
+```
 
 #### 用法
 > 假设当前北京时间为2020-09-05 13:20:30
