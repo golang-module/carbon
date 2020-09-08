@@ -68,7 +68,7 @@ carbon.Today() // 2020-09-08 00:00:00
 carbon.Tomorrow() // 2020-09-09 00:00:00
 ```
 
-###### 创建时间
+###### 数字转标准时间字符串
 ```go
 // 时间戳 转成 标准时间字符串
 carbon.CreateFromTimestamp(1599272433).Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
@@ -80,7 +80,7 @@ carbon.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
 carbon.CreateFromTime(13, 14, 15).Format("Y-m-d H:i:s") // 2020-09-08 13:14:15
 ```
 
-###### 解析标准格式时间字符串
+###### 解析标准时间字符串
 ```go
 carbon.Parse("2020-09-08 13:00:00").Format("YmdHis") // 20200908130000
 carbon.Parse("2020-09-08 13:00:00").Format("Y-m-d") // 2020-09-08
