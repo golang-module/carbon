@@ -205,4 +205,11 @@ carbon.Now().IsSaturday() // false
 carbon.Now().IsSunday() // false
 ```
 
+ **更新日志** 
+ 
+##### 2020-09-08
+* 修复已知BUG
+* 添加单元测试
+* 新增FirstDay()方法获取第一天
+* 新增FirstDay()方法获取最后一天
 
