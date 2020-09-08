@@ -1,4 +1,4 @@
-carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本
+carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本，初衷是为了摆脱Golang反人类的2006-01-02 15:04:05格式化时间设计
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
