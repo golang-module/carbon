@@ -41,6 +41,24 @@ func TestCarbon_Tomorrow(t *testing.T) {
 	}
 }
 
+func TestCarbon_FirstDay(t *testing.T) {
+	now := time.Now()
+	e := now.AddDate(0, 0, -now.Day()+1).Format("2006-01-02 00:00:00")
+	r := New().Now().FirstDay()
+	if r != e {
+		t.Fatalf("Expected %s, but got %s", e, r)
+	}
+}
+
+func TestCarbon_LastDay(t *testing.T) {
+	now := time.Now()
+	e := now.AddDate(0, 0, -now.Day()+1).AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
+	r := New().Now().LastDay()
+	if r != e {
+		t.Fatalf("Expected %s, but got %s", e, r)
+	}
+}
+
 func TestCarbon_CreateFromTimestamp(t *testing.T) {
 	now := time.Now()
 	e := now.Format("2006-01-02 15:04:05")

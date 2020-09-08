@@ -75,43 +75,43 @@ func (c *carbon) Now() *carbon {
 	return c
 }
 
-// AddYears 增加年数
+// AddYears N年后
 func (c *carbon) AddYears(years int) *carbon {
 	c.Time = c.Time.AddDate(years, 0, 0)
 	return c
 }
 
-// AddYear 增加1年数
+// AddYear 1年后
 func (c *carbon) AddYear() *carbon {
 	c.Time = c.Time.AddDate(1, 0, 0)
 	return c
 }
 
-// SubYears 减少年数
+// SubYears N年前
 func (c *carbon) SubYears(years int) *carbon {
 	c.Time = c.Time.AddDate(-years, 0, 0)
 	return c
 }
 
-// SubYear 减少1年
+// SubYear 1年前
 func (c *carbon) SubYear() *carbon {
 	c.Time = c.Time.AddDate(-1, 0, 0)
 	return c
 }
 
-// AddMonths 增加月数
+// AddMonths N月后
 func (c *carbon) AddMonths(months int) *carbon {
 	c.Time = c.Time.AddDate(0, months, 0)
 	return c
 }
 
-// AddMonth 增加1月
+// AddMonth 1月后
 func (c *carbon) AddMonth() *carbon {
 	c.Time = c.Time.AddDate(0, 1, 0)
 	return c
 }
 
-// SubMonths 减少月数
+// SubMonths N月前
 func (c *carbon) SubMonths(months int) *carbon {
 	c.Time = c.Time.AddDate(0, -months, 0)
 	return c
@@ -123,97 +123,97 @@ func (c *carbon) SubMonth() *carbon {
 	return c
 }
 
-// AddDays 增加天数
+// AddDays N天后
 func (c *carbon) AddDays(days int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, days)
 	return c
 }
 
-// AddDay 增加1天
+// AddDay 1天后
 func (c *carbon) AddDay() *carbon {
 	c.Time = c.Time.AddDate(0, 0, 1)
 	return c
 }
 
-// SubDays 减少天数
+// SubDays N天前
 func (c *carbon) SubDays(days int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, -days)
 	return c
 }
 
-// SubDay 减少1天
+// SubDay 1天前
 func (c *carbon) SubDay() *carbon {
 	c.Time = c.Time.AddDate(0, 0, -1)
 	return c
 }
 
-// AddHours 增加小时
+// AddHours N小时后
 func (c *carbon) AddHours(hours int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, hours/24)
 	return c
 }
 
-// AddHour 增加1小时
+// AddHour 1小时后
 func (c *carbon) AddHour() *carbon {
 	c.Time = c.Time.AddDate(0, 0, 1/24)
 	return c
 }
 
-// AddHours 减少小时
+// AddHours N小时前
 func (c *carbon) SubHours(hours int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, -hours/24)
 	return c
 }
 
-// AddHour 减少1小时
+// AddHour 1小时前
 func (c *carbon) SubHour() *carbon {
 	c.Time = c.Time.AddDate(0, 0, -1/24)
 	return c
 }
 
-// AddMinutes 增加分钟
+// AddMinutes N分钟后
 func (c *carbon) AddMinutes(minutes int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, minutes/1440)
 	return c
 }
 
-// AddMinute 增加1分钟
+// AddMinute 1分钟后
 func (c *carbon) AddMinute() *carbon {
 	c.Time = c.Time.AddDate(0, 0, 1/1440)
 	return c
 }
 
-// SubMinutes 减少分钟
+// SubMinutes N分钟前
 func (c *carbon) SubMinutes(minutes int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, -minutes/1440)
 	return c
 }
 
-// SubMinute 减少1分钟
+// SubMinute 1分钟前
 func (c *carbon) SubMinute() *carbon {
 	c.Time = c.Time.AddDate(0, 0, -1/1440)
 	return c
 }
 
-// AddSeconds 增加秒钟
+// AddSeconds N秒钟后
 func (c *carbon) AddSeconds(second int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, second/86400)
 	return c
 }
 
-// AddMinute 增加1秒钟
+// AddMinute 1秒钟后
 func (c *carbon) AddSecond() *carbon {
 	c.Time = c.Time.AddDate(0, 0, 1/86400)
 	return c
 }
 
-// SubMinutes 减少秒钟
+// SubMinutes N秒钟前
 func (c *carbon) SubSeconds(second int) *carbon {
 	c.Time = c.Time.AddDate(0, 0, -second/86400)
 	return c
 }
 
-// SubMinute 减少1秒钟
+// SubMinute 1秒钟前
 func (c *carbon) SubSecond() *carbon {
 	c.Time = c.Time.AddDate(0, 0, -1/86400)
 	return c
@@ -287,12 +287,24 @@ func (c *carbon) Today() string {
 
 // Tomorrow 明天
 func (c *carbon) Tomorrow() string {
-	return time.Now().AddDate(0, 0, 1).In(c.loc).Format("2006-01-02 00:00:00")
+	return time.Now().In(c.loc).AddDate(0, 0, 1).In(c.loc).Format("2006-01-02 00:00:00")
 }
 
 // Yesterday 昨天
 func (c *carbon) Yesterday() string {
-	return time.Now().AddDate(0, 0, -1).In(c.loc).Format("2006-01-02 00:00:00")
+	return time.Now().In(c.loc).AddDate(0, 0, -1).In(c.loc).Format("2006-01-02 00:00:00")
+}
+
+// FirstDay 第一天
+func (c *carbon) FirstDay() string {
+	t := c.Time
+	return t.In(c.loc).AddDate(0, 0, -t.Day()+1).Format("2006-01-02 00:00:00")
+}
+
+// LastDay 最后一天
+func (c *carbon) LastDay() string {
+	t := c.Time
+	return t.In(c.loc).AddDate(0, 0, -t.Day()+1).AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
 }
 
 // ToDateTimeString 转日期时间字符串
@@ -356,5 +368,15 @@ func (c *carbon) IsSaturday() bool {
 
 // IsSunday 是否是周日
 func (c *carbon) IsSunday() bool {
+	return c.Time.In(c.loc).Weekday().String() == "Sunday"
+}
+
+// IsFirstDay 是否月初
+func (c *carbon) IsFirstDay() bool {
+	return c.Time.In(c.loc).Weekday().String() == "Sunday"
+}
+
+// IsLastDay 是否是月末
+func (c *carbon) IsLastDay() bool {
 	return c.Time.In(c.loc).Weekday().String() == "Sunday"
 }
