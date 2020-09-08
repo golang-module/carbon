@@ -18,7 +18,7 @@ import (
 )
 
 // 初始化
-carbon := carbon:New()
+c := carbon:New()
 ```
 
 ###### 设置时区（不设置默认为Local，即服务器所在时区）
@@ -124,58 +124,58 @@ carbon.ParseByCustom("2020年09月05日 13时20分30秒", "Y年m月d日 H时i分
 
 ###### 增减日期
 ```go
-// 增加五年
+// 五年后
 carbon.Now().AddYears(5).ToDateTimeString() // 2025-09-05 13:20:30
-// 增加一年
+// 一年后
 carbon.Now().AddYear().ToDateTimeString() // 2021-09-05 13:20:30
-// 减少五年
+// 五年前
 carbon.Now().SubYears(5).ToDateTimeString() // 2015-09-05 13:20:30
-// 减少一年
+// 一年前
 carbon.Now().SubYear().ToDateTimeString() // 2019-09-05 13:20:30
 
-// 增加五月
+// 五月后
 carbon.Now().AddMonths(5).ToDateTimeString() // 2021-02-05 13:20:30
-// 增加一月
+// 一月后
 carbon.Now().AddMonth().ToDateTimeString() // 2020-10-05 13:20:30
-// 减少五月
+// 五月前
 carbon.Now().SubMonths(5).ToDateTimeString() // 2020-04-05 13:20:30
-// 减少一月
+// 一月前
 carbon.Now().SubMonth().ToDateTimeString() // 2020-08-05 13:20:30
 
-// 增加三日
+// 三天后
 carbon.Now().AddDays(3).ToDateTimeString() // 2020-09-08 13:20:30
-// 增加一日
+// 一天后
 carbon.Now().AddDay().ToDateTimeString() // 2020-09-06 13:20:30
-// 减少三日
+// 三天前
 carbon.Now().SubDays(3).ToDateTimeString() // 2020-09-02 13:20:30
-// 减少一日
+// 一天前
 carbon.Now().SubDay().ToDateTimeString() // 2020-08-04 13:20:30
 
-// 增加三小时
+// 三小时后
 carbon.Now().AddHours(3).ToDateTimeString() // 2020-09-05 16:20:30
-// 增加一小时
+// 一小时后
 carbon.Now().AddHoury().ToDateTimeString() // 2020-09-05 14:20:30
-// 减少三小时
+// 三小时前
 carbon.Now().SubHours(3).ToDateTimeString() // 2020-09-05 10:20:30
-// 减少一小时
+// 一小时前
 carbon.Now().SubHour().ToDateTimeString() // 2020-09-05 12:20:30
 
-// 增加三分钟
+// 三分钟后
 carbon.Now().AddMinutes(3).ToDateTimeString() // 2020-09-05 13:23:30
-// 增加一分钟
+// 一分钟后
 carbon.Now().AddMinute().ToDateTimeString() // 2020-09-05 13:21:30
-// 减少三分钟
+// 三分钟前
 carbon.Now().SubMinutes(3).ToDateTimeString() // 2020-09-05 13:17:30
-// 减少一分钟
+// 一分钟前
 carbon.Now().SubMinute().ToDateTimeString() // 2020-09-05 13:19:30
 
-// 增加三秒钟
+// 三秒钟后
 carbon.Now().AddSeconds(3).ToDateTimeString() // 2020-09-05 13:20:33
-// 增加一秒钟
+// 一秒钟后
 carbon.Now().AddSecond().ToDateTimeString() // 2020-09-05 13:20:31
-// 减少三秒钟
+// 三秒钟前
 carbon.Now().SubSeconds(3).ToDateTimeString() // 2020-09-05 13:20:27
-// 减少一秒钟
+// 一秒钟前
 carbon.Now().SubSecond().ToDateTimeString() // 2020-09-05 13:20:29
 ```
 
