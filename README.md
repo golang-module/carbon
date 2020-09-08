@@ -124,59 +124,59 @@ carbon.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分
 ###### 时间旅行
 > 假设当前北京时间为2020-09-08 13:00:00
 ```go
-// 三年后
-carbon.Now().AddYears(3).ToDateTimeString() // 2023-09-08 13:00:00
-// 一年后
-carbon.Now().AddYear().ToDateTimeString() // 2021-09-08 13:00:00
-// 三年前
-carbon.Now().SubYears(3).ToDateTimeString() // 2017-09-08 13:00:00
-// 一年前
-carbon.Now().SubYear().ToDateTimeString() // 2019-09-08 13:00:00
+// 三年后，2023-09-08 13:00:00
+carbon.Now().AddYears(3).ToDateTimeString() 
+// 一年后，2021-09-08 13:00:00
+carbon.Now().AddYear().ToDateTimeString() 
+// 三年前，2017-09-08 13:00:00
+carbon.Now().SubYears(3).ToDateTimeString() 
+// 一年前，2019-09-08 13:00:00
+carbon.Now().SubYear().ToDateTimeString() 
 
-// 三月后
-carbon.Now().AddMonths(3).ToDateTimeString() // 2020-12-08 13:00:00
-// 一月后
-carbon.Now().AddMonth().ToDateTimeString() // 2020-10-08 13:00:00
-// 三月前
-carbon.Now().SubMonths(3).ToDateTimeString() // 2020-06-08 13:00:00
-// 一月前
-carbon.Now().SubMonth().ToDateTimeString() // 2020-08-08 13:00:00
+// 三月后，2020-12-08 13:00:00
+carbon.Now().AddMonths(3).ToDateTimeString() 
+// 一月后，2020-10-08 13:00:00
+carbon.Now().AddMonth().ToDateTimeString() 
+// 三月前，2020-06-08 13:00:00
+carbon.Now().SubMonths(3).ToDateTimeString() 
+// 一月前，2020-08-08 13:00:00
+carbon.Now().SubMonth().ToDateTimeString() 
 
-// 三天后
-carbon.Now().AddDays(3).ToDateTimeString() // 2020-09-11 13:00:00
-// 一天后
-carbon.Now().AddDay().ToDateTimeString() // 2020-09-09 13:00:00
-// 三天前
-carbon.Now().SubDays(3).ToDateTimeString() // 2020-09-05 13:00:00
-// 一天前
-carbon.Now().SubDay().ToDateTimeString() // 2020-08-07 13:00:00
+// 三天后，2020-09-11 13:00:00
+carbon.Now().AddDays(3).ToDateTimeString() 
+// 一天后，2020-09-09 13:00:00
+carbon.Now().AddDay().ToDateTimeString() 
+// 三天前，2020-09-05 13:00:00
+carbon.Now().SubDays(3).ToDateTimeString() 
+// 一天前，2020-08-07 13:00:00
+carbon.Now().SubDay().ToDateTimeString() 
 
-// 三小时后
-carbon.Now().AddHours(3).ToDateTimeString() // 2020-09-08 16:00:00
-// 一小时后
-carbon.Now().AddHoury().ToDateTimeString() // 2020-09-08 14:00:00
-// 三小时前
-carbon.Now().SubHours(3).ToDateTimeString() // 2020-09-08 10:00:00
-// 一小时前
-carbon.Now().SubHour().ToDateTimeString() // 2020-09-08 12:00:00
+// 三小时后，2020-09-08 16:00:00
+carbon.Now().AddHours(3).ToDateTimeString() 
+// 一小时后，2020-09-08 14:00:00
+carbon.Now().AddHoury().ToDateTimeString() 
+// 三小时前，2020-09-08 10:00:00
+carbon.Now().SubHours(3).ToDateTimeString() 
+// 一小时前，2020-09-08 12:00:00
+carbon.Now().SubHour().ToDateTimeString() 
 
-// 三分钟后
-carbon.Now().AddMinutes(3).ToDateTimeString() // 2020-09-08 13:03:00
-// 一分钟后
-carbon.Now().AddMinute().ToDateTimeString() // 2020-09-08 13:01:00
-// 三分钟前
-carbon.Now().SubMinutes(3).ToDateTimeString() // 2020-09-08 12:57:00
-// 一分钟前
-carbon.Now().SubMinute().ToDateTimeString() // 2020-09-08 12:59:00
+// 三分钟后，2020-09-08 13:03:00
+carbon.Now().AddMinutes(3).ToDateTimeString() 
+// 一分钟后，2020-09-08 13:01:00
+carbon.Now().AddMinute().ToDateTimeString() 
+// 三分钟前，2020-09-08 12:57:00
+carbon.Now().SubMinutes(3).ToDateTimeString() 
+// 一分钟前，2020-09-08 12:59:00
+carbon.Now().SubMinute().ToDateTimeString() 
 
-// 三秒钟后
-carbon.Now().AddSeconds(3).ToDateTimeString() // 2020-09-08 13:00:03
-// 一秒钟后
-carbon.Now().AddSecond().ToDateTimeString() // 2020-09-08 13:00:01
-// 三秒钟前
-carbon.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:57
-// 一秒钟前
-carbon.Now().SubSecond().ToDateTimeString() // 2020-09-08 12:59:59
+// 三秒钟后，2020-09-08 13:00:03
+carbon.Now().AddSeconds(3).ToDateTimeString() 
+// 一秒钟后，2020-09-08 13:00:01
+carbon.Now().AddSecond().ToDateTimeString() 
+// 三秒钟前，2020-09-08 12:59:57
+carbon.Now().SubSeconds(3).ToDateTimeString() 
+// 一秒钟前，2020-09-08 12:59:59
+carbon.Now().SubSecond().ToDateTimeString() 
 ```
 
 ###### 日期判断
