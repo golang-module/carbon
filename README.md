@@ -18,7 +18,7 @@ import (
 )
 
 // 初始化
-c := carbon:New()
+carbon := carbon:New()
 ```
 
 ###### 设置时区（不设置默认为Local，即服务器所在时区）
