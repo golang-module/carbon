@@ -337,6 +337,66 @@ func (c *carbon) IsLeapYear() bool {
 	return false
 }
 
+// IsJanuary 是否是一月
+func (c *carbon) IsJanuary() bool {
+	return c.Time.In(c.loc).Month().String() == "January"
+}
+
+// IsMonday 是否是二月
+func (c *carbon) IsFebruary() bool {
+	return c.Time.In(c.loc).Month().String() == "February"
+}
+
+// IsMarch 是否是三月
+func (c *carbon) IsMarch() bool {
+	return c.Time.In(c.loc).Month().String() == "March"
+}
+
+// IsApril 是否是四月
+func (c *carbon) IsApril() bool {
+	return c.Time.In(c.loc).Month().String() == "April"
+}
+
+// IsMay 是否是五月
+func (c *carbon) IsMay() bool {
+	return c.Time.In(c.loc).Month().String() == "May"
+}
+
+// IsJune 是否是六月
+func (c *carbon) IsJune() bool {
+	return c.Time.In(c.loc).Month().String() == "June"
+}
+
+// IsJuly 是否是七月
+func (c *carbon) IsJuly() bool {
+	return c.Time.In(c.loc).Month().String() == "July"
+}
+
+// IsAugust 是否是八月
+func (c *carbon) IsAugust() bool {
+	return c.Time.In(c.loc).Month().String() == "August"
+}
+
+// IsSeptember 是否是九月
+func (c *carbon) IsSeptember() bool {
+	return c.Time.In(c.loc).Month().String() == "September"
+}
+
+// IsOctober 是否是十月
+func (c *carbon) IsOctober() bool {
+	return c.Time.In(c.loc).Month().String() == "October"
+}
+
+// IsNovember 是否是十一月
+func (c *carbon) IsNovember() bool {
+	return c.Time.In(c.loc).Month().String() == "November"
+}
+
+// IsDecember 是否是十二月
+func (c *carbon) IsDecember() bool {
+	return c.Time.In(c.loc).Month().String() == "December"
+}
+
 // IsMonday 是否是周一
 func (c *carbon) IsMonday() bool {
 	return c.Time.In(c.loc).Weekday().String() == "Monday"

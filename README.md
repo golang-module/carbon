@@ -189,10 +189,35 @@ c.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:57
 c.Now().SubSecond().ToDateTimeString() // 2020-09-08 12:59:59
 ```
 
-###### 日期判断
+###### 时间判断
 ```go
 // 是否是闰年
 c.Now().IsLeapYear() // true
+
+// 是否是一月
+c.Now().IsJanuary() // false
+// 是否是二月
+c.Now().IsFebruary() // true
+// 是否是三月
+c.Now().IsMarch() // false
+// 是否是四月
+c.Now().IsApril()  // false
+// 是否是五月
+c.Now().IsMay() // false
+// 是否是六月
+c.Now().IsJune() // false
+// 是否是七月
+c.Now().IsJuly() // false
+// 是否是八月
+c.Now().IsAugust() // false
+// 是否是九月
+c.Now().IsSeptember() // true
+// 是否是十月
+c.Now().IsOctober() // false
+// 是否是十一月
+c.Now().IsNovember() // false
+// 是否是十二月
+c.Now().IsDecember() // false
 
 // 是否是周一
 c.Now().IsMonday() // false
@@ -217,9 +242,27 @@ c.Now().IsLastDay() // false
 
  **更新日志** 
  
+##### 2020-09-09
+* 修复readme.md错误描述
+* 完善单元测试
+* 新增gorm时间格式化，支持多种输出格式
+* 新增IsJanuary()方法判断是否是第一月
+* 新增IsFebruary()方法判断是否是第二月
+* 新增IsMarch()方法判断是否是第三月
+* 新增IsApril()方法判断是否是第四月
+* 新增IsMay()方法判断是否是第五月
+* 新增IsJune()方法判断是否是第六月
+* 新增IsJuly()方法判断是否是第七月
+* 新增IsAugust()方法判断是否是第八月
+* 新增IsSeptember()方法判断是否是第九月
+* 新增IsOctober()方法判断是否是第十月
+* 新增IsNovember()方法判断是否是第十一月
+* 新增IsDecember()方法判断是否是第十二月
+ 
 ##### 2020-09-08
 * 修复已知BUG
 * 添加单元测试
 * 新增FirstDay()方法获取第一天
 * 新增FirstDay()方法获取最后一天
-
+* 新增IsFirstDay()方法判断是否第一天
+* 新增IsFirstDay()方法判断是否最后一天 
