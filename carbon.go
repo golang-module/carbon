@@ -373,10 +373,10 @@ func (c *carbon) IsSunday() bool {
 
 // IsFirstDay 是否月初
 func (c *carbon) IsFirstDay() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Sunday"
+	return c.time.In(c.loc).Day() == 1
 }
 
 // IsLastDay 是否是月末
 func (c *carbon) IsLastDay() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Sunday"
+	return c.time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDay()
 }
