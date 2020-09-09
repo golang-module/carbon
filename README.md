@@ -247,9 +247,12 @@ c.Now().IsLastDay() // false
 type User struct {
 	carbon.Model
 	Name string `json:"name"`
-	Phone string `json:"phone"`
+	QQ int32 `json:"qq"`
 	Birthday carbon.ToTimestamp `json:"birthday"`
 }
+
+输出
+{{"id": 1, "name": "勾国印", "qq": 245629560, "birthday": "2012-09-09 00:00:00", "created_at": "2020-09-09 00:00:00", "updated_at": "2020-09-09 00:00:00", "deleted_at": null}
 ```
 
  **更新日志** 
