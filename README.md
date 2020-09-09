@@ -251,8 +251,16 @@ type User struct {
 	Birthday carbon.ToTimestamp `json:"birthday"`
 }
 
-输出
-{{"id": 1, "name": "勾国印", "qq": 245629560, "birthday": "2012-09-09 00:00:00", "created_at": "2020-09-09 00:00:00", "updated_at": "2020-09-09 00:00:00", "deleted_at": null}
+// 输出
+{
+    "id": 1, 
+    "name": "勾国印", 
+    "qq": 245629560, 
+    "birthday": "2012-09-09 00:00:00", 
+    "created_at": "2020-09-09 00:00:00", 
+    "updated_at": "2020-09-09 00:00:00", 
+    "deleted_at": null
+}
 ```
 
  **更新日志** 
@@ -278,6 +286,6 @@ type User struct {
 * 修复已知BUG
 * 添加单元测试
 * 新增FirstDay()方法获取第一天
-* 新增FirstDay()方法获取最后一天
+* 新增LastDay()方法获取最后一天
 * 新增IsFirstDay()方法判断是否第一天
-* 新增IsFirstDay()方法判断是否最后一天 
+* 新增IsLastDay()方法判断是否最后一天 
