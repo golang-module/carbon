@@ -22,6 +22,7 @@ func (t ToDateString) Value() (driver.Value, error) {
 	}
 	return t.Time, nil
 }
+
 func (t *ToDateString) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {

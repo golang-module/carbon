@@ -15,6 +15,7 @@ func (t ToDateTimeString) MarshalJSON() ([]byte, error) {
 	return []byte(formatted), nil
 
 }
+
 func (t ToDateTimeString) Value() (driver.Value, error) {
 	var zeroTime time.Time
 	if t.Time.UnixNano() == zeroTime.UnixNano() {
@@ -22,6 +23,7 @@ func (t ToDateTimeString) Value() (driver.Value, error) {
 	}
 	return t.Time, nil
 }
+
 func (t *ToDateTimeString) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {
