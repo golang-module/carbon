@@ -263,6 +263,6 @@ c.Now().IsLastDay() // false
 * 修复已知BUG
 * 添加单元测试
 * 新增FirstDay()方法获取第一天
-* 新增FirstDay()方法获取最后一天
+* 新增LastDay()方法获取最后一天
 * 新增IsFirstDay()方法判断是否第一天
-* 新增IsFirstDay()方法判断是否最后一天 
+* 新增IsLastDay()方法判断是否最后一天 
