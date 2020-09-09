@@ -203,6 +203,11 @@ carbon.Now().IsFriday() // false
 carbon.Now().IsSaturday() // false
 // 是否是周日
 carbon.Now().IsSunday() // false
+
+// 是否月初
+carbon.Now().IsFirstDay() // false
+//是否是月末
+carbon.Now().IsLastDay() // false
 ```
 
  **更新日志** 
