@@ -31,6 +31,23 @@ type carbon struct {
 	loc  *time.Location
 }
 
+// format转layout
+func format2layout(format string) string {
+	format = strings.Trim(format, " ")
+	layout := strings.Replace(format, "Y", "2006", 1)
+	layout = strings.Replace(layout, "y", "06", 1)
+	layout = strings.Replace(layout, "m", "01", 1)
+	layout = strings.Replace(layout, "n", "1", 1)
+	layout = strings.Replace(layout, "d", "02", 1)
+	layout = strings.Replace(layout, "j", "2", 1)
+	layout = strings.Replace(layout, "H", "15", 1)
+	layout = strings.Replace(layout, "h", "03", 1)
+	layout = strings.Replace(layout, "g", "3", 1)
+	layout = strings.Replace(layout, "i", "04", 1)
+	layout = strings.Replace(layout, "s", "05", 1)
+	return layout
+}
+
 // New 初始化,设置默认时区
 func New() *carbon {
 	c := &carbon{}
@@ -262,23 +279,6 @@ func (c *carbon) ParseByCustom(value string, format string) *carbon {
 // Format 格式化时间
 func (c *carbon) Format(format string) string {
 	return c.Time.In(c.loc).Format(format2layout(format))
-}
-
-// format转layout
-func format2layout(format string) string {
-	format = strings.Trim(format, " ")
-	layout := strings.Replace(format, "Y", "2006", 1)
-	layout = strings.Replace(layout, "y", "06", 1)
-	layout = strings.Replace(layout, "m", "01", 1)
-	layout = strings.Replace(layout, "n", "1", 1)
-	layout = strings.Replace(layout, "d", "02", 1)
-	layout = strings.Replace(layout, "j", "2", 1)
-	layout = strings.Replace(layout, "H", "15", 1)
-	layout = strings.Replace(layout, "h", "03", 1)
-	layout = strings.Replace(layout, "g", "3", 1)
-	layout = strings.Replace(layout, "i", "04", 1)
-	layout = strings.Replace(layout, "s", "05", 1)
-	return layout
 }
 
 // Today 今天
