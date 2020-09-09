@@ -239,6 +239,18 @@ c.Now().IsFirstDay() // false
 //是否是月末
 c.Now().IsLastDay() // false
 ```
+###### gorm支持
+>假设数据表为user
+
+```go
+// 用法一
+type User struct {
+	carbon.Model
+	Name string `json:"name"`
+	Phone string `json:"phone"`
+	Birthday carbon.ToTimestamp `json:"birthday"`
+}
+```
 
  **更新日志** 
  
