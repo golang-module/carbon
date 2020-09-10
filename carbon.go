@@ -5,27 +5,6 @@ import (
 	"time"
 )
 
-// 时区常量
-const (
-	Local      = "Local"
-	UTC        = "UTC"
-	UCT        = "UCT"
-	GMT        = "GMT"
-	CET        = "CET"
-	MST        = "MST"
-	PRC        = "PRC"
-	Japan      = "Japan"
-	Shanghai   = "Asia/Shanghai"
-	Chongqing  = "Asia/Chongqing"
-	HongKong   = "Asia/Hong_Kong"
-	Macao      = "Asia/Macao"
-	Taipei     = "Asia/Taipei"
-	Tokyo      = "Asia/Tokyo"
-	NewYork    = "America/New_York"
-	London     = "Europe/London"
-	LosAngeles = "America/Los_Angeles"
-)
-
 type carbon struct {
 	Time time.Time
 	loc  *time.Location
@@ -288,24 +267,32 @@ func (c *carbon) Today() string {
 
 // Tomorrow 明天
 func (c *carbon) Tomorrow() string {
-	return time.Now().In(c.loc).AddDate(0, 0, 1).In(c.loc).Format("2006-01-02 00:00:00")
+	return time.Now().AddDate(0, 0, 1).In(c.loc).Format("2006-01-02 00:00:00")
 }
 
 // Yesterday 昨天
 func (c *carbon) Yesterday() string {
-	return time.Now().In(c.loc).AddDate(0, 0, -1).In(c.loc).Format("2006-01-02 00:00:00")
+	return time.Now().AddDate(0, 0, -1).In(c.loc).Format("2006-01-02 00:00:00")
 }
 
-// FirstDay 第一天
-func (c *carbon) FirstDay() string {
-	t := c.Time
-	return t.In(c.loc).AddDate(0, 0, -t.Day()+1).Format("2006-01-02 00:00:00")
+// FirstDayInYear 年初
+func (c *carbon) FirstDayInYear() string {
+	return c.CreateFromDate(c.Time.Year(), 01, 01).ToDateTimeString()
 }
 
-// LastDay 最后一天
-func (c *carbon) LastDay() string {
-	t := c.Time
-	return t.In(c.loc).AddDate(0, 0, -t.Day()+1).AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
+// LastDayInYear 年末
+func (c *carbon) LastDayInYear() string {
+	return c.CreateFromDate(c.Time.Year(), 12, 31).ToDateTimeString()
+}
+
+// FirstDayInMonth 月初
+func (c *carbon) FirstDayInMonth() string {
+	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).ToDateTimeString()
+}
+
+// LastDayInMonth 月末
+func (c *carbon) LastDayInMonth() string {
+	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).Time.AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
 }
 
 // ToDateTimeString 转日期时间字符串
@@ -432,12 +419,32 @@ func (c *carbon) IsSunday() bool {
 	return c.Time.In(c.loc).Weekday().String() == "Sunday"
 }
 
-// IsFirstDay 是否月初
-func (c *carbon) IsFirstDay() bool {
+// IsFirstDayInYear 是否年初
+func (c *carbon) IsFirstDayInYear() bool {
+	_, month, day := c.Time.Date()
+	if month.String() == "January" && day == 1 {
+		return true
+	}
+
+	return false
+}
+
+// IsLastDayInYear 是否是年末
+func (c *carbon) IsLastDayInYear() bool {
+	_, month, day := c.Time.Date()
+	if month.String() == "December" && day == 31 {
+		return true
+	}
+
+	return false
+}
+
+// IsFirstDayInMonth 是否月初
+func (c *carbon) IsFirstDayInMonth() bool {
 	return c.Time.In(c.loc).Day() == 1
 }
 
-// IsLastDay 是否是月末
-func (c *carbon) IsLastDay() bool {
-	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDay()
+// IsLastDayInMonth 是否是月末
+func (c *carbon) IsLastDayInMonth() bool {
+	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDayInMonth()
 }

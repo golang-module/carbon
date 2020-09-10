@@ -1,0 +1,40 @@
+package carbon
+
+// 时区常量
+const (
+	Local = "Local"
+	CET   = "CET"
+	EET   = "EET"
+	EST   = "EST"
+	GMT   = "GMT"
+	UTC   = "UTC"
+	UCT   = "UCT"
+	MST   = "MST"
+
+	Cuba      = "Cuba"
+	Egypt     = "Egypt"
+	Eire      = "Eire"
+	Greenwich = "Greenwich"
+	Iceland   = "Iceland"
+	Iran      = "Iran"
+	Israel    = "Israel"
+	Jamaica   = "Jamaica"
+	Japan     = "Japan"
+	Libya     = "Libya"
+	Poland    = "Poland"
+	Portugal  = "Portugal"
+	PRC       = "PRC"
+	Singapore = "Singapore"
+	Turkey    = "Turkey"
+	Zulu      = "Zulu"
+
+	Shanghai   = "Asia/Shanghai"
+	Chongqing  = "Asia/Chongqing"
+	HongKong   = "Asia/Hong_Kong"
+	Macao      = "Asia/Macao"
+	Taipei     = "Asia/Taipei"
+	Tokyo      = "Asia/Tokyo"
+	London     = "Europe/London"
+	NewYork    = "America/New_York"
+	LosAngeles = "America/Los_Angeles"
+)

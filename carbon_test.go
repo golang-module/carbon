@@ -41,19 +41,19 @@ func TestCarbon_Tomorrow(t *testing.T) {
 	}
 }
 
-func TestCarbon_FirstDay(t *testing.T) {
+func TestCarbon_FirstDayInMonth(t *testing.T) {
 	now := time.Now()
 	e := now.AddDate(0, 0, -now.Day()+1).Format("2006-01-02 00:00:00")
-	r := New().Now().FirstDay()
+	r := New().Now().FirstDayInMonth()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
 	}
 }
 
-func TestCarbon_LastDay(t *testing.T) {
+func TestCarbon_LastDayInMonth(t *testing.T) {
 	now := time.Now()
 	e := now.AddDate(0, 0, -now.Day()+1).AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
-	r := New().Now().LastDay()
+	r := New().Now().LastDayInMonth()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
 	}

@@ -1,4 +1,4 @@
-carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本，初衷是为了摆脱Golang反人类的2006-01-02 15:04:05格式化时间设计
+carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本，初衷是为了摆脱Golang反人类的2006-01-02 15:04:05格式化时间设计，支持链式调用和gorm结构体
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
@@ -53,8 +53,9 @@ c = c.Timezone(carbon.NewYork)
 c = c.Timezone(carbon.London)
 
 ```
+>更多时区常量请查看[timezone.go](https://gitee.com/go-package/carbon/blob/master/timezone.go "timezone.go")文件
 
-###### 获取当前时间
+###### 获取当前时间字符串
 ```go
 c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
 c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:00
@@ -62,20 +63,30 @@ c.Now().Format("Y/m/d") // 2020/09/08
 c.Now().ToDateTimeString() // 2020-09-08 13:00:00
 c.Now().ToDateString() // 2020-09-08
 c.Now().ToTimeString() // 13:00:00
-// 获取当前时间戳
+```
+
+###### 获取当前时间戳
+```go
 c.Now().ToTimestamp() // 1599272433
 ```
-###### 获取昨天、今天、明天时间
+
+###### 获取昨天、今天、明天时间字符串
 ```go
 c.Yesterday() // 2020-09-07 00:00:00
 c.Today() // 2020-09-08 00:00:00
 c.Tomorrow() // 2020-09-09 00:00:00
 ```
 
-###### 获取第一天、最后一天
+###### 获取第一天、最后一天时间字符串
 ```go
-c.Now().FirstDay() // 2020-09-01 00:00:00
-c.Now().LastDay() // 2020-09-30 00:00:00
+// 年初
+c.Now().FirstDayInYear() // 2020-01-01 00:00:00
+// 年末
+c.Now().LastDayInYear() // 2020-12-31 00:00:00
+// 月初
+c.Now().FirstDayInMonth() // 2020-09-01 00:00:00
+// 月末
+c.Now().LastDayInMonth() // 2020-09-30 00:00:00
 ```
 
 ###### 数字转标准时间字符串
@@ -90,7 +101,7 @@ c.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
 c.CreateFromTime(13, 14, 15).Format("Y-m-d H:i:s") // 2020-09-08 13:14:15
 ```
 
-###### 解析标准时间字符串
+###### 解析标准格式时间字符串
 ```go
 c.Parse("2020-09-08 13:00:00").Format("YmdHis") // 20200908130000
 c.Parse("2020-09-08 13:00:00").Format("Y-m-d") // 2020-09-08
@@ -133,6 +144,7 @@ c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒"
 
 ###### 时间旅行
 > 假设当前北京时间为2020-09-08 13:00:00
+
 ```go
 // 三年后
 c.Now().AddYears(3).ToDateTimeString() // 2023-09-08 13:00:00
@@ -234,32 +246,65 @@ c.Now().IsSaturday() // false
 // 是否是周日
 c.Now().IsSunday() // false
 
+// 是否年初
+c.Now().IsFirstDayInYear() // false
+//是否是年末
+c.Now().IsLastDayInYear() // false
 // 是否月初
-c.Now().IsFirstDay() // false
+c.Now().IsFirstDayInMonth() // false
 //是否是月末
-c.Now().IsLastDay() // false
+c.Now().IsLastDayInMonth() // false
 ```
-###### gorm支持
->假设数据表为user
+###### gorm支持(gorm.Open时必须包括parseTime=True参数)
+>假设数据表为users，字段有id、name、age、birthday、created_at、updated_at、deleted_at
 
 ```go
-// 用法一
+// 用法一，使用carbon.Model自动维护id、created_at、updated_at、deleted_at
 type User struct {
 	carbon.Model
 	Name string `json:"name"`
-	QQ int32 `json:"qq"`
-	Birthday carbon.ToTimestamp `json:"birthday"`
+	Age int `json:"age"`
+	Birthday carbon.ToDateTimeString `json:"birthday"`
 }
-
-// 输出
+user := User {
+    Name: "勾国印"
+    Age: 18
+    Birthday: "2012-09-09 00:00:00"
+}
+// json.Marshal(user)输出
 {
     "id": 1, 
     "name": "勾国印", 
-    "qq": 245629560, 
+    "age": 18, 
     "birthday": "2012-09-09 00:00:00", 
-    "created_at": "2020-09-09 00:00:00", 
-    "updated_at": "2020-09-09 00:00:00", 
+    "created_at": "2020-09-09 12:13:14", 
+    "updated_at": "2020-09-09 12:13:14", 
     "deleted_at": null
+}
+
+// 用法二，不使用carbon.Model
+type User struct {
+	Name string `json:"name"`
+	Age int `json:"age"`
+	Birthday carbon.ToDateString `json:"birthday"`
+	CreatedAt carbon.ToDateTimeString `json:"created_at"`
+	UpdatedAt carbon.ToTimeString `json:"updated_at"`
+	DeletedAt carbon.ToTimestamp `json:"deleted_at"`
+}
+user := User {
+    Name: "勾国印"
+    Age: 18
+    Birthday: "2012-09-09 00:00:00"
+}
+// json.Marshal(user)输出
+{
+    "id": 1, 
+    "name": "勾国印", 
+    "age": 18, 
+    "birthday": "2012-09-09", 
+    "created_at": "2020-09-09 12:13:14", 
+    "updated_at": "12:13:14", 
+    "deleted_at": 1599272433
 }
 ```
 
@@ -268,7 +313,7 @@ type User struct {
 ##### 2020-09-09
 * 修复readme.md错误描述
 * 完善单元测试
-* 新增gorm时间格式化，支持多种输出格式
+* 新增对gorm结构体的时间格式化支持，支持输出多种标准时间格式
 * 新增IsJanuary()方法判断是否是第一月
 * 新增IsFebruary()方法判断是否是第二月
 * 新增IsMarch()方法判断是否是第三月
@@ -285,7 +330,11 @@ type User struct {
 ##### 2020-09-08
 * 修复已知BUG
 * 添加单元测试
-* 新增FirstDay()方法获取第一天
-* 新增LastDay()方法获取最后一天
-* 新增IsFirstDay()方法判断是否第一天
-* 新增IsLastDay()方法判断是否最后一天 
+* 新增FirstDayInYear()方法获取年初第一天
+* 新增LastDayInYear()方法获取年末最后一天
+* 新增FirstDayInMonth()方法获取月初第一天
+* 新增LastDayInMonth()方法获取月末最后一天
+* 新增IsFirstDayInYaer()方法判断是否年初第一天
+* 新增IsLastDayInYear()方法判断是否年末最后一天
+* 新增IsFirstDayInMonth()方法判断是否月初第一天
+* 新增IsLastDayInMonth()方法判断是否月末最后一天
