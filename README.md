@@ -9,7 +9,7 @@ gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.c
 go get -u gitee.com/go-package/carbon
 ```
 
-#### 用法
+#### 通用用法
 ###### 初始化
 ```go
 import (
@@ -255,7 +255,8 @@ c.Now().IsFirstDayInMonth() // false
 //是否是月末
 c.Now().IsLastDayInMonth() // false
 ```
-###### gorm支持(gorm.Open时必须包括parseTime=True参数)
+#### 特殊用法
+###### 在gorm中的应用(gorm.Open时必须包括parseTime=True参数)
 >假设数据表为users，字段有id、name、age、birthday、created_at、updated_at、deleted_at
 
 ```go
@@ -308,7 +309,7 @@ user := User {
 }
 ```
 
- **更新日志** 
+#### 更新日志
  
 ##### 2020-09-09
 * 修复readme.md错误描述
