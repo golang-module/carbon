@@ -29,10 +29,8 @@ func format2layout(format string) string {
 
 // New 初始化,设置默认时区
 func New() *Carbon {
-	c := &Carbon{}
 	loc, _ := time.LoadLocation(Local)
-	c.loc = loc
-	return c
+	return &Carbon{loc: loc}
 }
 
 // Timezone 设置时区
@@ -353,103 +351,103 @@ func (c *Carbon) IsLeapYear() bool {
 
 // IsJanuary 是否是一月
 func (c *Carbon) IsJanuary() bool {
-	return c.Time.In(c.loc).Month().String() == "January"
+	return c.Time.In(c.loc).Month() == time.January
 }
 
 // IsMonday 是否是二月
 func (c *Carbon) IsFebruary() bool {
-	return c.Time.In(c.loc).Month().String() == "February"
+	return c.Time.In(c.loc).Month() == time.February
 }
 
 // IsMarch 是否是三月
 func (c *Carbon) IsMarch() bool {
-	return c.Time.In(c.loc).Month().String() == "March"
+	return c.Time.In(c.loc).Month() == time.March
 }
 
 // IsApril 是否是四月
 func (c *Carbon) IsApril() bool {
-	return c.Time.In(c.loc).Month().String() == "April"
+	return c.Time.In(c.loc).Month() == time.April
 }
 
 // IsMay 是否是五月
 func (c *Carbon) IsMay() bool {
-	return c.Time.In(c.loc).Month().String() == "May"
+	return c.Time.In(c.loc).Month() == time.May
 }
 
 // IsJune 是否是六月
 func (c *Carbon) IsJune() bool {
-	return c.Time.In(c.loc).Month().String() == "June"
+	return c.Time.In(c.loc).Month() == time.June
 }
 
 // IsJuly 是否是七月
 func (c *Carbon) IsJuly() bool {
-	return c.Time.In(c.loc).Month().String() == "July"
+	return c.Time.In(c.loc).Month() == time.July
 }
 
 // IsAugust 是否是八月
 func (c *Carbon) IsAugust() bool {
-	return c.Time.In(c.loc).Month().String() == "August"
+	return c.Time.In(c.loc).Month() == time.August
 }
 
 // IsSeptember 是否是九月
 func (c *Carbon) IsSeptember() bool {
-	return c.Time.In(c.loc).Month().String() == "September"
+	return c.Time.In(c.loc).Month() == time.September
 }
 
 // IsOctober 是否是十月
 func (c *Carbon) IsOctober() bool {
-	return c.Time.In(c.loc).Month().String() == "October"
+	return c.Time.In(c.loc).Month() == time.October
 }
 
 // IsNovember 是否是十一月
 func (c *Carbon) IsNovember() bool {
-	return c.Time.In(c.loc).Month().String() == "November"
+	return c.Time.In(c.loc).Month() == time.November
 }
 
 // IsDecember 是否是十二月
 func (c *Carbon) IsDecember() bool {
-	return c.Time.In(c.loc).Month().String() == "December"
+	return c.Time.In(c.loc).Month() == time.December
 }
 
 // IsMonday 是否是周一
 func (c *Carbon) IsMonday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Monday"
+	return c.Time.In(c.loc).Weekday() == time.Monday
 }
 
 // IsTuesday 是否是周二
 func (c *Carbon) IsTuesday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Tuesday"
+	return c.Time.In(c.loc).Weekday() == time.Tuesday
 }
 
 // IsWednesday 是否是周三
 func (c *Carbon) IsWednesday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Wednesday"
+	return c.Time.In(c.loc).Weekday() == time.Wednesday
 }
 
 // IsThursday 是否是周四
 func (c *Carbon) IsThursday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Thursday"
+	return c.Time.In(c.loc).Weekday() == time.Thursday
 }
 
 // IsFriday 是否是周五
 func (c *Carbon) IsFriday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Friday"
+	return c.Time.In(c.loc).Weekday() == time.Friday
 }
 
 // IsSaturday 是否是周六
 func (c *Carbon) IsSaturday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Saturday"
+	return c.Time.In(c.loc).Weekday() == time.Saturday
 }
 
 // IsSunday 是否是周日
 func (c *Carbon) IsSunday() bool {
-	return c.Time.In(c.loc).Weekday().String() == "Sunday"
+	return c.Time.In(c.loc).Weekday() == time.Sunday
 }
 
 // IsFirstDayInYear 是否年初
 func (c *Carbon) IsFirstDayInYear() bool {
 	_, month, day := c.Time.Date()
-	if month.String() == "January" && day == 1 {
+	if month == time.January && day == 1 {
 		return true
 	}
 
@@ -459,7 +457,7 @@ func (c *Carbon) IsFirstDayInYear() bool {
 // IsLastDayInYear 是否是年末
 func (c *Carbon) IsLastDayInYear() bool {
 	_, month, day := c.Time.Date()
-	if month.String() == "December" && day == 31 {
+	if month == time.December && day == 31 {
 		return true
 	}
 
@@ -474,4 +472,20 @@ func (c *Carbon) IsFirstDayInMonth() bool {
 // IsLastDayInMonth 是否是月末
 func (c *Carbon) IsLastDayInMonth() bool {
 	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDayInMonth()
+}
+
+// StartOfDay 当日开始时间
+func (c *Carbon) StartOfDay() *Carbon {
+	return c.setTime(0, 0, 0, 0, c.loc)
+}
+
+// EndOfDay 当日结束时间
+func (c *Carbon) EndOfDay() *Carbon {
+	return c.setTime(HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1, MicrosecondsPerSecond-1, c.loc)
+}
+
+func (c *Carbon) setTime(hour, min, sec, nsec int, loc *time.Location) *Carbon {
+	year, month, day := c.Time.Date()
+	c.Time = time.Date(year, month, day, hour, min, sec, nsec, loc)
+	return c
 }
