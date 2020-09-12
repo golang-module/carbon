@@ -16,4 +16,8 @@ const (
 	MillisecondsPerSecond      = 1000
 	MicrosecondsPerMillisecond = 1000
 	MicrosecondsPerSecond      = 1000000
+
+	DaysInLeapYear   = 366
+	DaysInNormalYear = 365
+	SecondsInWeek    = 691200
 )

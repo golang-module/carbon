@@ -40,25 +40,25 @@ func (c *Carbon) Timezone(name string) *Carbon {
 	return c
 }
 
-// CreateFromTimestamp 时间戳转时间对象
+// CreateFromTimestamp 时间戳转时间类型
 func (c *Carbon) CreateFromTimestamp(timestamp int64) *Carbon {
 	c.Time = time.Unix(timestamp, 0)
 	return c
 }
 
-// CreateFromDateTime 年月日时分秒转时间对象
+// CreateFromDateTime 年月日时分秒转时间类型
 func (c *Carbon) CreateFromDateTime(year int, month time.Month, day int, hour int, minute int, second int) *Carbon {
 	c.Time = time.Date(year, month, day, hour, minute, second, 0, c.loc)
 	return c
 }
 
-// CreateFromDate 年月日转时间对象
+// CreateFromDate 年月日转时间类型
 func (c *Carbon) CreateFromDate(year int, month time.Month, day int) *Carbon {
 	c.Time = time.Date(year, month, day, 0, 0, 0, 0, c.loc)
 	return c
 }
 
-// CreateFromTime 时分秒转时间对象
+// CreateFromTime 时分秒转时间类型
 func (c *Carbon) CreateFromTime(hour int, minute int, second int) *Carbon {
 	c.Time = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), hour, minute, second, 0, c.loc)
 	return c
@@ -472,20 +472,4 @@ func (c *Carbon) IsFirstDayInMonth() bool {
 // IsLastDayInMonth 是否是月末
 func (c *Carbon) IsLastDayInMonth() bool {
 	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDayInMonth()
-}
-
-// StartOfDay 当日开始时间
-func (c *Carbon) StartOfDay() *Carbon {
-	return c.setTime(0, 0, 0, 0, c.loc)
-}
-
-// EndOfDay 当日结束时间
-func (c *Carbon) EndOfDay() *Carbon {
-	return c.setTime(HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1, MicrosecondsPerSecond-1, c.loc)
-}
-
-func (c *Carbon) setTime(hour, min, sec, nsec int, loc *time.Location) *Carbon {
-	year, month, day := c.Time.Date()
-	c.Time = time.Date(year, month, day, hour, min, sec, nsec, loc)
-	return c
 }
