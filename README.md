@@ -257,13 +257,13 @@ c.Now().IsSaturday() // false
 c.Now().IsSunday() // false
 
 // 是否年初
-c.Now().IsFirstDayInYear() // false
+c.Now().IsFirstOfYear() // false
 //是否是年末
-c.Now().IsLastDayInYear() // false
+c.Now().IsLastOfYear() // false
 // 是否月初
-c.Now().IsFirstDayInMonth() // false
+c.Now().IsFirstOfMonth() // false
 //是否是月末
-c.Now().IsLastDayInMonth() // false
+c.Now().IsLastOfMonth() // false
 ```
 #### 特殊用法
 假设数据表为users，字段有id(int)、name(varchar)、age(int)、birthday(date)、created_at(datetime)、updated_at(datetime)、deleted_at(datetime)
@@ -405,11 +405,11 @@ user := User {
 ##### 2020-09-08
 * 修复已知BUG
 * 添加单元测试
-* 新增FirstDayInYear()方法获取年初第一天
-* 新增LastDayInYear()方法获取年末最后一天
-* 新增FirstDayInMonth()方法获取月初第一天
-* 新增LastDayInMonth()方法获取月末最后一天
-* 新增IsFirstDayInYaer()方法判断是否年初第一天
-* 新增IsLastDayInYear()方法判断是否年末最后一天
-* 新增IsFirstDayInMonth()方法判断是否月初第一天
-* 新增IsLastDayInMonth()方法判断是否月末最后一天
+* 新增FirstOfYear()方法获取年初第一天
+* 新增LastOfYear()方法获取年末最后一天
+* 新增FirstOfMonth()方法获取月初第一天
+* 新增LastOfMonth()方法获取月末最后一天
+* 新增IsFirstOfYaer()方法判断是否年初第一天
+* 新增IsLastOfYear()方法判断是否年末最后一天
+* 新增IsFirstOfMonth()方法判断是否月初第一天
+* 新增IsLastOfMonth()方法判断是否月末最后一天
