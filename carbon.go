@@ -10,30 +10,13 @@ type Carbon struct {
 	loc  *time.Location
 }
 
-// format转layout
-func format2layout(format string) string {
-	format = strings.Trim(format, " ")
-	layout := strings.Replace(format, "Y", "2006", 1)
-	layout = strings.Replace(layout, "y", "06", 1)
-	layout = strings.Replace(layout, "m", "01", 1)
-	layout = strings.Replace(layout, "n", "1", 1)
-	layout = strings.Replace(layout, "d", "02", 1)
-	layout = strings.Replace(layout, "j", "2", 1)
-	layout = strings.Replace(layout, "H", "15", 1)
-	layout = strings.Replace(layout, "h", "03", 1)
-	layout = strings.Replace(layout, "g", "3", 1)
-	layout = strings.Replace(layout, "i", "04", 1)
-	layout = strings.Replace(layout, "s", "05", 1)
-	return layout
-}
-
 // New 初始化,设置默认时区
 func New() *Carbon {
 	loc, _ := time.LoadLocation(Local)
 	return &Carbon{loc: loc}
 }
 
-// Timezone 设置时区
+// Timezone 设置时区，必须在New()之后，其他方法之前调用
 func (c *Carbon) Timezone(name string) *Carbon {
 	loc, _ := time.LoadLocation(name)
 	c.loc = loc
@@ -285,6 +268,23 @@ func (c *Carbon) Format(format string) string {
 	return c.Time.In(c.loc).Format(format2layout(format))
 }
 
+// format转layout
+func format2layout(format string) string {
+	format = strings.Trim(format, " ")
+	layout := strings.Replace(format, "Y", "2006", 1)
+	layout = strings.Replace(layout, "y", "06", 1)
+	layout = strings.Replace(layout, "m", "01", 1)
+	layout = strings.Replace(layout, "n", "1", 1)
+	layout = strings.Replace(layout, "d", "02", 1)
+	layout = strings.Replace(layout, "j", "2", 1)
+	layout = strings.Replace(layout, "H", "15", 1)
+	layout = strings.Replace(layout, "h", "03", 1)
+	layout = strings.Replace(layout, "g", "3", 1)
+	layout = strings.Replace(layout, "i", "04", 1)
+	layout = strings.Replace(layout, "s", "05", 1)
+	return layout
+}
+
 // Today 今天
 func (c *Carbon) Today() string {
 	return time.Now().In(c.loc).Format("2006-01-02 00:00:00")
@@ -301,22 +301,22 @@ func (c *Carbon) Yesterday() string {
 }
 
 // FirstDayInYear 年初
-func (c *Carbon) FirstDayInYear() string {
+func (c *Carbon) FirstOfYear() string {
 	return c.CreateFromDate(c.Time.Year(), 01, 01).ToDateTimeString()
 }
 
 // LastDayInYear 年末
-func (c *Carbon) LastDayInYear() string {
+func (c *Carbon) LastOfYear() string {
 	return c.CreateFromDate(c.Time.Year(), 12, 31).ToDateTimeString()
 }
 
 // FirstDayInMonth 月初
-func (c *Carbon) FirstDayInMonth() string {
+func (c *Carbon) FirstOfMonth() string {
 	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).ToDateTimeString()
 }
 
 // LastDayInMonth 月末
-func (c *Carbon) LastDayInMonth() string {
+func (c *Carbon) LastOfMonth() string {
 	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).Time.AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
 }
 
@@ -444,32 +444,30 @@ func (c *Carbon) IsSunday() bool {
 	return c.Time.In(c.loc).Weekday() == time.Sunday
 }
 
-// IsFirstDayInYear 是否年初
-func (c *Carbon) IsFirstDayInYear() bool {
+// IsFirstOfYear 是否年初
+func (c *Carbon) IsFirstOfYear() bool {
 	_, month, day := c.Time.Date()
 	if month == time.January && day == 1 {
 		return true
 	}
-
 	return false
 }
 
-// IsLastDayInYear 是否是年末
-func (c *Carbon) IsLastDayInYear() bool {
+// IsLastOfYear 是否是年末
+func (c *Carbon) IsLastOfYear() bool {
 	_, month, day := c.Time.Date()
 	if month == time.December && day == 31 {
 		return true
 	}
-
 	return false
 }
 
-// IsFirstDayInMonth 是否月初
-func (c *Carbon) IsFirstDayInMonth() bool {
+// IsFirstOfMonth 是否月初
+func (c *Carbon) IsFirstOfMonth() bool {
 	return c.Time.In(c.loc).Day() == 1
 }
 
-// IsLastDayInMonth 是否是月末
-func (c *Carbon) IsLastDayInMonth() bool {
-	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastDayInMonth()
+// IsLastOfMonth 是否是月末
+func (c *Carbon) IsLastOfMonth() bool {
+	return c.Time.In(c.loc).Format("2006-01-02 00:00:00") == c.LastOfMonth()
 }

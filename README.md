@@ -78,15 +78,16 @@ c.Tomorrow() // 2020-09-09 00:00:00
 ```
 
 ###### 获取第一天、最后一天时间字符串
+
 ```go
 // 年初
-c.Now().FirstDayInYear() // 2020-01-01 00:00:00
+c.Now().FirstOfYear() // 2020-01-01 00:00:00
 // 年末
-c.Now().LastDayInYear() // 2020-12-31 00:00:00
+c.Now().LastOfYear() // 2020-12-31 00:00:00
 // 月初
-c.Now().FirstDayInMonth() // 2020-09-01 00:00:00
+c.Now().FirstOfMonth() // 2020-09-01 00:00:00
 // 月末
-c.Now().LastDayInMonth() // 2020-09-30 00:00:00
+c.Now().LastOfMonth() // 2020-09-30 00:00:00
 ```
 
 ###### 数字转标准时间字符串
