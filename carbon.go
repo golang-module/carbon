@@ -27,55 +27,6 @@ func format2layout(format string) string {
 	return layout
 }
 
-// Now 当前
-func Now() *Carbon {
-	c := New()
-	c.Time = time.Now()
-	return c
-}
-
-// CreateFromTimestamp 时间戳转时间对象
-func CreateFromTimestamp(timestamp int64) *Carbon {
-	c := New()
-	c.Time = time.Unix(timestamp, 0)
-	return c
-}
-
-// CreateFromDateTime 年月日时分秒转时间对象
-func CreateFromDateTime(year, month, day, hour, minute, second int) *Carbon {
-	c := New()
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.loc)
-	return c
-}
-
-// CreateFromDate 年月日转时间对象
-func CreateFromDate(year, month, day int) *Carbon {
-	c := New()
-	c.Time = time.Date(year, time.Month(month), day, 0, 0, 0, 0, c.loc)
-	return c
-}
-
-// CreateFromTime 时分秒转时间对象
-func CreateFromTime(hour, minute, second int) *Carbon {
-	c := Now()
-	return c.setTime(hour, minute, second, 0, c.loc)
-}
-
-// Today 今天
-func Today() *Carbon {
-	return Now().StartOfDay()
-}
-
-// Tomorrow 明天
-func Tomorrow() *Carbon {
-	return Now().AddDay().StartOfDay()
-}
-
-// Yesterday 昨天
-func Yesterday() *Carbon {
-	return Now().SubDay().StartOfDay()
-}
-
 // New 初始化,设置默认时区
 func New() *Carbon {
 	loc, _ := time.LoadLocation(Local)
@@ -528,6 +479,7 @@ func (c *Carbon) StartOfDay() *Carbon {
 	return c.setTime(0, 0, 0, 0, c.loc)
 }
 
+// EndOfDay 当日结束时间
 func (c *Carbon) EndOfDay() *Carbon {
 	return c.setTime(HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1, MicrosecondsPerSecond-1, c.loc)
 }
