@@ -120,25 +120,25 @@ func (c *Carbon) SubMonth() *Carbon {
 
 // AddWeeks N周后
 func (c *Carbon) AddWeeks(weeks int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, weeks*7)
+	c.Time = c.Time.AddDate(0, 0, weeks*DaysPerWeek)
 	return c
 }
 
 // AddWeek 1周后
 func (c *Carbon) AddWeek() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 7)
+	c.Time = c.Time.AddDate(0, 0, DaysPerWeek)
 	return c
 }
 
 // SubWeeks N周前
 func (c *Carbon) SubWeeks(weeks int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -weeks*7)
+	c.Time = c.Time.AddDate(0, 0, -weeks*DaysPerWeek)
 	return c
 }
 
 // SubMonth 1月前
 func (c *Carbon) SubWeek() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -7)
+	c.Time = c.Time.AddDate(0, 0, -DaysPerWeek)
 	return c
 }
 
