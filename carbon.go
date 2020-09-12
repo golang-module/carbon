@@ -168,73 +168,73 @@ func (c *Carbon) SubDay() *Carbon {
 
 // AddHours N小时后
 func (c *Carbon) AddHours(hours int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, hours/24)
+	c.Time = c.Time.AddDate(0, 0, hours/HoursPerDay)
 	return c
 }
 
 // AddHour 1小时后
 func (c *Carbon) AddHour() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/24)
+	c.Time = c.Time.AddDate(0, 0, 1/HoursPerDay)
 	return c
 }
 
 // AddHours N小时前
 func (c *Carbon) SubHours(hours int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -hours/24)
+	c.Time = c.Time.AddDate(0, 0, -hours/HoursPerDay)
 	return c
 }
 
 // AddHour 1小时前
 func (c *Carbon) SubHour() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/24)
+	c.Time = c.Time.AddDate(0, 0, -1/HoursPerDay)
 	return c
 }
 
 // AddMinutes N分钟后
 func (c *Carbon) AddMinutes(minutes int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, minutes/1440)
+	c.Time = c.Time.AddDate(0, 0, minutes/MinutesPerDay)
 	return c
 }
 
 // AddMinute 1分钟后
 func (c *Carbon) AddMinute() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/1440)
+	c.Time = c.Time.AddDate(0, 0, 1/MinutesPerDay)
 	return c
 }
 
 // SubMinutes N分钟前
 func (c *Carbon) SubMinutes(minutes int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -minutes/1440)
+	c.Time = c.Time.AddDate(0, 0, -minutes/MinutesPerDay)
 	return c
 }
 
 // SubMinute 1分钟前
 func (c *Carbon) SubMinute() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/1440)
+	c.Time = c.Time.AddDate(0, 0, -1/MinutesPerDay)
 	return c
 }
 
 // AddSeconds N秒钟后
 func (c *Carbon) AddSeconds(second int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, second/86400)
+	c.Time = c.Time.AddDate(0, 0, second/SecondsPerDay)
 	return c
 }
 
 // AddMinute 1秒钟后
 func (c *Carbon) AddSecond() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/86400)
+	c.Time = c.Time.AddDate(0, 0, 1/SecondsPerDay)
 	return c
 }
 
 // SubMinutes N秒钟前
 func (c *Carbon) SubSeconds(second int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -second/86400)
+	c.Time = c.Time.AddDate(0, 0, -second/SecondsPerDay)
 	return c
 }
 
 // SubMinute 1秒钟前
 func (c *Carbon) SubSecond() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/86400)
+	c.Time = c.Time.AddDate(0, 0, -1/SecondsPerDay)
 	return c
 }
 
