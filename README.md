@@ -30,11 +30,13 @@ c := carbon.New().Timezone(carbon.PRC)
 c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
 c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:00
 c.Now().Format("Y/m/d") // 2020/09/08
+c.Now().ToDateString() // 2020-09-08
 c.Now().ToDateTimeString() // 2020-09-08 13:00:00
 c.Now().ToDateStartString() // 2020-09-08 00:00:00
 c.Now().ToDateEndString() // 2020-09-08 23:59:59
-c.Now().ToDateString() // 2020-09-08
 c.Now().ToTimeString() // 13:00:00
+c.Now().ToTimeStartString() // 13:00:00
+c.Now().ToTimeEndString() // 13:59:59
 ```
 
 ###### 获取当前时间戳
@@ -389,6 +391,8 @@ user := User {
 * 新增EndOfTomorrow方法获取明天结束时间
 * 新增ToDateStartString方法转换成日期开始时间
 * 新增ToDateEndString方法转换成日期结束时间
+* 新增ToTimeStartString方法转换成小时开始时间
+* 新增ToTimeEndString方法转换成小时结束时间
 * 新增IsToday方法判断是否是今天
 * 新增IsYesterday方法判断是否是昨天
 * 新增IsTomorrow方法判断是否是明天
@@ -413,18 +417,18 @@ user := User {
 * 修复readme.md错误描述
 * 完善单元测试
 * 新增对gorm结构体的json输出时间格式化支持，支持输出多种标准时间格式
-* 新增IsJanuary()方法判断是否是第一月
-* 新增IsFebruary()方法判断是否是第二月
-* 新增IsMarch()方法判断是否是第三月
-* 新增IsApril()方法判断是否是第四月
-* 新增IsMay()方法判断是否是第五月
-* 新增IsJune()方法判断是否是第六月
-* 新增IsJuly()方法判断是否是第七月
-* 新增IsAugust()方法判断是否是第八月
-* 新增IsSeptember()方法判断是否是第九月
-* 新增IsOctober()方法判断是否是第十月
-* 新增IsNovember()方法判断是否是第十一月
-* 新增IsDecember()方法判断是否是第十二月
+* 新增IsJanuary()方法判断是否是一月
+* 新增IsFebruary()方法判断是否是二月
+* 新增IsMarch()方法判断是否是三月
+* 新增IsApril()方法判断是否是四月
+* 新增IsMay()方法判断是否是五月
+* 新增IsJune()方法判断是否是六月
+* 新增IsJuly()方法判断是否是七月
+* 新增IsAugust()方法判断是否是八月
+* 新增IsSeptember()方法判断是否是九月
+* 新增IsOctober()方法判断是否是十月
+* 新增IsNovember()方法判断是否是十一月
+* 新增IsDecember()方法判断是否是十二月
  
 ##### 2020-09-08
 * 修复已知BUG

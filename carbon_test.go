@@ -261,6 +261,6 @@ func TestCarbon_IsSunday(t *testing.T) {
 }
 
 func TestCarbon_StartOfDay(t *testing.T) {
-	a := New().Parse("2020-09-13 00:10:00").IsYesterday()
+	a := New().Parse("2020-09-13 17:10:00").ToTimeEndString()
 	fmt.Println(a)
 }
