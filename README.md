@@ -23,18 +23,18 @@ c := carbon.New().Timezone(carbon.PRC)
 
 #### 通用用法
 
-> 假设当前北京时间为2020-09-08 13:00:00
+> 假设当前北京时间为2020-09-08 13:00:01
 
 ###### 获取当前时间
 ```go
-c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:00
+c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
+c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:01
 c.Now().Format("Y/m/d") // 2020/09/08
 c.Now().ToDateString() // 2020-09-08
-c.Now().ToDateTimeString() // 2020-09-08 13:00:00
+c.Now().ToDateTimeString() // 2020-09-08 13:00:01
 c.Now().ToDateStartString() // 2020-09-08 00:00:00
 c.Now().ToDateEndString() // 2020-09-08 23:59:59
-c.Now().ToTimeString() // 13:00:00
+c.Now().ToTimeString() // 13:00:01
 c.Now().ToTimeStartString() // 13:00:00
 c.Now().ToTimeEndString() // 13:59:59
 ```
@@ -74,9 +74,9 @@ c.Now().LastOfMonth() // 2020-09-30 00:00:00
 ###### 数字转标准时间字符串
 ```go
 // 时间戳 转成 标准时间字符串
-c.CreateFromTimestamp(1599272433).Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.CreateFromTimestamp(1599272433).Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
 // 年月日时分秒 转成 标准时间字符串
-c.CreateFromDateTime(2020, 09, 08, 13, 00, 00).Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.CreateFromDateTime(2020, 09, 08, 13, 00, 01).Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
 // 年月日 转成 标准时间字符串
 c.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
 // 时分秒 转成 标准时间字符串(年月日默认为当前年月日)
@@ -128,67 +128,67 @@ c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒"
 
 ```go
 // 三年后
-c.Now().AddYears(3).ToDateTimeString() // 2023-09-08 13:00:00
+c.Now().AddYears(3).ToDateTimeString() // 2023-09-08 13:00:01
 // 一年后
-c.Now().AddYear().ToDateTimeString() // 2021-09-08 13:00:00
+c.Now().AddYear().ToDateTimeString() // 2021-09-08 13:00:01
 // 三年前
-c.Now().SubYears(3).ToDateTimeString() // 2017-09-08 13:00:00
+c.Now().SubYears(3).ToDateTimeString() // 2017-09-08 13:00:01
 // 一年前
-c.Now().SubYear().ToDateTimeString() // 2019-09-08 13:00:00
+c.Now().SubYear().ToDateTimeString() // 2019-09-08 13:00:01
 
 // 三月后
-c.Now().AddMonths(3).ToDateTimeString() // 2020-12-08 13:00:00
+c.Now().AddMonths(3).ToDateTimeString() // 2020-12-08 13:00:01
 // 一月后
-c.Now().AddMonth().ToDateTimeString() // 2020-10-08 13:00:00
+c.Now().AddMonth().ToDateTimeString() // 2020-10-08 13:00:01
 // 三月前
-c.Now().SubMonths(3).ToDateTimeString() // 2020-06-08 13:00:00
+c.Now().SubMonths(3).ToDateTimeString() // 2020-06-08 13:00:01
 // 一月前
-c.Now().SubMonth().ToDateTimeString() // 2020-08-08 13:00:00
+c.Now().SubMonth().ToDateTimeString() // 2020-08-08 13:00:01
 
 // 三周后
-c.Now().AddWeeks(3).ToDateTimeString() // 2020-09-29 13:00:00
+c.Now().AddWeeks(3).ToDateTimeString() // 2020-09-29 13:00:01
 // 一周后
-c.Now().AddWeek().ToDateTimeString() // 2020-09-15 13:00:00
+c.Now().AddWeek().ToDateTimeString() // 2020-09-15 13:00:01
 // 三周前
-c.Now().SubWeeks(3).ToDateTimeString() // 2020-08-17 13:00:00
+c.Now().SubWeeks(3).ToDateTimeString() // 2020-08-17 13:00:01
 // 一周前
-c.Now().SubWeek().ToDateTimeString() // 2020-09-01 13:00:00
+c.Now().SubWeek().ToDateTimeString() // 2020-09-01 13:00:01
 
 // 三天后
-c.Now().AddDays(3).ToDateTimeString() // 2020-09-11 13:00:00
+c.Now().AddDays(3).ToDateTimeString() // 2020-09-11 13:00:01
 // 一天后
-c.Now().AddDay().ToDateTimeString() // 2020-09-09 13:00:00
+c.Now().AddDay().ToDateTimeString() // 2020-09-09 13:00:01
 // 三天前
-c.Now().SubDays(3).ToDateTimeString() // 2020-09-05 13:00:00
+c.Now().SubDays(3).ToDateTimeString() // 2020-09-05 13:00:01
 // 一天前
-c.Now().SubDay().ToDateTimeString() // 2020-08-07 13:00:00
+c.Now().SubDay().ToDateTimeString() // 2020-08-07 13:00:01
 
 // 三小时后
-c.Now().AddHours(3).ToDateTimeString() // 2020-09-08 16:00:00
+c.Now().AddHours(3).ToDateTimeString() // 2020-09-08 16:00:01
 // 一小时后
-c.Now().AddHoury().ToDateTimeString() // 2020-09-08 14:00:00
+c.Now().AddHoury().ToDateTimeString() // 2020-09-08 14:00:01
 // 三小时前
-c.Now().SubHours(3).ToDateTimeString() // 2020-09-08 10:00:00
+c.Now().SubHours(3).ToDateTimeString() // 2020-09-08 10:00:01
 // 一小时前
-c.Now().SubHour().ToDateTimeString() // 2020-09-08 12:00:00
+c.Now().SubHour().ToDateTimeString() // 2020-09-08 12:00:01
 
 // 三分钟后
-c.Now().AddMinutes(3).ToDateTimeString() // 2020-09-08 13:03:00
+c.Now().AddMinutes(3).ToDateTimeString() // 2020-09-08 13:03:01
 // 一分钟后
-c.Now().AddMinute().ToDateTimeString() // 2020-09-08 13:01:00
+c.Now().AddMinute().ToDateTimeString() // 2020-09-08 13:01:01
 // 三分钟前
-c.Now().SubMinutes(3).ToDateTimeString() // 2020-09-08 12:57:00
+c.Now().SubMinutes(3).ToDateTimeString() // 2020-09-08 12:57:01
 // 一分钟前
-c.Now().SubMinute().ToDateTimeString() // 2020-09-08 12:59:00
+c.Now().SubMinute().ToDateTimeString() // 2020-09-08 12:59:01
 
 // 三秒钟后
-c.Now().AddSeconds(3).ToDateTimeString() // 2020-09-08 13:00:03
+c.Now().AddSeconds(3).ToDateTimeString() // 2020-09-08 13:00:04
 // 一秒钟后
-c.Now().AddSecond().ToDateTimeString() // 2020-09-08 13:00:01
+c.Now().AddSecond().ToDateTimeString() // 2020-09-08 13:00:02
 // 三秒钟前
-c.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:57
+c.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:56
 // 一秒钟前
-c.Now().SubSecond().ToDateTimeString() // 2020-09-08 12:59:59
+c.Now().SubSecond().ToDateTimeString() // 2020-09-08 13:00:00
 ```
 
 ###### 时间判断
