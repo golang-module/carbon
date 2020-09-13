@@ -4,6 +4,7 @@ const (
 	YearsPerMillennium         = 1000    // 每千年1000年
 	YearsPerCentury            = 100     // 每世纪100年
 	YearsPerDecade             = 10      // 每十年10年
+	QuartersPerYear            = 4       // 每年4季度
 	MonthsPerYear              = 12      // 每年12月
 	MonthsPerQuarter           = 3       // 每季度3月
 	WeeksPerYear               = 52      // 每年52周

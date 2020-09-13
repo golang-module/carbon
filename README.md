@@ -8,9 +8,7 @@ gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.c
 ```go
 go get -u gitee.com/go-package/carbon
 ```
-
-#### 通用用法
-###### 初始化
+#### 初始化
 ```go
 import (
     "gitee.com/go-package/carbon"
@@ -18,43 +16,12 @@ import (
 
 // 初始化
 c := carbon.New()
-```
-
-###### 设置时区（不设置默认为Local，即服务器所在时区）
-```go
-// 设置中国时区
-c = c.Timezone(carbon.PRC)
-
-// 设置上海时区
-c = c.Timezone(carbon.Shanghai)
-
-// 设置重庆时区
-c = c.Timezone(carbon.Chongqing)
-
-// 设置香港时区
-c = c.Timezone(carbon.HongKong)
-
-// 设置澳门时区
-c = c.Timezone(carbon.Macao)
-
-// 设置台湾时区
-c = c.Timezone(carbon.Taipei)
-
-// 设置日本时区
-c = c.Timezone(carbon.Japan)
-
-// 设置东京时区
-c = c.Timezone(carbon.Tokyo)
-
-// 设置纽约时区
-c = c.Timezone(carbon.NewYork)
-
-// 设置伦敦时区
-c = c.Timezone(carbon.London)
-
+// 初始化并设置时区（不设置默认为Local，即服务器所在时区）
+c := carbon.New().Timezone(carbon.PRC)
 ```
 >更多时区常量请查看[timezone.go](https://gitee.com/go-package/carbon/blob/master/timezone.go "timezone.go")文件
 
+#### 通用用法
 ###### 获取当前时间字符串
 ```go
 c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
@@ -375,6 +342,22 @@ user := User {
 ```
 
 #### 更新日志
+##### 2020-09-14
+* 完善单元测试
+* 私有方法提取到独立文件private.go里
+* 新增StartOfYear()方法获取当年开始时间
+* 新增EndOfYear()方法获取当年结束时间
+* 新增StartOfMonth()方法获取当月开始时间
+* 新增EndOfMonth()方法获取当月结束时间
+* 新增StartOfDay()方法获取当天开始时间
+* 新增EndOfDay()方法获取当天结束时间
+* 新增StartOfYesterday()方法获取昨天开始时间
+* 新增EndOfYesterday()方法获取昨天结束时间
+* 新增StartOfToday()方法获取今天开始时间
+* 新增EndOfToday()方法获取今天结束时间
+* 新增StartOfTomorrow()方法获取明天开始时间
+* 新增EndOfTomorrow方法获取明天结束时间
+
 ##### 2020-09-12
 * 修复数据库中时间类型字段值为null或0000-00-00 00:00:00时，json格式化后为0001-01-01 00:00:00的BUG
 * 完善单元测试

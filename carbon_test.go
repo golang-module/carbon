@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -26,7 +27,7 @@ func TestCarbon_Yesterday(t *testing.T) {
 }
 
 func TestCarbon_Today(t *testing.T) {
-	e := time.Now().Format("2006-01-02 00:00:00")
+	e := time.Now().Format("2006-01-02")
 	r := New().Now().Today()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
@@ -34,14 +35,14 @@ func TestCarbon_Today(t *testing.T) {
 }
 
 func TestCarbon_Tomorrow(t *testing.T) {
-	e := time.Now().AddDate(0, 0, 1).Format("2006-01-02 00:00:00")
+	e := time.Now().AddDate(0, 0, 1).Format("2006-01-02")
 	r := New().Now().Tomorrow()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
 	}
 }
 
-func TestCarbon_FirstDayInMonth(t *testing.T) {
+func TestCarbon_FirstOfMonth(t *testing.T) {
 	now := time.Now()
 	e := now.AddDate(0, 0, -now.Day()+1).Format("2006-01-02 00:00:00")
 	r := New().Now().FirstOfMonth()
@@ -50,7 +51,7 @@ func TestCarbon_FirstDayInMonth(t *testing.T) {
 	}
 }
 
-func TestCarbon_LastDayInMonth(t *testing.T) {
+func TestCarbon_LastOfMonth(t *testing.T) {
 	now := time.Now()
 	e := now.AddDate(0, 0, -now.Day()+1).AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
 	r := New().Now().LastOfMonth()
@@ -257,4 +258,9 @@ func TestCarbon_IsSunday(t *testing.T) {
 			t.Fatalf("Expected %s isn't %s, but got %s is %s", today, wd, today, wd)
 		}
 	}
+}
+
+func TestCarbon_StartOfDay(t *testing.T) {
+	a := New().Now().EndOfDay()
+	fmt.Println(a)
 }
