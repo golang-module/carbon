@@ -261,6 +261,6 @@ func TestCarbon_IsSunday(t *testing.T) {
 }
 
 func TestCarbon_StartOfDay(t *testing.T) {
-	a := New().Now().FirstOfMonth()
+	a := New().Now().ToDateStartString()
 	fmt.Println(a)
 }

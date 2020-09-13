@@ -28,6 +28,8 @@ c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
 c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:00
 c.Now().Format("Y/m/d") // 2020/09/08
 c.Now().ToDateTimeString() // 2020-09-08 13:00:00
+c.Now().ToDateStartString() // 2020-09-08 00:00:00
+c.Now().ToDateEndString() // 2020-09-08 23:59:59
 c.Now().ToDateString() // 2020-09-08
 c.Now().ToTimeString() // 13:00:00
 ```
@@ -364,6 +366,8 @@ user := User {
 * 新增EndOfToday()方法获取今天结束时间
 * 新增StartOfTomorrow()方法获取明天开始时间
 * 新增EndOfTomorrow方法获取明天结束时间
+* 新增ToDateStartString方法转换成日期开始时间
+* 新增ToDateEndString方法转换成日期结束时间
 
 ##### 2020-09-12
 * 修复数据库中时间类型字段值为null或0000-00-00 00:00:00时，json格式化后为0001-01-01 00:00:00的BUG

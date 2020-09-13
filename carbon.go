@@ -383,6 +383,16 @@ func (c *Carbon) ToDateString() string {
 	return c.Time.In(c.loc).Format("2006-01-02")
 }
 
+// ToDateStartString 转日期开始时间字符串
+func (c *Carbon) ToDateStartString() string {
+	return c.Time.In(c.loc).Format("2006-01-02 00:00:00")
+}
+
+// ToDateEndString 转日期结束时间字符串
+func (c *Carbon) ToDateEndString() string {
+	return c.CreateFromDateTime(c.Time.Year(), c.Time.Month(), c.Time.Day(), HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1).Format("2006-01-02 15:04:05")
+}
+
 // ToTimeString 转时间字符串
 func (c *Carbon) ToTimeString() string {
 	return c.Time.In(c.loc).Format("15:04:05")
