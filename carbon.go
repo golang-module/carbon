@@ -306,7 +306,8 @@ func (c *Carbon) EndOfTomorrow() string {
 
 // Yesterday 昨天
 func (c *Carbon) Yesterday() string {
-	return time.Now().AddDate(0, 0, -1).In(c.loc).Format("2006-01-02 00:00:00")
+	yesterday := time.Now().AddDate(0, 0, -1)
+	return yesterday.In(c.loc).Format("2006-01-02")
 }
 
 // StartOfYesterday 昨天开始时间
@@ -323,22 +324,22 @@ func (c *Carbon) EndOfYesterday() string {
 
 // FirstDayInYear 年初第一天
 func (c *Carbon) FirstOfYear() string {
-	return c.CreateFromDate(c.Time.Year(), 01, 01).ToDateTimeString()
+	return c.CreateFromDate(c.Time.Year(), 01, 01).ToDateStartString()
 }
 
 // LastDayInYear 年末最后一天
 func (c *Carbon) LastOfYear() string {
-	return c.CreateFromDate(c.Time.Year(), 12, 31).ToDateTimeString()
+	return c.CreateFromDate(c.Time.Year(), 12, 31).ToDateStartString()
 }
 
 // FirstDayInMonth 月初第一天
 func (c *Carbon) FirstOfMonth() string {
-	return c.getStartDay(c.Time).Format("2006-01-02 00:00:00")
+	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 01).ToDateStartString()
 }
 
 // LastDayInMonth 月末最后一天
 func (c *Carbon) LastOfMonth() string {
-	return c.getEndDay(c.Time).Format("2006-01-02 00:00:00")
+	return c.getEndDay(c.Time).ToDateStartString()
 }
 
 // StartOfYear 当年开始时间
@@ -507,6 +508,21 @@ func (c *Carbon) IsSunday() bool {
 	return c.Time.In(c.loc).Weekday() == time.Sunday
 }
 
+// IsToday 是否是今天
+func (c *Carbon) IsToday() bool {
+	return c.ToDateString() == c.Today()
+}
+
+// IsYesterday 是否是昨天
+func (c *Carbon) IsYesterday() bool {
+	return c.SubDay().ToDateString() == c.Yesterday()
+}
+
+// IsTomorrow 是否是明天
+func (c *Carbon) IsTomorrow() bool {
+	return c.AddDay().ToDateString() == c.Tomorrow()
+}
+
 // IsFirstOfYear 是否年初
 func (c *Carbon) IsFirstOfYear() bool {
 	_, month, day := c.Time.Date()
@@ -563,4 +579,34 @@ func (c *Carbon) IsStartOfDay() bool {
 // IsEndOfDay 是否当天结束时间
 func (c *Carbon) IsEndOfDay() bool {
 	return c.ToDateTimeString() == c.EndOfDay()
+}
+
+// IsStartOfToday 是否今天开始时间
+func (c *Carbon) IsStartOfToday() bool {
+	return c.ToDateTimeString() == c.StartOfToday()
+}
+
+// IsEndOfToday 是否今天结束时间
+func (c *Carbon) IsEndOfToday() bool {
+	return c.ToDateTimeString() == c.EndOfToday()
+}
+
+// IsStartOfTomorrow 是否明天开始时间
+func (c *Carbon) IsStartOfTomorrow() bool {
+	return c.ToDateTimeString() == c.StartOfTomorrow()
+}
+
+// IsEndOfTomorrow 是否明天结束时间
+func (c *Carbon) IsEndOfTomorrow() bool {
+	return c.ToDateTimeString() == c.EndOfTomorrow()
+}
+
+// IsStartOfYesterday 是否昨天开始时间
+func (c *Carbon) IsStartOfYesterday() bool {
+	return c.ToDateTimeString() == c.StartOfYesterday()
+}
+
+// IsEndOfYesterday 是否昨天结束时间
+func (c *Carbon) IsEndOfYesterday() bool {
+	return c.ToDateTimeString() == c.EndOfYesterday()
 }

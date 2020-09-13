@@ -19,7 +19,7 @@ c := carbon.New()
 // 初始化并设置时区
 c := carbon.New().Timezone(carbon.PRC)
 ```
->更多时区常量请查看[timezone.go](https://gitee.com/go-package/carbon/blob/master/timezone.go "timezone.go")文件
+>更多时区常量请查看[const.go](https://gitee.com/go-package/carbon/blob/master/const.go "const.go")文件
 
 #### 通用用法
 
@@ -235,6 +235,25 @@ c.Now().IsSaturday() // false
 // 是否是周日
 c.Now().IsSunday() // false
 
+// 是否是今天
+c.Now().IsToday() // true
+// 是否是昨天
+c.Now().IsYesterday() // false
+// 是否是明天
+c.Now().IsTomorrow() // false
+// 是否今天开始时间
+c.Now().IsStartOfToday() // false
+// 是否今天结束时间
+c.Now().IsEndOfToday // false
+// 是否明天开始时间
+c.Now().IsStartOfTomorrow() // false
+// 是否明天结束时间
+c.Now().IsEndOfTomorrow() // false
+// 是否昨天开始时间
+c.Now().IsStartOfYesterday() // false
+// 是否昨天结束时间
+c.Now().IsEndOfYesterday() // false
+
 // 是否年初
 c.Now().IsFirstOfYear() // false
 //是否是年末
@@ -371,6 +390,15 @@ user := User {
 * 新增EndOfTomorrow方法获取明天结束时间
 * 新增ToDateStartString方法转换成日期开始时间
 * 新增ToDateEndString方法转换成日期结束时间
+* 新增IsToday方法判断是否是今天
+* 新增IsYesterday方法判断是否是昨天
+* 新增IsTomorrow方法判断是否是明天
+* 新增IsStartOfToday方法判断是否是今天开始时间
+* 新增IsEndOfToday方法判断是否是今天结束时间
+* 新增IsStartOfTomorrow方法判断是否是明天开始时间
+* 新增IsEndOfTomorrow方法判断是否是明天结束时间
+* 新增IsStartOfYesterday方法判断是否是昨天开始时间
+* 新增IsEndOfYesterday方法判断是否是昨天结束时间
 
 ##### 2020-09-12
 * 修复数据库中时间类型字段值为null或0000-00-00 00:00:00时，json格式化后为0001-01-01 00:00:00的BUG
