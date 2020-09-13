@@ -19,7 +19,7 @@ func TestCarbon_Timezone(t *testing.T) {
 }
 
 func TestCarbon_Yesterday(t *testing.T) {
-	e := time.Now().AddDate(0, 0, -1).Format("2006-01-02 00:00:00")
+	e := time.Now().AddDate(0, 0, -1).Format("2006-01-02")
 	r := New().Now().Yesterday()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
@@ -261,6 +261,6 @@ func TestCarbon_IsSunday(t *testing.T) {
 }
 
 func TestCarbon_StartOfDay(t *testing.T) {
-	a := New().Now().ToDateStartString()
+	a := New().Parse("2020-09-13 00:10:00").IsYesterday()
 	fmt.Println(a)
 }

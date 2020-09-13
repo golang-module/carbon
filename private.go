@@ -24,7 +24,7 @@ func format2layout(format string) string {
 
 // getStartDay 获取开始日期
 func (c *Carbon) getStartDay(t time.Time) *Carbon {
-	return c.CreateFromDate(t.Year(), t.Month(), 01)
+	return c.CreateFromDate(t.Year(), t.Month(), t.Day())
 }
 
 // getEndDay 获取结束日期
