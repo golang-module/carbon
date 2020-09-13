@@ -399,6 +399,16 @@ func (c *Carbon) ToTimeString() string {
 	return c.Time.In(c.loc).Format("15:04:05")
 }
 
+// ToTimeStartString 转开始时间字符串
+func (c *Carbon) ToTimeStartString() string {
+	return c.Time.In(c.loc).Format("15:00:00")
+}
+
+// ToDateEndString 转结束时间字符串
+func (c *Carbon) ToTimeEndString() string {
+	return c.CreateFromDateTime(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), MinutesPerHour-1, SecondsPerMinute-1).Format("15:04:05")
+}
+
 // ToTimestamp 转时间戳
 func (c *Carbon) ToTimestamp() int64 {
 	return c.Time.Unix()
