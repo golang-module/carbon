@@ -14,14 +14,17 @@ import (
     "gitee.com/go-package/carbon"
 )
 
-// 初始化
+// 初始化，默认时区为Local，即服务器所在时区
 c := carbon.New()
-// 初始化并设置时区（不设置默认为Local，即服务器所在时区）
+// 初始化并设置时区
 c := carbon.New().Timezone(carbon.PRC)
 ```
 >更多时区常量请查看[timezone.go](https://gitee.com/go-package/carbon/blob/master/timezone.go "timezone.go")文件
 
 #### 通用用法
+
+> 假设当前北京时间为2020-09-08 13:00:00
+
 ###### 获取当前时间
 ```go
 c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
