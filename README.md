@@ -123,7 +123,6 @@ c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒"
 ```
 
 ###### 时间旅行
-> 假设当前北京时间为2020-09-08 13:00:00
 
 ```go
 // 三年后
@@ -241,24 +240,24 @@ c.Now().IsToday() // true
 c.Now().IsYesterday() // false
 // 是否是明天
 c.Now().IsTomorrow() // false
-// 是否今天开始时间
+// 是否是今天开始时间
 c.Now().IsStartOfToday() // false
-// 是否今天结束时间
+// 是否是今天结束时间
 c.Now().IsEndOfToday // false
-// 是否明天开始时间
+// 是否是明天开始时间
 c.Now().IsStartOfTomorrow() // false
-// 是否明天结束时间
+// 是否是明天结束时间
 c.Now().IsEndOfTomorrow() // false
-// 是否昨天开始时间
+// 是否是昨天开始时间
 c.Now().IsStartOfYesterday() // false
-// 是否昨天结束时间
+// 是否是昨天结束时间
 c.Now().IsEndOfYesterday() // false
 
-// 是否年初
+// 是否是年初
 c.Now().IsFirstOfYear() // false
 //是否是年末
 c.Now().IsLastOfYear() // false
-// 是否月初
+// 是否是月初
 c.Now().IsFirstOfMonth() // false
 //是否是月末
 c.Now().IsLastOfMonth() // false
