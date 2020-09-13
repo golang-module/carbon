@@ -2,15 +2,14 @@ package carbon
 
 // 时区常量
 const (
-	Local = "Local"
-	CET   = "CET"
-	EET   = "EET"
-	EST   = "EST"
-	GMT   = "GMT"
-	UTC   = "UTC"
-	UCT   = "UCT"
-	MST   = "MST"
-
+	Local     = "Local"
+	CET       = "CET"
+	EET       = "EET"
+	EST       = "EST"
+	GMT       = "GMT"
+	UTC       = "UTC"
+	UCT       = "UCT"
+	MST       = "MST"
 	Cuba      = "Cuba"
 	Egypt     = "Egypt"
 	Eire      = "Eire"
