@@ -23,12 +23,12 @@ func format2layout(format string) string {
 }
 
 // getStartDay 获取开始日期
-func (c *Carbon) getStartDay(t time.Time) string {
-	return c.CreateFromDate(t.Year(), t.Month(), 01).Format("2006-01-02 15:04:05")
+func (c *Carbon) getStartDay(t time.Time) *Carbon {
+	return c.CreateFromDate(t.Year(), t.Month(), 01)
 }
 
 // getEndDay 获取结束日期
-func (c *Carbon) getEndDay(t time.Time) string {
+func (c *Carbon) getEndDay(t time.Time) *Carbon {
 	days := 30
 	if c.Time.Month() == time.February {
 		days = 28
@@ -36,5 +36,5 @@ func (c *Carbon) getEndDay(t time.Time) string {
 	if c.IsLeapYear() {
 		days = days + 1
 	}
-	return c.CreateFromDateTime(t.Year(), t.Month(), days-1, HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1).Format("2006-01-02 15:04:05")
+	return c.CreateFromDateTime(t.Year(), t.Month(), days-1, HoursPerDay-1, MinutesPerHour-1, SecondsPerMinute-1)
 }

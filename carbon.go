@@ -277,13 +277,13 @@ func (c *Carbon) Today() string {
 // StartOfToday 今天开始时间
 func (c *Carbon) StartOfToday() string {
 	now := time.Now()
-	return c.getStartDay(now)
+	return c.getStartDay(now).ToDateTimeString()
 }
 
 // EndOfToday 今天结束时间
 func (c *Carbon) EndOfToday() string {
 	now := time.Now()
-	return c.getEndDay(now)
+	return c.getEndDay(now).ToDateTimeString()
 }
 
 // Tomorrow 明天
@@ -295,13 +295,13 @@ func (c *Carbon) Tomorrow() string {
 // StartOfTomorrow 明天开始时间
 func (c *Carbon) StartOfTomorrow() string {
 	tomorrow := time.Now().AddDate(0, 0, 1)
-	return c.getStartDay(tomorrow)
+	return c.getStartDay(tomorrow).ToDateTimeString()
 }
 
 // EndOfTomorrow 明天结束时间
 func (c *Carbon) EndOfTomorrow() string {
 	tomorrow := time.Now().AddDate(0, 0, 1)
-	return c.getEndDay(tomorrow)
+	return c.getEndDay(tomorrow).ToDateTimeString()
 }
 
 // Yesterday 昨天
@@ -312,13 +312,13 @@ func (c *Carbon) Yesterday() string {
 // StartOfYesterday 昨天开始时间
 func (c *Carbon) StartOfYesterday() string {
 	yesterday := time.Now().AddDate(0, 0, -1)
-	return c.getStartDay(yesterday)
+	return c.getStartDay(yesterday).ToDateTimeString()
 }
 
 // EndOfYesterday 昨天结束时间
 func (c *Carbon) EndOfYesterday() string {
 	yesterday := time.Now().AddDate(0, 0, -1)
-	return c.getEndDay(yesterday)
+	return c.getEndDay(yesterday).ToDateTimeString()
 }
 
 // FirstDayInYear 年初第一天
@@ -333,12 +333,12 @@ func (c *Carbon) LastOfYear() string {
 
 // FirstDayInMonth 月初第一天
 func (c *Carbon) FirstOfMonth() string {
-	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).ToDateTimeString()
+	return c.getStartDay(c.Time).Format("2006-01-02 00:00:00")
 }
 
 // LastDayInMonth 月末最后一天
 func (c *Carbon) LastOfMonth() string {
-	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), 1).Time.AddDate(0, 1, -1).Format("2006-01-02 00:00:00")
+	return c.getEndDay(c.Time).Format("2006-01-02 00:00:00")
 }
 
 // StartOfYear 当年开始时间
@@ -354,23 +354,23 @@ func (c *Carbon) EndOfYear() string {
 // StartOfMonth 当月开始时间
 func (c *Carbon) StartOfMonth() string {
 	t := c.CreateFromDate(c.Time.Year(), c.Time.Month(), c.Time.Day()).Time
-	return c.getStartDay(t)
+	return c.getStartDay(t).ToDateTimeString()
 }
 
 // EndOfMonth 当月结束时间
 func (c *Carbon) EndOfMonth() string {
 	t := c.CreateFromDate(c.Time.Year(), c.Time.Month(), c.Time.Day()).Time
-	return c.getEndDay(t)
+	return c.getEndDay(t).ToDateTimeString()
 }
 
 // FirstDayInMonth 当天开始时间
 func (c *Carbon) StartOfDay() string {
-	return c.getStartDay(c.Time)
+	return c.getStartDay(c.Time).ToDateTimeString()
 }
 
 // LastDayInMonth 当天结束时间
 func (c *Carbon) EndOfDay() string {
-	return c.getEndDay(c.Time)
+	return c.getEndDay(c.Time).ToDateTimeString()
 }
 
 // ToDateTimeString 转日期时间字符串

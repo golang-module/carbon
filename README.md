@@ -22,7 +22,7 @@ c := carbon.New().Timezone(carbon.PRC)
 >更多时区常量请查看[timezone.go](https://gitee.com/go-package/carbon/blob/master/timezone.go "timezone.go")文件
 
 #### 通用用法
-###### 获取当前时间字符串
+###### 获取当前时间
 ```go
 c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
 c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:00
@@ -37,14 +37,21 @@ c.Now().ToTimeString() // 13:00:00
 c.Now().ToTimestamp() // 1599272433
 ```
 
-###### 获取昨天、今天、明天时间字符串
+###### 获取昨天、今天、明天
 ```go
-c.Yesterday() // 2020-09-07 00:00:00
-c.Today() // 2020-09-08 00:00:00
-c.Tomorrow() // 2020-09-09 00:00:00
+c.Yesterday() // 2020-09-07
+c.Today() // 2020-09-08
+c.Tomorrow() // 2020-09-09
+
+c.StartOfYesterday() // 2020-09-07 00:00:00
+c.EndOfYesterday() // 2020-09-07 23:59:59
+c.StartOfToday() // 2020-09-08 00:00:00
+c.EndOfToday() // 2020-09-08 23:59:59
+c.StartOfTomorrow() // 2020-09-09 00:00:00
+c.EndOfTomorrow() // 2020-09-09 23:59:59
 ```
 
-###### 获取第一天、最后一天时间字符串
+###### 获取第一天、最后一天
 
 ```go
 // 年初
