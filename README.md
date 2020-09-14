@@ -376,7 +376,7 @@ user := User {
 #### 更新日志
 ##### 2020-09-14
 * 完善单元测试
-* 私有方法提取到独立文件private.go里
+* 时区常量移到private.go文件里
 * 新增StartOfYear()方法获取当年开始时间
 * 新增EndOfYear()方法获取当年结束时间
 * 新增StartOfMonth()方法获取当月开始时间
@@ -393,6 +393,9 @@ user := User {
 * 新增ToDateEndString方法转换成日期结束时间
 * 新增ToTimeStartString方法转换成小时开始时间
 * 新增ToTimeEndString方法转换成小时结束时间
+
+##### 2020-09-13
+* 私有方法提取到独立文件private.go里
 * 新增IsToday方法判断是否是今天
 * 新增IsYesterday方法判断是否是昨天
 * 新增IsTomorrow方法判断是否是明天
