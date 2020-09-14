@@ -376,7 +376,7 @@ user := User {
 #### 更新日志
 ##### 2020-09-14
 * 完善单元测试
-* 时区常量移到private.go文件里
+* 时区常量移到const.go文件里
 * 新增StartOfYear()方法获取当年开始时间
 * 新增EndOfYear()方法获取当年结束时间
 * 新增StartOfMonth()方法获取当月开始时间
