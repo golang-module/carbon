@@ -85,6 +85,22 @@ c.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
 c.CreateFromTime(13, 14, 15).Format("Y-m-d H:i:s") // 2020-09-08 13:14:15
 ```
 
+###### 字符串转标准时间字符串
+```go
+// 十小时后
+c.CreateFromString("10h").Format("Y-m-d H:i:s") // 2020-09-09 01:00:01
+// 十小时前
+c.CreateFromString("-10h").Format("Y-m-d H:i:s") // 2020-09-08 03:00:01
+// 十分钟后
+c.CreateFromString("10m").Format("Y-m-d H:i:s") // 2020-09-08 13:10:01
+// 十分钟前
+c.CreateFromString("-10m").Format("Y-m-d H:i:s") // 2020-09-08 12:50:01
+// 十秒后
+c.CreateFromString("10s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:11
+// 十秒前
+c.CreateFromString("-10s").Format("Y-m-d H:i:s") // 2020-09-08 12:59:51
+```
+
 ###### 解析标准格式时间字符串
 ```go
 c.Parse("2020-09-08 13:00:00").Format("YmdHis") // 20200908130000
