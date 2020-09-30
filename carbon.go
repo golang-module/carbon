@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"strconv"
 	"strings"
 	"time"
 )
@@ -23,27 +24,34 @@ func (c *Carbon) Timezone(name string) *Carbon {
 	return c
 }
 
-// CreateFromTimestamp 时间戳转时间类型
+// CreateFromTimestamp 将时间戳转成时间实例
 func (c *Carbon) CreateFromTimestamp(timestamp int64) *Carbon {
 	c.Time = time.Unix(timestamp, 0)
 	return c
 }
 
-// CreateFromDateTime 年月日时分秒转时间类型
+// CreateFromDateTime 将年月日时分秒转成时间实例
 func (c *Carbon) CreateFromDateTime(year int, month time.Month, day int, hour int, minute int, second int) *Carbon {
 	c.Time = time.Date(year, month, day, hour, minute, second, 0, c.loc)
 	return c
 }
 
-// CreateFromDate 年月日转时间类型
+// CreateFromDate 将年月日转成时间实例
 func (c *Carbon) CreateFromDate(year int, month time.Month, day int) *Carbon {
 	c.Time = time.Date(year, month, day, 0, 0, 0, 0, c.loc)
 	return c
 }
 
-// CreateFromTime 时分秒转时间类型
+// CreateFromTime 将时分秒转成时间类型
 func (c *Carbon) CreateFromTime(hour int, minute int, second int) *Carbon {
 	c.Time = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), hour, minute, second, 0, c.loc)
+	return c
+}
+
+// CreateFromString 将字符串转成时间类型
+func (c *Carbon) CreateFromString(duration string) *Carbon {
+	d, _ := time.ParseDuration(duration)
+	c.Time = c.Time.Add(d)
 	return c
 }
 
@@ -151,74 +159,74 @@ func (c *Carbon) SubDay() *Carbon {
 
 // AddHours N小时后
 func (c *Carbon) AddHours(hours int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, hours/HoursPerDay)
-	return c
+	duration := strconv.Itoa(hours) + "h"
+	return c.CreateFromString(duration)
 }
 
 // AddHour 1小时后
 func (c *Carbon) AddHour() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/HoursPerDay)
-	return c
+	duration := "1h"
+	return c.CreateFromString(duration)
 }
 
 // AddHours N小时前
 func (c *Carbon) SubHours(hours int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -hours/HoursPerDay)
-	return c
+	duration := "-" + strconv.Itoa(hours) + "h"
+	return c.CreateFromString(duration)
 }
 
 // AddHour 1小时前
 func (c *Carbon) SubHour() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/HoursPerDay)
-	return c
+	duration := "-1h"
+	return c.CreateFromString(duration)
 }
 
 // AddMinutes N分钟后
 func (c *Carbon) AddMinutes(minutes int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, minutes/MinutesPerDay)
-	return c
+	duration := strconv.Itoa(minutes) + "m"
+	return c.CreateFromString(duration)
 }
 
 // AddMinute 1分钟后
 func (c *Carbon) AddMinute() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/MinutesPerDay)
-	return c
+	duration := "1m"
+	return c.CreateFromString(duration)
 }
 
 // SubMinutes N分钟前
 func (c *Carbon) SubMinutes(minutes int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -minutes/MinutesPerDay)
-	return c
+	duration := "-" + strconv.Itoa(minutes) + "m"
+	return c.CreateFromString(duration)
 }
 
 // SubMinute 1分钟前
 func (c *Carbon) SubMinute() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/MinutesPerDay)
-	return c
+	duration := "-1m"
+	return c.CreateFromString(duration)
 }
 
 // AddSeconds N秒钟后
 func (c *Carbon) AddSeconds(second int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, second/SecondsPerDay)
-	return c
+	duration := strconv.Itoa(second) + "s"
+	return c.CreateFromString(duration)
 }
 
 // AddMinute 1秒钟后
 func (c *Carbon) AddSecond() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, 1/SecondsPerDay)
-	return c
+	duration := "1s"
+	return c.CreateFromString(duration)
 }
 
 // SubMinutes N秒钟前
 func (c *Carbon) SubSeconds(second int) *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -second/SecondsPerDay)
-	return c
+	duration := "-" + strconv.Itoa(second) + "s"
+	return c.CreateFromString(duration)
 }
 
 // SubMinute 1秒钟前
 func (c *Carbon) SubSecond() *Carbon {
-	c.Time = c.Time.AddDate(0, 0, -1/SecondsPerDay)
-	return c
+	duration := "-1s"
+	return c.CreateFromString(duration)
 }
 
 // Parse 解析标准时间格式
