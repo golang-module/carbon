@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
@@ -520,4 +519,3 @@ func TestCarbon_IsSunday(t *testing.T) {
 		}
 	}
 }
-
