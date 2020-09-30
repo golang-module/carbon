@@ -34,7 +34,7 @@ func (t ToDateTimeString) MarshalJSON() ([]byte, error) {
 	if !timeTime.IsZero() {
 		timeFormat = timeTime.Format("2006-01-02 15:04:05")
 	}
-	return []byte(fmt.Sprintf("%s\"", timeFormat)), nil
+	return []byte(fmt.Sprintf(`"%s"`, timeFormat)), nil
 }
 func (t *ToDateTimeString) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
@@ -59,7 +59,7 @@ func (t ToDateString) MarshalJSON() ([]byte, error) {
 	if !timeTime.IsZero() {
 		timeFormat = timeTime.Format("2006-01-02")
 	}
-	return []byte(fmt.Sprintf("\"%s\"", timeFormat)), nil
+	return []byte(fmt.Sprintf(`"%s"`, timeFormat)), nil
 }
 func (t *ToDateString) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
@@ -84,7 +84,7 @@ func (t ToTimeString) MarshalJSON() ([]byte, error) {
 	if !timeTime.IsZero() {
 		timeFormat = timeTime.Format("15:04:05")
 	}
-	return []byte(fmt.Sprintf("\"%s\"", timeFormat)), nil
+	return []byte(fmt.Sprintf(`"%s"`, timeFormat)), nil
 }
 func (t *ToTimeString) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
