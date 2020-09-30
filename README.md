@@ -406,6 +406,7 @@ user := User {
 * 修复 AddSecond() 浮点数错误
 * 修复 SubSeconds() 传入参数小于1天时变成浮点数的错误
 * 修复 SubSecond() 浮点数错误
+* 修复orm中时间字段类型设置为carbon.ToDateTimeString时报错的BUG
 * 新增 CreateFromString() 方法将字符串转化成时间实例
 
 ##### 2020-09-14
