@@ -80,7 +80,7 @@ c.Now().EndOfDay() // 2020-09-08 23:59:59
 ###### 获取第一天、最后一天
 
 ```go
-// 当年的第一天
+// 当前年的第一天
 c.Now().FirstOfYear() // 2020-01-01 00:00:00
 // 当前年的最后一天
 c.Now().LastOfYear() // 2020-12-31 00:00:00
@@ -132,6 +132,17 @@ c.Parse("20200908130000").ToTimeString() // 13:00:00
 c.Parse("20200908130000").ToTimestamp() // 1599272433
 ```
 
+###### 解析自定义格式时间字符串
+```go
+c.ParseByFormat("2020|09|08 13:00:00", "Y|m|d H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020%09%08% 01%00%00", "Y年m月d日 h%i%s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020年09月08日 13:00:00", "Y年m月d日 H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-09-08 13:20:30
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-09-08
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:00:00
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1599272433
+```
+
 ###### 解析相对时间字符串(相对于今天)
 ```go
 // 十小时后
@@ -146,17 +157,6 @@ c.ParseByDuration("-10m").Format("Y-m-d H:i:s") // 2020-09-08 12:50:01
 c.ParseByDuration("10s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:11
 // 十秒前
 c.ParseByDuration("-10s").Format("Y-m-d H:i:s") // 2020-09-08 12:59:51
-```
-
-###### 解析自定义格式时间字符串
-```go
-c.ParseByFormat("2020|09|08 13:00:00", "Y|m|d H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020%09%08% 01%00%00", "Y年m月d日 h%i%s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020年09月08日 13:00:00", "Y年m月d日 H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-09-08 13:20:30
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-09-08
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:00:00
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1599272433
 ```
 
 ###### 时间旅行
