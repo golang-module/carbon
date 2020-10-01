@@ -388,12 +388,12 @@ func (c *Carbon) EndOfMonth() string {
 	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), c.getDays()).ToDateEndString()
 }
 
-// FirstDayInMonth 当天开始时间
+// StartOfDay 当天开始时间
 func (c *Carbon) StartOfDay() string {
 	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), c.Time.Day()).ToDateStartString()
 }
 
-// LastDayInMonth 当天结束时间
+// EndOfDay 当天结束时间
 func (c *Carbon) EndOfDay() string {
 	return c.CreateFromDate(c.Time.Year(), c.Time.Month(), c.Time.Day()).ToDateEndString()
 }
