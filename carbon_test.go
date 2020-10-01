@@ -98,7 +98,7 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 func TestCarbon_CreateFromString(t *testing.T) {
 	now := time.Now().Add(time.Hour * 2)
 	e := now.Format("2006-01-02 15:04:05")
-	r := New().Now().CreateFromString("2h").ToDateTimeString()
+	r := New().Now().ParseByDuration("2h").ToDateTimeString()
 	if r != e {
 		t.Fatalf("Expected %s, but got %s", e, r)
 	}

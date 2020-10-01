@@ -71,6 +71,19 @@ c.Now().LastOfYear() // 2020-12-31 00:00:00
 c.Now().FirstOfMonth() // 2020-09-01 00:00:00
 // 月末
 c.Now().LastOfMonth() // 2020-09-30 00:00:00
+
+// 年初
+c.Now().StartOfYear() // 2020-01-01 00:00:00
+// 年末
+c.Now().EndOfYear() // 2020-12-31 23:59:59
+// 月初
+c.Now().StartOfMonth() // 2020-09-01 00:00:00
+// 月末
+c.Now().EndOfMonth() // 2020-09-30 23:59:59
+// 日初
+c.Now().StartOfDay() // 2020-09-08 00:00:00
+// 日末
+c.Now().EndOfDay() // 2020-09-30 23:59:59
 ```
 
 ###### 数字转标准时间字符串
@@ -83,22 +96,6 @@ c.CreateFromDateTime(2020, 09, 08, 13, 00, 01).Format("Y-m-d H:i:s") // 2020-09-
 c.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
 // 时分秒 转成 标准时间字符串(年月日默认为当前年月日)
 c.CreateFromTime(13, 14, 15).Format("Y-m-d H:i:s") // 2020-09-08 13:14:15
-```
-
-###### 字符串转标准时间字符串
-```go
-// 十小时后
-c.CreateFromString("10h").Format("Y-m-d H:i:s") // 2020-09-09 01:00:01
-// 十小时前
-c.CreateFromString("-10h").Format("Y-m-d H:i:s") // 2020-09-08 03:00:01
-// 十分钟后
-c.CreateFromString("10m").Format("Y-m-d H:i:s") // 2020-09-08 13:10:01
-// 十分钟前
-c.CreateFromString("-10m").Format("Y-m-d H:i:s") // 2020-09-08 12:50:01
-// 十秒后
-c.CreateFromString("10s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:11
-// 十秒前
-c.CreateFromString("-10s").Format("Y-m-d H:i:s") // 2020-09-08 12:59:51
 ```
 
 ###### 解析标准格式时间字符串
@@ -131,15 +128,31 @@ c.Parse("20200908130000").ToTimeString() // 13:00:00
 c.Parse("20200908130000").ToTimestamp() // 1599272433
 ```
 
+###### 解析相对时间字符串(相对于今天)
+```go
+// 十小时后
+c.ParseByDuration("10h").ToDateTimeString() // 2020-09-09 01:00:01
+// 十小时前
+c.ParseByDuration("-10h").Format("Y-m-d H:i:s") // 2020-09-08 03:00:01
+// 十分钟后
+c.ParseByDuration("10m").Format("Y-m-d H:i:s") // 2020-09-08 13:10:01
+// 十分钟前
+c.ParseByDuration("-10m").Format("Y-m-d H:i:s") // 2020-09-08 12:50:01
+// 十秒后
+c.ParseByDuration("10s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:11
+// 十秒前
+c.ParseByDuration("-10s").Format("Y-m-d H:i:s") // 2020-09-08 12:59:51
+```
+
 ###### 解析自定义格式时间字符串
 ```go
-c.ParseByCustom("2020|09|08 13:00:00", "Y|m|d H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByCustom("2020%09%08% 01%00%00", "Y年m月d日 h%i%s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByCustom("2020年09月08日 13:00:00", "Y年m月d日 H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-09-08 13:20:30
-c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-09-08
-c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:00:00
-c.ParseByCustom("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1599272433
+c.ParseByFormat("2020|09|08 13:00:00", "Y|m|d H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020%09%08% 01%00%00", "Y年m月d日 h%i%s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020年09月08日 13:00:00", "Y年m月d日 H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-09-08 13:20:30
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-09-08
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:00:00
+c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1599272433
 ```
 
 ###### 时间旅行
@@ -207,6 +220,7 @@ c.Now().AddSecond().ToDateTimeString() // 2020-09-08 13:00:02
 c.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:56
 // 一秒钟前
 c.Now().SubSecond().ToDateTimeString() // 2020-09-08 13:00:00
+
 ```
 
 ###### 时间判断
@@ -282,6 +296,41 @@ c.Now().IsFirstOfMonth() // false
 //是否是月末
 c.Now().IsLastOfMonth() // false
 ```
+
+###### 农历支持
+```go
+// 获取生肖年
+c.Now().ToAnimalYear() // 鼠
+// 获取农历年
+c.Now().ToLunarYear() // 庚子
+
+// 是否是鼠年
+c.Now().IsYearOfRat() // true
+// 是否是牛年
+c.Now().IsYearOfOx() // false
+// 是否是虎年
+c.Now().IsYearOfTiger() // false
+// 是否是兔年
+c.Now().IsYearOfRabbit() // false
+// 是否是龙年
+c.Now().IsYearOfDragon() // false
+// 是否是蛇年
+c.Now().IsYearOfSnake() // false
+// 是否是马年
+c.Now().IsYearOfHorse() // false
+// 是否是羊年
+c.Now().IsYearOfGoat() // false
+// 是否是猴年
+c.Now().IsYearOfMonkey() // false
+// 是否是鸡年
+c.Now().IsYearOfRooster() // false
+// 是否是狗年
+c.Now().IsYearOfDog() // false
+// 是否是猪年
+c.Now().IsYearOfPig() // false
+
+```
+
 #### 特殊用法
 假设数据表为users，字段有id(int)、name(varchar)、age(int)、birthday(date)、created_at(datetime)、updated_at(datetime)、deleted_at(datetime)
 
@@ -407,7 +456,9 @@ user := User {
 * 修复 SubSeconds() 传入参数小于1天时变成浮点数的错误
 * 修复 SubSecond() 浮点数错误
 * 修复orm中时间字段类型设置为carbon.ToDateTimeString时报错的BUG
-* 新增 CreateFromString() 方法将字符串转化成时间实例
+* 改名解析自定义时间格式方法ParseByCustom() 为 ParseByFormat()
+* 新增 ParseByDuration() 方法将持续时间字符串转化成时间实例
+* 新增对农历的部分支持
 
 ##### 2020-09-14
 * 完善单元测试
