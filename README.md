@@ -462,7 +462,20 @@ user := User {
 * 修复orm中时间字段类型设置为carbon.ToDateTimeString时报错的BUG
 * 改名解析自定义时间格式方法ParseByCustom() 为 ParseByFormat()
 * 新增 ParseByDuration() 方法将持续时间字符串转化成时间实例
-* 新增对农历的部分支持
+* 新增 ToAnimalYear() 方法获取生肖年
+* 新增 ToLunarYear() 方法获取农历年
+* 新增 IsYearOfRat() 方法判断是否是鼠年
+* 新增 IsYearOfOx() 方法判断是否是牛年
+* 新增 IsYearOfTiger() 方法判断是否是虎年
+* 新增 IsYearOfRabbit() 方法判断是否是兔年
+* 新增 IsYearOfDragon() 方法判断是否是龙年
+* 新增 IsYearOfSnake() 方法判断是否是蛇年
+* 新增 IsYearOfHorse() 方法判断是否是马年
+* 新增 IsYearOfGoat() 方法判断是否是羊年
+* 新增 IsYearOfMonkey() 方法判断是否是猴年
+* 新增 IsYearOfRooster() 方法判断是否是鸡年
+* 新增 IsYearOfDog() 方法判断是否是狗年
+* 新增 IsYearOfPig() 方法判断是否是猪年
 
 ##### 2020-09-14
 * 完善单元测试
