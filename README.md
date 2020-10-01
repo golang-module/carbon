@@ -447,18 +447,18 @@ user := User {
 #### 更新日志
 ##### 2020-10-01
 * 完善单元测试
-* 修复 AddHours() 传入参数小于1天时变成浮点数的错误
-* 修复 AddHour() 浮点数错误
-* 修复 SubHours() 传入参数小于1天时变成浮点数的错误
-* 修复 SubHour() 浮点数错误
-* 修复 AddMinutes() 传入参数小于1天时变成浮点数的错误
-* 修复 AddMinute() 浮点数错误
-* 修复 SubMinutes() 传入参数小于1天时变成浮点数的错误
-* 修复 SubMinute() 浮点数错误
-* 修复 AddSeconds() 传入参数小于1天时变成浮点数的错误
-* 修复 AddSecond() 浮点数错误
-* 修复 SubSeconds() 传入参数小于1天时变成浮点数的错误
-* 修复 SubSecond() 浮点数错误
+* 修复 AddHours() 传入参数小于1天时变成浮点数的BUG
+* 修复 AddHour() 浮点数BUG
+* 修复 SubHours() 传入参数小于1天时变成浮点数的BUG
+* 修复 SubHour() 浮点数BUG
+* 修复 AddMinutes() 传入参数小于1天时变成浮点数的BUG
+* 修复 AddMinute() 浮点数BUG
+* 修复 SubMinutes() 传入参数小于1天时变成浮点数的BUG
+* 修复 SubMinute() 浮点数BUG
+* 修复 AddSeconds() 传入参数小于1天时变成浮点数的BUG
+* 修复 AddSecond() 浮点数BUG
+* 修复 SubSeconds() 传入参数小于1天时变成浮点数的BUG
+* 修复 SubSecond() 浮点数BUG
 * 修复orm中时间字段类型设置为carbon.ToDateTimeString时报错的BUG
 * 改名解析自定义时间格式方法ParseByCustom() 为 ParseByFormat()
 * 新增 ParseByDuration() 方法将持续时间字符串转化成时间实例
