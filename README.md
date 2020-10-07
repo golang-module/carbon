@@ -8,12 +8,12 @@ gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.c
 
 #### 安装
 ```go
-go get -u gitee.com/go-package/carbon
+go get -u github.com/golang-module/carbon
 ```
 #### 初始化
 ```go
 import (
-    "gitee.com/go-package/carbon"
+    "github.com/golang-module/carbon"
 )
 
 // 初始化，默认时区为Local，即服务器所在时区
