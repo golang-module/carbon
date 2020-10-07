@@ -611,7 +611,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
-##### 2020-10-09
+##### 2020-10-08
 * 完善单元测试
 * 完善优化对ORM的多场景支持
 * 优化代码组织结构，将不可继承的最终方法统一放到final.go文件里
