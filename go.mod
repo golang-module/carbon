@@ -1,3 +1,4 @@
-module github.com/golang-module/encode
+module github.com/golang-module/carbon
 
 go 1.14
+
