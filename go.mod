@@ -1,3 +1,3 @@
-module gitee.com/go-package/carbon
+module github.com/golang-module/encode
 
 go 1.14
