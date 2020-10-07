@@ -1,4 +1,7 @@
-carbon 是一个轻量级、语义化、对IDE友好的日期时间处理库，是PHP Carbon库的Golang实现版本，初衷是为了摆脱Golang反人类的2006-01-02 15:04:05格式化时间设计，支持链式调用和gorm、xrom等主流orm
+# Carbon  #
+中文 | [英文](./README.en.md)
+
+carbon 是一个轻量级、语义化、对IDE友好的Golang时间处理库，支持链式调用和gorm、xrom等主流orm
 
 如果您觉得不错，请给个star吧
 
@@ -6,445 +9,632 @@ github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon
 
 gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
-#### 安装
+#### 安装使用
 ```go
+// 使用github库
 go get -u github.com/golang-module/carbon
-```
-#### 初始化
-```go
+
 import (
     "github.com/golang-module/carbon"
 )
 
-// 初始化，默认时区为Local，即服务器所在时区
-c := carbon.New()
-// 初始化并设置时区
-c := carbon.New().Timezone(carbon.PRC)
+// 使用gitee库
+go get -u gitee.com/go-package/carbon
+
+import (
+    "gitee.com/go-package/carbon"
+)
 ```
->更多时区常量请查看[const.go](https://gitee.com/go-package/carbon/blob/master/const.go "const.go")文件
 
-#### 通用用法
+#### 用法示例
+> 默认时区为Local，即服务器所在时区，假设当前时间为2020-08-05 13:14:15
 
-> 假设当前北京时间为2020-09-08 13:00:01
-
-###### 获取当前时间
+##### 设置时区
 ```go
-c.Now().Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
-c.Now().Format("y-m-d h:i:s") // 20-09-08 01:00:01
-c.Now().Format("Y/m/d") // 2020/09/08
-c.Now().ToDateString() // 2020-09-08
-c.Now().ToDateTimeString() // 2020-09-08 13:00:01
-c.Now().ToDateStartString() // 2020-09-08 00:00:00
-c.Now().ToDateEndString() // 2020-09-08 23:59:59
-c.Now().ToTimeString() // 13:00:01
-c.Now().ToTimeStartString() // 13:00:00
-c.Now().ToTimeEndString() // 13:59:59
+// 设置时区，全局生效
+c := carbon.Timezone(carbon.PRC)
+// 设置时区，临时生效，不会覆盖全局时区
+c.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+c.Now().ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
-###### 获取当前时间戳
+>更多时区常量请查看[const.go](./const.go)文件
+
+##### 昨天、今天、明天
 ```go
-c.Now().ToTimestamp() // 1599272433
+// 今天此时此刻
+carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
+// 今天开始时间
+carbon.Now().ToDateStartString() // 2020-08-05 00:00:00
+// 今天结束时间
+carbon.Now().ToDateEndString() // 2020-08-05 23:59:59
+// 今天日期
+carbon.Now().ToDateString() // 2020-08-05
+// 今天此时
+carbon.Now().ToTimeString() // 13:14:15
+// 今天时间戳
+carbon.Now().ToTimestamp() // 1596604455
+
+// 昨天此时此刻
+carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
+// 昨天开始时间
+carbon.Yesterday().ToDateStartString() // 2020-08-04 00:00:00
+// 昨天结束时间
+carbon.Yesterday().ToDateEndString() // 2020-08-04 23:59:59
+// 昨天日期
+carbon.Yesterday().ToDateString() // 2020-08-04
+// 昨天此时
+carbon.Now().ToTimeString() // 13:14:15
+// 昨天时间戳
+carbon.Yesterday().ToTimestamp() // 1596518055
+
+// 明天此时此刻
+carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
+// 明天开始时间
+carbon.Tomorrow().ToDateStartString() // 2020-08-06 00:00:00
+// 明天结束时间
+carbon.Tomorrow().ToDateEndString() // 2020-08-06 23:59:59
+// 明天日期
+carbon.Tomorrow().ToDateString() // 2020-08-06
+// 明天此时
+carbon.Now().ToTimeString() // 13:14:15
+// 明天时间戳
+carbon.Tomorrow().ToTimestamp() // 1596690855
 ```
 
-###### 获取昨天、今天、明天
+##### 第一天、最后一天
 ```go
-c.Yesterday() // 2020-09-07
-c.Today() // 2020-09-08
-c.Tomorrow() // 2020-09-09
+// 本年第一天当前时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateTimeString() // 2020-01-01 13:14:15
+// 本年第一天开始时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateStartString() // 2020-01-01 00:00:00
+// 本年第一天结束时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateEndString() // 2020-01-01 23:59:59
+// 本年最后一天当前时间
+carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateTimeString() // 2020-12-31 13:14:15
+// 本年最后一天开始时间
+carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateStartString() // 2020-12-31 00:00:00
+// 本年最后一天结束时间
+carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateStartString() // 2020-12-31 23:59:59
 
-c.StartOfYesterday() // 2020-09-07 00:00:00
-c.EndOfYesterday() // 2020-09-07 23:59:59
-c.StartOfToday() // 2020-09-08 00:00:00
-c.EndOfToday() // 2020-09-08 23:59:59
-c.StartOfTomorrow() // 2020-09-09 00:00:00
-c.EndOfTomorrow() // 2020-09-09 23:59:59
+// 本月第一天当前时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateTimeString() // 2020-08-01 13:14:15
+// 本月第一天开始时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateStartString() // 2020-08-01 00:00:00
+// 本月第一天结束时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateStartString() // 2020-08-01 23:59:59
+// 本月最后一天当前时间
+carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateTimeString() // 2020-08-31 13:14:15
+// 本月最后一天开始时间
+carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateStartString() // 2020-08-31 00:00:00
+// 本月最后一天结束时间
+carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateStartString() // 2020-08-31 23:59:59
+
+// 本周第一天当前时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateTimeString() // 2020-08-03 13:14:15
+// 本周第一天开始时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateStartString() // 2020-08-03 00:00:00
+// 本周第一天结束时间
+carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateStartString() // 2020-08-03 23:59:59
+// 本周最后一天当前时间
+carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 13:14:15
+// 本周最后一天开始时间
+carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 00:00:00
+// 本周最后一天结束时间
+carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 23:59:59
 ```
 
-###### 获取开始时间、结束时间
-
+##### 创建Carbon实例
 ```go
-// 当前年的开始
-c.Now().StartOfYear() // 2020-01-01 00:00:00
-// 当前年的结束
-c.Now().EndOfYear() // 2020-12-31 23:59:59
-// 当前月的开始
-c.Now().StartOfMonth() // 2020-09-01 00:00:00
-// 当前月的结束
-c.Now().EndOfMonth() // 2020-09-30 23:59:59
-// 当前天的开始
-c.Now().StartOfDay() // 2020-09-08 00:00:00
-// 当前天的结束
-c.Now().EndOfDay() // 2020-09-08 23:59:59
+// 从时间戳创建Carbon实例
+carbon.CreateFromTimestamp(1596604455).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+// 从年月日时分秒创建Carbon实例
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+// 从年月日创建Carbon实例(时分秒默认为当前时分秒)
+carbon.CreateFromDate(2020, 8, 5).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+// 从时分秒创建Carbon实例(年月日默认为当前年月日)
+carbon.CreateFromTime(13, 14, 15).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
 ```
 
-###### 获取第一天、最后一天
-
+##### 解析标准格式时间字符串
 ```go
-// 当前年的第一天
-c.Now().FirstOfYear() // 2020-01-01 00:00:00
-// 当前年的最后一天
-c.Now().LastOfYear() // 2020-12-31 00:00:00
-// 当前月的第一天
-c.Now().FirstOfMonth() // 2020-09-01 00:00:00
-// 当前月的最后一天
-c.Now().LastOfMonth() // 2020-09-30 00:00:00
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05").ToFormatString("Y/m/d H:i:s") // 2020/09/08 00:00:00
+carbon.Parse("2020-08-05").ToFormatString("Y/m/d") // 2020/09/08
+carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15").ToDateStartString() // 2020-08-05 00:00:00
+carbon.Parse("2020-08-05 13:14:15").ToDateEndString() // 2020-08-05 23:59:59
+carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
+carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
+
+carbon.Parse("2020/08/05 13:14:15").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.Parse("2020/08/05 13/14/15").ToFormatString("Y-m-d") // 2020-08-05
+carbon.Parse("2020/08/05").ToFormatString("Y-m-d H:i:s") // 2020-08-05 00:00:00
+carbon.Parse("2020/08/05").ToFormatString("Y-m-d") // 2020-08-05
+carbon.Parse("2020/08/05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020/08/05 13:14:15").ToDateString() // 2020-09-08
+carbon.Parse("2020/08/05 13:14:15").ToTimeString() // 13:14:15
+carbon.Parse("2020/08/05 13:14:15").ToTimestamp() // 1596604455
+
+carbon.Parse("20200805131415").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.Parse("20200805131415").ToFormatString("Y-m-d") // 2020-08-05
+carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("20200805131415").ToDateString() // 2020-09-08
+carbon.Parse("20200805131415").ToTimeString() // 13:00:00
+carbon.Parse("20200805131415").ToTimestamp() // 1596604455
+carbon.Parse("20200805").ToFormatString("Y-m-d H:i:s") // 2020-08-05 00:00:00
+carbon.Parse("20200805").ToFormatString("Y/m/d") // 2020/08/05
 ```
 
-###### 数字转标准时间字符串
+##### 解析指定格式时间字符串
 ```go
-// 时间戳 转成 标准时间字符串
-c.CreateFromTimestamp(1599272433).Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
-// 年月日时分秒 转成 标准时间字符串
-c.CreateFromDateTime(2020, 09, 08, 13, 00, 01).Format("Y-m-d H:i:s") // 2020-09-08 13:00:01
-// 年月日 转成 标准时间字符串
-c.CreateFromDate(2020, 09, 08).Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
-// 时分秒 转成 标准时间字符串(年月日默认为当前年月日)
-c.CreateFromTime(13, 14, 15).Format("Y-m-d H:i:s") // 2020-09-08 13:14:15
+carbon.ParseByFormat("2020|08|05 13:14:15", "Y|m|d H:i:s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020%08%05% 13%14%15", "Y年m月d日 h%i%s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020年08月05日 13:14:15", "Y年m月d日 H:i:s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-08-05
+carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:14:15
+carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1596604455
 ```
 
-###### 解析标准格式时间字符串
-```go
-c.Parse("2020-09-08 13:00:00").Format("YmdHis") // 20200908130000
-c.Parse("2020-09-08 13:00:00").Format("Y-m-d") // 2020-09-08
-c.Parse("2020-09-08").Format("Y/m/d H:i:s") // 2020/09/08 00:00:00
-c.Parse("2020-09-08").Format("Y/m/d") // 2020/09/08
-c.Parse("2020-09-08 13:00:00").ToDateTimeString() // 2020-09-05 13:00:00
-c.Parse("2020-09-08 13:00:00").ToDateString() // 2020-09-08
-c.Parse("2020-09-08 13:00:00").ToTimeString() // 13:00:00
-c.Parse("2020-09-08 13:00:00").ToTimestamp() // 1599272433
+##### 解析持续时间字符串(基于当前时间)
 
-c.Parse("2020/09/08 13:00:00").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.Parse("2020/09/08 13:00:00").Format("Y-m-d") // 2020-09-08
-c.Parse("2020/09/08").Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
-c.Parse("2020/09/08").Format("Y-m-d") // 2020-09-08
-c.Parse("2020/09/08 13:00:00").ToDateTimeString() // 2020-09-05 13:00:00
-c.Parse("2020/09/08 13:00:00").ToDateString() // 2020-09-08
-c.Parse("2020/09/08 13:00:00").ToTimeString() // 10:20:30
-c.Parse("2020/09/08 13:00:00").ToTimestamp() // 1599272433
+支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 
-c.Parse("20200908130000").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.Parse("20200908130000").Format("Y-m-d") // 2020-09-08
-c.Parse("20200908").Format("Y-m-d H:i:s") // 2020-09-08 00:00:00
-c.Parse("20200908").Format("Y/m/d") // 2020/09/08
-c.Parse("20200908130000").ToDateTimeString() // 2020-09-05 13:00:00
-c.Parse("20200908130000").ToDateString() // 2020-09-08
-c.Parse("20200908130000").ToTimeString() // 13:00:00
-c.Parse("20200908130000").ToTimestamp() // 1599272433
-```
-
-###### 解析自定义格式时间字符串
-```go
-c.ParseByFormat("2020|09|08 13:00:00", "Y|m|d H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020%09%08% 01%00%00", "Y年m月d日 h%i%s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020年09月08日 13:00:00", "Y年m月d日 H:i:s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:00
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-09-08 13:20:30
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-09-08
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:00:00
-c.ParseByFormat("2020年09月08日 13时00分00秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1599272433
-```
-
-###### 解析相对时间字符串(相对于今天)
 ```go
 // 十小时后
-c.ParseByDuration("10h").ToDateTimeString() // 2020-09-09 01:00:01
-// 十小时前
-c.ParseByDuration("-10h").Format("Y-m-d H:i:s") // 2020-09-08 03:00:01
+carbon.ParseByDuration("10h").ToDateTimeString() // 2020-08-06 23:14:15
+// 十小时半前
+carbon.ParseByDuration("-10.5h").ToFormatString("Y-m-d H:i:s") // 2020-08-05 02:44:15
 // 十分钟后
-c.ParseByDuration("10m").Format("Y-m-d H:i:s") // 2020-09-08 13:10:01
-// 十分钟前
-c.ParseByDuration("-10m").Format("Y-m-d H:i:s") // 2020-09-08 12:50:01
+carbon.ParseByDuration("10m").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:24:15
+// 十分钟半前
+carbon.ParseByDuration("-10.5m").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:03:45
 // 十秒后
-c.ParseByDuration("10s").Format("Y-m-d H:i:s") // 2020-09-08 13:00:11
-// 十秒前
-c.ParseByDuration("-10s").Format("Y-m-d H:i:s") // 2020-09-08 12:59:51
+carbon.ParseByDuration("10s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:25
+// 十秒半前
+carbon.ParseByDuration("-10.5s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:04
+
 ```
 
-###### 时间旅行
+##### 解析原生time.Time实例
+```go
+carbon.ParseByTime(time.Now()).ToTimestamp() // 1596604455
+carbon.ParseByTime(time.Now()).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByTime(time.Now().AddDate(0, 0, 1)).ToDateTimeString() // 2020-08-06 13:14:15
+carbon.ParseByTime(time.Now().AddDate(0, 0, -1)).ToDateString() // 2020-08-05
+```
 
+##### 时间旅行
 ```go
 // 三年后
-c.Now().AddYears(3).ToDateTimeString() // 2023-09-08 13:00:01
+carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").NextYears(3).ToDateTimeString() // 2023-02-28 13:14:15
+
 // 一年后
-c.Now().AddYear().ToDateTimeString() // 2021-09-08 13:00:01
+carbon.Parse("2020-02-29 13:14:15").AddYear().ToDateTimeString() // 2021-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").NextYear().ToDateTimeString() // 2021-02-28 13:14:15
+
 // 三年前
-c.Now().SubYears(3).ToDateTimeString() // 2017-09-08 13:00:01
+carbon.Parse("2020-02-29 13:14:15").SubYears(3).ToDateTimeString() // 2017-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").PreYears(3).ToDateTimeString() // 2017-02-28 13:14:15
+
 // 一年前
-c.Now().SubYear().ToDateTimeString() // 2019-09-08 13:00:01
+carbon.Parse("2020-02-29 13:14:15").SubYear().ToDateTimeString() // 2019-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").PreYear().ToDateTimeString() // 2019-02-28 13:14:15
 
 // 三月后
-c.Now().AddMonths(3).ToDateTimeString() // 2020-12-08 13:00:01
-// 一月后
-c.Now().AddMonth().ToDateTimeString() // 2020-10-08 13:00:01
-// 三月前
-c.Now().SubMonths(3).ToDateTimeString() // 2020-06-08 13:00:01
-// 一月前
-c.Now().SubMonth().ToDateTimeString() // 2020-08-08 13:00:01
+carbon.Parse("2020-02-29 13:14:15").AddMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").NextMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
 
-// 三周后
-c.Now().AddWeeks(3).ToDateTimeString() // 2020-09-29 13:00:01
-// 一周后
-c.Now().AddWeek().ToDateTimeString() // 2020-09-15 13:00:01
-// 三周前
-c.Now().SubWeeks(3).ToDateTimeString() // 2020-08-17 13:00:01
-// 一周前
-c.Now().SubWeek().ToDateTimeString() // 2020-09-01 13:00:01
+// 一月后
+carbon.Parse("2020-01-31 13:14:15").AddMonth().ToDateTimeString() // 2020-03-02 13:14:15
+carbon.Parse("2020-01-31 13:14:15").NextMonth().ToDateTimeString() // 2020-02-29 13:14:15
+
+// 三月前
+carbon.Parse("2020-02-29 13:14:15").SubMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").PreMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
+
+// 一月前
+carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 13:14:15
+carbon.Parse("2020-03-31 13:14:15").PreMonth().ToDateTimeString() // 2020-02-29 13:14:15
 
 // 三天后
-c.Now().AddDays(3).ToDateTimeString() // 2020-09-11 13:00:01
+carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString() // 2020-08-08 13:14:15
 // 一天后
-c.Now().AddDay().ToDateTimeString() // 2020-09-09 13:00:01
+carbon.Parse("2020-08-05 13:14:15").AddDay().ToDateTimeString() // 2020-08-05 13:14:15
+
 // 三天前
-c.Now().SubDays(3).ToDateTimeString() // 2020-09-05 13:00:01
+carbon.Parse("2020-08-05 13:14:15").SubDays(3).ToDateTimeString() // 2020-08-02 13:14:15
 // 一天前
-c.Now().SubDay().ToDateTimeString() // 2020-08-07 13:00:01
+carbon.Parse("2020-08-05 13:14:15").SubDay().ToDateTimeString() // 2020-08-04 13:14:15
 
 // 三小时后
-c.Now().AddHours(3).ToDateTimeString() // 2020-09-08 16:00:01
+carbon.Parse("2020-08-05 13:14:15").AddHours(3).ToDateTimeString() // 2020-08-05 16:14:15
+// 二小时半后
+carbon.Parse("2020-08-05 13:14:15").Duration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
 // 一小时后
-c.Now().AddHoury().ToDateTimeString() // 2020-09-08 14:00:01
+carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
+
 // 三小时前
-c.Now().SubHours(3).ToDateTimeString() // 2020-09-08 10:00:01
+carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
+// 二小时半前
+carbon.Parse("2020-08-05 13:14:15").Duration("-2.5h").ToDateTimeString() // 2020-08-05 10:44:15
 // 一小时前
-c.Now().SubHour().ToDateTimeString() // 2020-09-08 12:00:01
+carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 12:14:15
 
 // 三分钟后
-c.Now().AddMinutes(3).ToDateTimeString() // 2020-09-08 13:03:01
+carbon.Parse("2020-08-05 13:14:15").AddMinutes(3).ToDateTimeString() // 2020-08-05 13:17:15
+// 二分钟半后
+carbon.Parse("2020-08-05 13:14:15").Duration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
 // 一分钟后
-c.Now().AddMinute().ToDateTimeString() // 2020-09-08 13:01:01
+carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
+
 // 三分钟前
-c.Now().SubMinutes(3).ToDateTimeString() // 2020-09-08 12:57:01
+carbon.Parse("2020-08-05 13:14:15").SubMinutes(3).ToDateTimeString() // 2020-08-05 13:11:15
+// 二分钟半前
+carbon.Parse("2020-08-05 13:14:15").Duration("-2.5m").ToDateTimeString() // 2020-08-05 13:11:45
 // 一分钟前
-c.Now().SubMinute().ToDateTimeString() // 2020-09-08 12:59:01
+carbon.Parse("2020-08-05 13:14:15").SubMinute().ToDateTimeString() // 2020-08-05 13:13:15
 
 // 三秒钟后
-c.Now().AddSeconds(3).ToDateTimeString() // 2020-09-08 13:00:04
+carbon.Parse("2020-08-05 13:14:15").AddSeconds(3).ToDateTimeString() // 2020-08-05 13:14:18
+// 二秒钟半后
+carbon.Parse("2020-08-05 13:14:15").Duration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
 // 一秒钟后
-c.Now().AddSecond().ToDateTimeString() // 2020-09-08 13:00:02
+carbon.Parse("2020-08-05 13:14:15").AddSecond().ToDateTimeString() // 2020-08-05 13:14:16
+
 // 三秒钟前
-c.Now().SubSeconds(3).ToDateTimeString() // 2020-09-08 12:59:56
+carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-05 13:14:12
+// 二秒钟半前
+carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // 一秒钟前
-c.Now().SubSecond().ToDateTimeString() // 2020-09-08 13:00:00
+carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
 
 ```
 
-###### 时间判断
+##### 时间输出
 ```go
+// 输出时间戳
+carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
+
+// 输出字符串
+carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+// 输出格式化字符串
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
+// 输出日期时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
+// 输出日期字符串
+carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+// 输出日期开始时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToDateStartString() // 2020-08-05 00:00:00
+// 输出日期结束时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToDateEndString() // 2020-08-05 23:59:59
+// 输出时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
+
+// 输出Ansic格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
+// 输出Atom字符串
+carbon.Parse("2020-08-05 13:14:15").ToAtomString() // Wed Aug  5 13:14:15 2020
+// 输出UnixDate格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
+// 输出RubyDate格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
+// 输出Kitchen格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
+// 输出Cookie格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
+// 输出DayDateTime格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
+// 输出RSS格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
+// 输出W3C格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
+
+// 输出RFC822格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC822String() // 05 Aug 20 13:14 CST
+// 输出RFC822Z格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC822zString() // 05 Aug 20 13:14 +0800
+// 输出RFC850格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC850String() // Wednesday, 05-Aug-20 13:14:15 CST
+// 输出RFC1036格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC1036String() // Wed, 05 Aug 20 13:14:15 +0800
+// 输出RFC1123格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC1123String() // Wed, 05 Aug 2020 13:14:15 CST
+// 输出RFC2822格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC2822String() // Wed, 05 Aug 2020 13:14:15 +0800
+// 输出RFC3339格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC3339String() // 2020-08-05T13:14:15+08:00
+// 输出RFC7231格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:15 GMT
+
+```
+>更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
+
+##### 总天数
+```go
+// 本年总天数
+carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
+// 本月总天数
+carbon.Parse("2020-08-05 13:14:15").DaysInMonth() // 31
+```
+
+##### 第几周/天
+```go
+// 本年第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
+// 本年第几周
+carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
+// 本月第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
+// 本月第几周
+carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
+// 本周第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+```
+
+##### 时间判断
+```go
+// 是否是零值时间
+carbon.Parse("").IsZero() // true
+carbon.Parse("0000-00-00 00:00:00").IsZero() // true
+carbon.Parse("2020-08-05 00:00:00").IsZero() // false
+carbon.Parse("2020-08-05").IsZero() // false
+
+// 是否是未来时间
+carbon.Parse("2020-08-06 13:14:15").IsFuture() // true
+// 是否是过去时间
+carbon.Parse("2020-08-04 13:14:15").IsPast() // true
 // 是否是闰年
-c.Now().IsLeapYear() // true
+carbon.Parse("2020-08-05 13:14:15").IsLeapYear() // true
 
 // 是否是一月
-c.Now().IsJanuary() // false
+carbon.Parse("2020-08-05 13:14:15").IsJanuary() // false
 // 是否是二月
-c.Now().IsFebruary() // false
+carbon.Parse("2020-08-05 13:14:15").IsFebruary() // false
 // 是否是三月
-c.Now().IsMarch() // false
+carbon.Parse("2020-08-05 13:14:15").IsMarch() // false
 // 是否是四月
-c.Now().IsApril()  // false
+carbon.Parse("2020-08-05 13:14:15").IsApril()  // false
 // 是否是五月
-c.Now().IsMay() // false
+carbon.Parse("2020-08-05 13:14:15").IsMay() // false
 // 是否是六月
-c.Now().IsJune() // false
+carbon.Parse("2020-08-05 13:14:15").IsJune() // false
 // 是否是七月
-c.Now().IsJuly() // false
+carbon.Parse("2020-08-05 13:14:15").IsJuly() // false
 // 是否是八月
-c.Now().IsAugust() // false
+carbon.Parse("2020-08-05 13:14:15").IsAugust() // false
 // 是否是九月
-c.Now().IsSeptember() // true
+carbon.Parse("2020-08-05 13:14:15").IsSeptember() // true
 // 是否是十月
-c.Now().IsOctober() // false
+carbon.Parse("2020-08-05 13:14:15").IsOctober() // false
 // 是否是十一月
-c.Now().IsNovember() // false
+carbon.Parse("2020-08-05 13:14:15").IsNovember() // false
 // 是否是十二月
-c.Now().IsDecember() // false
+carbon.Parse("2020-08-05 13:14:15").IsDecember() // false
+
+// 是否是昨天
+carbon.Parse("2020-08-04 13:14:15").IsYesterday() // true
+carbon.Parse("2020-08-04 00:00:00").IsYesterday() // true
+carbon.Parse("2020-08-04").IsYesterday() // true
+// 是否是今天
+carbon.Parse("2020-08-05 13:14:15").IsToday() // true
+carbon.Parse("2020-08-05 00:00:00").IsToday() // true
+carbon.Parse("2020-08-05").IsToday() // true
+// 是否是明天
+carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
+carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
+carbon.Parse("2020-08-06").IsTomorrow() // true
 
 // 是否是周一
-c.Now().IsMonday() // false
+carbon.Parse("2020-08-05 13:14:15").IsMonday() // false
 // 是否是周二
-c.Now().IsTuesday() // true
+carbon.Parse("2020-08-05 13:14:15").IsTuesday() // true
 // 是否是周三
-c.Now().IsWednesday() // false
+carbon.Parse("2020-08-05 13:14:15").IsWednesday() // false
 // 是否是周四
-c.Now().IsThursday()  // false
+carbon.Parse("2020-08-05 13:14:15").IsThursday()  // false
 // 是否是周五
-c.Now().IsFriday() // false
+carbon.Parse("2020-08-05 13:14:15").IsFriday() // false
 // 是否是周六
-c.Now().IsSaturday() // false
+carbon.Parse("2020-08-05 13:14:15").IsSaturday() // false
 // 是否是周日
-c.Now().IsSunday() // false
-
-// 是否是今天
-c.Now().IsToday() // true
-// 是否是昨天
-c.Now().IsYesterday() // false
-// 是否是明天
-c.Now().IsTomorrow() // false
-// 是否是今天开始时间
-c.Now().IsStartOfToday() // false
-// 是否是今天结束时间
-c.Now().IsEndOfToday // false
-// 是否是明天开始时间
-c.Now().IsStartOfTomorrow() // false
-// 是否是明天结束时间
-c.Now().IsEndOfTomorrow() // false
-// 是否是昨天开始时间
-c.Now().IsStartOfYesterday() // false
-// 是否是昨天结束时间
-c.Now().IsEndOfYesterday() // false
+carbon.Parse("2020-08-05 13:14:15").IsSunday() // false
+// 是否是工作日
+carbon.Parse("2020-08-05 13:14:15").IsWeekday() // false
+// 是否是周末
+carbon.Parse("2020-08-05 13:14:15").IsWeekend() // true
 
 // 是否是年初
-c.Now().IsFirstOfYear() // false
-//是否是年末
-c.Now().IsLastOfYear() // false
+carbon.Parse("2020-01-01").IsFirstOfYear() // true
+carbon.Parse("2020-01-01 00:00:00").IsFirstOfYear() // true
+carbon.Parse("2020-01-01 13:14:15").IsFirstOfYear() // true
+// 是否是年末
+carbon.Parse("2020-12-31").IsLastOfYear() // true
+carbon.Parse("2020-12-31 00:00:00").IsLastOfYear() // true
+carbon.Parse("2020-12-31 13:14:15").IsLastOfYear() // true
 // 是否是月初
-c.Now().IsFirstOfMonth() // false
-//是否是月末
-c.Now().IsLastOfMonth() // false
+carbon.Parse("2020-08-01").IsFirstOfMonth() // true
+carbon.Parse("2020-08-01 00:00:00").IsFirstOfMonth() // true
+carbon.Parse("2020-08-01 13:14:15").IsFirstOfMonth() // true
+// 是否是月末
+carbon.Parse("2020-08-31").IsLastOfMonth() // true
+carbon.Parse("2020-08-31 00:00:00").IsLastOfMonth() // true
+carbon.Parse("2020-08-31 13:14:15").IsLastOfMonth() // true
 ```
 
-###### 农历支持
+##### 农历支持
 ```go
 // 获取生肖年
-c.Now().ToAnimalYear() // 鼠
+carbon.Parse("2020-08-05 13:14:15").ToAnimalYear() // 鼠
 // 获取农历年
-c.Now().ToLunarYear() // 庚子
+carbon.Parse("2020-08-05 13:14:15").ToLunarYear() // 庚子
 
 // 是否是鼠年
-c.Now().IsYearOfRat() // true
+carbon.Parse("2020-08-05 13:14:15").IsYearOfRat() // true
 // 是否是牛年
-c.Now().IsYearOfOx() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfOx() // false
 // 是否是虎年
-c.Now().IsYearOfTiger() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfTiger() // false
 // 是否是兔年
-c.Now().IsYearOfRabbit() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfRabbit() // false
 // 是否是龙年
-c.Now().IsYearOfDragon() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfDragon() // false
 // 是否是蛇年
-c.Now().IsYearOfSnake() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfSnake() // false
 // 是否是马年
-c.Now().IsYearOfHorse() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfHorse() // false
 // 是否是羊年
-c.Now().IsYearOfGoat() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfGoat() // false
 // 是否是猴年
-c.Now().IsYearOfMonkey() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfMonkey() // false
 // 是否是鸡年
-c.Now().IsYearOfRooster() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfRooster() // false
 // 是否是狗年
-c.Now().IsYearOfDog() // false
+carbon.Parse("2020-08-05 13:14:15").IsYearOfDog() // false
 // 是否是猪年
-c.Now().IsYearOfPig() // false
-
+carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
 ```
 
-#### 特殊用法
-假设数据表为users，字段有id(int)、name(varchar)、age(int)、birthday(date)、created_at(datetime)、updated_at(datetime)、deleted_at(datetime)
+##### ORM支持
+假设数据表为users，字段有id(int)、name(varchar)、age(int)、graduated_at(date)、birthday(date)、created_at(datetime)、updated_at(datetime)、deleted_at(datetime)
 
-##### 在gorm中的应用
-gorm.Open时必须包括parseTime=True参数
-
+###### 定义模型
 ```go
-// 用法一，使用carbon.GormModel自动维护id、created_at、updated_at、deleted_at
 type User struct {
-	carbon.GormModel
-	Name string `json:"name"`
-	Age int `json:"age"`
-	Birthday carbon.ToDateTimeString `json:"birthday"`
-}
-user := User {
-    Name: "勾国印"
-    Age: 18
-    Birthday: "2012-09-09 00:00:00"
-}
-// json.Marshal(user)输出
-{
-    "id": 1, 
-    "name": "勾国印", 
-    "age": 18, 
-    "birthday": "2012-09-09 00:00:00", 
-    "created_at": "2020-09-09 12:13:14", 
-    "updated_at": "2020-09-09 12:13:14", 
-    "deleted_at": null
-}
-
-// 用法二，不使用carbon.GormModel
-type User struct {
-	Name string `json:"name"`
-	Age int `json:"age"`
-	Birthday carbon.ToDateString `json:"birthday"`
-	CreatedAt carbon.ToDateTimeString `json:"created_at"`
-	UpdatedAt carbon.ToTimeString `json:"updated_at"`
-	DeletedAt carbon.ToTimestamp `json:"deleted_at"`
-}
-user := User {
-    Name: "勾国印"
-    Age: 18
-    Birthday: "2012-09-09 00:00:00"
-}
-// json.Marshal(user)输出
-{
-    "id": 1, 
-    "name": "勾国印", 
-    "age": 18, 
-    "birthday": "2012-09-09", 
-    "created_at": "2020-09-09 12:13:14", 
-    "updated_at": "12:13:14", 
-    "deleted_at": 1599272433
+    ID  int64  `json:"id"`
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Birthday carbon.Carbon `json:"birthday"`
+    CreatedAt carbon.ToDateTimeString `json:"created_at"`
+    DeletedAt carbon.ToTimestamp `json:"deleted_at"`
+    GraduatedAt carbon.ToDateString `json:"graduated_at"`
+    UpdatedAt carbon.ToTimeString `json:"updated_at"`
 }
 ```
 
-##### 在xorm中的应用
-xorm.NewEngine时必须包括parseTime=True参数
-
+###### 实例化模型
 ```go
-// 用法一，使用carbon.XormModel自动维护id、created_at、updated_at、deleted_at
-type User struct {
-	carbon.XormModel
-	Name string `json:"name"`
-	Age int `json:"age"`
-	Birthday carbon.ToDateTimeString `json:"birthday"`
-}
 user := User {
-    Name: "勾国印"
-    Age: 18
-    Birthday: "2012-09-09 00:00:00"
-}
-// json.Marshal(user)输出
-{
-    "id": 1, 
-    "name": "勾国印", 
-    "age": 18, 
-    "birthday": "2012-09-09 00:00:00", 
-    "created_at": "2020-09-09 12:13:14", 
-    "updated_at": "2020-09-09 12:13:14", 
-    "deleted_at": null
-}
-
-// 用法二，不使用carbon.XormModel
-type User struct {
-	Name string `json:"name"`
-	Age int `json:"age"`
-	Birthday carbon.ToDateString `json:"birthday"`
-	CreatedAt carbon.ToDateTimeString `json:"created_at"`
-	UpdatedAt carbon.ToTimeString `json:"updated_at"`
-	DeletedAt carbon.ToTimestamp `json:"deleted_at"`
-}
-user := User {
-    Name: "勾国印"
-    Age: 18
-    Birthday: "2012-09-09 00:00:00"
-}
-// json.Marshal(user)输出
-{
-    "id": 1, 
-    "name": "勾国印", 
-    "age": 18, 
-    "birthday": "2012-09-09", 
-    "created_at": "2020-09-09 12:13:14", 
-    "updated_at": "12:13:14", 
-    "deleted_at": 1599272433
+    Name: "勾国印",
+    Age: 18,
+    Birthday: Birthday: carbon.Now().SubYears(18),
+    CreatedAt: carbon.ToDateTimeString{carbon.Now()},
+    DeletedAt: carbon.ToTimestamp{carbon.Parse("2020-08-05 13:14:15")},
+    GraduatedAt: carbon.ToDateString{carbon.Parse("2012-09-09")},
+    UpdatedAt: carbon.ToTimeString{carbon.Now()},
 }
 ```
+
+###### 输出内置格式
+```go
+user.ID // 18
+user.Name // 勾国印
+user.Birthday.ToDateString() // 2012-08-05
+user.CreatedAt.ToDateStartString() // 2012-08-05 00:00:00
+user.DeletedAt.ToDateEndString() // 2012-08-05 23:59:59
+user.GraduatedAt.AddDay().ToDateString() // 2012-09-10
+user.UpdatedAt.ToDateString() // 2012-08-05
+```
+
+###### 输出JSON格式
+```go
+// json.Marshal(&user)输出
+{
+    "id": 42,
+    "name": "勾国印",
+    "age": 18,
+    "birthday": "2012-08-05 00:00:00",
+    "created_at": "2020-08-05 13:14:15",
+    "deleted_at ": 1596604455
+    "graduated_at": "2012-09-09",
+    "updated_at": "13:14:15",
+}
+```
+
+###### 输出自定义格式
+```go
+// 定义输出格式
+type ToRssString struct {
+    carbon.Carbon
+}
+
+// 定义模型
+type User struct {
+    Birthday ToRssString `json:"birthday"`
+}
+
+// 实例化模型
+user := User {
+    Birthday: Birthday: ToRssString{carbon.Now()},
+}
+
+// 重写MarshalJSON方法
+func (c ToRssString) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, c.ToRssString())), nil
+}
+
+// json.Marshal(&user)输出
+{
+    "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
+}
+```
+
+#### 附录
+##### <a id="格式化符号表">格式化符号表</a>
+| 符号 | 描述 | 类型 | 长度 | 范围 | 示例 |
+| :------------: | :------------: | :------------: | :------------: | :------------: | :------------: |
+| Y | 年份 | 数字 | 4 | - | 2020 |
+| y | 年份 | 数字 | 2 | 00-99 | 20 |
+| M | 月份 | 字母 | 3 | Jan-Dec | Aug |
+| m | 月份 | 数字 | 2 | 01-12 | 08 |
+| F | 月份 | 字母 | - | January-December | August |
+| n | 月份 | 数字 | 1/2 | 1-12 | 8 |
+| l | 周几 | 字母 | - | Monday-Sunday | Wednesday |
+| D | 周几 | 字母 | 3 | Mon-Sun | Wed |
+| d | 天数 | 数字 | 2 | 01-31 | 05 |
+| j | 天数 | 数字 | 1/2 |1-31 | 5 |
+| H | 小时 | 数字 | 2 | 00-23 | 15 |
+| h | 小时 | 数字 | 2 | 00-11 | 03 |
+| i | 分钟 | 数字 | 2 | 01-59 | 14 |
+| s | 秒钟 | 数字 | 2 | 01-59 | 15 |
+| P | 上下午 | 字母 | 2 | AM/PM | PM |
+| p | 上下午 | 字母 | 2 | am/pm | pm |
+
+#### 参考项目
+* [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
+* [uniplaces/carbon](https://github.com/uniplaces/carbon)
+* [jinzhu/now](https://github.com/jinzhu/now)
+* [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-10-06
+* 完善单元测试
+* 完善优化对ORM的多场景支持
+* 优化代码组织结构，将不可继承的最终方法统一放到final.go文件里
+* 统一输出函数命名规则，将Format() 改为 ToFormatString()
+* 废弃New()初始化函数，无需初始化即可直接使用
+* 新增英文版README.MD说明文档
+* 新增多种时间格式输出，如Cookie、W3C、RSS、RFC7231
+* 新增ParseByTime(t time.Time)方法将原生time.Time实例解析成Carbon实例
+* 新增ParseByDuration()方法解析持续时间字符串(相对于今天)，支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+* 新增NextYears()、NextYear()、PreYears()、PreYear()方法防止出现添加/减少指定年时出现跨月的现象
+* 新增NextMonths()、NextMonth()、PreMonths()、PreMonth()方法防止出现添加/减少指定月后出现跨月的现象
+* 新增DaysInYear()方法获取本年的总天数
+* 新增DaysInMonth()方法获取本月的总天数
+* 新增MonthOfYear()方法获取本年的第几月
+* 新增DayOfYear()方法获取本年的第几天
+* 新增DayOfMonth()方法获取本月的第几天
+* 新增DayOfWeek()方法获取本周的第几天
+* 新增WeekOfYear()方法获取本年的第几周
+* 新增WeekOfMonth()方法获取本月的第几周
+* 新增IsZero()方法判断是否是零值时间
+* 新增IsFuture()方法判断是否是未来时间
+* 新增IsPast()方法判断是否是过去时间
+
 ##### 2020-10-01
 * 完善单元测试
 * 修复 AddHours() 传入参数小于1天时变成浮点数的BUG
@@ -497,8 +687,8 @@ user := User {
 * 新增ToTimeStartString方法转换成小时开始时间
 * 新增ToTimeEndString方法转换成小时结束时间
 
-##### 2020-09-13
-* 私有方法提取到独立文件private.go里
+##### 2020-09-10
+* 优化代码组织结构，将私有方法统一放到private.go文件里
 * 新增IsToday方法判断是否是今天
 * 新增IsYesterday方法判断是否是昨天
 * 新增IsTomorrow方法判断是否是明天
@@ -509,7 +699,7 @@ user := User {
 * 新增IsStartOfYesterday方法判断是否是昨天开始时间
 * 新增IsEndOfYesterday方法判断是否是昨天结束时间
 
-##### 2020-09-12
+##### 2020-09-02
 * 修复数据库中时间类型字段值为null或0000-00-00 00:00:00时，json格式化后为0001-01-01 00:00:00的BUG
 * 完善单元测试
 * 优化代码组织结构，精简代码
@@ -519,7 +709,7 @@ user := User {
 * 新增SubWeeks(N)方法获取N周前时间
 * 新增SubWeek()方法获取1周前时间
 
-##### 2020-09-09
+##### 2020-08-21
 * 修复readme.md错误描述
 * 完善单元测试
 * 新增对gorm结构体的json输出时间格式化支持，支持输出多种标准时间格式
@@ -536,7 +726,7 @@ user := User {
 * 新增IsNovember()方法判断是否是十一月
 * 新增IsDecember()方法判断是否是十二月
  
-##### 2020-09-08
+##### 2020-08-05
 * 修复已知BUG
 * 添加单元测试
 * 新增FirstOfYear()方法获取年初第一天

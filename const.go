@@ -1,5 +1,7 @@
 package carbon
 
+import "time"
+
 // 时区常量
 const (
 	Local = "Local"
@@ -88,4 +90,29 @@ const (
 	MillisecondsPerSecond      = 1000    // 每秒1000毫秒
 	MicrosecondsPerMillisecond = 1000    // 每毫秒1000微秒
 	MicrosecondsPerSecond      = 1000000 // 每秒1000000微秒
+)
+
+// 时间格式化常量
+const (
+	AnsicFormat       = time.ANSIC
+	UnixDateFormat    = time.UnixDate
+	RubyDateFormat    = time.RubyDate
+	RFC822Format      = time.RFC822
+	RFC822ZFormat     = time.RFC822Z
+	RFC850Format      = time.RFC850
+	RFC1123Format     = time.RFC1123
+	RFC1123ZFormat    = time.RFC1123Z
+	RssFormat         = time.RFC1123Z
+	RFC2822Format     = time.RFC1123Z
+	RFC3339Format     = time.RFC3339
+	KitchenFormat     = time.Kitchen
+	CookieFormat      = "Monday, 02-Jan-2006 15:04:05 MST"
+	RFC1036Format     = "Mon, 02 Jan 06 15:04:05 -0700"
+	RFC7231Format     = "Mon, 02 Jan 2006 15:04:05 GMT"
+	DayDateTimeFormat = "Mon, Aug 2, 2006 3:04 PM"
+	DateTimeFormat    = "2006-01-02 15:04:05"
+	DateFormat        = "2006-01-02"
+	TimeFormat        = "15:04:05"
+	TimeStartFormat   = "00:00:00"
+	TimeEndFormat     = "23:59:59"
 )
