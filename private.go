@@ -29,10 +29,7 @@ func format2layout(format string) string {
 
 // newCarbon 创建一个新Carbon实例
 func newCarbon(t time.Time) Carbon {
-	loc, err := time.LoadLocation(Local)
-	if err != nil {
-		panic("invalid timezone value: " + Local)
-	}
+	loc, _ := time.LoadLocation(Local)
 	return Carbon{Time: t, loc: loc}
 }
 
@@ -40,7 +37,25 @@ func newCarbon(t time.Time) Carbon {
 func getLocalByTimezone(timezone string) *time.Location {
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
-		panic("invalid timezone value: " + timezone)
+		panic("invalid timezone \"" + timezone + "\", for all valid timezone, please see the $GOROOT/lib/time/zoneinfo.zip file")
 	}
 	return loc
+}
+
+// parseByLayout 通过布局模板解析
+func parseByLayout(value string, layout string) time.Time {
+	t, err := time.ParseInLocation(layout, value, getLocalByTimezone(Local))
+	if err != nil {
+		panic("The value \"" + value + "\" and the layout \"" + layout + "\" don't match")
+	}
+	return t
+}
+
+// parseByDuration 通过持续时间解析
+func parseByDuration(duration string) time.Duration {
+	d, err := time.ParseDuration(duration)
+	if err != nil {
+		panic("invalid duration \"" + duration + "\"")
+	}
+	return d
 }

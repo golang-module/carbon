@@ -1,9 +1,7 @@
 package carbon
 
 import (
-	"database/sql/driver"
 	"fmt"
-	"time"
 )
 
 type ToDateTimeString struct {
@@ -20,24 +18,6 @@ type ToTimeString struct {
 
 type ToTimestamp struct {
 	Carbon
-}
-
-func (c *Carbon) Scan(v interface{}) error {
-	value, ok := v.(time.Time)
-	if ok {
-		*c = Carbon{Time: value}
-		return nil
-	}
-	return fmt.Errorf("can not convert %v to timestamp", v)
-}
-
-func (c Carbon) Value() (driver.Value, error) {
-	var zeroTime time.Time
-	var timeTime = c.Time
-	if timeTime.UnixNano() == zeroTime.UnixNano() {
-		return nil, nil
-	}
-	return timeTime, nil
 }
 
 func (c Carbon) MarshalJSON() ([]byte, error) {

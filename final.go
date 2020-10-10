@@ -27,121 +27,177 @@ func (c Carbon) ToFormatString(format string) string {
 
 // ToDayDateTimeString 输出天数日期时间字符串
 func (c Carbon) ToDayDateTimeString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(DayDateTimeFormat)
 }
 
 // ToDateTimeString 输出日期时间字符串
 func (c Carbon) ToDateTimeString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(DateTimeFormat)
 }
 
 // ToDateString 输出日期字符串
 func (c Carbon) ToDateString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(DateFormat)
-}
-
-// ToDateStartString 输出日期开始时间字符串
-func (c Carbon) ToDateStartString() string {
-	return c.Time.Format(DateFormat) + " " + TimeStartFormat
-}
-
-// ToDateEndString 输出日期结束时间字符串
-func (c Carbon) ToDateEndString() string {
-	return c.Time.Format(DateFormat) + " " + TimeEndFormat
 }
 
 // ToTimeString 输出时间字符串
 func (c Carbon) ToTimeString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(TimeFormat)
 }
 
 // ToAtomString 输出Atom格式字符串
 func (c Carbon) ToAtomString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC3339Format)
 }
 
 // ToAnsicString 输出ANSIC格式字符串
 func (c Carbon) ToAnsicString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(AnsicFormat)
 }
 
 // ToCookieString 输出Cookie格式字符串
 func (c Carbon) ToCookieString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(CookieFormat)
 }
 
 // ToRssString 输出RSS格式字符串
 func (c Carbon) ToRssString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RssFormat)
 }
 
 // ToW3cString 输出W3C格式字符串
 func (c Carbon) ToW3cString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC3339Format)
 }
 
 // ToUnixDateString 输出UnixDate格式字符串
 func (c Carbon) ToUnixDateString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(UnixDateFormat)
 }
 
 // ToUnixDateString 输出RubyDate格式字符串
 func (c Carbon) ToRubyDateString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RubyDateFormat)
 }
 
 // ToKitchenString 输出Kitchen格式字符串
 func (c Carbon) ToKitchenString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(KitchenFormat)
 }
 
 // ToRfc822String 输出RFC822格式字符串
 func (c Carbon) ToRFC822String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC822Format)
 }
 
 // ToRfc822String 输出RFC822Z格式字符串
 func (c Carbon) ToRFC822zString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC822ZFormat)
 }
 
 // ToRfc850String 输出RFC850格式字符串
 func (c Carbon) ToRFC850String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC850Format)
 }
 
 // ToRfc1036String 输出RFC1036格式字符串
 func (c Carbon) ToRFC1036String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC1036Format)
 }
 
 // ToRfc1123String 输出RFC1123格式字符串
 func (c Carbon) ToRFC1123String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC1123Format)
 }
 
 // ToRFC1123ZString 输出RFC1123Z格式字符串
 func (c Carbon) ToRFC1123ZString() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC1123ZFormat)
 }
 
 // ToRFC2822String 输出RFC2822格式字符串
 func (c Carbon) ToRFC2822String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC2822Format)
 }
 
 // ToRfc3339String 输出RFC3339格式字符串
 func (c Carbon) ToRFC3339String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC3339Format)
 }
 
 // ToRfc7231String 输出RFC7231格式字符串
 func (c Carbon) ToRFC7231String() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	return c.Time.Format(RFC7231Format)
 }
 
 // DaysInYear 获取本年的总天数
 func (c Carbon) DaysInYear() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	days := DaysPerNormalYear
 	if c.IsLeapYear() {
 		days = DaysPerLeapYear
@@ -151,72 +207,63 @@ func (c Carbon) DaysInYear() int {
 
 // DaysInMonth 获取本月的总天数
 func (c Carbon) DaysInMonth() int {
-	return c.LastOfMonth().Time.Day()
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.EndOfMonth().Time.Day()
 }
 
 // MonthOfYear 获取本年的第几月
 func (c Carbon) MonthOfYear() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	return int(c.Time.Month())
 }
 
 // DayOfYear 获取本年的第几天
 func (c Carbon) DayOfYear() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	return c.Time.YearDay()
 }
 
 // DayOfMonth 获取本月的第几天
 func (c Carbon) DayOfMonth() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	return c.Time.Day()
 }
 
 // DayOfWeek 获取本周的第几天
 func (c Carbon) DayOfWeek() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	return int(c.Time.Weekday())
 }
 
 // WeekOfYear 获取本年的第几周
 func (c Carbon) WeekOfYear() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	_, week := c.Time.ISOWeek()
 	return week
 }
 
 // WeekOfMonth 获取本月的第几周
 func (c Carbon) WeekOfMonth() int {
+	if c.Time.IsZero() {
+		return 0
+	}
 	day := c.Time.Day()
 	if day < DaysPerWeek {
 		return 1
 	}
 	return day%DaysPerWeek + 1
-}
-
-// CurrentDay 获取当前天数
-func (c Carbon) CurrentDay() int {
-	return c.Time.Day()
-}
-
-// CurrentMonth 获取当前月数
-func (c Carbon) CurrentMonth() int {
-	return int(c.Time.Month())
-}
-
-// CurrentHour 获取当前小时
-func (c Carbon) CurrentHour() int {
-	return c.Time.Hour()
-}
-
-// CurrentMinute 获取当前分钟
-func (c Carbon) CurrentMinute() int {
-	return c.Time.Minute()
-}
-
-// CurrentSecond 获取当前秒
-func (c Carbon) CurrentSecond() int {
-	return c.Time.Second()
-}
-
-// CurrentNanosecond 获取当前纳秒
-func (c Carbon) CurrentNanosecond() int {
-	return c.Time.Nanosecond()
 }
 
 // IsZero 是否是零值
@@ -226,11 +273,17 @@ func (c Carbon) IsZero() bool {
 
 // IsFuture 是否是未来时间
 func (c Carbon) IsFuture() bool {
+	if c.Time.IsZero() {
+		return false
+	}
 	return c.ToTimestamp() > c.Now().ToTimestamp()
 }
 
 // IsPast 是否是过去时间
 func (c Carbon) IsPast() bool {
+	if c.Time.IsZero() {
+		return true
+	}
 	return c.ToTimestamp() < c.Now().ToTimestamp()
 }
 
@@ -303,21 +356,6 @@ func (c Carbon) IsDecember() bool {
 	return c.Time.In(c.loc).Month() == time.December
 }
 
-// IsYesterday 是否是昨天
-func (c Carbon) IsYesterday() bool {
-	return c.ToDateString() == c.Yesterday().ToDateString()
-}
-
-// IsToday 是否是今天
-func (c Carbon) IsToday() bool {
-	return c.ToDateString() == c.Now().ToDateString()
-}
-
-// IsTomorrow 是否是明天
-func (c Carbon) IsTomorrow() bool {
-	return c.ToDateString() == c.Tomorrow().ToDateString()
-}
-
 // IsMonday 是否是周一
 func (c Carbon) IsMonday() bool {
 	return c.Time.In(c.loc).Weekday() == time.Monday
@@ -355,7 +393,7 @@ func (c Carbon) IsSunday() bool {
 
 // IsWeekday 是否是工作日
 func (c Carbon) IsWeekday() bool {
-	return !c.IsWeekend()
+	return !c.IsSaturday() && !c.IsSunday()
 }
 
 // IsWeekend 是否是周末
@@ -363,30 +401,17 @@ func (c Carbon) IsWeekend() bool {
 	return c.IsSaturday() || c.IsSunday()
 }
 
-// IsFirstOfYear 是否年初
-func (c Carbon) IsFirstOfYear() bool {
-	_, month, day := c.Time.Date()
-	if month == time.January && day == 1 {
-		return true
-	}
-	return false
+// IsYesterday 是否是昨天
+func (c Carbon) IsYesterday() bool {
+	return c.ToDateString() == c.Yesterday().ToDateString()
 }
 
-// IsLastOfYear 是否是年末
-func (c Carbon) IsLastOfYear() bool {
-	_, month, day := c.Time.Date()
-	if month == time.December && day == 31 {
-		return true
-	}
-	return false
+// IsToday 是否是今天
+func (c Carbon) IsToday() bool {
+	return c.ToDateString() == c.Now().ToDateString()
 }
 
-// IsFirstOfMonth 是否月初
-func (c Carbon) IsFirstOfMonth() bool {
-	return c.ToDateString() == c.FirstOfMonth().ToDateString()
-}
-
-// IsLastOfMonth 是否是月末
-func (c Carbon) IsLastOfMonth() bool {
-	return c.ToDateString() == c.LastOfMonth().ToDateString()
+// IsTomorrow 是否是明天
+func (c Carbon) IsTomorrow() bool {
+	return c.ToDateString() == c.Tomorrow().ToDateString()
 }

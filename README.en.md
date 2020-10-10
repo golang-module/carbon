@@ -1,8 +1,8 @@
 # Carbon
-Englsih | [中文](./README.md)
+Englsih | [Chinese](./README.md)
 
 #### Description
-A simple,semantic and IDE-friendly golang package for DateTime
+A simple,semantic and developer-friendly golang package for DateTime
 
 If you feel good, please give me a star
 
@@ -42,14 +42,10 @@ import (
 
 > For more timezone constants, please see the [const.go](./const.go) file
 
-##### Yesterday,Today and Tomorrow
+##### Yesterday,today and tomorrow
 ```go
 // Datetime of today
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
-// Start date of today
-carbon.Now().ToDateStartString() // 2020-08-05 00:00:00
-// End date of today
-carbon.Now().ToDateEndString() // 2020-08-05 23:59:59
 // Date of today
 carbon.Now().ToDateString() // 2020-08-05
 // Time of today
@@ -59,126 +55,86 @@ carbon.Now().ToTimestamp() // 1596604455
 
 // Datetime of yesterday
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
-// Start date of yesterday
-carbon.Yesterday().ToDateStartString() // 2020-08-04 00:00:00
-// End date of yesterday
-carbon.Yesterday().ToDateEndString() // 2020-08-04 23:59:59
 // Date of yesterday
 carbon.Yesterday().ToDateString() // 2020-08-04
 // Time of yesterday
-carbon.Now().ToTimeString() // 13:14:15
+carbon.Yesterday().ToTimeString() // 13:14:15
 // Timestamp of yesterday
 carbon.Yesterday().ToTimestamp() // 1596518055
 
 // Datetime of tomorrow
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
-// Start date of tomorrow
-carbon.Tomorrow().ToDateStartString() // 2020-08-06 00:00:00
-// End date of tomorrow
-carbon.Tomorrow().ToDateEndString() // 2020-08-06 23:59:59
 // Date of tomorrow
 carbon.Tomorrow().ToDateString() // 2020-08-06
 // Time of tomorrow
-carbon.Now().ToTimeString() // 13:14:15
+carbon.Tomorrow().ToTimeString() // 13:14:15
 // Timestamp of tomorrow
 carbon.Tomorrow().ToTimestamp() // 1596690855
 ```
 
-##### First、Last
+##### Beginning and end
 ```go
-// Current time on the first day of the year
-carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateTimeString() // 2020-01-01 13:14:15
-// Start time on the first day of the year
-carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateStartString() // 2020-01-01 00:00:00
-// End time on the first day of the year
-carbon.Parse("2020-08-05 13:14:15").FirstOfYear().ToDateEndString() // 2020-01-01 23:59:59
-// Current time on the last day of the year
-carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateTimeString() // 2020-12-31 13:14:15
-// Start time on the last day of the year
-carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateStartString() // 2020-12-31 00:00:00
-// End time on the last day of the year
-carbon.Parse("2020-08-05 13:14:15").LastOfYear().ToDateStartString() // 2020-12-31 23:59:59
+// Beginning of the year
+carbon.Parse("2020-08-05 13:14:15").BeginningOfYear().ToDateTimeString() // 2020-01-01 00:00:00
+// End of the year
+carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToEndTimeString() // 2020-12-31 23:59:59
 
-// Current time on the first day of the month
-carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateTimeString() // 2020-08-01 13:14:15
-// Start time on the first day of the month
-carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateStartString() // 2020-08-01 00:00:00
-// End time on the first day of the month
-carbon.Parse("2020-08-05 13:14:15").FirstOfMonth().ToDateStartString() // 2020-08-01 23:59:59
-// Current time on the last day of the month
-carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateTimeString() // 2020-08-31 13:14:15
-// Start time on the last day of the month
-carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateStartString() // 2020-08-31 00:00:00
-// End time on the last day of the month
-carbon.Parse("2020-08-05 13:14:15").LastOfMonth().ToDateStartString() // 2020-08-31 23:59:59
+// Beginning of the month
+carbon.Parse("2020-08-05 13:14:15").BeginningOfMonth().ToStartTimeString() // 2020-08-01 00:00:00
+// End of the month
+carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToEndTimeString() // 2020-08-31 23:59:59
 
-// Current time on the first day of the week
-carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateTimeString() // 2020-08-03 13:14:15
-// Start time on the first day of the week
-carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateStartString() // 2020-08-03 00:00:00
-// End time on the first day of the week
-carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToDateStartString() // 2020-08-03 23:59:59
-// Current time on the last day of the week
-carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 13:14:15
-// Start time on the last day of the week
-carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 00:00:00
-// End time on the last day of the week
-carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToDateStartString() // 2020-08-09 23:59:59
+// Beginning of the week
+carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToStartTimeString() // 2020-08-03 00:00:00
+// End of the week
+carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToEndTimeString() // 2020-08-09 23:59:59
+
+// Beginning of the day
+carbon.Parse("2020-08-05 13:14:15").BeginningOfDay().ToDateTimeString() // 2020-08-05 00:00:00
+// End of the day
+carbon.Parse("2020-08-05 13:14:15").EndOfDay().ToDateTimeString() // 2020-08-05 23:59:59
+
+// Beginning of the hour
+carbon.Parse("2020-08-05 13:14:15").BeginningOfHour().ToDateTimeString() // 2020-08-05 13:00:00
+// End of the hour
+carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05 13:59:59
+
+// Beginning of the minute
+carbon.Parse("2020-08-05 13:14:15").BeginningOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
+// End of the minute
+carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 ```
 
-##### Create Carbon instance
+##### Create carbon instance
 ```go
 // Create Carbon instance from timestamp
-carbon.CreateFromTimestamp(1596604455).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
 // Create Carbon instance from year,month,day,hour,minute and second
-carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 // Create Carbon instance from year,month and day
-carbon.CreateFromDate(2020, 8, 5).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
 // Create Carbon instance from hour,minute and second
-carbon.CreateFromTime(13, 14, 15).ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+// Create Carbon instance from golang time.Time instance
+carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 ```
 
-##### Parse standard format time string
+##### Parse standard time format string
 ```go
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
-carbon.Parse("2020-08-05").ToFormatString("Y/m/d H:i:s") // 2020/09/08 00:00:00
-carbon.Parse("2020-08-05").ToFormatString("Y/m/d") // 2020/09/08
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToDateStartString() // 2020-08-05 00:00:00
-carbon.Parse("2020-08-05 13:14:15").ToDateEndString() // 2020-08-05 23:59:59
-carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
-
-carbon.Parse("2020/08/05 13:14:15").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
-carbon.Parse("2020/08/05 13/14/15").ToFormatString("Y-m-d") // 2020-08-05
-carbon.Parse("2020/08/05").ToFormatString("Y-m-d H:i:s") // 2020-08-05 00:00:00
-carbon.Parse("2020/08/05").ToFormatString("Y-m-d") // 2020-08-05
-carbon.Parse("2020/08/05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020/08/05 13:14:15").ToDateString() // 2020-09-08
-carbon.Parse("2020/08/05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020/08/05 13:14:15").ToTimestamp() // 1596604455
-
-carbon.Parse("20200805131415").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
-carbon.Parse("20200805131415").ToFormatString("Y-m-d") // 2020-08-05
 carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("20200805131415").ToDateString() // 2020-09-08
-carbon.Parse("20200805131415").ToTimeString() // 13:00:00
-carbon.Parse("20200805131415").ToTimestamp() // 1596604455
-carbon.Parse("20200805").ToFormatString("Y-m-d H:i:s") // 2020-08-05 00:00:00
-carbon.Parse("20200805").ToFormatString("Y/m/d") // 2020/08/05
+carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
 ```
 
-##### Parse custom format time string
+##### Parse custom time format string
 ```go
-carbon.ParseByFormat("2020|08|05 13:14:15", "Y|m|d H:i:s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020%08%05% 13%14%15", "Y年m月d日 h%i%s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020年08月05日 13:14:15", "Y年m月d日 H:i:s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020%08%05% 13%14%15", "Y%m%d% h%i%s").ToDateTimeString // 2020-08-05 13:14:15
 carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateString() // 2020-08-05
-carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToTimeString() // 13:14:15
-carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToTimestamp() // 1596604455
+carbon.ParseByFormat("2020年08月05日", "Y年m月d日").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.ParseByFormat("13时14分15秒", "H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
 ##### Parse duration time string (base on now)
@@ -186,24 +142,16 @@ carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分
 // Ten hours later
 carbon.ParseByDuration("10h").ToDateTimeString() // 2020-08-06 23:14:15
 // Ten and a half hours ago
-carbon.ParseByDuration("-10.5h").ToFormatString("Y-m-d H:i:s") // 2020-08-05 02:44:15
+carbon.ParseByDuration("-10.5h").ToDateTimeString // 2020-08-05 02:44:15
 // Ten minutes later
-carbon.ParseByDuration("10m").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:24:15
+carbon.ParseByDuration("10m").ToDateTimeString // 2020-08-05 13:24:15
 // Ten and a half minutes ago
-carbon.ParseByDuration("-10.5m").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:03:45
+carbon.ParseByDuration("-10.5m").ToDateTimeString // 2020-08-05 13:03:45
 // Ten seconds later
-carbon.ParseByDuration("10s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:25
+carbon.ParseByDuration("10s").ToDateTimeString // 2020-08-05 13:14:25
 // Ten seconds ago
-carbon.ParseByDuration("-10.5s").ToFormatString("Y-m-d H:i:s") // 2020-08-05 13:14:04
+carbon.ParseByDuration("-10.5s").ToDateTimeString // 2020-08-05 13:14:04
 
-```
-
-##### Parse golang `time.Time` instance
-```go
-carbon.ParseByTime(time.Now()).ToTimestamp() // 1596604455
-carbon.ParseByTime(time.Now()).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByTime(time.Now().AddDate(0, 0, 1)).ToDateTimeString() // 2020-08-06 13:14:15
-carbon.ParseByTime(time.Now().AddDate(0, 0, -1)).ToDateString() // 2020-08-05
 ```
 
 ##### Time travel
@@ -302,14 +250,11 @@ carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
 carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
 // To string of layout format
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 // To string of datetime format
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 // To string of date format
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-// To string of start date format
-carbon.Parse("2020-08-05 13:14:15").ToDateStartString() // 2020-08-05 00:00:00
-// To string from end date format
-carbon.Parse("2020-08-05 13:14:15").ToDateEndString() // 2020-08-05 23:59:59
 // To string of time format
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
 
@@ -352,7 +297,7 @@ carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:
 ```
 > For more format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
-##### The total days
+##### Total days
 ```go
 // Total days of the year
 carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
@@ -360,7 +305,7 @@ carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
 carbon.Parse("2020-08-05 13:14:15").DaysInMonth() // 31
 ```
 
-##### The week/day
+##### Week and day
 ```go
 // Day of the year
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
@@ -378,7 +323,10 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 ```go
 // Is zero time
 carbon.Parse("").IsZero() // true
+carbon.Parse("0").IsZero() // true
 carbon.Parse("0000-00-00 00:00:00").IsZero() // true
+carbon.Parse("0000-00-00").IsZero() // true
+carbon.Parse("00:00:00").IsZero() // true
 carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
 
@@ -414,19 +362,6 @@ carbon.Parse("2020-08-05 13:14:15").IsNovember() // false
 // Is December
 carbon.Parse("2020-08-05 13:14:15").IsDecember() // false
 
-// Is Yesterday
-carbon.Parse("2020-08-04 13:14:15").IsYesterday() // true
-carbon.Parse("2020-08-04 00:00:00").IsYesterday() // true
-carbon.Parse("2020-08-04").IsYesterday() // true
-// Is Today
-carbon.Parse("2020-08-05 13:14:15").IsToday() // true
-carbon.Parse("2020-08-05 00:00:00").IsToday() // true
-carbon.Parse("2020-08-05").IsToday() // true
-// Is Tomorrow
-carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
-carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
-carbon.Parse("2020-08-06").IsTomorrow() // true
-
 // Is Monday
 carbon.Parse("2020-08-05 13:14:15").IsMonday() // false
 // Is Tuesday
@@ -446,22 +381,18 @@ carbon.Parse("2020-08-05 13:14:15").IsWeekday() // false
 // Is Weekend
 carbon.Parse("2020-08-05 13:14:15").IsWeekend() // true
 
-// Is first day of the year
-carbon.Parse("2020-01-01").IsFirstOfYear() // true
-carbon.Parse("2020-01-01 00:00:00").IsFirstOfYear() // true
-carbon.Parse("2020-01-01 13:14:15").IsFirstOfYear() // true
-// Is last day of the year
-carbon.Parse("2020-12-31").IsLastOfYear() // true
-carbon.Parse("2020-12-31 00:00:00").IsLastOfYear() // true
-carbon.Parse("2020-12-31 13:14:15").IsLastOfYear() // true
-// Is first day of the moth
-carbon.Parse("2020-08-01").IsFirstOfMonth() // true
-carbon.Parse("2020-08-01 00:00:00").IsFirstOfMonth() // true
-carbon.Parse("2020-08-01 13:14:15").IsFirstOfMonth() // true
-// Is last day of the moth
-carbon.Parse("2020-08-31").IsLastOfMonth() // true
-carbon.Parse("2020-08-31 00:00:00").IsLastOfMonth() // true
-carbon.Parse("2020-08-31 13:14:15").IsLastOfMonth() // true
+// Is Yesterday
+carbon.Parse("2020-08-04 13:14:15").IsYesterday() // true
+carbon.Parse("2020-08-04 00:00:00").IsYesterday() // true
+carbon.Parse("2020-08-04").IsYesterday() // true
+// Is Today
+carbon.Parse("2020-08-05 13:14:15").IsToday() // true
+carbon.Parse("2020-08-05 00:00:00").IsToday() // true
+carbon.Parse("2020-08-05").IsToday() // true
+// Is Tomorrow
+carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
+carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
+carbon.Parse("2020-08-06").IsTomorrow() // true
 ```
 
 ##### Calendar
@@ -497,12 +428,12 @@ carbon.Parse("2020-08-05 13:14:15").IsYearOfDog() // false
 carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
 ```
 
-##### ORM
+##### Database
 Assuming the database table is users, its fields have id(int), name(varchar), age(int), graduated_at(date), birthday(date), created_at(datetime), updated_at(datetime), deleted_at(datetime)
 
-###### Define the struct of model
+###### Define model
 ```go
-type User struct {
+type UserModel struct {
     ID  int64  `json:"id"`
     Name string `json:"name"`
     Age int `json:"age"`
@@ -514,12 +445,12 @@ type User struct {
 }
 ```
 
-###### Instantiate the struct of model
+###### Instantiate model
 ```go
-user := User {
+user := UserModel {
     Name: "勾国印",
     Age: 18,
-    Birthday: Birthday: carbon.Now().SubYears(18),
+    Birthday: carbon.Now().SubYears(18),
     CreatedAt: carbon.ToDateTimeString{carbon.Now()},
     DeletedAt: carbon.ToTimestamp{carbon.Parse("2020-08-05 13:14:15")},
     GraduatedAt: carbon.ToDateString{carbon.Parse("2012-09-09")},
@@ -527,7 +458,7 @@ user := User {
 }
 ```
 
-###### Output built-in format
+###### Output fields
 ```go
 user.ID // 18
 user.Name // 勾国印
@@ -538,9 +469,11 @@ user.GraduatedAt.AddDay().ToDateString() // 2012-09-10
 user.UpdatedAt.ToDateString() // 2012-08-05
 ```
 
-###### Output json format
+###### Output model by json
 ```go
-// Output by json.Marshal(&user)
+data, _ := json.Marshal(&user)
+fmt.Print(string(data))
+// Output
 {
     "id": 42,
     "name": "勾国印",
@@ -555,18 +488,18 @@ user.UpdatedAt.ToDateString() // 2012-08-05
 
 ###### Output custom format
 ```go
-// Define the struct of format
+// Define format
 type ToRssString struct {
     carbon.Carbon
 }
 
-// Define the struct of model
-type User struct {
+// Define model
+type UserModel struct {
     Birthday ToRssString `json:"birthday"`
 }
 
-// Instantiate the struct of model
-user := User {
+// Instantiate model
+user := UserModel {
     Birthday: Birthday: ToRssString{carbon.Now()},
 }
 
@@ -575,7 +508,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, c.ToRssString())), nil
 }
 
-// Output by json.Marshal(&user)
+// Output model by json.Marshal(&user)
 {
     "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
 }
@@ -585,7 +518,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 ##### <a id="format-sign-table">Format sign table</a>
 
 | sign | desc | type | length | range | example |
-| :------------: | :------------: | :------------: | :------------: | :------------: | :------------: |
+| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Y | year | number | 4 | - | 2020 |
 | y | year | number | 2 | 00-99 | 20 |
 | M | month | letter | 3 | Jan-Dec | Aug |
