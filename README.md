@@ -483,7 +483,7 @@ fmt.Print(string(data))
     "age": 18,
     "birthday": "2012-08-05 00:00:00",
     "created_at": "2020-08-05 13:14:15",
-    "deleted_at ": 1596604455
+    "deleted_at": 1596604455
     "graduated_at": "2012-09-09",
     "updated_at": "13:14:15",
 }
