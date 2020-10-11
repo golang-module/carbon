@@ -7,7 +7,6 @@ import (
 
 // format转layout
 func format2layout(format string) string {
-	format = strings.Trim(format, " ")
 	layout := strings.Replace(format, "Y", "2006", 1)
 	layout = strings.Replace(layout, "y", "06", 1)
 	layout = strings.Replace(layout, "M", "Jan", 1)
@@ -37,7 +36,7 @@ func newCarbon(t time.Time) Carbon {
 func getLocalByTimezone(timezone string) *time.Location {
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
-		panic("invalid timezone \"" + timezone + "\", for all valid timezone, please see the $GOROOT/lib/time/zoneinfo.zip file")
+		panic("invalid timezone \"" + timezone + "\", all valid timezone, please see the $GOROOT/lib/time/zoneinfo.zip file")
 	}
 	return loc
 }
@@ -46,7 +45,7 @@ func getLocalByTimezone(timezone string) *time.Location {
 func parseByLayout(value string, layout string) time.Time {
 	t, err := time.ParseInLocation(layout, value, getLocalByTimezone(Local))
 	if err != nil {
-		panic("The value \"" + value + "\" and the layout \"" + layout + "\" don't match")
+		panic("the value \"" + value + "\" and layout \"" + layout + "\" don't match")
 	}
 	return t
 }

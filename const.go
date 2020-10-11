@@ -7,7 +7,7 @@ const (
 	Version = "v1.2.0"
 	Author  = "gouguoyin"
 	Email   = "mail@gouguoyin.cn"
-	Home    = "www.gouguoyin.cn"
+	Blog    = "www.gouguoyin.cn"
 )
 
 // 时区常量

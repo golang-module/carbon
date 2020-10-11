@@ -10,12 +10,12 @@ type Carbon struct {
 	loc  *time.Location
 }
 
-// Timezone 设置时区，全局生效
+// Timezone 设置时区
 func Timezone(name string) Carbon {
 	return Carbon{loc: getLocalByTimezone(name)}
 }
 
-// Timezone 设置时区，临时生效
+// Timezone 设置时区
 func (c Carbon) Timezone(name string) Carbon {
 	loc := getLocalByTimezone(name)
 	return Carbon{Time: c.Time.In(c.loc), loc: loc}
@@ -105,11 +105,10 @@ func (c Carbon) CreateFromGoTime(t time.Time) Carbon {
 
 // Parse 解析标准格式时间字符串
 func Parse(value string) Carbon {
-	value = strings.Trim(value, " ")
 	layout := DateTimeFormat
 
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
-		return Carbon{}
+		return Carbon{loc: getLocalByTimezone(Local)}
 	}
 
 	if len(value) == 10 && strings.Count(value, "-") == 2 {
@@ -124,7 +123,7 @@ func Parse(value string) Carbon {
 		layout = ShortDateFormat
 	}
 
-	if len(value) == 25 && strings.Index(value, "T") == 10 {
+	if strings.Index(value, "T") == 10 {
 		layout = RFC3339Format
 	}
 

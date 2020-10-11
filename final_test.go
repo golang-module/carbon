@@ -682,12 +682,41 @@ func TestCarbon_IsZero(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"0000-00-00 00:00:00", true},
-		{"2020-08-05  00:00:00", false},
+		{"2020-08-05 00:00:00", false},
 		{"2020-08-05", false},
 	}
 
 	for _, v := range Tests {
 		output := Parse(v.input).IsZero()
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
+		}
+	}
+}
+
+func TestCarbon_IsNow(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output bool   // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", false},
+		{Tomorrow().ToDateTimeString(), false},
+		{Now().ToDateTimeString(), true},
+		{Yesterday().ToDateTimeString(), false},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).IsNow()
 
 		if output != v.output {
 			expected := "false"
@@ -710,8 +739,9 @@ func TestCarbon_IsFuture(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"0000-00-00 00:00:00", false},
-		{"2099-08-05 00:00:00", true},
-		{"2010-01-05", false},
+		{Tomorrow().ToDateTimeString(), true},
+		{Now().ToDateTimeString(), false},
+		{Yesterday().ToDateTimeString(), false},
 	}
 
 	for _, v := range Tests {
@@ -738,8 +768,9 @@ func TestCarbon_IsPast(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"0000-00-00 00:00:00", true},
-		{"2099-08-05 00:00:00", false},
-		{"2010-01-05", true},
+		{Tomorrow().ToDateTimeString(), false},
+		{Now().ToDateTimeString(), false},
+		{Yesterday().ToDateTimeString(), true},
 	}
 
 	for _, v := range Tests {

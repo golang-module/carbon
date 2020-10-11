@@ -13,12 +13,18 @@ var (
 
 // ToAnimalYear 获取生肖年
 func (c Carbon) ToAnimalYear() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	year := c.Time.Year()
 	return SymbolicAnimals[year%12]
 }
 
 // ToLunarYear 获取农历年
 func (c Carbon) ToLunarYear() string {
+	if c.Time.IsZero() {
+		return ""
+	}
 	year := c.Time.Year()
 	return HeavenlyStems[year%10] + EarthlyBranches[year%12]
 }

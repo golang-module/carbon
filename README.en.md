@@ -33,11 +33,9 @@ import (
 
 ##### Set timezone
  ```go
- // Set global timezone
- c := carbon.Timezone(carbon.PRC)
- // Set temporary timezone
- c.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
- c.Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.Timezone(carbon.Tokyo).Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
  ```
 
 > For more timezone constants, please see the [const.go](./const.go) file
@@ -330,6 +328,8 @@ carbon.Parse("00:00:00").IsZero() // true
 carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
 
+// Is now time
+carbon.Parse(carbon.Now().ToDateTimeString()).IsNow() // true
 // Is future time
 carbon.Parse("2020-08-06 13:14:15").IsFuture() // true
 // Is pass time
@@ -463,8 +463,8 @@ user := UserModel {
 user.ID // 18
 user.Name // 勾国印
 user.Birthday.ToDateString() // 2012-08-05
-user.CreatedAt.ToDateStartString() // 2012-08-05 00:00:00
-user.DeletedAt.ToDateEndString() // 2012-08-05 23:59:59
+user.CreatedAt.ToTimestamp() // 2012-08-05 13:14:15
+user.DeletedAt.ToDateTimeString() // 1596604455
 user.GraduatedAt.AddDay().ToDateString() // 2012-09-10
 user.UpdatedAt.ToDateString() // 2012-08-05
 ```
@@ -519,7 +519,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 
 | sign | desc | type | length | range | example |
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Y | year | number | 4 | - | 2020 |
+| Y | year | number | 4 | 0000-9999 | 2020 |
 | y | year | number | 2 | 00-99 | 20 |
 | M | month | letter | 3 | Jan-Dec | Aug |
 | m | month | number | 2 | 01-12 | 08 |

@@ -31,11 +31,9 @@ import (
 
 ##### 设置时区
 ```go
-// 设置时区，全局生效
-c := carbon.Timezone(carbon.PRC)
-// 设置时区，临时生效，不会覆盖全局时区
-c.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-c.Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.Timezone(carbon.Tokyo).Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
 >更多时区常量请查看[const.go](./const.go)文件
@@ -332,6 +330,8 @@ carbon.Parse("00:00:00").IsZero() // true
 carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
 
+// 是否是当前时间
+carbon.Parse(carbon.Now().ToDateTimeString()).IsNow() // true
 // 是否是未来时间
 carbon.Parse("2020-08-06 13:14:15").IsFuture() // true
 // 是否是过去时间
@@ -466,8 +466,8 @@ user := UserModel {
 user.ID // 18
 user.Name // 勾国印
 user.Birthday.ToDateString() // 2012-08-05
-user.CreatedAt.ToDateStartString() // 2012-08-05 00:00:00
-user.DeletedAt.ToDateEndString() // 2012-08-05 23:59:59
+user.CreatedAt.ToTimestamp() // 2012-08-05 13:14:15
+user.DeletedAt.ToDateTimeString() // 1596604455
 user.GraduatedAt.AddDay().ToDateString() // 2012-09-10
 user.UpdatedAt.ToDateString() // 2012-08-05
 ```
@@ -521,7 +521,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 ##### <a id="格式化符号表">格式化符号表</a>
 | 符号 | 描述 | 类型 | 长度 | 范围 | 示例 |
 | :------------: | :------------: | :------------: | :------------: | :------------: | :------------: |
-| Y | 年份 | 数字 | 4 | - | 2020 |
+| Y | 年份 | 数字 | 4 | 0000-9999 | 2020 |
 | y | 年份 | 数字 | 2 | 00-99 | 20 |
 | M | 月份 | 字母 | 3 | Jan-Dec | Aug |
 | m | 月份 | 数字 | 2 | 01-12 | 08 |

@@ -7,6 +7,7 @@ func TestCarbon_ToAnimalYear(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"0000-00-00", ""},
 		{"2020-08-05", "鼠"},
 		{"2021-08-05", "牛"},
 		{"2022-08-05", "虎"},
@@ -35,6 +36,7 @@ func TestCarbon_ToLunarYear(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"0000-00-00", ""},
 		{"1861-08-22", "辛酉"}, // 辛酉政变发生日期
 		{"1894-07-25", "甲午"}, // 甲午战争发生日期
 		{"1898-06-11", "戊戌"}, // 戊戌变法发生日期

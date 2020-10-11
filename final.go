@@ -271,19 +271,18 @@ func (c Carbon) IsZero() bool {
 	return c.Time.IsZero()
 }
 
+// IsNow 是否是当前时间
+func (c Carbon) IsNow() bool {
+	return c.ToTimestamp() == c.Now().ToTimestamp()
+}
+
 // IsFuture 是否是未来时间
 func (c Carbon) IsFuture() bool {
-	if c.Time.IsZero() {
-		return false
-	}
 	return c.ToTimestamp() > c.Now().ToTimestamp()
 }
 
 // IsPast 是否是过去时间
 func (c Carbon) IsPast() bool {
-	if c.Time.IsZero() {
-		return true
-	}
 	return c.ToTimestamp() < c.Now().ToTimestamp()
 }
 
