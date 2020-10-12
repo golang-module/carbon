@@ -545,15 +545,19 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-10-12
+* 完善单元测试，代码覆盖率100%
+* 统一异常处理
+* 新增英文版README.MD说明文档
+* 统一输出函数命名规则，将Format() 改为 ToFormatString()
+* 新增CreateFromGoTime(t time.Time)方法从原生time.Time创建Carbon实例
+
 ##### 2020-10-08
 * 完善单元测试
 * 完善优化对ORM的多场景支持
 * 优化代码组织结构，将不可继承的最终方法统一放到final.go文件里
-* 统一输出函数命名规则，将Format() 改为 ToFormatString()
 * 废弃New()初始化函数，无需初始化即可直接使用
-* 新增英文版README.MD说明文档
 * 新增多种时间格式输出，如Cookie、W3C、RSS、RFC7231
-* 新增CreateFromGoTime(t time.Time)方法从原生time.Time创建Carbon实例
 * 新增ParseByDuration()方法解析持续时间字符串(相对于今天)，支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 * 新增NextYears()、NextYear()、PreYears()、PreYear()方法防止出现添加/减少指定年时出现跨月的现象
 * 新增NextMonths()、NextMonth()、PreMonths()、PreMonth()方法防止出现添加/减少指定月后出现跨月的现象
