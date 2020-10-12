@@ -1,7 +1,7 @@
 # Carbon  #
 中文 | [英文](./README.en.md)
 
-carbon 是一个轻量级、语义化、对开发者友好的Golang时间处理库，支持链式调用和gorm、xrom等主流orm
+carbon 是一个轻量级、语义化、对开发者友好的Golang时间处理库，支持链式调用和gorm、xorm等主流orm
 
 如果您觉得不错，请给个star吧
 
@@ -572,6 +572,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * 新增IsZero()方法判断是否是零值时间
 * 新增IsFuture()方法判断是否是未来时间
 * 新增IsPast()方法判断是否是过去时间
+* 新增IsNow()方法判断是否是当前时间
 
 ##### 2020-10-01
 * 完善单元测试
