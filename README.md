@@ -117,9 +117,12 @@ carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 
 ##### 解析标准格式时间字符串
 ```go
+carbon.Parse("").ToDateTimeString() // 空字符串
+carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空字符串
+carbon.Parse("0000-00-00").ToDateTimeString() // 空字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
 ```
@@ -297,12 +300,32 @@ carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:
 ```
 >更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
 
-##### 总天数
+##### 统计数字
 ```go
 // 本年总天数
+carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
 carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
 // 本月总天数
-carbon.Parse("2020-08-05 13:14:15").DaysInMonth() // 31
+carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
+carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
+carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
+
+// 获取年龄
+carbon.Parse("1990-01-01 13:14:15").Age() // 30
+carbon.Parse("1990-12-31 13:14:15").Age() // 29
+
+// 当前年
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// 当前月
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// 当前日
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// 当前时
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// 当前分
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// 当前秒
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
 ```
 
 ##### 第几周/天
@@ -545,6 +568,15 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-10-16
+* 新增Age()方法获取年龄
+* 新增Year()方法获取当前年
+* 新增Month()方法获取当前月
+* 新增Day()方法获取当前日
+* 新增Hour()方法获取当前小时
+* 新增Minute()方法获取当前分钟数
+* 新增Second()方法获取当前秒数
+
 ##### 2020-10-12
 * 完善单元测试，代码覆盖率100%
 * 统一异常处理

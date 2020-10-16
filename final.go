@@ -266,6 +266,66 @@ func (c Carbon) WeekOfMonth() int {
 	return day%DaysPerWeek + 1
 }
 
+// Age 获取年龄
+func (c Carbon) Age() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	age := time.Now().Year() - c.Time.Year()
+	if int(time.Now().Month())*10+time.Now().Day() < int(c.Time.Month())*10+c.Time.Day() {
+		age = age - 1
+	}
+	return age
+}
+
+// 获取当前年
+func (c Carbon) Year() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Year()
+}
+
+// 获取当前月
+func (c Carbon) Month() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return int(c.Time.Month())
+}
+
+// 获取当前日
+func (c Carbon) Day() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Day()
+}
+
+// 获取当前小时
+func (c Carbon) Hour() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Hour()
+}
+
+// 获取当前分钟数
+func (c Carbon) Minute() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Minute()
+}
+
+// 获取当前秒数
+func (c Carbon) Second() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Second()
+}
+
 // IsZero 是否是零值
 func (c Carbon) IsZero() bool {
 	return c.Time.IsZero()

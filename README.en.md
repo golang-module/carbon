@@ -119,9 +119,12 @@ carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 
 ##### Parse standard time format string
 ```go
+carbon.Parse("").ToDateTimeString() // empty string
+carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
+carbon.Parse("0000-00-00").ToDateTimeString() // empty string
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
 ```
@@ -295,12 +298,32 @@ carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:
 ```
 > For more format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
-##### Total days
+##### Statistics
 ```go
 // Total days of the year
+carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
 carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
 // Total days of the month
-carbon.Parse("2020-08-05 13:14:15").DaysInMonth() // 31
+carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
+carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
+carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
+
+// current age
+carbon.Parse("1990-01-01 13:14:15").Age() // 30
+carbon.Parse("1990-12-31 13:14:15").Age() // 29
+
+// Current year
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// Current month
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// Current day
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// Current hour
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// Current minute
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// Current second
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
 ```
 
 ##### Week and day

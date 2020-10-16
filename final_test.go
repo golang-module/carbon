@@ -676,12 +676,155 @@ func TestCarbon_WeekOfMonth(t *testing.T) {
 	}
 }
 
+func TestCarbon_Age(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"0000-00-00", 0},
+		{Now().SubYears(18).ToDateTimeString(), 18},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Age()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Year(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05", 2020},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Year()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Month(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 8},
+		{"2020-08-05", 8},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Month()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Day(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 5},
+		{"2020-08-05", 5},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Day()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Hour(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 13},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Hour()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Minute(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 14},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Minute()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Second(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 15},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Second()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_IsZero(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
 		{"0000-00-00 00:00:00", true},
+		{"0000-00-00", true},
 		{"2020-08-05 00:00:00", false},
 		{"2020-08-05", false},
 	}
