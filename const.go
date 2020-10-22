@@ -4,7 +4,7 @@ import "time"
 
 // 版权信息
 const (
-	Version = "v1.2.1"
+	Version = "v1.2.2"
 	Author  = "gouguoyin"
 	Email   = "mail@gouguoyin.cn"
 	Blog    = "www.gouguoyin.cn"
@@ -84,7 +84,8 @@ const (
 	QuartersPerYear            = 4       // 每年4季度
 	MonthsPerYear              = 12      // 每年12月
 	MonthsPerQuarter           = 3       // 每季度3月
-	WeeksPerYear               = 52      // 每年52周
+	WeeksPerNormalYear         = 52      // 每常规年52周
+	weeksPerLongYear           = 53      // 每长年53周
 	WeeksPerMonth              = 4       // 每月4周
 	DaysPerLeapYear            = 366     // 每闰年366天
 	DaysPerNormalYear          = 365     // 每常规年365天
@@ -93,8 +94,9 @@ const (
 	HoursPerDay                = 24      // 每天24小时
 	MinutesPerDay              = 1440    // 每天1440分钟
 	MinutesPerHour             = 60      // 每小时60分钟
-	SecondsPerWeek             = 691200  // 每周691200秒
+	SecondsPerWeek             = 604800  // 每周604800秒
 	SecondsPerDay              = 86400   // 每天86400秒
+	SecondsPerHour             = 3600    // 每小时3600秒
 	SecondsPerMinute           = 60      // 每分钟60秒
 	MillisecondsPerSecond      = 1000    // 每秒1000毫秒
 	MicrosecondsPerMillisecond = 1000    // 每毫秒1000微秒

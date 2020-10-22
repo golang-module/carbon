@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // ToString 输出字符串
 func (c Carbon) ToString() string {
@@ -193,6 +195,86 @@ func (c Carbon) ToRFC7231String() string {
 	return c.Time.Format(RFC7231Format)
 }
 
+// DiffInWeeks 相差多少周
+func (start Carbon) DiffInWeeks(end Carbon) int64 {
+	return start.DiffInSeconds(end) / SecondsPerWeek
+}
+
+// DiffAbsInWeeks 相差多少周（绝对值）
+func (start Carbon) DiffAbsInWeeks(end Carbon) int64 {
+	diff := start.DiffInWeeks(end)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff
+}
+
+// DiffInDays 相差多少天
+func (start Carbon) DiffInDays(end Carbon) int64 {
+	return start.DiffInSeconds(end) / SecondsPerDay
+}
+
+// DiffAbsInDays 相差多少天（绝对值）
+func (start Carbon) DiffAbsInDays(end Carbon) int64 {
+	diff := start.DiffInDays(end)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff
+}
+
+// DiffInHours 相差多少小时
+func (start Carbon) DiffInHours(end Carbon) int64 {
+	return start.DiffInSeconds(end) / SecondsPerHour
+}
+
+// DiffAbsInHours 相差多少小时（绝对值）
+func (start Carbon) DiffAbsInHours(end Carbon) int64 {
+	diff := start.DiffInHours(end)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff
+}
+
+// DiffInMinutes 相差多少分钟
+func (start Carbon) DiffInMinutes(end Carbon) int64 {
+	return start.DiffInSeconds(end) / SecondsPerMinute
+}
+
+// DiffAbsInMinutes 相差多少分钟（绝对值）
+func (start Carbon) DiffAbsInMinutes(end Carbon) int64 {
+	diff := start.DiffInMinutes(end)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff
+}
+
+// DiffInSeconds 相差多少秒
+func (start Carbon) DiffInSeconds(end Carbon) int64 {
+	if start.Time.IsZero() && end.Time.IsZero() {
+		return 0
+	}
+	if end.Time.IsZero() {
+		return -start.ToTimestamp()
+	}
+	if start.Time.IsZero() {
+		return end.ToTimestamp()
+	}
+
+	return end.ToTimestamp() - start.ToTimestamp()
+}
+
+// DiffAbsInSeconds 相差多少秒（绝对值）
+func (start Carbon) DiffAbsInSeconds(end Carbon) int64 {
+	diff := start.DiffInSeconds(end)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff
+}
+
 // DaysInYear 获取本年的总天数
 func (c Carbon) DaysInYear() int {
 	if c.Time.IsZero() {
@@ -266,13 +348,21 @@ func (c Carbon) WeekOfMonth() int {
 	return day%DaysPerWeek + 1
 }
 
+// Timezone 获取时区
+func (c Carbon) Timezone() string {
+	return c.loc.String()
+}
+
 // Age 获取年龄
 func (c Carbon) Age() int {
 	if c.Time.IsZero() {
 		return 0
 	}
+	if c.ToTimestamp() > Now().ToTimestamp() {
+		return 0
+	}
 	age := time.Now().Year() - c.Time.Year()
-	if int(time.Now().Month())*10+time.Now().Day() < int(c.Time.Month())*10+c.Time.Day() {
+	if int(time.Now().Month())*100+time.Now().Day() < int(c.Time.Month())*100+c.Time.Day() {
 		age = age - 1
 	}
 	return age
@@ -353,6 +443,13 @@ func (c Carbon) IsLeapYear() bool {
 		return true
 	}
 	return false
+}
+
+// IsLongYear 是否是长年
+func (c Carbon) IsLongYear() bool {
+	t := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.loc)
+	_, w := t.ISOWeek()
+	return w == weeksPerLongYear
 }
 
 // IsJanuary 是否是一月

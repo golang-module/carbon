@@ -11,14 +11,50 @@ type Carbon struct {
 }
 
 // Timezone 设置时区
-func Timezone(name string) Carbon {
+func SetTimezone(name string) Carbon {
 	return Carbon{loc: getLocalByTimezone(name)}
 }
 
 // Timezone 设置时区
-func (c Carbon) Timezone(name string) Carbon {
+func (c Carbon) SetTimezone(name string) Carbon {
 	loc := getLocalByTimezone(name)
 	return Carbon{Time: c.Time.In(c.loc), loc: loc}
+}
+
+// SetYear 设置年
+func (c Carbon) SetYear(year int) Carbon {
+	c.Time = time.Date(year, c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
+	return c
+}
+
+// SetMonth 设置月
+func (c Carbon) SetMonth(month int) Carbon {
+	c.Time = time.Date(c.Time.Year(), time.Month(month), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
+	return c
+}
+
+// SetDay 设置日
+func (c Carbon) SetDay(day int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
+	return c
+}
+
+// SetHour 设置时
+func (c Carbon) SetHour(hour int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), hour, c.Time.Minute(), c.Time.Second(), 0, c.loc)
+	return c
+}
+
+// SetMinute 设置分
+func (c Carbon) SetMinute(minute int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), minute, c.Time.Second(), 0, c.loc)
+	return c
+}
+
+// SetSecond 设置秒
+func (c Carbon) SetSecond(second int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, 0, c.loc)
+	return c
 }
 
 // Now 当前
@@ -312,7 +348,7 @@ func (c Carbon) NextYears(years int) Carbon {
 	day := c.Time.Day()
 
 	// 获取N年后本月的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc).AddDate(0, 1, -1)
 
 	if day > last.Day() {
 		day = last.Day()
@@ -334,7 +370,7 @@ func (c Carbon) NextMonths(months int) Carbon {
 	day := c.Time.Day()
 
 	// 获取N月后的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc).AddDate(0, 1, -1)
 
 	if day > last.Day() {
 		day = last.Day()
@@ -369,8 +405,8 @@ func (c Carbon) PreMonth() Carbon {
 	return c.NextMonths(-1)
 }
 
-// BeginningOfYear 本年开始时间
-func (c Carbon) BeginningOfYear() Carbon {
+// StartOfYear 本年开始时间
+func (c Carbon) StartOfYear() Carbon {
 	c.Time = time.Date(c.Time.Year(), 1, 1, 0, 0, 0, 0, c.loc)
 	return c
 }
@@ -381,8 +417,8 @@ func (c Carbon) EndOfYear() Carbon {
 	return c
 }
 
-// BeginningOfMonth 本月开始时间
-func (c Carbon) BeginningOfMonth() Carbon {
+// StartOfMonth 本月开始时间
+func (c Carbon) StartOfMonth() Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), 1, 0, 0, 0, 0, c.loc)
 	return c
 }
@@ -394,8 +430,8 @@ func (c Carbon) EndOfMonth() Carbon {
 	return c
 }
 
-// BeginningOfWeek 本周开始时间
-func (c Carbon) BeginningOfWeek() Carbon {
+// StartOfWeek 本周开始时间
+func (c Carbon) StartOfWeek() Carbon {
 	days := c.Time.Weekday()
 	if days == 0 {
 		days = DaysPerWeek
@@ -416,8 +452,8 @@ func (c Carbon) EndOfWeek() Carbon {
 	return c
 }
 
-// BeginningOfDay 本日开始时间
-func (c Carbon) BeginningOfDay() Carbon {
+// StartOfDay 本日开始时间
+func (c Carbon) StartOfDay() Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 0, 0, 0, 0, c.loc)
 	return c
 }
@@ -428,8 +464,8 @@ func (c Carbon) EndOfDay() Carbon {
 	return c
 }
 
-// BeginningOfHour 小时开始时间
-func (c Carbon) BeginningOfHour() Carbon {
+// StartOfHour 小时开始时间
+func (c Carbon) StartOfHour() Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), 0, 0, 0, c.loc)
 	return c
 }
@@ -440,8 +476,8 @@ func (c Carbon) EndOfHour() Carbon {
 	return c
 }
 
-// BeginningOfMinute 分钟开始时间
-func (c Carbon) BeginningOfMinute() Carbon {
+// StartOfMinute 分钟开始时间
+func (c Carbon) StartOfMinute() Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 0, 0, c.loc)
 	return c
 }

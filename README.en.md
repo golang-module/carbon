@@ -1,5 +1,5 @@
 # Carbon
-Englsih | [Chinese](./README.md)
+English | [Chinese](./README.md)
 
 #### Description
 A simple,semantic and developer-friendly golang package for datetime
@@ -24,21 +24,11 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
-)
-               
+)               
 ```
 
 #### Usage and example
 > The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
-
-##### Set timezone
- ```go
-carbon.Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.Timezone(carbon.Tokyo).Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
- ```
-
-> For more timezone constants, please see the [const.go](./const.go) file
 
 ##### Yesterday,today and tomorrow
 ```go
@@ -68,39 +58,6 @@ carbon.Tomorrow().ToDateString() // 2020-08-06
 carbon.Tomorrow().ToTimeString() // 13:14:15
 // Timestamp of tomorrow
 carbon.Tomorrow().ToTimestamp() // 1596690855
-```
-
-##### Beginning and end
-```go
-// Beginning of the year
-carbon.Parse("2020-08-05 13:14:15").BeginningOfYear().ToDateTimeString() // 2020-01-01 00:00:00
-// End of the year
-carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToEndTimeString() // 2020-12-31 23:59:59
-
-// Beginning of the month
-carbon.Parse("2020-08-05 13:14:15").BeginningOfMonth().ToStartTimeString() // 2020-08-01 00:00:00
-// End of the month
-carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToEndTimeString() // 2020-08-31 23:59:59
-
-// Beginning of the week
-carbon.Parse("2020-08-05 13:14:15").FirstOfWeek().ToStartTimeString() // 2020-08-03 00:00:00
-// End of the week
-carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToEndTimeString() // 2020-08-09 23:59:59
-
-// Beginning of the day
-carbon.Parse("2020-08-05 13:14:15").BeginningOfDay().ToDateTimeString() // 2020-08-05 00:00:00
-// End of the day
-carbon.Parse("2020-08-05 13:14:15").EndOfDay().ToDateTimeString() // 2020-08-05 23:59:59
-
-// Beginning of the hour
-carbon.Parse("2020-08-05 13:14:15").BeginningOfHour().ToDateTimeString() // 2020-08-05 13:00:00
-// End of the hour
-carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05 13:59:59
-
-// Beginning of the minute
-carbon.Parse("2020-08-05 13:14:15").BeginningOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
-// End of the minute
-carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 ```
 
 ##### Create carbon instance
@@ -152,12 +109,78 @@ carbon.ParseByDuration("-10.5m").ToDateTimeString // 2020-08-05 13:03:45
 carbon.ParseByDuration("10s").ToDateTimeString // 2020-08-05 13:14:25
 // Ten seconds ago
 carbon.ParseByDuration("-10.5s").ToDateTimeString // 2020-08-05 13:14:04
+```
 
+##### Time setter
+```go
+// Set timezone
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+
+// Set year
+carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
+carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+
+// Set month
+carbon.Parse("2020-01-30").SetMonth(2).ToDateString() // 2020-03-01
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+
+// Set day
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// Set hour
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// Set minute
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// Set second
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+```
+> For more timezone constants, please see the [const.go](./const.go) file
+
+##### Start and end
+```go
+// Start of the year
+carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
+// End of the year
+carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToEndTimeString() // 2020-12-31 23:59:59
+
+// Start of the month
+carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToStartTimeString() // 2020-08-01 00:00:00
+// End of the month
+carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToEndTimeString() // 2020-08-31 23:59:59
+
+// Start of the week
+carbon.Parse("2020-08-05 13:14:15").StartOfWeek().ToStartTimeString() // 2020-08-03 00:00:00
+// End of the week
+carbon.Parse("2020-08-05 13:14:15").LastOfWeek().ToEndTimeString() // 2020-08-09 23:59:59
+
+// Start of the day
+carbon.Parse("2020-08-05 13:14:15").StartOfDay().ToDateTimeString() // 2020-08-05 00:00:00
+// End of the day
+carbon.Parse("2020-08-05 13:14:15").EndOfDay().ToDateTimeString() // 2020-08-05 23:59:59
+
+// Start of the hour
+carbon.Parse("2020-08-05 13:14:15").StartOfHour().ToDateTimeString() // 2020-08-05 13:00:00
+// End of the hour
+carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05 13:59:59
+
+// Start of the minute
+carbon.Parse("2020-08-05 13:14:15").StartOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
+// End of the minute
+carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 ```
 
 ##### Time travel
 ```go
-// After Three years
+// After three years
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
 // Next three years
 carbon.Parse("2020-02-29 13:14:15").NextYears(3).ToDateTimeString() // 2023-02-28 13:14:15
@@ -191,9 +214,9 @@ carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 
 // Previous one month
 carbon.Parse("2020-03-31 13:14:15").PreMonth().ToDateTimeString() // 2020-02-29 13:14:15
 
-// After Three days
+// After three days
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString() // 2020-08-08 13:14:15
-// After One day
+// After one day
 carbon.Parse("2020-08-05 13:14:15").AddDay().ToDateTimeString() // 2020-08-05 13:14:15
 // After three days
 carbon.Parse("2020-08-05 13:14:15").SubDays(3).ToDateTimeString() // 2020-08-02 13:14:15
@@ -238,11 +261,37 @@ carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // Before one second
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
-
 ```
 
-##### Time output
-      
+##### Time difference
+```go
+// Difference in weeks
+carbon.Parse("2020-08-05 13:14:15").DiffInWeeks(carbon.Parse("2020-07-28 13:14:15")) // -1
+// Difference absolute in weeks
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInWeeks(carbon.Parse("2020-07-28 13:14:15")) // 1
+
+// Difference in days
+carbon.Parse("2020-08-05 13:14:15").DiffInDays(carbon.Parse("2020-08-04 13:14:15")) // -1
+// Difference absolute in days
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInDays(carbon.Parse("2020-08-04 13:14:15")) // 1
+
+// Difference in hours
+carbon.Parse("2020-08-05 13:14:15").DiffInHours(carbon.Parse("2020-08-05 12:14:15")) // -1
+// Difference absolute in hours
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInHours(carbon.Parse("2020-08-05 12:14:15")) // 1
+
+// Difference in minutes
+carbon.Parse("2020-08-05 13:14:15").DiffInMinutes(carbon.Parse("2020-08-05 13:13:15")) // -1
+// Difference absolute in minutes
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMinutes(carbon.Parse("2020-08-05 13:13:15")) // 1
+
+// Difference in seconds
+carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
+// Difference absolute in seconds
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13:14:14")) // 1
+```
+
+##### Time output   
 ```go
 // To timestamp
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
@@ -294,50 +343,50 @@ carbon.Parse("2020-08-05 13:14:15").ToRFC2822String() // Wed, 05 Aug 2020 13:14:
 carbon.Parse("2020-08-05 13:14:15").ToRFC3339String() // 2020-08-05T13:14:15+08:00
 // To string of RFC7231 format
 carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:15 GMT
-
 ```
 > For more format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
-##### Statistics
+##### Time getter
 ```go
-// Total days of the year
+// Get total days of the year
 carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
 carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
-// Total days of the month
+// Get total days of the month
 carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
 carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
 carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
 
-// current age
-carbon.Parse("1990-01-01 13:14:15").Age() // 30
-carbon.Parse("1990-12-31 13:14:15").Age() // 29
-
-// Current year
-carbon.Parse("2020-08-05 13:14:15").Year() // 2020
-// Current month
-carbon.Parse("2020-08-05 13:14:15").Month() // 8
-// Current day
-carbon.Parse("2020-08-05 13:14:15").Day() // 5
-// Current hour
-carbon.Parse("2020-08-05 13:14:15").Hour() // 13
-// Current minute
-carbon.Parse("2020-08-05 13:14:15").Minute() // 14
-// Current second
-carbon.Parse("2020-08-05 13:14:15").Second() // 15
-```
-
-##### Week and day
-```go
-// Day of the year
+// Get day of the year
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// Week of the year
+// Get week of the year
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-// Day of the month
+// Get day of the month
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// Week of the month
+// Get week of the month
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// Day of the week
+// Get day of the week
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+
+// Get current year
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// Get current month
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// Get current day
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// Get current hour
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// Get current minute
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// Get current second
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
+
+// Get timezone name
+carbon.SetTimezone(carbon.PRC).Timezone() // PRC
+carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+
+// Get current age
+carbon.Parse("2002-01-01 13:14:15").Age() // 17
+carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
 
 ##### Time judgment
@@ -357,62 +406,65 @@ carbon.Parse(carbon.Now().ToDateTimeString()).IsNow() // true
 carbon.Parse("2020-08-06 13:14:15").IsFuture() // true
 // Is pass time
 carbon.Parse("2020-08-04 13:14:15").IsPast() // true
+
 // Is leap year
 carbon.Parse("2020-08-05 13:14:15").IsLeapYear() // true
+// Is long year
+carbon.Parse("2020-08-05 13:14:15").IsLongYear() // true
 
-// Is January 
+// Is january 
 carbon.Parse("2020-08-05 13:14:15").IsJanuary() // false
-// Is February
+// Is february
 carbon.Parse("2020-08-05 13:14:15").IsFebruary() // false
-// Is March
+// Is march
 carbon.Parse("2020-08-05 13:14:15").IsMarch() // false
-// Is April
+// Is april
 carbon.Parse("2020-08-05 13:14:15").IsApril()  // false
-// Is May
+// Is may
 carbon.Parse("2020-08-05 13:14:15").IsMay() // false
-// Is June
+// Is june
 carbon.Parse("2020-08-05 13:14:15").IsJune() // false
-// Is July
+// Is july
 carbon.Parse("2020-08-05 13:14:15").IsJuly() // false
-// Is August
+// Is august
 carbon.Parse("2020-08-05 13:14:15").IsAugust() // false
-// Is September
+// Is september
 carbon.Parse("2020-08-05 13:14:15").IsSeptember() // true
-// Is October
+// Is october
 carbon.Parse("2020-08-05 13:14:15").IsOctober() // false
-// Is November
+// Is november
 carbon.Parse("2020-08-05 13:14:15").IsNovember() // false
-// Is December
+// Is december
 carbon.Parse("2020-08-05 13:14:15").IsDecember() // false
 
-// Is Monday
+// Is monday
 carbon.Parse("2020-08-05 13:14:15").IsMonday() // false
-// Is Tuesday
+// Is tuesday
 carbon.Parse("2020-08-05 13:14:15").IsTuesday() // true
-// Is Wednesday
+// Is wednesday
 carbon.Parse("2020-08-05 13:14:15").IsWednesday() // false
-// Is Thursday
+// Is thursday
 carbon.Parse("2020-08-05 13:14:15").IsThursday()  // false
-// Is Friday
+// Is friday
 carbon.Parse("2020-08-05 13:14:15").IsFriday() // false
-// Is Saturday
+// Is saturday
 carbon.Parse("2020-08-05 13:14:15").IsSaturday() // false
-// Is Sunday
+// Is sunday
 carbon.Parse("2020-08-05 13:14:15").IsSunday() // false
-// Is Weekday
+// Is weekday
 carbon.Parse("2020-08-05 13:14:15").IsWeekday() // false
-// Is Weekend
+// Is weekend
 carbon.Parse("2020-08-05 13:14:15").IsWeekend() // true
 
-// Is Yesterday
+// Is yesterday
 carbon.Parse("2020-08-04 13:14:15").IsYesterday() // true
 carbon.Parse("2020-08-04 00:00:00").IsYesterday() // true
 carbon.Parse("2020-08-04").IsYesterday() // true
-// Is Today
+// Is today
 carbon.Parse("2020-08-05 13:14:15").IsToday() // true
 carbon.Parse("2020-08-05 00:00:00").IsToday() // true
 carbon.Parse("2020-08-05").IsToday() // true
-// Is Tomorrow
+// Is tomorrow
 carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
 carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
 carbon.Parse("2020-08-06").IsTomorrow() // true

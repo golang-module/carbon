@@ -29,15 +29,6 @@ import (
 #### 用法示例
 > 默认时区为Local，即服务器所在时区，假设当前时间为2020-08-05 13:14:15
 
-##### 设置时区
-```go
-carbon.Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Timezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.Timezone(carbon.Tokyo).Timezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-```
-
->更多时区常量请查看[const.go](./const.go)文件
-
 ##### 昨天、今天、明天
 ```go
 // 今天
@@ -66,39 +57,6 @@ carbon.Tomorrow().ToDateString() // 2020-08-06
 carbon.Tomorrow().ToTimeString() // 13:14:15
 // 明天时间戳
 carbon.Tomorrow().ToTimestamp() // 1596690855
-```
-
-##### 开始时间、结束时间
-```go
-// 本年开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfYear().ToDateTimeString() // 2020-01-01 00:00:00
-// 本年结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToDateTimeString() // 2020-12-31 23:59:59
-
-// 本月开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfMonth().ToDateTimeString() // 2020-08-01 00:00:00
-// 本月结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToDateTimeString() // 2020-08-31 23:59:59
-
-// 本周开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfWeek().ToDateTimeString() // 2020-08-03 00:00:00
-// 本周结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfWeek().ToDateTimeString() // 2020-08-09 23:59:59
-
-// 本日开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfDay().ToDateTimeString() // 2020-08-05 00:00:00
-// 本日结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfDay().ToDateTimeString() // 2020-08-05 23:59:59
-
-// 本小时开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfHour().ToDateTimeString() // 2020-08-05 13:00:00
-// 本小时结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05 13:59:59
-
-// 本分钟开始时间
-carbon.Parse("2020-08-05 13:14:15").BeginningOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
-// 本分钟结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 ```
 
 ##### 创建Carbon实例
@@ -153,7 +111,73 @@ carbon.ParseByDuration("-10.5m").ToDateTimeString() // 2020-08-05 13:03:45
 carbon.ParseByDuration("10s").ToDateTimeString() // 2020-08-05 13:14:25
 // 十秒半前
 carbon.ParseByDuration("-10.5s").ToDateTimeString() // 2020-08-05 13:14:04
+```
 
+##### 时间设置
+```go
+// 设置时区
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+
+// 设置年
+carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
+carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+
+// 设置月
+carbon.Parse("2020-01-30").SetMonth(2).ToDateString() // 2020-03-01
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+
+// 设置日
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// 设置时
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// 设置分
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// 设置秒
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+```
+>更多时区常量请查看[const.go](./const.go)文件
+
+##### 开始时间、结束时间
+```go
+// 本年开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
+// 本年结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToDateTimeString() // 2020-12-31 23:59:59
+
+// 本月开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToDateTimeString() // 2020-08-01 00:00:00
+// 本月结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToDateTimeString() // 2020-08-31 23:59:59
+
+// 本周开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfWeek().ToDateTimeString() // 2020-08-03 00:00:00
+// 本周结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfWeek().ToDateTimeString() // 2020-08-09 23:59:59
+
+// 本日开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfDay().ToDateTimeString() // 2020-08-05 00:00:00
+// 本日结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfDay().ToDateTimeString() // 2020-08-05 23:59:59
+
+// 本小时开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfHour().ToDateTimeString() // 2020-08-05 13:00:00
+// 本小时结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05 13:59:59
+
+// 本分钟开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
+// 本分钟结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 ```
 
 ##### 时间旅行
@@ -241,7 +265,34 @@ carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // 一秒钟前
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
+```
 
+##### 时间差
+```go
+// 相差多少周
+carbon.Parse("2020-08-05 13:14:15").DiffInWeeks(carbon.Parse("2020-07-28 13:14:15")) // -1
+// 相差多少周（绝对值）
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInWeeks(carbon.Parse("2020-07-28 13:14:15")) // 1
+
+// 相差多少天
+carbon.Parse("2020-08-05 13:14:15").DiffInDays(carbon.Parse("2020-08-04 13:14:15")) // -1
+// 相差多少天（绝对值）
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInDays(carbon.Parse("2020-08-04 13:14:15")) // 1
+
+// 相差多少小时
+carbon.Parse("2020-08-05 13:14:15").DiffInHours(carbon.Parse("2020-08-05 12:14:15")) // -1
+// 相差多少小时（绝对值）
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInHours(carbon.Parse("2020-08-05 12:14:15")) // 1
+
+// 相差多少分
+carbon.Parse("2020-08-05 13:14:15").DiffInMinutes(carbon.Parse("2020-08-05 13:13:15")) // -1
+// 相差多少分（绝对值）
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMinutes(carbon.Parse("2020-08-05 13:13:15")) // 1
+
+// 相差多少秒
+carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
+// 相差多少秒（绝对值）
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13:14:14")) // 1
 ```
 
 ##### 时间输出
@@ -300,46 +351,48 @@ carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:
 ```
 >更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
 
-##### 统计数字
+##### 时间获取
 ```go
-// 本年总天数
+// 获取本年总天数
 carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
 carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
-// 本月总天数
+// 获取本月总天数
 carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
 carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
 carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
 
-// 获取年龄
-carbon.Parse("1990-01-01 13:14:15").Age() // 30
-carbon.Parse("1990-12-31 13:14:15").Age() // 29
-
-// 当前年
-carbon.Parse("2020-08-05 13:14:15").Year() // 2020
-// 当前月
-carbon.Parse("2020-08-05 13:14:15").Month() // 8
-// 当前日
-carbon.Parse("2020-08-05 13:14:15").Day() // 5
-// 当前时
-carbon.Parse("2020-08-05 13:14:15").Hour() // 13
-// 当前分
-carbon.Parse("2020-08-05 13:14:15").Minute() // 14
-// 当前秒
-carbon.Parse("2020-08-05 13:14:15").Second() // 15
-```
-
-##### 第几周/天
-```go
-// 本年第几天
+// 获取本年第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// 本年第几周
+// 获取本年第几周
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-// 本月第几天
+// 获取本月第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// 本月第几周
+// 获取本月第几周
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// 本周第几天
+// 获取本周第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+
+// 获取当前年
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// 获取当前月
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// 获取当前日
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// 获取当前时
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// 获取当前分
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// 获取当前秒
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
+
+// 获取时区
+carbon.SetTimezone(carbon.PRC).Timezone() // PRC
+carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+
+// 获取年龄
+carbon.Parse("2002-01-01 13:14:15").Age() // 17
+carbon.Parse("2002-12-31 13:14:15").Age() // 18
+
 ```
 
 ##### 时间判断
@@ -359,8 +412,11 @@ carbon.Parse(carbon.Now().ToDateTimeString()).IsNow() // true
 carbon.Parse("2020-08-06 13:14:15").IsFuture() // true
 // 是否是过去时间
 carbon.Parse("2020-08-04 13:14:15").IsPast() // true
+
 // 是否是闰年
 carbon.Parse("2020-08-05 13:14:15").IsLeapYear() // true
+// 是否是长年
+carbon.Parse("2020-08-05 13:14:15").IsLongYear() // true
 
 // 是否是一月
 carbon.Parse("2020-08-05 13:14:15").IsJanuary() // false
@@ -568,7 +624,26 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-10-22
+* 新增SetYear()方法设置年
+* 新增SetMonth()方法设置月
+* 新增SetDay()方法设置日
+* 新增SetHour()方法设置时
+* 新增SetMinute()方法设置分
+* 新增SetSecond方法设置秒
+* 新增DiffInWeeks()方法计算相差多少周
+* 新增DiffAbsInWeeks()方法计算相差多少周(绝对值)
+* 新增DiffInDays()方法计算相差多少天
+* 新增DiffAbsInDays()方法计算相差多少天(绝对值)
+* 新增DiffInHours()方法计算相差多少小时
+* 新增DiffAbsInHours()方法计算相差多少小时(绝对值)
+* 新增DiffInMinutes()方法计算相差多少分钟
+* 新增DiffAbsInMinutes()方法计算相差多少分钟(绝对值)
+* 新增DiffInSeconds()方法计算相差多少秒
+* 新增DiffAbsInSeconds()方法计算相差多少秒(绝对值)
+
 ##### 2020-10-16
+* 新增Timezone()方法获取时区名
 * 新增Age()方法获取年龄
 * 新增Year()方法获取当前年
 * 新增Month()方法获取当前月

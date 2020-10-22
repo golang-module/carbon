@@ -16,7 +16,7 @@ var TimezoneTests = []struct {
 	{"2020-08-05", "Hangzhou", "panic"}, // 异常情况
 }
 
-func TestCarbon_Timezone1(t *testing.T) {
+func TestCarbon_SetTimezone1(t *testing.T) {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Printf("catch an exception in Timezone()：%s\n", r)
@@ -24,7 +24,7 @@ func TestCarbon_Timezone1(t *testing.T) {
 	}()
 
 	for _, v := range TimezoneTests {
-		output := Timezone(v.timezone).Parse(v.input).ToDateTimeString()
+		output := SetTimezone(v.timezone).Parse(v.input).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -32,7 +32,7 @@ func TestCarbon_Timezone1(t *testing.T) {
 	}
 }
 
-func TestCarbon_Timezone2(t *testing.T) {
+func TestCarbon_SetTimezone2(t *testing.T) {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Printf("catch an exception in Timezone()：%s\n", r)
@@ -40,7 +40,128 @@ func TestCarbon_Timezone2(t *testing.T) {
 	}()
 
 	for _, v := range TimezoneTests {
-		output := Timezone(PRC).Timezone(v.timezone).Parse(v.input).ToDateTimeString()
+		output := SetTimezone(PRC).SetTimezone(v.timezone).Parse(v.input).ToDateTimeString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetYear(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		year   int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-01-01", 2019, "2019-01-01"},
+		{"2020-01-31", 2019, "2019-01-31"},
+		{"2020-02-01", 2019, "2019-02-01"},
+		{"2020-02-28", 2019, "2019-02-28"},
+		{"2020-02-29", 2019, "2019-03-01"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetYear(v.year).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetMonth(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		month  int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-01-01", 2, "2020-02-01"},
+		{"2020-01-30", 2, "2020-03-01"},
+		{"2020-01-31", 2, "2020-03-02"},
+		{"2020-08-05", 2, "2020-02-05"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetMonth(v.month).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetDay(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		day    int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-01-01", 31, "2020-01-31"},
+		{"2020-02-01", 31, "2020-03-02"},
+		{"2020-02-28", 31, "2020-03-02"},
+		{"2020-02-29", 31, "2020-03-02"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetDay(v.day).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetHour(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		hour   int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-08-05 13:14:15", 10, "2020-08-05 10:14:15"},
+		{"2020-08-05 13:14:15", 24, "2020-08-06 00:14:15"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetHour(v.hour).ToDateTimeString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetMinute(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		minute int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-08-05 13:14:15", 10, "2020-08-05 13:10:15"},
+		{"2020-08-05 13:14:15", 60, "2020-08-05 14:00:15"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetMinute(v.minute).ToDateTimeString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SetSecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		second int    // 输入参数
+		output string // 期望输出值
+	}{
+		{"2020-08-05 13:14:15", 10, "2020-08-05 13:14:10"},
+		{"2020-08-05 13:14:15", 60, "2020-08-05 13:15:00"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SetSecond(v.second).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -57,7 +178,7 @@ func TestCarbon_Now(t *testing.T) {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 
-	output = Timezone(PRC).Now().Time.Format(DateTimeFormat)
+	output = SetTimezone(PRC).Now().Time.Format(DateTimeFormat)
 
 	if expected != output {
 		t.Fatalf("Expected %s, but got %s", expected, output)
@@ -74,7 +195,7 @@ func TestCarbon_Yesterday(t *testing.T) {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 
-	output = Timezone(PRC).Yesterday().Time.Format(DateTimeFormat)
+	output = SetTimezone(PRC).Yesterday().Time.Format(DateTimeFormat)
 
 	if expected != output {
 		t.Fatalf("Expected %s, but got %s", expected, output)
@@ -90,14 +211,14 @@ func TestCarbon_Tomorrow(t *testing.T) {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 
-	output = Timezone(PRC).Tomorrow().Time.Format(DateTimeFormat)
+	output = SetTimezone(PRC).Tomorrow().Time.Format(DateTimeFormat)
 
 	if expected != output {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 }
 
-func TestCarbon_BeginningOfYear(t *testing.T) {
+func TestCarbon_StartOfYear(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -110,7 +231,7 @@ func TestCarbon_BeginningOfYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfYear().ToDateTimeString()
+		output := Parse(v.input).StartOfYear().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -139,7 +260,7 @@ func TestCarbon_EndOfYear(t *testing.T) {
 	}
 }
 
-func TestCarbon_BeginningOfMonth(t *testing.T) {
+func TestCarbon_StartOfMonth(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -152,7 +273,7 @@ func TestCarbon_BeginningOfMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfMonth().ToDateTimeString()
+		output := Parse(v.input).StartOfMonth().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -181,7 +302,7 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 	}
 }
 
-func TestCarbon_BeginningOfWeek(t *testing.T) {
+func TestCarbon_StartOfWeek(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -195,7 +316,7 @@ func TestCarbon_BeginningOfWeek(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfWeek().ToDateTimeString()
+		output := Parse(v.input).StartOfWeek().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -225,7 +346,7 @@ func TestCarbon_EndOfWeek(t *testing.T) {
 	}
 }
 
-func TestCarbon_BeginningOfDay(t *testing.T) {
+func TestCarbon_StartOfDay(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -238,7 +359,7 @@ func TestCarbon_BeginningOfDay(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfDay().ToDateTimeString()
+		output := Parse(v.input).StartOfDay().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -267,7 +388,7 @@ func TestCarbon_EndOfDay(t *testing.T) {
 	}
 }
 
-func TestCarbon_BeginningOfHour(t *testing.T) {
+func TestCarbon_StartOfHour(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -280,7 +401,7 @@ func TestCarbon_BeginningOfHour(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfHour().ToDateTimeString()
+		output := Parse(v.input).StartOfHour().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -309,7 +430,7 @@ func TestCarbon_EndOfHour(t *testing.T) {
 	}
 }
 
-func TestCarbon_BeginningOfMinute(t *testing.T) {
+func TestCarbon_StartOfMinute(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -322,7 +443,7 @@ func TestCarbon_BeginningOfMinute(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).BeginningOfMinute().ToDateTimeString()
+		output := Parse(v.input).StartOfMinute().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -372,7 +493,7 @@ func TestCarbon_CreateFromTimestamp(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).CreateFromTimestamp(v.timestamp).ToDateTimeString()
+		output := SetTimezone(PRC).CreateFromTimestamp(v.timestamp).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -401,7 +522,7 @@ func TestCarbon_CreateFromDateTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).CreateFromDateTime(v.year, v.month, v.day, v.hour, v.minute, v.second).ToDateTimeString()
+		output := SetTimezone(PRC).CreateFromDateTime(v.year, v.month, v.day, v.hour, v.minute, v.second).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -432,7 +553,7 @@ func TestCarbon_CreateFromDate(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).CreateFromDate(v.year, v.month, v.day).ToDateTimeString()
+		output := SetTimezone(PRC).CreateFromDate(v.year, v.month, v.day).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -462,7 +583,7 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).CreateFromTime(v.hour, v.minute, v.second).ToDateTimeString()
+		output := SetTimezone(PRC).CreateFromTime(v.hour, v.minute, v.second).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -488,7 +609,7 @@ func TestCarbon_CreateFromGoTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).CreateFromGoTime(v.time).ToDateTimeString()
+		output := SetTimezone(PRC).CreateFromGoTime(v.time).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -501,6 +622,10 @@ func TestCarbon_Parse(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15"},
 		{"20200805131415", "2020-08-05 13:14:15"},
 		{"20200805", "2020-08-05 00:00:00"},
@@ -524,7 +649,7 @@ func TestCarbon_Parse(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -566,7 +691,7 @@ func TestCarbon_ParseByFormat2(t *testing.T) {
 	}()
 
 	for _, v := range ParseByFormatTests {
-		output := Timezone(PRC).ParseByFormat(v.input, v.format).ToDateTimeString()
+		output := SetTimezone(PRC).ParseByFormat(v.input, v.format).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -621,7 +746,7 @@ func TestCarbon_ParseByDuration2(t *testing.T) {
 	}()
 
 	for _, v := range ParseByDurationTests {
-		output := Timezone(PRC).ParseByDuration(v.duration).ToDateTimeString()
+		output := SetTimezone(PRC).ParseByDuration(v.duration).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -668,7 +793,7 @@ func TestCarbon_Duration(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).Duration(v.duration).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).Duration(v.duration).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -698,7 +823,7 @@ func TestCarbon_AddYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddYears(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -728,7 +853,7 @@ func TestCarbon_NextYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).NextYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).NextYears(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -760,7 +885,7 @@ func TestCarbon_SubYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubYears(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -790,7 +915,7 @@ func TestCarbon_PreYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).PreYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).PreYears(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -819,7 +944,7 @@ func TestCarbon_AddYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddYear().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -848,7 +973,7 @@ func TestCarbon_NextYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).NextYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).NextYear().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -877,7 +1002,7 @@ func TestCarbon_SubYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubYear().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -906,7 +1031,7 @@ func TestCarbon_PreYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).PreYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).PreYear().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -936,7 +1061,7 @@ func TestCarbon_AddMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddMonths(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -966,7 +1091,7 @@ func TestCarbon_NextMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).NextMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).NextMonths(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -996,7 +1121,7 @@ func TestCarbon_SubMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubMonths(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1026,7 +1151,7 @@ func TestCarbon_PreMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).PreMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).PreMonths(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1055,7 +1180,7 @@ func TestCarbon_AddMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddMonth().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1084,7 +1209,7 @@ func TestCarbon_NextMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).NextMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).NextMonth().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1113,7 +1238,7 @@ func TestCarbon_SubMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubMonth().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1142,7 +1267,7 @@ func TestCarbon_PreMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).PreMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).PreMonth().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1172,7 +1297,7 @@ func TestCarbon_AddDays(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddDays(v.days).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddDays(v.days).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1202,7 +1327,7 @@ func TestCarbon_SubDays(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubDays(v.days).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubDays(v.days).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1231,7 +1356,7 @@ func TestCarbon_AddDay(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddDay().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddDay().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1260,7 +1385,7 @@ func TestCarbon_SubDay(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubDay().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubDay().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1290,7 +1415,7 @@ func TestCarbon_AddHours(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddHours(v.hours).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddHours(v.hours).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1320,7 +1445,7 @@ func TestCarbon_SubHours(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubHours(v.hours).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubHours(v.hours).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1349,7 +1474,7 @@ func TestCarbon_AddHour(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddHour().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddHour().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1378,7 +1503,7 @@ func TestCarbon_SubHour(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubHour().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubHour().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1408,7 +1533,7 @@ func TestCarbon_AddMinutes(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddMinutes(v.minutes).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddMinutes(v.minutes).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1438,7 +1563,7 @@ func TestCarbon_SubMinutes(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubMinutes(v.minutes).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubMinutes(v.minutes).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1467,7 +1592,7 @@ func TestCarbon_AddMinute(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddMinute().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddMinute().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1496,7 +1621,7 @@ func TestCarbon_SubMinute(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubMinute().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubMinute().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1526,7 +1651,7 @@ func TestCarbon_AddSeconds(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddSeconds(v.seconds).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddSeconds(v.seconds).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1556,7 +1681,7 @@ func TestCarbon_SubSeconds(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubSeconds(v.seconds).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubSeconds(v.seconds).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1585,7 +1710,7 @@ func TestCarbon_AddSecond(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).AddSecond().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddSecond().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1614,7 +1739,7 @@ func TestCarbon_SubSecond(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Timezone(PRC).Parse(v.input).SubSecond().ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).SubSecond().ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)

@@ -493,6 +493,300 @@ func TestCarbon_ToRFC7231String(t *testing.T) {
 	}
 }
 
+func TestCarbon_DiffInWeeks(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", -2639},
+		{"", "2020-08-05 13:14:15", 2639},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", -1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffInWeeks(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffAbsInWeeks(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", 2639},
+		{"", "2020-08-05 13:14:15", 2639},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffAbsInWeeks(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffInDays(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", -18479},
+		{"", "2020-08-05 13:14:15", 18479},
+		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
+		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
+		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffInDays(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffAbsInDays(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", 18479},
+		{"", "2020-08-05 13:14:15", 18479},
+		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
+		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffAbsInDays(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffInHours(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", -443501},
+		{"", "2020-08-05 13:14:15", 443501},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffInHours(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffAbsInHours(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", 443501},
+		{"", "2020-08-05 13:14:15", 443501},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffAbsInHours(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffInMinutes(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
+		{"2020-08-05 13:14:15", "", -26610074},
+		{"", "2010-08-05 13:14:15", 21349754},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffInMinutes(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffAbsInMinutes(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
+		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
+		{"2020-08-05 13:14:15", "", 26610074},
+		{"", "2010-08-05 13:14:15", 21349754},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffAbsInMinutes(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffInSeconds(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", -1596604455},
+		{"", "2010-08-05 13:14:15", 1280985255},
+		{"2020-08-05 13:14:15", "2010-08-05 13:14:15", -315619200},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffInSeconds(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_DiffAbsInSeconds(t *testing.T) {
+	Tests := []struct {
+		input1 string // 输入值1
+		input2 string // 输入值2
+		output int64  // 期望输出值
+	}{
+		{"0000-00-00 00:00:00", "", 0},
+		{"", "0000-00-00 00:00:00", 0},
+		{"", "", 0},
+		{"2020-08-05 13:14:15", "", 1596604455},
+		{"", "2010-08-05 13:14:15", 1280985255},
+		{"2020-08-05 13:14:15", "2010-08-05 13:14:15", 315619200},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input1).DiffAbsInSeconds(Parse(v.input2))
+
+		if output != v.output {
+			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_DaysInYear(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
@@ -676,13 +970,35 @@ func TestCarbon_WeekOfMonth(t *testing.T) {
 	}
 }
 
+func TestCarbon_Timezone(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{PRC, PRC},
+		{Tokyo, Tokyo},
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(v.input).Timezone()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_Age(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0", 0},
 		{"0000-00-00", 0},
+		{Now().AddYears(18).ToDateTimeString(), 0},
 		{Now().SubYears(18).ToDateTimeString(), 18},
+		{CreateFromDate(Now().Year(), 12, 31).SubYears(18).ToDateTimeString(), 17},
 	}
 
 	for _, v := range Tests {
@@ -948,6 +1264,37 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).IsLeapYear()
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
+		}
+	}
+}
+
+func TestCarbon_IsLongYear(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output bool   // 期望输出值
+	}{
+		{"2015-01-01", true},
+		{"2016-01-01", false},
+		{"2017-01-01", false},
+		{"2018-01-01", false},
+		{"2019-01-01", false},
+		{"2020-01-01", true},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).IsLongYear()
 
 		if output != v.output {
 			expected := "false"
