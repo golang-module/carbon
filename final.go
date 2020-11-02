@@ -9,9 +9,29 @@ func (c Carbon) ToString() string {
 	return c.Time.String()
 }
 
-// ToTimestamp 输出时间戳
+// ToTimestamp ToTimestampWithSecond的简称
 func (c Carbon) ToTimestamp() int64 {
+	return c.ToTimestampWithSecond()
+}
+
+// ToTimestampWithSecond 输出秒级时间戳
+func (c Carbon) ToTimestampWithSecond() int64 {
 	return c.Time.Unix()
+}
+
+// ToTimestampWithMillisecond 输出毫秒级时间戳
+func (c Carbon) ToTimestampWithMillisecond() int64 {
+	return c.Time.UnixNano() / int64(time.Millisecond)
+}
+
+// ToTimestampWithMicrosecond 输出微秒级时间戳
+func (c Carbon) ToTimestampWithMicrosecond() int64 {
+	return c.Time.UnixNano() / int64(time.Microsecond)
+}
+
+// ToTimestampWithNanosecond 输出纳秒级时间戳
+func (c Carbon) ToTimestampWithNanosecond() int64 {
+	return c.Time.UnixNano()
 }
 
 // Format ToFormatString的简称
@@ -376,6 +396,26 @@ func (c Carbon) Year() int {
 	return c.Time.Year()
 }
 
+// 获取当前季度
+func (c Carbon) Quarter() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	month := c.Time.Month()
+	quarter := 0
+	switch {
+	case month >= 1 && month <= 3:
+		quarter = 1
+	case month >= 4 && month <= 6:
+		quarter = 2
+	case month >= 7 && month <= 9:
+		quarter = 3
+	case month >= 10 && month <= 12:
+		quarter = 4
+	}
+	return quarter
+}
+
 // 获取当前月
 func (c Carbon) Month() int {
 	if c.Time.IsZero() {
@@ -414,6 +454,30 @@ func (c Carbon) Second() int {
 		return 0
 	}
 	return c.Time.Second()
+}
+
+// 获取当前毫秒数
+func (c Carbon) Millisecond() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Nanosecond() / 1e6
+}
+
+// 获取当前微秒数
+func (c Carbon) Microsecond() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Nanosecond() / 1e9
+}
+
+// 获取当前纳秒数
+func (c Carbon) Nanosecond() int {
+	if c.Time.IsZero() {
+		return 0
+	}
+	return c.Time.Nanosecond()
 }
 
 // IsZero 是否是零值
