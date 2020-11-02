@@ -161,10 +161,17 @@ func (c Carbon) ParseByDuration(duration string) Carbon {
 	return newCarbon(ParseByDuration(duration).Time.In(c.loc))
 }
 
-// Duration 按照持续时间字符串改变时间(指定时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func (c Carbon) Duration(duration string) Carbon {
+// AddDurations 按照持续时间字符串增加时间
+// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func (c Carbon) AddDuration(duration string) Carbon {
 	c.Time = c.Time.Add(parseByDuration(duration))
+	return c
+}
+
+// SubDurations 按照持续时间字符串减少时间
+// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func (c Carbon) SubDuration(duration string) Carbon {
+	c.Time = c.Time.Add(parseByDuration("-" + duration))
 	return c
 }
 

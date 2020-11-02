@@ -754,38 +754,32 @@ func TestCarbon_ParseByDuration2(t *testing.T) {
 	}
 }
 
-func TestCarbon_Duration(t *testing.T) {
+func TestCarbon_AddDuration(t *testing.T) {
 	Tests := []struct {
 		input    string // 输入值
 		duration string // 输入参数
 		output   string // 期望输出值
 	}{
 		{"2020-01-01 13:14:15", "10h", "2020-01-01 23:14:15"},
-		{"2020-01-01 13:14:15", "-10h", "2020-01-01 03:14:15"},
 		{"2020-01-01 13:14:15", "10.5h", "2020-01-01 23:44:15"},
-		{"2020-01-01 13:14:15", "-10.5h", "2020-01-01 02:44:15"},
 
 		{"2020-01-01 13:14:15", "10m", "2020-01-01 13:24:15"},
-		{"2020-01-01 13:14:15", "-10m", "2020-01-01 13:04:15"},
 		{"2020-01-01 13:14:15", "10.5m", "2020-01-01 13:24:45"},
-		{"2020-01-01 13:14:15", "-10.5m", "2020-01-01 13:03:45"},
 
 		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:25"},
-		{"2020-01-01 13:14:15", "-10s", "2020-01-01 13:14:05"},
 		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:25"},
-		{"2020-01-01 13:14:15", "-10.5s", "2020-01-01 13:14:04"},
 
-		{"2020-01-01 13:14:15", "-10x", ""},
+		{"2020-01-01 13:14:15", "10x", ""},
 	}
 
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in Duration()：%s\n", r)
+			fmt.Printf("catch an exception in AddDuration()：%s\n", r)
 		}
 	}()
 
 	for _, v := range Tests {
-		output := Parse(v.input).Duration(v.duration).ToDateTimeString()
+		output := Parse(v.input).AddDuration(v.duration).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -793,7 +787,48 @@ func TestCarbon_Duration(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).Duration(v.duration).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddDuration(v.duration).ToDateTimeString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubDuration(t *testing.T) {
+	Tests := []struct {
+		input    string // 输入值
+		duration string // 输入参数
+		output   string // 期望输出值
+	}{
+		{"2020-01-01 13:14:15", "10h", "2020-01-01 03:14:15"},
+		{"2020-01-01 13:14:15", "10.5h", "2020-01-01 02:44:15"},
+
+		{"2020-01-01 13:14:15", "10m", "2020-01-01 13:04:15"},
+		{"2020-01-01 13:14:15", "10.5m", "2020-01-01 13:03:45"},
+
+		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:05"},
+		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:04"},
+
+		{"2020-01-01 13:14:15", "10x", ""},
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("catch an exception in SubDuration()：%s\n", r)
+		}
+	}()
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubDuration(v.duration).ToDateTimeString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubDuration(v.duration).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)

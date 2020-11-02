@@ -260,42 +260,42 @@ carbon.Parse("2020-08-05 13:14:15").SubDay().ToDateTimeString() // 2020-08-04 13
 // 三小时后
 carbon.Parse("2020-08-05 13:14:15").AddHours(3).ToDateTimeString() // 2020-08-05 16:14:15
 // 二小时半后
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
 // 一小时后
 carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
 
 // 三小时前
 carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
 // 二小时半前
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5h").ToDateTimeString() // 2020-08-05 10:44:15
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5h").ToDateTimeString() // 2020-08-05 10:44:15
 // 一小时前
 carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 12:14:15
 
 // 三分钟后
 carbon.Parse("2020-08-05 13:14:15").AddMinutes(3).ToDateTimeString() // 2020-08-05 13:17:15
 // 二分钟半后
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
 // 一分钟后
 carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
 
 // 三分钟前
 carbon.Parse("2020-08-05 13:14:15").SubMinutes(3).ToDateTimeString() // 2020-08-05 13:11:15
 // 二分钟半前
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5m").ToDateTimeString() // 2020-08-05 13:11:45
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5m").ToDateTimeString() // 2020-08-05 13:11:45
 // 一分钟前
 carbon.Parse("2020-08-05 13:14:15").SubMinute().ToDateTimeString() // 2020-08-05 13:13:15
 
 // 三秒钟后
 carbon.Parse("2020-08-05 13:14:15").AddSeconds(3).ToDateTimeString() // 2020-08-05 13:14:18
 // 二秒钟半后
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
 // 一秒钟后
 carbon.Parse("2020-08-05 13:14:15").AddSecond().ToDateTimeString() // 2020-08-05 13:14:16
 
 // 三秒钟前
 carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-05 13:14:12
 // 二秒钟半前
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // 一秒钟前
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
 ```

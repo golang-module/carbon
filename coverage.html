@@ -58,7 +58,7 @@
 				
 				<option value="file1">github.com/golang-module/carbon/carbon.go (100.0%)</option>
 				
-				<option value="file2">github.com/golang-module/carbon/database.go (33.3%)</option>
+				<option value="file2">github.com/golang-module/carbon/database.go (26.3%)</option>
 				
 				<option value="file3">github.com/golang-module/carbon/final.go (100.0%)</option>
 				
@@ -379,10 +379,17 @@ func (c Carbon) ParseByDuration(duration string) Carbon <span class="cov8" title
         return newCarbon(ParseByDuration(duration).Time.In(c.loc))
 }</span>
 
-// Duration 按照持续时间字符串改变时间(指定时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func (c Carbon) Duration(duration string) Carbon <span class="cov8" title="1">{
+// AddDurations 按照持续时间字符串增加时间
+// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func (c Carbon) AddDuration(duration string) Carbon <span class="cov8" title="1">{
         c.Time = c.Time.Add(parseByDuration(duration))
+        return c
+}</span>
+
+// SubDurations 按照持续时间字符串减少时间
+// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func (c Carbon) SubDuration(duration string) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.Add(parseByDuration("-" + duration))
         return c
 }</span>
 
@@ -805,6 +812,22 @@ type ToTimestamp struct {
         Carbon
 }
 
+type ToTimestampWithSecond struct {
+        Carbon
+}
+
+type ToTimestampWithMillisecond struct {
+        Carbon
+}
+
+type ToTimestampWithMicrosecond struct {
+        Carbon
+}
+
+type ToTimestampWithNanosecond struct {
+        Carbon
+}
+
 func (c *Carbon) Scan(v interface{}) error <span class="cov0" title="0">{
         value, ok := v.(time.Time)
         if ok </span><span class="cov0" title="0">{
@@ -841,6 +864,22 @@ func (c ToTimeString) MarshalJSON() ([]byte, error) <span class="cov8" title="1"
 
 func (c ToTimestamp) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`%d`, c.ToTimestamp())), nil
+}</span>
+
+func (c ToTimestampWithSecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+        return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithSecond())), nil
+}</span>
+
+func (c ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+        return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMillisecond())), nil
+}</span>
+
+func (c ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+        return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMicrosecond())), nil
+}</span>
+
+func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+        return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithNanosecond())), nil
 }</span>
 </pre>
 		

@@ -263,39 +263,39 @@ carbon.Parse("2020-08-05 13:14:15").SubDay().ToDateTimeString() // 2020-08-04 13
 // Add three hours
 carbon.Parse("2020-08-05 13:14:15").AddHours(3).ToDateTimeString() // 2020-08-05 16:14:15
 // Add two and a half hours
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
 // Add one hour
 carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
 // Subtract three hours
 carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
 // Subtract two and a half hours
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5h").ToDateTimeString() // 2020-08-05 10:44:15
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5h").ToDateTimeString() // 2020-08-05 10:44:15
 // Subtract one hour
 carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 12:14:15
 
 // Add three minutes
 carbon.Parse("2020-08-05 13:14:15").AddMinutes(3).ToDateTimeString() // 2020-08-05 13:17:15
 // Add two and a half minutes
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
 // Add one minute
 carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
 // Subtract three minutes
 carbon.Parse("2020-08-05 13:14:15").SubMinutes(3).ToDateTimeString() // 2020-08-05 13:11:15
 // Subtract two and a half minutes
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5m").ToDateTimeString() // 2020-08-05 13:11:45
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5m").ToDateTimeString() // 2020-08-05 13:11:45
 // Subtract one minute
 carbon.Parse("2020-08-05 13:14:15").SubMinute().ToDateTimeString() // 2020-08-05 13:13:15
 
 // Add three seconds
 carbon.Parse("2020-08-05 13:14:15").AddSeconds(3).ToDateTimeString() // 2020-08-05 13:14:18
 // Add two and a half seconds
-carbon.Parse("2020-08-05 13:14:15").Duration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
 // Add one second
 carbon.Parse("2020-08-05 13:14:15").AddSecond().ToDateTimeString() // 2020-08-05 13:14:16
 // Subtract three seconds
 carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-05 13:14:12
 // Subtract two and a half seconds
-carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // Subtract one second
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
 ```
