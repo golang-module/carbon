@@ -477,18 +477,18 @@ func TestCarbon_CreateFromTimestamp(t *testing.T) {
 		timestamp int64  // 输入参数
 		output    string // 期望输出值
 	}{
+		{123456, "1970-01-01 08:00:00"},
 		{1577855655, "2020-01-01 13:14:15"},
-		{1580447655, "2020-01-31 13:14:15"},
-		{1580534055, "2020-02-01 13:14:15"},
-		{1582866855, "2020-02-28 13:14:15"},
-		{1582953255, "2020-02-29 13:14:15"},
+		{1604074084682, "2020-10-31 00:08:04"},
+		{1604074196366540, "2020-10-31 00:09:56"},
+		{1604074298500312000, "2020-10-31 00:11:38"},
 	}
 
 	for _, v := range Tests {
 		output := CreateFromTimestamp(v.timestamp).ToDateTimeString()
 
 		if output != v.output {
-			t.Fatalf("Expected %s, but got %s", v.output, output)
+			t.Fatalf("Input %d, expected %s, but got %s", v.timestamp, v.output, output)
 		}
 	}
 
@@ -1039,6 +1039,252 @@ func TestCarbon_PreYear(t *testing.T) {
 	}
 }
 
+func TestCarbon_AddQuarters(t *testing.T) {
+	Tests := []struct {
+		input    string // 输入值
+		quarters int
+		output   string // 期望输出值
+	}{
+		{"2019-08-01", 2, "2020-02-01"},
+		{"2019-08-31", 2, "2020-03-02"},
+		{"2020-01-01", 2, "2020-07-01"},
+		{"2020-02-28", 2, "2020-08-28"},
+		{"2020-02-29", 2, "2020-08-29"},
+		{"2020-08-31", 2, "2021-03-03"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).AddQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_NextQuarters(t *testing.T) {
+	Tests := []struct {
+		input    string // 输入值
+		quarters int
+		output   string // 期望输出值
+	}{
+		{"2019-08-01", 2, "2020-02-01"},
+		{"2019-08-31", 2, "2020-02-29"},
+		{"2020-01-01", 2, "2020-07-01"},
+		{"2020-02-28", 2, "2020-08-28"},
+		{"2020-02-29", 2, "2020-08-29"},
+		{"2020-08-31", 2, "2021-02-28"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).NextQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).NextQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubQuarters(t *testing.T) {
+	Tests := []struct {
+		input    string // 输入值
+		quarters int
+		output   string // 期望输出值
+	}{
+		{"2019-08-01", 2, "2019-02-01"},
+		{"2019-08-31", 2, "2019-03-03"},
+		{"2020-01-01", 2, "2019-07-01"},
+		{"2020-02-28", 2, "2019-08-28"},
+		{"2020-02-29", 2, "2019-08-29"},
+		{"2020-08-31", 2, "2020-03-02"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_PreQuarters(t *testing.T) {
+	Tests := []struct {
+		input    string // 输入值
+		quarters int
+		output   string // 期望输出值
+	}{
+		{"2019-08-01", 2, "2019-02-01"},
+		{"2019-08-31", 2, "2019-02-28"},
+		{"2020-01-01", 2, "2019-07-01"},
+		{"2020-02-28", 2, "2019-08-28"},
+		{"2020-02-29", 2, "2019-08-29"},
+		{"2020-08-31", 2, "2020-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).PreQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).PreQuarters(v.quarters).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_AddQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2019-11-01", "2020-02-01"},
+		{"2019-11-30", "2020-03-01"},
+		{"2020-02-28", "2020-05-28"},
+		{"2020-02-29", "2020-05-29"},
+		{"2020-08-31", "2020-12-01"},
+		{"2020-11-01", "2021-02-01"},
+		{"2020-11-30", "2021-03-02"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).AddQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_NextQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2019-11-01", "2020-02-01"},
+		{"2019-11-30", "2020-02-29"},
+		{"2020-02-28", "2020-05-28"},
+		{"2020-02-29", "2020-05-29"},
+		{"2020-08-31", "2020-11-30"},
+		{"2020-11-01", "2021-02-01"},
+		{"2020-11-30", "2021-02-28"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).NextQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).NextQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2019-04-01", "2019-01-01"},
+		{"2019-04-30", "2019-01-30"},
+		{"2020-05-01", "2020-02-01"},
+		{"2020-05-31", "2020-03-02"},
+		{"2020-04-01", "2020-01-01"},
+		{"2020-04-30", "2020-01-30"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_PreQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2019-04-01", "2019-01-01"},
+		{"2019-04-30", "2019-01-30"},
+		{"2020-05-01", "2020-02-01"},
+		{"2020-05-31", "2020-02-29"},
+		{"2020-04-01", "2020-01-01"},
+		{"2020-04-30", "2020-01-30"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).PreQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).PreQuarter().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_AddMonths(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
@@ -1268,6 +1514,124 @@ func TestCarbon_PreMonth(t *testing.T) {
 
 	for _, v := range Tests {
 		output := SetTimezone(PRC).Parse(v.input).PreMonth().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_AddWeeks(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		weeks  int
+		output string // 期望输出值
+	}{
+		{"2020-01-01", 3, "2020-01-22"},
+		{"2020-01-31", 3, "2020-02-21"},
+		{"2020-02-01", 3, "2020-02-22"},
+		{"2020-02-28", 3, "2020-03-20"},
+		{"2020-02-29", 3, "2020-03-21"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddWeeks(v.weeks).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).AddWeeks(v.weeks).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubWeeks(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		weeks  int
+		output string // 期望输出值
+	}{
+		{"2020-01-01", 3, "2019-12-11"},
+		{"2020-01-31", 3, "2020-01-10"},
+		{"2020-02-01", 3, "2020-01-11"},
+		{"2020-02-28", 3, "2020-02-07"},
+		{"2020-02-29", 3, "2020-02-08"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubWeeks(v.weeks).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubWeeks(v.weeks).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_AddWeek(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "2020-01-08"},
+		{"2020-01-31", "2020-02-07"},
+		{"2020-02-01", "2020-02-08"},
+		{"2020-02-28", "2020-03-06"},
+		{"2020-02-29", "2020-03-07"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddWeek().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).AddWeek().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubWeek(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "2019-12-25"},
+		{"2020-01-31", "2020-01-24"},
+		{"2020-02-01", "2020-01-25"},
+		{"2020-02-28", "2020-02-21"},
+		{"2020-02-29", "2020-02-22"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubWeek().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubWeek().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
