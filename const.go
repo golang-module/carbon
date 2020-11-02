@@ -4,7 +4,7 @@ import "time"
 
 // 版权信息
 const (
-	Version = "v1.2.2"
+	Version = "v1.2.3"
 	Author  = "gouguoyin"
 	Email   = "mail@gouguoyin.cn"
 	Blog    = "www.gouguoyin.cn"
