@@ -588,8 +588,8 @@ user := UserModel {
 user.ID // 18
 user.Name // 勾国印
 user.Birthday.ToDateString() // 2012-08-05
-user.CreatedAt.ToTimestamp() // 2012-08-05 13:14:15
-user.DeletedAt.ToDateTimeString() // 1596604455
+user.CreatedAt.ToTimestamp() // 1596604455
+user.DeletedAt.ToDateTimeString() // 2012-08-05 13:14:15
 user.GraduatedAt.AddDay().ToDateString() // 2012-09-10
 user.UpdatedAt.ToDateString() // 2012-08-05
 ```
