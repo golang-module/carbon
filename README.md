@@ -61,8 +61,15 @@ carbon.Tomorrow().ToTimestamp() // 1596690855
 
 ##### 创建Carbon实例
 ```go
-// 从时间戳创建Carbon实例
+// 从秒级时间戳创建Carbon实例
 carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
+// 从毫秒级时间戳创建Carbon实例
+carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
+// 从微秒级时间戳创建Carbon实例
+carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
+// 从纳级时间戳创建Carbon实例
+carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
+
 // 从年月日时分秒创建Carbon实例
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 // 从年月日创建Carbon实例(时分秒默认为当前时分秒)
@@ -198,6 +205,22 @@ carbon.Parse("2020-02-29 13:14:15").PreYears(3).ToDateTimeString() // 2017-02-28
 carbon.Parse("2020-02-29 13:14:15").SubYear().ToDateTimeString() // 2019-03-01 13:14:15
 carbon.Parse("2020-02-29 13:14:15").PreYear().ToDateTimeString() // 2019-02-28 13:14:15
 
+// 三季度后
+carbon.Parse("2019-08-31 13:14:15").AddQuarters(3).ToDateTimeString() // 2019-03-02 13:14:15
+carbon.Parse("2019-08-31 13:14:15").NextQuarters(3).ToDateTimeString() // 2019-02-29 13:14:15
+
+// 一季度后
+carbon.Parse("2019-11-30 13:14:15").AddQuarter().ToDateTimeString() // 2020-03-01 13:14:15
+carbon.Parse("2019-11-30 13:14:15").NextQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+
+// 三季度前
+carbon.Parse("2019-08-31 13:14:15").SubQuarters(3).ToDateTimeString() // 2019-03-03 13:14:15
+carbon.Parse("2019-08-31 13:14:15").PreQuarters(3).ToDateTimeString() // 2019-02-28 13:14:15
+
+// 一季度前
+carbon.Parse("2020-05-31 13:14:15").SubQuarter().ToDateTimeString() // 2020-03-02 13:14:15
+carbon.Parse("2020-05-31 13:14:15").PreQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+
 // 三月后
 carbon.Parse("2020-02-29 13:14:15").AddMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
 carbon.Parse("2020-02-29 13:14:15").NextMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
@@ -213,6 +236,16 @@ carbon.Parse("2020-02-29 13:14:15").PreMonths(3).ToDateTimeString() // 2019-11-2
 // 一月前
 carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 13:14:15
 carbon.Parse("2020-03-31 13:14:15").PreMonth().ToDateTimeString() // 2020-02-29 13:14:15
+
+// 三周后
+carbon.Parse("2020-02-29 13:14:15").AddWeeks(3).ToDateTimeString() // 2020-03-21 13:14:15
+// 一周后
+carbon.Parse("2020-02-29 13:14:15").AddWeek().ToDateTimeString() // 2020-03-07 13:14:15
+
+// 三周前
+carbon.Parse("2020-02-29 13:14:15").SubWeeks(3).ToDateTimeString() // 2020-02-08 13:14:15
+// 一周前
+carbon.Parse("2020-02-29 13:14:15").SubWeek().ToDateTimeString() // 2020-02-22 13:14:15
 
 // 三天后
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString() // 2020-08-08 13:14:15
@@ -297,12 +330,20 @@ carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13
 
 ##### 时间输出
 ```go
-// 输出时间戳
+// 输出秒级时间戳
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithSecond() // 1596604455
+// 输出毫秒级时间戳
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMillisecond() // 1596604455000
+// 输出微秒级时间戳
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMicrosecond() // 1596604455000000
+// 输出纳秒级时间戳
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000000000
 
 // 输出字符串
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 // 输出格式化字符串
+carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 // 输出日期时间字符串
@@ -374,6 +415,8 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // 获取当前年
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// 获取当前季节
+carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
 // 获取当前月
 carbon.Parse("2020-08-05 13:14:15").Month() // 8
 // 获取当前日
@@ -624,6 +667,12 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-11-02
+* CreateFromTimestamp()方法支持秒、毫秒、微秒、纳秒级时间戳
+* 新增ToTimestampWithSecond()方法获取秒级时间戳，等价于ToTimestamp()
+* 新增ToTimestampWithMillisecond()方法获取毫秒级时间戳
+* 新增ToTimestampWithMicrosecond()方法获取微秒级时间戳
+* 新增ToTimestampWithNanosecond()方法获取微秒级时间戳
 ##### 2020-10-22
 * 新增SetYear()方法设置年
 * 新增SetMonth()方法设置月
