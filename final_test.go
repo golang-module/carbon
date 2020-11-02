@@ -42,6 +42,90 @@ func TestCarbon_ToTimestamp(t *testing.T) {
 	}
 }
 
+func TestCarbon_ToTimestampWithSecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int64  // 期望输出值
+	}{
+		{"2020-01-01 13:14:15", 1577855655},
+		{"2020-01-31 13:14:15", 1580447655},
+		{"2020-02-01 13:14:15", 1580534055},
+		{"2020-02-28 13:14:15", 1582866855},
+		{"2020-02-29 13:14:15", 1582953255},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).ToTimestampWithSecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_ToTimestampWithMillisecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int64  // 期望输出值
+	}{
+		{"2020-01-01 13:14:15", 1577855655000},
+		{"2020-01-31 13:14:15", 1580447655000},
+		{"2020-02-01 13:14:15", 1580534055000},
+		{"2020-02-28 13:14:15", 1582866855000},
+		{"2020-02-29 13:14:15", 1582953255000},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).ToTimestampWithMillisecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_ToTimestampWithMicrosecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int64  // 期望输出值
+	}{
+		{"2020-01-01 13:14:15", 1577855655000000},
+		{"2020-01-31 13:14:15", 1580447655000000},
+		{"2020-02-01 13:14:15", 1580534055000000},
+		{"2020-02-28 13:14:15", 1582866855000000},
+		{"2020-02-29 13:14:15", 1582953255000000},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).ToTimestampWithMicrosecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_ToTimestampWithNanosecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int64  // 期望输出值
+	}{
+		{"2020-01-01 13:14:15", 1577855655000000000},
+		{"2020-01-31 13:14:15", 1580447655000000000},
+		{"2020-02-01 13:14:15", 1580534055000000000},
+		{"2020-02-28 13:14:15", 1582866855000000000},
+		{"2020-02-29 13:14:15", 1582953255000000000},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).ToTimestampWithNanosecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_Format(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
@@ -1029,6 +1113,28 @@ func TestCarbon_Year(t *testing.T) {
 	}
 }
 
+func TestCarbon_Quarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00", 0},
+		{"2020-01-05", 1},
+		{"2020-04-05", 2},
+		{"2020-08-05", 3},
+		{"2020-11-05", 4},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Quarter()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_Month(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
@@ -1127,6 +1233,69 @@ func TestCarbon_Second(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).Second()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Millisecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 0},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Millisecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Microsecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 0},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Microsecond()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Nanosecond(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05 13:14:15", 0},
+		{"2020-08-05", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Nanosecond()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %d, but got %d", v.input, v.output, output)
