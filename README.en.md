@@ -621,7 +621,7 @@ type UserModel struct {
 
 // Instantiate model
 user := UserModel {
-    Birthday: Birthday: ToRssString{carbon.Now()},
+    Birthday: ToRssString{carbon.Now()},
 }
 
 // Overload MarshalJSON method

@@ -625,7 +625,7 @@ type UserModel struct {
 
 // 实例化模型
 user := UserModel {
-    Birthday: Birthday: ToRssString{carbon.Now()},
+    Birthday: ToRssString{carbon.Now()},
 }
 
 // 重写MarshalJSON方法
