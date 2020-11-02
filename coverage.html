@@ -1,0 +1,1577 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/golang-module/carbon/calendar.go (100.0%)</option>
+				
+				<option value="file1">github.com/golang-module/carbon/carbon.go (100.0%)</option>
+				
+				<option value="file2">github.com/golang-module/carbon/database.go (33.3%)</option>
+				
+				<option value="file3">github.com/golang-module/carbon/final.go (100.0%)</option>
+				
+				<option value="file4">github.com/golang-module/carbon/private.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package carbon
+
+var (
+        // 十二生肖
+        SymbolicAnimals = [12]string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
+
+        // 天干
+        HeavenlyStems = [10]string{"庚", "辛", "壬", "癸", "甲", "乙", "丙", "丙", "戊", "己"}
+
+        // 地支
+        EarthlyBranches = [12]string{"申", "酉", "戌", "亥", "子", "丑", "寅", "卯", "辰", "巳", "午", "未"}
+)
+
+// ToAnimalYear 获取生肖年
+func (c Carbon) ToAnimalYear() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">year := c.Time.Year()
+        return SymbolicAnimals[year%12]</span>
+}
+
+// ToLunarYear 获取农历年
+func (c Carbon) ToLunarYear() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">year := c.Time.Year()
+        return HeavenlyStems[year%10] + EarthlyBranches[year%12]</span>
+}
+
+// IsYearOfRat 是否是鼠年
+func (c Carbon) IsYearOfRat() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 4 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfOx 是否是牛年
+func (c Carbon) IsYearOfOx() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 5 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfTiger 是否是虎年
+func (c Carbon) IsYearOfTiger() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 6 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfRabbit 是否是兔年
+func (c Carbon) IsYearOfRabbit() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 7 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfDragon 是否是龙年
+func (c Carbon) IsYearOfDragon() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 8 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfSnake 是否是蛇年
+func (c Carbon) IsYearOfSnake() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 9 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfHorse 是否是马年
+func (c Carbon) IsYearOfHorse() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 10 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfGoat 是否是羊年
+func (c Carbon) IsYearOfGoat() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 11 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfMonkey 是否是猴年
+func (c Carbon) IsYearOfMonkey() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 0 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfRooster 是否是鸡年
+func (c Carbon) IsYearOfRooster() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 1 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfDog 是否是狗年
+func (c Carbon) IsYearOfDog() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 2 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsYearOfPig 是否是猪年
+func (c Carbon) IsYearOfPig() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%12 == 3 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package carbon
+
+import (
+        "strconv"
+        "strings"
+        "time"
+)
+
+type Carbon struct {
+        Time time.Time
+        loc  *time.Location
+}
+
+// Now 当前
+func Now() Carbon <span class="cov8" title="1">{
+        return newCarbon(time.Now())
+}</span>
+
+// Now 当前(指定时区)
+func (c Carbon) Now() Carbon <span class="cov8" title="1">{
+        return newCarbon(Now().Time.In(c.loc))
+}</span>
+
+// Tomorrow 明天
+func Tomorrow() Carbon <span class="cov8" title="1">{
+        return newCarbon(time.Now().AddDate(0, 0, 1))
+}</span>
+
+// Tomorrow 明天(指定时区)
+func (c Carbon) Tomorrow() Carbon <span class="cov8" title="1">{
+        return newCarbon(Tomorrow().Time.In(c.loc))
+}</span>
+
+// Yesterday 昨天
+func Yesterday() Carbon <span class="cov8" title="1">{
+        return newCarbon(time.Now().AddDate(0, 0, -1))
+}</span>
+
+// Yesterday 昨天(指定时区)
+func (c Carbon) Yesterday() Carbon <span class="cov8" title="1">{
+        return newCarbon(Yesterday().Time.In(c.loc))
+}</span>
+
+// CreateFromTimestamp 从时间戳创建Carbon实例
+func CreateFromTimestamp(timestamp int64) Carbon <span class="cov8" title="1">{
+        ts := timestamp
+        switch len(strconv.FormatInt(timestamp, 10)) </span>{
+        case 10:<span class="cov8" title="1">
+                ts = timestamp</span>
+        case 13:<span class="cov8" title="1">
+                ts = timestamp / 1e3</span>
+        case 16:<span class="cov8" title="1">
+                ts = timestamp / 1e6</span>
+        case 19:<span class="cov8" title="1">
+                ts = timestamp / 1e9</span>
+        default:<span class="cov8" title="1">
+                ts = 0</span>
+        }
+        <span class="cov8" title="1">return newCarbon(time.Unix(ts, 0))</span>
+}
+
+// CreateFromTimestamp 从时间戳创建Carbon实例(指定时区)
+func (c Carbon) CreateFromTimestamp(timestamp int64) Carbon <span class="cov8" title="1">{
+        return newCarbon(CreateFromTimestamp(timestamp).Time.In(c.loc))
+}</span>
+
+// CreateFromDateTime 从年月日时分秒创建Carbon实例
+func CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon <span class="cov8" title="1">{
+        return newCarbon(time.Date(year, time.Month(month), day, hour, minute, second, 0, getLocalByTimezone(Local)))
+}</span>
+
+// CreateFromDateTime 从年月日时分秒创建Carbon实例(指定时区)
+func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon <span class="cov8" title="1">{
+        return newCarbon(CreateFromDateTime(year, month, day, hour, minute, second).Time.In(c.loc))
+}</span>
+
+// CreateFromDate 从年月日创建Carbon实例
+func CreateFromDate(year int, month int, day int) Carbon <span class="cov8" title="1">{
+        hour, minute, second := time.Now().Clock()
+        return newCarbon(time.Date(year, time.Month(month), day, hour, minute, second, 0, getLocalByTimezone(Local)))
+}</span>
+
+// CreateFromDate 从年月日创建Carbon实例(指定时区)
+func (c Carbon) CreateFromDate(year int, month int, day int) Carbon <span class="cov8" title="1">{
+        return newCarbon(CreateFromDate(year, month, day).Time.In(c.loc))
+}</span>
+
+// CreateFromTime 从时分秒创建Carbon实例
+func CreateFromTime(hour int, minute int, second int) Carbon <span class="cov8" title="1">{
+        year, month, day := time.Now().Date()
+        return newCarbon(time.Date(year, month, day, hour, minute, second, 0, getLocalByTimezone(Local)))
+}</span>
+
+// CreateFromTime 从时分秒创建Carbon实例(指定时区)
+func (c Carbon) CreateFromTime(hour int, minute int, second int) Carbon <span class="cov8" title="1">{
+        return newCarbon(CreateFromTime(hour, minute, second).Time.In(c.loc))
+}</span>
+
+// CreateFromGoTime 从原生time.Time创建Carbon实例
+func CreateFromGoTime(t time.Time) Carbon <span class="cov8" title="1">{
+        return newCarbon(t)
+}</span>
+
+// CreateFromGoTime 从原生time.Time创建Carbon实例(指定时区)
+func (c Carbon) CreateFromGoTime(t time.Time) Carbon <span class="cov8" title="1">{
+        return newCarbon(CreateFromGoTime(t).Time.In(c.loc))
+}</span>
+
+// Parse 解析标准格式时间字符串
+func Parse(value string) Carbon <span class="cov8" title="1">{
+        layout := DateTimeFormat
+
+        if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" </span><span class="cov8" title="1">{
+                return Carbon{loc: getLocalByTimezone(Local)}
+        }</span>
+
+        <span class="cov8" title="1">if len(value) == 10 &amp;&amp; strings.Count(value, "-") == 2 </span><span class="cov8" title="1">{
+                layout = DateFormat
+        }</span>
+
+        <span class="cov8" title="1">if len(value) == 14 </span><span class="cov8" title="1">{
+                layout = ShortDateTimeFormat
+        }</span>
+
+        <span class="cov8" title="1">if len(value) == 8 </span><span class="cov8" title="1">{
+                layout = ShortDateFormat
+        }</span>
+
+        <span class="cov8" title="1">if strings.Index(value, "T") == 10 </span><span class="cov8" title="1">{
+                layout = RFC3339Format
+        }</span>
+
+        <span class="cov8" title="1">return newCarbon(parseByLayout(value, layout))</span>
+}
+
+// Parse 解析标准格式时间字符串(指定时区)
+func (c Carbon) Parse(value string) Carbon <span class="cov8" title="1">{
+        return newCarbon(Parse(value).Time.In(c.loc))
+}</span>
+
+// ParseByFormat 解析指定格式时间字符串
+func ParseByFormat(value string, format string) Carbon <span class="cov8" title="1">{
+        value = strings.Trim(value, " ")
+        layout := format2layout(format)
+        return newCarbon(parseByLayout(value, layout))
+}</span>
+
+// ParseByFormat 解析指定格式时间字符串(指定时区)
+func (c Carbon) ParseByFormat(value string, format string) Carbon <span class="cov8" title="1">{
+        return newCarbon(ParseByFormat(value, format).Time.In(c.loc))
+}</span>
+
+// ParseByDuration 解析持续时间字符串(基于现在时间)
+// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func ParseByDuration(duration string) Carbon <span class="cov8" title="1">{
+        return newCarbon(time.Now().Add(parseByDuration(duration)))
+}</span>
+
+// ParseByDuration 解析持续时间字符串(指定时区)
+func (c Carbon) ParseByDuration(duration string) Carbon <span class="cov8" title="1">{
+        return newCarbon(ParseByDuration(duration).Time.In(c.loc))
+}</span>
+
+// Duration 按照持续时间字符串改变时间(指定时区)
+// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+func (c Carbon) Duration(duration string) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.Add(parseByDuration(duration))
+        return c
+}</span>
+
+// AddYears N年后
+func (c Carbon) AddYears(years int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(years, 0, 0)
+        return c
+}</span>
+
+// AddYear 1年后
+func (c Carbon) AddYear() Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(1, 0, 0)
+        return c
+}</span>
+
+// SubYears N年前
+func (c Carbon) SubYears(years int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(-years, 0, 0)
+        return c
+}</span>
+
+// SubYear 1年前
+func (c Carbon) SubYear() Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(-1, 0, 0)
+        return c
+}</span>
+
+// AddMonths N季度后
+func (c Carbon) AddQuarters(quarters int) Carbon <span class="cov8" title="1">{
+        return c.AddMonths(quarters * MonthsPerQuarter)
+}</span>
+
+// AddMonth 1季度后
+func (c Carbon) AddQuarter() Carbon <span class="cov8" title="1">{
+        return c.AddQuarters(1)
+}</span>
+
+// SubMonths N季度前
+func (c Carbon) SubQuarters(quarters int) Carbon <span class="cov8" title="1">{
+        return c.SubMonths(quarters * MonthsPerQuarter)
+}</span>
+
+// SubMonth 1季度前
+func (c Carbon) SubQuarter() Carbon <span class="cov8" title="1">{
+        return c.SubQuarters(1)
+}</span>
+
+// AddMonths N月后
+func (c Carbon) AddMonths(months int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(0, months, 0)
+        return c
+}</span>
+
+// AddMonth 1月后
+func (c Carbon) AddMonth() Carbon <span class="cov8" title="1">{
+        return c.AddMonths(1)
+}</span>
+
+// SubMonths N月前
+func (c Carbon) SubMonths(months int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(0, -months, 0)
+        return c
+}</span>
+
+// SubMonth 1月前
+func (c Carbon) SubMonth() Carbon <span class="cov8" title="1">{
+        return c.SubMonths(1)
+}</span>
+
+// AddWeeks N周后
+func (c Carbon) AddWeeks(weeks int) Carbon <span class="cov8" title="1">{
+        return c.AddDays(weeks * DaysPerWeek)
+}</span>
+
+// AddWeek 1天后
+func (c Carbon) AddWeek() Carbon <span class="cov8" title="1">{
+        return c.AddWeeks(1)
+}</span>
+
+// SubWeeks N周后
+func (c Carbon) SubWeeks(weeks int) Carbon <span class="cov8" title="1">{
+        return c.SubDays(weeks * DaysPerWeek)
+}</span>
+
+// SubWeek 1天后
+func (c Carbon) SubWeek() Carbon <span class="cov8" title="1">{
+        return c.SubWeeks(1)
+}</span>
+
+// AddDays N天后
+func (c Carbon) AddDays(days int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(0, 0, days)
+        return c
+}</span>
+
+// AddDay 1天后
+func (c Carbon) AddDay() Carbon <span class="cov8" title="1">{
+        return c.AddDays(1)
+}</span>
+
+// SubDays N天前
+func (c Carbon) SubDays(days int) Carbon <span class="cov8" title="1">{
+        c.Time = c.Time.AddDate(0, 0, -days)
+        return c
+}</span>
+
+// SubDay 1天前
+func (c Carbon) SubDay() Carbon <span class="cov8" title="1">{
+        return c.SubDays(1)
+}</span>
+
+// AddHours N小时后
+func (c Carbon) AddHours(hours int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(hours) * time.Hour
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// AddHour 1小时后
+func (c Carbon) AddHour() Carbon <span class="cov8" title="1">{
+        return c.AddHours(1)
+}</span>
+
+// SubHours N小时前
+func (c Carbon) SubHours(hours int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(hours) * -time.Hour
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// SubHour 1小时前
+func (c Carbon) SubHour() Carbon <span class="cov8" title="1">{
+        return c.SubHours(1)
+}</span>
+
+// AddMinutes N分钟后
+func (c Carbon) AddMinutes(minutes int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(minutes) * time.Minute
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// AddMinute 1分钟后
+func (c Carbon) AddMinute() Carbon <span class="cov8" title="1">{
+        return c.AddMinutes(1)
+}</span>
+
+// SubMinutes N分钟前
+func (c Carbon) SubMinutes(minutes int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(minutes) * -time.Minute
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// SubMinute 1分钟前
+func (c Carbon) SubMinute() Carbon <span class="cov8" title="1">{
+        return c.SubMinutes(1)
+}</span>
+
+// AddSeconds N秒钟后
+func (c Carbon) AddSeconds(seconds int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(seconds) * time.Second
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// AddSecond 1秒钟后
+func (c Carbon) AddSecond() Carbon <span class="cov8" title="1">{
+        return c.AddSeconds(1)
+}</span>
+
+// SubSeconds N秒钟前
+func (c Carbon) SubSeconds(seconds int) Carbon <span class="cov8" title="1">{
+        duration := time.Duration(seconds) * -time.Second
+        c.Time = c.Time.Add(duration)
+        return c
+}</span>
+
+// SubSecond 1秒钟前
+func (c Carbon) SubSecond() Carbon <span class="cov8" title="1">{
+        return c.SubSeconds(1)
+}</span>
+
+// NextYears N年后
+func (c Carbon) NextYears(years int) Carbon <span class="cov8" title="1">{
+        year := c.Time.Year() + years
+        month := c.Time.Month()
+        day := c.Time.Day()
+
+        // 获取N年后本月的最后一天
+        last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
+
+        if day &gt; last.Day() </span><span class="cov8" title="1">{
+                day = last.Day()
+        }</span>
+
+        <span class="cov8" title="1">c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c</span>
+}
+
+// NextYear 1年后
+func (c Carbon) NextYear() Carbon <span class="cov8" title="1">{
+        return c.NextYears(1)
+}</span>
+
+// PreYears N年前
+func (c Carbon) PreYears(years int) Carbon <span class="cov8" title="1">{
+        return c.NextYears(-years)
+}</span>
+
+// PreYear 1年前
+func (c Carbon) PreYear() Carbon <span class="cov8" title="1">{
+        return c.NextYears(-1)
+}</span>
+
+// NextQuarters N季度后
+func (c Carbon) NextQuarters(quarters int) Carbon <span class="cov8" title="1">{
+        return c.NextMonths(quarters * MonthsPerQuarter)
+}</span>
+
+// NextQuarters 1季度后
+func (c Carbon) NextQuarter() Carbon <span class="cov8" title="1">{
+        return c.NextQuarters(1)
+}</span>
+
+// PreQuarters N季度前
+func (c Carbon) PreQuarters(quarters int) Carbon <span class="cov8" title="1">{
+        return c.NextMonths(-quarters * MonthsPerQuarter)
+}</span>
+
+// PreQuarter 1季度前
+func (c Carbon) PreQuarter() Carbon <span class="cov8" title="1">{
+        return c.PreQuarters(1)
+}</span>
+
+// NextMonths N月后
+func (c Carbon) NextMonths(months int) Carbon <span class="cov8" title="1">{
+        year := c.Time.Year()
+        month := c.Time.Month() + time.Month(months)
+        day := c.Time.Day()
+
+        // 获取N月后的最后一天
+        last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
+
+        if day &gt; last.Day() </span><span class="cov8" title="1">{
+                day = last.Day()
+        }</span>
+
+        <span class="cov8" title="1">c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c</span>
+}
+
+// NextMonth 1月后
+func (c Carbon) NextMonth() Carbon <span class="cov8" title="1">{
+        return c.NextMonths(1)
+}</span>
+
+// PreMonths N月前
+func (c Carbon) PreMonths(months int) Carbon <span class="cov8" title="1">{
+        return c.NextMonths(-months)
+}</span>
+
+// PreMonth 1月前
+func (c Carbon) PreMonth() Carbon <span class="cov8" title="1">{
+        return c.PreMonths(1)
+}</span>
+
+// StartOfYear 本年开始时间
+func (c Carbon) StartOfYear() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), 1, 1, 0, 0, 0, 0, c.loc)
+        return c
+}</span>
+
+// EndOfYear 本年结束时间
+func (c Carbon) EndOfYear() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), 12, 31, 23, 59, 59, 0, c.loc)
+        return c
+}</span>
+
+// StartOfMonth 本月开始时间
+func (c Carbon) StartOfMonth() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), 1, 0, 0, 0, 0, c.loc)
+        return c
+}</span>
+
+// EndOfMonth 本月结束时间
+func (c Carbon) EndOfMonth() Carbon <span class="cov8" title="1">{
+        t := time.Date(c.Time.Year(), c.Time.Month(), 1, 23, 59, 59, 0, c.loc)
+        c.Time = t.AddDate(0, 1, -1)
+        return c
+}</span>
+
+// StartOfWeek 本周开始时间
+func (c Carbon) StartOfWeek() Carbon <span class="cov8" title="1">{
+        days := c.Time.Weekday()
+        if days == 0 </span><span class="cov8" title="1">{
+                days = DaysPerWeek
+        }</span>
+        <span class="cov8" title="1">t := time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 0, 0, 0, 0, c.loc)
+        c.Time = t.AddDate(0, 0, int(1-days))
+        return c</span>
+}
+
+// EndOfWeek 本周结束时间
+func (c Carbon) EndOfWeek() Carbon <span class="cov8" title="1">{
+        days := c.Time.Weekday()
+        if days == 0 </span><span class="cov8" title="1">{
+                days = DaysPerWeek
+        }</span>
+        <span class="cov8" title="1">t := time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 0, c.loc)
+        c.Time = t.AddDate(0, 0, int(DaysPerWeek-days))
+        return c</span>
+}
+
+// StartOfDay 本日开始时间
+func (c Carbon) StartOfDay() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 0, 0, 0, 0, c.loc)
+        return c
+}</span>
+
+// EndOfDay 本日结束时间
+func (c Carbon) EndOfDay() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 0, c.loc)
+        return c
+}</span>
+
+// StartOfHour 小时开始时间
+func (c Carbon) StartOfHour() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), 0, 0, 0, c.loc)
+        return c
+}</span>
+
+// EndOfHour 小时结束时间
+func (c Carbon) EndOfHour() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), 59, 59, 0, c.loc)
+        return c
+}</span>
+
+// StartOfMinute 分钟开始时间
+func (c Carbon) StartOfMinute() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 0, 0, c.loc)
+        return c
+}</span>
+
+// EndOfMinute 分钟结束时间
+func (c Carbon) EndOfMinute() Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 59, 0, c.loc)
+        return c
+}</span>
+
+// Timezone 设置时区
+func SetTimezone(name string) Carbon <span class="cov8" title="1">{
+        return Carbon{loc: getLocalByTimezone(name)}
+}</span>
+
+// Timezone 设置时区
+func (c Carbon) SetTimezone(name string) Carbon <span class="cov8" title="1">{
+        loc := getLocalByTimezone(name)
+        return Carbon{Time: c.Time.In(c.loc), loc: loc}
+}</span>
+
+// SetYear 设置年
+func (c Carbon) SetYear(year int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(year, c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+
+// SetMonth 设置月
+func (c Carbon) SetMonth(month int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), time.Month(month), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+
+// SetDay 设置日
+func (c Carbon) SetDay(day int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+
+// SetHour 设置时
+func (c Carbon) SetHour(hour int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), hour, c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+
+// SetMinute 设置分
+func (c Carbon) SetMinute(minute int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), minute, c.Time.Second(), c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+
+// SetSecond 设置秒
+func (c Carbon) SetSecond(second int) Carbon <span class="cov8" title="1">{
+        c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, c.Time.Nanosecond(), c.loc)
+        return c
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package carbon
+
+import (
+        "database/sql/driver"
+        "fmt"
+        "time"
+)
+
+type ToDateTimeString struct {
+        Carbon
+}
+
+type ToDateString struct {
+        Carbon
+}
+
+type ToTimeString struct {
+        Carbon
+}
+
+type ToTimestamp struct {
+        Carbon
+}
+
+func (c *Carbon) Scan(v interface{}) error <span class="cov0" title="0">{
+        value, ok := v.(time.Time)
+        if ok </span><span class="cov0" title="0">{
+                *c = Carbon{Time: value}
+                return nil
+        }</span>
+        <span class="cov0" title="0">return fmt.Errorf("can not convert %v to timestamp", v)</span>
+}
+
+func (c Carbon) Value() (driver.Value, error) <span class="cov0" title="0">{
+        var zeroTime time.Time
+        var timeTime = c.Time
+        if timeTime.UnixNano() == zeroTime.UnixNano() </span><span class="cov0" title="0">{
+                return nil, nil
+        }</span>
+        <span class="cov0" title="0">return timeTime, nil</span>
+}
+
+func (c Carbon) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
+}</span>
+
+func (c ToDateTimeString) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
+}</span>
+
+func (c ToDateString) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return []byte(fmt.Sprintf(`"%s"`, c.ToDateString())), nil
+}</span>
+
+func (c ToTimeString) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return []byte(fmt.Sprintf(`"%s"`, c.ToTimeString())), nil
+}</span>
+
+func (c ToTimestamp) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return []byte(fmt.Sprintf(`%d`, c.ToTimestamp())), nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package carbon
+
+import (
+        "time"
+)
+
+// ToString 输出字符串
+func (c Carbon) ToString() string <span class="cov8" title="1">{
+        return c.Time.String()
+}</span>
+
+// ToTimestamp ToTimestampWithSecond的简称
+func (c Carbon) ToTimestamp() int64 <span class="cov8" title="1">{
+        return c.ToTimestampWithSecond()
+}</span>
+
+// ToTimestampWithSecond 输出秒级时间戳
+func (c Carbon) ToTimestampWithSecond() int64 <span class="cov8" title="1">{
+        return c.Time.Unix()
+}</span>
+
+// ToTimestampWithMillisecond 输出毫秒级时间戳
+func (c Carbon) ToTimestampWithMillisecond() int64 <span class="cov8" title="1">{
+        return c.Time.UnixNano() / int64(time.Millisecond)
+}</span>
+
+// ToTimestampWithMicrosecond 输出微秒级时间戳
+func (c Carbon) ToTimestampWithMicrosecond() int64 <span class="cov8" title="1">{
+        return c.Time.UnixNano() / int64(time.Microsecond)
+}</span>
+
+// ToTimestampWithNanosecond 输出纳秒级时间戳
+func (c Carbon) ToTimestampWithNanosecond() int64 <span class="cov8" title="1">{
+        return c.Time.UnixNano()
+}</span>
+
+// Format ToFormatString的简称
+func (c Carbon) Format(format string) string <span class="cov8" title="1">{
+        return c.ToFormatString(format)
+}</span>
+
+// ToFormatString 输出指定格式时间
+func (c Carbon) ToFormatString(format string) string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.In(c.loc).Format(format2layout(format))</span>
+}
+
+// ToDayDateTimeString 输出天数日期时间字符串
+func (c Carbon) ToDayDateTimeString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(DayDateTimeFormat)</span>
+}
+
+// ToDateTimeString 输出日期时间字符串
+func (c Carbon) ToDateTimeString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(DateTimeFormat)</span>
+}
+
+// ToDateString 输出日期字符串
+func (c Carbon) ToDateString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(DateFormat)</span>
+}
+
+// ToTimeString 输出时间字符串
+func (c Carbon) ToTimeString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(TimeFormat)</span>
+}
+
+// ToAtomString 输出Atom格式字符串
+func (c Carbon) ToAtomString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC3339Format)</span>
+}
+
+// ToAnsicString 输出ANSIC格式字符串
+func (c Carbon) ToAnsicString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(AnsicFormat)</span>
+}
+
+// ToCookieString 输出Cookie格式字符串
+func (c Carbon) ToCookieString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(CookieFormat)</span>
+}
+
+// ToRssString 输出RSS格式字符串
+func (c Carbon) ToRssString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RssFormat)</span>
+}
+
+// ToW3cString 输出W3C格式字符串
+func (c Carbon) ToW3cString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC3339Format)</span>
+}
+
+// ToUnixDateString 输出UnixDate格式字符串
+func (c Carbon) ToUnixDateString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(UnixDateFormat)</span>
+}
+
+// ToUnixDateString 输出RubyDate格式字符串
+func (c Carbon) ToRubyDateString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RubyDateFormat)</span>
+}
+
+// ToKitchenString 输出Kitchen格式字符串
+func (c Carbon) ToKitchenString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(KitchenFormat)</span>
+}
+
+// ToRfc822String 输出RFC822格式字符串
+func (c Carbon) ToRFC822String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC822Format)</span>
+}
+
+// ToRfc822String 输出RFC822Z格式字符串
+func (c Carbon) ToRFC822zString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC822ZFormat)</span>
+}
+
+// ToRfc850String 输出RFC850格式字符串
+func (c Carbon) ToRFC850String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC850Format)</span>
+}
+
+// ToRfc1036String 输出RFC1036格式字符串
+func (c Carbon) ToRFC1036String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC1036Format)</span>
+}
+
+// ToRfc1123String 输出RFC1123格式字符串
+func (c Carbon) ToRFC1123String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC1123Format)</span>
+}
+
+// ToRFC1123ZString 输出RFC1123Z格式字符串
+func (c Carbon) ToRFC1123ZString() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC1123ZFormat)</span>
+}
+
+// ToRFC2822String 输出RFC2822格式字符串
+func (c Carbon) ToRFC2822String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC2822Format)</span>
+}
+
+// ToRfc3339String 输出RFC3339格式字符串
+func (c Carbon) ToRFC3339String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC3339Format)</span>
+}
+
+// ToRfc7231String 输出RFC7231格式字符串
+func (c Carbon) ToRFC7231String() string <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return ""
+        }</span>
+        <span class="cov8" title="1">return c.Time.Format(RFC7231Format)</span>
+}
+
+// DiffInWeeks 相差多少周
+func (start Carbon) DiffInWeeks(end Carbon) int64 <span class="cov8" title="1">{
+        return start.DiffInSeconds(end) / SecondsPerWeek
+}</span>
+
+// DiffAbsInWeeks 相差多少周（绝对值）
+func (start Carbon) DiffAbsInWeeks(end Carbon) int64 <span class="cov8" title="1">{
+        diff := start.DiffInWeeks(end)
+        if diff &lt; 0 </span><span class="cov8" title="1">{
+                diff = -diff
+        }</span>
+        <span class="cov8" title="1">return diff</span>
+}
+
+// DiffInDays 相差多少天
+func (start Carbon) DiffInDays(end Carbon) int64 <span class="cov8" title="1">{
+        return start.DiffInSeconds(end) / SecondsPerDay
+}</span>
+
+// DiffAbsInDays 相差多少天（绝对值）
+func (start Carbon) DiffAbsInDays(end Carbon) int64 <span class="cov8" title="1">{
+        diff := start.DiffInDays(end)
+        if diff &lt; 0 </span><span class="cov8" title="1">{
+                diff = -diff
+        }</span>
+        <span class="cov8" title="1">return diff</span>
+}
+
+// DiffInHours 相差多少小时
+func (start Carbon) DiffInHours(end Carbon) int64 <span class="cov8" title="1">{
+        return start.DiffInSeconds(end) / SecondsPerHour
+}</span>
+
+// DiffAbsInHours 相差多少小时（绝对值）
+func (start Carbon) DiffAbsInHours(end Carbon) int64 <span class="cov8" title="1">{
+        diff := start.DiffInHours(end)
+        if diff &lt; 0 </span><span class="cov8" title="1">{
+                diff = -diff
+        }</span>
+        <span class="cov8" title="1">return diff</span>
+}
+
+// DiffInMinutes 相差多少分钟
+func (start Carbon) DiffInMinutes(end Carbon) int64 <span class="cov8" title="1">{
+        return start.DiffInSeconds(end) / SecondsPerMinute
+}</span>
+
+// DiffAbsInMinutes 相差多少分钟（绝对值）
+func (start Carbon) DiffAbsInMinutes(end Carbon) int64 <span class="cov8" title="1">{
+        diff := start.DiffInMinutes(end)
+        if diff &lt; 0 </span><span class="cov8" title="1">{
+                diff = -diff
+        }</span>
+        <span class="cov8" title="1">return diff</span>
+}
+
+// DiffInSeconds 相差多少秒
+func (start Carbon) DiffInSeconds(end Carbon) int64 <span class="cov8" title="1">{
+        if start.Time.IsZero() &amp;&amp; end.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">if end.Time.IsZero() </span><span class="cov8" title="1">{
+                return -start.ToTimestamp()
+        }</span>
+        <span class="cov8" title="1">if start.Time.IsZero() </span><span class="cov8" title="1">{
+                return end.ToTimestamp()
+        }</span>
+
+        <span class="cov8" title="1">return end.ToTimestamp() - start.ToTimestamp()</span>
+}
+
+// DiffAbsInSeconds 相差多少秒（绝对值）
+func (start Carbon) DiffAbsInSeconds(end Carbon) int64 <span class="cov8" title="1">{
+        diff := start.DiffInSeconds(end)
+        if diff &lt; 0 </span><span class="cov8" title="1">{
+                diff = -diff
+        }</span>
+        <span class="cov8" title="1">return diff</span>
+}
+
+// DaysInYear 获取本年的总天数
+func (c Carbon) DaysInYear() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">days := DaysPerNormalYear
+        if c.IsLeapYear() </span><span class="cov8" title="1">{
+                days = DaysPerLeapYear
+        }</span>
+        <span class="cov8" title="1">return days</span>
+}
+
+// DaysInMonth 获取本月的总天数
+func (c Carbon) DaysInMonth() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.EndOfMonth().Time.Day()</span>
+}
+
+// MonthOfYear 获取本年的第几月
+func (c Carbon) MonthOfYear() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return int(c.Time.Month())</span>
+}
+
+// DayOfYear 获取本年的第几天
+func (c Carbon) DayOfYear() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.YearDay()</span>
+}
+
+// DayOfMonth 获取本月的第几天
+func (c Carbon) DayOfMonth() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Day()</span>
+}
+
+// DayOfWeek 获取本周的第几天
+func (c Carbon) DayOfWeek() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return int(c.Time.Weekday())</span>
+}
+
+// WeekOfYear 获取本年的第几周
+func (c Carbon) WeekOfYear() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">_, week := c.Time.ISOWeek()
+        return week</span>
+}
+
+// WeekOfMonth 获取本月的第几周
+func (c Carbon) WeekOfMonth() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">day := c.Time.Day()
+        if day &lt; DaysPerWeek </span><span class="cov8" title="1">{
+                return 1
+        }</span>
+        <span class="cov8" title="1">return day%DaysPerWeek + 1</span>
+}
+
+// Timezone 获取时区
+func (c Carbon) Timezone() string <span class="cov8" title="1">{
+        return c.loc.String()
+}</span>
+
+// Age 获取年龄
+func (c Carbon) Age() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">if c.ToTimestamp() &gt; Now().ToTimestamp() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">age := time.Now().Year() - c.Time.Year()
+        if int(time.Now().Month())*100+time.Now().Day() &lt; int(c.Time.Month())*100+c.Time.Day() </span><span class="cov8" title="1">{
+                age = age - 1
+        }</span>
+        <span class="cov8" title="1">return age</span>
+}
+
+// 获取当前年
+func (c Carbon) Year() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Year()</span>
+}
+
+// 获取当前季度
+func (c Carbon) Quarter() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">month := c.Time.Month()
+        quarter := 0
+        switch </span>{
+        case month &gt;= 1 &amp;&amp; month &lt;= 3:<span class="cov8" title="1">
+                quarter = 1</span>
+        case month &gt;= 4 &amp;&amp; month &lt;= 6:<span class="cov8" title="1">
+                quarter = 2</span>
+        case month &gt;= 7 &amp;&amp; month &lt;= 9:<span class="cov8" title="1">
+                quarter = 3</span>
+        case month &gt;= 10 &amp;&amp; month &lt;= 12:<span class="cov8" title="1">
+                quarter = 4</span>
+        }
+        <span class="cov8" title="1">return quarter</span>
+}
+
+// 获取当前月
+func (c Carbon) Month() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return int(c.Time.Month())</span>
+}
+
+// 获取当前日
+func (c Carbon) Day() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Day()</span>
+}
+
+// 获取当前小时
+func (c Carbon) Hour() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Hour()</span>
+}
+
+// 获取当前分钟数
+func (c Carbon) Minute() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Minute()</span>
+}
+
+// 获取当前秒数
+func (c Carbon) Second() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Second()</span>
+}
+
+// 获取当前毫秒数
+func (c Carbon) Millisecond() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Nanosecond() / 1e6</span>
+}
+
+// 获取当前微秒数
+func (c Carbon) Microsecond() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Nanosecond() / 1e9</span>
+}
+
+// 获取当前纳秒数
+func (c Carbon) Nanosecond() int <span class="cov8" title="1">{
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                return 0
+        }</span>
+        <span class="cov8" title="1">return c.Time.Nanosecond()</span>
+}
+
+// IsZero 是否是零值
+func (c Carbon) IsZero() bool <span class="cov8" title="1">{
+        return c.Time.IsZero()
+}</span>
+
+// IsNow 是否是当前时间
+func (c Carbon) IsNow() bool <span class="cov8" title="1">{
+        return c.ToTimestamp() == c.Now().ToTimestamp()
+}</span>
+
+// IsFuture 是否是未来时间
+func (c Carbon) IsFuture() bool <span class="cov8" title="1">{
+        return c.ToTimestamp() &gt; c.Now().ToTimestamp()
+}</span>
+
+// IsPast 是否是过去时间
+func (c Carbon) IsPast() bool <span class="cov8" title="1">{
+        return c.ToTimestamp() &lt; c.Now().ToTimestamp()
+}</span>
+
+// IsLeapYear 是否是闰年
+func (c Carbon) IsLeapYear() bool <span class="cov8" title="1">{
+        year := c.Time.Year()
+        if year%400 == 0 || (year%4 == 0 &amp;&amp; year%100 != 0) </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// IsLongYear 是否是长年
+func (c Carbon) IsLongYear() bool <span class="cov8" title="1">{
+        t := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.loc)
+        _, w := t.ISOWeek()
+        return w == weeksPerLongYear
+}</span>
+
+// IsJanuary 是否是一月
+func (c Carbon) IsJanuary() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.January
+}</span>
+
+// IsMonday 是否是二月
+func (c Carbon) IsFebruary() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.February
+}</span>
+
+// IsMarch 是否是三月
+func (c Carbon) IsMarch() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.March
+}</span>
+
+// IsApril 是否是四月
+func (c Carbon) IsApril() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.April
+}</span>
+
+// IsMay 是否是五月
+func (c Carbon) IsMay() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.May
+}</span>
+
+// IsJune 是否是六月
+func (c Carbon) IsJune() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.June
+}</span>
+
+// IsJuly 是否是七月
+func (c Carbon) IsJuly() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.July
+}</span>
+
+// IsAugust 是否是八月
+func (c Carbon) IsAugust() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.August
+}</span>
+
+// IsSeptember 是否是九月
+func (c Carbon) IsSeptember() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.September
+}</span>
+
+// IsOctober 是否是十月
+func (c Carbon) IsOctober() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.October
+}</span>
+
+// IsNovember 是否是十一月
+func (c Carbon) IsNovember() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.November
+}</span>
+
+// IsDecember 是否是十二月
+func (c Carbon) IsDecember() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Month() == time.December
+}</span>
+
+// IsMonday 是否是周一
+func (c Carbon) IsMonday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Monday
+}</span>
+
+// IsTuesday 是否是周二
+func (c Carbon) IsTuesday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Tuesday
+}</span>
+
+// IsWednesday 是否是周三
+func (c Carbon) IsWednesday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Wednesday
+}</span>
+
+// IsThursday 是否是周四
+func (c Carbon) IsThursday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Thursday
+}</span>
+
+// IsFriday 是否是周五
+func (c Carbon) IsFriday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Friday
+}</span>
+
+// IsSaturday 是否是周六
+func (c Carbon) IsSaturday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Saturday
+}</span>
+
+// IsSunday 是否是周日
+func (c Carbon) IsSunday() bool <span class="cov8" title="1">{
+        return c.Time.In(c.loc).Weekday() == time.Sunday
+}</span>
+
+// IsWeekday 是否是工作日
+func (c Carbon) IsWeekday() bool <span class="cov8" title="1">{
+        return !c.IsSaturday() &amp;&amp; !c.IsSunday()
+}</span>
+
+// IsWeekend 是否是周末
+func (c Carbon) IsWeekend() bool <span class="cov8" title="1">{
+        return c.IsSaturday() || c.IsSunday()
+}</span>
+
+// IsYesterday 是否是昨天
+func (c Carbon) IsYesterday() bool <span class="cov8" title="1">{
+        return c.ToDateString() == c.Yesterday().ToDateString()
+}</span>
+
+// IsToday 是否是今天
+func (c Carbon) IsToday() bool <span class="cov8" title="1">{
+        return c.ToDateString() == c.Now().ToDateString()
+}</span>
+
+// IsTomorrow 是否是明天
+func (c Carbon) IsTomorrow() bool <span class="cov8" title="1">{
+        return c.ToDateString() == c.Tomorrow().ToDateString()
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package carbon
+
+import (
+        "strings"
+        "time"
+)
+
+// format转layout
+func format2layout(format string) string <span class="cov8" title="1">{
+        layout := strings.Replace(format, "Y", "2006", 1)
+        layout = strings.Replace(layout, "y", "06", 1)
+        layout = strings.Replace(layout, "M", "Jan", 1)
+        layout = strings.Replace(layout, "m", "01", 1)
+        layout = strings.Replace(layout, "F", "January", 1)
+        layout = strings.Replace(layout, "n", "1", 1)
+        layout = strings.Replace(layout, "l", "Monday", 1)
+        layout = strings.Replace(layout, "D", "Mon", 1)
+        layout = strings.Replace(layout, "d", "02", 1)
+        layout = strings.Replace(layout, "j", "2", 1)
+        layout = strings.Replace(layout, "H", "15", 1)
+        layout = strings.Replace(layout, "h", "03", 1)
+        layout = strings.Replace(layout, "i", "04", 1)
+        layout = strings.Replace(layout, "s", "05", 1)
+        layout = strings.Replace(layout, "P", "PM", 1)
+        layout = strings.Replace(layout, "p", "pm", 1)
+        return layout
+}</span>
+
+// newCarbon 创建一个新Carbon实例
+func newCarbon(t time.Time) Carbon <span class="cov8" title="1">{
+        loc, _ := time.LoadLocation(Local)
+        return Carbon{Time: t, loc: loc}
+}</span>
+
+// getLocalByTimezone 通过时区获取Location实例
+func getLocalByTimezone(timezone string) *time.Location <span class="cov8" title="1">{
+        loc, err := time.LoadLocation(timezone)
+        if err != nil </span><span class="cov8" title="1">{
+                panic("invalid timezone \"" + timezone + "\", all valid timezone, please see the $GOROOT/lib/time/zoneinfo.zip file")</span>
+        }
+        <span class="cov8" title="1">return loc</span>
+}
+
+// parseByLayout 通过布局模板解析
+func parseByLayout(value string, layout string) time.Time <span class="cov8" title="1">{
+        t, err := time.ParseInLocation(layout, value, getLocalByTimezone(Local))
+        if err != nil </span><span class="cov8" title="1">{
+                panic("the value \"" + value + "\" and layout \"" + layout + "\" don't match")</span>
+        }
+        <span class="cov8" title="1">return t</span>
+}
+
+// parseByDuration 通过持续时间解析
+func parseByDuration(duration string) time.Duration <span class="cov8" title="1">{
+        d, err := time.ParseDuration(duration)
+        if err != nil </span><span class="cov8" title="1">{
+                panic("invalid duration \"" + duration + "\"")</span>
+        }
+        <span class="cov8" title="1">return d</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
