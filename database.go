@@ -22,6 +22,22 @@ type ToTimestamp struct {
 	Carbon
 }
 
+type ToTimestampWithSecond struct {
+	Carbon
+}
+
+type ToTimestampWithMillisecond struct {
+	Carbon
+}
+
+type ToTimestampWithMicrosecond struct {
+	Carbon
+}
+
+type ToTimestampWithNanosecond struct {
+	Carbon
+}
+
 func (c *Carbon) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {
@@ -58,4 +74,20 @@ func (c ToTimeString) MarshalJSON() ([]byte, error) {
 
 func (c ToTimestamp) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, c.ToTimestamp())), nil
+}
+
+func (c ToTimestampWithSecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithSecond())), nil
+}
+
+func (c ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMillisecond())), nil
+}
+
+func (c ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMicrosecond())), nil
+}
+
+func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithNanosecond())), nil
 }
