@@ -668,6 +668,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 
 #### 更新日志
 ##### 2020-11-02
+* 新增测试覆盖率报告文件coverage.html
 * CreateFromTimestamp()方法支持秒、毫秒、微秒、纳秒级时间戳
 * 新增ToTimestampWithSecond()方法获取秒级时间戳，等价于ToTimestamp()
 * 新增ToTimestampWithMillisecond()方法获取毫秒级时间戳
