@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"strconv"
 	"strings"
 	"time"
 )
@@ -8,53 +9,6 @@ import (
 type Carbon struct {
 	Time time.Time
 	loc  *time.Location
-}
-
-// Timezone 设置时区
-func SetTimezone(name string) Carbon {
-	return Carbon{loc: getLocalByTimezone(name)}
-}
-
-// Timezone 设置时区
-func (c Carbon) SetTimezone(name string) Carbon {
-	loc := getLocalByTimezone(name)
-	return Carbon{Time: c.Time.In(c.loc), loc: loc}
-}
-
-// SetYear 设置年
-func (c Carbon) SetYear(year int) Carbon {
-	c.Time = time.Date(year, c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// SetMonth 设置月
-func (c Carbon) SetMonth(month int) Carbon {
-	c.Time = time.Date(c.Time.Year(), time.Month(month), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// SetDay 设置日
-func (c Carbon) SetDay(day int) Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// SetHour 设置时
-func (c Carbon) SetHour(hour int) Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), hour, c.Time.Minute(), c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// SetMinute 设置分
-func (c Carbon) SetMinute(minute int) Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), minute, c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// SetSecond 设置秒
-func (c Carbon) SetSecond(second int) Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, 0, c.loc)
-	return c
 }
 
 // Now 当前
@@ -89,7 +43,20 @@ func (c Carbon) Yesterday() Carbon {
 
 // CreateFromTimestamp 从时间戳创建Carbon实例
 func CreateFromTimestamp(timestamp int64) Carbon {
-	return newCarbon(time.Unix(timestamp, 0))
+	ts := timestamp
+	switch len(strconv.FormatInt(timestamp, 10)) {
+	case 10:
+		ts = timestamp
+	case 13:
+		ts = timestamp / 1e3
+	case 16:
+		ts = timestamp / 1e6
+	case 19:
+		ts = timestamp / 1e9
+	default:
+		ts = 0
+	}
+	return newCarbon(time.Unix(ts, 0))
 }
 
 // CreateFromTimestamp 从时间戳创建Carbon实例(指定时区)
@@ -225,6 +192,26 @@ func (c Carbon) SubYear() Carbon {
 	return c
 }
 
+// AddMonths N季度后
+func (c Carbon) AddQuarters(quarters int) Carbon {
+	return c.AddMonths(quarters * MonthsPerQuarter)
+}
+
+// AddMonth 1季度后
+func (c Carbon) AddQuarter() Carbon {
+	return c.AddQuarters(1)
+}
+
+// SubMonths N季度前
+func (c Carbon) SubQuarters(quarters int) Carbon {
+	return c.SubMonths(quarters * MonthsPerQuarter)
+}
+
+// SubMonth 1季度前
+func (c Carbon) SubQuarter() Carbon {
+	return c.SubQuarters(1)
+}
+
 // AddMonths N月后
 func (c Carbon) AddMonths(months int) Carbon {
 	c.Time = c.Time.AddDate(0, months, 0)
@@ -245,6 +232,26 @@ func (c Carbon) SubMonths(months int) Carbon {
 // SubMonth 1月前
 func (c Carbon) SubMonth() Carbon {
 	return c.SubMonths(1)
+}
+
+// AddWeeks N周后
+func (c Carbon) AddWeeks(weeks int) Carbon {
+	return c.AddDays(weeks * DaysPerWeek)
+}
+
+// AddWeek 1天后
+func (c Carbon) AddWeek() Carbon {
+	return c.AddWeeks(1)
+}
+
+// SubWeeks N周后
+func (c Carbon) SubWeeks(weeks int) Carbon {
+	return c.SubDays(weeks * DaysPerWeek)
+}
+
+// SubWeek 1天后
+func (c Carbon) SubWeek() Carbon {
+	return c.SubWeeks(1)
 }
 
 // AddDays N天后
@@ -348,41 +355,19 @@ func (c Carbon) NextYears(years int) Carbon {
 	day := c.Time.Day()
 
 	// 获取N年后本月的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc).AddDate(0, 1, -1)
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
 
 	if day > last.Day() {
 		day = last.Day()
 	}
 
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
 	return c
 }
 
 // NextYear 1年后
 func (c Carbon) NextYear() Carbon {
 	return c.NextYears(1)
-}
-
-// N月后
-func (c Carbon) NextMonths(months int) Carbon {
-	year := c.Time.Year()
-	month := c.Time.Month() + time.Month(months)
-	day := c.Time.Day()
-
-	// 获取N月后的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc).AddDate(0, 1, -1)
-
-	if day > last.Day() {
-		day = last.Day()
-	}
-
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), 0, c.loc)
-	return c
-}
-
-// NextMonth 1月后
-func (c Carbon) NextMonth() Carbon {
-	return c.NextMonths(1)
 }
 
 // PreYears N年前
@@ -395,14 +380,56 @@ func (c Carbon) PreYear() Carbon {
 	return c.NextYears(-1)
 }
 
+// NextQuarters N季度后
+func (c Carbon) NextQuarters(quarters int) Carbon {
+	return c.NextMonths(quarters * MonthsPerQuarter)
+}
+
+// NextQuarters 1季度后
+func (c Carbon) NextQuarter() Carbon {
+	return c.NextQuarters(1)
+}
+
+// PreQuarters N季度前
+func (c Carbon) PreQuarters(quarters int) Carbon {
+	return c.NextMonths(-quarters * MonthsPerQuarter)
+}
+
+// PreQuarter 1季度前
+func (c Carbon) PreQuarter() Carbon {
+	return c.PreQuarters(1)
+}
+
 // NextMonths N月后
+func (c Carbon) NextMonths(months int) Carbon {
+	year := c.Time.Year()
+	month := c.Time.Month() + time.Month(months)
+	day := c.Time.Day()
+
+	// 获取N月后的最后一天
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc).AddDate(0, 1, -1)
+
+	if day > last.Day() {
+		day = last.Day()
+	}
+
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// NextMonth 1月后
+func (c Carbon) NextMonth() Carbon {
+	return c.NextMonths(1)
+}
+
+// PreMonths N月前
 func (c Carbon) PreMonths(months int) Carbon {
 	return c.NextMonths(-months)
 }
 
-// NextMonth 1月后
+// PreMonth 1月前
 func (c Carbon) PreMonth() Carbon {
-	return c.NextMonths(-1)
+	return c.PreMonths(1)
 }
 
 // StartOfYear 本年开始时间
@@ -485,5 +512,52 @@ func (c Carbon) StartOfMinute() Carbon {
 // EndOfMinute 分钟结束时间
 func (c Carbon) EndOfMinute() Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 59, 0, c.loc)
+	return c
+}
+
+// Timezone 设置时区
+func SetTimezone(name string) Carbon {
+	return Carbon{loc: getLocalByTimezone(name)}
+}
+
+// Timezone 设置时区
+func (c Carbon) SetTimezone(name string) Carbon {
+	loc := getLocalByTimezone(name)
+	return Carbon{Time: c.Time.In(c.loc), loc: loc}
+}
+
+// SetYear 设置年
+func (c Carbon) SetYear(year int) Carbon {
+	c.Time = time.Date(year, c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// SetMonth 设置月
+func (c Carbon) SetMonth(month int) Carbon {
+	c.Time = time.Date(c.Time.Year(), time.Month(month), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// SetDay 设置日
+func (c Carbon) SetDay(day int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// SetHour 设置时
+func (c Carbon) SetHour(hour int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), hour, c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// SetMinute 设置分
+func (c Carbon) SetMinute(minute int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), minute, c.Time.Second(), c.Time.Nanosecond(), c.loc)
+	return c
+}
+
+// SetSecond 设置秒
+func (c Carbon) SetSecond(second int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, c.Time.Nanosecond(), c.loc)
 	return c
 }
