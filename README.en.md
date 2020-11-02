@@ -62,8 +62,15 @@ carbon.Tomorrow().ToTimestamp() // 1596690855
 
 ##### Create carbon instance
 ```go
-// Create Carbon instance from timestamp
+// Create Carbon instance from timestamp with second
 carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
+// Create Carbon instance from timestamp with millisecond
+carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
+// Create Carbon instance from timestamp with microsecond
+carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
+// Create Carbon instance from timestamp with nanosecond
+carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
+
 // Create Carbon instance from year,month,day,hour,minute and second
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 // Create Carbon instance from year,month and day
@@ -180,86 +187,116 @@ carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-
 
 ##### Time travel
 ```go
-// After three years
+// Add three years
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
 // Next three years
 carbon.Parse("2020-02-29 13:14:15").NextYears(3).ToDateTimeString() // 2023-02-28 13:14:15
-// After one year
+// Add one year
 carbon.Parse("2020-02-29 13:14:15").AddYear().ToDateTimeString() // 2021-03-01 13:14:15
 // Next one year
 carbon.Parse("2020-02-29 13:14:15").NextYear().ToDateTimeString() // 2021-02-28 13:14:15
-// Before three years
+// Subtract three years
 carbon.Parse("2020-02-29 13:14:15").SubYears(3).ToDateTimeString() // 2017-03-01 13:14:15
 // Previous three years
 carbon.Parse("2020-02-29 13:14:15").PreYears(3).ToDateTimeString() // 2017-02-28 13:14:15
-// After one year
+// Subtract one year
 carbon.Parse("2020-02-29 13:14:15").SubYear().ToDateTimeString() // 2019-03-01 13:14:15
 // Previous one year
 carbon.Parse("2020-02-29 13:14:15").PreYear().ToDateTimeString() // 2019-02-28 13:14:15
 
-// After three months
+// Add three quarters
+carbon.Parse("2019-08-31 13:14:15").AddQuarters(3).ToDateTimeString() // 2019-03-02 13:14:15
+// Next three quarters
+carbon.Parse("2019-08-31 13:14:15").NextQuarters(3).ToDateTimeString() // 2019-02-29 13:14:15
+
+// Add one quarter
+carbon.Parse("2019-11-30 13:14:15").AddQuarter().ToDateTimeString() // 2020-03-01 13:14:15
+// Next one quarter
+carbon.Parse("2019-11-30 13:14:15").NextQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+
+// Subtract three quarters
+carbon.Parse("2019-08-31 13:14:15").SubQuarters(3).ToDateTimeString() // 2019-03-03 13:14:15
+// Previous three quarters
+carbon.Parse("2019-08-31 13:14:15").PreQuarters(3).ToDateTimeString() // 2019-02-28 13:14:15
+
+// Subtract one quarter
+carbon.Parse("2020-05-31 13:14:15").SubQuarter().ToDateTimeString() // 2020-03-02 13:14:15
+// Previous one quarter
+carbon.Parse("2020-05-31 13:14:15").PreQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+
+// Add three months
 carbon.Parse("2020-02-29 13:14:15").AddMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
 // Next three months
 carbon.Parse("2020-02-29 13:14:15").NextMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
-// After one month
+// Add one month
 carbon.Parse("2020-01-31 13:14:15").AddMonth().ToDateTimeString() // 2020-03-02 13:14:15
 // Next one month
 carbon.Parse("2020-01-31 13:14:15").NextMonth().ToDateTimeString() // 2020-02-29 13:14:15
-// After three months
+// Subtract three months
 carbon.Parse("2020-02-29 13:14:15").SubMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
 // Previous three months
 carbon.Parse("2020-02-29 13:14:15").PreMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
-// After one month
+// Subtract one month
 carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 13:14:15
 // Previous one month
 carbon.Parse("2020-03-31 13:14:15").PreMonth().ToDateTimeString() // 2020-02-29 13:14:15
 
-// After three days
+// Add three weeks
+carbon.Parse("2020-02-29 13:14:15").AddWeeks(3).ToDateTimeString() // 2020-03-21 13:14:15
+// Add one week
+carbon.Parse("2020-02-29 13:14:15").AddWeek().ToDateTimeString() // 2020-03-07 13:14:15
+
+// Subtract three weeks
+carbon.Parse("2020-02-29 13:14:15").SubWeeks(3).ToDateTimeString() // 2020-02-08 13:14:15
+// Subtract three week
+carbon.Parse("2020-02-29 13:14:15").SubWeek().ToDateTimeString() // 2020-02-22 13:14:15
+
+// Add three days
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString() // 2020-08-08 13:14:15
-// After one day
+// Add one day
 carbon.Parse("2020-08-05 13:14:15").AddDay().ToDateTimeString() // 2020-08-05 13:14:15
-// After three days
+// Subtract three days
 carbon.Parse("2020-08-05 13:14:15").SubDays(3).ToDateTimeString() // 2020-08-02 13:14:15
-// After one day
+// Subtract one day
 carbon.Parse("2020-08-05 13:14:15").SubDay().ToDateTimeString() // 2020-08-04 13:14:15
 
-// After three hours
+// Add three hours
 carbon.Parse("2020-08-05 13:14:15").AddHours(3).ToDateTimeString() // 2020-08-05 16:14:15
-// After two and a half hours
+// Add two and a half hours
 carbon.Parse("2020-08-05 13:14:15").Duration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
-// After one hour
+// Add one hour
 carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
-// Before three hours
+// Subtract three hours
 carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
-// Before two and a half hours
+// Subtract two and a half hours
 carbon.Parse("2020-08-05 13:14:15").Duration("-2.5h").ToDateTimeString() // 2020-08-05 10:44:15
-// Before one hour
+// Subtract one hour
 carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 12:14:15
 
-// After three minutes
+// Add three minutes
 carbon.Parse("2020-08-05 13:14:15").AddMinutes(3).ToDateTimeString() // 2020-08-05 13:17:15
-// After two and a half minutes
+// Add two and a half minutes
 carbon.Parse("2020-08-05 13:14:15").Duration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
-// After one minute
+// Add one minute
 carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
-// Before three minutes
+// Subtract three minutes
 carbon.Parse("2020-08-05 13:14:15").SubMinutes(3).ToDateTimeString() // 2020-08-05 13:11:15
-// Before two and a half minutes
+// Subtract two and a half minutes
 carbon.Parse("2020-08-05 13:14:15").Duration("-2.5m").ToDateTimeString() // 2020-08-05 13:11:45
-// Before one minute
+// Subtract one minute
 carbon.Parse("2020-08-05 13:14:15").SubMinute().ToDateTimeString() // 2020-08-05 13:13:15
 
-// After three seconds
+// Add three seconds
 carbon.Parse("2020-08-05 13:14:15").AddSeconds(3).ToDateTimeString() // 2020-08-05 13:14:18
-// After two and a half seconds
+// Add two and a half seconds
 carbon.Parse("2020-08-05 13:14:15").Duration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
-// After one second
+// Add one second
 carbon.Parse("2020-08-05 13:14:15").AddSecond().ToDateTimeString() // 2020-08-05 13:14:16
-// Before three seconds
+// Subtract three seconds
 carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-05 13:14:12
-// Before two and a half seconds
+// Subtract two and a half seconds
 carbon.Parse("2020-08-05 13:14:15").Duration("-2.5s").ToDateTimeString() // 2020-08-05 13:14:12
-// Before one second
+// Subtract one second
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
 ```
 
@@ -293,8 +330,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13
 
 ##### Time output   
 ```go
-// To timestamp
+// To timestamp with second
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithSecond() // 1596604455
+// To timestamp with millisecond
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMillisecond() // 1596604455000
+// To timestamp with microsecond
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMicrosecond() // 1596604455000000
+// To timestamp with nanosecond
+carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000000000
 
 // To string
 carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
@@ -369,6 +413,8 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // Get current year
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// Get current quarter
+carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
 // Get current month
 carbon.Parse("2020-08-05 13:14:15").Month() // 8
 // Get current day
