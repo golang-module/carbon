@@ -220,7 +220,7 @@ func (start Carbon) DiffInWeeks(end Carbon) int64 {
 	return start.DiffInSeconds(end) / SecondsPerWeek
 }
 
-// DiffAbsInWeeks 相差多少周（绝对值）
+// DiffInWeeksWithAbs 相差多少周（绝对值）
 func (start Carbon) DiffInWeeksWithAbs(end Carbon) int64 {
 	diff := start.DiffInWeeks(end)
 	if diff < 0 {
@@ -234,7 +234,7 @@ func (start Carbon) DiffInDays(end Carbon) int64 {
 	return start.DiffInSeconds(end) / SecondsPerDay
 }
 
-// DiffAbsInDays 相差多少天（绝对值）
+// DiffInDaysWithAbs 相差多少天（绝对值）
 func (start Carbon) DiffInDaysWithAbs(end Carbon) int64 {
 	diff := start.DiffInDays(end)
 	if diff < 0 {
@@ -248,7 +248,7 @@ func (start Carbon) DiffInHours(end Carbon) int64 {
 	return start.DiffInSeconds(end) / SecondsPerHour
 }
 
-// DiffAbsInHours 相差多少小时（绝对值）
+// DiffInHoursWithAbs 相差多少小时（绝对值）
 func (start Carbon) DiffInHoursWithAbs(end Carbon) int64 {
 	diff := start.DiffInHours(end)
 	if diff < 0 {
@@ -262,7 +262,7 @@ func (start Carbon) DiffInMinutes(end Carbon) int64 {
 	return start.DiffInSeconds(end) / SecondsPerMinute
 }
 
-// DiffAbsInMinutes 相差多少分钟（绝对值）
+// DiffInMinutesWithAbs 相差多少分钟（绝对值）
 func (start Carbon) DiffInMinutesWithAbs(end Carbon) int64 {
 	diff := start.DiffInMinutes(end)
 	if diff < 0 {
@@ -286,7 +286,7 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 {
 	return end.ToTimestamp() - start.ToTimestamp()
 }
 
-// DiffAbsInSeconds 相差多少秒（绝对值）
+// DiffInSecondsWithAbs 相差多少秒（绝对值）
 func (start Carbon) DiffInSecondsWithAbs(end Carbon) int64 {
 	diff := start.DiffInSeconds(end)
 	if diff < 0 {
