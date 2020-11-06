@@ -608,7 +608,7 @@ func TestCarbon_DiffInWeeks(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffAbsInWeeks(t *testing.T) {
+func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
 	Tests := []struct {
 		input1 string // 输入值1
 		input2 string // 输入值2
@@ -631,7 +631,7 @@ func TestCarbon_DiffAbsInWeeks(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffAbsInWeeks(Parse(v.input2))
+		output := Parse(v.input1).DiffInWeeksWithAbs(Parse(v.input2))
 
 		if output != v.output {
 			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
@@ -670,7 +670,7 @@ func TestCarbon_DiffInDays(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffAbsInDays(t *testing.T) {
+func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
 	Tests := []struct {
 		input1 string // 输入值1
 		input2 string // 输入值2
@@ -693,7 +693,7 @@ func TestCarbon_DiffAbsInDays(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffAbsInDays(Parse(v.input2))
+		output := Parse(v.input1).DiffInDaysWithAbs(Parse(v.input2))
 
 		if output != v.output {
 			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
@@ -732,7 +732,7 @@ func TestCarbon_DiffInHours(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffAbsInHours(t *testing.T) {
+func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
 	Tests := []struct {
 		input1 string // 输入值1
 		input2 string // 输入值2
@@ -755,7 +755,7 @@ func TestCarbon_DiffAbsInHours(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffAbsInHours(Parse(v.input2))
+		output := Parse(v.input1).DiffInHoursWithAbs(Parse(v.input2))
 
 		if output != v.output {
 			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
@@ -794,7 +794,7 @@ func TestCarbon_DiffInMinutes(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffAbsInMinutes(t *testing.T) {
+func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
 	Tests := []struct {
 		input1 string // 输入值1
 		input2 string // 输入值2
@@ -817,7 +817,7 @@ func TestCarbon_DiffAbsInMinutes(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffAbsInMinutes(Parse(v.input2))
+		output := Parse(v.input1).DiffInMinutesWithAbs(Parse(v.input2))
 
 		if output != v.output {
 			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
@@ -848,7 +848,7 @@ func TestCarbon_DiffInSeconds(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffAbsInSeconds(t *testing.T) {
+func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 	Tests := []struct {
 		input1 string // 输入值1
 		input2 string // 输入值2
@@ -863,7 +863,7 @@ func TestCarbon_DiffAbsInSeconds(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffAbsInSeconds(Parse(v.input2))
+		output := Parse(v.input1).DiffInSecondsWithAbs(Parse(v.input2))
 
 		if output != v.output {
 			t.Fatalf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
@@ -2292,6 +2292,365 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 				reality = "true"
 			}
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Compare(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input    Carbon // 输入值
+		operator string // 输入参数
+		time     Carbon // 输入参数
+		output   bool   // 期望输出值
+	}{
+		{now, ">", yesterday, true},
+		{now, "<", yesterday, false},
+		{now, "<", tomorrow, true},
+		{now, ">", tomorrow, false},
+		{now, "=", now, true},
+		{now, ">=", now, true},
+		{now, "<=", now, true},
+		{now, "!=", now, false},
+		{now, "<>", now, false},
+		{now, "!=", yesterday, true},
+		{now, "<>", yesterday, true},
+		{now, "+", yesterday, false},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Compare(v.operator, v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s %s %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.operator, v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Gt(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, false},
+		{now, yesterday, true},
+		{now, tomorrow, false},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Gt(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s > %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Lt(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, false},
+		{now, yesterday, false},
+		{now, tomorrow, true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Lt(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s < %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Eq(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, true},
+		{now, yesterday, false},
+		{now, tomorrow, false},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Eq(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s = %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Ne(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, false},
+		{now, yesterday, true},
+		{now, tomorrow, true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Ne(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s != %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Gte(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, true},
+		{now, yesterday, true},
+		{now, tomorrow, false},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Gte(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s >= %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Lte(t *testing.T) {
+	now := Now()
+	tomorrow := Tomorrow()
+	yesterday := Yesterday()
+	Tests := []struct {
+		input  Carbon // 输入值
+		time   Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{now, now, true},
+		{now, yesterday, false},
+		{now, tomorrow, true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Lte(v.time)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s <= %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_Between(t *testing.T) {
+	Tests := []struct {
+		input  Carbon // 输入值
+		time1  Carbon // 输入参数
+		time2  Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.Between(v.time1, v.time2)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s < %s < %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_BetweenIncludedStartTime(t *testing.T) {
+	Tests := []struct {
+		input  Carbon // 输入值
+		time1  Carbon // 输入参数
+		time2  Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.BetweenIncludedStartTime(v.time1, v.time2)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s <= %s < %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_BetweenIncludedEndTime(t *testing.T) {
+	Tests := []struct {
+		input  Carbon // 输入值
+		time1  Carbon // 输入参数
+		time2  Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-05 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+	}
+
+	for _, v := range Tests {
+		output := v.input.BetweenIncludedEndTime(v.time1, v.time2)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s < %s <= %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
+		}
+	}
+}
+
+func TestCarbon_BetweenIncludedBoth(t *testing.T) {
+	Tests := []struct {
+		input  Carbon // 输入值
+		time1  Carbon // 输入参数
+		time2  Carbon // 输入参数
+		output bool   // 期望输出值
+	}{
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-05 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), Parse("2020-08-06 13:14:15"), true},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), Parse("2020-08-06 13:14:15"), false},
+	}
+
+	for _, v := range Tests {
+		output := v.input.BetweenIncludedBoth(v.time1, v.time2)
+
+		if output != v.output {
+			expected := "false"
+			if v.output == true {
+				expected = "true"
+			}
+
+			reality := "false"
+			if output == true {
+				reality = "true"
+			}
+			t.Fatalf("Input %s <= %s <= %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
 		}
 	}
 }

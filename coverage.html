@@ -58,9 +58,9 @@
 				
 				<option value="file1">github.com/golang-module/carbon/carbon.go (100.0%)</option>
 				
-				<option value="file2">github.com/golang-module/carbon/database.go (26.3%)</option>
+				<option value="file2">github.com/golang-module/carbon/database.go (44.4%)</option>
 				
-				<option value="file3">github.com/golang-module/carbon/final.go (100.0%)</option>
+				<option value="file3">github.com/golang-module/carbon/final.go (97.5%)</option>
 				
 				<option value="file4">github.com/golang-module/carbon/private.go (100.0%)</option>
 				
@@ -846,10 +846,6 @@ func (c Carbon) Value() (driver.Value, error) <span class="cov0" title="0">{
         <span class="cov0" title="0">return timeTime, nil</span>
 }
 
-func (c Carbon) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
-        return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
-}</span>
-
 func (c ToDateTimeString) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
 }</span>
@@ -866,19 +862,19 @@ func (c ToTimestamp) MarshalJSON() ([]byte, error) <span class="cov8" title="1">
         return []byte(fmt.Sprintf(`%d`, c.ToTimestamp())), nil
 }</span>
 
-func (c ToTimestampWithSecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+func (c ToTimestampWithSecond) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithSecond())), nil
 }</span>
 
-func (c ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+func (c ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMillisecond())), nil
 }</span>
 
-func (c ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+func (c ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMicrosecond())), nil
 }</span>
 
-func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) <span class="cov0" title="0">{
+func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
         return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithNanosecond())), nil
 }</span>
 </pre>
@@ -1106,7 +1102,7 @@ func (start Carbon) DiffInWeeks(end Carbon) int64 <span class="cov8" title="1">{
 }</span>
 
 // DiffAbsInWeeks 相差多少周（绝对值）
-func (start Carbon) DiffAbsInWeeks(end Carbon) int64 <span class="cov8" title="1">{
+func (start Carbon) DiffInWeeksWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInWeeks(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
                 diff = -diff
@@ -1120,7 +1116,7 @@ func (start Carbon) DiffInDays(end Carbon) int64 <span class="cov8" title="1">{
 }</span>
 
 // DiffAbsInDays 相差多少天（绝对值）
-func (start Carbon) DiffAbsInDays(end Carbon) int64 <span class="cov8" title="1">{
+func (start Carbon) DiffInDaysWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInDays(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
                 diff = -diff
@@ -1134,7 +1130,7 @@ func (start Carbon) DiffInHours(end Carbon) int64 <span class="cov8" title="1">{
 }</span>
 
 // DiffAbsInHours 相差多少小时（绝对值）
-func (start Carbon) DiffAbsInHours(end Carbon) int64 <span class="cov8" title="1">{
+func (start Carbon) DiffInHoursWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInHours(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
                 diff = -diff
@@ -1148,7 +1144,7 @@ func (start Carbon) DiffInMinutes(end Carbon) int64 <span class="cov8" title="1"
 }</span>
 
 // DiffAbsInMinutes 相差多少分钟（绝对值）
-func (start Carbon) DiffAbsInMinutes(end Carbon) int64 <span class="cov8" title="1">{
+func (start Carbon) DiffInMinutesWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInMinutes(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
                 diff = -diff
@@ -1172,7 +1168,7 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 <span class="cov8" title="1"
 }
 
 // DiffAbsInSeconds 相差多少秒（绝对值）
-func (start Carbon) DiffAbsInSeconds(end Carbon) int64 <span class="cov8" title="1">{
+func (start Carbon) DiffInSecondsWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInSeconds(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
                 diff = -diff
@@ -1520,6 +1516,90 @@ func (c Carbon) IsToday() bool <span class="cov8" title="1">{
 func (c Carbon) IsTomorrow() bool <span class="cov8" title="1">{
         return c.ToDateString() == c.Tomorrow().ToDateString()
 }</span>
+
+// Compare 时间比较
+func (c Carbon) Compare(operator string, t Carbon) bool <span class="cov8" title="1">{
+        switch operator </span>{
+        case "=":<span class="cov8" title="1">
+                return c.Time.Equal(t.Time)</span>
+        case "&lt;&gt;":<span class="cov8" title="1">
+                return !c.Time.Equal(t.Time)</span>
+        case "!=":<span class="cov8" title="1">
+                return !c.Time.Equal(t.Time)</span>
+        case "&gt;":<span class="cov8" title="1">
+                return c.Time.After(t.Time)</span>
+        case "&gt;=":<span class="cov8" title="1">
+                return c.Time.After(t.Time) || c.Time.Equal(t.Time)</span>
+        case "&lt;":<span class="cov8" title="1">
+                return c.Time.Before(t.Time)</span>
+        case "&lt;=":<span class="cov8" title="1">
+                return c.Time.Before(t.Time) || c.Time.Equal(t.Time)</span>
+        }
+
+        <span class="cov8" title="1">return false</span>
+}
+
+// Gt 大于
+func (c Carbon) Gt(t Carbon) bool {
+        return c.Time.After(t.Time)
+}</span>
+
+// Lt 小于
+func (c Carbon) Lt(t Carbon) bool {
+        return c.Time.Before(t.Time)
+}</span>
+
+// Eq 等于
+func (c Carbon) Eq(operator string, t Carbon) bool <span class="cov0" title="0">{
+        return c.Time.Equal(t.Time)
+}</span>
+
+// Ne 不等于
+func (c Carbon) Ne(t Carbon) bool {
+        return !c.Time.Equal(t.Time)
+}</span>
+
+// Gte 大于等于
+func (c Carbon) Gte(t Carbon) bool {
+        return c.Time.After(t.Time) || c.Time.Equal(t.Time)
+}</span>
+
+// Lte 小于等于
+func (c Carbon) Lte(t Carbon) bool {
+        return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
+}</span>
+
+// Between 是否在两个时间之间(不包括这两个时间)
+func (c Carbon) Between(start Carbon, end Carbon) bool <span class="cov8" title="1">{
+        if c.Time.After(start.Time) &amp;&amp; c.Time.Before(end.Time) </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// BetweenIncludedStartTime 是否在两个时间之间(包括开始时间)
+func (c Carbon) BetweenIncludedStartTime(start Carbon, end Carbon) bool <span class="cov8" title="1">{
+        if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) &amp;&amp; c.Time.Before(end.Time) </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// BetweenIncludedEndTime 是否在两个时间之间(包括结束时间)
+func (c Carbon) BetweenIncludedEndTime(start Carbon, end Carbon) bool <span class="cov8" title="1">{
+        if c.Time.After(start.Time) &amp;&amp; (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
+
+// BetweenIncludedBoth 是否在两个时间之间(包括这两个时间)
+func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool <span class="cov8" title="1">{
+        if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) &amp;&amp; (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) </span><span class="cov8" title="1">{
+                return true
+        }</span>
+        <span class="cov8" title="1">return false</span>
+}
 </pre>
 		
 		<pre class="file" id="file4" style="display: none">package carbon

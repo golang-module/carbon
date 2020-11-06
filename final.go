@@ -221,7 +221,7 @@ func (start Carbon) DiffInWeeks(end Carbon) int64 {
 }
 
 // DiffAbsInWeeks 相差多少周（绝对值）
-func (start Carbon) DiffAbsInWeeks(end Carbon) int64 {
+func (start Carbon) DiffInWeeksWithAbs(end Carbon) int64 {
 	diff := start.DiffInWeeks(end)
 	if diff < 0 {
 		diff = -diff
@@ -235,7 +235,7 @@ func (start Carbon) DiffInDays(end Carbon) int64 {
 }
 
 // DiffAbsInDays 相差多少天（绝对值）
-func (start Carbon) DiffAbsInDays(end Carbon) int64 {
+func (start Carbon) DiffInDaysWithAbs(end Carbon) int64 {
 	diff := start.DiffInDays(end)
 	if diff < 0 {
 		diff = -diff
@@ -249,7 +249,7 @@ func (start Carbon) DiffInHours(end Carbon) int64 {
 }
 
 // DiffAbsInHours 相差多少小时（绝对值）
-func (start Carbon) DiffAbsInHours(end Carbon) int64 {
+func (start Carbon) DiffInHoursWithAbs(end Carbon) int64 {
 	diff := start.DiffInHours(end)
 	if diff < 0 {
 		diff = -diff
@@ -263,7 +263,7 @@ func (start Carbon) DiffInMinutes(end Carbon) int64 {
 }
 
 // DiffAbsInMinutes 相差多少分钟（绝对值）
-func (start Carbon) DiffAbsInMinutes(end Carbon) int64 {
+func (start Carbon) DiffInMinutesWithAbs(end Carbon) int64 {
 	diff := start.DiffInMinutes(end)
 	if diff < 0 {
 		diff = -diff
@@ -287,7 +287,7 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 {
 }
 
 // DiffAbsInSeconds 相差多少秒（绝对值）
-func (start Carbon) DiffAbsInSeconds(end Carbon) int64 {
+func (start Carbon) DiffInSecondsWithAbs(end Carbon) int64 {
 	diff := start.DiffInSeconds(end)
 	if diff < 0 {
 		diff = -diff
@@ -634,4 +634,88 @@ func (c Carbon) IsToday() bool {
 // IsTomorrow 是否是明天
 func (c Carbon) IsTomorrow() bool {
 	return c.ToDateString() == c.Tomorrow().ToDateString()
+}
+
+// Compare 时间比较
+func (c Carbon) Compare(operator string, t Carbon) bool {
+	switch operator {
+	case "=":
+		return c.Time.Equal(t.Time)
+	case "<>":
+		return !c.Time.Equal(t.Time)
+	case "!=":
+		return !c.Time.Equal(t.Time)
+	case ">":
+		return c.Time.After(t.Time)
+	case ">=":
+		return c.Time.After(t.Time) || c.Time.Equal(t.Time)
+	case "<":
+		return c.Time.Before(t.Time)
+	case "<=":
+		return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
+	}
+
+	return false
+}
+
+// Gt 大于
+func (c Carbon) Gt(t Carbon) bool {
+	return c.Time.After(t.Time)
+}
+
+// Lt 小于
+func (c Carbon) Lt(t Carbon) bool {
+	return c.Time.Before(t.Time)
+}
+
+// Eq 等于
+func (c Carbon) Eq(t Carbon) bool {
+	return c.Time.Equal(t.Time)
+}
+
+// Ne 不等于
+func (c Carbon) Ne(t Carbon) bool {
+	return !c.Time.Equal(t.Time)
+}
+
+// Gte 大于等于
+func (c Carbon) Gte(t Carbon) bool {
+	return c.Time.After(t.Time) || c.Time.Equal(t.Time)
+}
+
+// Lte 小于等于
+func (c Carbon) Lte(t Carbon) bool {
+	return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
+}
+
+// Between 是否在两个时间之间(不包括这两个时间)
+func (c Carbon) Between(start Carbon, end Carbon) bool {
+	if c.Time.After(start.Time) && c.Time.Before(end.Time) {
+		return true
+	}
+	return false
+}
+
+// BetweenIncludedStartTime 是否在两个时间之间(包括开始时间)
+func (c Carbon) BetweenIncludedStartTime(start Carbon, end Carbon) bool {
+	if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) && c.Time.Before(end.Time) {
+		return true
+	}
+	return false
+}
+
+// BetweenIncludedEndTime 是否在两个时间之间(包括结束时间)
+func (c Carbon) BetweenIncludedEndTime(start Carbon, end Carbon) bool {
+	if c.Time.After(start.Time) && (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) {
+		return true
+	}
+	return false
+}
+
+// BetweenIncludedBoth 是否在两个时间之间(包括这两个时间)
+func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
+	if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) && (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) {
+		return true
+	}
+	return false
 }

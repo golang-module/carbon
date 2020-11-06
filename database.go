@@ -56,10 +56,6 @@ func (c Carbon) Value() (driver.Value, error) {
 	return timeTime, nil
 }
 
-func (c Carbon) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
-}
-
 func (c ToDateTimeString) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
 }
