@@ -658,6 +658,7 @@ type UserModel struct {
 ###### Instantiate model
 ```go
 user := UserModel {
+    ID: 1153,
     Name: "勾国印",
     Age: 18,
     Birthday: carbon.ToDateTimeString{carbon.Now().SubYears(18)},
@@ -673,7 +674,7 @@ user := UserModel {
 
 ###### Output fields
 ```go
-user.ID // 42
+user.ID // 1153
 user.Name // 勾国印
 user.Age // 18
 user.Birthday.ToDateTimeString() // 2012-08-05 13:14:15
@@ -692,7 +693,7 @@ data, _ := json.Marshal(&user)
 fmt.Print(string(data))
 // Output
 {
-    "id": 42,
+    "id": 1153,
     "name": "勾国印",
     "age": 18,
     "birthday": "2012-08-05 13:14:15",
