@@ -563,7 +563,9 @@ carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
 // 获取本年第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
 // 获取本年第几周
+carbon.Parse("2019-12-31 13:14:15").WeekOfYear() // 1
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
+> 参考 [ ISO 8601 标准](https://baike.baidu.com/item/ISO%208601/3910715?fr=aladdin#3 " ISO 8601 标准")
 // 获取本月第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
 // 获取本月第几周
