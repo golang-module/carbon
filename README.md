@@ -772,7 +772,8 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * 更新readme.md文档
 * 修复已知错误
 * 将const.go改名为constant.go
-* 新增ToGoTime()将carbon实例转为time.Time
+* 新增CreateFromGoTime()方法将time.Time转为carbon实例
+* 新增ToGoTime()方法将carbon实例转为time.Time
 
 ##### 2020-11-06
 * 弃用Duration()方法，拆分为AddDuration()和SubDuration()
