@@ -4,6 +4,23 @@ import (
 	"testing"
 )
 
+func TestCarbon_ToGoTime(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-08-05", "2020-08-05"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).ToGoTime().Format("2006-01-02")
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_ToString(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值

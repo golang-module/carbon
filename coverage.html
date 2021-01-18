@@ -60,7 +60,7 @@
 				
 				<option value="file2">github.com/golang-module/carbon/database.go (44.4%)</option>
 				
-				<option value="file3">github.com/golang-module/carbon/final.go (97.5%)</option>
+				<option value="file3">github.com/golang-module/carbon/final.go (100.0%)</option>
 				
 				<option value="file4">github.com/golang-module/carbon/private.go (100.0%)</option>
 				
@@ -885,6 +885,11 @@ import (
         "time"
 )
 
+// ToGoTime 输出carbon实例
+func (c Carbon) ToGoTime() time.Time <span class="cov8" title="1">{
+        return c.Time
+}</span>
+
 // ToString 输出字符串
 func (c Carbon) ToString() string <span class="cov8" title="1">{
         return c.Time.String()
@@ -1101,7 +1106,7 @@ func (start Carbon) DiffInWeeks(end Carbon) int64 <span class="cov8" title="1">{
         return start.DiffInSeconds(end) / SecondsPerWeek
 }</span>
 
-// DiffAbsInWeeks 相差多少周（绝对值）
+// DiffInWeeksWithAbs 相差多少周（绝对值）
 func (start Carbon) DiffInWeeksWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInWeeks(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
@@ -1115,7 +1120,7 @@ func (start Carbon) DiffInDays(end Carbon) int64 <span class="cov8" title="1">{
         return start.DiffInSeconds(end) / SecondsPerDay
 }</span>
 
-// DiffAbsInDays 相差多少天（绝对值）
+// DiffInDaysWithAbs 相差多少天（绝对值）
 func (start Carbon) DiffInDaysWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInDays(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
@@ -1129,7 +1134,7 @@ func (start Carbon) DiffInHours(end Carbon) int64 <span class="cov8" title="1">{
         return start.DiffInSeconds(end) / SecondsPerHour
 }</span>
 
-// DiffAbsInHours 相差多少小时（绝对值）
+// DiffInHoursWithAbs 相差多少小时（绝对值）
 func (start Carbon) DiffInHoursWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInHours(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
@@ -1143,7 +1148,7 @@ func (start Carbon) DiffInMinutes(end Carbon) int64 <span class="cov8" title="1"
         return start.DiffInSeconds(end) / SecondsPerMinute
 }</span>
 
-// DiffAbsInMinutes 相差多少分钟（绝对值）
+// DiffInMinutesWithAbs 相差多少分钟（绝对值）
 func (start Carbon) DiffInMinutesWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInMinutes(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
@@ -1167,7 +1172,7 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 <span class="cov8" title="1"
         <span class="cov8" title="1">return end.ToTimestamp() - start.ToTimestamp()</span>
 }
 
-// DiffAbsInSeconds 相差多少秒（绝对值）
+// DiffInSecondsWithAbs 相差多少秒（绝对值）
 func (start Carbon) DiffInSecondsWithAbs(end Carbon) int64 <span class="cov8" title="1">{
         diff := start.DiffInSeconds(end)
         if diff &lt; 0 </span><span class="cov8" title="1">{
@@ -1540,32 +1545,32 @@ func (c Carbon) Compare(operator string, t Carbon) bool <span class="cov8" title
 }
 
 // Gt 大于
-func (c Carbon) Gt(t Carbon) bool {
+func (c Carbon) Gt(t Carbon) bool <span class="cov8" title="1">{
         return c.Time.After(t.Time)
 }</span>
 
 // Lt 小于
-func (c Carbon) Lt(t Carbon) bool {
+func (c Carbon) Lt(t Carbon) bool <span class="cov8" title="1">{
         return c.Time.Before(t.Time)
 }</span>
 
 // Eq 等于
-func (c Carbon) Eq(operator string, t Carbon) bool <span class="cov0" title="0">{
+func (c Carbon) Eq(t Carbon) bool <span class="cov8" title="1">{
         return c.Time.Equal(t.Time)
 }</span>
 
 // Ne 不等于
-func (c Carbon) Ne(t Carbon) bool {
+func (c Carbon) Ne(t Carbon) bool <span class="cov8" title="1">{
         return !c.Time.Equal(t.Time)
 }</span>
 
 // Gte 大于等于
-func (c Carbon) Gte(t Carbon) bool {
+func (c Carbon) Gte(t Carbon) bool <span class="cov8" title="1">{
         return c.Time.After(t.Time) || c.Time.Equal(t.Time)
 }</span>
 
 // Lte 小于等于
-func (c Carbon) Lte(t Carbon) bool {
+func (c Carbon) Lte(t Carbon) bool <span class="cov8" title="1">{
         return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
 }</span>
 

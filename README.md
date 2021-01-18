@@ -101,6 +101,14 @@ carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 ```
 
+##### carbon和time.Time互转
+```go
+// Go 内置 Time.time 转 Carbon
+carbon.CreateFromGoTime(time.Now())
+// Carbon 转 Go 内置 Time.time
+carbon.Now().ToGoTime()
+```
+
 ##### 解析标准格式时间字符串
 ```go
 carbon.Parse("").ToDateTimeString() // 空字符串
@@ -597,7 +605,7 @@ carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
-> 关于周的计算请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
+> 关于第几周的计算请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
 
 ##### 农历支持
 ```go
@@ -760,6 +768,11 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2020-01-18
+* 更新文档
+* 修复已知错误
+* 新增ToGoTime()将carbon实例转为time.Time
+
 ##### 2020-11-06
 * 弃用Duration()方法，拆分为AddDuration()和SubDuration()
 * 新增Compare()方法比较时间

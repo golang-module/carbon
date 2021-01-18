@@ -4,6 +4,11 @@ import (
 	"time"
 )
 
+// ToGoTime 输出carbon实例
+func (c Carbon) ToGoTime() time.Time {
+	return c.Time
+}
+
 // ToString 输出字符串
 func (c Carbon) ToString() string {
 	return c.Time.String()

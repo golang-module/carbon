@@ -102,6 +102,14 @@ carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 ```
 
+##### Convert between carbon and time.Time
+```go
+// Time.time convert to Carbon
+carbon.CreateFromGoTime(time.Now())
+// Carbon convert to Time.time
+carbon.Now().ToGoTime()
+```
+
 ##### Parse standard time format string
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
