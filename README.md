@@ -769,8 +769,9 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 
 #### 更新日志
 ##### 2020-01-18
-* 更新文档
+* 更新readme.md文档
 * 修复已知错误
+* 将const.go改名为constant.go
 * 新增ToGoTime()将carbon实例转为time.Time
 
 ##### 2020-11-06
