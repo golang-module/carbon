@@ -57,7 +57,7 @@ func (c Carbon) ToDayDateTimeString() string {
 	if c.Time.IsZero() {
 		return ""
 	}
-	return c.Time.Format(DayDateTimeFormat)
+	return c.Time.In(c.Loc).Format(DayDateTimeFormat)
 }
 
 // ToDateTimeString 输出日期时间字符串
@@ -386,8 +386,8 @@ func (c Carbon) Age() int {
 	if c.ToTimestamp() > Now().ToTimestamp() {
 		return 0
 	}
-	age := time.Now().Year() - c.Time.Year()
-	if int(time.Now().Month())*100+time.Now().Day() < int(c.Time.Month())*100+c.Time.Day() {
+	age := time.Now().Year() - c.Time.In(c.Loc).Year()
+	if int(time.Now().Month())*100+time.Now().Day() < int(c.Time.In(c.Loc).Month())*100+c.Time.In(c.Loc).Day() {
 		age = age - 1
 	}
 	return age
