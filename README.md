@@ -791,7 +791,7 @@ fmt.Println(c.ToDateTimeString())
 // 输出
 invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
 ```
-
+> 建议使用SetTimezone()、Parse()、ParseByFormat()、ParseByDuration()、AddDuration()、SubDuration()等方法时先进行错误处理判断，除非你能确保传入参数无误
 #### 附录
 ##### <a id="格式化符号表">格式化符号表</a>
 | 符号 | 描述 | 类型 | 长度 | 范围 | 示例 |
