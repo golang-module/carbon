@@ -17,33 +17,31 @@ var TimezoneTests = []struct {
 }
 
 func TestCarbon_SetTimezone1(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in Timezone()：%s\n", r)
-		}
-	}()
-
 	for _, v := range TimezoneTests {
-		output := SetTimezone(v.timezone).Parse(v.input).ToDateTimeString()
+		output := SetTimezone(v.timezone).Parse(v.input)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in SetTimezone():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
 
 func TestCarbon_SetTimezone2(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in Timezone()：%s\n", r)
-		}
-	}()
-
 	for _, v := range TimezoneTests {
-		output := SetTimezone(PRC).SetTimezone(v.timezone).Parse(v.input).ToDateTimeString()
+		output := SetTimezone(PRC).SetTimezone(v.timezone).Parse(v.input)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in SetTimezone():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
@@ -597,7 +595,6 @@ func TestCarbon_CreateFromGoTime(t *testing.T) {
 		output string    // 期望输出值
 	}{
 		{time.Now(), time.Now().Format(DateTimeFormat)},
-		{parseByLayout("2020-08-05 13:14:15", DateTimeFormat), "2020-08-05 13:14:15"},
 	}
 
 	for _, v := range Tests {
@@ -631,28 +628,32 @@ func TestCarbon_Parse(t *testing.T) {
 		{"20200805", "2020-08-05 00:00:00"},
 		{"2020-08-05", "2020-08-05 00:00:00"},
 		{"2020-08-05T13:14:15+08:00", "2020-08-05 13:14:15"},
-		{"12345678", "panic"}, // 异常情况
-	}
-
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in Parse()：%s\n", r)
-		}
-	}()
-
-	for _, v := range Tests {
-		output := Parse(v.input).ToDateTimeString()
-
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
-		}
+		{"12345678", ""}, // 异常情况
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).ToDateTimeString()
+		output := Parse(v.input)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in Parse():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in Parse():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
@@ -664,37 +665,35 @@ var ParseByFormatTests = []struct {
 }{
 	{"2020|08|05", "Y|m|d", "2020-08-05 00:00:00"},
 	{"2020|08|05 13:14:15", "Y|m|d H:i:s", "2020-08-05 13:14:15"},
-	{"12345678", "abc", "panic"}, // 异常情况
+	{"12345678", "XXXX", ""}, // 异常情况
 }
 
 func TestCarbon_ParseByFormat1(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in ParseByFormat()：%s\n", r)
-		}
-	}()
-
 	for _, v := range ParseByFormatTests {
-		output := ParseByFormat(v.input, v.format).ToDateTimeString()
+		output := ParseByFormat(v.input, v.format)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByFormat():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
 
 func TestCarbon_ParseByFormat2(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in ParseByFormat()：%s\n", r)
-		}
-	}()
-
 	for _, v := range ParseByFormatTests {
-		output := SetTimezone(PRC).ParseByFormat(v.input, v.format).ToDateTimeString()
+		output := SetTimezone("XXXX").ParseByFormat(v.input, v.format)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByFormat():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
@@ -704,52 +703,50 @@ var ParseByDurationTests = []struct {
 	duration string // 输入参数
 	output   string // 期望输出值
 }{
-	{Now().ToDateTimeString(), "10h", time.Now().Add(parseByDuration("10h")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10h", time.Now().Add(parseByDuration("-10h")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5h", time.Now().Add(parseByDuration("10.5h")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5h", time.Now().Add(parseByDuration("-10.5h")).Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10h", ParseByDuration("10h").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10h", ParseByDuration("-10h").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10.5h", ParseByDuration("10.5h").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10.5h", ParseByDuration("-10.5h").Format(DateTimeFormat)},
 
-	{Now().ToDateTimeString(), "10m", time.Now().Add(parseByDuration("10m")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10m", time.Now().Add(parseByDuration("-10m")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5m", time.Now().Add(parseByDuration("10.5m")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5m", time.Now().Add(parseByDuration("-10.5m")).Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10m", ParseByDuration("10m").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10m", ParseByDuration("-10m").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10.5m", ParseByDuration("10.5m").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10.5m", ParseByDuration("-10.5m").Format(DateTimeFormat)},
 
-	{Now().ToDateTimeString(), "10s", time.Now().Add(parseByDuration("10s")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10s", time.Now().Add(parseByDuration("-10s")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5s", time.Now().Add(parseByDuration("10.5s")).Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5s", time.Now().Add(parseByDuration("-10.5s")).Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10s", ParseByDuration("10s").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10s", ParseByDuration("-10s").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "10.5s", ParseByDuration("10.5s").Format(DateTimeFormat)},
+	{Now().ToDateTimeString(), "-10.5s", ParseByDuration("-10.5s").Format(DateTimeFormat)},
 
-	{Now().ToDateTimeString(), "-10a", "panic"}, // 异常情况
+	{Now().ToDateTimeString(), "XXXX", ""}, // 异常情况
 }
 
 func TestCarbon_ParseByDuration1(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in ParseByDuration()：%s\n", r)
-		}
-	}()
-
 	for _, v := range ParseByDurationTests {
-		output := ParseByDuration(v.duration).ToDateTimeString()
+		output := ParseByDuration(v.duration)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByDuration():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
 
 func TestCarbon_ParseByDuration2(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in ParseByDuration()：%s\n", r)
-		}
-	}()
-
 	for _, v := range ParseByDurationTests {
-		output := SetTimezone(PRC).ParseByDuration(v.duration).ToDateTimeString()
+		output := SetTimezone("XXXX").ParseByDuration(v.duration)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByDuration():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
@@ -769,28 +766,33 @@ func TestCarbon_AddDuration(t *testing.T) {
 		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:25"},
 		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:25"},
 
-		{"2020-01-01 13:14:15", "10x", ""},
-	}
-
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in AddDuration()：%s\n", r)
-		}
-	}()
-
-	for _, v := range Tests {
-		output := Parse(v.input).AddDuration(v.duration).ToDateTimeString()
-
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
-		}
+		{"12345678", "10h", ""},             // 异常情况
+		{"2020-01-01 13:14:15", "XXXX", ""}, // 异常情况
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).AddDuration(v.duration).ToDateTimeString()
+		output := Parse(v.input).AddDuration(v.duration)
 
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		if output.Error != nil {
+			fmt.Println("catch an exception in AddDuration():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone("XXXX").Parse(v.input).AddDuration(v.duration)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in AddDuration():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
 }
@@ -810,17 +812,54 @@ func TestCarbon_SubDuration(t *testing.T) {
 		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:05"},
 		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:04"},
 
-		{"2020-01-01 13:14:15", "10x", ""},
+		{"2020-01-01 13:14:15 XXXX", "10h", ""}, // 异常情况
+		{"2020-01-01 13:14:15", "10x", ""},      // 异常情况
 	}
 
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("catch an exception in SubDuration()：%s\n", r)
+	for _, v := range Tests {
+		output := Parse(v.input).SubDuration(v.duration)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in SubDuration():", output.Error)
+			return
 		}
-	}()
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).SubDuration(v.duration).ToDateTimeString()
+		output := SetTimezone("XXXX").Parse(v.input).SubDuration(v.duration)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in SubDuration():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
+}
+
+func TestCarbon_AddCenturies(t *testing.T) {
+	type Test struct {
+		input     string // 输入值
+		centuries int    // 输入参数
+		output    string // 期望输出值
+	}
+
+	Tests := []Test{
+		{"2020-01-01", 3, "2320-01-01"},
+		{"2020-01-31", 3, "2320-01-31"},
+		{"2020-02-01", 3, "2320-02-01"},
+		{"2020-02-28", 3, "2320-02-28"},
+		{"2020-02-29", 3, "2320-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddCenturies(v.centuries).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -828,7 +867,215 @@ func TestCarbon_SubDuration(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).SubDuration(v.duration).ToDateTimeString()
+		output := SetTimezone(PRC).Parse(v.input).AddCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_NextCenturies(t *testing.T) {
+	Tests := []struct {
+		input     string // 输入值
+		centuries int    // 输入参数
+		output    string // 期望输出值
+	}{
+		{"2020-01-01", 3, "2320-01-01"},
+		{"2020-01-31", 3, "2320-01-31"},
+		{"2020-02-01", 3, "2320-02-01"},
+		{"2020-02-28", 3, "2320-02-28"},
+		{"2020-02-29", 3, "2320-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).NextCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).NextCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubCenturies(t *testing.T) {
+	type Test struct {
+		input     string // 输入值
+		centuries int    // 输入参数
+		output    string // 期望输出值
+	}
+
+	Tests := []Test{
+		{"2020-01-01", 3, "1720-01-01"},
+		{"2020-01-31", 3, "1720-01-31"},
+		{"2020-02-01", 3, "1720-02-01"},
+		{"2020-02-28", 3, "1720-02-28"},
+		{"2020-02-29", 3, "1720-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_PreCenturies(t *testing.T) {
+	Tests := []struct {
+		input     string // 输入值
+		centuries int
+		output    string // 期望输出值
+	}{
+		{"2020-01-01", 3, "1720-01-01"},
+		{"2020-01-31", 3, "1720-01-31"},
+		{"2020-02-01", 3, "1720-02-01"},
+		{"2020-02-28", 3, "1720-02-28"},
+		{"2020-02-29", 3, "1720-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).PreCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).PreCenturies(v.centuries).ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_AddCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "2120-01-01"},
+		{"2020-01-31", "2120-01-31"},
+		{"2020-02-01", "2120-02-01"},
+		{"2020-02-28", "2120-02-28"},
+		{"2020-02-29", "2120-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).AddCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).AddCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_NextCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "2120-01-01"},
+		{"2020-01-31", "2120-01-31"},
+		{"2020-02-01", "2120-02-01"},
+		{"2020-02-28", "2120-02-28"},
+		{"2020-02-29", "2120-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).NextCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).NextCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_SubCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "1920-01-01"},
+		{"2020-01-31", "1920-01-31"},
+		{"2020-02-01", "1920-02-01"},
+		{"2020-02-28", "1920-02-28"},
+		{"2020-02-29", "1920-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).SubCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).SubCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_PreCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01", "1920-01-01"},
+		{"2020-01-31", "1920-01-31"},
+		{"2020-02-01", "1920-02-01"},
+		{"2020-02-28", "1920-02-28"},
+		{"2020-02-29", "1920-02-29"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).PreCentury().ToDateString()
+
+		if output != v.output {
+			t.Fatalf("Expected %s, but got %s", v.output, output)
+		}
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(PRC).Parse(v.input).PreCentury().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)

@@ -1,7 +1,7 @@
 # Carbon  #
 中文 | [English](./README.en.md)
 
-carbon 是一个轻量级、语义化、对开发者友好的 Golang 时间处理库，支持链式调用和 gorm、xorm 等主流 orm。
+carbon 是一个轻量级、语义化、对开发者友好的 Golang 时间处理库，支持链式调用和 gorm、xorm、zorm 等主流 orm。
 
 如果您觉得不错，请给个 star 吧
 
@@ -217,6 +217,22 @@ carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-
 
 ##### 时间旅行
 ```go
+// 三世纪后
+carbon.Parse("2020-02-29 13:14:15").AddCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").NextCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
+
+// 一世纪后
+carbon.Parse("2020-02-29 13:14:15").AddCentury().ToDateTimeString() // 2120-02-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").NextCentury().ToDateTimeString() // 2120-02-29 13:14:15
+
+// 三世纪前
+carbon.Parse("2020-02-29 13:14:15").SubCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").PreCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
+
+// 一世纪前
+carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-29 13:14:15
+carbon.Parse("2020-02-29 13:14:15").PreCentury().ToDateTimeString() // 1920-02-29 13:14:15
+
 // 三年后
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
 carbon.Parse("2020-02-29 13:14:15").NextYears(3).ToDateTimeString() // 2023-02-28 13:14:15
@@ -641,7 +657,7 @@ carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
 ```
 
 ##### 数据库支持
-假设数据表为 users，字段有 id(int)、name(varchar)、age(int)、birthday(datetime)、graduated_at(datetime)、created_at(datetime)、updated_at(datetime)、date_time1(datetime)、date_time2(datetime)、date_time3(datetime)、date_time4(datetime)
+> 假设数据表为 users，字段有 id(int)、name(varchar)、age(int)、birthday(datetime)、graduated_at(datetime)、created_at(datetime)、updated_at(datetime)、date_time1(datetime)、date_time2(datetime)、date_time3(datetime)、date_time4(datetime)
 
 ###### 定义模型
 ```go
@@ -739,6 +755,42 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
     "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
 }
 ```
+##### 错误处理
+> 如果有多个错误发生，只返回第一个错误信息，前一个错误排除后才返回下一个错误信息
+
+###### 场景一
+```go
+c := carbon.SetTimezone(PRC).Parse("123456")
+if c.Error != nil {
+    // 错误处理...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// 输出
+the value "123456" and layout "2006-01-02 15:04:05" don't match
+```
+###### 场景二
+```go
+c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
+if c.Error != nil {
+    // 错误处理...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// 输出
+invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
+```
+###### 场景三
+```go
+c := carbon.SetTimezone("XXXX").Parse("12345678")
+if c.Error != nil {
+    // 错误处理...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// 输出
+invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
+```
 
 #### 附录
 ##### <a id="格式化符号表">格式化符号表</a>
@@ -768,6 +820,21 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 
 #### 更新日志
+##### 2021-01-26
+* 更新readme.md文档
+* 完善单元测试代码覆盖率
+* carbon结构体的Loc私有属性改成Loc公开属性
+* carbon结构体新增Error公开属性
+* 优化错误处理机制，弃用出错直接panic的粗暴处理方式
+* 新增AddCenturies()方法获取N世纪后时间
+* 新增AddCentury()方法获取一世纪后时间
+* 新增SubCenturies()方法获取N世纪前时间
+* 新增SubCentury()方法获取一世纪前时间
+* 新增NextCenturies()方法获取N世纪后时间(不跨月)
+* 新增NextCentury()方法获取一世纪后时间(不跨月)
+* 新增PreCenturies()方法获取N世纪前时间(不跨月)
+* 新增PreCentury()方法获取一世纪前时间(不跨月)
+
 ##### 2021-01-18
 * 更新readme.md文档
 * 修复已知错误

@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"errors"
 	"strings"
 	"time"
 )
@@ -26,35 +27,30 @@ func format2layout(format string) string {
 	return layout
 }
 
-// newCarbon 创建一个新Carbon实例
-func newCarbon(t time.Time) Carbon {
-	loc, _ := time.LoadLocation(Local)
-	return Carbon{Time: t, loc: loc}
-}
-
-// getLocalByTimezone 通过时区获取Location实例
-func getLocalByTimezone(timezone string) *time.Location {
+// getLocationByTimezone 通过时区获取Location实例
+func getLocationByTimezone(timezone string) (*time.Location, error) {
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
-		panic("invalid timezone \"" + timezone + "\", all valid timezone, please see the $GOROOT/lib/time/zoneinfo.zip file")
+		err = errors.New("invalid timezone \"" + timezone + "\", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone")
 	}
-	return loc
+	return loc, err
 }
 
 // parseByLayout 通过布局模板解析
-func parseByLayout(value string, layout string) time.Time {
-	t, err := time.ParseInLocation(layout, value, getLocalByTimezone(Local))
+func parseByLayout(value string, layout string) (time.Time, error) {
+	loc, _ := time.LoadLocation(Local)
+	tt, err := time.ParseInLocation(layout, value, loc)
 	if err != nil {
-		panic("the value \"" + value + "\" and layout \"" + layout + "\" don't match")
+		err = errors.New("the value \"" + value + "\" and layout \"" + layout + "\" don't match")
 	}
-	return t
+	return tt, err
 }
 
 // parseByDuration 通过持续时间解析
-func parseByDuration(duration string) time.Duration {
-	d, err := time.ParseDuration(duration)
+func parseByDuration(duration string) (time.Duration, error) {
+	td, err := time.ParseDuration(duration)
 	if err != nil {
-		panic("invalid duration \"" + duration + "\"")
+		err = errors.New("invalid duration \"" + duration + "\"")
 	}
-	return d
+	return td, err
 }

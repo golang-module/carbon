@@ -4,7 +4,7 @@ English | [Chinese](./README.md)
 #### Description
 A simple,semantic and developer-friendly golang package for datetime
 
-If you think it helpful, please give me a star
+If you think it is helpful, please give me a star
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
@@ -215,6 +215,26 @@ carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-
 
 ##### Time travel
 ```go
+// Add three centuries
+carbon.Parse("2020-02-29 13:14:15").AddCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
+// Next three centuries
+carbon.Parse("2020-02-29 13:14:15").NextCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
+
+// Add one century
+carbon.Parse("2020-02-29 13:14:15").AddCentury().ToDateTimeString() // 2120-02-29 13:14:15
+// Next one century
+carbon.Parse("2020-02-29 13:14:15").NextCentury().ToDateTimeString() // 2120-02-29 13:14:15
+
+// Subtract three centuries
+carbon.Parse("2020-02-29 13:14:15").SubCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
+// Previous three centuries
+carbon.Parse("2020-02-29 13:14:15").PreCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
+
+// Subtract one century
+carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-29 13:14:15
+// Previous one century
+carbon.Parse("2020-02-29 13:14:15").PreCentury().ToDateTimeString() // 1920-02-20 13:14:15
+
 // Add three years
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
 // Next three years
@@ -644,7 +664,7 @@ carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
 ```
 
 ##### Database
-Assuming the database table is users, its fields have id(int), name(varchar), age(int), birthday(datetime), graduated_at(datetime), created_at(datetime), updated_at(datetime), date_time1(datetime), date_time2(datetime), date_time3(datetime), date_time4(datetime)
+> Assuming the database table is users, its fields have id(int), name(varchar), age(int), birthday(datetime), graduated_at(datetime), created_at(datetime), updated_at(datetime), date_time1(datetime), date_time2(datetime), date_time3(datetime), date_time4(datetime)
 
 ###### Define model
 ```go
@@ -741,6 +761,43 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 {
     "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
 }
+```
+
+##### Error handle
+> If more than one error occurs, only the first error message is returned
+
+###### Scene one
+```go
+c := carbon.SetTimezone(PRC).Parse("123456")
+if c.Error != nil {
+    // Error handle...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// 输出
+the value "123456" and layout "2006-01-02 15:04:05" don't match
+```
+###### Scene two
+```go
+c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
+if c.Error != nil {
+    // Error handle...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// Output
+invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
+```
+###### Scene three
+```go
+c := carbon.SetTimezone("XXXX").Parse("12345678")
+if c.Error != nil {
+    // Error handle...
+    fmt.Println(c.Error)
+}
+fmt.Println(c.ToDateTimeString())
+// Output
+invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
 ```
 
 #### Appendix
