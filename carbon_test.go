@@ -193,9 +193,9 @@ func TestCarbon_Yesterday(t *testing.T) {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 
-	output = SetTimezone(PRC).Yesterday().Time.Format(DateTimeFormat)
+	output = SetTimezone(PRC).Parse("2020-08-05").Yesterday().Time.Format(DateFormat)
 
-	if expected != output {
+	if "2020-08-04" != output {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 }
@@ -209,9 +209,9 @@ func TestCarbon_Tomorrow(t *testing.T) {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 
-	output = SetTimezone(PRC).Tomorrow().Time.Format(DateTimeFormat)
+	output = SetTimezone(PRC).Parse("2020-08-05").Tomorrow().Time.Format(DateFormat)
 
-	if expected != output {
+	if "2020-08-06" != output {
 		t.Fatalf("Expected %s, but got %s", expected, output)
 	}
 }
@@ -689,59 +689,6 @@ func TestCarbon_ParseByFormat2(t *testing.T) {
 
 		if output.Error != nil {
 			fmt.Println("catch an exception in ParseByFormat():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-}
-
-var ParseByDurationTests = []struct {
-	input    string // 输入值
-	duration string // 输入参数
-	output   string // 期望输出值
-}{
-	{Now().ToDateTimeString(), "10h", ParseByDuration("10h").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10h", ParseByDuration("-10h").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5h", ParseByDuration("10.5h").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5h", ParseByDuration("-10.5h").Format(DateTimeFormat)},
-
-	{Now().ToDateTimeString(), "10m", ParseByDuration("10m").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10m", ParseByDuration("-10m").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5m", ParseByDuration("10.5m").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5m", ParseByDuration("-10.5m").Format(DateTimeFormat)},
-
-	{Now().ToDateTimeString(), "10s", ParseByDuration("10s").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10s", ParseByDuration("-10s").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "10.5s", ParseByDuration("10.5s").Format(DateTimeFormat)},
-	{Now().ToDateTimeString(), "-10.5s", ParseByDuration("-10.5s").Format(DateTimeFormat)},
-
-	{Now().ToDateTimeString(), "XXXX", ""}, // 异常情况
-}
-
-func TestCarbon_ParseByDuration1(t *testing.T) {
-	for _, v := range ParseByDurationTests {
-		output := ParseByDuration(v.duration)
-
-		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByDuration():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-}
-
-func TestCarbon_ParseByDuration2(t *testing.T) {
-	for _, v := range ParseByDurationTests {
-		output := SetTimezone("XXXX").ParseByDuration(v.duration)
-
-		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByDuration():", output.Error)
 			return
 		}
 

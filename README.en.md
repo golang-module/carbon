@@ -48,7 +48,7 @@ carbon.Now().ToTimestampWithMicrosecond() // 1596604455000000
 // Timestamp with nanosecond of today
 carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
 
-// Datetime of yesterday
+// Datetime of yesterday 
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
 // Date of yesterday
 carbon.Yesterday().ToDateString() // 2020-08-04
@@ -63,6 +63,8 @@ carbon.Yesterday().ToTimestampWithMillisecond() // 1596518055000
 carbon.Yesterday().ToTimestampWithMicrosecond() // 1596518055000000
 // Timestamp with nanosecond of yesterday
 carbon.Yesterday().ToTimestampWithNanosecond() // 1596518055000000000
+// Datetime of yesterday in other day
+carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
 
 // Datetime of tomorrow
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
@@ -79,6 +81,8 @@ carbon.Tomorrow().ToTimestampWithMillisecond() // 1596690855000
 carbon.Tomorrow().ToTimestampWithMicrosecond() // 1596690855000000
 // Timestamp with nanosecond of tomorrow
 carbon.Tomorrow().ToTimestampWithNanosecond() // 1596690855000000000
+// Datetime of tomorrow in other day
+carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
 ```
 
 ##### Create carbon instance
@@ -107,7 +111,7 @@ carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
 // Time.time convert to Carbon
 carbon.CreateFromGoTime(time.Now())
 // Carbon convert to Time.time
-carbon.Now().ToGoTime()
+carbon.Now().ToGoTime() 或 carbon.Now().Time
 ```
 
 ##### Parse standard time format string
@@ -129,22 +133,6 @@ carbon.ParseByFormat("2020%08%05% 13%14%15", "Y%m%d% h%i%s").ToDateTimeString //
 carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("2020年08月05日", "Y年m月d日").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.ParseByFormat("13时14分15秒", "H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
-```
-
-##### Parse duration time string (base on now)
-```go
-// Ten hours later
-carbon.ParseByDuration("10h").ToDateTimeString() // 2020-08-06 23:14:15
-// Ten and a half hours ago
-carbon.ParseByDuration("-10.5h").ToDateTimeString // 2020-08-05 02:44:15
-// Ten minutes later
-carbon.ParseByDuration("10m").ToDateTimeString // 2020-08-05 13:24:15
-// Ten and a half minutes ago
-carbon.ParseByDuration("-10.5m").ToDateTimeString // 2020-08-05 13:03:45
-// Ten seconds later
-carbon.ParseByDuration("10s").ToDateTimeString // 2020-08-05 13:14:25
-// Ten seconds ago
-carbon.ParseByDuration("-10.5s").ToDateTimeString // 2020-08-05 13:14:04
 ```
 
 ##### Time setter
@@ -319,6 +307,7 @@ carbon.Parse("2020-08-05 13:14:15").SubDay().ToDateTimeString() // 2020-08-04 13
 carbon.Parse("2020-08-05 13:14:15").AddHours(3).ToDateTimeString() // 2020-08-05 16:14:15
 // Add two and a half hours
 carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5h").ToDateTimeString() // 2020-08-05 15:44:15
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2h30m").ToDateTimeString() // 2020-08-05 15:44:15
 // Add one hour
 carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
 
@@ -326,6 +315,7 @@ carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 1
 carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
 // Subtract two and a half hours
 carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5h").ToDateTimeString() // 2020-08-05 10:44:15
+carbon.Parse("2020-08-05 13:14:15").SubDuration("2h30m").ToDateTimeString() // 2020-08-05 10:44:15
 // Subtract one hour
 carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 12:14:15
 
@@ -333,6 +323,7 @@ carbon.Parse("2020-08-05 13:14:15").SubHour().ToDateTimeString() // 2020-08-05 1
 carbon.Parse("2020-08-05 13:14:15").AddMinutes(3).ToDateTimeString() // 2020-08-05 13:17:15
 // Add two and a half minutes
 carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5m").ToDateTimeString() // 2020-08-05 13:16:45
+carbon.Parse("2020-08-05 13:14:15").AddDuration("2m30s").ToDateTimeString() // 2020-08-05 13:16:45
 // Add one minute
 carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
 
@@ -620,6 +611,12 @@ carbon.Parse("2020-08-05 13:14:15").Hour() // 13
 carbon.Parse("2020-08-05 13:14:15").Minute() // 14
 // Get current second
 carbon.Parse("2020-08-05 13:14:15").Second() // 15
+// Get current millisecond
+carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
+// Get current microsecond
+carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
+// Get current nanosecond
+carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 
 // Get timezone name
 carbon.SetTimezone(carbon.PRC).Timezone() // PRC
@@ -803,27 +800,43 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 #### Appendix
 ##### <a id="format-sign-table">Format sign table</a>
 
-| sign | desc | type | length | range | example |
-| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-| Y | year | number | 4 | 0000-9999 | 2020 |
-| y | year | number | 2 | 00-99 | 20 |
-| M | month | letter | 3 | Jan-Dec | Aug |
-| m | month | number | 2 | 01-12 | 08 |
-| F | month | letter | - | January-December | August |
-| n | month | number | 1/2 | 1-12 | 8 |
-| l | weekday | letter | - | Monday-Sunday | Wednesday |
-| D | weekday | letter | 3 | Mon-Sun | Wed |
-| d | day | number | 2 | 01-31 | 05 |
-| j | day | number | 1/2 |1-31 | 5 |
-| H | hour | number | 2 | 00-23 | 15 |
-| h | hour | number | 2 | 00-11 | 03 |
-| i | minute | number | 2 | 01-59 | 14 |
-| s | second | number | 2 | 01-59 | 15 |
-| P | Ante Meridiem/Post Meridiem | letter | 2 | AM/PM | PM |
-| p | ante meridiem/post meridiem | letter | 2 | am/pm | pm |
+| sign | desc | length | range | example |
+| :------------: | :------------: | :------------: | :------------: | :------------: |
+| d | Day of the month, 2 digits with leading zeros | 2 | 01-31 | 05 |
+| D | A textual representation of a day, three letters | 3 | Mon-Sun | Wed |
+| j | Day of the month without leading zeros | 1/2 |1-31 | 5 |
+| l | A full textual representation of the day of the week | - | Monday-Sunday | Wednesday |
+| F | A full textual representation of a month | - | January-December | August |
+| m | Numeric representation of a month, with leading zeros | 2 | 01-12 | 08 |
+| M | A short textual representation of a month, three letters | 3 | Jan-Dec | Aug |
+| n | Numeric representation of a month, without leading zeros | 1/2 | 1-12 | 8 |
+| y | A two digit representation of a year | 2 | 00-99 | 20 |
+| Y | A full numeric representation of a year, 4 digits | 4 | 0000-9999 | 2020 |
+| a | A full numeric representation of a year, 4 digits | 2 | am/pm | pm |
+| A | Uppercase Ante meridiem and Post meridiem | 2 | AM/PM | PM |
+| g | 12-hour format of an hour without leading zeros | 1/2 | 1-12 | 1 |
+| G | 24-hour format of an hour without leading zeros | 1/2 | 0-23 | 15 |
+| h | 12-hour format of an hour with leading zeros | 2 | 00-11 | 03 |
+| H | 24-hour format of an hour with leading zeros | 2 | 00-23 | 15 |
+| i | Minutes with leading zeros | 2 | 01-59 | 14 |
+| s | Seconds with leading zeros | 2 | 01-59 | 15 |
+| c | ISO 8601 date | - | - | 2020-08-05T15:19:21+00:00 |
+| r | RFC 2822 date | - | - | Thu, 21 Dec 2020 16:01:07 +0200 |
+| O | Difference to Greenwich time (GMT) without colon between hours and minutes | - | - | +0200 |
+| P | Difference to Greenwich time (GMT) with colon between hours and minutes | - | - | +02:00 |
+| T | Timezone abbreviation | - | - | EST |
+| N | ISO-8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
+| L | Whether it's a leap year | 1 | 0-1 | 1 |
+| U | Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) | 10 | - | 1611818268 |
+| u | Microseconds| - | - | 999 |
+| w | Numeric representation of the day of the week | 1 | 0-6 | 6 |
+| t | Number of days in the given month | 2 | 28-31 | 30 |
+| z | The day of the year (starting from 0) | 1/2/3 | 0-365 | 15 |
+| e | Timezone identifier | - | - | UTC |
 
 #### Reference
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
 * [uniplaces/carbon](https://github.com/uniplaces/carbon)
 * [jinzhu/now](https://github.com/jinzhu/now/)
 * [araddon/dateparse](https://github.com/araddon/dateparse)
+* [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)

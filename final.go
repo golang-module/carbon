@@ -1,6 +1,8 @@
 package carbon
 
 import (
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -49,7 +51,60 @@ func (c Carbon) ToFormatString(format string) string {
 	if c.Time.IsZero() {
 		return ""
 	}
-	return c.Time.In(c.Loc).Format(format2layout(format))
+
+	s := c.Time.In(c.Loc).Format(format2layout(format))
+
+	// ISO-8601 格式数字表示的星期中的第几天，取值范围 1-7
+	if strings.Contains(s, "N") {
+		s = strings.Replace(s, "N", strconv.Itoa(c.DayOfWeek()), 1)
+	}
+
+	// 是否为闰年，如果是闰年为 1，否则为 0
+	if strings.Contains(s, "L") {
+		if c.IsLeapYear() {
+			s = strings.Replace(s, "L", "1", 1)
+		} else {
+			s = strings.Replace(s, "L", "0", 1)
+		}
+	}
+
+	// 数字表示的小时，24 小时格式，没有前导零，取值范围 0-23
+	if strings.Contains(s, "G") {
+		s = c.Time.In(c.Loc).Format("15")
+		s = strings.Replace(s, "0", "", 1)
+	}
+
+	// 秒级时间戳，如 1611818268
+	if strings.Contains(s, "U") {
+		s = strings.Replace(s, "U", strconv.FormatInt(c.ToTimestamp(), 10), 1)
+	}
+
+	// 数字表示的毫秒，如 999
+	if strings.Contains(s, "u") {
+		s = strings.Replace(s, "u", strconv.Itoa(c.Millisecond()), 1)
+	}
+
+	// 数字表示的星期中的第几天，取值范围 0-6
+	if strings.Contains(s, "w") {
+		s = strings.Replace(s, "w", strconv.Itoa(c.DayOfWeek()-1), 1)
+	}
+
+	// 指定的月份有几天，取值范围 28-31
+	if strings.Contains(s, "t") {
+		s = strings.Replace(s, "t", strconv.Itoa(c.DaysInMonth()), 1)
+	}
+
+	// 年份中的第几天，取值范围 0-365
+	if strings.Contains(s, "z") {
+		s = strings.Replace(s, "z", strconv.Itoa(c.DayOfYear()-1), 1)
+	}
+
+	// 时区标识，如 UTC，GMT，Atlantic/Azores
+	if strings.Contains(s, "e") {
+		s = strings.Replace(s, "e", c.Timezone(), 1)
+	}
+
+	return s
 }
 
 // ToDayDateTimeString 输出天数日期时间字符串
@@ -148,7 +203,7 @@ func (c Carbon) ToKitchenString() string {
 	return c.Time.In(c.Loc).Format(KitchenFormat)
 }
 
-// ToRfc822String 输出RFC822格式字符串
+// ToRFC822String 输出RFC822格式字符串
 func (c Carbon) ToRFC822String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -156,7 +211,7 @@ func (c Carbon) ToRFC822String() string {
 	return c.Time.In(c.Loc).Format(RFC822Format)
 }
 
-// ToRfc822String 输出RFC822Z格式字符串
+// ToRFC822zString 输出RFC822Z格式字符串
 func (c Carbon) ToRFC822zString() string {
 	if c.Time.IsZero() {
 		return ""
@@ -164,7 +219,7 @@ func (c Carbon) ToRFC822zString() string {
 	return c.Time.In(c.Loc).Format(RFC822ZFormat)
 }
 
-// ToRfc850String 输出RFC850格式字符串
+// ToRFC850String 输出RFC850格式字符串
 func (c Carbon) ToRFC850String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -172,7 +227,7 @@ func (c Carbon) ToRFC850String() string {
 	return c.Time.In(c.Loc).Format(RFC850Format)
 }
 
-// ToRfc1036String 输出RFC1036格式字符串
+// ToRFC1036String 输出RFC1036格式字符串
 func (c Carbon) ToRFC1036String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -180,7 +235,7 @@ func (c Carbon) ToRFC1036String() string {
 	return c.Time.In(c.Loc).Format(RFC1036Format)
 }
 
-// ToRfc1123String 输出RFC1123格式字符串
+// ToRFC1123String 输出RFC1123格式字符串
 func (c Carbon) ToRFC1123String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -204,7 +259,7 @@ func (c Carbon) ToRFC2822String() string {
 	return c.Time.In(c.Loc).Format(RFC2822Format)
 }
 
-// ToRfc3339String 输出RFC3339格式字符串
+// ToRFC3339String 输出RFC3339格式字符串
 func (c Carbon) ToRFC3339String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -212,7 +267,7 @@ func (c Carbon) ToRFC3339String() string {
 	return c.Time.In(c.Loc).Format(RFC3339Format)
 }
 
-// ToRfc7231String 输出RFC7231格式字符串
+// ToRFC7231String 输出RFC7231格式字符串
 func (c Carbon) ToRFC7231String() string {
 	if c.Time.IsZero() {
 		return ""
@@ -628,7 +683,7 @@ func (c Carbon) IsWeekend() bool {
 
 // IsYesterday 是否是昨天
 func (c Carbon) IsYesterday() bool {
-	return c.ToDateString() == c.Yesterday().ToDateString()
+	return c.ToDateString() == Now().SubDay().ToDateString()
 }
 
 // IsToday 是否是今天
@@ -638,7 +693,7 @@ func (c Carbon) IsToday() bool {
 
 // IsTomorrow 是否是明天
 func (c Carbon) IsTomorrow() bool {
-	return c.ToDateString() == c.Tomorrow().ToDateString()
+	return c.ToDateString() == Now().AddDay().ToDateString()
 }
 
 // Compare 时间比较

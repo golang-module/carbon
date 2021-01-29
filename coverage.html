@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0098)file:///private/var/folders/bt/6b6lck_j5kjc_g91vxwqt70w0000gn/T/cover877896953/coverage.html#file0 -->
+<!-- saved from url=(0098)file:///private/var/folders/tv/ww8yj98d1hnfhsgdxxszrvj80000gn/T/cover422012145/coverage.html#file4 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		
 		<style>
@@ -59,9 +59,9 @@
 				
 				<option value="file2">github.com/golang-module/carbon/database.go (44.4%)</option>
 				
-				<option value="file3">github.com/golang-module/carbon/final.go (100.0%)</option>
+				<option value="file3">github.com/golang-module/carbon/final.go (99.6%)</option>
 				
-				<option value="file4">github.com/golang-module/carbon/private.go (100.0%)</option>
+				<option value="file4">github.com/golang-module/carbon/private.go (76.3%)</option>
 				
 				</select>
 			</div>
@@ -75,7 +75,7 @@
 		</div>
 		<div id="content">
 		
-		<pre class="file" id="file0" style="display: block;">package carbon
+		<pre class="file" id="file0" style="display: none;">package carbon
 
 var (
         // 十二生肖
@@ -229,7 +229,7 @@ type Carbon struct {
         Error error
 }
 
-// Now 当前(指定时区)
+// Now 当前
 func (c Carbon) Now() Carbon <span class="cov8" title="1">{
         c.Time = time.Now()
         return c
@@ -240,29 +240,37 @@ func Now() Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).Now()
 }</span>
 
-// Tomorrow 明天(指定时区)
+// Tomorrow 明天
 func (c Carbon) Tomorrow() Carbon <span class="cov8" title="1">{
-        c.Time = time.Now().AddDate(0, 0, 1)
-        return c
-}</span>
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                c.Time = time.Now().AddDate(0, 0, 1)
+        }</span> else<span class="cov8" title="1"> {
+                c.Time = c.Time.AddDate(0, 0, 1)
+        }</span>
+        <span class="cov8" title="1">return c</span>
+}
 
 // Tomorrow 明天(默认时区)
 func Tomorrow() Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).Tomorrow()
 }</span>
 
-// Yesterday 昨天(指定时区)
+// Yesterday 昨天
 func (c Carbon) Yesterday() Carbon <span class="cov8" title="1">{
-        c.Time = time.Now().AddDate(0, 0, -1)
-        return c
-}</span>
+        if c.Time.IsZero() </span><span class="cov8" title="1">{
+                c.Time = time.Now().AddDate(0, 0, -1)
+        }</span> else<span class="cov8" title="1"> {
+                c.Time = c.Time.AddDate(0, 0, -1)
+        }</span>
+        <span class="cov8" title="1">return c</span>
+}
 
 // Yesterday 昨天(默认时区)
 func Yesterday() Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).Yesterday()
 }</span>
 
-// CreateFromTimestamp 从时间戳创建Carbon实例(指定时区)
+// CreateFromTimestamp 从时间戳创建Carbon实例
 func (c Carbon) CreateFromTimestamp(timestamp int64) Carbon <span class="cov8" title="1">{
         ts := timestamp
         switch len(strconv.FormatInt(timestamp, 10)) </span>{
@@ -286,7 +294,7 @@ func CreateFromTimestamp(timestamp int64) Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).CreateFromTimestamp(timestamp)
 }</span>
 
-// CreateFromDateTime 从年月日时分秒创建Carbon实例(指定时区)
+// CreateFromDateTime 从年月日时分秒创建Carbon实例
 func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon <span class="cov8" title="1">{
         c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
         return c
@@ -297,7 +305,7 @@ func CreateFromDateTime(year int, month int, day int, hour int, minute int, seco
         return SetTimezone(Local).CreateFromDateTime(year, month, day, hour, minute, second)
 }</span>
 
-// CreateFromDate 从年月日创建Carbon实例(指定时区)
+// CreateFromDate 从年月日创建Carbon实例
 func (c Carbon) CreateFromDate(year int, month int, day int) Carbon <span class="cov8" title="1">{
         hour, minute, second := time.Now().Clock()
         c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
@@ -309,7 +317,7 @@ func CreateFromDate(year int, month int, day int) Carbon <span class="cov8" titl
         return SetTimezone(Local).CreateFromDate(year, month, day)
 }</span>
 
-// CreateFromTime 从时分秒创建Carbon实例(指定时区)
+// CreateFromTime 从时分秒创建Carbon实例
 func (c Carbon) CreateFromTime(hour int, minute int, second int) Carbon <span class="cov8" title="1">{
         year, month, day := time.Now().Date()
         c.Time = time.Date(year, month, day, hour, minute, second, 0, c.Loc)
@@ -321,7 +329,7 @@ func CreateFromTime(hour int, minute int, second int) Carbon <span class="cov8" 
         return SetTimezone(Local).CreateFromTime(hour, minute, second)
 }</span>
 
-// CreateFromGoTime 从原生time.Time创建Carbon实例(指定时区)
+// CreateFromGoTime 从原生time.Time创建Carbon实例
 func (c Carbon) CreateFromGoTime(tt time.Time) Carbon <span class="cov8" title="1">{
         c.Time = tt
         return c
@@ -332,33 +340,34 @@ func CreateFromGoTime(tt time.Time) Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).CreateFromGoTime(tt)
 }</span>
 
-// Parse 解析标准格式时间字符串(指定时区)
+// Parse 解析标准格式时间字符串
 func (c Carbon) Parse(value string) Carbon <span class="cov8" title="1">{
         if c.Error != nil </span><span class="cov8" title="1">{
                 return c
         }</span>
 
-        <span class="cov8" title="1">if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" </span><span class="cov8" title="1">{
+        <span class="cov8" title="1">layout := DateTimeFormat
+
+        if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" </span><span class="cov8" title="1">{
                 return c
         }</span>
 
-        <span class="cov8" title="1">layout := DateTimeFormat
-
-        if len(value) == 10 &amp;&amp; strings.Count(value, "-") == 2 </span><span class="cov8" title="1">{
+        <span class="cov8" title="1">if len(value) == 10 &amp;&amp; strings.Count(value, "-") == 2 </span><span class="cov8" title="1">{
                 layout = DateFormat
-        }</span>
-
-        <span class="cov8" title="1">if len(value) == 14 </span><span class="cov8" title="1">{
-                layout = ShortDateTimeFormat
-        }</span>
-
-        <span class="cov8" title="1">if len(value) == 8 </span><span class="cov8" title="1">{
-                layout = ShortDateFormat
         }</span>
 
         <span class="cov8" title="1">if strings.Index(value, "T") == 10 </span><span class="cov8" title="1">{
                 layout = RFC3339Format
         }</span>
+
+        <span class="cov8" title="1">if _, err := strconv.ParseInt(value, 10, 64); err == nil </span><span class="cov8" title="1">{
+                switch len(value) </span>{
+                case 8:<span class="cov8" title="1">
+                        layout = ShortDateFormat</span>
+                case 14:<span class="cov8" title="1">
+                        layout = ShortDateTimeFormat</span>
+                }
+        }
 
         <span class="cov8" title="1">tt, err := parseByLayout(value, layout)
         c.Time = tt
@@ -371,7 +380,7 @@ func Parse(value string) Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).Parse(value)
 }</span>
 
-// ParseByFormat 解析指定格式时间字符串(指定时区)
+// ParseByFormat 解析指定格式时间字符串
 func (c Carbon) ParseByFormat(value string, format string) Carbon <span class="cov8" title="1">{
         if c.Error != nil </span><span class="cov8" title="1">{
                 return c
@@ -386,24 +395,6 @@ func (c Carbon) ParseByFormat(value string, format string) Carbon <span class="c
 // ParseByFormat 解析指定格式时间字符串(默认时区)
 func ParseByFormat(value string, format string) Carbon <span class="cov8" title="1">{
         return SetTimezone(Local).ParseByFormat(value, format)
-}</span>
-
-// ParseByDuration 解析持续时间字符串(指定时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func (c Carbon) ParseByDuration(duration string) Carbon <span class="cov8" title="1">{
-        if c.Error != nil </span><span class="cov8" title="1">{
-                return c
-        }</span>
-        <span class="cov8" title="1">td, err := parseByDuration(duration)
-        c.Time = time.Now().Add(td)
-        c.Error = err
-        return c</span>
-}
-
-// ParseByDuration 解析持续时间字符串(默认时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func ParseByDuration(duration string) Carbon <span class="cov8" title="1">{
-        return SetTimezone(Local).ParseByDuration(duration)
 }</span>
 
 // AddDurations 按照持续时间字符串增加时间
@@ -630,27 +621,27 @@ func (c Carbon) SubSecond() Carbon <span class="cov8" title="1">{
         return c.SubSeconds(1)
 }</span>
 
-// NextCenturies N世纪后
+// NextCenturies N世纪后(不会出现月份溢出)
 func (c Carbon) NextCenturies(centuries int) Carbon <span class="cov8" title="1">{
         return c.NextYears(centuries * YearsPerCentury)
 }</span>
 
-// NextCentury 1世纪后
+// NextCentury 1世纪后(不会出现月份溢出)
 func (c Carbon) NextCentury() Carbon <span class="cov8" title="1">{
         return c.NextYears(YearsPerCentury)
 }</span>
 
-// PreCenturies N世纪前
+// PreCenturies N世纪前(不会出现月份溢出)
 func (c Carbon) PreCenturies(centuries int) Carbon <span class="cov8" title="1">{
         return c.PreYears(centuries * YearsPerCentury)
 }</span>
 
-// PreYears 1世纪前
+// PreYears 1世纪前(不会出现月份溢出)
 func (c Carbon) PreCentury() Carbon <span class="cov8" title="1">{
         return c.PreYears(YearsPerCentury)
 }</span>
 
-// NextYears N年后
+// NextYears N年后(不会出现月份溢出)
 func (c Carbon) NextYears(years int) Carbon <span class="cov8" title="1">{
         year := c.Time.Year() + years
         month := c.Time.Month()
@@ -667,42 +658,42 @@ func (c Carbon) NextYears(years int) Carbon <span class="cov8" title="1">{
         return c</span>
 }
 
-// NextYear 1年后
+// NextYear 1年后(不会出现月份溢出)
 func (c Carbon) NextYear() Carbon <span class="cov8" title="1">{
         return c.NextYears(1)
 }</span>
 
-// PreYears N年前
+// PreYears N年前(不会出现月份溢出)
 func (c Carbon) PreYears(years int) Carbon <span class="cov8" title="1">{
         return c.NextYears(-years)
 }</span>
 
-// PreYear 1年前
+// PreYear 1年前(不会出现月份溢出)
 func (c Carbon) PreYear() Carbon <span class="cov8" title="1">{
         return c.NextYears(-1)
 }</span>
 
-// NextQuarters N季度后
+// NextQuarters N季度后(不会出现月份溢出)
 func (c Carbon) NextQuarters(quarters int) Carbon <span class="cov8" title="1">{
         return c.NextMonths(quarters * MonthsPerQuarter)
 }</span>
 
-// NextQuarters 1季度后
+// NextQuarters 1季度后(不会出现月份溢出)
 func (c Carbon) NextQuarter() Carbon <span class="cov8" title="1">{
         return c.NextQuarters(1)
 }</span>
 
-// PreQuarters N季度前
+// PreQuarters N季度前(不会出现月份溢出)
 func (c Carbon) PreQuarters(quarters int) Carbon <span class="cov8" title="1">{
         return c.NextMonths(-quarters * MonthsPerQuarter)
 }</span>
 
-// PreQuarter 1季度前
+// PreQuarter 1季度前(不会出现月份溢出)
 func (c Carbon) PreQuarter() Carbon <span class="cov8" title="1">{
         return c.PreQuarters(1)
 }</span>
 
-// NextMonths N月后
+// NextMonths N月后(不会出现月份溢出)
 func (c Carbon) NextMonths(months int) Carbon <span class="cov8" title="1">{
         year := c.Time.Year()
         month := c.Time.Month() + time.Month(months)
@@ -719,17 +710,17 @@ func (c Carbon) NextMonths(months int) Carbon <span class="cov8" title="1">{
         return c</span>
 }
 
-// NextMonth 1月后
+// NextMonth 1月后(不会出现月份溢出)
 func (c Carbon) NextMonth() Carbon <span class="cov8" title="1">{
         return c.NextMonths(1)
 }</span>
 
-// PreMonths N月前
+// PreMonths N月前(不会出现月份溢出)
 func (c Carbon) PreMonths(months int) Carbon <span class="cov8" title="1">{
         return c.NextMonths(-months)
 }</span>
 
-// PreMonth 1月前
+// PreMonth 1月前(不会出现月份溢出)
 func (c Carbon) PreMonth() Carbon <span class="cov8" title="1">{
         return c.PreMonths(1)
 }</span>
@@ -962,6 +953,8 @@ func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) <span class="co
 		<pre class="file" id="file3" style="display: none">package carbon
 
 import (
+        "strconv"
+        "strings"
         "time"
 )
 
@@ -1010,7 +1003,60 @@ func (c Carbon) ToFormatString(format string) string <span class="cov8" title="1
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
         }</span>
-        <span class="cov8" title="1">return c.Time.In(c.Loc).Format(format2layout(format))</span>
+
+        <span class="cov8" title="1">s := c.Time.In(c.Loc).Format(format2layout(format))
+
+        // ISO-8601 格式数字表示的星期中的第几天，取值范围 1-7
+        if strings.Contains(s, "N") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "N", strconv.Itoa(c.DayOfWeek()), 1)
+        }</span>
+
+        // 是否为闰年，如果是闰年为 1，否则为 0
+        <span class="cov8" title="1">if strings.Contains(s, "L") </span><span class="cov8" title="1">{
+                if c.IsLeapYear() </span><span class="cov8" title="1">{
+                        s = strings.Replace(s, "L", "1", 1)
+                }</span> else<span class="cov0" title="0"> {
+                        s = strings.Replace(s, "L", "0", 1)
+                }</span>
+        }
+
+        // 数字表示的小时，24 小时格式，没有前导零，取值范围 0-23
+        <span class="cov8" title="1">if strings.Contains(s, "G") </span><span class="cov8" title="1">{
+                s = c.Time.In(c.Loc).Format("15")
+                s = strings.Replace(s, "0", "", 1)
+        }</span>
+
+        // 秒级时间戳，如 1611818268
+        <span class="cov8" title="1">if strings.Contains(s, "U") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "U", strconv.FormatInt(c.ToTimestamp(), 10), 1)
+        }</span>
+
+        // 数字表示的毫秒，如 1596604455000
+        <span class="cov8" title="1">if strings.Contains(s, "u") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "u", strconv.Itoa(c.Millisecond()), 1)
+        }</span>
+
+        // 数字表示的星期中的第几天，取值范围 0-6
+        <span class="cov8" title="1">if strings.Contains(s, "w") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "w", strconv.Itoa(c.DayOfWeek()-1), 1)
+        }</span>
+
+        // 指定的月份有几天，取值范围 28-31
+        <span class="cov8" title="1">if strings.Contains(s, "t") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "t", strconv.Itoa(c.DaysInMonth()), 1)
+        }</span>
+
+        // 年份中的第几天，取值范围 0-365
+        <span class="cov8" title="1">if strings.Contains(s, "z") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "z", strconv.Itoa(c.DayOfYear()-1), 1)
+        }</span>
+
+        // 时区标识，如 UTC，GMT，Atlantic/Azores
+        <span class="cov8" title="1">if strings.Contains(s, "e") </span><span class="cov8" title="1">{
+                s = strings.Replace(s, "e", c.Timezone(), 1)
+        }</span>
+
+        <span class="cov8" title="1">return s</span>
 }
 
 // ToDayDateTimeString 输出天数日期时间字符串
@@ -1018,7 +1064,7 @@ func (c Carbon) ToDayDateTimeString() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
         }</span>
-        <span class="cov8" title="1">return c.Time.Format(DayDateTimeFormat)</span>
+        <span class="cov8" title="1">return c.Time.In(c.Loc).Format(DayDateTimeFormat)</span>
 }
 
 // ToDateTimeString 输出日期时间字符串
@@ -1109,7 +1155,7 @@ func (c Carbon) ToKitchenString() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(KitchenFormat)</span>
 }
 
-// ToRfc822String 输出RFC822格式字符串
+// ToRFC822String 输出RFC822格式字符串
 func (c Carbon) ToRFC822String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1117,7 +1163,7 @@ func (c Carbon) ToRFC822String() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC822Format)</span>
 }
 
-// ToRfc822String 输出RFC822Z格式字符串
+// ToRFC822zString 输出RFC822Z格式字符串
 func (c Carbon) ToRFC822zString() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1125,7 +1171,7 @@ func (c Carbon) ToRFC822zString() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC822ZFormat)</span>
 }
 
-// ToRfc850String 输出RFC850格式字符串
+// ToRFC850String 输出RFC850格式字符串
 func (c Carbon) ToRFC850String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1133,7 +1179,7 @@ func (c Carbon) ToRFC850String() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC850Format)</span>
 }
 
-// ToRfc1036String 输出RFC1036格式字符串
+// ToRFC1036String 输出RFC1036格式字符串
 func (c Carbon) ToRFC1036String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1141,7 +1187,7 @@ func (c Carbon) ToRFC1036String() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC1036Format)</span>
 }
 
-// ToRfc1123String 输出RFC1123格式字符串
+// ToRFC1123String 输出RFC1123格式字符串
 func (c Carbon) ToRFC1123String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1165,7 +1211,7 @@ func (c Carbon) ToRFC2822String() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC2822Format)</span>
 }
 
-// ToRfc3339String 输出RFC3339格式字符串
+// ToRFC3339String 输出RFC3339格式字符串
 func (c Carbon) ToRFC3339String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1173,7 +1219,7 @@ func (c Carbon) ToRFC3339String() string <span class="cov8" title="1">{
         <span class="cov8" title="1">return c.Time.In(c.Loc).Format(RFC3339Format)</span>
 }
 
-// ToRfc7231String 输出RFC7231格式字符串
+// ToRFC7231String 输出RFC7231格式字符串
 func (c Carbon) ToRFC7231String() string <span class="cov8" title="1">{
         if c.Time.IsZero() </span><span class="cov8" title="1">{
                 return ""
@@ -1347,8 +1393,8 @@ func (c Carbon) Age() int <span class="cov8" title="1">{
         <span class="cov8" title="1">if c.ToTimestamp() &gt; Now().ToTimestamp() </span><span class="cov8" title="1">{
                 return 0
         }</span>
-        <span class="cov8" title="1">age := time.Now().Year() - c.Time.Year()
-        if int(time.Now().Month())*100+time.Now().Day() &lt; int(c.Time.Month())*100+c.Time.Day() </span><span class="cov8" title="1">{
+        <span class="cov8" title="1">age := time.Now().Year() - c.Time.In(c.Loc).Year()
+        if int(time.Now().Month())*100+time.Now().Day() &lt; int(c.Time.In(c.Loc).Month())*100+c.Time.In(c.Loc).Day() </span><span class="cov8" title="1">{
                 age = age - 1
         }</span>
         <span class="cov8" title="1">return age</span>
@@ -1589,7 +1635,7 @@ func (c Carbon) IsWeekend() bool <span class="cov8" title="1">{
 
 // IsYesterday 是否是昨天
 func (c Carbon) IsYesterday() bool <span class="cov8" title="1">{
-        return c.ToDateString() == c.Yesterday().ToDateString()
+        return c.ToDateString() == Now().SubDay().ToDateString()
 }</span>
 
 // IsToday 是否是今天
@@ -1599,7 +1645,7 @@ func (c Carbon) IsToday() bool <span class="cov8" title="1">{
 
 // IsTomorrow 是否是明天
 func (c Carbon) IsTomorrow() bool <span class="cov8" title="1">{
-        return c.ToDateString() == c.Tomorrow().ToDateString()
+        return c.ToDateString() == Now().AddDay().ToDateString()
 }</span>
 
 // Compare 时间比较
@@ -1687,7 +1733,7 @@ func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool <span class="
 }
 </pre>
 		
-		<pre class="file" id="file4" style="display: none">package carbon
+		<pre class="file" id="file4" style="display: block;">package carbon
 
 import (
         "errors"
@@ -1697,24 +1743,120 @@ import (
 
 // format转layout
 func format2layout(format string) string <span class="cov8" title="1">{
-        layout := strings.Replace(format, "Y", "2006", 1)
-        layout = strings.Replace(layout, "y", "06", 1)
-        layout = strings.Replace(layout, "M", "Jan", 1)
-        layout = strings.Replace(layout, "m", "01", 1)
-        layout = strings.Replace(layout, "F", "January", 1)
-        layout = strings.Replace(layout, "n", "1", 1)
-        layout = strings.Replace(layout, "l", "Monday", 1)
-        layout = strings.Replace(layout, "D", "Mon", 1)
-        layout = strings.Replace(layout, "d", "02", 1)
-        layout = strings.Replace(layout, "j", "2", 1)
-        layout = strings.Replace(layout, "H", "15", 1)
-        layout = strings.Replace(layout, "h", "03", 1)
-        layout = strings.Replace(layout, "i", "04", 1)
-        layout = strings.Replace(layout, "s", "05", 1)
-        layout = strings.Replace(layout, "P", "PM", 1)
-        layout = strings.Replace(layout, "p", "pm", 1)
-        return layout
-}</span>
+        layout := format
+
+        // 月份中的第几天，有前导零的 2 位数字，取值范围 01-31
+        if strings.Contains(layout, "d") </span><span class="cov8" title="1">{
+                layout = strings.Replace(format, "d", "02", 1)
+        }</span>
+
+        // 星期中的第几天，3 个字母，取值范围 Mon-Sun
+        <span class="cov8" title="1">if strings.Contains(layout, "D") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "D", "Mon", 1)
+        }</span>
+
+        // 月份中的第几天，没有前导零，取值范围 1-31
+        <span class="cov8" title="1">if strings.Contains(layout, "j") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "j", "2", 1)
+        }</span>
+
+        // 数字表示的月份，有前导零，取值范围 01-12
+        <span class="cov8" title="1">if strings.Contains(layout, "m") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "m", "01", 1)
+        }</span>
+
+        // 数字表示的月份，没有前导零，取值范围 1-12
+        <span class="cov8" title="1">if strings.Contains(layout, "n") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "n", "1", 1)
+        }</span>
+
+        // 数字表示的简写年份，有前导零，如 21
+        <span class="cov8" title="1">if strings.Contains(layout, "y") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "y", "06", 1)
+        }</span>
+
+        // 数字表示的完整年份，如 2021
+        <span class="cov8" title="1">if strings.Contains(layout, "Y") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "Y", "2006", 1)
+        }</span>
+
+        // 数字表示的小时，12 小时格式，没有前导零，取值范围 1-12
+        <span class="cov8" title="1">if strings.Contains(layout, "g") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "g", "3", 1)
+        }</span>
+
+        // 数字表示的小时，12 小时格式，有前导零，取值范围 01-12
+        <span class="cov8" title="1">if strings.Contains(layout, "h") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "h", "03", 1)
+        }</span>
+
+        // 数字表示的小时，24 小时格式，有前导零，取值范围 00-23
+        <span class="cov8" title="1">if strings.Contains(layout, "H") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "H", "15", 1)
+        }</span>
+
+        // 数字表示的分钟，有前导零，取值范围 00-59
+        <span class="cov8" title="1">if strings.Contains(layout, "i") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "i", "04", 1)
+        }</span>
+
+        // 数字表示的秒数，有前导零，取值范围 00-59
+        <span class="cov8" title="1">if strings.Contains(layout, "s") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "s", "05", 1)
+        }</span>
+
+        // ISO8601 格式的日期，如 2020-08-05T15:19:21+00:00
+        <span class="cov8" title="1">if strings.Contains(layout, "c") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "c", "2006-01-02T15:04:05-07:00", 1)
+        }</span>
+
+        // RFC822 格式的日期，如 Thu, 21 Dec 2020 16:01:07 +0200
+        <span class="cov8" title="1">if strings.Contains(layout, "r") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "r", "Mon, 02 Jan 06 15:04 MST", 1)
+        }</span>
+
+        // 与格林威治时间相差的小时数，如 +0200
+        <span class="cov8" title="1">if strings.Contains(layout, "O") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "O", "-0700", 1)
+        }</span>
+
+        // 与格林威治时间相差的小时数，小时和分钟之间有冒号分隔，如 +02:00
+        <span class="cov8" title="1">if strings.Contains(layout, "P") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "P", "-07:00", 1)
+        }</span>
+
+        // 本机所在的时区，如 EST，MDT
+        <span class="cov8" title="1">if strings.Contains(layout, "T") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "T", "MST", 1)
+        }</span>
+
+        // 完整单词表示的星期几，取值范围 Sunday-Saturday
+        <span class="cov8" title="1">if strings.Contains(layout, "l") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "l", "Monday", 1)
+        }</span>
+
+        // 小写的上午和下午缩写字母，如 am 或 pm
+        <span class="cov8" title="1">if strings.Contains(layout, "a") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "a", "pm", 1)
+        }</span>
+
+        // 大写的上午和下午缩写字母，如 AM 或 PM
+        <span class="cov8" title="1">if strings.Contains(layout, "A") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "A", "PM", 1)
+        }</span>
+
+        // 缩写单词表示的月份，取值范围 Jan-Dec
+        <span class="cov8" title="1">if strings.Contains(layout, "M") </span><span class="cov8" title="1">{
+                layout = strings.Replace(layout, "M", "Jan", 1)
+        }</span>
+
+        // 完整单词表示的月份，取值范围 January-December
+        <span class="cov8" title="1">if strings.Contains(layout, "F") </span><span class="cov0" title="0">{
+                layout = strings.Replace(layout, "F", "January", 1)
+        }</span>
+
+        <span class="cov8" title="1">return layout</span>
+}
 
 // getLocationByTimezone 通过时区获取Location实例
 func getLocationByTimezone(timezone string) (*time.Location, error) <span class="cov8" title="1">{
@@ -1738,7 +1880,7 @@ func parseByLayout(value string, layout string) (time.Time, error) <span class="
 // parseByDuration 通过持续时间解析
 func parseByDuration(duration string) (time.Duration, error) <span class="cov8" title="1">{
         td, err := time.ParseDuration(duration)
-        if err != nil </span><span class="cov8" title="1">{
+        if err != nil </span><span class="cov0" title="0">{
                 err = errors.New("invalid duration \"" + duration + "\"")
         }</span>
         <span class="cov8" title="1">return td, err</span>

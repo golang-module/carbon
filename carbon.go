@@ -12,7 +12,7 @@ type Carbon struct {
 	Error error
 }
 
-// Now 当前(指定时区)
+// Now 当前
 func (c Carbon) Now() Carbon {
 	c.Time = time.Now()
 	return c
@@ -23,9 +23,13 @@ func Now() Carbon {
 	return SetTimezone(Local).Now()
 }
 
-// Tomorrow 明天(指定时区)
+// Tomorrow 明天
 func (c Carbon) Tomorrow() Carbon {
-	c.Time = time.Now().AddDate(0, 0, 1)
+	if c.Time.IsZero() {
+		c.Time = time.Now().AddDate(0, 0, 1)
+	} else {
+		c.Time = c.Time.AddDate(0, 0, 1)
+	}
 	return c
 }
 
@@ -34,9 +38,13 @@ func Tomorrow() Carbon {
 	return SetTimezone(Local).Tomorrow()
 }
 
-// Yesterday 昨天(指定时区)
+// Yesterday 昨天
 func (c Carbon) Yesterday() Carbon {
-	c.Time = time.Now().AddDate(0, 0, -1)
+	if c.Time.IsZero() {
+		c.Time = time.Now().AddDate(0, 0, -1)
+	} else {
+		c.Time = c.Time.AddDate(0, 0, -1)
+	}
 	return c
 }
 
@@ -45,7 +53,7 @@ func Yesterday() Carbon {
 	return SetTimezone(Local).Yesterday()
 }
 
-// CreateFromTimestamp 从时间戳创建Carbon实例(指定时区)
+// CreateFromTimestamp 从时间戳创建Carbon实例
 func (c Carbon) CreateFromTimestamp(timestamp int64) Carbon {
 	ts := timestamp
 	switch len(strconv.FormatInt(timestamp, 10)) {
@@ -69,7 +77,7 @@ func CreateFromTimestamp(timestamp int64) Carbon {
 	return SetTimezone(Local).CreateFromTimestamp(timestamp)
 }
 
-// CreateFromDateTime 从年月日时分秒创建Carbon实例(指定时区)
+// CreateFromDateTime 从年月日时分秒创建Carbon实例
 func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon {
 	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
 	return c
@@ -80,7 +88,7 @@ func CreateFromDateTime(year int, month int, day int, hour int, minute int, seco
 	return SetTimezone(Local).CreateFromDateTime(year, month, day, hour, minute, second)
 }
 
-// CreateFromDate 从年月日创建Carbon实例(指定时区)
+// CreateFromDate 从年月日创建Carbon实例
 func (c Carbon) CreateFromDate(year int, month int, day int) Carbon {
 	hour, minute, second := time.Now().Clock()
 	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
@@ -92,7 +100,7 @@ func CreateFromDate(year int, month int, day int) Carbon {
 	return SetTimezone(Local).CreateFromDate(year, month, day)
 }
 
-// CreateFromTime 从时分秒创建Carbon实例(指定时区)
+// CreateFromTime 从时分秒创建Carbon实例
 func (c Carbon) CreateFromTime(hour int, minute int, second int) Carbon {
 	year, month, day := time.Now().Date()
 	c.Time = time.Date(year, month, day, hour, minute, second, 0, c.Loc)
@@ -104,7 +112,7 @@ func CreateFromTime(hour int, minute int, second int) Carbon {
 	return SetTimezone(Local).CreateFromTime(hour, minute, second)
 }
 
-// CreateFromGoTime 从原生time.Time创建Carbon实例(指定时区)
+// CreateFromGoTime 从原生time.Time创建Carbon实例
 func (c Carbon) CreateFromGoTime(tt time.Time) Carbon {
 	c.Time = tt
 	return c
@@ -115,32 +123,33 @@ func CreateFromGoTime(tt time.Time) Carbon {
 	return SetTimezone(Local).CreateFromGoTime(tt)
 }
 
-// Parse 解析标准格式时间字符串(指定时区)
+// Parse 解析标准格式时间字符串
 func (c Carbon) Parse(value string) Carbon {
 	if c.Error != nil {
 		return c
 	}
 
+	layout := DateTimeFormat
+
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
-
-	layout := DateTimeFormat
 
 	if len(value) == 10 && strings.Count(value, "-") == 2 {
 		layout = DateFormat
 	}
 
-	if len(value) == 14 {
-		layout = ShortDateTimeFormat
-	}
-
-	if len(value) == 8 {
-		layout = ShortDateFormat
-	}
-
 	if strings.Index(value, "T") == 10 {
 		layout = RFC3339Format
+	}
+
+	if _, err := strconv.ParseInt(value, 10, 64); err == nil {
+		switch len(value) {
+		case 8:
+			layout = ShortDateFormat
+		case 14:
+			layout = ShortDateTimeFormat
+		}
 	}
 
 	tt, err := parseByLayout(value, layout)
@@ -154,7 +163,7 @@ func Parse(value string) Carbon {
 	return SetTimezone(Local).Parse(value)
 }
 
-// ParseByFormat 解析指定格式时间字符串(指定时区)
+// ParseByFormat 解析指定格式时间字符串
 func (c Carbon) ParseByFormat(value string, format string) Carbon {
 	if c.Error != nil {
 		return c
@@ -169,24 +178,6 @@ func (c Carbon) ParseByFormat(value string, format string) Carbon {
 // ParseByFormat 解析指定格式时间字符串(默认时区)
 func ParseByFormat(value string, format string) Carbon {
 	return SetTimezone(Local).ParseByFormat(value, format)
-}
-
-// ParseByDuration 解析持续时间字符串(指定时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func (c Carbon) ParseByDuration(duration string) Carbon {
-	if c.Error != nil {
-		return c
-	}
-	td, err := parseByDuration(duration)
-	c.Time = time.Now().Add(td)
-	c.Error = err
-	return c
-}
-
-// ParseByDuration 解析持续时间字符串(默认时区)
-// 支持正负整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
-func ParseByDuration(duration string) Carbon {
-	return SetTimezone(Local).ParseByDuration(duration)
 }
 
 // AddDurations 按照持续时间字符串增加时间
@@ -413,27 +404,27 @@ func (c Carbon) SubSecond() Carbon {
 	return c.SubSeconds(1)
 }
 
-// NextCenturies N世纪后
+// NextCenturies N世纪后(不会出现月份溢出)
 func (c Carbon) NextCenturies(centuries int) Carbon {
 	return c.NextYears(centuries * YearsPerCentury)
 }
 
-// NextCentury 1世纪后
+// NextCentury 1世纪后(不会出现月份溢出)
 func (c Carbon) NextCentury() Carbon {
 	return c.NextYears(YearsPerCentury)
 }
 
-// PreCenturies N世纪前
+// PreCenturies N世纪前(不会出现月份溢出)
 func (c Carbon) PreCenturies(centuries int) Carbon {
 	return c.PreYears(centuries * YearsPerCentury)
 }
 
-// PreYears 1世纪前
+// PreYears 1世纪前(不会出现月份溢出)
 func (c Carbon) PreCentury() Carbon {
 	return c.PreYears(YearsPerCentury)
 }
 
-// NextYears N年后
+// NextYears N年后(不会出现月份溢出)
 func (c Carbon) NextYears(years int) Carbon {
 	year := c.Time.Year() + years
 	month := c.Time.Month()
@@ -450,42 +441,42 @@ func (c Carbon) NextYears(years int) Carbon {
 	return c
 }
 
-// NextYear 1年后
+// NextYear 1年后(不会出现月份溢出)
 func (c Carbon) NextYear() Carbon {
 	return c.NextYears(1)
 }
 
-// PreYears N年前
+// PreYears N年前(不会出现月份溢出)
 func (c Carbon) PreYears(years int) Carbon {
 	return c.NextYears(-years)
 }
 
-// PreYear 1年前
+// PreYear 1年前(不会出现月份溢出)
 func (c Carbon) PreYear() Carbon {
 	return c.NextYears(-1)
 }
 
-// NextQuarters N季度后
+// NextQuarters N季度后(不会出现月份溢出)
 func (c Carbon) NextQuarters(quarters int) Carbon {
 	return c.NextMonths(quarters * MonthsPerQuarter)
 }
 
-// NextQuarters 1季度后
+// NextQuarters 1季度后(不会出现月份溢出)
 func (c Carbon) NextQuarter() Carbon {
 	return c.NextQuarters(1)
 }
 
-// PreQuarters N季度前
+// PreQuarters N季度前(不会出现月份溢出)
 func (c Carbon) PreQuarters(quarters int) Carbon {
 	return c.NextMonths(-quarters * MonthsPerQuarter)
 }
 
-// PreQuarter 1季度前
+// PreQuarter 1季度前(不会出现月份溢出)
 func (c Carbon) PreQuarter() Carbon {
 	return c.PreQuarters(1)
 }
 
-// NextMonths N月后
+// NextMonths N月后(不会出现月份溢出)
 func (c Carbon) NextMonths(months int) Carbon {
 	year := c.Time.Year()
 	month := c.Time.Month() + time.Month(months)
@@ -502,17 +493,17 @@ func (c Carbon) NextMonths(months int) Carbon {
 	return c
 }
 
-// NextMonth 1月后
+// NextMonth 1月后(不会出现月份溢出)
 func (c Carbon) NextMonth() Carbon {
 	return c.NextMonths(1)
 }
 
-// PreMonths N月前
+// PreMonths N月前(不会出现月份溢出)
 func (c Carbon) PreMonths(months int) Carbon {
 	return c.NextMonths(-months)
 }
 
-// PreMonth 1月前
+// PreMonth 1月前(不会出现月份溢出)
 func (c Carbon) PreMonth() Carbon {
 	return c.PreMonths(1)
 }
