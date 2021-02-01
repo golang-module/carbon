@@ -589,7 +589,7 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 	}
 }
 
-func TestCarbon_CreateFromGoTime(t *testing.T) {
+func TestCarbon_Time2Carbon(t *testing.T) {
 	Tests := []struct {
 		time   time.Time // // 输入参数
 		output string    // 期望输出值
@@ -598,15 +598,7 @@ func TestCarbon_CreateFromGoTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := CreateFromGoTime(v.time).ToDateTimeString()
-
-		if output != v.output {
-			t.Fatalf("Expected %s, but got %s", v.output, output)
-		}
-	}
-
-	for _, v := range Tests {
-		output := SetTimezone(PRC).CreateFromGoTime(v.time).ToDateTimeString()
+		output := Time2Carbon(v.time).ToDateTimeString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -663,8 +655,9 @@ var ParseByFormatTests = []struct {
 	format string // 输入参数
 	output string // 期望输出值
 }{
-	{"2020|08|05", "Y|m|d", "2020-08-05 00:00:00"},
 	{"2020|08|05 13:14:15", "Y|m|d H:i:s", "2020-08-05 13:14:15"},
+	{"It is 2020|08|05 13:14:15", "It is Y|m|d H:i:s", "2020-08-05 13:14:15"},
+	{"今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒", "2020-08-05 13:14:15"},
 	{"12345678", "XXXX", ""}, // 异常情况
 }
 
@@ -698,6 +691,47 @@ func TestCarbon_ParseByFormat2(t *testing.T) {
 	}
 }
 
+var ParseByLayoutTests = []struct {
+	input  string // 输入值
+	format string // 输入参数
+	output string // 期望输出值
+}{
+	{"2020|08|05 13:14:15", "2006|01|02 15:04:05", "2020-08-05 13:14:15"},
+	{"It is 2020|08|05 13:14:15", "It is 2006|01|02 15:04:05", "2020-08-05 13:14:15"},
+	{"今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒", "2020-08-05 13:14:15"},
+	{"12345678", "XXXX", ""}, // 异常情况
+}
+
+func TestCarbon_ParseByLayout1(t *testing.T) {
+	for _, v := range ParseByLayoutTests {
+		output := ParseByLayout(v.input, v.format)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByLayout():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
+}
+
+func TestCarbon_ParseByLayout2(t *testing.T) {
+	for _, v := range ParseByLayoutTests {
+		output := SetTimezone("XXXX").ParseByLayout(v.input, v.format)
+
+		if output.Error != nil {
+			fmt.Println("catch an exception in ParseByLayout():", output.Error)
+			return
+		}
+
+		if output.ToDateTimeString() != v.output {
+			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		}
+	}
+}
+
 func TestCarbon_AddDuration(t *testing.T) {
 	Tests := []struct {
 		input    string // 输入值
@@ -713,7 +747,6 @@ func TestCarbon_AddDuration(t *testing.T) {
 		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:25"},
 		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:25"},
 
-		{"12345678", "10h", ""},             // 异常情况
 		{"2020-01-01 13:14:15", "XXXX", ""}, // 异常情况
 	}
 
@@ -722,11 +755,10 @@ func TestCarbon_AddDuration(t *testing.T) {
 
 		if output.Error != nil {
 			fmt.Println("catch an exception in AddDuration():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+		} else {
+			if output.ToDateTimeString() != v.output {
+				t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
+			}
 		}
 	}
 
@@ -822,7 +854,7 @@ func TestCarbon_AddCenturies(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextCenturies(t *testing.T) {
+func TestCarbon_AddCenturiesNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input     string // 输入值
 		centuries int    // 输入参数
@@ -836,7 +868,7 @@ func TestCarbon_NextCenturies(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextCenturies(v.centuries).ToDateString()
+		output := Parse(v.input).AddCenturiesNoOverflow(v.centuries).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -844,7 +876,7 @@ func TestCarbon_NextCenturies(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextCenturies(v.centuries).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddCenturiesNoOverflow(v.centuries).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -884,7 +916,7 @@ func TestCarbon_SubCenturies(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreCenturies(t *testing.T) {
+func TestCarbon_SubCenturiesNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input     string // 输入值
 		centuries int
@@ -898,7 +930,7 @@ func TestCarbon_PreCenturies(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreCenturies(v.centuries).ToDateString()
+		output := Parse(v.input).SubCenturiesNoOverflow(v.centuries).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -906,7 +938,7 @@ func TestCarbon_PreCenturies(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreCenturies(v.centuries).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubCenturiesNoOverflow(v.centuries).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -943,7 +975,7 @@ func TestCarbon_AddCentury(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextCentury(t *testing.T) {
+func TestCarbon_AddCenturyNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -956,7 +988,7 @@ func TestCarbon_NextCentury(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextCentury().ToDateString()
+		output := Parse(v.input).AddCenturyNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -964,7 +996,7 @@ func TestCarbon_NextCentury(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextCentury().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddCenturyNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1001,7 +1033,7 @@ func TestCarbon_SubCentury(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreCentury(t *testing.T) {
+func TestCarbon_SubCenturyNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1014,7 +1046,7 @@ func TestCarbon_PreCentury(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreCentury().ToDateString()
+		output := Parse(v.input).SubCenturyNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -1022,7 +1054,7 @@ func TestCarbon_PreCentury(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreCentury().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubCenturyNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1060,7 +1092,7 @@ func TestCarbon_AddYears(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextYears(t *testing.T) {
+func TestCarbon_AddYearsNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		years  int    // 输入参数
@@ -1074,7 +1106,7 @@ func TestCarbon_NextYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextYears(v.years).ToDateString()
+		output := Parse(v.input).AddYearsNoOverflow(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1082,7 +1114,7 @@ func TestCarbon_NextYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddYearsNoOverflow(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1122,7 +1154,7 @@ func TestCarbon_SubYears(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreYears(t *testing.T) {
+func TestCarbon_SubYearsNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		years  int
@@ -1136,7 +1168,7 @@ func TestCarbon_PreYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreYears(v.years).ToDateString()
+		output := Parse(v.input).SubYearsNoOverflow(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1144,7 +1176,7 @@ func TestCarbon_PreYears(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreYears(v.years).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubYearsNoOverflow(v.years).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1181,7 +1213,7 @@ func TestCarbon_AddYear(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextYear(t *testing.T) {
+func TestCarbon_AddYearNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1194,7 +1226,7 @@ func TestCarbon_NextYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextYear().ToDateString()
+		output := Parse(v.input).AddYearNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1202,7 +1234,7 @@ func TestCarbon_NextYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddYearNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1239,7 +1271,7 @@ func TestCarbon_SubYear(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreYear(t *testing.T) {
+func TestCarbon_SubYearNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1252,7 +1284,7 @@ func TestCarbon_PreYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreYear().ToDateString()
+		output := Parse(v.input).SubYearNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Expected %s, but got %s", v.output, output)
@@ -1260,7 +1292,7 @@ func TestCarbon_PreYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreYear().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubYearNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1299,7 +1331,7 @@ func TestCarbon_AddQuarters(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextQuarters(t *testing.T) {
+func TestCarbon_AddQuartersNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input    string // 输入值
 		quarters int
@@ -1314,7 +1346,7 @@ func TestCarbon_NextQuarters(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextQuarters(v.quarters).ToDateString()
+		output := Parse(v.input).AddQuartersNoOverflow(v.quarters).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1322,7 +1354,7 @@ func TestCarbon_NextQuarters(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextQuarters(v.quarters).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddQuartersNoOverflow(v.quarters).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1361,7 +1393,7 @@ func TestCarbon_SubQuarters(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreQuarters(t *testing.T) {
+func TestCarbon_SubQuartersNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input    string // 输入值
 		quarters int
@@ -1376,7 +1408,7 @@ func TestCarbon_PreQuarters(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreQuarters(v.quarters).ToDateString()
+		output := Parse(v.input).SubQuartersNoOverflow(v.quarters).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1384,7 +1416,7 @@ func TestCarbon_PreQuarters(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreQuarters(v.quarters).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubQuartersNoOverflow(v.quarters).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1423,7 +1455,7 @@ func TestCarbon_AddQuarter(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextQuarter(t *testing.T) {
+func TestCarbon_AddQuarterNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1438,7 +1470,7 @@ func TestCarbon_NextQuarter(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextQuarter().ToDateString()
+		output := Parse(v.input).AddQuarterNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1446,7 +1478,7 @@ func TestCarbon_NextQuarter(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextQuarter().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddQuarterNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1484,7 +1516,7 @@ func TestCarbon_SubQuarter(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreQuarter(t *testing.T) {
+func TestCarbon_SubQuarterNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1498,7 +1530,7 @@ func TestCarbon_PreQuarter(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreQuarter().ToDateString()
+		output := Parse(v.input).SubQuarterNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1506,7 +1538,7 @@ func TestCarbon_PreQuarter(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreQuarter().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubQuarterNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1544,7 +1576,7 @@ func TestCarbon_AddMonths(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextMonths(t *testing.T) {
+func TestCarbon_AddMonthsNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		months int
@@ -1558,7 +1590,7 @@ func TestCarbon_NextMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextMonths(v.months).ToDateString()
+		output := Parse(v.input).AddMonthsNoOverflow(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1566,7 +1598,7 @@ func TestCarbon_NextMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddMonthsNoOverflow(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1604,7 +1636,7 @@ func TestCarbon_SubMonths(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreMonths(t *testing.T) {
+func TestCarbon_SubMonthsNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		months int
@@ -1618,7 +1650,7 @@ func TestCarbon_PreMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreMonths(v.months).ToDateString()
+		output := Parse(v.input).SubMonthsNoOverflow(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1626,7 +1658,7 @@ func TestCarbon_PreMonths(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreMonths(v.months).ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubMonthsNoOverflow(v.months).ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1663,7 +1695,7 @@ func TestCarbon_AddMonth(t *testing.T) {
 	}
 }
 
-func TestCarbon_NextMonth(t *testing.T) {
+func TestCarbon_AddMonthNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1676,7 +1708,7 @@ func TestCarbon_NextMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).NextMonth().ToDateString()
+		output := Parse(v.input).AddMonthNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1684,7 +1716,7 @@ func TestCarbon_NextMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).NextMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).AddMonthNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1721,7 +1753,7 @@ func TestCarbon_SubMonth(t *testing.T) {
 	}
 }
 
-func TestCarbon_PreMonth(t *testing.T) {
+func TestCarbon_SubMonthNoOverflow(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -1734,7 +1766,7 @@ func TestCarbon_PreMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).PreMonth().ToDateString()
+		output := Parse(v.input).SubMonthNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -1742,7 +1774,7 @@ func TestCarbon_PreMonth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input).PreMonth().ToDateString()
+		output := SetTimezone(PRC).Parse(v.input).SubMonthNoOverflow().ToDateString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)

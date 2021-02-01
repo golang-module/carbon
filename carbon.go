@@ -112,18 +112,7 @@ func CreateFromTime(hour int, minute int, second int) Carbon {
 	return SetTimezone(Local).CreateFromTime(hour, minute, second)
 }
 
-// CreateFromGoTime 从原生time.Time创建Carbon实例
-func (c Carbon) CreateFromGoTime(tt time.Time) Carbon {
-	c.Time = tt
-	return c
-}
-
-// CreateFromGoTime 从原生time.Time创建Carbon实例(默认时区)
-func CreateFromGoTime(tt time.Time) Carbon {
-	return SetTimezone(Local).CreateFromGoTime(tt)
-}
-
-// Parse 解析标准格式时间字符串
+// Parse 将标准格式时间字符串解析成 Carbon 实例
 func (c Carbon) Parse(value string) Carbon {
 	if c.Error != nil {
 		return c
@@ -158,26 +147,50 @@ func (c Carbon) Parse(value string) Carbon {
 	return c
 }
 
-// Parse 解析标准格式时间字符串(默认时区)
+// Parse 将标准格式时间字符串解析成 Carbon 实例(默认时区)
 func Parse(value string) Carbon {
 	return SetTimezone(Local).Parse(value)
 }
 
-// ParseByFormat 解析指定格式时间字符串
+// ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByFormat(value string, format string) Carbon {
 	if c.Error != nil {
 		return c
 	}
 	layout := format2layout(format)
+	return c.ParseByLayout(value, layout)
+}
+
+// ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例(默认时区)
+func ParseByFormat(value string, format string) Carbon {
+	return SetTimezone(Local).ParseByFormat(value, format)
+}
+
+// ParseByLayout 将布局时间字符串解析成 Carbon 实例
+func (c Carbon) ParseByLayout(value string, layout string) Carbon {
+	if c.Error != nil {
+		return c
+	}
 	tt, err := parseByLayout(value, layout)
 	c.Time = tt
 	c.Error = err
 	return c
 }
 
-// ParseByFormat 解析指定格式时间字符串(默认时区)
-func ParseByFormat(value string, format string) Carbon {
-	return SetTimezone(Local).ParseByFormat(value, format)
+// ParseByLayout 将布局时间字符串解析成 Carbon 实例(默认时区)
+func ParseByLayout(value string, layout string) Carbon {
+	return SetTimezone(Local).ParseByLayout(value, layout)
+}
+
+// Time2Carbon 将 time.Time 转换成 Carbon
+func Time2Carbon(tt time.Time) Carbon {
+	loc, _ := time.LoadLocation(Local)
+	return Carbon{Time: tt, Loc: loc}
+}
+
+// Carbon2Time 将 Carbon 转换成 time.Time
+func (c Carbon) Carbon2Time() time.Time {
+	return c.Time
 }
 
 // AddDurations 按照持续时间字符串增加时间
@@ -209,9 +222,19 @@ func (c Carbon) AddCenturies(centuries int) Carbon {
 	return c.AddYears(YearsPerCentury * centuries)
 }
 
+// AddCenturiesNoOverflow N世纪后(月份不溢出)
+func (c Carbon) AddCenturiesNoOverflow(centuries int) Carbon {
+	return c.AddYearsNoOverflow(centuries * YearsPerCentury)
+}
+
 // AddCentury 1世纪后
 func (c Carbon) AddCentury() Carbon {
-	return c.AddYears(YearsPerCentury)
+	return c.AddCenturies(1)
+}
+
+// AddCenturyNoOverflow 1世纪后(月份不溢出)
+func (c Carbon) AddCenturyNoOverflow() Carbon {
+	return c.AddCenturiesNoOverflow(1)
 }
 
 // SubCenturies N世纪前
@@ -219,9 +242,19 @@ func (c Carbon) SubCenturies(centuries int) Carbon {
 	return c.SubYears(YearsPerCentury * centuries)
 }
 
+// SubCenturiesNoOverflow N世纪前(月份不溢出)
+func (c Carbon) SubCenturiesNoOverflow(centuries int) Carbon {
+	return c.SubYearsNoOverflow(centuries * YearsPerCentury)
+}
+
 // SubCentury 1世纪前
 func (c Carbon) SubCentury() Carbon {
-	return c.SubYears(YearsPerCentury)
+	return c.SubCenturies(1)
+}
+
+// SubCenturyNoOverflow 1世纪前(月份不溢出)
+func (c Carbon) SubCenturyNoOverflow() Carbon {
+	return c.SubCenturiesNoOverflow(1)
 }
 
 // AddYears N年后
@@ -230,10 +263,31 @@ func (c Carbon) AddYears(years int) Carbon {
 	return c
 }
 
+// AddYearsNoOverflow N年后(月份不溢出)
+func (c Carbon) AddYearsNoOverflow(years int) Carbon {
+	year := c.Time.Year() + years
+	month := c.Time.Month()
+	day := c.Time.Day()
+
+	// 获取N年后本月的最后一天
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc).AddDate(0, 1, -1)
+
+	if day > last.Day() {
+		day = last.Day()
+	}
+
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc)
+	return c
+}
+
 // AddYear 1年后
 func (c Carbon) AddYear() Carbon {
-	c.Time = c.Time.AddDate(1, 0, 0)
-	return c
+	return c.AddYears(1)
+}
+
+// AddYearNoOverflow 1年后(月份不溢出)
+func (c Carbon) AddYearNoOverflow() Carbon {
+	return c.AddYearsNoOverflow(1)
 }
 
 // SubYears N年前
@@ -242,30 +296,59 @@ func (c Carbon) SubYears(years int) Carbon {
 	return c
 }
 
-// SubYear 1年前
-func (c Carbon) SubYear() Carbon {
-	c.Time = c.Time.AddDate(-1, 0, 0)
-	return c
+// SubYearsWithOverflow N年前(月份不溢出)
+func (c Carbon) SubYearsNoOverflow(years int) Carbon {
+	return c.AddYearsNoOverflow(-years)
 }
 
-// AddMonths N季度后
+// SubYear 1年前
+func (c Carbon) SubYear() Carbon {
+	return c.SubYears(1)
+}
+
+// SubYearWithOverflow 1年前(月份不溢出)
+func (c Carbon) SubYearNoOverflow() Carbon {
+	return c.SubYearsNoOverflow(1)
+}
+
+// AddQuarters N季度后
 func (c Carbon) AddQuarters(quarters int) Carbon {
 	return c.AddMonths(quarters * MonthsPerQuarter)
 }
 
-// AddMonth 1季度后
+// AddQuartersNoOverflow N季度后(月份不溢出)
+func (c Carbon) AddQuartersNoOverflow(quarters int) Carbon {
+	return c.AddMonthsNoOverflow(quarters * MonthsPerQuarter)
+}
+
+// AddQuarter 1季度后
 func (c Carbon) AddQuarter() Carbon {
 	return c.AddQuarters(1)
 }
 
-// SubMonths N季度前
+// NextQuarters 1季度后(月份不溢出)
+func (c Carbon) AddQuarterNoOverflow() Carbon {
+	return c.AddQuartersNoOverflow(1)
+}
+
+// SubQuarters N季度前
 func (c Carbon) SubQuarters(quarters int) Carbon {
 	return c.SubMonths(quarters * MonthsPerQuarter)
 }
 
-// SubMonth 1季度前
+// SubQuartersNoOverflow N季度前(月份不溢出)
+func (c Carbon) SubQuartersNoOverflow(quarters int) Carbon {
+	return c.AddMonthsNoOverflow(-quarters * MonthsPerQuarter)
+}
+
+// SubQuarter 1季度前
 func (c Carbon) SubQuarter() Carbon {
 	return c.SubQuarters(1)
+}
+
+// SubQuarterNoOverflow 1季度前(月份不溢出)
+func (c Carbon) SubQuarterNoOverflow() Carbon {
+	return c.SubQuartersNoOverflow(1)
 }
 
 // AddMonths N月后
@@ -274,9 +357,31 @@ func (c Carbon) AddMonths(months int) Carbon {
 	return c
 }
 
+// AddMonthsNoOverflow N月后(月份不溢出)
+func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
+	year := c.Time.Year()
+	month := c.Time.Month() + time.Month(months)
+	day := c.Time.Day()
+
+	// 获取N月后的最后一天
+	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc).AddDate(0, 1, -1)
+
+	if day > last.Day() {
+		day = last.Day()
+	}
+
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc)
+	return c
+}
+
 // AddMonth 1月后
 func (c Carbon) AddMonth() Carbon {
 	return c.AddMonths(1)
+}
+
+// AddMonthNoOverflow 1月后(月份不溢出)
+func (c Carbon) AddMonthNoOverflow() Carbon {
+	return c.AddMonthsNoOverflow(1)
 }
 
 // SubMonths N月前
@@ -285,9 +390,19 @@ func (c Carbon) SubMonths(months int) Carbon {
 	return c
 }
 
+// SubMonthsNoOverflow N月前(月份不溢出)
+func (c Carbon) SubMonthsNoOverflow(months int) Carbon {
+	return c.AddMonthsNoOverflow(-months)
+}
+
 // SubMonth 1月前
 func (c Carbon) SubMonth() Carbon {
 	return c.SubMonths(1)
+}
+
+// SubMonthNoOverflow 1月前(月份不溢出)
+func (c Carbon) SubMonthNoOverflow() Carbon {
+	return c.SubMonthsNoOverflow(1)
 }
 
 // AddWeeks N周后
@@ -402,110 +517,6 @@ func (c Carbon) SubSeconds(seconds int) Carbon {
 // SubSecond 1秒钟前
 func (c Carbon) SubSecond() Carbon {
 	return c.SubSeconds(1)
-}
-
-// NextCenturies N世纪后(不会出现月份溢出)
-func (c Carbon) NextCenturies(centuries int) Carbon {
-	return c.NextYears(centuries * YearsPerCentury)
-}
-
-// NextCentury 1世纪后(不会出现月份溢出)
-func (c Carbon) NextCentury() Carbon {
-	return c.NextYears(YearsPerCentury)
-}
-
-// PreCenturies N世纪前(不会出现月份溢出)
-func (c Carbon) PreCenturies(centuries int) Carbon {
-	return c.PreYears(centuries * YearsPerCentury)
-}
-
-// PreYears 1世纪前(不会出现月份溢出)
-func (c Carbon) PreCentury() Carbon {
-	return c.PreYears(YearsPerCentury)
-}
-
-// NextYears N年后(不会出现月份溢出)
-func (c Carbon) NextYears(years int) Carbon {
-	year := c.Time.Year() + years
-	month := c.Time.Month()
-	day := c.Time.Day()
-
-	// 获取N年后本月的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc).AddDate(0, 1, -1)
-
-	if day > last.Day() {
-		day = last.Day()
-	}
-
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc)
-	return c
-}
-
-// NextYear 1年后(不会出现月份溢出)
-func (c Carbon) NextYear() Carbon {
-	return c.NextYears(1)
-}
-
-// PreYears N年前(不会出现月份溢出)
-func (c Carbon) PreYears(years int) Carbon {
-	return c.NextYears(-years)
-}
-
-// PreYear 1年前(不会出现月份溢出)
-func (c Carbon) PreYear() Carbon {
-	return c.NextYears(-1)
-}
-
-// NextQuarters N季度后(不会出现月份溢出)
-func (c Carbon) NextQuarters(quarters int) Carbon {
-	return c.NextMonths(quarters * MonthsPerQuarter)
-}
-
-// NextQuarters 1季度后(不会出现月份溢出)
-func (c Carbon) NextQuarter() Carbon {
-	return c.NextQuarters(1)
-}
-
-// PreQuarters N季度前(不会出现月份溢出)
-func (c Carbon) PreQuarters(quarters int) Carbon {
-	return c.NextMonths(-quarters * MonthsPerQuarter)
-}
-
-// PreQuarter 1季度前(不会出现月份溢出)
-func (c Carbon) PreQuarter() Carbon {
-	return c.PreQuarters(1)
-}
-
-// NextMonths N月后(不会出现月份溢出)
-func (c Carbon) NextMonths(months int) Carbon {
-	year := c.Time.Year()
-	month := c.Time.Month() + time.Month(months)
-	day := c.Time.Day()
-
-	// 获取N月后的最后一天
-	last := time.Date(year, month, 1, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc).AddDate(0, 1, -1)
-
-	if day > last.Day() {
-		day = last.Day()
-	}
-
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Time.Hour(), c.Time.Minute(), c.Time.Second(), c.Time.Nanosecond(), c.Loc)
-	return c
-}
-
-// NextMonth 1月后(不会出现月份溢出)
-func (c Carbon) NextMonth() Carbon {
-	return c.NextMonths(1)
-}
-
-// PreMonths N月前(不会出现月份溢出)
-func (c Carbon) PreMonths(months int) Carbon {
-	return c.NextMonths(-months)
-}
-
-// PreMonth 1月前(不会出现月份溢出)
-func (c Carbon) PreMonth() Carbon {
-	return c.PreMonths(1)
 }
 
 // StartOfYear 本年开始时间

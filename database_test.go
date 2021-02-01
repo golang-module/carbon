@@ -31,7 +31,7 @@ var user = struct {
 	DateTime4:   ToTimestampWithNanosecond{Now()},
 }
 
-func TestCarbon_MarshalJSON(t *testing.T) {
+func TestCarbon_MarshalJSON(*testing.T) {
 	data, _ := json.Marshal(&user)
 	fmt.Print("Model output by json:\n", string(data)+"\n")
 }

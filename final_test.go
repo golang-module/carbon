@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCarbon_ToGoTime(t *testing.T) {
+func TestCarbon_Carbon2Time(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -13,7 +13,7 @@ func TestCarbon_ToGoTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToGoTime().Format("2006-01-02")
+		output := Parse(v.input).Carbon2Time().Format("2006-01-02")
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -155,9 +155,13 @@ func TestCarbon_Format(t *testing.T) {
 		{"00:00:00", "Y年m月d日", ""},
 		{"2020-08-05 13:14:15", "Y年m月d日", "2020年08月05日"},
 		{"2020-08-05 01:14:15", "j", "5"},
-
+		{"2020-08-05 01:14:15", "W", "32"},
+		{"2020-08-05 01:14:15", "M", "Aug"},
+		{"2020-08-05 01:14:15", "F", "August"},
 		{"2020-08-05 01:14:15", "N", "3"},
 		{"2020-08-05 01:14:15", "L", "1"},
+		{"2020-08-05 01:14:15", "L", "1"},
+		{"2021-08-05 01:14:15", "L", "0"},
 		{"2020-08-05 01:14:15", "G", "1"},
 		{"2020-08-05 13:14:15", "U", "1596604455"},
 		{"2020-08-05 13:14:15.999", "u", "999"},
@@ -165,32 +169,15 @@ func TestCarbon_Format(t *testing.T) {
 		{"2020-08-05 13:14:15", "t", "31"},
 		{"2020-08-05 13:14:15", "z", "217"},
 		{"2020-08-05 13:14:15", "e", "Local"},
+		{"2020-08-05 13:14:15", "jS", "5th"},
+		{"2020-08-22 13:14:15", "jS", "22nd"},
+		{"2020-08-23 13:14:15", "jS", "23rd"},
+		{"2020-08-31 13:14:15", "jS", "31st"},
+		{"2020-08-05 13:14:15", "l jS \\o\\f F Y h:i:s A", "Wednesday 5th of August 2020 01:14:15 PM"},
 	}
 
 	for _, v := range Tests {
 		output := Parse(v.input).Format(v.format)
-
-		if output != v.output {
-			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
-		}
-	}
-}
-
-func TestCarbon_ToFormatString(t *testing.T) {
-	Tests := []struct {
-		input  string // 输入值
-		format string // 输入参数
-		output string // 期望输出值
-	}{
-		{"", "Y年m月d日", ""},
-		{"0000-00-00 00:00:00", "Y年m月d日", ""},
-		{"0000-00-00", "Y年m月d日", ""},
-		{"00:00:00", "Y年m月d日", ""},
-		{"2020-08-05 13:14:15", "Y年m月d日", "2020年08月05日"},
-	}
-
-	for _, v := range Tests {
-		output := Parse(v.input).ToFormatString(v.format)
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -434,7 +421,7 @@ func TestCarbon_ToKitchenString(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC822String(t *testing.T) {
+func TestCarbon_ToRfc822String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -445,7 +432,7 @@ func TestCarbon_ToRFC822String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC822String()
+		output := Parse(v.input).ToRfc822String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -453,7 +440,7 @@ func TestCarbon_ToRFC822String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC822zString(t *testing.T) {
+func TestCarbon_ToRfc822zString(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -464,7 +451,7 @@ func TestCarbon_ToRFC822zString(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC822zString()
+		output := Parse(v.input).ToRfc822zString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -472,7 +459,7 @@ func TestCarbon_ToRFC822zString(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC850String(t *testing.T) {
+func TestCarbon_ToRfc850String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -483,7 +470,7 @@ func TestCarbon_ToRFC850String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC850String()
+		output := Parse(v.input).ToRfc850String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -491,7 +478,7 @@ func TestCarbon_ToRFC850String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC1036String(t *testing.T) {
+func TestCarbon_ToRfc1036String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -502,7 +489,7 @@ func TestCarbon_ToRFC1036String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC1036String()
+		output := Parse(v.input).ToRfc1036String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -510,7 +497,7 @@ func TestCarbon_ToRFC1036String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC1123String(t *testing.T) {
+func TestCarbon_ToRfc1123String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -521,7 +508,7 @@ func TestCarbon_ToRFC1123String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC1123String()
+		output := Parse(v.input).ToRfc1123String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -529,7 +516,7 @@ func TestCarbon_ToRFC1123String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC1123ZString(t *testing.T) {
+func TestCarbon_ToRfc1123ZString(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -540,7 +527,7 @@ func TestCarbon_ToRFC1123ZString(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC1123ZString()
+		output := Parse(v.input).ToRfc1123ZString()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -548,7 +535,7 @@ func TestCarbon_ToRFC1123ZString(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC2822String(t *testing.T) {
+func TestCarbon_ToRfc2822String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -559,7 +546,7 @@ func TestCarbon_ToRFC2822String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC2822String()
+		output := Parse(v.input).ToRfc2822String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -567,7 +554,7 @@ func TestCarbon_ToRFC2822String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC3339String(t *testing.T) {
+func TestCarbon_ToRfc3339String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -578,7 +565,7 @@ func TestCarbon_ToRFC3339String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC3339String()
+		output := Parse(v.input).ToRfc3339String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
@@ -586,7 +573,7 @@ func TestCarbon_ToRFC3339String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRFC7231String(t *testing.T) {
+func TestCarbon_ToRfc7231String(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
@@ -597,7 +584,7 @@ func TestCarbon_ToRFC7231String(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).ToRFC7231String()
+		output := Parse(v.input).ToRfc7231String()
 
 		if output != v.output {
 			t.Fatalf("Input %s, expected %s, but got %s\n", v.input, v.output, output)

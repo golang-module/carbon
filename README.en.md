@@ -47,6 +47,8 @@ carbon.Now().ToTimestampWithMillisecond() // 1596604455000
 carbon.Now().ToTimestampWithMicrosecond() // 1596604455000000
 // Timestamp with nanosecond of today
 carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
+// Datetime of today in other timezone
+carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 01:14:15
 
 // Datetime of yesterday 
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
@@ -63,6 +65,8 @@ carbon.Yesterday().ToTimestampWithMillisecond() // 1596518055000
 carbon.Yesterday().ToTimestampWithMicrosecond() // 1596518055000000
 // Timestamp with nanosecond of yesterday
 carbon.Yesterday().ToTimestampWithNanosecond() // 1596518055000000000
+// Datetime of yesterday in other timezone
+carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 01:14:15
 // Datetime of yesterday in other day
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
 
@@ -81,6 +85,8 @@ carbon.Tomorrow().ToTimestampWithMillisecond() // 1596690855000
 carbon.Tomorrow().ToTimestampWithMicrosecond() // 1596690855000000
 // Timestamp with nanosecond of tomorrow
 carbon.Tomorrow().ToTimestampWithNanosecond() // 1596690855000000000
+// Datetime of tomorrow in other timezone
+carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 01:14:15
 // Datetime of tomorrow in other day
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
 ```
@@ -102,16 +108,6 @@ carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
 // Create Carbon instance from hour,minute and second
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from golang time.Time instance
-carbon.CreateFromGoTime(time.Now()).ToTimestamp() // 1596604455
-```
-
-##### Convert between carbon and time.Time
-```go
-// Time.time convert to Carbon
-carbon.CreateFromGoTime(time.Now())
-// Carbon convert to Time.time
-carbon.Now().ToGoTime() 或 carbon.Now().Time
 ```
 
 ##### Parse standard time format string
@@ -126,13 +122,26 @@ carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
 ```
 
-##### Parse custom time format string
+##### Parse by format string as carbon
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020%08%05% 13%14%15", "Y%m%d% h%i%s").ToDateTimeString // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020年08月05日 13时14分15秒", "Y年m月d日 H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020年08月05日", "Y年m月d日").ToDateTimeString() // 2020-08-05 00:00:00
-carbon.ParseByFormat("13时14分15秒", "H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByFormat("It is 2020-08-05 13:14:15", "It is Y-m-d H:i:s").ToDateTimeString // 2020-08-05 13:14:15
+carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString // 2020-08-05 13:14:15
+```
+
+##### Parse by layout string as carbon
+```go
+carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15:04:05").ToDateTimeString // 2020-08-05 13:14:15
+carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006|01|02 15:04:05").ToDateTimeString // 2020-08-05 13:14:15
+carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
+```
+
+##### Convert between carbon and time.Time
+```go
+// Time.time convert to Carbon
+carbon.Time2Carbon(time.Now())
+// Carbon convert to Time.time
+carbon.Now().Carbon2Time() 或 carbon.Now().Time
 ```
 
 ##### Time setter
@@ -205,83 +214,83 @@ carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-
 ```go
 // Add three centuries
 carbon.Parse("2020-02-29 13:14:15").AddCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
-// Next three centuries
-carbon.Parse("2020-02-29 13:14:15").NextCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
+// Add three centuries with no overflow
+carbon.Parse("2020-02-29 13:14:15").AddCenturiesNoOverflow(3).ToDateTimeString() // 2320-02-29 13:14:15
 
 // Add one century
 carbon.Parse("2020-02-29 13:14:15").AddCentury().ToDateTimeString() // 2120-02-29 13:14:15
-// Next one century
-carbon.Parse("2020-02-29 13:14:15").NextCentury().ToDateTimeString() // 2120-02-29 13:14:15
+// Add one century with no overflow
+carbon.Parse("2020-02-29 13:14:15").AddCenturyNoOverflow().ToDateTimeString() // 2120-02-29 13:14:15
 
 // Subtract three centuries
 carbon.Parse("2020-02-29 13:14:15").SubCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
-// Previous three centuries
-carbon.Parse("2020-02-29 13:14:15").PreCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
+// Subtract three centuries with no overflow
+carbon.Parse("2020-02-29 13:14:15").SubCenturiesNoOverflow(3).ToDateTimeString() // 1720-02-29 13:14:15
 
 // Subtract one century
 carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-29 13:14:15
-// Previous one century
-carbon.Parse("2020-02-29 13:14:15").PreCentury().ToDateTimeString() // 1920-02-20 13:14:15
+// Subtract one century with no overflow
+carbon.Parse("2020-02-29 13:14:15").SubCenturyNoOverflow().ToDateTimeString() // 1920-02-20 13:14:15
 
 // Add three years
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
-// Next three years
-carbon.Parse("2020-02-29 13:14:15").NextYears(3).ToDateTimeString() // 2023-02-28 13:14:15
+// Add three years with no overflow
+carbon.Parse("2020-02-29 13:14:15").AddYearsNoOverflow(3).ToDateTimeString() // 2023-02-28 13:14:15
 
 // Add one year
 carbon.Parse("2020-02-29 13:14:15").AddYear().ToDateTimeString() // 2021-03-01 13:14:15
-// Next one year
-carbon.Parse("2020-02-29 13:14:15").NextYear().ToDateTimeString() // 2021-02-28 13:14:15
+// Add one year with no overflow
+carbon.Parse("2020-02-29 13:14:15").AddYearNoOverflow().ToDateTimeString() // 2021-02-28 13:14:15
 
 // Subtract three years
 carbon.Parse("2020-02-29 13:14:15").SubYears(3).ToDateTimeString() // 2017-03-01 13:14:15
-// Previous three years
-carbon.Parse("2020-02-29 13:14:15").PreYears(3).ToDateTimeString() // 2017-02-28 13:14:15
+// Subtract three years with no overflow
+carbon.Parse("2020-02-29 13:14:15").SubYearsNoOverflow(3).ToDateTimeString() // 2017-02-28 13:14:15
 
 // Subtract one year
 carbon.Parse("2020-02-29 13:14:15").SubYear().ToDateTimeString() // 2019-03-01 13:14:15
-// Previous one year
-carbon.Parse("2020-02-29 13:14:15").PreYear().ToDateTimeString() // 2019-02-28 13:14:15
+// Subtract one year with no overflow
+carbon.Parse("2020-02-29 13:14:15").SubYearNoOverflow().ToDateTimeString() // 2019-02-28 13:14:15
 
 // Add three quarters
 carbon.Parse("2019-08-31 13:14:15").AddQuarters(3).ToDateTimeString() // 2019-03-02 13:14:15
-// Next three quarters
-carbon.Parse("2019-08-31 13:14:15").NextQuarters(3).ToDateTimeString() // 2019-02-29 13:14:15
+// Add three quarters with no overflow
+carbon.Parse("2019-08-31 13:14:15").AddQuartersNoOverflow(3).ToDateTimeString() // 2019-02-29 13:14:15
 
 // Add one quarter
 carbon.Parse("2019-11-30 13:14:15").AddQuarter().ToDateTimeString() // 2020-03-01 13:14:15
-// Next one quarter
-carbon.Parse("2019-11-30 13:14:15").NextQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+// Add one quarter with no overflow
+carbon.Parse("2019-11-30 13:14:15").AddQuarterNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Subtract three quarters
 carbon.Parse("2019-08-31 13:14:15").SubQuarters(3).ToDateTimeString() // 2019-03-03 13:14:15
-// Previous three quarters
-carbon.Parse("2019-08-31 13:14:15").PreQuarters(3).ToDateTimeString() // 2019-02-28 13:14:15
+// Subtract three quarters with no overflow
+carbon.Parse("2019-08-31 13:14:15").SubQuartersNoOverflow(3).ToDateTimeString() // 2019-02-28 13:14:15
 
 // Subtract one quarter
 carbon.Parse("2020-05-31 13:14:15").SubQuarter().ToDateTimeString() // 2020-03-02 13:14:15
-// Previous one quarter
-carbon.Parse("2020-05-31 13:14:15").PreQuarter().ToDateTimeString() // 2020-02-29 13:14:15
+// Subtract one quarter with no overflow
+carbon.Parse("2020-05-31 13:14:15").SubQuarterNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Add three months
 carbon.Parse("2020-02-29 13:14:15").AddMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
-// Next three months
-carbon.Parse("2020-02-29 13:14:15").NextMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
+// Add three months with no overflow
+carbon.Parse("2020-02-29 13:14:15").AddMonthsNoOverflow(3).ToDateTimeString() // 2020-05-29 13:14:15
 
 // Add one month
 carbon.Parse("2020-01-31 13:14:15").AddMonth().ToDateTimeString() // 2020-03-02 13:14:15
-// Next one month
-carbon.Parse("2020-01-31 13:14:15").NextMonth().ToDateTimeString() // 2020-02-29 13:14:15
+// Add one month with no overflow
+carbon.Parse("2020-01-31 13:14:15").AddMonthNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Subtract three months
 carbon.Parse("2020-02-29 13:14:15").SubMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
-// Previous three months
-carbon.Parse("2020-02-29 13:14:15").PreMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
+// Subtract three months with no overflow
+carbon.Parse("2020-02-29 13:14:15").SubMonthsNoOverflow(3).ToDateTimeString() // 2019-11-29 13:14:15
 
 // Subtract one month
 carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 13:14:15
-// Previous one month
-carbon.Parse("2020-03-31 13:14:15").PreMonth().ToDateTimeString() // 2020-02-29 13:14:15
+// Subtract one month with no overflow
+carbon.Parse("2020-03-31 13:14:15").SubMonthNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Add three weeks
 carbon.Parse("2020-02-29 13:14:15").AddWeeks(3).ToDateTimeString() // 2020-03-21 13:14:15
@@ -526,11 +535,6 @@ carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMicrosecond() // 159660445500
 // To timestamp with nanosecond
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000000000
 
-// To string
-carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
-// To string of layout format
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 // To string of datetime format
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 // To string of date format
@@ -558,21 +562,29 @@ carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
 // To string of RFC822 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC822String() // 05 Aug 20 13:14 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
 // To string of RFC822Z format
-carbon.Parse("2020-08-05 13:14:15").ToRFC822zString() // 05 Aug 20 13:14 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
 // To string of RFC850 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC850String() // Wednesday, 05-Aug-20 13:14:15 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
 // To string of RFC1036 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC1036String() // Wed, 05 Aug 20 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
 // To string of RFC1123 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC1123String() // Wed, 05 Aug 2020 13:14:15 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
 // To string of RFC2822 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC2822String() // Wed, 05 Aug 2020 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
 // To string of RFC3339 format 
-carbon.Parse("2020-08-05 13:14:15").ToRFC3339String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
 // To string of RFC7231 format
-carbon.Parse("2020-08-05 13:14:15").ToRFC7231String() // Wed, 05 Aug 2020 05:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
+
+// To string
+carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
+// To string of layout format，ToFormatString() abbreviated as Format()
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
 ```
 > For more format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
@@ -760,7 +772,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 }
 ```
 
-##### Error handle
+##### Error handling
 > If more than one error occurs, only the first error message is returned
 
 ###### Scene one
@@ -772,7 +784,7 @@ if c.Error != nil {
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-the value "123456" and layout "2006-01-02 15:04:05" don't match
+the value "123456" can't parse string as time
 ```
 ###### Scene two
 ```go
@@ -805,6 +817,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | d | Day of the month, 2 digits with leading zeros | 2 | 01-31 | 05 |
 | D | A textual representation of a day, three letters | 3 | Mon-Sun | Wed |
 | j | Day of the month without leading zeros | 1/2 |1-31 | 5 |
+| S | English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j | 2 | st/nd/rd/th | th |
 | l | A full textual representation of the day of the week | - | Monday-Sunday | Wednesday |
 | F | A full textual representation of a month | - | January-December | August |
 | m | Numeric representation of a month, with leading zeros | 2 | 01-12 | 08 |
@@ -825,6 +838,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | O | Difference to Greenwich time (GMT) without colon between hours and minutes | - | - | +0200 |
 | P | Difference to Greenwich time (GMT) with colon between hours and minutes | - | - | +02:00 |
 | T | Timezone abbreviation | - | - | EST |
+| W | ISO-8601 numeric representation of the week of the year | 1/2 | 1-52 | 42 |
 | N | ISO-8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
 | L | Whether it's a leap year | 1 | 0-1 | 1 |
 | U | Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) | 10 | - | 1611818268 |
@@ -832,7 +846,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | w | Numeric representation of the day of the week | 1 | 0-6 | 6 |
 | t | Number of days in the given month | 2 | 28-31 | 30 |
 | z | The day of the year (starting from 0) | 1/2/3 | 0-365 | 15 |
-| e | Timezone identifier | - | - | UTC |
+| e | Timezone identifier | - | - | America/New_York |
 
 #### Reference
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
