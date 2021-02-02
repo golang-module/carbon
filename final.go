@@ -687,19 +687,19 @@ func (c Carbon) IsTomorrow() bool {
 func (c Carbon) Compare(operator string, t Carbon) bool {
 	switch operator {
 	case "=":
-		return c.Time.Equal(t.Time)
+		return c.Eq(t)
 	case "<>":
-		return !c.Time.Equal(t.Time)
+		return !c.Eq(t)
 	case "!=":
-		return !c.Time.Equal(t.Time)
+		return !c.Eq(t)
 	case ">":
-		return c.Time.After(t.Time)
+		return c.Gt(t)
 	case ">=":
-		return c.Time.After(t.Time) || c.Time.Equal(t.Time)
+		return c.Gte(t)
 	case "<":
-		return c.Time.Before(t.Time)
+		return c.Lt(t)
 	case "<=":
-		return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
+		return c.Lte(t)
 	}
 
 	return false
