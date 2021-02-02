@@ -722,22 +722,22 @@ func (c Carbon) Eq(t Carbon) bool {
 
 // Ne 不等于
 func (c Carbon) Ne(t Carbon) bool {
-	return !c.Time.Equal(t.Time)
+	return !c.Eq(t)
 }
 
 // Gte 大于等于
 func (c Carbon) Gte(t Carbon) bool {
-	return c.Time.After(t.Time) || c.Time.Equal(t.Time)
+	return c.Gt(t) || c.Eq(t)
 }
 
 // Lte 小于等于
 func (c Carbon) Lte(t Carbon) bool {
-	return c.Time.Before(t.Time) || c.Time.Equal(t.Time)
+	return c.Lt(t) || c.Eq(t)
 }
 
 // Between 是否在两个时间之间(不包括这两个时间)
 func (c Carbon) Between(start Carbon, end Carbon) bool {
-	if c.Time.After(start.Time) && c.Time.Before(end.Time) {
+	if c.Gt(start) && c.Lt(end) {
 		return true
 	}
 	return false
@@ -745,7 +745,7 @@ func (c Carbon) Between(start Carbon, end Carbon) bool {
 
 // BetweenIncludedStartTime 是否在两个时间之间(包括开始时间)
 func (c Carbon) BetweenIncludedStartTime(start Carbon, end Carbon) bool {
-	if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) && c.Time.Before(end.Time) {
+	if c.Gte(start) && c.Lt(end) {
 		return true
 	}
 	return false
@@ -753,7 +753,7 @@ func (c Carbon) BetweenIncludedStartTime(start Carbon, end Carbon) bool {
 
 // BetweenIncludedEndTime 是否在两个时间之间(包括结束时间)
 func (c Carbon) BetweenIncludedEndTime(start Carbon, end Carbon) bool {
-	if c.Time.After(start.Time) && (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) {
+	if c.Gt(start) && c.Lte(end) {
 		return true
 	}
 	return false
@@ -761,7 +761,7 @@ func (c Carbon) BetweenIncludedEndTime(start Carbon, end Carbon) bool {
 
 // BetweenIncludedBoth 是否在两个时间之间(包括这两个时间)
 func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
-	if (c.Time.After(start.Time) || c.Time.Equal(start.Time)) && (c.Time.Before(end.Time) || c.Time.Equal(end.Time)) {
+	if c.Gte(start) && c.Lte(end) {
 		return true
 	}
 	return false
