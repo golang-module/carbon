@@ -141,7 +141,7 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 // Time.time convert to Carbon
 carbon.Time2Carbon(time.Now())
 // Carbon convert to Time.time
-carbon.Now().Carbon2Time() 或 carbon.Now().Time
+carbon.Now().Carbon2Time() or carbon.Now().Time
 ```
 
 ##### Time setter
@@ -696,7 +696,7 @@ type UserModel struct {
 ```go
 user := UserModel {
     ID: 1153,
-    Name: "勾国印",
+    Name: "gouguoyin",
     Age: 18,
     Birthday: carbon.ToDateTimeString{carbon.Now().SubYears(18)},
     GraduatedAt: carbon.ToDateString{carbon.Parse("2012-09-09")},
@@ -712,7 +712,7 @@ user := UserModel {
 ###### Output fields
 ```go
 user.ID // 1153
-user.Name // 勾国印
+user.Name // gouguoyin
 user.Age // 18
 user.Birthday.ToDateTimeString() // 2012-08-05 13:14:15
 user.GraduatedAt.ToDateString() // 2012-09-09
@@ -731,7 +731,7 @@ fmt.Print(string(data))
 // Output
 {
     "id": 1153,
-    "name": "勾国印",
+    "name": "gouguoyin",
     "age": 18,
     "birthday": "2012-08-05 13:14:15",
     "graduated_at": "2012-09-09",
@@ -783,7 +783,7 @@ if c.Error != nil {
     fmt.Println(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
-// 输出
+// Output
 the value "123456" can't parse string as time
 ```
 ###### Scene two
