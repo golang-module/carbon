@@ -63,18 +63,15 @@ func (c Carbon) ToFormatString(format string) string {
 				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
 			case 'N': // ISO-8601 格式数字表示的星期中的第几天，取值范围 1-7
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek()))
-			case 'S': // 第几天的英文缩写后缀，如st, nd, rd, th
-				day := c.Time.In(c.Loc).Format("02")
-				suffix := ""
-				switch day {
-				case "01", "21", "31":
+			case 'S': // 月份中第几天的英文缩写后缀，如st, nd, rd, th
+				suffix := "th"
+				switch c.Day() {
+				case 1, 21, 31:
 					suffix = "st"
-				case "02", "22":
+				case 2, 22:
 					suffix = "nd"
-				case "03", "23":
+				case 3, 23:
 					suffix = "rd"
-				default:
-					suffix = "th"
 				}
 				buffer.WriteString(suffix)
 			case 'L': // 是否为闰年，如果是闰年为 1，否则为 0
@@ -84,8 +81,7 @@ func (c Carbon) ToFormatString(format string) string {
 					buffer.WriteString("0")
 				}
 			case 'G': // 数字表示的小时，24 小时格式，没有前导零，取值范围 0-23
-				s := strings.Replace(c.Time.In(c.Loc).Format("15"), "0", "", 1)
-				buffer.WriteString(s)
+				buffer.WriteString(strconv.Itoa(c.Hour()))
 			case 'U': // 秒级时间戳，如 1611818268
 				buffer.WriteString(strconv.FormatInt(c.ToTimestamp(), 10))
 			case 'u': // 数字表示的毫秒，如 999
@@ -268,18 +264,34 @@ func (c Carbon) ToRfc7231String() string {
 	return c.Time.In(c.Loc).Format(RFC7231Format)
 }
 
+// DiffInYears 相差多少年
+func (start Carbon) DiffInYears(end Carbon) int64 {
+	return int64(start.DiffInMonths(end) / 12)
+}
+
+// DiffInYearsWithAbs 相差多少年（绝对值）
+func (start Carbon) DiffInYearsWithAbs(end Carbon) int64 {
+	return getAbsValue(start.DiffInYears(end))
+}
+
+// DiffInMonths 相差多少月
+func (start Carbon) DiffInMonths(end Carbon) int64 {
+	return int64((end.Year()-start.Year())*MonthsPerYear + end.Month() - start.Month())
+}
+
+// DiffInMonthsWithAbs 相差多少月（绝对值）
+func (start Carbon) DiffInMonthsWithAbs(end Carbon) int64 {
+	return getAbsValue(start.DiffInMonths(end))
+}
+
 // DiffInWeeks 相差多少周
 func (start Carbon) DiffInWeeks(end Carbon) int64 {
-	return start.DiffInSeconds(end) / SecondsPerWeek
+	return start.DiffInDays(end) / DaysPerWeek
 }
 
 // DiffInWeeksWithAbs 相差多少周（绝对值）
 func (start Carbon) DiffInWeeksWithAbs(end Carbon) int64 {
-	diff := start.DiffInWeeks(end)
-	if diff < 0 {
-		diff = -diff
-	}
-	return diff
+	return getAbsValue(start.DiffInWeeks(end))
 }
 
 // DiffInDays 相差多少天
@@ -289,11 +301,7 @@ func (start Carbon) DiffInDays(end Carbon) int64 {
 
 // DiffInDaysWithAbs 相差多少天（绝对值）
 func (start Carbon) DiffInDaysWithAbs(end Carbon) int64 {
-	diff := start.DiffInDays(end)
-	if diff < 0 {
-		diff = -diff
-	}
-	return diff
+	return getAbsValue(start.DiffInDays(end))
 }
 
 // DiffInHours 相差多少小时
@@ -303,11 +311,7 @@ func (start Carbon) DiffInHours(end Carbon) int64 {
 
 // DiffInHoursWithAbs 相差多少小时（绝对值）
 func (start Carbon) DiffInHoursWithAbs(end Carbon) int64 {
-	diff := start.DiffInHours(end)
-	if diff < 0 {
-		diff = -diff
-	}
-	return diff
+	return getAbsValue(start.DiffInHours(end))
 }
 
 // DiffInMinutes 相差多少分钟
@@ -317,11 +321,7 @@ func (start Carbon) DiffInMinutes(end Carbon) int64 {
 
 // DiffInMinutesWithAbs 相差多少分钟（绝对值）
 func (start Carbon) DiffInMinutesWithAbs(end Carbon) int64 {
-	diff := start.DiffInMinutes(end)
-	if diff < 0 {
-		diff = -diff
-	}
-	return diff
+	return getAbsValue(start.DiffInMinutes(end))
 }
 
 // DiffInSeconds 相差多少秒
@@ -329,6 +329,7 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 {
 	if start.Time.IsZero() && end.Time.IsZero() {
 		return 0
 	}
+
 	if end.Time.IsZero() {
 		return -start.ToTimestamp()
 	}
@@ -341,11 +342,63 @@ func (start Carbon) DiffInSeconds(end Carbon) int64 {
 
 // DiffInSecondsWithAbs 相差多少秒（绝对值）
 func (start Carbon) DiffInSecondsWithAbs(end Carbon) int64 {
-	diff := start.DiffInSeconds(end)
-	if diff < 0 {
-		diff = -diff
+	return getAbsValue(start.DiffInSeconds(end))
+}
+
+// DiffForHumans 获取对人类友好的可读格式时间差
+func (c Carbon) DiffForHumans() string {
+	var unit string
+	var count int64
+	now := c.Now()
+	switch true {
+	case c.DiffInYearsWithAbs(now) > 0:
+		unit = "year"
+		count = c.DiffInYearsWithAbs(now)
+		break
+	case c.DiffInMonthsWithAbs(now) > 0:
+		unit = "month"
+		count = c.DiffInMonthsWithAbs(now)
+		break
+	case c.DiffInWeeksWithAbs(now) > 0:
+		unit = "week"
+		count = c.DiffInWeeksWithAbs(now)
+		break
+	case c.DiffInDaysWithAbs(now) > 0:
+		unit = "day"
+		count = c.DiffInDaysWithAbs(now)
+		break
+	case c.DiffInHoursWithAbs(now) > 0:
+		unit = "hour"
+		count = c.DiffInHoursWithAbs(now)
+		break
+	case c.DiffInMinutesWithAbs(now) > 0:
+		unit = "minute"
+		count = c.DiffInMinutesWithAbs(now)
+		break
+	case c.DiffInSecondsWithAbs(now) > 10:
+		unit = "second"
+		count = c.DiffInSecondsWithAbs(now)
+		break
+	case c.DiffInSecondsWithAbs(now) <= 10:
+		unit = "now"
+		count = 0
+		break
 	}
-	return diff
+
+	locale := NewLanguage().locale
+	if c.Lang != nil && c.Lang.locale != "" {
+		locale = c.Lang.locale
+	}
+
+	c = c.SetLocale(locale)
+	translation := c.Lang.translate(unit, count)
+	if c.IsFuture() {
+		return strings.Replace(c.Lang.resources["after"], "{time}", translation, 1)
+	}
+	if c.IsPast() {
+		return strings.Replace(c.Lang.resources["before"], "{time}", translation, 1)
+	}
+	return c.Lang.resources["now"]
 }
 
 // DaysInYear 获取本年的总天数
@@ -426,6 +479,11 @@ func (c Carbon) Timezone() string {
 	return c.Loc.String()
 }
 
+// Locale 获取语言区域
+func (c Carbon) Locale() string {
+	return c.Lang.locale
+}
+
 // Age 获取年龄
 func (c Carbon) Age() int {
 	if c.IsZero() {
@@ -471,11 +529,17 @@ func (c Carbon) Quarter() int {
 
 // 获取当前月
 func (c Carbon) Month() int {
+	if c.IsZero() {
+		return 0
+	}
 	return c.MonthOfYear()
 }
 
 // 获取当前日
 func (c Carbon) Day() int {
+	if c.IsZero() {
+		return 0
+	}
 	return c.DayOfMonth()
 }
 

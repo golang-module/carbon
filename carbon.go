@@ -1,5 +1,6 @@
 package carbon
 
+import "C"
 import (
 	"strconv"
 	"strings"
@@ -9,6 +10,7 @@ import (
 type Carbon struct {
 	Time  time.Time
 	Loc   *time.Location
+	Lang  *Language
 	Error error
 }
 
@@ -649,5 +651,14 @@ func (c Carbon) SetMinute(minute int) Carbon {
 // SetSecond 设置秒
 func (c Carbon) SetSecond(second int) Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, c.Time.Nanosecond(), c.Loc)
+	return c
+}
+
+// SetLocale 设置语言区域
+func (c Carbon) SetLocale(locale string) Carbon {
+	lang := NewLanguage()
+	err := lang.SetLocale(locale)
+	c.Lang = lang
+	c.Error = err
 	return c
 }

@@ -151,6 +151,10 @@ carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 
+// Set locale
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+
 // Set year
 carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
 carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
@@ -384,6 +388,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-0
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // Difference in seconds with absolute value
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+
+// Difference for humans in English
+carbon.Parse("2019-08-05 13:14:15").DiffForHumans()) // 1 years before
+carbon.Parse("2018-08-05 13:14:15").DiffForHumans()) // 2 year before
+carbon.Parse("2021-08-05 13:14:15").DiffForHumans()) // 1 year after
+carbon.Parse("2022-08-05 13:14:15").DiffForHumans()) // 2 years after
+// Difference for humans in Chinese
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+carbon.Parse("2020-09-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 2 月后
 ```
 
 ##### Time compare
@@ -634,6 +647,10 @@ carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 carbon.SetTimezone(carbon.PRC).Timezone() // PRC
 carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 
+// Get locale name
+carbon.Now().SetLocale("en").Locale() // en
+carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
+
 // Get current age
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
@@ -854,3 +871,4 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [jinzhu/now](https://github.com/jinzhu/now/)
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
+* [kofoworola/godate](https://github.com/kofoworola/godate)

@@ -150,6 +150,10 @@ carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 
+// 设置语言
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+
 // 设置年
 carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
 carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
@@ -384,6 +388,17 @@ carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-0
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // 相差多少秒（绝对值）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+
+// 对人类友好的可读格式时间差(默认英文)
+carbon.Now().DiffForHumans()) // just now
+carbon.Parse("2019-08-05 13:14:15").DiffForHumans()) // 1 years before
+carbon.Parse("2018-08-05 13:14:15").DiffForHumans()) // 2 year before
+carbon.Parse("2021-08-05 13:14:15").DiffForHumans()) // 1 year after
+carbon.Parse("2022-08-05 13:14:15").DiffForHumans()) // 2 years after
+// 对人类友好的可读格式时间差(指定语言)
+carbon.Now().SetLocale("zh-CN").DiffForHumans()) // 刚刚
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+carbon.Parse("2020-09-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 2 月后
 ```
 
 ##### 时间比较
@@ -637,6 +652,10 @@ carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 // 获取时区
 carbon.SetTimezone(carbon.PRC).Timezone() // PRC
 carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+
+// 获取当前语言
+carbon.Now().SetLocale("en").Locale() // en
+carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 
 // 获取年龄
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
