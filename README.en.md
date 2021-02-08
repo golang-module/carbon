@@ -179,7 +179,7 @@ carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
 carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
 ```
-> For more timezone constants, please see the [const.go](./const.go) file
+> For more timezone constants, please see the [constant.go](./constant.go) file
 
 ##### Start and end
 ```go

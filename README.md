@@ -178,7 +178,7 @@ carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
 carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
 ```
->更多时区常量请查看[const.go](./const.go)文件
+>更多时区常量请查看[constant.go](./constant.go)文件
 
 ##### 开始时间、结束时间
 ```go
