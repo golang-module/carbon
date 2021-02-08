@@ -7,6 +7,6 @@
 	"minute":"1 minute|{count} minutes",
 	"second":"1 second|{count} seconds",
 	"now": "just now",
-	"after":"{time} after",
-	"before":"{time} before"
+	"past":"{time} ago",
+	"future":"in {time}"
 }

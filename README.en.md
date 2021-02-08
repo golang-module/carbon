@@ -390,13 +390,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
 // Difference for humans in English
-carbon.Parse("2019-08-05 13:14:15").DiffForHumans()) // 1 years before
-carbon.Parse("2018-08-05 13:14:15").DiffForHumans()) // 2 year before
-carbon.Parse("2021-08-05 13:14:15").DiffForHumans()) // 1 year after
-carbon.Parse("2022-08-05 13:14:15").DiffForHumans()) // 2 years after
+carbon.Now().DiffForHumans()) // just now
+carbon.Now().SubYears(1).DiffForHumans()) // 1 years ago
+carbon.Now().SubYears(2).DiffForHumans()) // 2 year ago
+carbon.Now().AddYears(1).DiffForHumans()) // in 1 year
+carbon.Now().AddYears(2).DiffForHumans()) // in 2 years
 // Difference for humans in Chinese
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
-carbon.Parse("2020-09-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 2 月后
+carbon.Now().SetLocale("zh-CN").DiffForHumans()) // 刚刚
+carbon.Now().SubMonths(1).SetLocale("zh-CN").DiffForHumans()) // 1 月前
+carbon.Now().AddMonths(2).SetLocale("zh-CN").DiffForHumans()) // 2 月后
 ```
 
 ##### Time compare

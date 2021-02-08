@@ -7,6 +7,6 @@
 	"minute":"{count} 分钟",
 	"second":"{count} 秒",
 	"now": "刚刚",
-	"after":"{time}后",
-	"before":"{time}前"
+	"past":"{time}前",
+	"future":"{time}后"
 }

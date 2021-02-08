@@ -393,10 +393,10 @@ func (c Carbon) DiffForHumans() string {
 	c = c.SetLocale(locale)
 	translation := c.Lang.translate(unit, count)
 	if c.IsFuture() {
-		return strings.Replace(c.Lang.resources["after"], "{time}", translation, 1)
+		return strings.Replace(c.Lang.resources["future"], "{time}", translation, 1)
 	}
 	if c.IsPast() {
-		return strings.Replace(c.Lang.resources["before"], "{time}", translation, 1)
+		return strings.Replace(c.Lang.resources["past"], "{time}", translation, 1)
 	}
 	return c.Lang.resources["now"]
 }

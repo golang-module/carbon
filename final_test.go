@@ -976,15 +976,15 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 		output string // 期望输出值
 	}{
 		{Now().ToDateTimeString(), "just now"},
-		{Now().AddYears(1).ToDateTimeString(), "1 year after"},
-		{Now().SubYears(1).ToDateTimeString(), "1 year before"},
-		{Now().AddYears(10).ToDateTimeString(), "10 years after"},
-		{Now().SubYears(10).ToDateTimeString(), "10 years before"},
+		{Now().AddYears(1).ToDateTimeString(), "in 1 year"},
+		{Now().SubYears(1).ToDateTimeString(), "1 year ago"},
+		{Now().AddYears(10).ToDateTimeString(), "in 10 years"},
+		{Now().SubYears(10).ToDateTimeString(), "10 years ago"},
 
-		{Now().AddMonths(1).ToDateTimeString(), "1 month after"},
-		{Now().SubMonths(1).ToDateTimeString(), "1 month before"},
-		{Now().AddMonths(10).ToDateTimeString(), "10 months after"},
-		{Now().SubMonths(10).ToDateTimeString(), "10 months before"},
+		{Now().AddMonths(1).ToDateTimeString(), "in 1 month"},
+		{Now().SubMonths(1).ToDateTimeString(), "1 month ago"},
+		{Now().AddMonths(10).ToDateTimeString(), "in 10 months"},
+		{Now().SubMonths(10).ToDateTimeString(), "10 months ago"},
 	}
 
 	for _, v := range Tests {
