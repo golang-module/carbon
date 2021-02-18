@@ -95,7 +95,7 @@ func (c Carbon) Age() int {
 	return int(c.DiffInYears(now))
 }
 
-// 获取当前年
+// Year 获取当前年
 func (c Carbon) Year() int {
 	if c.IsZero() {
 		return 0
@@ -103,7 +103,7 @@ func (c Carbon) Year() int {
 	return c.Time.In(c.Loc).Year()
 }
 
-// 获取当前季度
+// Quarter 获取当前季度
 func (c Carbon) Quarter() int {
 	if c.IsZero() {
 		return 0
@@ -122,7 +122,7 @@ func (c Carbon) Quarter() int {
 	return 0
 }
 
-// 获取当前月
+// Month 获取当前月
 func (c Carbon) Month() int {
 	if c.IsZero() {
 		return 0
@@ -130,7 +130,7 @@ func (c Carbon) Month() int {
 	return c.MonthOfYear()
 }
 
-// 获取当前日
+// Day 获取当前日
 func (c Carbon) Day() int {
 	if c.IsZero() {
 		return 0
@@ -138,7 +138,7 @@ func (c Carbon) Day() int {
 	return c.DayOfMonth()
 }
 
-// 获取当前小时
+// Hour 获取当前小时
 func (c Carbon) Hour() int {
 	if c.IsZero() {
 		return 0
@@ -146,7 +146,7 @@ func (c Carbon) Hour() int {
 	return c.Time.In(c.Loc).Hour()
 }
 
-// 获取当前分钟数
+// Minute 获取当前分钟数
 func (c Carbon) Minute() int {
 	if c.IsZero() {
 		return 0
@@ -154,7 +154,7 @@ func (c Carbon) Minute() int {
 	return c.Time.In(c.Loc).Minute()
 }
 
-// 获取当前秒数
+// Second 获取当前秒数
 func (c Carbon) Second() int {
 	if c.IsZero() {
 		return 0
@@ -162,7 +162,7 @@ func (c Carbon) Second() int {
 	return c.Time.In(c.Loc).Second()
 }
 
-// 获取当前毫秒数
+// Millisecond 获取当前毫秒数
 func (c Carbon) Millisecond() int {
 	if c.IsZero() {
 		return 0
@@ -170,7 +170,7 @@ func (c Carbon) Millisecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e6
 }
 
-// 获取当前微秒数
+// Microsecond 获取当前微秒数
 func (c Carbon) Microsecond() int {
 	if c.IsZero() {
 		return 0
@@ -178,7 +178,7 @@ func (c Carbon) Microsecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e9
 }
 
-// 获取当前纳秒数
+// Nanosecond 获取当前纳秒数
 func (c Carbon) Nanosecond() int {
 	if c.IsZero() {
 		return 0
