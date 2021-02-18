@@ -694,7 +694,7 @@ carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
 lang := NewLanguage()
 
 if err := lang.SetLocale("en");err != nil {
-	// 错误处理
+	// Error handle...
     fmt.Println(err)
 }
 
