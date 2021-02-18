@@ -143,43 +143,6 @@ carbon.Time2Carbon(time.Now())
 carbon.Now().Carbon2Time() 或 carbon.Now().Time
 ```
 
-##### 时间设置
-```go
-// 设置时区
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-
-// 设置语言
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
-
-// 设置年
-carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
-carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
-
-// 设置月
-carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
-
-// 设置日
-carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
-carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
-
-// 设置时
-carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
-carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
-
-// 设置分
-carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
-carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
-
-// 设置秒
-carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
-carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
-```
->更多时区常量请查看[constant.go](./constant.go)文件
-
 ##### 开始时间、结束时间
 ```go
 // 本年开始时间
@@ -211,6 +174,11 @@ carbon.Parse("2020-08-05 13:14:15").EndOfHour().ToDateTimeString() // 2020-08-05
 carbon.Parse("2020-08-05 13:14:15").StartOfMinute().ToDateTimeString() // 2020-08-05 13:14:00
 // 本分钟结束时间
 carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
+
+// 本秒开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.0
+// 本秒结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.999
 ```
 
 ##### 时间旅行
@@ -389,73 +357,17 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // 相差多少秒（绝对值）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
-// 对人类友好的可读格式时间差(默认英文)
-carbon.Now().DiffForHumans()) // just now
-carbon.Now().SubYears(1).DiffForHumans() // 1 years ago
-carbon.Now().SubYears(2).DiffForHumans() // 2 year ago
-carbon.Now().AddYears(1).DiffForHumans() // in 1 year
-carbon.Now().AddYears(2).DiffForHumans() // in 2 years
-// 对人类友好的可读格式时间差(指定语言)
-carbon.Now().SetLocale("zh-CN").DiffForHumans() // 刚刚
-carbon.Now().SubMonths(1).SetLocale("zh-CN").DiffForHumans() // 1 月前
-carbon.Now().AddMonths(2).SetLocale("zh-CN").DiffForHumans() // 2 月后
+// 对人类友好的可读格式时间差
+carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
+carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
+carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
+carbon.Parse("2021-08-05 13:14:15").DiffForHumans() // 1 year from now
+carbon.Parse("2022-08-05 13:14:15").DiffForHumans() // 2 years from now
 
-```
-
-##### 时间比较
-```go
-// 是否大于
-carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-04 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-05 13:14:15")) // false
-carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-04 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-05 13:14:15")) // false
-
-// 是否小于
-carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-05 13:14:15")) // false
-carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-05 13:14:15")) // false
-
-// 是否等于
-carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:00")) // false
-carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:00")) // false
-
-// 是否不等于
-carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-05 13:14:15")) // false
-carbon.Parse("2020-08-05 13:14:15").Compare("!=", carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare("<>", carbon.Parse("2020-08-05 13:14:15")) // false
-
-// 是否大于等于
-carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-04 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-04 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-05 13:14:15")) // true
-
-// 是否小于等于
-carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-05 13:14:15")) // true
-
-// 是否在两个时间之间(不包括这两个时间)
-carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // false
-carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-
-// 是否在两个时间之间(包括开始时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-
-// 是否在两个时间之间(包括结束时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-
-// 是否在两个时间之间(包括这两个时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
-
+carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
+carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
+carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
+carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ```
 
 ##### 时间判断
@@ -538,6 +450,59 @@ carbon.Parse("2020-08-05").IsToday() // true
 carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
 carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
 carbon.Parse("2020-08-06").IsTomorrow() // true
+
+// 是否大于
+carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-04 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-04 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-05 13:14:15")) // false
+
+// 是否小于
+carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-05 13:14:15")) // false
+
+// 是否等于
+carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:00")) // false
+carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:00")) // false
+
+// 是否不等于
+carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").Compare("!=", carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare("<>", carbon.Parse("2020-08-05 13:14:15")) // false
+
+// 是否大于等于
+carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-04 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-04 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-05 13:14:15")) // true
+
+// 是否小于等于
+carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-05 13:14:15")) // true
+
+// 是否在两个时间之间(不包括这两个时间)
+carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+
+// 是否在两个时间之间(包括开始时间)
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+
+// 是否在两个时间之间(包括结束时间)
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+
+// 是否在两个时间之间(包括这两个时间)
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
+
 ```
 
 ##### 时间输出
@@ -606,6 +571,42 @@ carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesd
 ```
 >更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
 
+##### 时间设置
+```go
+// 设置时区
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+
+// 设置语言
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+
+// 设置年
+carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
+carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+
+// 设置月
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+
+// 设置日
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// 设置时
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// 设置分
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// 设置秒
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+```
+
 ##### 时间获取
 ```go
 // 获取本年总天数
@@ -664,6 +665,76 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
 > 关于第几周的计算如有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
+
+##### 多语言支持
+###### 设置区域
+```go
+// 方式一(推荐)
+c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
+if c.Error != nil {
+    // 错误处理
+    fmt.Println(c.Error)
+}
+c.DiffForHumans() // 1 小时后
+
+// 方式二
+lang := NewLanguage()
+if err := lang.SetLocale("zh-CN");err != nil {
+	// 错误处理
+    fmt.Println(err)
+}
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
+```
+###### 设置目录
+```go
+lang := NewLanguage()
+if err := lang.SetDir("lang");err != nil {
+	// 错误处理
+    fmt.Println(err)
+}
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
+```
+
+###### 部分自定义翻译(其余仍然按照指定的locale翻译)
+```go
+lang := NewLanguage()
+
+if err := lang.SetLocale("en");err != nil {
+	// 错误处理
+    fmt.Println(err)
+}
+
+resources := map[string]string{
+    "hour":"%dh",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
+```
+
+###### 完全自定义翻译
+```go
+lang := NewLanguage()
+resources := map[string]string{
+"year":"1 yr|%d yrs",
+"month":"1 mo|%d mos",
+"week":"%dw",
+"day":"%dd",
+"hour":"%dh",
+"minute":"%dm",
+"second":"%ds",
+"now": "just now",
+"ago":"%s ago",
+"from_now":"in %s",
+"before":"%s before",
+"after":"%s after",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // in 1 yr
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // in 1h
+```
 
 ##### 农历支持
 ```go
@@ -833,7 +904,7 @@ fmt.Println(c.ToDateTimeString())
 // 输出
 invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
 ```
-> 建议使用SetTimezone()、Parse()、ParseByFormat()、AddDuration()、SubDuration()等方法时先进行错误处理判断，除非你能确保传入参数无误
+> 建议使用SetTimezone()、Parse()、ParseByFormat()、AddDuration()、SubDuration()、SetLocale()等方法时先进行错误处理判断，除非你能确保传入参数无误
 #### 附录
 ##### <a id="格式化符号表">格式化符号表</a>
 | 符号 | 描述 |  长度 | 范围 | 示例 |

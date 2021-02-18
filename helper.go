@@ -76,6 +76,5 @@ func parseByDuration(duration string) (time.Duration, error) {
 
 // getAbsValue 获取绝对值
 func getAbsValue(value int64) int64 {
-	y := value >> 63
-	return (value ^ y) - y
+	return (value ^ value>>31) - value>>31
 }

@@ -9,51 +9,77 @@ import (
 	"strings"
 )
 
+var (
+	// 默认语言目录
+	defaultDir = "lang"
+	// 默认语言区域
+	defaultLocale = "en"
+)
+
 type Language struct {
 	locale    string
 	dir       string
 	resources map[string]string
 }
 
+// NewLanguage 初始化Language对象
 func NewLanguage() *Language {
 	return &Language{
-		locale:    "en",
-		dir:       "./lang",
+		locale:    "",
+		dir:       defaultDir,
 		resources: make(map[string]string),
 	}
 }
 
-// SetLocale 设置语言区域
+// SetLocale 设置区域
 func (lang *Language) SetLocale(locale string) error {
-	err := lang.loadResource(locale)
-	if err == nil {
-		lang.locale = locale
+	if len(lang.resources) != 0 {
+		return nil
 	}
-	return err
-}
-
-// loadResource 加载资源
-func (lang *Language) loadResource(locale string) error {
 	fileName := lang.dir + string(os.PathSeparator) + locale + ".json"
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		return errors.New("not able to read the lang file:" + fileName)
+		return errors.New("invalid locale \"" + locale + "\", please see the " + lang.dir + " directory for all valid locale")
 	}
 	if err := json.Unmarshal(bytes, &lang.resources); err != nil {
 		return err
 	}
+	lang.locale = locale
 	return nil
 }
 
-// translate 翻译
-func (lang *Language) translate(unit string, count int64) string {
-	s := strings.Split(lang.resources[unit], "|")
-	if len(s) == 1 {
-		return strings.Replace(s[0], "{count}", strconv.FormatInt(count, 10), 1)
+// SetDir 设置目录
+func (lang *Language) SetDir(dir string) error {
+	fi, err := os.Stat(dir)
+	if err != nil || !fi.IsDir() {
+		return errors.New("invalid directory \"" + dir + "\"")
 	}
+	lang.dir = dir
+	return nil
+}
 
-	if count > 1 {
-		return strings.Replace(s[1], "{count}", strconv.FormatInt(count, 10), 1)
+// SetResources 设置资源
+func (lang *Language) SetResources(resources map[string]string) {
+	if len(lang.resources) == 0 {
+		lang.resources = resources
+	} else {
+		for k, v := range resources {
+			lang.resources[k] = v
+		}
 	}
-	return s[0]
+}
+
+// translate 翻译转换
+func (lang *Language) translate(unit string, diff int64) string {
+	if len(lang.resources) == 0 {
+		lang.SetLocale(defaultLocale)
+	}
+	array := strings.Split(lang.resources[unit], "|")
+	if len(array) == 1 {
+		return strings.Replace(array[0], "%d", strconv.FormatInt(diff, 10), 1)
+	}
+	if diff > 1 {
+		return strings.Replace(array[1], "%d", strconv.FormatInt(diff, 10), 1)
+	}
+	return array[0]
 }
