@@ -2,7 +2,7 @@
 English | [Chinese](./README.md)
 
 #### Introduction
-A simple,semantic and developer-friendly golang package for datetime
+A simple, semantic and developer-friendly golang package for datetime
 
 If you think it is helpful, please give me a star
 
