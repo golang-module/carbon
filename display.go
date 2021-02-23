@@ -3,13 +3,9 @@ package carbon
 import (
 	"bytes"
 	"strconv"
+	"strings"
 	"time"
 )
-
-// ToString 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
-func (c Carbon) ToString() string {
-	return c.Time.In(c.Loc).String()
-}
 
 // ToTimestamp ToTimestampWithSecond的简称
 func (c Carbon) ToTimestamp() int64 {
@@ -36,6 +32,67 @@ func (c Carbon) ToTimestampWithNanosecond() int64 {
 	return c.Time.UnixNano()
 }
 
+// ToString 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
+func (c Carbon) ToString() string {
+	return c.Time.In(c.Loc).String()
+}
+
+// ToMonthString 输出完整月份字符串
+func (c Carbon) ToMonthString() string {
+	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
+		return ""
+	}
+	if months, ok := c.Lang.resources["months"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Month()-1]
+	}
+	return ""
+}
+
+// ToShortMonthString 输出缩写月份字符串
+func (c Carbon) ToShortMonthString() string {
+	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
+		return ""
+	}
+	if months, ok := c.Lang.resources["months_short"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Month()-1]
+	}
+	if months, ok := c.Lang.resources["months"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Month()-1]
+	}
+	return ""
+}
+
+// ToWeekString 输出完整星期字符串
+func (c Carbon) ToWeekString() string {
+	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
+		return ""
+	}
+	if months, ok := c.Lang.resources["weeks"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Week()]
+	}
+	return ""
+}
+
+// ToShortWeekString 输出缩写星期字符串
+func (c Carbon) ToShortWeekString() string {
+	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
+		return ""
+	}
+	if months, ok := c.Lang.resources["weeks_short"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Week()]
+	}
+	if months, ok := c.Lang.resources["weeks"]; ok {
+		slice := strings.Split(months, "|")
+		return slice[c.Week()]
+	}
+	return ""
+}
+
 // Format ToFormatString的简称
 func (c Carbon) Format(format string) string {
 	return c.ToFormatString(format)
@@ -46,7 +103,9 @@ func (c Carbon) ToFormatString(format string) string {
 	if c.IsZero() {
 		return ""
 	}
-
+	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
+		return ""
+	}
 	runes := []rune(format)
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(runes); i++ {
@@ -54,7 +113,7 @@ func (c Carbon) ToFormatString(format string) string {
 			buffer.WriteString(c.Time.In(c.Loc).Format(layout))
 		} else {
 			switch runes[i] {
-			case '\\':
+			case '\\': // 原样输出，不解析
 				buffer.WriteRune(runes[i+1])
 				i += 2
 				continue

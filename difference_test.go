@@ -6,378 +6,332 @@ import (
 
 func TestCarbon_DiffInYears(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", -2},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), 0},
+		{Parse("2020-12-31 13:14:15"), Parse("2021-01-01 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-28 13:14:59"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2018-08-28 13:14:59"), -2},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInYears(Parse(v.input2))
+		output := v.input.DiffInYears(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func Test1Carbon_DiffInYearsWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", 2},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), 0},
+		{Parse("2020-12-31 13:14:15"), Parse("2021-01-01 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-28 13:14:59"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2018-08-28 13:14:59"), 2},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInYearsWithAbs(Parse(v.input2))
+		output := v.input.DiffInYearsWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInMonths(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-31 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", -24},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), 0},
+		{Parse("2020-12-31 13:14:15"), Parse("2021-01-31 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-28 13:14:59"), 12},
+		{Parse("2020-08-05 13:14:15"), Parse("2018-08-28 13:14:59"), -24},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInMonths(Parse(v.input2))
+		output := v.input.DiffInMonths(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", 24},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), 0},
+		{Parse("2020-12-31 13:14:15"), Parse("2021-01-01 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-28 13:14:59"), 12},
+		{Parse("2020-08-05 13:14:15"), Parse("2018-08-28 13:14:59"), 24},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInMonthsWithAbs(Parse(v.input2))
+		output := v.input.DiffInMonthsWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInWeeks(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", -2639},
-		{"", "2020-08-05 13:14:15", 2639},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:15"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:59"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInWeeks(Parse(v.input2))
+		output := v.input.DiffInWeeks(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", 2639},
-		{"", "2020-08-05 13:14:15", 2639},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-07-28 13:14:59"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-12 13:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInWeeksWithAbs(Parse(v.input2))
+		output := v.input.DiffInWeeksWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInDays(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", -18479},
-		{"", "2020-08-05 13:14:15", 18479},
-		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:00:00"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:00:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:00:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInDays(Parse(v.input2))
+		output := v.input.DiffInDays(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", 18479},
-		{"", "2020-08-05 13:14:15", 18479},
-		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:00:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-04 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:00:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:00:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-06 13:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInDaysWithAbs(Parse(v.input2))
+		output := v.input.DiffInDaysWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInHours(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", -443501},
-		{"", "2020-08-05 13:14:15", 443501},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:00"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:15"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInHours(Parse(v.input2))
+		output := v.input.DiffInHours(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", 443501},
-		{"", "2020-08-05 13:14:15", 443501},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 12:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 14:14:59"), 1},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInHoursWithAbs(Parse(v.input2))
+		output := v.input.DiffInHoursWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInMinutes(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
-		{"2020-08-05 13:14:15", "", -26610074},
-		{"", "2010-08-05 13:14:15", 21349754},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:00"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:15"), -1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:59"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:15"), 2},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:59"), 2},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInMinutes(Parse(v.input2))
+		output := v.input.DiffInMinutes(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
-		{"2020-08-05 13:14:15", "", 26610074},
-		{"", "2010-08-05 13:14:15", 21349754},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:13:59"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:00"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:15"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:15:59"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:00"), 1},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:15"), 2},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:16:59"), 2},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInMinutesWithAbs(Parse(v.input2))
+		output := v.input.DiffInMinutesWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInSeconds(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", -1596604455},
-		{"", "2010-08-05 13:14:15", 1280985255},
-		{"2020-08-05 13:14:15", "2010-08-05 13:14:15", -315619200},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:20"), 5},
+		{Parse("2020-08-05 13:14:20"), Parse("2020-08-05 13:14:15"), -5},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInSeconds(Parse(v.input2))
+		output := v.input.DiffInSeconds(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
 
 func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output int64  // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", "", 0},
-		{"", "0000-00-00 00:00:00", 0},
-		{"", "", 0},
-		{"2020-08-05 13:14:15", "", 1596604455},
-		{"", "2010-08-05 13:14:15", 1280985255},
-		{"2020-08-05 13:14:15", "2010-08-05 13:14:15", 315619200},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), 0},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:20"), 5},
+		{Parse("2020-08-05 13:14:20"), Parse("2020-08-05 13:14:15"), 5},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input1).DiffInSecondsWithAbs(Parse(v.input2))
+		output := v.input.DiffInSecondsWithAbs(v.param)
 
 		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input1, v.input2, v.output, output)
+			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input.ToDateString(), v.param.ToDateString(), v.output, output)
 		}
 	}
 }
@@ -430,8 +384,8 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 
 func TestCarbon_DiffForHumans2(t *testing.T) {
 	Tests := []struct {
-		input1 Carbon // 输入值1
-		input2 Carbon // 输入值2
+		input  Carbon // 输入值
+		param  Carbon // 参数值
 		output string // 期望输出值
 	}{
 		{Now(), Now(), "刚刚"},
@@ -447,10 +401,10 @@ func TestCarbon_DiffForHumans2(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := (v.input1).SetLocale("zh-CN").DiffForHumans(v.input2)
+		output := (v.input).SetLocale("zh-CN").DiffForHumans(v.param)
 
 		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input1.ToDateTimeString(), v.output, output)
+			t.Errorf("Input time %s, expected %s, but got %s", v.input.ToDateTimeString(), v.output, output)
 		}
 	}
 }

@@ -6,1227 +6,1095 @@ import (
 
 func TestCarbon_IsZero(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", true},
-		{"0000-00-00", true},
-		{"2020-08-05 00:00:00", false},
-		{"2020-08-05", false},
+		{Parse("0000-00-00 00:00:00"), true},
+		{Parse("0000-00-00"), true},
+		{Parse("2020-08-05"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsZero()
+		output := v.input.IsZero()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is zero, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is zero, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsNow(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", false},
-		{Tomorrow().ToDateTimeString(), false},
-		{Now().ToDateTimeString(), true},
-		{Yesterday().ToDateTimeString(), false},
+		{Parse("0000-00-00 00:00:00"), false},
+		{Tomorrow(), false},
+		{Now(), true},
+		{Yesterday(), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsNow()
+		output := v.input.IsNow()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is now, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is now, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsFuture(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", false},
-		{Tomorrow().ToDateTimeString(), true},
-		{Now().ToDateTimeString(), false},
-		{Yesterday().ToDateTimeString(), false},
+		{Parse("0000-00-00 00:00:00"), false},
+		{Tomorrow(), true},
+		{Now(), false},
+		{Yesterday(), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsFuture()
+		output := v.input.IsFuture()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is future, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is future, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
+
 }
 
 func TestCarbon_IsPast(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", true},
-		{Tomorrow().ToDateTimeString(), false},
-		{Now().ToDateTimeString(), false},
-		{Yesterday().ToDateTimeString(), true},
+		{Parse("0000-00-00 00:00:00"), true},
+		{Tomorrow(), false},
+		{Now(), false},
+		{Yesterday(), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsPast()
+		output := v.input.IsPast()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is past, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is past, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsLeapYear(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2016-01-01", true},
-		{"2017-01-01", false},
-		{"2018-01-01", false},
-		{"2019-01-01", false},
-		{"2020-01-01", true},
+		{Parse("2016-01-01"), true},
+		{Parse("2017-01-01"), false},
+		{Parse("2018-01-01"), false},
+		{Parse("2019-01-01"), false},
+		{Parse("2020-01-01"), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsLeapYear()
+		output := v.input.IsLeapYear()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is leap year, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is leap year, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsLongYear(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2015-01-01", true},
-		{"2016-01-01", false},
-		{"2017-01-01", false},
-		{"2018-01-01", false},
-		{"2019-01-01", false},
-		{"2020-01-01", true},
+		{Parse("2015-01-01"), true},
+		{Parse("2016-01-01"), false},
+		{Parse("2017-01-01"), false},
+		{Parse("2018-01-01"), false},
+		{Parse("2019-01-01"), false},
+		{Parse("2020-01-01"), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsLongYear()
+		output := v.input.IsLongYear()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is long year, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is long year, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsJanuary(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", true},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), true},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsJanuary()
+		output := v.input.IsJanuary()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is January, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is January, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsFebruary(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", true},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), true},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsFebruary()
+		output := v.input.IsFebruary()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is February, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is February, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsMarch(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", true},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), true},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsMarch()
+		output := v.input.IsMarch()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is March, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is March, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsApril(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", true},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), true},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsApril()
+		output := v.input.IsApril()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is April, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is April, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsMay(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", true},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), true},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsMay()
+		output := v.input.IsMay()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is May, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is May, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsJune(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", true},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), true},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsJune()
+		output := v.input.IsJune()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is June, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is June, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsJuly(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", true},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), true},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsJuly()
+		output := v.input.IsJuly()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is July, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is July, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsAugust(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", true},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), true},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsAugust()
+		output := v.input.IsAugust()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is August, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is August, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsSeptember(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", true},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), true},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsSeptember()
+		output := v.input.IsSeptember()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is september, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is september, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsOctober(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", true},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), true},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsOctober()
+		output := v.input.IsOctober()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is October, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is October, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsNovember(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", true},
-		{"2020-12-01", false},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), true},
+		{Parse("2020-12-01"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsNovember()
+		output := v.input.IsNovember()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is November, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is November, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsDecember(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", true},
+		{Parse("2020-01-01"), false},
+		{Parse("2020-02-01"), false},
+		{Parse("2020-03-01"), false},
+		{Parse("2020-04-01"), false},
+		{Parse("2020-05-01"), false},
+		{Parse("2020-06-01"), false},
+		{Parse("2020-07-01"), false},
+		{Parse("2020-08-01"), false},
+		{Parse("2020-09-01"), false},
+		{Parse("2020-10-01"), false},
+		{Parse("2020-11-01"), false},
+		{Parse("2020-12-01"), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsDecember()
+		output := v.input.IsDecember()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is December, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is December, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsMonday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", true},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), true},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsMonday()
+		output := v.input.IsMonday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Monday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Monday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsTuesday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", true},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), true},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsTuesday()
+		output := v.input.IsTuesday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Tuesday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Tuesday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsWednesday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", true},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), true},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsWednesday()
+		output := v.input.IsWednesday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Wednesday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Wednesday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsThursday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", true},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), true},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsThursday()
+		output := v.input.IsThursday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Thursday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Thursday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsFriday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", true},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), true},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsFriday()
+		output := v.input.IsFriday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Friday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Friday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsSaturday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", true},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), true},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsSaturday()
+		output := v.input.IsSaturday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Saturday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Saturday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsSunday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", true},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsSunday()
+		output := v.input.IsSunday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is Sunday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is Sunday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsWeekday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", true},
-		{"2020-10-06", true},
-		{"2020-10-07", true},
-		{"2020-10-08", true},
-		{"2020-10-09", true},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		{Parse("2020-10-05"), true},
+		{Parse("2020-10-06"), true},
+		{Parse("2020-10-07"), true},
+		{Parse("2020-10-08"), true},
+		{Parse("2020-10-09"), true},
+		{Parse("2020-10-10"), false},
+		{Parse("2020-10-11"), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsWeekday()
+		output := v.input.IsWeekday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is weekday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is weekday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsWeekend(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", true},
-		{"2020-10-11", true},
+		{Parse("2020-10-05"), false},
+		{Parse("2020-10-06"), false},
+		{Parse("2020-10-07"), false},
+		{Parse("2020-10-08"), false},
+		{Parse("2020-10-09"), false},
+		{Parse("2020-10-10"), true},
+		{Parse("2020-10-11"), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsWeekend()
+		output := v.input.IsWeekend()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is weekend, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is weekend, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsYesterday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{Now().ToDateTimeString(), false},
-		{Yesterday().ToDateTimeString(), true},
-		{Tomorrow().ToDateTimeString(), false},
+		{Now(), false},
+		{Yesterday(), true},
+		{Tomorrow(), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsYesterday()
+		output := v.input.IsYesterday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is yesterday, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is yesterday, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsToday(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{Now().ToDateTimeString(), true},
-		{Yesterday().ToDateTimeString(), false},
-		{Tomorrow().ToDateTimeString(), false},
+		{Now(), true},
+		{Yesterday(), false},
+		{Tomorrow(), false},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsToday()
+		output := v.input.IsToday()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is today, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is today, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_IsTomorrow(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
+		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
-		{Now().ToDateTimeString(), false},
-		{Yesterday().ToDateTimeString(), false},
-		{Tomorrow().ToDateTimeString(), true},
+		{Now(), false},
+		{Yesterday(), false},
+		{Tomorrow(), true},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).IsTomorrow()
+		output := v.input.IsTomorrow()
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s is tomorrow, expected true, but got false\n", v.input.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s is tomorrow, expected false, but got true\n", v.input.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Compare(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
-		input    Carbon // 输入值
-		operator string // 输入参数
-		time     Carbon // 输入参数
-		output   bool   // 期望输出值
+		input  Carbon // 输入值
+		param1 string // 输入参数1
+		param2 Carbon // 输入参数2
+		output bool   // 期望输出值
 	}{
-		{now, ">", yesterday, true},
-		{now, "<", yesterday, false},
-		{now, "<", tomorrow, true},
-		{now, ">", tomorrow, false},
-		{now, "=", now, true},
-		{now, ">=", now, true},
-		{now, "<=", now, true},
-		{now, "!=", now, false},
-		{now, "<>", now, false},
-		{now, "!=", yesterday, true},
-		{now, "<>", yesterday, true},
-		{now, "+", yesterday, false},
+		{Parse("2020-08-05"), ">", Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), "<", Parse("2020-08-04"), false},
+		{Parse("2020-08-05"), "<", Parse("2020-08-06"), true},
+		{Parse("2020-08-05"), ">", Parse("2020-08-06"), false},
+		{Parse("2020-08-05"), "=", Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), ">=", Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), "<=", Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), "!=", Parse("2020-08-05"), false},
+		{Parse("2020-08-05"), "<>", Parse("2020-08-05"), false},
+		{Parse("2020-08-05"), "!=", Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), "<>", Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), "+", Parse("2020-08-04"), false},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Compare(v.operator, v.time)
+		output := v.input.Compare(v.param1, v.param2)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %v %s %v, expected true, but got false\n", v.input.ToDateString(), v.param1, v.param2.ToDateTimeString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %v %s %v, expected false, but got true\n", v.input, v.param1, v.param2.ToDateTimeString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s %s %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.operator, v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Gt(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, false},
-		{now, yesterday, true},
-		{now, tomorrow, false},
+		{Parse("2020-08-05"), Parse("2020-08-05"), false},
+		{Parse("2020-08-05"), Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), Parse("2020-08-06"), false},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Gt(v.time)
+		output := v.input.Gt(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s > %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s > %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s > %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Lt(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, false},
-		{now, yesterday, false},
-		{now, tomorrow, true},
+		{Parse("2020-08-05"), Parse("2020-08-05"), false},
+		{Parse("2020-08-05"), Parse("2020-08-04"), false},
+		{Parse("2020-08-05"), Parse("2020-08-06"), true},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Lt(v.time)
+		output := v.input.Lt(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s < %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s < %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s < %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Eq(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, true},
-		{now, yesterday, false},
-		{now, tomorrow, false},
+		{Parse("2020-08-05"), Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), Parse("2020-08-04"), false},
+		{Parse("2020-08-05"), Parse("2020-08-06"), false},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Eq(v.time)
+		output := v.input.Eq(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s == %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s == %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s = %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Ne(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, false},
-		{now, yesterday, true},
-		{now, tomorrow, true},
+		{Parse("2020-08-05"), Parse("2020-08-05"), false},
+		{Parse("2020-08-05"), Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), Parse("2020-08-06"), true},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Ne(v.time)
+		output := v.input.Ne(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s != %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s != %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s != %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Gte(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, true},
-		{now, yesterday, true},
-		{now, tomorrow, false},
+		{Parse("2020-08-05"), Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), Parse("2020-08-04"), true},
+		{Parse("2020-08-05"), Parse("2020-08-06"), false},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Gte(v.time)
+		output := v.input.Gte(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s >= %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s >= %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s >= %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
 
 func TestCarbon_Lte(t *testing.T) {
-	now := Now()
-	tomorrow := Tomorrow()
-	yesterday := Yesterday()
 	Tests := []struct {
 		input  Carbon // 输入值
-		time   Carbon // 输入参数
+		param  Carbon // 参数值
 		output bool   // 期望输出值
 	}{
-		{now, now, true},
-		{now, yesterday, false},
-		{now, tomorrow, true},
+		{Parse("2020-08-05"), Parse("2020-08-05"), true},
+		{Parse("2020-08-05"), Parse("2020-08-04"), false},
+		{Parse("2020-08-05"), Parse("2020-08-06"), true},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Lte(v.time)
+		output := v.input.Lte(v.param)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s <= %s, expected true, but got false\n", v.input.ToDateString(), v.param.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s <= %s, expected false, but got true\n", v.input.ToDateString(), v.param.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s <= %s, expected %s, but got %s\n", v.input.ToDateTimeString(), v.time.ToDateTimeString(), expected, reality)
 		}
 	}
 }
@@ -1234,8 +1102,8 @@ func TestCarbon_Lte(t *testing.T) {
 func TestCarbon_Between(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
-		time1  Carbon // 输入参数
-		time2  Carbon // 输入参数
+		param1 Carbon // 输入参数1
+		param2 Carbon // 输入参数2
 		output bool   // 期望输出值
 	}{
 		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
@@ -1245,19 +1113,16 @@ func TestCarbon_Between(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.Between(v.time1, v.time2)
+		output := v.input.Between(v.param1, v.param2)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s < %s < %s, expected true, but got false\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s < %s < %s, expected false, but got true\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s < %s < %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
 		}
 	}
 }
@@ -1265,8 +1130,8 @@ func TestCarbon_Between(t *testing.T) {
 func TestCarbon_BetweenIncludedStartTime(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
-		time1  Carbon // 输入参数
-		time2  Carbon // 输入参数
+		param1 Carbon // 输入参数1
+		param2 Carbon // 输入参数2
 		output bool   // 期望输出值
 	}{
 		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
@@ -1276,19 +1141,16 @@ func TestCarbon_BetweenIncludedStartTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.BetweenIncludedStartTime(v.time1, v.time2)
+		output := v.input.BetweenIncludedStartTime(v.param1, v.param2)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s <= %s < %s, expected true, but got false\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s <= %s < %s, expected false, but got true\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s <= %s < %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
 		}
 	}
 }
@@ -1296,8 +1158,8 @@ func TestCarbon_BetweenIncludedStartTime(t *testing.T) {
 func TestCarbon_BetweenIncludedEndTime(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
-		time1  Carbon // 输入参数
-		time2  Carbon // 输入参数
+		param1 Carbon // 输入参数1
+		param2 Carbon // 输入参数2
 		output bool   // 期望输出值
 	}{
 		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), false},
@@ -1307,19 +1169,16 @@ func TestCarbon_BetweenIncludedEndTime(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.BetweenIncludedEndTime(v.time1, v.time2)
+		output := v.input.BetweenIncludedEndTime(v.param1, v.param2)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s < %s <= %s, expected true, but got false\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s < %s <= %s, expected false, but got true\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s < %s <= %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
 		}
 	}
 }
@@ -1327,8 +1186,8 @@ func TestCarbon_BetweenIncludedEndTime(t *testing.T) {
 func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
-		time1  Carbon // 输入参数
-		time2  Carbon // 输入参数
+		param1 Carbon // 输入参数1
+		param2 Carbon // 输入参数2
 		output bool   // 期望输出值
 	}{
 		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
@@ -1339,19 +1198,16 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.BetweenIncludedBoth(v.time1, v.time2)
+		output := v.input.BetweenIncludedBoth(v.param1, v.param2)
 
-		if output != v.output {
-			expected := "false"
+		if output == true {
+			if v.output == false {
+				t.Errorf("Input %s <= %s <= %s, expected true, but got false\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
+			}
+		} else {
 			if v.output == true {
-				expected = "true"
+				t.Errorf("Input %s <= %s <= %s, expected false, but got true\n", v.param1.ToDateString(), v.input.ToDateString(), v.param2.ToDateString())
 			}
-
-			reality := "false"
-			if output == true {
-				reality = "true"
-			}
-			t.Errorf("Input %s <= %s <= %s, expected %s, but got %s\n", v.time1.ToDateTimeString(), v.input.ToDateTimeString(), v.time2.ToDateTimeString(), expected, reality)
 		}
 	}
 }

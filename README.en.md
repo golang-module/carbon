@@ -560,7 +560,7 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:
 
 // To string
 carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
-// To string of layout format，Format() is short of ToFormatString()
+// To string of sign format，Format() is short of ToFormatString()
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
@@ -614,15 +614,15 @@ carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
 carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
 carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
 
-// Get day of the year
+// Get day of the year (start with 1)
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// Get week of the year
+// Get week of the year (start with 1)
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-// Get day of the month
+// Get day of the month (start with 1)
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// Get week of the month
+// Get week of the month (start with 1)
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// Get day of the week
+// Get day of the week (start with 1)
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // Get current year
@@ -631,6 +631,9 @@ carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
 // Get current month
 carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// Get current week(start with 0)
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
 // Get current day
 carbon.Parse("2020-08-05 13:14:15").Day() // 5
 // Get current hour
@@ -654,80 +657,14 @@ carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 carbon.Now().SetLocale("en").Locale() // en
 carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 
+// Get constellation name
+carbon.Now().Constellation() // Leo
+carbon.Now().SetLocale("en").Constellation() // Leo
+carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+
 // Get current age
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
-```
-
-##### I18n
-###### Set locale
-```go
-// Way one(recommend)
-c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
-if c.Error != nil {
-    // Error handle...
-    fmt.Println(c.Error)
-}
-c.DiffForHumans() // 1 小时后
-
-// Way two
-lang := NewLanguage()
-if err := lang.SetLocale("zh-CN");err != nil {
-    // Error handle...
-    fmt.Println(err)
-}
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
-```
-
-###### Set dir
-```go
-lang := NewLanguage()
-if err := lang.SetDir("lang");err != nil {
-    // Error handle...
-    fmt.Println(err)
-}
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
-```
-
-###### Set some resources(the rest still translate from the specific locale)
-```go
-lang := NewLanguage()
-
-if err := lang.SetLocale("en");err != nil {
-	// Error handle...
-    fmt.Println(err)
-}
-
-resources := map[string]string{
-    "hour":"%dh",
-}
-lang.SetResources(resources)
-
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
-```
-
-###### Set all resources
-```go
-lang := NewLanguage()
-resources := map[string]string{
-"year":"1 yr|%d yrs",
-"month":"1 mo|%d mos",
-"week":"%dw",
-"day":"%dd",
-"hour":"%dh",
-"minute":"%dm",
-"second":"%ds",
-"now": "just now",
-"ago":"%s ago",
-"from_now":"in %s",
-"before":"%s before",
-"after":"%s after",
-}
-lang.SetResources(resources)
-
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // in 1 yr
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // in 1h
 ```
 
 ##### Calendar
@@ -761,6 +698,37 @@ carbon.Parse("2020-08-05 13:14:15").IsYearOfRooster() // false
 carbon.Parse("2020-08-05 13:14:15").IsYearOfDog() // false
 // Is year of the dig
 carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
+```
+
+##### Constellation
+```go
+// Get constellation
+carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
+
+// Is aries
+carbon.Parse("2020-08-05 13:14:15").IsAries() // false
+// Is taurus
+carbon.Parse("2020-08-05 13:14:15").IsTaurus() // false
+// Is gemini
+carbon.Parse("2020-08-05 13:14:15").IsGemini() // false
+// Is cancer
+carbon.Parse("2020-08-05 13:14:15").IsCancer() // false
+// Is leo
+carbon.Parse("2020-08-05 13:14:15").IsLeo() // true
+// Is virgo
+carbon.Parse("2020-08-05 13:14:15").IsVirgo() // false
+// Is libra
+carbon.Parse("2020-08-05 13:14:15").IsLibra() // false
+// Is scorpio
+carbon.Parse("2020-08-05 13:14:15").IsScorpio() // false
+// Is sagittarius
+carbon.Parse("2020-08-05 13:14:15").IsSagittarius() // false
+// Is capricorn
+carbon.Parse("2020-08-05 13:14:15").IsCapricorn() // false
+// Is aquarius
+carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
+// Is pisces
+carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
 ##### Database
@@ -863,6 +831,122 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 }
 ```
 
+
+##### I18n
+The following languages are supported
+* [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
+* [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
+* [English(en)](./lang/en.json "English")
+* [Japanese(jp)](./lang/jp.json "日语")
+
+The following methods are supported
+* ToMonthString()：to string of month
+* ToShortMonthString()：to string of short month
+* ToWeekString()：to string of week
+* ToShortWeekString()：to string of short week
+* Constellation()：get constellation name
+
+###### Set locale
+```go
+// Way one(recommend)
+c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
+if c.Error != nil {
+    // Error handle...
+    log.Fatal(c.Error)
+}
+c.DiffForHumans() // 1 小时后
+c.ToMonthString() // 八月
+c.ToShortMonthString() // 8月
+c.ToWeekString() // 星期二
+c.ToShortWeekString() // 周二
+c.Constellation() // 狮子座
+
+// Way two
+lang := NewLanguage()
+if err := lang.SetLocale("zh-CN");err != nil {
+    // Error handle...
+    log.Fatal(err)
+}
+c.DiffForHumans() // 1 小时后
+c.ToMonthString() // 八月
+c.ToShortMonthString() // 8月
+c.ToWeekString() // 星期二
+c.ToShortWeekString() // 周二
+c.Constellation() // 狮子座
+
+```
+
+###### Set dir
+```go
+lang := NewLanguage()
+if err := lang.SetDir("lang");err != nil {
+    // Error handle...
+    log.Fatal(err)
+}
+c.DiffForHumans() // 1 hour from now
+c.ToMonthString() // August
+c.ToShortMonthString() // Aug
+c.ToWeekString() // Tuesday
+c.ToShortWeekString() // Tue
+c.Constellation() // Leo
+```
+
+###### Set some resources(the rest still translate from the specific locale)
+```go
+lang := NewLanguage()
+
+if err := lang.SetLocale("en");err != nil {
+	// Error handle...
+    log.Fatal(err)
+}
+
+resources := map[string]string {
+    "hour":"%dh",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
+carbon.Now().SetLanguage(lang).ToMonthString() // August
+carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
+carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
+carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
+carbon.Now().SetLanguage(lang).Constellation() // Leo
+```
+
+###### Set all resources
+```go
+lang := NewLanguage()
+resources := map[string]string {
+    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
+    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
+    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
+    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
+    "year":"1 yr|%d yrs",
+    "month":"1 mo|%d mos",
+    "week":"%dw",
+    "day":"%dd",
+    "hour":"%dh",
+    "minute":"%dm",
+    "second":"%ds",
+    "now": "just now",
+    "ago":"%s ago",
+    "from_now":"in %s",
+    "before":"%s before",
+    "after":"%s after",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
+carbon.Now().SetLanguage(lang).ToMonthString() // August
+carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
+carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
+carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
+carbon.Now().SetLanguage(lang).Constellation() // Leo
+```
+
 ##### Error handling
 > If more than one error occurs, only the first error message is returned
 
@@ -871,7 +955,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 c := carbon.SetTimezone(PRC).Parse("123456")
 if c.Error != nil {
     // Error handle...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
@@ -882,7 +966,7 @@ the value "123456" can't parse string as time
 c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
 if c.Error != nil {
     // Error handle...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
@@ -893,7 +977,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 c := carbon.SetTimezone("XXXX").Parse("12345678")
 if c.Error != nil {
     // Error handle...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
@@ -907,19 +991,19 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | d | Day of the month, 2 digits with leading zeros | 2 | 01-31 | 05 |
 | D | A textual representation of a day, three letters | 3 | Mon-Sun | Wed |
-| j | Day of the month without leading zeros | 1/2 |1-31 | 5 |
+| j | Day of the month without leading zeros | - |1-31 | 5 |
 | S | English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j | 2 | st/nd/rd/th | th |
 | l | A full textual representation of the day of the week | - | Monday-Sunday | Wednesday |
 | F | A full textual representation of a month | - | January-December | August |
 | m | Numeric representation of a month, with leading zeros | 2 | 01-12 | 08 |
 | M | A short textual representation of a month, three letters | 3 | Jan-Dec | Aug |
-| n | Numeric representation of a month, without leading zeros | 1/2 | 1-12 | 8 |
+| n | Numeric representation of a month, without leading zeros | - | 1-12 | 8 |
 | y | A two digit representation of a year | 2 | 00-99 | 20 |
 | Y | A full numeric representation of a year, 4 digits | 4 | 0000-9999 | 2020 |
 | a | A full numeric representation of a year, 4 digits | 2 | am/pm | pm |
 | A | Uppercase Ante meridiem and Post meridiem | 2 | AM/PM | PM |
-| g | 12-hour format of an hour without leading zeros | 1/2 | 1-12 | 1 |
-| G | 24-hour format of an hour without leading zeros | 1/2 | 0-23 | 15 |
+| g | 12-hour format of an hour without leading zeros | - | 1-12 | 1 |
+| G | 24-hour format of an hour without leading zeros | - | 0-23 | 15 |
 | h | 12-hour format of an hour with leading zeros | 2 | 00-11 | 03 |
 | H | 24-hour format of an hour with leading zeros | 2 | 00-23 | 15 |
 | i | Minutes with leading zeros | 2 | 01-59 | 14 |
@@ -929,14 +1013,14 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | O | Difference to Greenwich time (GMT) without colon between hours and minutes | - | - | +0200 |
 | P | Difference to Greenwich time (GMT) with colon between hours and minutes | - | - | +02:00 |
 | T | Timezone abbreviation | - | - | EST |
-| W | ISO-8601 numeric representation of the week of the year | 1/2 | 1-52 | 42 |
+| W | ISO-8601 numeric representation of the week of the year | - | 1-52 | 42 |
 | N | ISO-8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
 | L | Whether it's a leap year | 1 | 0-1 | 1 |
 | U | Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) | 10 | - | 1611818268 |
 | u | Microseconds| - | - | 999 |
 | w | Numeric representation of the day of the week | 1 | 0-6 | 6 |
 | t | Number of days in the given month | 2 | 28-31 | 30 |
-| z | The day of the year (starting from 0) | 1/2/3 | 0-365 | 15 |
+| z | The day of the year (starting from 0) | - | 0-365 | 15 |
 | e | Timezone identifier | - | - | America/New_York |
 
 #### Reference
@@ -946,3 +1030,4 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
 * [kofoworola/godate](https://github.com/kofoworola/godate)
+* [arrow-py/arrow](https://github.com/arrow-py/arrow)

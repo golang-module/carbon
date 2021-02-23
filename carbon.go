@@ -1,9 +1,10 @@
 // @Title carbon
 // @Description A simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.3.2
+// @Version v1.3.3
 // @Author gouguoyin
 // @Email mail@gouguoyin.cn
+
 package carbon
 
 import "time"
@@ -135,6 +136,17 @@ type Carbon struct {
 	Error error
 }
 
+// Time2Carbon 将 time.Time 转换成 Carbon
+func Time2Carbon(tt time.Time) Carbon {
+	loc, _ := time.LoadLocation(Local)
+	return Carbon{Time: tt, Loc: loc}
+}
+
+// Carbon2Time 将 Carbon 转换成 time.Time
+func (c Carbon) Carbon2Time() time.Time {
+	return c.Time
+}
+
 // Now 当前
 func (c Carbon) Now() Carbon {
 	c.Time = time.Now()
@@ -163,7 +175,7 @@ func Tomorrow() Carbon {
 
 // Yesterday 昨天
 func (c Carbon) Yesterday() Carbon {
-	if c.Time.IsZero() {
+	if c.IsZero() {
 		c.Time = time.Now().AddDate(0, 0, -1)
 	} else {
 		c.Time = c.Time.AddDate(0, 0, -1)

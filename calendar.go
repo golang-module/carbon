@@ -1,11 +1,11 @@
 package carbon
 
 var (
-	// 十二生肖
+	// 生肖
 	SymbolicAnimals = [12]string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
 
 	// 天干
-	HeavenlyStems = [10]string{"庚", "辛", "壬", "癸", "甲", "乙", "丙", "丙", "戊", "己"}
+	HeavenlyStems = [10]string{"庚", "辛", "壬", "癸", "甲", "乙", "丙", "丁", "戊", "己"}
 
 	// 地支
 	EarthlyBranches = [12]string{"申", "酉", "戌", "亥", "子", "丑", "寅", "卯", "辰", "巳", "午", "未"}
@@ -13,26 +13,23 @@ var (
 
 // ToAnimalYear 获取生肖年
 func (c Carbon) ToAnimalYear() string {
-	if c.Time.IsZero() {
+	if c.IsZero() {
 		return ""
 	}
-	year := c.Time.Year()
-	return SymbolicAnimals[year%12]
+	return SymbolicAnimals[c.Year()%MonthsPerYear]
 }
 
 // ToLunarYear 获取农历年
 func (c Carbon) ToLunarYear() string {
-	if c.Time.IsZero() {
+	if c.IsZero() {
 		return ""
 	}
-	year := c.Time.Year()
-	return HeavenlyStems[year%10] + EarthlyBranches[year%12]
+	return HeavenlyStems[c.Year()%YearsPerDecade] + EarthlyBranches[c.Year()%MonthsPerYear]
 }
 
 // IsYearOfRat 是否是鼠年
 func (c Carbon) IsYearOfRat() bool {
-	year := c.Time.Year()
-	if year%12 == 4 {
+	if c.Year()%MonthsPerYear == 4 {
 		return true
 	}
 	return false
@@ -40,8 +37,7 @@ func (c Carbon) IsYearOfRat() bool {
 
 // IsYearOfOx 是否是牛年
 func (c Carbon) IsYearOfOx() bool {
-	year := c.Time.Year()
-	if year%12 == 5 {
+	if c.Year()%MonthsPerYear == 5 {
 		return true
 	}
 	return false
@@ -49,8 +45,7 @@ func (c Carbon) IsYearOfOx() bool {
 
 // IsYearOfTiger 是否是虎年
 func (c Carbon) IsYearOfTiger() bool {
-	year := c.Time.Year()
-	if year%12 == 6 {
+	if c.Year()%MonthsPerYear == 6 {
 		return true
 	}
 	return false
@@ -58,8 +53,7 @@ func (c Carbon) IsYearOfTiger() bool {
 
 // IsYearOfRabbit 是否是兔年
 func (c Carbon) IsYearOfRabbit() bool {
-	year := c.Time.Year()
-	if year%12 == 7 {
+	if c.Year()%MonthsPerYear == 7 {
 		return true
 	}
 	return false
@@ -67,8 +61,7 @@ func (c Carbon) IsYearOfRabbit() bool {
 
 // IsYearOfDragon 是否是龙年
 func (c Carbon) IsYearOfDragon() bool {
-	year := c.Time.Year()
-	if year%12 == 8 {
+	if c.Year()%MonthsPerYear == 8 {
 		return true
 	}
 	return false
@@ -76,8 +69,7 @@ func (c Carbon) IsYearOfDragon() bool {
 
 // IsYearOfSnake 是否是蛇年
 func (c Carbon) IsYearOfSnake() bool {
-	year := c.Time.Year()
-	if year%12 == 9 {
+	if c.Year()%MonthsPerYear == 9 {
 		return true
 	}
 	return false
@@ -85,8 +77,7 @@ func (c Carbon) IsYearOfSnake() bool {
 
 // IsYearOfHorse 是否是马年
 func (c Carbon) IsYearOfHorse() bool {
-	year := c.Time.Year()
-	if year%12 == 10 {
+	if c.Year()%MonthsPerYear == 10 {
 		return true
 	}
 	return false
@@ -94,8 +85,7 @@ func (c Carbon) IsYearOfHorse() bool {
 
 // IsYearOfGoat 是否是羊年
 func (c Carbon) IsYearOfGoat() bool {
-	year := c.Time.Year()
-	if year%12 == 11 {
+	if c.Year()%MonthsPerYear == 11 {
 		return true
 	}
 	return false
@@ -103,8 +93,7 @@ func (c Carbon) IsYearOfGoat() bool {
 
 // IsYearOfMonkey 是否是猴年
 func (c Carbon) IsYearOfMonkey() bool {
-	year := c.Time.Year()
-	if year%12 == 0 {
+	if c.Year()%MonthsPerYear == 0 {
 		return true
 	}
 	return false
@@ -112,8 +101,7 @@ func (c Carbon) IsYearOfMonkey() bool {
 
 // IsYearOfRooster 是否是鸡年
 func (c Carbon) IsYearOfRooster() bool {
-	year := c.Time.Year()
-	if year%12 == 1 {
+	if c.Year()%MonthsPerYear == 1 {
 		return true
 	}
 	return false
@@ -121,8 +109,7 @@ func (c Carbon) IsYearOfRooster() bool {
 
 // IsYearOfDog 是否是狗年
 func (c Carbon) IsYearOfDog() bool {
-	year := c.Time.Year()
-	if year%12 == 2 {
+	if c.Year()%MonthsPerYear == 2 {
 		return true
 	}
 	return false
@@ -130,8 +117,7 @@ func (c Carbon) IsYearOfDog() bool {
 
 // IsYearOfPig 是否是猪年
 func (c Carbon) IsYearOfPig() bool {
-	year := c.Time.Year()
-	if year%12 == 3 {
+	if c.Year()%MonthsPerYear == 3 {
 		return true
 	}
 	return false

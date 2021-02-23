@@ -135,7 +135,7 @@ carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").T
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
-##### carbon和time.Time互转
+##### carbon 和 time.Time 互转
 ```go
 // 将 time.Time 转换成 Carbon
 carbon.Time2Carbon(time.Now())
@@ -524,45 +524,45 @@ carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
 // 输出时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
 
-// 输出Ansic格式字符串
+// 输出 Ansic 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-// 输出Atom字符串
+// 输出 Atom 字符串
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // Wed Aug  5 13:14:15 2020
-// 输出UnixDate格式字符串
+// 输出 UnixDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-// 输出RubyDate格式字符串
+// 输出 RubyDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
 // 输出Kitchen格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-// 输出Cookie格式字符串
+// 输出 Cookie 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-// 输出DayDateTime格式字符串
+// 输出 DayDateTime 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-// 输出RSS格式字符串
+// 输出 RSS 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-// 输出W3C格式字符串
+// 输出 W3C 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
-// 输出RFC822格式字符串
+// 输出 RFC822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-// 输出RFC822Z格式字符串
+// 输出 RFC822Z 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-// 输出RFC850格式字符串
+// 输出 RFC850 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-// 输出RFC1036格式字符串
+// 输出 RFC1036 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-// 输出RFC1123格式字符串
+// 输出 RFC1123 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-// 输出RFC2822格式字符串
+// 输出 RFC2822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-// 输出RFC3339格式字符串
+// 输出 RFC3339 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-// 输出RFC7231格式字符串
+// 输出 RFC7231 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
 
 // 输出字符串
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
-// 输出格式化字符串，Format()是ToFormatString()的简写
+// 输出格式化字符串，Format() 是 ToFormatString() 的简写
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
@@ -623,26 +623,30 @@ carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
 carbon.Parse("2019-12-31 13:14:15").WeekOfYear() // 1
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
 
-// 获取本月第几天
+// 获取本月第几天(从1开始)
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// 获取本月第几周
+// 获取本月第几周(从1开始)
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// 获取本周第几天
+// 获取本周第几天(从1开始)
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+carbon.Parse("2020-08-09 13:14:15").Week() // 7
 
-// 获取当前年
+// 获取当前年份
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 // 获取当前季度
 carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
-// 获取当前月
+// 获取当前月份
 carbon.Parse("2020-08-05 13:14:15").Month() // 8
-// 获取当前日
+// 获取当前周(从0开始)
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
+carbon.Parse("2020-08-09 13:14:15").Week() // 0
+// 获取当前天数
 carbon.Parse("2020-08-05 13:14:15").Day() // 5
 // 获取当前时
 carbon.Parse("2020-08-05 13:14:15").Hour() // 13
-// 获取当前分
+// 获取当前分钟
 carbon.Parse("2020-08-05 13:14:15").Minute() // 14
-// 获取当前秒
+// 获取当前秒钟
 carbon.Parse("2020-08-05 13:14:15").Second() // 15
 // 获取当前毫秒
 carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
@@ -656,8 +660,13 @@ carbon.SetTimezone(carbon.PRC).Timezone() // PRC
 carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 
 // 获取当前语言
-carbon.Now().SetLocale("en").Locale() // en
+carbon.Now().Locale() // en
 carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
+
+// 获取当前星座
+carbon.Now().Constellation() // Leo
+carbon.Now().SetLocale("en").Constellation() // Leo
+carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
 
 // 获取年龄
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
@@ -666,77 +675,7 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
 > 关于第几周的计算如有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
 
-##### 多语言支持
-###### 设置区域
-```go
-// 方式一(推荐)
-c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
-if c.Error != nil {
-    // 错误处理
-    fmt.Println(c.Error)
-}
-c.DiffForHumans() // 1 小时后
-
-// 方式二
-lang := NewLanguage()
-if err := lang.SetLocale("zh-CN");err != nil {
-	// 错误处理
-    fmt.Println(err)
-}
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
-```
-###### 设置目录
-```go
-lang := NewLanguage()
-if err := lang.SetDir("lang");err != nil {
-	// 错误处理
-    fmt.Println(err)
-}
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1 小时后
-```
-
-###### 部分自定义翻译(其余仍然按照指定的locale翻译)
-```go
-lang := NewLanguage()
-
-if err := lang.SetLocale("en");err != nil {
-	// 错误处理
-    fmt.Println(err)
-}
-
-resources := map[string]string{
-    "hour":"%dh",
-}
-lang.SetResources(resources)
-
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
-```
-
-###### 完全自定义翻译
-```go
-lang := NewLanguage()
-resources := map[string]string{
-"year":"1 yr|%d yrs",
-"month":"1 mo|%d mos",
-"week":"%dw",
-"day":"%dd",
-"hour":"%dh",
-"minute":"%dm",
-"second":"%ds",
-"now": "just now",
-"ago":"%s ago",
-"from_now":"in %s",
-"before":"%s before",
-"after":"%s after",
-}
-lang.SetResources(resources)
-
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // in 1 yr
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // in 1h
-```
-
-##### 农历支持
+##### 农历
 ```go
 // 获取生肖年
 carbon.Parse("2020-08-05 13:14:15").ToAnimalYear() // 鼠
@@ -767,6 +706,37 @@ carbon.Parse("2020-08-05 13:14:15").IsYearOfRooster() // false
 carbon.Parse("2020-08-05 13:14:15").IsYearOfDog() // false
 // 是否是猪年
 carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
+```
+
+##### 星座
+```go
+// 获取星座
+carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
+
+// 是否是白羊座
+carbon.Parse("2020-08-05 13:14:15").IsAries() // false
+// 是否是金牛座
+carbon.Parse("2020-08-05 13:14:15").IsTaurus() // false
+// 是否是双子座
+carbon.Parse("2020-08-05 13:14:15").IsGemini() // false
+// 是否是巨蟹座
+carbon.Parse("2020-08-05 13:14:15").IsCancer() // false
+// 是否是狮子座
+carbon.Parse("2020-08-05 13:14:15").IsLeo() // true
+// 是否是处女座
+carbon.Parse("2020-08-05 13:14:15").IsVirgo() // false
+// 是否是天秤座
+carbon.Parse("2020-08-05 13:14:15").IsLibra() // false
+// 是否是天蝎座
+carbon.Parse("2020-08-05 13:14:15").IsScorpio() // false
+// 是否是射手座
+carbon.Parse("2020-08-05 13:14:15").IsSagittarius() // false
+// 是否是摩羯座
+carbon.Parse("2020-08-05 13:14:15").IsCapricorn() // false
+// 是否是水瓶座
+carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
+// 是否是双鱼座
+carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
 ##### 数据库支持
@@ -821,7 +791,7 @@ user.DateTime3.ToTimestampWithMicrosecond() // 1596604455000000
 user.DateTime4.ToTimestampWithNanosecond() // 1596604455000000000
 ```
 
-###### JSON输出模型
+###### JSON 输出模型
 ```go
 data, _ := json.Marshal(&user)
 fmt.Print(string(data))
@@ -868,6 +838,122 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
     "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
 }
 ```
+
+
+##### 多语言支持
+目前支持的语言有
+* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
+* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
+* [英语(en)](./lang/en.json "英语")
+* [日语(jp)](./lang/jp.json "日语")
+
+目前支持的方法有
+* DiffForHumans()：输出对人类友好的可读格式时间差
+* ToMonthString()：输出完整月份字符串
+* ToShortMonthString()：输出缩写月份字符串
+* ToWeekString()：输出完整星期字符串
+* ToShortWeekString()：输出缩写星期字符串
+* Constellation()：获取星座
+
+###### 设置区域
+```go
+// 方式一(推荐)
+c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
+if c.Error != nil {
+    // 错误处理
+    log.Fatal(c.Error)
+}
+c.DiffForHumans() // 1 小时后
+c.ToMonthString() // 八月
+c.ToShortMonthString() // 8月
+c.ToWeekString() // 星期二
+c.ToShortWeekString() // 周二
+c.Constellation() // 狮子座
+
+// 方式二
+lang := NewLanguage()
+if err := lang.SetLocale("zh-CN");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+c.DiffForHumans() // 1 小时后
+c.ToMonthString() // 八月
+c.ToShortMonthString() // 8月
+c.ToWeekString() // 星期二
+c.ToShortWeekString() // 周二
+c.Constellation() // 狮子座
+```
+###### 设置目录
+```go
+lang := NewLanguage()
+if err := lang.SetDir("lang");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+c.DiffForHumans() // 1 hour from now
+c.ToMonthString() // August
+c.ToShortMonthString() // Aug
+c.ToWeekString() // Tuesday
+c.ToShortWeekString() // Tue
+c.Constellation() // Leo
+```
+
+###### 重写部分翻译资源(其余仍然按照指定的 locale 翻译)
+```go
+lang := NewLanguage()
+
+if err := lang.SetLocale("en");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+
+resources := map[string]string {
+    "hour":"%dh",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
+carbon.Now().SetLanguage(lang).ToMonthString() // August
+carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
+carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
+carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
+carbon.Now().SetLanguage(lang).Constellation() // Leo
+```
+
+###### 重写全部翻译资源(无需指定 locale)
+```go
+lang := NewLanguage()
+resources := map[string]string {
+    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
+    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
+    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
+    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
+    "year":"1 yr|%d yrs",
+    "month":"1 mo|%d mos",
+    "week":"%dw",
+    "day":"%dd",
+    "hour":"%dh",
+    "minute":"%dm",
+    "second":"%ds",
+    "now": "just now",
+    "ago":"%s ago",
+    "from_now":"in %s",
+    "before":"%s before",
+    "after":"%s after",
+}
+lang.SetResources(resources)
+
+carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // in 1 yr
+carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // in 1h
+carbon.Now().SetLanguage(lang).ToMonthString() // August
+carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
+carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
+carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
+carbon.Now().SetLanguage(lang).Constellation() // Leo
+```
+
 ##### 错误处理
 > 如果有多个错误发生，只返回第一个错误信息，前一个错误排除后才返回下一个错误信息
 
@@ -876,7 +962,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 c := carbon.SetTimezone(PRC).Parse("123456")
 if c.Error != nil {
     // 错误处理...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
@@ -887,7 +973,7 @@ the value "123456" can't parse string as time
 c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
 if c.Error != nil {
     // 错误处理...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
@@ -898,7 +984,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 c := carbon.SetTimezone("XXXX").Parse("12345678")
 if c.Error != nil {
     // 错误处理...
-    fmt.Println(c.Error)
+    log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
@@ -911,19 +997,19 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | d | 月份中的第几天，有前导零 | 2 | 01-31 | 05 |
 | D | 缩写单词表示的周几 | 3 | Mon-Sun | Wed |
-| j | 月份中的第几天，没有前导零 | 1/2 |1-31 | 5 |
+| j | 月份中的第几天，没有前导零 | - |1-31 | 5 |
 | S | 月份中的第几天，英文缩写后缀，一般和j配合使用 | 2 | st/nd/rd/th | th |
 | l | 完整单词表示的周几 | - | Monday-Sunday | Wednesday |
 | F | 完整单词表示的月份 | - | January-December | August |
 | m | 数字表示的月份，有前导零 | 2 | 01-12 | 08 |
 | M | 缩写单词表示的月份 | 3 | Jan-Dec | Aug |
-| n | 数字表示的月份，没有前导零 | 1/2 | 1-12 | 8 |
+| n | 数字表示的月份，没有前导零 | - | 1-12 | 8 |
 | y | 年份，有前导零 | 2 | 00-99 | 20 |
 | Y | 年份 | 4 | 0000-9999 | 2020 |
 | a | 小写的上下午缩写字母 | 2 | am/pm | pm |
 | A | 大写的上下午缩写字母 | 2 | AM/PM | PM |
-| g | 小时，12 小时格式，没有前导零 | 1/2 | 1-12 | 1 |
-| G | 小时，24 小时格式，没有前导零 | 1/2 | 0-23 | 15 |
+| g | 小时，12 小时格式，没有前导零 | - | 1-12 | 1 |
+| G | 小时，24 小时格式，没有前导零 | - | 0-23 | 15 |
 | h | 小时，12 小时格式，有前导零 | 2 | 00-11 | 03 |
 | H | 小时，24 小时格式，有前导零 | 2 | 00-23 | 15 |
 | i | 分钟，有前导零 | 2 | 01-59 | 14 |
@@ -933,14 +1019,14 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 | O | 与格林威治时间相差的小时数 | - | - | +0200 |
 | P | 与格林威治时间相差的小时数，小时和分钟之间有冒号分隔 | - | - | +02:00 |
 | T | 时区缩写 | - | - | EST |
-| W | ISO-8601 格式数字表示的年份中的第几周 | 1/2 | 1-52 | 42 |
+| W | ISO-8601 格式数字表示的年份中的第几周 | - | 1-52 | 42 |
 | N | ISO-8601 格式数字表示的星期中的第几天 | 1 | 1-7 | 6 |
 | L | 是否为闰年，如果是闰年为 1，否则为 0 | 1 | 0-1 | 1 |
 | U | 秒级时间戳 | 10 | - | 1611818268 |
 | u | 毫秒 | - | - | 999 |
 | w | 数字表示的周几 | 1 | 0-6 | 6 |
 | t | 月份中的总天数 | 2 | 28-31 | 30 |
-| z | 年份中的第几天 | 1/2/3 | 0-365 | 15 |
+| z | 年份中的第几天 | - | 0-365 | 15 |
 | e | 时区标识 | - | - | America/New_York |
 
 #### 参考项目
@@ -949,6 +1035,7 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [jinzhu/now](https://github.com/jinzhu/now)
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
+* [arrow-py/arrow](https://github.com/arrow-py/arrow)
 
-#### 更新日志
-[wiki/更新日志](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+#### 相关链接
+[更新日志](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)

@@ -10,23 +10,23 @@ import (
 )
 
 var (
-	// 默认语言目录
+	// 默认目录
 	defaultDir = "lang"
-	// 默认语言区域
+	// 默认区域
 	defaultLocale = "en"
 )
 
 type Language struct {
-	locale    string
-	dir       string
-	resources map[string]string
+	dir       string            // 目录
+	locale    string            // 区域
+	resources map[string]string // 资源
 }
 
-// NewLanguage 初始化Language对象
+// NewLanguage 初始化 Language 实例
 func NewLanguage() *Language {
 	return &Language{
-		locale:    "",
 		dir:       defaultDir,
+		locale:    defaultLocale,
 		resources: make(map[string]string),
 	}
 }
@@ -52,7 +52,7 @@ func (lang *Language) SetLocale(locale string) error {
 func (lang *Language) SetDir(dir string) error {
 	fi, err := os.Stat(dir)
 	if err != nil || !fi.IsDir() {
-		return errors.New("invalid directory \"" + dir + "\"")
+		return errors.New("invalid directory \"" + dir + "\", please make sure the directory exists")
 	}
 	lang.dir = dir
 	return nil
@@ -62,8 +62,11 @@ func (lang *Language) SetDir(dir string) error {
 func (lang *Language) SetResources(resources map[string]string) {
 	if len(lang.resources) == 0 {
 		lang.resources = resources
-	} else {
-		for k, v := range resources {
+		return
+	}
+
+	for k, v := range resources {
+		if _, ok := lang.resources[k]; ok {
 			lang.resources[k] = v
 		}
 	}
@@ -71,15 +74,15 @@ func (lang *Language) SetResources(resources map[string]string) {
 
 // translate 翻译转换
 func (lang *Language) translate(unit string, diff int64) string {
-	if len(lang.resources) == 0 {
-		lang.SetLocale(defaultLocale)
+	if len(lang.resources) == 0 && lang.SetLocale(defaultLocale) != nil {
+		return ""
 	}
-	array := strings.Split(lang.resources[unit], "|")
-	if len(array) == 1 {
-		return strings.Replace(array[0], "%d", strconv.FormatInt(diff, 10), 1)
+	slice := strings.Split(lang.resources[unit], "|")
+	if len(slice) == 1 {
+		return strings.Replace(slice[0], "%d", strconv.FormatInt(diff, 10), 1)
 	}
 	if diff > 1 {
-		return strings.Replace(array[1], "%d", strconv.FormatInt(diff, 10), 1)
+		return strings.Replace(slice[1], "%d", strconv.FormatInt(diff, 10), 1)
 	}
-	return array[0]
+	return slice[0]
 }

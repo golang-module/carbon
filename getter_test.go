@@ -126,12 +126,16 @@ func TestCarbon_DayOfWeek(t *testing.T) {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0000-00-00 00:00:00", 0},
 		{"0000-00-00", 0},
-		{"2020-01-01", 3},
-		{"2020-01-31", 5},
-		{"2020-02-28", 5},
-		{"2020-01-29", 3},
+		{"2020-08-03", 1},
+		{"2020-08-04", 2},
 		{"2020-08-05", 3},
+		{"2020-08-06", 4},
+		{"2020-08-07", 5},
+		{"2020-08-08", 6},
+		{"2020-08-09", 7},
 	}
 
 	for _, v := range Tests {
@@ -181,63 +185,6 @@ func TestCarbon_WeekOfMonth(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).WeekOfMonth()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
-		}
-	}
-}
-
-func TestCarbon_Timezone(t *testing.T) {
-	Tests := []struct {
-		input  string // 输入值
-		output string // 期望输出值
-	}{
-		{PRC, PRC},
-		{Tokyo, Tokyo},
-	}
-
-	for _, v := range Tests {
-		output := SetTimezone(v.input).Timezone()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
-	}
-}
-
-func TestCarbon_Locale(t *testing.T) {
-	Tests := []struct {
-		input  string // 输入值
-		output string // 期望输出值
-	}{
-		{"en", "en"},
-		{"zh-CN", "zh-CN"},
-	}
-
-	for _, v := range Tests {
-		output := Now().SetLocale(v.input).Locale()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
-	}
-}
-
-func TestCarbon_Age(t *testing.T) {
-	Tests := []struct {
-		input  string // 输入值
-		output int    // 期望输出值
-	}{
-		{"", 0},
-		{"0", 0},
-		{"0000-00-00", 0},
-		{Now().AddYears(18).ToDateTimeString(), 0},
-		{Now().SubYears(18).ToDateTimeString(), 18},
-	}
-
-	for _, v := range Tests {
-		output := Parse(v.input).Age()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
@@ -301,6 +248,32 @@ func TestCarbon_Month(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).Month()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Week(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", -1},
+		{"0000-00-00 00:00:00", -1},
+		{"0000-00-00", -1},
+		{"2020-08-03", 1},
+		{"2020-08-04", 2},
+		{"2020-08-05", 3},
+		{"2020-08-06", 4},
+		{"2020-08-07", 5},
+		{"2020-08-08", 6},
+		{"2020-08-09", 0},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Week()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
@@ -448,6 +421,63 @@ func TestCarbon_Nanosecond(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).Nanosecond()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Timezone(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{PRC, PRC},
+		{Tokyo, Tokyo},
+	}
+
+	for _, v := range Tests {
+		output := SetTimezone(v.input).Timezone()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Locale(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"en", "en"},
+		{"zh-CN", "zh-CN"},
+	}
+
+	for _, v := range Tests {
+		output := Now().SetLocale(v.input).Locale()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_Age(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{Now().AddYears(18).ToDateTimeString(), 0},
+		{Now().SubYears(18).ToDateTimeString(), 18},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Age()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)

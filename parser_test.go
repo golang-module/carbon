@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -26,11 +25,8 @@ func TestCarbon_Parse(t *testing.T) {
 		output := Parse(v.input)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in Parse():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in Parse():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
@@ -39,11 +35,8 @@ func TestCarbon_Parse(t *testing.T) {
 		output := SetTimezone(PRC).Parse(v.input)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in Parse():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in Parse():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
@@ -65,11 +58,8 @@ func TestCarbon_ParseByFormat1(t *testing.T) {
 		output := ParseByFormat(v.input, v.format)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByFormat():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in ParseByFormat():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
@@ -80,11 +70,8 @@ func TestCarbon_ParseByFormat2(t *testing.T) {
 		output := SetTimezone("XXXX").ParseByFormat(v.input, v.format)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByFormat():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in ParseByFormat():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
@@ -106,11 +93,8 @@ func TestCarbon_ParseByLayout1(t *testing.T) {
 		output := ParseByLayout(v.input, v.format)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByLayout():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in ParseByLayout():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}
@@ -121,11 +105,8 @@ func TestCarbon_ParseByLayout2(t *testing.T) {
 		output := SetTimezone("XXXX").ParseByLayout(v.input, v.format)
 
 		if output.Error != nil {
-			fmt.Println("catch an exception in ParseByLayout():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
+			t.Logf("catch an exception in ParseByLayout():%v", output.Error)
+		} else if output.ToDateTimeString() != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
 		}
 	}

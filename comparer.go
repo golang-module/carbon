@@ -33,8 +33,7 @@ func (c Carbon) IsLeapYear() bool {
 
 // IsLongYear 是否是长年
 func (c Carbon) IsLongYear() bool {
-	t := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.Loc)
-	_, w := t.ISOWeek()
+	_, w := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.Loc).ISOWeek()
 	return w == weeksPerLongYear
 }
 

@@ -20,7 +20,7 @@ func (c Carbon) DaysInMonth() int {
 	return c.EndOfMonth().Time.In(c.Loc).Day()
 }
 
-// MonthOfYear 获取本年的第几月
+// MonthOfYear 获取本年的第几月(从1开始)
 func (c Carbon) MonthOfYear() int {
 	if c.IsZero() {
 		return 0
@@ -28,7 +28,7 @@ func (c Carbon) MonthOfYear() int {
 	return int(c.Time.In(c.Loc).Month())
 }
 
-// DayOfYear 获取本年的第几天
+// DayOfYear 获取本年的第几天(从1开始)
 func (c Carbon) DayOfYear() int {
 	if c.IsZero() {
 		return 0
@@ -36,7 +36,7 @@ func (c Carbon) DayOfYear() int {
 	return c.Time.In(c.Loc).YearDay()
 }
 
-// DayOfMonth 获取本月的第几天
+// DayOfMonth 获取本月的第几天(从1开始)
 func (c Carbon) DayOfMonth() int {
 	if c.IsZero() {
 		return 0
@@ -44,15 +44,19 @@ func (c Carbon) DayOfMonth() int {
 	return c.Time.In(c.Loc).Day()
 }
 
-// DayOfWeek 获取本周的第几天
+// DayOfWeek 获取本周的第几天(从1开始)
 func (c Carbon) DayOfWeek() int {
 	if c.IsZero() {
 		return 0
 	}
-	return int(c.Time.In(c.Loc).Weekday())
+	day := int(c.Time.In(c.Loc).Weekday())
+	if day == 0 {
+		return DaysPerWeek
+	}
+	return day
 }
 
-// WeekOfYear 获取本年的第几周
+// WeekOfYear 获取本年的第几周(从1开始)
 func (c Carbon) WeekOfYear() int {
 	if c.IsZero() {
 		return 0
@@ -61,7 +65,7 @@ func (c Carbon) WeekOfYear() int {
 	return week
 }
 
-// WeekOfMonth 获取本月的第几周
+// WeekOfMonth 获取本月的第几周(从1开始)
 func (c Carbon) WeekOfMonth() int {
 	if c.IsZero() {
 		return 0
@@ -71,28 +75,6 @@ func (c Carbon) WeekOfMonth() int {
 		return 1
 	}
 	return day%DaysPerWeek + 1
-}
-
-// Timezone 获取时区
-func (c Carbon) Timezone() string {
-	return c.Loc.String()
-}
-
-// Locale 获取语言区域
-func (c Carbon) Locale() string {
-	return c.Lang.locale
-}
-
-// Age 获取年龄
-func (c Carbon) Age() int {
-	if c.IsZero() {
-		return 0
-	}
-	now := Now()
-	if c.ToTimestamp() > now.ToTimestamp() {
-		return 0
-	}
-	return int(c.DiffInYears(now))
 }
 
 // Year 获取当前年
@@ -108,18 +90,18 @@ func (c Carbon) Quarter() int {
 	if c.IsZero() {
 		return 0
 	}
-	month := c.Month()
 	switch {
-	case month >= 10:
+	case c.Month() >= 10:
 		return 4
-	case month >= 7:
+	case c.Month() >= 7:
 		return 3
-	case month >= 4:
+	case c.Month() >= 4:
 		return 2
-	case month >= 1:
+	case c.Month() >= 1:
 		return 1
+	default:
+		return 0
 	}
-	return 0
 }
 
 // Month 获取当前月
@@ -128,6 +110,14 @@ func (c Carbon) Month() int {
 		return 0
 	}
 	return c.MonthOfYear()
+}
+
+// Week 获取当前周(从0开始)
+func (c Carbon) Week() int {
+	if c.IsZero() {
+		return -1
+	}
+	return int(c.Time.In(c.Loc).Weekday())
 }
 
 // Day 获取当前日
@@ -184,4 +174,26 @@ func (c Carbon) Nanosecond() int {
 		return 0
 	}
 	return c.Time.In(c.Loc).Nanosecond()
+}
+
+// Timezone 获取时区
+func (c Carbon) Timezone() string {
+	return c.Loc.String()
+}
+
+// Locale 获取语言区域
+func (c Carbon) Locale() string {
+	return c.Lang.locale
+}
+
+// Age 获取年龄
+func (c Carbon) Age() int {
+	if c.IsZero() {
+		return 0
+	}
+	now := Now()
+	if c.ToTimestamp() > now.ToTimestamp() {
+		return 0
+	}
+	return int(c.DiffInYears(now))
 }
