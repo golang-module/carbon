@@ -48,12 +48,11 @@ func (c *Carbon) Scan(v interface{}) error {
 }
 
 func (c Carbon) Value() (driver.Value, error) {
-	var zeroTime time.Time
-	var timeTime = c.Time
-	if timeTime.UnixNano() == zeroTime.UnixNano() {
+	var tt time.Time
+	if c.Time.UnixNano() == tt.UnixNano() {
 		return nil, nil
 	}
-	return timeTime, nil
+	return c.Time, nil
 }
 
 func (c ToDateTimeString) MarshalJSON() ([]byte, error) {
