@@ -96,13 +96,12 @@ func (c Carbon) ToChineseDayString() string {
 	if c.IsZero() {
 		return ""
 	}
-	// 获取年份后2位并转为int类型
-	s, _ := strconv.Atoi(c.Format("y"))
+	s := c.Year() % 100
+	u, d := s%4, c.Day()
 	// 计算世纪常数x
 	x := (44*(c.Century()-1) + (c.Century()-1)/4 + 9) % 60
 	// 计算月基数m
 	m := (int(math.Pow(-1, float64(c.Month())))+1)/2*30 + (3*c.Month()-7)/5
-	u, d := s%4, c.Day()
 	index := (s/4*6 + 5*(s/4*3+u) + m + d + x) % 60
 	return stemsAndBranches[index-1]
 }
