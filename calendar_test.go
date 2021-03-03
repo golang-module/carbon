@@ -2,7 +2,7 @@ package carbon
 
 import "testing"
 
-func TestCarbon_ToAnimalYear(t *testing.T) {
+func TestCarbon_AnimalYear(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
 		output string // 期望输出值
@@ -23,7 +23,7 @@ func TestCarbon_ToAnimalYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.ToAnimalYear()
+		output := v.input.AnimalYear()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input.ToDateString(), v.output, output)
@@ -31,7 +31,7 @@ func TestCarbon_ToAnimalYear(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToLunarYear(t *testing.T) {
+func TestCarbon_ToChineseYearStringYear(t *testing.T) {
 	Tests := []struct {
 		input  Carbon // 输入值
 		output string // 期望输出值
@@ -46,7 +46,7 @@ func TestCarbon_ToLunarYear(t *testing.T) {
 	}
 
 	for _, v := range Tests {
-		output := v.input.ToLunarYear()
+		output := v.input.ToChineseYearString()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %s, but got %s\n", v.input.ToDateString(), v.output, output)

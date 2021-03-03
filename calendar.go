@@ -1,30 +1,118 @@
 package carbon
 
-var (
-	// 生肖
-	SymbolicAnimals = [12]string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
-
-	// 天干
-	HeavenlyStems = [10]string{"庚", "辛", "壬", "癸", "甲", "乙", "丙", "丁", "戊", "己"}
-
-	// 地支
-	EarthlyBranches = [12]string{"申", "酉", "戌", "亥", "子", "丑", "寅", "卯", "辰", "巳", "午", "未"}
+import (
+	"math"
+	"strconv"
 )
 
-// ToAnimalYear 获取生肖年
-func (c Carbon) ToAnimalYear() string {
+var (
+	// 生肖
+	symbolicAnimals = [12]string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
+
+	// 干支
+	stemsAndBranches = [60]string{
+		"甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉", // 1-10
+		"甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未", // 11-20
+		"甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳", // 21-30
+		"甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯", // 31-40
+		"甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑", // 41-50
+		"甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥", // 51-60
+	}
+)
+
+// AnimalYear 获取生肖年
+func (c Carbon) AnimalYear() string {
 	if c.IsZero() {
 		return ""
 	}
-	return SymbolicAnimals[c.Year()%MonthsPerYear]
+	return symbolicAnimals[c.Year()%MonthsPerYear]
 }
 
-// ToLunarYear 获取农历年
-func (c Carbon) ToLunarYear() string {
+// Todo ToLunarYear 获取农历年
+func (c Carbon) LunarYear() int {
+	return 2018
+}
+
+// Todo ToLunarMonth 获取农历月
+func (c Carbon) LunarMonth() int {
+	return 11
+}
+
+// Todo LunarDay 获取农历日
+func (c Carbon) LunarDay() int {
+	return 25
+}
+
+// Todo ToLunarYearString 输出农历年
+func (c Carbon) ToLunarYearString() string {
+	return "二零一八"
+}
+
+// Todo ToLunarDayString 输出农历月
+func (c Carbon) ToLunarMonthString() string {
+	return "十一"
+}
+
+// Todo ToLunarDayString 输出农历日
+func (c Carbon) ToLunarDayString() string {
+	return "廿五"
+}
+
+// Todo ToLunarDateString 输出农历日期
+func (c Carbon) ToLunarDateString() string {
+	return "二零一八年十一月廿五"
+}
+
+// ToShortLunarDateString 输出简写农历日期
+func (c Carbon) ToShortLunarDateString() string {
+	return "20181125"
+}
+
+// ToChineseYearString 输出天干地支纪年
+func (c Carbon) ToChineseYearString() string {
 	if c.IsZero() {
 		return ""
 	}
-	return HeavenlyStems[c.Year()%YearsPerDecade] + EarthlyBranches[c.Year()%MonthsPerYear]
+	index := c.Year() % 60
+	if index < 60 {
+		index -= 3
+	}
+	if index <= 0 {
+		index += 60
+	}
+	return stemsAndBranches[index-1]
+}
+
+// Todo ToChineseMonthString 输出天干地支纪月
+func (c Carbon) ToChineseMonthString() string {
+	if c.IsZero() {
+		return ""
+	}
+	return ""
+}
+
+// ToChineseDayString 输出天干地支纪日(根据高氏日柱公式v3版)
+func (c Carbon) ToChineseDayString() string {
+	if c.IsZero() {
+		return ""
+	}
+	// 获取年份后2位并转为int类型
+	s, _ := strconv.Atoi(c.Format("y"))
+	// 计算世纪常数x
+	x := (44*(c.Century()-1) + (c.Century()-1)/4 + 9) % 60
+	// 计算月基数m
+	m := (int(math.Pow(-1, float64(c.Month())))+1)/2*30 + (3*c.Month()-7)/5
+	u, d := s%4, c.Day()
+	index := (s/4*6 + 5*(s/4*3+u) + m + d + x) % 60
+	return stemsAndBranches[index-1]
+}
+
+// Todo ToChineseHourString 输出天干地支日期
+func (c Carbon) ToChineseDateString() string {
+	if c.IsZero() {
+		return ""
+	}
+	return ""
 }
 
 // IsYearOfRat 是否是鼠年
