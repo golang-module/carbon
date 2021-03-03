@@ -77,6 +77,14 @@ func (c Carbon) WeekOfMonth() int {
 	return day%DaysPerWeek + 1
 }
 
+// Century 获取当前世纪
+func (c Carbon) Century() int {
+	if c.IsZero() {
+		return 0
+	}
+	return c.Year()/100 + 1
+}
+
 // Year 获取当前年
 func (c Carbon) Year() int {
 	if c.IsZero() {

@@ -192,6 +192,25 @@ func TestCarbon_WeekOfMonth(t *testing.T) {
 	}
 }
 
+func TestCarbon_Century(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output int    // 期望输出值
+	}{
+		{"", 0},
+		{"0000-00-00", 0},
+		{"2020-08-05", 21},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).Century()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %d, but got %d", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_Year(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
