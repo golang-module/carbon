@@ -631,6 +631,8 @@ carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 carbon.Parse("2020-08-09 13:14:15").Week() // 7
 
+// 获取当前世纪
+carbon.Parse("2020-08-05 13:14:15").Century() // 21
 // 获取当前年份
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 // 获取当前季度
@@ -678,9 +680,11 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ##### 农历
 ```go
 // 获取生肖年
-carbon.Parse("2020-08-05 13:14:15").ToAnimalYear() // 鼠
-// 获取农历年
-carbon.Parse("2020-08-05 13:14:15").ToLunarYear() // 庚子
+carbon.Parse("2020-08-05 13:14:15").AnimalYear() // 鼠
+// 获取干支纪年
+carbon.Parse("2020-08-05 13:14:15").ToChineseYearString() // 庚子
+// 获取干支纪日
+carbon.Parse("2020-08-05 13:14:15").ToChineseDayString() // 庚辰
 
 // 是否是鼠年
 carbon.Parse("2020-08-05 13:14:15").IsYearOfRat() // true
@@ -841,6 +845,8 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 
 
 ##### 多语言支持
+> 需要使用多语言时，请先把lang目录复制到项目目录下
+
 目前支持的语言有
 * [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
 * [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")

@@ -625,6 +625,8 @@ carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
 // Get day of the week (start with 1)
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
+// Get current century
+carbon.Parse("2020-08-05 13:14:15").Century() // 21
 // Get current year
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 // Get current quarter
@@ -833,6 +835,8 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 
 
 ##### I18n
+> If you need to use i18n, please copy Lang directory to project directory first
+
 The following languages are supported
 * [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
 * [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
