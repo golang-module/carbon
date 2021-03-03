@@ -103,9 +103,6 @@ func (c Carbon) ToFormatString(format string) string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
-	}
 	runes := []rune(format)
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(runes); i++ {
