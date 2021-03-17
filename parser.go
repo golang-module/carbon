@@ -34,7 +34,7 @@ func (c Carbon) Parse(value string) Carbon {
 		}
 	}
 
-	tt, err := parseByLayout(value, layout)
+	tt, err := parseByLayout(value, layout, c.Loc)
 	c.Time = tt
 	c.Error = err
 	return c
@@ -64,7 +64,7 @@ func (c Carbon) ParseByLayout(value string, layout string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	tt, err := parseByLayout(value, layout)
+	tt, err := parseByLayout(value, layout, c.Loc)
 	c.Time = tt
 	c.Error = err
 	return c
