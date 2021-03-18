@@ -58,6 +58,7 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 // parseByLayout 通过布局模板解析
 func parseByLayout(value string, layout string) (time.Time, error) {
 	loc, _ := time.LoadLocation(Local)
+
 	tt, err := time.ParseInLocation(layout, value, loc)
 	if err != nil {
 		err = errors.New("the value \"" + value + "\" can't parse string as time")
