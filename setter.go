@@ -12,7 +12,14 @@ func (c Carbon) SetTimezone(name string) Carbon {
 
 // Timezone 设置时区
 func SetTimezone(name string) Carbon {
-	loc, err := getLocationByTimezone(name)
+	var loc *time.Location
+	var err error
+	if name == Local {
+		loc = time.Local
+	} else {
+		loc, err = getLocationByTimezone(name)
+	}
+
 	return Carbon{Loc: loc, Error: err, Lang: NewLanguage()}
 }
 
