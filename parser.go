@@ -1,8 +1,10 @@
 package carbon
 
 import (
+	"errors"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例
@@ -34,9 +36,8 @@ func (c Carbon) Parse(value string) Carbon {
 		}
 	}
 
-	tt, err := parseByLayout(value, layout, c.Loc)
-	c.Time = tt
-	c.Error = err
+	c.Time, c.Error = c.parseByLayout(value, layout)
+
 	return c
 }
 
@@ -64,11 +65,24 @@ func (c Carbon) ParseByLayout(value string, layout string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	tt, err := parseByLayout(value, layout, c.Loc)
-	c.Time = tt
-	c.Error = err
+	c.Time, c.Error = c.parseByLayout(value, layout)
+
 	return c
 }
+
+// parseByLayout 通过布局模板解析
+func (c Carbon) parseByLayout(value string, layout string) (time.Time, error) {
+	if c.Loc == nil {
+		c.Loc, _ = time.LoadLocation(Local)
+	}
+
+	tt, err := time.ParseInLocation(layout, value, c.Loc)
+	if err != nil {
+		err = errors.New("the value \"" + value + "\" can't parse string as time")
+	}
+	return tt, err
+}
+
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例(默认时区)
 func ParseByLayout(value string, layout string) Carbon {
