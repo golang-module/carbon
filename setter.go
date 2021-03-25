@@ -20,7 +20,7 @@ func SetTimezone(name string) Carbon {
 		return Carbon{Loc: time.Local, Lang: NewLanguage()}
 	}
 	loc, err := getLocationByTimezone(name)
-	return Carbon{Loc: loc, Error: err, Lang: NewLanguage()}
+	return Carbon{Loc: loc, Lang: NewLanguage(), Error: err}
 }
 
 // SetLanguage 设置语言对象
@@ -53,7 +53,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 func SetLocale(locale string) Carbon {
 	lang := NewLanguage()
 	err := lang.SetLocale(locale)
-	return Carbon{Lang: lang, Error: err}
+	return Carbon{Loc: time.Local, Lang: lang, Error: err}
 }
 
 // SetYear 设置年
