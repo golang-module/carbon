@@ -36,9 +36,7 @@ func (c Carbon) Parse(value string) Carbon {
 		}
 	}
 
-	c.Time, c.Error = c.parseByLayout(value, layout)
-
-	return c
+	return c.ParseByLayout(value, layout)
 }
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例(默认时区)
@@ -62,27 +60,16 @@ func ParseByFormat(value string, format string) Carbon {
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByLayout(value string, layout string) Carbon {
-	if c.Error != nil {
-		return c
+	if c.Loc == nil {
+		c.Loc = time.Local
 	}
-	c.Time, c.Error = c.parseByLayout(value, layout)
-
+	tt, err := time.ParseInLocation(layout, value, c.Loc)
+	c.Time = tt
+	if err != nil {
+		c.Error = errors.New("the value \"" + value + "\" can't parse string as time")
+	}
 	return c
 }
-
-// parseByLayout 通过布局模板解析
-func (c Carbon) parseByLayout(value string, layout string) (time.Time, error) {
-	if c.Loc == nil {
-		c.Loc, _ = time.LoadLocation(Local)
-	}
-
-	tt, err := time.ParseInLocation(layout, value, c.Loc)
-	if err != nil {
-		err = errors.New("the value \"" + value + "\" can't parse string as time")
-	}
-	return tt, err
-}
-
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例(默认时区)
 func ParseByLayout(value string, layout string) Carbon {
