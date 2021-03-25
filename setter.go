@@ -37,9 +37,8 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 
 // SetLanguage 设置语言对象
 func SetLanguage(lang *Language) Carbon {
-	loc, _ := getLocationByTimezone(Local)
 	err := lang.SetLocale(lang.locale)
-	return Carbon{Loc: loc, Lang: lang, Error: err}
+	return Carbon{Loc: time.Local, Lang: lang, Error: err}
 }
 
 // SetLocale 设置语言区域
