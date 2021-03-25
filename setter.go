@@ -4,9 +4,13 @@ import "time"
 
 // Timezone 设置时区
 func (c Carbon) SetTimezone(name string) Carbon {
-	loc, err := getLocationByTimezone(name)
-	c.Loc = loc
-	c.Error = err
+	if name == Local {
+		c.Loc = time.Local
+	} else {
+		loc, err := getLocationByTimezone(name)
+		c.Loc = loc
+		c.Error = err
+	}
 	return c
 }
 
@@ -15,9 +19,7 @@ func SetTimezone(name string) Carbon {
 	if name == Local {
 		return Carbon{Loc: time.Local, Lang: NewLanguage()}
 	}
-
 	loc, err := getLocationByTimezone(name)
-
 	return Carbon{Loc: loc, Error: err, Lang: NewLanguage()}
 }
 
