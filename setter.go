@@ -6,11 +6,11 @@ import "time"
 func (c Carbon) SetTimezone(name string) Carbon {
 	if name == Local {
 		c.Loc = time.Local
-	} else {
-		loc, err := getLocationByTimezone(name)
-		c.Loc = loc
-		c.Error = err
+		return c
 	}
+	loc, err := getLocationByTimezone(name)
+	c.Loc = loc
+	c.Error = err
 	return c
 }
 
