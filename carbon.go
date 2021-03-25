@@ -138,8 +138,7 @@ type Carbon struct {
 
 // Time2Carbon 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
-	loc, _ := time.LoadLocation(Local)
-	return Carbon{Time: tt, Loc: loc}
+	return Carbon{Time: tt, Loc: time.Local}
 }
 
 // Carbon2Time 将 Carbon 转换成 time.Time
