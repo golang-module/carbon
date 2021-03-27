@@ -10,7 +10,7 @@ func (c Carbon) StartOfYear() Carbon {
 
 // EndOfYear 本年结束时间
 func (c Carbon) EndOfYear() Carbon {
-	c.Time = time.Date(c.Time.Year(), 12, 31, 23, 59, 59, 0, c.Loc)
+	c.Time = time.Date(c.Time.Year(), 12, 31, 23, 59, 59, 999999999, c.Loc)
 	return c
 }
 
@@ -22,7 +22,7 @@ func (c Carbon) StartOfMonth() Carbon {
 
 // EndOfMonth 本月结束时间
 func (c Carbon) EndOfMonth() Carbon {
-	t := time.Date(c.Time.Year(), c.Time.Month(), 1, 23, 59, 59, 0, c.Loc)
+	t := time.Date(c.Time.Year(), c.Time.Month(), 1, 23, 59, 59, 999999999, c.Loc)
 	c.Time = t.AddDate(0, 1, -1)
 	return c
 }
@@ -44,7 +44,7 @@ func (c Carbon) EndOfWeek() Carbon {
 	if days == 0 {
 		days = DaysPerWeek
 	}
-	t := time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 0, c.Loc)
+	t := time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 999999999, c.Loc)
 	c.Time = t.AddDate(0, 0, int(DaysPerWeek-days))
 	return c
 }
@@ -57,7 +57,7 @@ func (c Carbon) StartOfDay() Carbon {
 
 // EndOfDay 本日结束时间
 func (c Carbon) EndOfDay() Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 0, c.Loc)
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), 23, 59, 59, 999999999, c.Loc)
 	return c
 }
 
@@ -69,7 +69,7 @@ func (c Carbon) StartOfHour() Carbon {
 
 // EndOfHour 小时结束时间
 func (c Carbon) EndOfHour() Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), 59, 59, 0, c.Loc)
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), 59, 59, 999999999, c.Loc)
 	return c
 }
 
@@ -81,7 +81,7 @@ func (c Carbon) StartOfMinute() Carbon {
 
 // EndOfMinute 分钟结束时间
 func (c Carbon) EndOfMinute() Carbon {
-	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 59, 0, c.Loc)
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), 59, 999999999, c.Loc)
 	return c
 }
 
