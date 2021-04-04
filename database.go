@@ -40,9 +40,8 @@ type ToTimestampWithNanosecond struct {
 
 func (c *Carbon) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
-	loc, _ := time.LoadLocation(Local)
 	if ok {
-		*c = Carbon{Time: value, Loc: loc}
+		*c = Carbon{Time: value, Loc: time.Local}
 		return nil
 	}
 	return fmt.Errorf("can not convert %v to timestamp", v)
