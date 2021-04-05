@@ -202,7 +202,7 @@ func (c Carbon) AddWeeks(weeks int) Carbon {
 	return c.AddDays(weeks * DaysPerWeek)
 }
 
-// AddWeek 1天后
+// AddWeek 1周后
 func (c Carbon) AddWeek() Carbon {
 	return c.AddWeeks(1)
 }
@@ -212,7 +212,7 @@ func (c Carbon) SubWeeks(weeks int) Carbon {
 	return c.SubDays(weeks * DaysPerWeek)
 }
 
-// SubWeek 1天后
+// SubWeek 1周后
 func (c Carbon) SubWeek() Carbon {
 	return c.SubWeeks(1)
 }
