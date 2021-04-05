@@ -12,21 +12,16 @@ func (c Carbon) Parse(value string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-
 	layout := DateTimeFormat
-
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
-
 	if len(value) == 10 && strings.Count(value, "-") == 2 {
 		layout = DateFormat
 	}
-
 	if strings.Index(value, "T") == 10 {
 		layout = RFC3339Format
 	}
-
 	if _, err := strconv.ParseInt(value, 10, 64); err == nil {
 		switch len(value) {
 		case 8:
@@ -35,7 +30,6 @@ func (c Carbon) Parse(value string) Carbon {
 			layout = ShortDateTimeFormat
 		}
 	}
-
 	return c.ParseByLayout(value, layout)
 }
 

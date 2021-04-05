@@ -10,7 +10,6 @@ func (c Carbon) Constellation() string {
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
 	}
-
 	index := -1
 	switch {
 	case c.Month() == 3 && c.Day() >= 21, c.Month() == 4 && c.Day() <= 19:
@@ -40,12 +39,10 @@ func (c Carbon) Constellation() string {
 	default:
 		return ""
 	}
-
 	if constellations, ok := c.Lang.resources["constellations"]; ok {
 		slice := strings.Split(constellations, "|")
 		return slice[index]
 	}
-
 	return ""
 }
 
