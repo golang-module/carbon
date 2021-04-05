@@ -92,6 +92,18 @@ func (c Carbon) SetSecond(second int) Carbon {
 	return c
 }
 
+// SetMillisecond 设置毫秒
+func (c Carbon) SetMillisecond(millisecond int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), millisecond*1e6, c.Loc)
+	return c
+}
+
+// SetMicrosecond 设置微秒
+func (c Carbon) SetMicrosecond(microsecond int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), microsecond*1e9, c.Loc)
+	return c
+}
+
 // SetNanosecond 设置纳秒
 func (c Carbon) SetNanosecond(nanosecond int) Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), nanosecond, c.Loc)
