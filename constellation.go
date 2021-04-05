@@ -2,7 +2,7 @@ package carbon
 
 import "strings"
 
-// Constellation 获取星座
+// Constellation 获取星座，支持i18n
 func (c Carbon) Constellation() string {
 	if c.IsZero() {
 		return ""

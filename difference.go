@@ -141,7 +141,7 @@ func (c Carbon) DiffInSecondsWithAbs(arg ...Carbon) int64 {
 	return getAbsValue(c.DiffInSeconds(end))
 }
 
-// DiffForHumans 获取对人类友好的可读格式时间差
+// DiffForHumans 获取对人类友好的可读格式时间差，支持i18n
 func (c Carbon) DiffForHumans(arg ...Carbon) string {
 	end := c.Now()
 	if len(arg) > 0 {

@@ -70,12 +70,10 @@ func (c Carbon) AddYears(years int) Carbon {
 func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 	// 获取N年后本月的最后一天
 	last := time.Date(c.Year()+years, time.Month(c.Month()), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
-
 	day := c.Day()
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-
 	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
 	return c
 }
@@ -159,15 +157,12 @@ func (c Carbon) AddMonths(months int) Carbon {
 // AddMonthsNoOverflow N月后(月份不溢出)
 func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	month := c.Time.Month() + time.Month(months)
-
 	// 获取N月后的最后一天
 	last := time.Date(c.Year(), month, 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
-
 	day := c.Day()
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-
 	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
 	return c
 }

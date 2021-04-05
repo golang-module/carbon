@@ -37,7 +37,12 @@ func (c Carbon) ToString() string {
 	return c.Time.In(c.Loc).String()
 }
 
-// ToMonthString 输出完整月份字符串
+// ToUtcString 输出0时区时间字符串
+func (c Carbon) ToUtcString() string {
+	return c.Time.In(c.Loc).UTC().String()
+}
+
+// ToMonthString 输出完整月份字符串，支持i18n
 func (c Carbon) ToMonthString() string {
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
@@ -49,7 +54,7 @@ func (c Carbon) ToMonthString() string {
 	return ""
 }
 
-// ToShortMonthString 输出缩写月份字符串
+// ToShortMonthString 输出缩写月份字符串，支持i18n
 func (c Carbon) ToShortMonthString() string {
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
@@ -65,7 +70,7 @@ func (c Carbon) ToShortMonthString() string {
 	return ""
 }
 
-// ToWeekString 输出完整星期字符串
+// ToWeekString 输出完整星期字符串，支持i18n
 func (c Carbon) ToWeekString() string {
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
@@ -77,7 +82,7 @@ func (c Carbon) ToWeekString() string {
 	return ""
 }
 
-// ToShortWeekString 输出缩写星期字符串
+// ToShortWeekString 输出缩写星期字符串，支持i18n
 func (c Carbon) ToShortWeekString() string {
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
