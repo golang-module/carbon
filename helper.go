@@ -51,6 +51,9 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 	if timezone == Local {
 		return time.Local, nil
 	}
+	if timezone == UTC {
+		return time.UTC, nil
+	}
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
 		err = errors.New("invalid timezone \"" + timezone + "\", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone")
