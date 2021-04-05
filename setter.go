@@ -91,3 +91,9 @@ func (c Carbon) SetSecond(second int) Carbon {
 	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), second, c.Time.Nanosecond(), c.Loc)
 	return c
 }
+
+// SetNanosecond 设置纳秒
+func (c Carbon) SetNanosecond(nanosecond int) Carbon {
+	c.Time = time.Date(c.Time.Year(), c.Time.Month(), c.Time.Day(), c.Time.Hour(), c.Time.Minute(), c.Time.Second(), nanosecond, c.Loc)
+	return c
+}
