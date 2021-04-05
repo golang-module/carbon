@@ -8,7 +8,7 @@ func (c Carbon) DiffInYears(arg ...Carbon) int64 {
 	if len(arg) > 0 {
 		end = arg[0]
 	}
-	return c.DiffInMonths(end) / 12
+	return c.DiffInMonths(end) / MonthsPerYear
 }
 
 // DiffInYearsWithAbs 相差多少年(绝对值)
@@ -23,13 +23,10 @@ func (c Carbon) DiffInYearsWithAbs(arg ...Carbon) int64 {
 // DiffInMonths 相差多少月
 func (c Carbon) DiffInMonths(arg ...Carbon) int64 {
 	end := c.Now()
-
 	if len(arg) > 0 {
 		end = arg[0]
 	}
-
 	dy, dm, dd := end.Year()-c.Year(), end.Month()-c.Month(), end.Day()-c.Day()
-
 	if dd < 0 {
 		dm = dm - 1
 	}
@@ -42,7 +39,6 @@ func (c Carbon) DiffInMonths(arg ...Carbon) int64 {
 		}
 		return int64(dm)
 	}
-
 	return int64(dy*MonthsPerYear + dm)
 }
 
@@ -148,14 +144,13 @@ func (c Carbon) DiffInSecondsWithAbs(arg ...Carbon) int64 {
 // DiffForHumans 获取对人类友好的可读格式时间差
 func (c Carbon) DiffForHumans(arg ...Carbon) string {
 	end := c.Now()
-
 	if len(arg) > 0 {
 		end = arg[0]
 	}
-
-	var unit string
-	var diff int64
-
+	var (
+		unit string
+		diff int64
+	)
 	switch true {
 	case c.DiffInYearsWithAbs(end) > 0:
 		unit = "year"
