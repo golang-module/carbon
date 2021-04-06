@@ -175,7 +175,6 @@ func (c Carbon) Compare(operator string, t Carbon) bool {
 	case "<=":
 		return c.Lte(t)
 	}
-
 	return false
 }
 

@@ -183,9 +183,7 @@ func (c Carbon) DiffForHumans(arg ...Carbon) string {
 		diff = 0
 		return c.Lang.translate(unit, diff)
 	}
-
 	translation := c.Lang.translate(unit, diff)
-
 	if c.Lt(end) && len(arg) == 0 {
 		return strings.Replace(c.Lang.resources["ago"], "%s", translation, 1)
 	}
@@ -198,6 +196,5 @@ func (c Carbon) DiffForHumans(arg ...Carbon) string {
 	if c.Gt(end) && len(arg) > 0 {
 		return strings.Replace(c.Lang.resources["after"], "%s", translation, 1)
 	}
-
 	return translation
 }

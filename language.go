@@ -64,7 +64,6 @@ func (lang *Language) SetResources(resources map[string]string) {
 		lang.resources = resources
 		return
 	}
-
 	for k, v := range resources {
 		if _, ok := lang.resources[k]; ok {
 			lang.resources[k] = v

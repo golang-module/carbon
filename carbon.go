@@ -136,7 +136,7 @@ type Carbon struct {
 	Error error
 }
 
-// String 实现 String 接口
+// String 实现 Stringer 接口
 func (c Carbon) String() string {
 	if c.IsZero() {
 		return ""
@@ -167,7 +167,7 @@ func Now() Carbon {
 
 // Tomorrow 明天
 func (c Carbon) Tomorrow() Carbon {
-	if c.Time.IsZero() {
+	if c.IsZero() {
 		c.Time = time.Now().AddDate(0, 0, 1)
 	} else {
 		c.Time = c.Time.AddDate(0, 0, 1)
