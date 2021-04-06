@@ -101,7 +101,6 @@ func (c Carbon) ToChineseDayString() string {
 	x := (44*(c.Century()-1) + (c.Century()-1)/4 + 9) % 60
 	// 计算月基数m
 	m := (int(math.Pow(-1, float64(c.Month())))+1)/2*30 + (3*c.Month()-7)/5
-
 	index := (s/4*6 + 5*(s/4*3+u) + m + d + x) % 60
 	return stemsAndBranches[index-1]
 }
