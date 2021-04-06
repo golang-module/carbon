@@ -48,8 +48,7 @@ func (c *Carbon) Scan(v interface{}) error {
 }
 
 func (c Carbon) Value() (driver.Value, error) {
-	var tt time.Time
-	if c.Time.UnixNano() == tt.UnixNano() {
+	if c.Time.IsZero() {
 		return nil, nil
 	}
 	return c.Time, nil

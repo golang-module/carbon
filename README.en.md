@@ -559,7 +559,8 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
 
 // To string
-carbon.Parse("2020-08-05 13:14:15").Time.String() // 2020-08-05 13:14:15 +0800 CST
+fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
+carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 // To string of sign format，Format() is short of ToFormatString()
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒

@@ -136,6 +136,14 @@ type Carbon struct {
 	Error error
 }
 
+// String 实现 String 接口
+func (c Carbon) String() string {
+	if c.IsZero() {
+		return ""
+	}
+	return c.ToDateTimeString()
+}
+
 // Time2Carbon 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	return Carbon{Time: tt, Loc: time.Local}

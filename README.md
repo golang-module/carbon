@@ -357,7 +357,7 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // 相差多少秒（绝对值）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
-// 对人类友好的可读格式时间差
+// 对人类友好的可读格式时间差(需要先把lang目录复制到项目目录下)
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
@@ -561,6 +561,7 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
 
 // 输出字符串
+fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 // 输出格式化字符串，Format() 是 ToFormatString() 的简写
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
@@ -665,7 +666,7 @@ carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 carbon.Now().Locale() // en
 carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 
-// 获取当前星座
+// 获取当前星座(需要先把lang目录复制到项目目录下)
 carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
 carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
@@ -844,7 +845,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 ```
 
 
-##### 多语言支持
+##### 国际化
 > 需要使用多语言时，请先把lang目录复制到项目目录下
 
 目前支持的语言有
