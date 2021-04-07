@@ -48,7 +48,7 @@ func (c *Carbon) Scan(v interface{}) error {
 }
 
 func (c Carbon) Value() (driver.Value, error) {
-	if c.Time.IsZero() {
+	if c.IsZero() {
 		return nil, nil
 	}
 	return c.Time, nil
