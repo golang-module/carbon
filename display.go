@@ -32,6 +32,14 @@ func (c Carbon) ToTimestampWithNanosecond() int64 {
 	return c.Time.UnixNano()
 }
 
+// String 实现 Stringer 接口
+func (c Carbon) String() string {
+	if c.IsZero() {
+		return ""
+	}
+	return c.ToDateTimeString()
+}
+
 // ToString 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
 func (c Carbon) ToString() string {
 	return c.Time.In(c.Loc).String()
