@@ -29,23 +29,23 @@ func (c Carbon) EndOfMonth() Carbon {
 
 // StartOfWeek 本周开始时间
 func (c Carbon) StartOfWeek() Carbon {
-	days := c.Time.In(c.Loc).Weekday()
+	days := c.Week()
 	if days == 0 {
 		days = DaysPerWeek
 	}
 	t := time.Date(c.Year(), time.Month(c.Month()), c.Day(), 0, 0, 0, 0, c.Loc)
-	c.Time = t.AddDate(0, 0, int(1-days))
+	c.Time = t.AddDate(0, 0, 1-days)
 	return c
 }
 
 // EndOfWeek 本周结束时间
 func (c Carbon) EndOfWeek() Carbon {
-	days := c.Time.In(c.Loc).Weekday()
+	days := c.Week()
 	if days == 0 {
 		days = DaysPerWeek
 	}
 	t := time.Date(c.Year(), time.Month(c.Month()), c.Day(), 23, 59, 59, 999999999, c.Loc)
-	c.Time = t.AddDate(0, 0, int(DaysPerWeek-days))
+	c.Time = t.AddDate(0, 0, DaysPerWeek-days)
 	return c
 }
 
