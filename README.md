@@ -526,7 +526,7 @@ carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
 
 // 输出 Ansic 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-// 输出 Atom 字符串
+// 输出 Atom 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // Wed Aug  5 13:14:15 2020
 // 输出 UnixDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
