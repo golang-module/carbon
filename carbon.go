@@ -1,7 +1,7 @@
 // @Title carbon
 // @Description A simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.3.7
+// @Version v1.3.8
 // @Author gouguoyin
 // @Email mail@gouguoyin.cn
 
@@ -20,32 +20,41 @@ const (
 	UCT   = "UCT"
 	MST   = "MST"
 
-	Cuba      = "Cuba"
-	Egypt     = "Egypt"
-	Eire      = "Eire"
-	Greenwich = "Greenwich"
-	Iceland   = "Iceland"
-	Iran      = "Iran"
-	Israel    = "Israel"
-	Jamaica   = "Jamaica"
-	Japan     = "Japan"
-	Libya     = "Libya"
-	Poland    = "Poland"
-	Portugal  = "Portugal"
-	PRC       = "PRC"
-	Singapore = "Singapore"
-	Turkey    = "Turkey"
-	Zulu      = "Zulu"
+	Cuba      = "Cuba"      // 古巴
+	Egypt     = "Egypt"     // 埃及
+	Eire      = "Eire"      // 爱尔兰
+	Greenwich = "Greenwich" // 格林尼治
+	Iceland   = "Iceland"   // 冰岛
+	Iran      = "Iran"      // 伊朗
+	Israel    = "Israel"    // 以色列
+	Jamaica   = "Jamaica"   // 牙买加
+	Japan     = "Japan"     // 日本
+	Libya     = "Libya"     // 利比亚
+	Poland    = "Poland"    // 波兰
+	Portugal  = "Portugal"  // 葡萄牙
+	PRC       = "PRC"       // 中国
+	Singapore = "Singapore" // 新加坡
+	Turkey    = "Turkey"    // 土耳其
 
-	Shanghai   = "Asia/Shanghai"
-	Chongqing  = "Asia/Chongqing"
-	HongKong   = "Asia/Hong_Kong"
-	Macao      = "Asia/Macao"
-	Taipei     = "Asia/Taipei"
-	Tokyo      = "Asia/Tokyo"
-	London     = "Europe/London"
-	NewYork    = "America/New_York"
-	LosAngeles = "America/Los_Angeles"
+	Shanghai   = "Asia/Shanghai"       // 上海
+	Chongqing  = "Asia/Chongqing"      // 重庆
+	Harbin     = "Asia/Harbin"         // 哈尔滨
+	HongKong   = "Asia/Hong_Kong"      // 香港
+	Macao      = "Asia/Macao"          // 澳门
+	Taipei     = "Asia/Taipei"         // 台北
+	Tokyo      = "Asia/Tokyo"          // 东京
+	Saigon     = "Asia/Saigon"         // 西贡
+	Seoul      = "Asia/Seoul"          // 首尔
+	Bangkok    = "Asia/Bangkok"        // 曼谷
+	Dubai      = "Asia/Dubai"          // 迪拜
+	NewYork    = "America/New_York"    // 纽约
+	LosAngeles = "America/Los_Angeles" // 洛杉矶
+	Chicago    = "America/Chicago"     // 芝加哥
+	Moscow     = "Europe/Moscow"       // 莫斯科
+	London     = "Europe/London"       // 伦敦
+	Berlin     = "Europe/Berlin"       // 柏林
+	Paris      = "Europe/Paris"        // 巴黎
+	Rome       = "Europe/Rome"         // 罗马
 )
 
 // 月份常量
@@ -143,7 +152,7 @@ func Time2Carbon(tt time.Time) Carbon {
 
 // Carbon2Time 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
-	return c.Time
+	return c.Time.In(c.Loc)
 }
 
 // Now 当前
