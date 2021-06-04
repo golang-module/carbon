@@ -519,46 +519,66 @@ carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000
 
 // 输出日期时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15").ToDateTimeStringWithTimezone(carbon.LosAngeles) // 2020-08-04 22:14:15
 // 输出日期字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+carbon.Parse("2020-08-05 13:14:15").ToDateStringWithTimezone(carbon.LosAngeles) // 2020-08-04
 // 输出时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
+carbon.Parse("2020-08-05 13:14:15").ToTimeStringWithTimezone(carbon.LosAngeles) // 22:14:15
 
 // 输出 Ansic 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
+carbon.Parse("2020-08-05 13:14:15").ToAnsicStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 2020
 // 输出 Atom 格式字符串
-carbon.Parse("2020-08-05 13:14:15").ToAtomString() // Wed Aug  5 13:14:15 2020
+carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToAtomStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
 // 输出 UnixDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
+carbon.Parse("2020-08-05 13:14:15").ToUnixDateStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 PDT 2020
 // 输出 RubyDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
+carbon.Parse("2020-08-05 13:14:15").ToRubyDateStringWithTimezone(carbon.LosAngeles) // Tue Aug 04 22:14:15 -0700 2020
 // 输出Kitchen格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
+carbon.Parse("2020-08-05 13:14:15").ToKitchenStringWithTimezone(carbon.LosAngeles) // 10:14PM
 // 输出 Cookie 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
+carbon.Parse("2020-08-05 13:14:15").ToCookieStringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-2020 22:14:15 PDT
 // 输出 DayDateTime 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
+carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeStringWithTimezone(carbon.LosAngeles) // Tue, Aug 4, 2020 10:14 PM
 // 输出 RSS 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRssStringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
 // 输出 W3C 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToW3cStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
 
 // 输出 RFC822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc822StringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 PDT
 // 输出 RFC822Z 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc822zStringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 -0700
 // 输出 RFC850 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc850StringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-20 22:14:15 PDT
 // 输出 RFC1036 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc1036StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 20 22:14:15 -0700
 // 输出 RFC1123 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123StringWithTimezone() // Tue, 04 Aug 2020 22:14:15 PDT
 // 输出 RFC2822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc2822StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
 // 输出 RFC3339 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToRfc3339StringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
 // 输出 RFC7231 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 GMT
 
 // 输出字符串
 fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
