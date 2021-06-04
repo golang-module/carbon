@@ -539,7 +539,7 @@ carbon.Parse("2020-08-05 13:14:15").ToUnixDateStringWithTimezone(carbon.LosAngel
 // 输出 RubyDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateStringWithTimezone(carbon.LosAngeles) // Tue Aug 04 22:14:15 -0700 2020
-// 输出Kitchen格式字符串
+// 输出 Kitchen 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
 carbon.Parse("2020-08-05 13:14:15").ToKitchenStringWithTimezone(carbon.LosAngeles) // 10:14PM
 // 输出 Cookie 格式字符串
