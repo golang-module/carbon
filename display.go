@@ -178,12 +178,30 @@ func (c Carbon) ToDayDateTimeString() string {
 	return c.Time.In(c.Loc).Format(DayDateTimeFormat)
 }
 
+// ToDayDateTimeStringWithTimezone 输出指定时区的天数日期时间字符串
+func (c Carbon) ToDayDateTimeStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(DayDateTimeFormat)
+}
+
 // ToDateTimeString 输出日期时间字符串
 func (c Carbon) ToDateTimeString() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(DateTimeFormat)
+}
+
+// ToDateTimeStringWithTimezone 输出指定时区的日期时间字符串
+func (c Carbon) ToDateTimeStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(DateTimeFormat)
 }
 
 // ToDateString 输出日期字符串
@@ -194,6 +212,15 @@ func (c Carbon) ToDateString() string {
 	return c.Time.In(c.Loc).Format(DateFormat)
 }
 
+// ToDateStringWithTimezone 输出指定时区的日期字符串
+func (c Carbon) ToDateStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(DateFormat)
+}
+
 // ToTimeString 输出时间字符串
 func (c Carbon) ToTimeString() string {
 	if c.IsZero() {
@@ -202,9 +229,23 @@ func (c Carbon) ToTimeString() string {
 	return c.Time.In(c.Loc).Format(TimeFormat)
 }
 
+// ToTimeStringWithTimezone 输出指定时区的时间字符串
+func (c Carbon) ToTimeStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(TimeFormat)
+}
+
 // ToAtomString 输出Atom格式字符串
 func (c Carbon) ToAtomString() string {
 	return c.ToRfc3339String()
+}
+
+// ToAtomStringWithTimezone 输出指定时区的Atom格式字符串
+func (c Carbon) ToAtomStringWithTimezone(timezone string) string {
+	return c.ToRfc3339StringWithTimezone(timezone)
 }
 
 // ToAnsicString 输出Ansic格式字符串
@@ -215,12 +256,30 @@ func (c Carbon) ToAnsicString() string {
 	return c.Time.In(c.Loc).Format(AnsicFormat)
 }
 
+// ToAnsicStringWithTimezone 输出指定时区的Ansic格式字符串
+func (c Carbon) ToAnsicStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(AnsicFormat)
+}
+
 // ToCookieString 输出Cookie格式字符串
 func (c Carbon) ToCookieString() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(CookieFormat)
+}
+
+// ToCookieStringWithTimezone 输出指定时区的Cookie格式字符串
+func (c Carbon) ToCookieStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(CookieFormat)
 }
 
 // ToRssString 输出RSS格式字符串
@@ -231,9 +290,23 @@ func (c Carbon) ToRssString() string {
 	return c.Time.In(c.Loc).Format(RssFormat)
 }
 
+// ToRssStringWithTimezone 输出指定时区的RSS格式字符串
+func (c Carbon) ToRssStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RssFormat)
+}
+
 // ToW3cString 输出W3C格式字符串
 func (c Carbon) ToW3cString() string {
 	return c.ToRfc3339String()
+}
+
+// ToW3cStringWithTimezone 输出指定时区的W3C格式字符串
+func (c Carbon) ToW3cStringWithTimezone(timezone string) string {
+	return c.ToRfc3339StringWithTimezone(timezone)
 }
 
 // ToUnixDateString 输出UnixDate格式字符串
@@ -244,12 +317,30 @@ func (c Carbon) ToUnixDateString() string {
 	return c.Time.In(c.Loc).Format(UnixDateFormat)
 }
 
+// ToUnixDateStringWithTimezone 输出指定时区的UnixDate格式字符串
+func (c Carbon) ToUnixDateStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(UnixDateFormat)
+}
+
 // ToUnixDateString 输出RubyDate格式字符串
 func (c Carbon) ToRubyDateString() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RubyDateFormat)
+}
+
+// ToUnixDateStringWithTimezone 输出指定时区的RubyDate格式字符串
+func (c Carbon) ToRubyDateStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RubyDateFormat)
 }
 
 // ToKitchenString 输出Kitchen格式字符串
@@ -260,12 +351,30 @@ func (c Carbon) ToKitchenString() string {
 	return c.Time.In(c.Loc).Format(KitchenFormat)
 }
 
+// ToKitchenStringWithTimezone 输出指定时区的Kitchen格式字符串
+func (c Carbon) ToKitchenStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(KitchenFormat)
+}
+
 // ToRfc822String 输出RFC822格式字符串
 func (c Carbon) ToRfc822String() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RFC822Format)
+}
+
+// ToRfc822StringWithTimezone 输出指定时区的RFC822格式字符串
+func (c Carbon) ToRfc822StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC822Format)
 }
 
 // ToRfc822zString 输出RFC822Z格式字符串
@@ -276,12 +385,30 @@ func (c Carbon) ToRfc822zString() string {
 	return c.Time.In(c.Loc).Format(RFC822ZFormat)
 }
 
+// ToRfc822zStringWithTimezone 输出指定时区的RFC822Z格式字符串
+func (c Carbon) ToRfc822zStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC822ZFormat)
+}
+
 // ToRfc850String 输出RFC850格式字符串
 func (c Carbon) ToRfc850String() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RFC850Format)
+}
+
+// ToRfc850StringWithTimezone 输出指定时区的RFC850格式字符串
+func (c Carbon) ToRfc850StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC850Format)
 }
 
 // ToRfc1036String 输出RFC1036格式字符串
@@ -292,12 +419,30 @@ func (c Carbon) ToRfc1036String() string {
 	return c.Time.In(c.Loc).Format(RFC1036Format)
 }
 
+// ToRfc1036StringWithTimezone 输出指定时区的RFC1036格式字符串
+func (c Carbon) ToRfc1036StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC1036Format)
+}
+
 // ToRfc1123String 输出RFC1123格式字符串
 func (c Carbon) ToRfc1123String() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RFC1123Format)
+}
+
+// ToRfc1123StringWithTimezone 输出指定时区的RFC1123格式字符串
+func (c Carbon) ToRfc1123StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC1123Format)
 }
 
 // ToRfc1123ZString 输出RFC1123Z格式字符串
@@ -308,12 +453,30 @@ func (c Carbon) ToRfc1123ZString() string {
 	return c.Time.In(c.Loc).Format(RFC1123ZFormat)
 }
 
+// ToRfc1123ZStringWithTimezone 输出指定时区的RFC1123Z格式字符串
+func (c Carbon) ToRfc1123ZStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC1123ZFormat)
+}
+
 // ToRfc2822String 输出RFC2822格式字符串
 func (c Carbon) ToRfc2822String() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RFC2822Format)
+}
+
+// ToRfc2822StringWithTimezone 输出指定时区的RFC2822格式字符串
+func (c Carbon) ToRfc2822StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC2822Format)
 }
 
 // ToRfc3339String 输出RFC3339格式字符串
@@ -324,10 +487,28 @@ func (c Carbon) ToRfc3339String() string {
 	return c.Time.In(c.Loc).Format(RFC3339Format)
 }
 
+// ToRfc3339StringWithTimezone 输出指定时区的RFC3339格式字符串
+func (c Carbon) ToRfc3339StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC3339Format)
+}
+
 // ToRfc7231String 输出RFC7231格式字符串
 func (c Carbon) ToRfc7231String() string {
 	if c.IsZero() {
 		return ""
 	}
 	return c.Time.In(c.Loc).Format(RFC7231Format)
+}
+
+// ToRfc7231StringWithTimezone 输出指定时区的RFC7231格式字符串
+func (c Carbon) ToRfc7231StringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
+	loc, _ := time.LoadLocation(timezone)
+	return c.Time.In(c.Loc).In(loc).Format(RFC7231Format)
 }
