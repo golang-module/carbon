@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // StartOfYear 本年开始时间
 func (c Carbon) StartOfYear() Carbon {
@@ -29,24 +31,28 @@ func (c Carbon) EndOfMonth() Carbon {
 
 // StartOfWeek 本周开始时间
 func (c Carbon) StartOfWeek() Carbon {
-	days := c.Week()
-	if days == 0 {
-		days = DaysPerWeek
+	weekDay := c.Time.In(c.Loc).Weekday()
+	if weekDay == c.WeekStartDay {
+		return c.StartOfDay()
 	}
-	t := time.Date(c.Year(), time.Month(c.Month()), c.Day(), 0, 0, 0, 0, c.Loc)
-	c.Time = t.AddDate(0, 0, 1-days)
-	return c
+	days := int(weekDay) - int(c.WeekStartDay)
+	if weekDay == time.Sunday {
+		days = 6
+	}
+	return c.SubDays(days).StartOfDay()
 }
 
 // EndOfWeek 本周结束时间
 func (c Carbon) EndOfWeek() Carbon {
-	days := c.Week()
-	if days == 0 {
-		days = DaysPerWeek
+	weekDay := c.Time.In(c.Loc).Weekday()
+	if weekDay == 1-c.WeekStartDay {
+		return c.EndOfDay()
 	}
-	t := time.Date(c.Year(), time.Month(c.Month()), c.Day(), 23, 59, 59, 999999999, c.Loc)
-	c.Time = t.AddDate(0, 0, DaysPerWeek-days)
-	return c
+	days := 6 - int(weekDay) + int(c.WeekStartDay)
+	if weekDay == time.Sunday {
+		days = 6
+	}
+	return c.AddDays(days).EndOfDay()
 }
 
 // StartOfDay 本日开始时间
