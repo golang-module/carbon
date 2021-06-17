@@ -26,7 +26,7 @@ func (c Carbon) CreateFromTimestamp(timestamp int64) Carbon {
 
 // CreateFromTimestamp 从时间戳创建 Carbon 实例(默认时区)
 func CreateFromTimestamp(timestamp int64) Carbon {
-	return SetTimezone(Local).CreateFromTimestamp(timestamp)
+	return NewCarbon().CreateFromTimestamp(timestamp)
 }
 
 // CreateFromDateTime 从年月日时分秒创建 Carbon 实例
@@ -37,7 +37,7 @@ func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minut
 
 // CreateFromDateTime 从年月日时分秒创建 Carbon 实例(默认时区)
 func CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon {
-	return SetTimezone(Local).CreateFromDateTime(year, month, day, hour, minute, second)
+	return NewCarbon().CreateFromDateTime(year, month, day, hour, minute, second)
 }
 
 // CreateFromDate 从年月日创建 Carbon 实例
@@ -49,7 +49,7 @@ func (c Carbon) CreateFromDate(year int, month int, day int) Carbon {
 
 // CreateFromDate 从年月日创建 Carbon 实例(默认时区)
 func CreateFromDate(year int, month int, day int) Carbon {
-	return SetTimezone(Local).CreateFromDate(year, month, day)
+	return NewCarbon().CreateFromDate(year, month, day)
 }
 
 // CreateFromTime 从时分秒创建 Carbon 实例
@@ -61,5 +61,5 @@ func (c Carbon) CreateFromTime(hour int, minute int, second int) Carbon {
 
 // CreateFromTime 从时分秒创建 Carbon 实例(默认时区)
 func CreateFromTime(hour int, minute int, second int) Carbon {
-	return SetTimezone(Local).CreateFromTime(hour, minute, second)
+	return NewCarbon().CreateFromTime(hour, minute, second)
 }

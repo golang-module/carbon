@@ -2,7 +2,7 @@ package carbon
 
 import "time"
 
-// Timezone 设置时区
+// SetTimezone 设置时区
 func (c Carbon) SetTimezone(name string) Carbon {
 	loc, err := getLocationByTimezone(name)
 	c.Loc = loc
@@ -10,10 +10,9 @@ func (c Carbon) SetTimezone(name string) Carbon {
 	return c
 }
 
-// Timezone 设置时区
+// SetTimezone 设置时区
 func SetTimezone(name string) Carbon {
-	loc, err := getLocationByTimezone(name)
-	return Carbon{Loc: loc, Lang: NewLanguage(), Error: err}
+	return NewCarbon().SetTimezone(name)
 }
 
 // SetLanguage 设置语言对象
@@ -30,23 +29,35 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 
 // SetLanguage 设置语言对象
 func SetLanguage(lang *Language) Carbon {
+	c := NewCarbon()
 	err := lang.SetLocale(lang.locale)
-	return Carbon{Loc: time.Local, Lang: lang, Error: err}
+	c.Lang = lang
+	c.Error = err
+	return c
 }
 
 // SetLocale 设置语言区域
 func (c Carbon) SetLocale(locale string) Carbon {
-	lang := NewLanguage()
-	c.Error = lang.SetLocale(locale)
-	c.Lang = lang
+	c.Error = c.Lang.SetLocale(locale)
 	return c
 }
 
 // SetLocale 设置语言区域
 func SetLocale(locale string) Carbon {
-	lang := NewLanguage()
-	err := lang.SetLocale(locale)
-	return Carbon{Loc: time.Local, Lang: lang, Error: err}
+	c := NewCarbon()
+	c.Error = c.Lang.SetLocale(locale)
+	return c
+}
+
+// SetWeekStartDay 设置一周开始时间
+func (c Carbon) SetWeekStartDay(wd time.Weekday) Carbon {
+	c.WeekStartDay = wd
+	return c
+}
+
+// SetWeekStartDay 设置一周开始时间
+func SetWeekStartDay(wd time.Weekday) Carbon {
+	return NewCarbon().SetWeekStartDay(wd)
 }
 
 // SetYear 设置年
