@@ -49,17 +49,6 @@ func SetLocale(locale string) Carbon {
 	return c
 }
 
-// SetWeekStartDay 设置一周开始时间
-func (c Carbon) SetWeekStartDay(wd time.Weekday) Carbon {
-	c.WeekStartDay = wd
-	return c
-}
-
-// SetWeekStartDay 设置一周开始时间
-func SetWeekStartDay(wd time.Weekday) Carbon {
-	return NewCarbon().SetWeekStartDay(wd)
-}
-
 // SetYear 设置年
 func (c Carbon) SetYear(year int) Carbon {
 	c.Time = time.Date(year, time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)

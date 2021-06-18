@@ -139,16 +139,15 @@ const (
 
 // Carbon 定义 Carbon 结构体
 type Carbon struct {
-	Time         time.Time
-	WeekStartDay time.Weekday
-	Loc          *time.Location
-	Lang         *Language
-	Error        error
+	Time  time.Time
+	Loc   *time.Location
+	Lang  *Language
+	Error error
 }
 
 // NewCarbon 新建 Carbon
 func NewCarbon() Carbon {
-	return Carbon{WeekStartDay: time.Sunday, Loc: time.Local, Lang: NewLanguage()}
+	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
 // Time2Carbon 将 time.Time 转换成 Carbon

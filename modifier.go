@@ -30,12 +30,12 @@ func (c Carbon) EndOfMonth() Carbon {
 }
 
 // StartOfWeek 本周开始时间
-func (c Carbon) StartOfWeek() Carbon {
+func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
 	weekDay := c.Time.In(c.Loc).Weekday()
-	if weekDay == c.WeekStartDay {
+	if weekDay == weekStartDay {
 		return c.StartOfDay()
 	}
-	days := int(weekDay) - int(c.WeekStartDay)
+	days := int(weekDay) - int(weekStartDay)
 	if weekDay == time.Sunday {
 		days = 6
 	}
@@ -43,12 +43,15 @@ func (c Carbon) StartOfWeek() Carbon {
 }
 
 // EndOfWeek 本周结束时间
-func (c Carbon) EndOfWeek() Carbon {
+func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
 	weekDay := c.Time.In(c.Loc).Weekday()
-	if weekDay == 1-c.WeekStartDay {
+	if weekStartDay == 0 && weekDay == 6 {
 		return c.EndOfDay()
 	}
-	days := 6 - int(weekDay) + int(c.WeekStartDay)
+	if weekStartDay == 1 && weekDay == 0 {
+		return c.EndOfDay()
+	}
+	days := 6 - int(weekDay) + int(weekStartDay)
 	if weekDay == time.Sunday {
 		days = 6
 	}

@@ -2,6 +2,7 @@ package carbon
 
 import (
 	"testing"
+	"time"
 )
 
 func TestCarbon_StartOfYear(t *testing.T) {
@@ -90,19 +91,22 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 
 func TestCarbon_StartOfWeek(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
-		output string // 期望输出值
+		input  string       // 输入值
+		week   time.Weekday // 输入参数
+		output string       // 期望输出值
 	}{
-		{"2020-01-01 00:00:00", "2019-12-29 00:00:00"},
-		{"2020-01-31 23:59:59", "2020-01-26 00:00:00"},
-		{"2020-02-01 13:14:15", "2020-01-26 00:00:00"},
-		{"2020-02-28", "2020-02-23 00:00:00"},
-		{"2020-02-29", "2020-02-23 00:00:00"},
-		{"2020-10-12", "2020-10-11 00:00:00"},
+		{"2021-06-13", time.Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-14", time.Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-18", time.Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-13", time.Monday, "2021-06-07 00:00:00"},
+		{"2021-06-14", time.Monday, "2021-06-14 00:00:00"},
+		{"2021-06-18", time.Monday, "2021-06-14 00:00:00"},
+		{"2021-06-19", time.Monday, "2021-06-14 00:00:00"},
+		{"2021-06-20", time.Monday, "2021-06-14 00:00:00"},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).StartOfWeek().ToDateTimeString()
+		output := Parse(v.input).StartOfWeek(v.week).ToDateTimeString()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
@@ -112,19 +116,22 @@ func TestCarbon_StartOfWeek(t *testing.T) {
 
 func TestCarbon_EndOfWeek(t *testing.T) {
 	Tests := []struct {
-		input  string // 输入值
-		output string // 期望输出值
+		input  string       // 输入值
+		week   time.Weekday // 输入参数
+		output string       // 期望输出值
 	}{
-		{"2020-01-01 00:00:00", "2020-01-04 23:59:59"},
-		{"2020-01-31 23:59:59", "2020-02-01 23:59:59"},
-		{"2020-02-01 13:14:15", "2020-02-01 23:59:59"},
-		{"2020-02-28", "2020-02-29 23:59:59"},
-		{"2020-02-29", "2020-02-29 23:59:59"},
-		{"2020-10-04", "2020-10-10 23:59:59"},
+		{"2021-06-13", time.Sunday, "2021-06-19 23:59:59"},
+		{"2021-06-14", time.Sunday, "2021-06-19 23:59:59"},
+		{"2021-06-18", time.Sunday, "2021-06-19 23:59:59"},
+		{"2021-06-13", time.Monday, "2021-06-13 23:59:59"},
+		{"2021-06-14", time.Monday, "2021-06-20 23:59:59"},
+		{"2021-06-18", time.Monday, "2021-06-20 23:59:59"},
+		{"2021-06-19", time.Monday, "2021-06-20 23:59:59"},
+		{"2021-06-20", time.Monday, "2021-06-20 23:59:59"},
 	}
 
 	for _, v := range Tests {
-		output := Parse(v.input).EndOfWeek().ToDateTimeString()
+		output := Parse(v.input).EndOfWeek(v.week).ToDateTimeString()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
