@@ -4,6 +4,18 @@ import (
 	"time"
 )
 
+// StartOfCentury 本世纪开始时间
+func (c Carbon) StartOfCentury() Carbon {
+	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury, 1, 1, 0, 0, 0, 0, c.Loc)
+	return c
+}
+
+// EndOfCentury 本世纪结束时间
+func (c Carbon) EndOfCentury() Carbon {
+	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+999, 12, 31, 23, 59, 59, 999999999, c.Loc)
+	return c
+}
+
 // StartOfYear 本年开始时间
 func (c Carbon) StartOfYear() Carbon {
 	c.Time = time.Date(c.Year(), 1, 1, 0, 0, 0, 0, c.Loc)
@@ -13,6 +25,25 @@ func (c Carbon) StartOfYear() Carbon {
 // EndOfYear 本年结束时间
 func (c Carbon) EndOfYear() Carbon {
 	c.Time = time.Date(c.Year(), 12, 31, 23, 59, 59, 999999999, c.Loc)
+	return c
+}
+
+// StartOfQuarter 本季度开始时间
+func (c Carbon) StartOfQuarter() Carbon {
+	c.Time = time.Date(c.Year(), time.Month(3*c.Quarter()-2), 1, 0, 0, 0, 0, c.Loc)
+	return c
+}
+
+// EndOfQuarter 本季度结束时间
+func (c Carbon) EndOfQuarter() Carbon {
+	quarter, day := c.Quarter(), 30
+	switch quarter {
+	case 1, 4:
+		day = 31
+	case 2, 3:
+		day = 30
+	}
+	c.Time = time.Date(c.Year(), time.Month(3*quarter), day, 23, 59, 59, 999999999, c.Loc)
 	return c
 }
 
