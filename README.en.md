@@ -131,8 +131,8 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 
 ##### Parse by layout string as carbon
 ```go
-carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006|01|02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
@@ -141,15 +141,25 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 // Time.time convert to Carbon
 carbon.Time2Carbon(time.Now())
 // Carbon convert to Time.time
-carbon.Now().Carbon2Time() or carbon.Now().Time
+carbon.Now().Carbon2Time()
 ```
 
 ##### Start and end
 ```go
+// Start of the century
+carbon.Parse("2020-08-05 13:14:15").StartOfCentury().ToDateTimeString() // 2000-01-01 00:00:00
+// End of the century
+carbon.Parse("2020-08-05 13:14:15").EndOfCentury().ToDateTimeString() // 2999-12-31 23:59:59
+
 // Start of the year
 carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
 // End of the year
 carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToDateTimeString() // 2020-12-31 23:59:59
+
+// Start of the quarter
+carbon.Parse("2020-08-05 13:14:15").StartOfQuarter().ToDateTimeString() // 2020-07-01 00:00:00
+// End of the quarter
+carbon.Parse("2020-08-05 13:14:15").EndOfQuarter().ToDateTimeString() // 2020-09-30 23:59:59
 
 // Start of the month
 carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToStartTimeString() // 2020-08-01 00:00:00

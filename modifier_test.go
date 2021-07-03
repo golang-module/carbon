@@ -5,6 +5,48 @@ import (
 	"time"
 )
 
+func TestCarbon_StartOfCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01 00:00:00", "2000-01-01 00:00:00"},
+		{"2020-01-31 23:59:59", "2000-01-01 00:00:00"},
+		{"2020-02-01 13:14:15", "2000-01-01 00:00:00"},
+		{"2020-02-28", "2000-01-01 00:00:00"},
+		{"2020-02-29", "2000-01-01 00:00:00"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).StartOfCentury().ToDateTimeString()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_EndOfCentury(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-01 00:00:00", "2999-12-31 23:59:59"},
+		{"2020-01-31 23:59:59", "2999-12-31 23:59:59"},
+		{"2020-02-01 13:14:15", "2999-12-31 23:59:59"},
+		{"2020-02-28", "2999-12-31 23:59:59"},
+		{"2020-02-29", "2999-12-31 23:59:59"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).EndOfCentury().ToDateTimeString()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
 func TestCarbon_StartOfYear(t *testing.T) {
 	Tests := []struct {
 		input  string // 输入值
@@ -40,6 +82,52 @@ func TestCarbon_EndOfYear(t *testing.T) {
 
 	for _, v := range Tests {
 		output := Parse(v.input).EndOfYear().ToDateTimeString()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_StartOfQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-31 00:00:00", "2020-01-01 00:00:00"},
+		{"2020-02-28 00:00:00", "2020-01-01 00:00:00"},
+		{"2020-04-30 23:59:59", "2020-04-01 00:00:00"},
+		{"2020-07-31 23:59:59", "2020-07-01 00:00:00"},
+		{"2020-08-05 13:14:15", "2020-07-01 00:00:00"},
+		{"2020-10-31", "2020-10-01 00:00:00"},
+		{"2020-12-31", "2020-10-01 00:00:00"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).StartOfQuarter().ToDateTimeString()
+
+		if output != v.output {
+			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
+		}
+	}
+}
+
+func TestCarbon_EndOfQuarter(t *testing.T) {
+	Tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"2020-01-31 00:00:00", "2020-03-31 23:59:59"},
+		{"2020-02-28 00:00:00", "2020-03-31 23:59:59"},
+		{"2020-04-28 23:59:59", "2020-06-30 23:59:59"},
+		{"2020-07-31 23:59:59", "2020-09-30 23:59:59"},
+		{"2020-08-05 13:14:15", "2020-09-30 23:59:59"},
+		{"2020-10-31", "2020-12-31 23:59:59"},
+		{"2020-12-31", "2020-12-31 23:59:59"},
+	}
+
+	for _, v := range Tests {
+		output := Parse(v.input).EndOfQuarter().ToDateTimeString()
 
 		if output != v.output {
 			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)

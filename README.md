@@ -140,15 +140,25 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 // 将 time.Time 转换成 Carbon
 carbon.Time2Carbon(time.Now())
 // 将 Carbon 转换成 time.Time
-carbon.Now().Carbon2Time() 或 carbon.Now().Time
+carbon.Now().Carbon2Time()
 ```
 
 ##### 开始时间、结束时间
 ```go
+// 本世纪开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfCentury().ToDateTimeString() // 2000-01-01 00:00:00
+// 本世纪结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfCentury().ToDateTimeString() // 2999-12-31 23:59:59
+
 // 本年开始时间
 carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
 // 本年结束时间
 carbon.Parse("2020-08-05 13:14:15").EndOfYear().ToDateTimeString() // 2020-12-31 23:59:59
+
+// 本季度开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfQuarter().ToDateTimeString() // 2020-07-01 00:00:00
+// 本季度结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfQuarter().ToDateTimeString() // 2020-09-30 23:59:59
 
 // 本月开始时间
 carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToDateTimeString() // 2020-08-01 00:00:00
