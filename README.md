@@ -885,6 +885,7 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 * [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
 * [英语(en)](./lang/en.json "英语")
 * [日语(jp)](./lang/jp.json "日语")
+* [韩语(jp)](./lang/kr.json "韩语")
 
 目前支持的方法有
 * DiffForHumans()：输出对人类友好的可读格式时间差

@@ -874,7 +874,8 @@ The following languages are supported
 * [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
 * [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
 * [English(en)](./lang/en.json "English")
-* [Japanese(jp)](./lang/jp.json "日语")
+* [Japanese(jp)](./lang/jp.json "Japanese")
+* [Korean(kr)](./lang/kr.json "Korean")
 
 The following methods are supported
 * ToMonthString()：to string of month
