@@ -47,7 +47,7 @@ func (c Carbon) ToString() string {
 
 // ToUtcString 输出0时区时间字符串
 func (c Carbon) ToUtcString() string {
-	return c.Time.In(c.Loc).UTC().String()
+	return c.Time.UTC().String()
 }
 
 // ToMonthString 输出完整月份字符串，支持i18n
