@@ -145,7 +145,7 @@ type Carbon struct {
 	Error error
 }
 
-// New 新建 Carbon
+// New 新建 Carbon 结构体
 func New() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
@@ -191,7 +191,7 @@ func Tomorrow() Carbon {
 // Yesterday 昨天
 func (c Carbon) Yesterday() Carbon {
 	if c.IsZero() {
-		c.Time = time.Now().AddDate(0, 0, -1)
+		c.Time = time.Now().In(c.Loc).AddDate(0, 0, -1)
 	} else {
 		c.Time = c.Time.In(c.Loc).AddDate(0, 0, -1)
 	}
