@@ -150,7 +150,7 @@ func (c Carbon) SubQuarterNoOverflow() Carbon {
 
 // AddMonths N月后
 func (c Carbon) AddMonths(months int) Carbon {
-	c.Time = c.Time.AddDate(0, months, 0)
+	c.Time = c.Time.In(c.Loc).AddDate(0, months, 0)
 	return c
 }
 
@@ -219,7 +219,7 @@ func (c Carbon) SubWeek() Carbon {
 
 // AddDays N天后
 func (c Carbon) AddDays(days int) Carbon {
-	c.Time = c.Time.AddDate(0, 0, days)
+	c.Time = c.Time.In(c.Loc).AddDate(0, 0, days)
 	return c
 }
 
