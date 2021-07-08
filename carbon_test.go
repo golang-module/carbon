@@ -73,17 +73,17 @@ func TestCarbon_Time2Carbon(t *testing.T) {
 
 func TestCarbon_Carbon2Time(t *testing.T) {
 	Tests := []struct {
-		input  Carbon // 输入值
+		input  string // 输入值
 		output string // 期望输出值
 	}{
-		{Parse("2020-08-05"), "2020-08-05"},
+		{"2020-08-05", "2020-08-05"},
 	}
 
 	for _, v := range Tests {
-		output := v.input.Carbon2Time().Format("2006-01-02")
+		output := Parse(v.input).Carbon2Time().Format("2006-01-02")
 
 		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input.ToDateString(), v.output, output)
+			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
 		}
 	}
 }

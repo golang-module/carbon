@@ -702,37 +702,64 @@ carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
 
-##### Calendar
+##### Lunar
+> Currently only 200 years from 1900 to 2100 are supported
 ```go
-// To year of the animal
-carbon.Parse("2020-08-05 13:14:15").ToAnimalYear() // 鼠
-// To lunar year
-carbon.Parse("2020-08-05 13:14:15").ToLunarYear() // 庚子
+// Get year of animal
+carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
+
+// Get year of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
+// Get month of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
+// Get leap month of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
+// Get day of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
+
+// Get year in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
+// Get month in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
+// Get day in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
+
+// Get year in ganzhi
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
+// Get month in ganzhi
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
+// Get month in ganzhi
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
+
+// Is leap year
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
+// Is leap month
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
 
 // Is year of the rat
-carbon.Parse("2020-08-05 13:14:15").IsYearOfRat() // true
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRat() // true
 // Is year of the ox
-carbon.Parse("2020-08-05 13:14:15").IsYearOfOx() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfOx() // false
 // Is year of the tiger
-carbon.Parse("2020-08-05 13:14:15").IsYearOfTiger() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfTiger() // false
 // Is year of the rabbit
-carbon.Parse("2020-08-05 13:14:15").IsYearOfRabbit() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRabbit() // false
 // Is year of the dragon
-carbon.Parse("2020-08-05 13:14:15").IsYearOfDragon() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDragon() // false
 // Is year of the snake
-carbon.Parse("2020-08-05 13:14:15").IsYearOfSnake() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfSnake() // false
 // Is year of the horse
-carbon.Parse("2020-08-05 13:14:15").IsYearOfHorse() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfHorse() // false
 // Is year of the goat
-carbon.Parse("2020-08-05 13:14:15").IsYearOfGoat() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfGoat() // false
 // Is year of the monkey
-carbon.Parse("2020-08-05 13:14:15").IsYearOfMonkey() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfMonkey() // false
 // Is year of the rooster
-carbon.Parse("2020-08-05 13:14:15").IsYearOfRooster() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRooster() // false
 // Is year of the dog
-carbon.Parse("2020-08-05 13:14:15").IsYearOfDog() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDog() // false
 // Is year of the dig
-carbon.Parse("2020-08-05 13:14:15").IsYearOfPig() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfPig() // false
 ```
 
 ##### Constellation
@@ -886,31 +913,19 @@ The following methods are supported
 
 ###### Set locale
 ```go
-// Way one(recommend)
-c := carbon.Now().AddHours(1).SetLocale("zh-CN") 
-if c.Error != nil {
-    // Error handle...
-    log.Fatal(c.Error)
-}
-c.DiffForHumans() // 1 小时后
-c.ToMonthString() // 八月
-c.ToShortMonthString() // 8月
-c.ToWeekString() // 星期二
-c.ToShortWeekString() // 周二
-c.Constellation() // 狮子座
-
-// Way two
 lang := NewLanguage()
 if err := lang.SetLocale("zh-CN");err != nil {
     // Error handle...
     log.Fatal(err)
 }
-c.DiffForHumans() // 1 小时后
-c.ToMonthString() // 八月
-c.ToShortMonthString() // 8月
-c.ToWeekString() // 星期二
-c.ToShortWeekString() // 周二
-c.Constellation() // 狮子座
+
+c := carbon.SetLanguage(lang)
+c.Now().AddHours(1).DiffForHumans() // 1 小时后
+c.Now().AddHours(1).ToMonthString() // 八月
+c.Now().AddHours(1).ToShortMonthString() // 8月
+c.Now().AddHours(1).ToWeekString() // 星期二
+c.Now().AddHours(1).ToShortWeekString() // 周二
+c.Now().AddHours(1).Constellation() // 狮子座
 
 ```
 
@@ -921,12 +936,14 @@ if err := lang.SetDir("lang");err != nil {
     // Error handle...
     log.Fatal(err)
 }
-c.DiffForHumans() // 1 hour from now
-c.ToMonthString() // August
-c.ToShortMonthString() // Aug
-c.ToWeekString() // Tuesday
-c.ToShortWeekString() // Tue
-c.Constellation() // Leo
+
+c := carbon.SetLanguage(lang)
+Now().AddHours(1).DiffForHumans() // 1 hour from now
+Now().AddHours(1).ToMonthString() // August
+Now().AddHours(1).ToShortMonthString() // Aug
+Now().AddHours(1).ToWeekString() // Tuesday
+Now().AddHours(1).ToShortWeekString() // Tue
+Now().AddHours(1).Constellation() // Leo
 ```
 
 ###### Set some resources(the rest still translate from the specific locale)
@@ -943,13 +960,14 @@ resources := map[string]string {
 }
 lang.SetResources(resources)
 
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
-carbon.Now().SetLanguage(lang).ToMonthString() // August
-carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
-carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
-carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
-carbon.Now().SetLanguage(lang).Constellation() // Leo
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // 1 year from now
+c.Now().AddHours(1).DiffForHumans() // 1h from now
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
 ```
 
 ###### Set all resources
@@ -976,13 +994,14 @@ resources := map[string]string {
 }
 lang.SetResources(resources)
 
-carbon.Now().AddYears(1).SetLanguage(lang).DiffForHumans() // 1 year from now
-carbon.Now().AddHours(1).SetLanguage(lang).DiffForHumans() // 1h from now
-carbon.Now().SetLanguage(lang).ToMonthString() // August
-carbon.Now().SetLanguage(lang).ToShortMonthString() // Aug
-carbon.Now().SetLanguage(lang).ToWeekString() // Tuesday
-carbon.Now().SetLanguage(lang).ToShortWeekString() // Tue
-carbon.Now().SetLanguage(lang).Constellation() // Leo
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // in 1 yr
+c.Now().AddHours(1).DiffForHumans() // in 1h
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
 ```
 
 ##### Error handling
