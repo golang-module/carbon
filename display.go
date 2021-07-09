@@ -9,26 +9,41 @@ import (
 
 // ToTimestamp ToTimestampWithSecond的简称
 func (c Carbon) ToTimestamp() int64 {
+	if c.IsZero() {
+		return 0
+	}
 	return c.ToTimestampWithSecond()
 }
 
 // ToTimestampWithSecond 输出秒级时间戳
 func (c Carbon) ToTimestampWithSecond() int64 {
+	if c.IsZero() {
+		return 0
+	}
 	return c.Time.Unix()
 }
 
 // ToTimestampWithMillisecond 输出毫秒级时间戳
 func (c Carbon) ToTimestampWithMillisecond() int64 {
+	if c.IsZero() {
+		return 0
+	}
 	return c.Time.UnixNano() / int64(time.Millisecond)
 }
 
 // ToTimestampWithMicrosecond 输出微秒级时间戳
 func (c Carbon) ToTimestampWithMicrosecond() int64 {
+	if c.IsZero() {
+		return 0
+	}
 	return c.Time.UnixNano() / int64(time.Microsecond)
 }
 
 // ToTimestampWithNanosecond 输出纳秒级时间戳
 func (c Carbon) ToTimestampWithNanosecond() int64 {
+	if c.IsZero() {
+		return 0
+	}
 	return c.Time.UnixNano()
 }
 
@@ -42,16 +57,25 @@ func (c Carbon) String() string {
 
 // ToString 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
 func (c Carbon) ToString() string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.Time.In(c.Loc).String()
 }
 
 // ToUtcString 输出0时区时间字符串
 func (c Carbon) ToUtcString() string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.Time.UTC().String()
 }
 
 // ToMonthString 输出完整月份字符串，支持i18n
 func (c Carbon) ToMonthString() string {
+	if c.IsZero() {
+		return ""
+	}
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
 	}
@@ -64,6 +88,9 @@ func (c Carbon) ToMonthString() string {
 
 // ToShortMonthString 输出缩写月份字符串，支持i18n
 func (c Carbon) ToShortMonthString() string {
+	if c.IsZero() {
+		return ""
+	}
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
 	}
@@ -80,6 +107,9 @@ func (c Carbon) ToShortMonthString() string {
 
 // ToWeekString 输出完整星期字符串，支持i18n
 func (c Carbon) ToWeekString() string {
+	if c.IsZero() {
+		return ""
+	}
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
 	}
@@ -92,6 +122,9 @@ func (c Carbon) ToWeekString() string {
 
 // ToShortWeekString 输出缩写星期字符串，支持i18n
 func (c Carbon) ToShortWeekString() string {
+	if c.IsZero() {
+		return ""
+	}
 	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
 		return ""
 	}
@@ -108,6 +141,9 @@ func (c Carbon) ToShortWeekString() string {
 
 // Format ToFormatString的简称
 func (c Carbon) Format(format string) string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.ToFormatString(format)
 }
 
@@ -240,11 +276,17 @@ func (c Carbon) ToTimeStringWithTimezone(timezone string) string {
 
 // ToAtomString 输出Atom格式字符串
 func (c Carbon) ToAtomString() string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.ToRfc3339String()
 }
 
 // ToAtomStringWithTimezone 输出指定时区的Atom格式字符串
 func (c Carbon) ToAtomStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.ToRfc3339StringWithTimezone(timezone)
 }
 
@@ -301,11 +343,17 @@ func (c Carbon) ToRssStringWithTimezone(timezone string) string {
 
 // ToW3cString 输出W3C格式字符串
 func (c Carbon) ToW3cString() string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.ToRfc3339String()
 }
 
 // ToW3cStringWithTimezone 输出指定时区的W3C格式字符串
 func (c Carbon) ToW3cStringWithTimezone(timezone string) string {
+	if c.IsZero() {
+		return ""
+	}
 	return c.ToRfc3339StringWithTimezone(timezone)
 }
 
