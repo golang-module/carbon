@@ -150,6 +150,15 @@ carbon.Parse("2020-08-05 13:14:15").StartOfCentury().ToDateTimeString() // 2000-
 // 本世纪结束时间
 carbon.Parse("2020-08-05 13:14:15").EndOfCentury().ToDateTimeString() // 2999-12-31 23:59:59
 
+// 本年代开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+carbon.Parse("2021-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+carbon.Parse("2029-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+// 本年代结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+carbon.Parse("2021-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+carbon.Parse("2029-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+
 // 本年开始时间
 carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
 // 本年结束时间
@@ -666,6 +675,9 @@ carbon.Parse("2020-08-09 13:14:15").Week() // 7
 
 // 获取当前世纪
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
+// 获取当前年代
+carbon.Parse("2019-08-05 13:14:15").Decade() // 10
+carbon.Parse("2021-08-05 13:14:15").Decade() // 20
 // 获取当前年份
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 // 获取当前季度
@@ -1095,4 +1107,6 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 
 #### 相关链接
-[更新日志](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+* [更新日志](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+* [segmentfault](https://segmentfault.com/t/go-carbon)
+* [oschina](https://www.oschina.net/p/go-carbon)

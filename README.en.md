@@ -151,6 +151,15 @@ carbon.Parse("2020-08-05 13:14:15").StartOfCentury().ToDateTimeString() // 2000-
 // End of the century
 carbon.Parse("2020-08-05 13:14:15").EndOfCentury().ToDateTimeString() // 2999-12-31 23:59:59
 
+// Start of the decade
+carbon.Parse("2020-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+carbon.Parse("2021-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+carbon.Parse("2029-08-05 13:14:15").StartOfDecade().ToDateTimeString() // 2020-01-01 00:00:00
+// End of the decade
+carbon.Parse("2020-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+carbon.Parse("2021-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+carbon.Parse("2029-08-05 13:14:15").EndOfDecade().ToDateTimeString() // 2029-12-31 23:59:59
+
 // Start of the year
 carbon.Parse("2020-08-05 13:14:15").StartOfYear().ToDateTimeString() // 2020-01-01 00:00:00
 // End of the year
@@ -660,6 +669,9 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // Get current century
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
+// Get current decade
+carbon.Parse("2019-08-05 13:14:15").Decade() // 10
+carbon.Parse("2021-08-05 13:14:15").Decade() // 20
 // Get current year
 carbon.Parse("2020-08-05 13:14:15").Year() // 2020
 // Get current quarter
