@@ -10,6 +10,7 @@ func TestCarbon_Constellation1(t *testing.T) {
 		output string // 期望输出值
 	}{
 		{"", ""},
+		{"0000-00-00", ""},
 		{"2020-01-05", "Capricorn"},
 		{"2020-02-05", "Aquarius"},
 		{"2020-03-05", "Pisces"},
@@ -39,6 +40,8 @@ func TestCarbon_Constellation(t *testing.T) {
 		input2 string // 输入值2
 		output string // 期望输出值
 	}{
+		{"", "en", ""},
+		{"0000-00-00", "en", ""},
 		{"2020-08-05", "en", "Leo"},
 		{"2020-08-05", "zh-CN", "狮子座"},
 		{"2020-08-05", "zh-Tw", "獅子座"},
@@ -59,6 +62,8 @@ func TestCarbon_IsAries(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-03-21", true},
 		{"2020-04-19", true},
 		{"2020-08-05", false},
@@ -84,6 +89,8 @@ func TestCarbon_IsTaurus(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-04-20", true},
 		{"2020-05-20", true},
 		{"2020-08-05", false},
@@ -109,6 +116,8 @@ func TestCarbon_IsGemini(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-05-21", true},
 		{"2020-06-21", true},
 		{"2020-08-05", false},
@@ -134,6 +143,8 @@ func TestCarbon_IsCancer(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-06-22", true},
 		{"2020-07-22", true},
 		{"2020-08-05", false},
@@ -159,6 +170,8 @@ func TestCarbon_IsLeo(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-07-23", true},
 		{"2020-08-05", true},
 		{"2020-08-22", true},
@@ -185,6 +198,8 @@ func TestCarbon_IsVirgo(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-08-23", true},
 		{"2020-09-22", true},
 		{"2020-08-05", false},
@@ -210,6 +225,8 @@ func TestCarbon_IsLibra(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-09-23", true},
 		{"2020-10-23", true},
 		{"2020-08-05", false},
@@ -235,6 +252,8 @@ func TestCarbon_IsScorpio(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-10-24", true},
 		{"2020-11-22", true},
 		{"2020-08-05", false},
@@ -260,6 +279,8 @@ func TestCarbon_IsSagittarius(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-11-23", true},
 		{"2020-12-21", true},
 		{"2020-08-05", false},
@@ -285,6 +306,8 @@ func TestCarbon_IsCapricorn(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-12-22", true},
 		{"2020-01-19", true},
 		{"2020-08-05", false},
@@ -310,6 +333,8 @@ func TestCarbon_IsAquarius(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-01-20", true},
 		{"2020-02-18", true},
 		{"2020-08-05", false},
@@ -335,6 +360,8 @@ func TestCarbon_IsPisces(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0000-00-00", false},
 		{"2020-02-19", true},
 		{"2020-03-20", true},
 		{"2020-08-05", false},
