@@ -85,6 +85,14 @@ func (c Carbon) Century() int {
 	return c.Year()/YearsPerCentury + 1
 }
 
+// Decade 获取当前年代
+func (c Carbon) Decade() int {
+	if c.IsZero() {
+		return 0
+	}
+	return c.Year() % YearsPerCentury / YearsPerDecade * YearsPerDecade
+}
+
 // Year 获取当前年
 func (c Carbon) Year() int {
 	if c.IsZero() {
