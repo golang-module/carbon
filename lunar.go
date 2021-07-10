@@ -273,6 +273,9 @@ func (l lunar) IsLeapMonth() bool {
 
 // IsYearOfRat 是否是鼠年
 func (l lunar) IsYearOfRat() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 4 {
 		return true
 	}
@@ -281,6 +284,9 @@ func (l lunar) IsYearOfRat() bool {
 
 // IsYearOfOx 是否是牛年
 func (l lunar) IsYearOfOx() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 5 {
 		return true
 	}
@@ -289,6 +295,9 @@ func (l lunar) IsYearOfOx() bool {
 
 // IsYearOfTiger 是否是虎年
 func (l lunar) IsYearOfTiger() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 6 {
 		return true
 	}
@@ -297,6 +306,9 @@ func (l lunar) IsYearOfTiger() bool {
 
 // IsYearOfRabbit 是否是兔年
 func (l lunar) IsYearOfRabbit() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 7 {
 		return true
 	}
@@ -305,6 +317,9 @@ func (l lunar) IsYearOfRabbit() bool {
 
 // IsYearOfDragon 是否是龙年
 func (l lunar) IsYearOfDragon() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 8 {
 		return true
 	}
@@ -313,6 +328,9 @@ func (l lunar) IsYearOfDragon() bool {
 
 // IsYearOfSnake 是否是蛇年
 func (l lunar) IsYearOfSnake() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 9 {
 		return true
 	}
@@ -321,6 +339,9 @@ func (l lunar) IsYearOfSnake() bool {
 
 // IsYearOfHorse 是否是马年
 func (l lunar) IsYearOfHorse() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 10 {
 		return true
 	}
@@ -329,6 +350,9 @@ func (l lunar) IsYearOfHorse() bool {
 
 // IsYearOfGoat 是否是羊年
 func (l lunar) IsYearOfGoat() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 11 {
 		return true
 	}
@@ -348,6 +372,9 @@ func (l lunar) IsYearOfMonkey() bool {
 
 // IsYearOfRooster 是否是鸡年
 func (l lunar) IsYearOfRooster() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 1 {
 		return true
 	}
@@ -356,6 +383,9 @@ func (l lunar) IsYearOfRooster() bool {
 
 // IsYearOfDog 是否是狗年
 func (l lunar) IsYearOfDog() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 2 {
 		return true
 	}
@@ -364,6 +394,9 @@ func (l lunar) IsYearOfDog() bool {
 
 // IsYearOfPig 是否是猪年
 func (l lunar) IsYearOfPig() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.year%MonthsPerYear == 3 {
 		return true
 	}
