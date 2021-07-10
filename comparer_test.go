@@ -9,8 +9,11 @@ func TestCarbon_IsZero(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"0000-00-00 00:00:00", true},
+		{"", true},
+		{"0", true},
 		{"0000-00-00", true},
+		{"00:00:00", true},
+		{"0000-00-00 00:00:00", true},
 		{"2020-08-05", false},
 	}
 
@@ -34,6 +37,10 @@ func TestCarbon_IsNow(t *testing.T) {
 		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
+		{Parse(""), false},
+		{Parse("0"), false},
+		{Parse("0000-00-00"), false},
+		{Parse("00:00:00"), false},
 		{Parse("0000-00-00 00:00:00"), false},
 		{Tomorrow(), false},
 		{Now(), true},
@@ -60,6 +67,10 @@ func TestCarbon_IsFuture(t *testing.T) {
 		input  Carbon // 输入值
 		output bool   // 期望输出值
 	}{
+		{Parse(""), false},
+		{Parse("0"), false},
+		{Parse("0000-00-00"), false},
+		{Parse("00:00:00"), false},
 		{Parse("0000-00-00 00:00:00"), false},
 		{Tomorrow(), true},
 		{Now(), false},
@@ -88,7 +99,10 @@ func TestCarbon_IsPast(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{Parse(""), false},
+		{Parse("0"), false},
 		{Parse("0000-00-00"), false},
+		{Parse("00:00:00"), false},
+		{Parse("0000-00-00 00:00:00"), false},
 		{Tomorrow(), false},
 		{Now(), false},
 		{Yesterday(), true},
@@ -115,7 +129,10 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2016-01-01", true},
 		{"2017-01-01", false},
 		{"2018-01-01", false},
@@ -144,7 +161,10 @@ func TestCarbon_IsLongYear(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2015-01-01", true},
 		{"2016-01-01", false},
 		{"2017-01-01", false},
@@ -174,7 +194,10 @@ func TestCarbon_IsJanuary(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", true},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -210,7 +233,10 @@ func TestCarbon_IsFebruary(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", true},
 		{"2020-03-01", false},
@@ -246,7 +272,10 @@ func TestCarbon_IsMarch(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", true},
@@ -282,7 +311,10 @@ func TestCarbon_IsApril(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -318,7 +350,10 @@ func TestCarbon_IsMay(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -354,7 +389,10 @@ func TestCarbon_IsJune(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -390,7 +428,10 @@ func TestCarbon_IsJuly(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -426,7 +467,10 @@ func TestCarbon_IsAugust(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -462,7 +506,10 @@ func TestCarbon_IsSeptember(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -498,7 +545,10 @@ func TestCarbon_IsOctober(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -534,7 +584,10 @@ func TestCarbon_IsNovember(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -570,7 +623,10 @@ func TestCarbon_IsDecember(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -606,7 +662,10 @@ func TestCarbon_IsMonday(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-10-05", true},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -637,7 +696,10 @@ func TestCarbon_IsTuesday(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-10-05", false},
 		{"2020-10-06", true},
 		{"2020-10-07", false},
@@ -668,7 +730,10 @@ func TestCarbon_IsWednesday(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", true},
@@ -699,7 +764,10 @@ func TestCarbon_IsThursday(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -730,7 +798,10 @@ func TestCarbon_IsFriday(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},

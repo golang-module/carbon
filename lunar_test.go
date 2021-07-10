@@ -7,7 +7,11 @@ func TestLunar_Animal(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-05-01", "鼠"},
 		{"2020-08-05", "鼠"},
 		{"2021-07-07", "牛"},
@@ -27,7 +31,11 @@ func TestLunar_Year(t *testing.T) {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0", 0},
 		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
 		{"2020-05-01", 2020},
 		{"2020-08-05", 2020},
 		{"2021-07-07", 2021},
@@ -47,7 +55,11 @@ func TestLunar_Month(t *testing.T) {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0", 0},
 		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
 		{"2020-05-01", 4},
 		{"2020-08-05", 6},
 		{"2021-07-07", 5},
@@ -67,7 +79,11 @@ func TestLunar_Day(t *testing.T) {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0", 0},
 		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
 		{"2020-05-01", 9},
 		{"2020-08-05", 16},
 		{"2021-07-07", 28},
@@ -87,7 +103,11 @@ func TestLunar_LeapMonth(t *testing.T) {
 		input  string // 输入值
 		output int    // 期望输出值
 	}{
+		{"", 0},
+		{"0", 0},
 		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
 		{"2020-05-01", 4},
 		{"2020-08-05", 4},
 		{"2021-07-07", 0},
@@ -107,7 +127,11 @@ func TestLunar_ToChinaYearString(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-05-01", "二零二零"},
 		{"2020-08-05", "二零二零"},
 		{"2021-07-07", "二零二一"},
@@ -127,7 +151,11 @@ func TestLunar_ToChinaMonthString(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-05-01", "四月"},
 		{"2020-08-05", "六月"},
 		{"2021-07-07", "五月"},
@@ -147,7 +175,11 @@ func TestLunar_ToChinaDayString(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-05-01", "初九"},
 		{"2020-08-05", "十六"},
 		{"2021-07-07", "廿八"},
@@ -167,7 +199,11 @@ func TestLunar_ToGanZhiYearString(t *testing.T) {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
+		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
 		{"2020-05-01", "庚子"},
 		{"2020-08-05", "庚子"},
 		{"2021-07-07", "辛丑"},
@@ -187,7 +223,11 @@ func TestLunar_IsLeapYear(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", true},
 		{"2020-08-05", true},
 		{"2021-07-07", false},
@@ -213,7 +253,11 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", true},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -239,7 +283,11 @@ func TestLunar_IsYearOfRat(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", true},
 		{"2020-08-05", true},
 		{"2021-07-07", false},
@@ -265,7 +313,11 @@ func TestLunar_IsYearOfOx(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", true},
@@ -291,7 +343,11 @@ func TestLunar_IsYearOfTiger(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -318,7 +374,11 @@ func TestLunar_IsYearOfRabbit(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -345,7 +405,11 @@ func TestLunar_IsYearOfDragon(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -372,7 +436,11 @@ func TestLunar_IsYearOfSnake(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -399,7 +467,11 @@ func TestLunar_IsYearOfHorse(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -426,7 +498,11 @@ func TestLunar_IsYearOfGoat(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -453,7 +529,11 @@ func TestLunar_IsYearOfMonkey(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -480,7 +560,11 @@ func TestLunar_IsYearOfRooster(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -507,7 +591,11 @@ func TestLunar_IsYearOfDog(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},
@@ -534,7 +622,11 @@ func TestLunar_IsYearOfPig(t *testing.T) {
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
+		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
 		{"2020-05-01", false},
 		{"2020-08-05", false},
 		{"2021-07-07", false},

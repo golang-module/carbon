@@ -111,9 +111,6 @@ func (c Carbon) Lunar() (l lunar) {
 
 // 获取该年总天数
 func (l lunar) getDaysInYear() int {
-	if l.year == 0 {
-		return 0
-	}
 	var i, sum = 0, 348
 	for i = 0x8000; i > 0x8; i >>= 1 {
 		if (lunarItems[l.year-1900] & i) != 0 {
@@ -125,9 +122,6 @@ func (l lunar) getDaysInYear() int {
 
 // getDaysInMonth 获取该月总天数
 func (l lunar) getDaysInMonth() int {
-	if l.month == 0 {
-		return 0
-	}
 	if (lunarItems[l.year-1900] & (0x10000 >> uint(l.month))) == 0 {
 		return 29
 	}
@@ -136,9 +130,6 @@ func (l lunar) getDaysInMonth() int {
 
 // getDaysInLeapMonth 获取闰月总天数
 func (l lunar) getDaysInLeapMonth() int {
-	if l.month == 0 {
-		return 0
-	}
 	if l.LeapMonth() == 0 {
 		return 0
 	}
@@ -228,7 +219,7 @@ func (l lunar) ToGanZhiYearString() string {
 
 // ToGanZhiMonthString 获取干支纪月字符串
 func (l lunar) ToGanZhiMonthString() string {
-	if l.month == 0 {
+	if l.year == 0 {
 		return ""
 	}
 	// 天干索引
@@ -252,7 +243,7 @@ func (l lunar) ToGanZhiMonthString() string {
 
 // Todo ToGanZhiDayString 获取干支纪日字符串
 func (l lunar) ToGanZhiDayString() string {
-	if l.day == 0 {
+	if l.year == 0 {
 		return ""
 	}
 	return ""
@@ -260,11 +251,17 @@ func (l lunar) ToGanZhiDayString() string {
 
 // IsLeapYear 是否是闰年
 func (l lunar) IsLeapYear() bool {
+	if l.year == 0 {
+		return false
+	}
 	return l.LeapMonth() != 0
 }
 
 // IsLeapMonth 是否是闰月
 func (l lunar) IsLeapMonth() bool {
+	if l.year == 0 {
+		return false
+	}
 	if l.month == 0 {
 		return false
 	}
