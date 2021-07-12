@@ -31,7 +31,7 @@ func CreateFromTimestamp(timestamp int64) Carbon {
 
 // CreateFromDateTime 从年月日时分秒创建 Carbon 实例
 func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int) Carbon {
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
+	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
 	return c
 }
 
@@ -43,7 +43,7 @@ func CreateFromDateTime(year int, month int, day int, hour int, minute int, seco
 // CreateFromDate 从年月日创建 Carbon 实例
 func (c Carbon) CreateFromDate(year int, month int, day int) Carbon {
 	hour, minute, second := time.Now().Clock()
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, 0, c.Loc)
+	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
 	return c
 }
 
@@ -55,7 +55,7 @@ func CreateFromDate(year int, month int, day int) Carbon {
 // CreateFromTime 从时分秒创建 Carbon 实例
 func (c Carbon) CreateFromTime(hour int, minute int, second int) Carbon {
 	year, month, day := time.Now().Date()
-	c.Time = time.Date(year, month, day, hour, minute, second, 0, c.Loc)
+	c.Time = time.Date(year, month, day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
 	return c
 }
 
