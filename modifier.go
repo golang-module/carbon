@@ -97,8 +97,7 @@ func (c Carbon) EndOfMonth() Carbon {
 	if c.IsZero() {
 		return c
 	}
-	t := time.Date(c.Year(), time.Month(c.Month()), 1, 23, 59, 59, 999999999, c.Loc)
-	c.Time = t.AddDate(0, 1, -1)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
 	return c
 }
 
