@@ -709,69 +709,14 @@ carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
 carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
 
+//Get season name
+carbon.Now().Season() // Summer
+carbon.Now().SetLocale("en").Season() // Summer
+carbon.Now().SetLocale("zh-CN").Season() // 夏季
+
 // Get current age
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
-```
-
-##### Lunar
-> Currently only 200 years from 1900 to 2100 are supported
-```go
-// Get year of animal
-carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
-// Get year of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// Get month of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// Get leap month of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// Get day of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-
-// Get year in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
-// Get month in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
-// Get day in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
-
-// Get year in ganzhi
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
-// Get month in ganzhi
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
-// Get month in ganzhi
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
-
-// Is leap year
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
-// Is leap month
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
-
-// Is year of the rat
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRat() // true
-// Is year of the ox
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfOx() // false
-// Is year of the tiger
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfTiger() // false
-// Is year of the rabbit
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRabbit() // false
-// Is year of the dragon
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDragon() // false
-// Is year of the snake
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfSnake() // false
-// Is year of the horse
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfHorse() // false
-// Is year of the goat
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfGoat() // false
-// Is year of the monkey
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfMonkey() // false
-// Is year of the rooster
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRooster() // false
-// Is year of the dog
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDog() // false
-// Is year of the dig
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfPig() // false
 ```
 
 ##### Constellation
@@ -803,6 +748,231 @@ carbon.Parse("2020-08-05 13:14:15").IsCapricorn() // false
 carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
 // Is pisces
 carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
+```
+
+##### Season
+> According to the meteorological division, March to May is spring, June to August is summer, September to November is autumn, and December to February is winter
+```go
+// Get season
+carbon.Parse("2020-08-05 13:14:15").Season() // Summer
+
+// Start of the season
+carbon.Parse("2020-08-05 13:14:15").StartOfSeason().ToDateTimeString() // 2020-06-01 00:00:00
+// End of the season
+carbon.Parse("2020-08-05 13:14:15").EndOfSeason().ToDateTimeString() // 2020-08-31 23:59:59
+
+// Is spring
+carbon.Parse("2020-08-05 13:14:15").IsSpring() // false
+// Is summer
+carbon.Parse("2020-08-05 13:14:15").IsSummer() // true
+// Is autumn
+carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
+// Is winter
+carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
+```
+
+##### Lunar
+> Currently only `200` years from `1900` to `2100` are supported
+```go
+// Get year of animal
+carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
+
+// Get festival of lunar
+carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
+
+// Get year of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
+// Get month of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
+// Get leap month of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
+// Get day of lunar
+carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
+
+// Get year in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
+// Get month in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
+// Get day in chinese
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
+
+
+// Get index of year in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanYear() // 7
+// Get index of year in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiYear() // 1
+// Get index of month in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanMonth() // 10
+// Get index of month in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiMonth() // 8
+// Get index of day in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanDay() // 7
+// Get index of day in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiDay() // 7
+
+// Get string of year in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanYearString() // 庚
+// Get string of year in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiYearString() // 子
+// Get string of month in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanMonthString() // 癸
+// Get string of month in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiMonthString() // 未
+// Get string of day in heavenly stem
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanDayString() // 庚
+// Get string of day in earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiDayString() // 辰
+
+// Get string of year in heavenly stem and earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
+// Get string of month in heavenly stem and earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
+// Get string of day in heavenly stem and earthly branch
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
+
+// Is leap year
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
+// Is leap month
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
+
+// Is year of the rat
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
+// Is year of the ox
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
+// Is year of the tiger
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
+// Is year of the rabbit
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
+// Is year of the dragon
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
+// Is year of the snake
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
+// Is year of the horse
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
+// Is year of the goat
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
+// Is year of the monkey
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
+// Is year of the rooster
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
+// Is year of the dog
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
+// Is year of the dig
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+```
+
+##### I18n
+> If you need to use i18n, please copy Lang directory to project directory first
+
+The following languages are supported
+* [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
+* [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
+* [English(en)](./lang/en.json "English")
+* [Japanese(jp)](./lang/jp.json "Japanese")
+* [Korean(kr)](./lang/kr.json "Korean")
+
+The following methods are supported
+* `ToMonthString()`：to string of month
+* `ToShortMonthString()`：to string of short month
+* `ToWeekString()`：to string of week
+* `ToShortWeekString()`：to string of short week
+* `Constellation()`：get constellation name
+* `Season()`：get season name
+
+###### Set locale
+```go
+lang := NewLanguage()
+if err := lang.SetLocale("zh-CN");err != nil {
+    // Error handle...
+    log.Fatal(err)
+}
+
+c := carbon.SetLanguage(lang)
+c.Now().AddHours(1).DiffForHumans() // 1 小时后
+c.Now().AddHours(1).ToMonthString() // 八月
+c.Now().AddHours(1).ToShortMonthString() // 8月
+c.Now().AddHours(1).ToWeekString() // 星期二
+c.Now().AddHours(1).ToShortWeekString() // 周二
+c.Now().AddHours(1).Constellation() // 狮子座
+c.Now().AddHours(1).Season() // 夏季
+```
+
+###### Set dir
+```go
+lang := NewLanguage()
+if err := lang.SetDir("lang");err != nil {
+    // Error handle...
+    log.Fatal(err)
+}
+
+c := carbon.SetLanguage(lang)
+Now().AddHours(1).DiffForHumans() // 1 hour from now
+Now().AddHours(1).ToMonthString() // August
+Now().AddHours(1).ToShortMonthString() // Aug
+Now().AddHours(1).ToWeekString() // Tuesday
+Now().AddHours(1).ToShortWeekString() // Tue
+Now().AddHours(1).Constellation() // Leo
+Now().AddHours(1).Season() // Summer
+```
+
+###### Set some resources(the rest still translate from the specific locale)
+```go
+lang := NewLanguage()
+
+if err := lang.SetLocale("en");err != nil {
+	// Error handle...
+    log.Fatal(err)
+}
+
+resources := map[string]string {
+    "hour":"%dh",
+}
+lang.SetResources(resources)
+
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // 1 year from now
+c.Now().AddHours(1).DiffForHumans() // 1h from now
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
+c.Now().Season() // Summer
+```
+
+###### Set all resources
+```go
+lang := NewLanguage()
+resources := map[string]string {
+    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
+    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
+    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
+    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
+    "year":"1 yr|%d yrs",
+    "month":"1 mo|%d mos",
+    "week":"%dw",
+    "day":"%dd",
+    "hour":"%dh",
+    "minute":"%dm",
+    "second":"%ds",
+    "now": "just now",
+    "ago":"%s ago",
+    "from_now":"in %s",
+    "before":"%s before",
+    "after":"%s after",
+}
+lang.SetResources(resources)
+
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // in 1 yr
+c.Now().AddHours(1).DiffForHumans() // in 1h
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
+c.Now().Season() // Summer
 ```
 
 ##### Database
@@ -905,117 +1075,6 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 }
 ```
 
-
-##### I18n
-> If you need to use i18n, please copy Lang directory to project directory first
-
-The following languages are supported
-* [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
-* [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
-* [English(en)](./lang/en.json "English")
-* [Japanese(jp)](./lang/jp.json "Japanese")
-* [Korean(kr)](./lang/kr.json "Korean")
-
-The following methods are supported
-* ToMonthString()：to string of month
-* ToShortMonthString()：to string of short month
-* ToWeekString()：to string of week
-* ToShortWeekString()：to string of short week
-* Constellation()：get constellation name
-
-###### Set locale
-```go
-lang := NewLanguage()
-if err := lang.SetLocale("zh-CN");err != nil {
-    // Error handle...
-    log.Fatal(err)
-}
-
-c := carbon.SetLanguage(lang)
-c.Now().AddHours(1).DiffForHumans() // 1 小时后
-c.Now().AddHours(1).ToMonthString() // 八月
-c.Now().AddHours(1).ToShortMonthString() // 8月
-c.Now().AddHours(1).ToWeekString() // 星期二
-c.Now().AddHours(1).ToShortWeekString() // 周二
-c.Now().AddHours(1).Constellation() // 狮子座
-
-```
-
-###### Set dir
-```go
-lang := NewLanguage()
-if err := lang.SetDir("lang");err != nil {
-    // Error handle...
-    log.Fatal(err)
-}
-
-c := carbon.SetLanguage(lang)
-Now().AddHours(1).DiffForHumans() // 1 hour from now
-Now().AddHours(1).ToMonthString() // August
-Now().AddHours(1).ToShortMonthString() // Aug
-Now().AddHours(1).ToWeekString() // Tuesday
-Now().AddHours(1).ToShortWeekString() // Tue
-Now().AddHours(1).Constellation() // Leo
-```
-
-###### Set some resources(the rest still translate from the specific locale)
-```go
-lang := NewLanguage()
-
-if err := lang.SetLocale("en");err != nil {
-	// Error handle...
-    log.Fatal(err)
-}
-
-resources := map[string]string {
-    "hour":"%dh",
-}
-lang.SetResources(resources)
-
-c := carbon.SetLanguage(lang)
-c.Now().AddYears(1).DiffForHumans() // 1 year from now
-c.Now().AddHours(1).DiffForHumans() // 1h from now
-c.Now().ToMonthString() // August
-c.Now().ToShortMonthString() // Aug
-c.Now().ToWeekString() // Tuesday
-c.Now().ToShortWeekString() // Tue
-c.Now().Constellation() // Leo
-```
-
-###### Set all resources
-```go
-lang := NewLanguage()
-resources := map[string]string {
-    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
-    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
-    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
-    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
-    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
-    "year":"1 yr|%d yrs",
-    "month":"1 mo|%d mos",
-    "week":"%dw",
-    "day":"%dd",
-    "hour":"%dh",
-    "minute":"%dm",
-    "second":"%ds",
-    "now": "just now",
-    "ago":"%s ago",
-    "from_now":"in %s",
-    "before":"%s before",
-    "after":"%s after",
-}
-lang.SetResources(resources)
-
-c := carbon.SetLanguage(lang)
-c.Now().AddYears(1).DiffForHumans() // in 1 yr
-c.Now().AddHours(1).DiffForHumans() // in 1h
-c.Now().ToMonthString() // August
-c.Now().ToShortMonthString() // Aug
-c.Now().ToWeekString() // Tuesday
-c.Now().ToShortWeekString() // Tue
-c.Now().Constellation() // Leo
-```
-
 ##### Error handling
 > If more than one error occurs, only the first error message is returned
 
@@ -1100,3 +1159,6 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
 * [kofoworola/godate](https://github.com/kofoworola/godate)
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
+* [overtrue/chinese-calendar](https://github.com/overtrue/chinese-calendar)
+* [moment/moment](https://github.com/moment/moment)
+* [iamkun/dayjs](https://github.com/iamkun/dayjs)

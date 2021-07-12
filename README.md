@@ -378,7 +378,7 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // 相差多少秒（绝对值）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
-// 对人类友好的可读格式时间差(需要先把lang目录复制到项目目录下)
+// 对人类友好的可读格式时间差(需要先把 `lang` 目录复制到项目目录下)
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
@@ -710,77 +710,22 @@ carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 carbon.Now().Locale() // en
 carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 
-// 获取当前星座(需要先把lang目录复制到项目目录下)
+// 获取当前星座(需要先把 `lang` 目录复制到项目目录下)
 carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
 carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+
+// 获取当前季节(需要先把 `lang` 目录复制到项目目录下)
+carbon.Now().Season() // Summer
+carbon.Now().SetLocale("en").Season() // Summer
+carbon.Now().SetLocale("zh-CN").Season() // 夏季
 
 // 获取年龄
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
-> 关于第几周的计算如有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
-
-##### 农历
-> 目前仅支持1900年至2100年的200年
-```go
-// 获取生肖
-carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
-// 获取农历年年份
-carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// 获取农历月月份
-carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// 获取农历闰月月份
-carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// 获取农历日日期
-carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-
-// 获取农历年字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
-// 获取农历月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
-// 获取农历日字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
-
-// 获取干支纪年字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
-// 获取干支纪月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
-// 获取干支纪日字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
-
-// 是否是农历闰年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
-// 是否是农历闰月
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
-
-// 是否是鼠年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRat() // true
-// 是否是牛年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfOx() // false
-// 是否是虎年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfTiger() // false
-// 是否是兔年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRabbit() // false
-// 是否是龙年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDragon() // false
-// 是否是蛇年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfSnake() // false
-// 是否是马年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfHorse() // false
-// 是否是羊年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfGoat() // false
-// 是否是猴年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfMonkey() // false
-// 是否是鸡年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfRooster() // false
-// 是否是狗年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfDog() // false
-// 是否是猪年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsYearOfPig() // false
-```
+> 关于第几周`WeekOfYear()`和`WeekOfMonth()`的计算如有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
 
 ##### 星座
 ```go
@@ -813,8 +758,232 @@ carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
 carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
+##### 季节
+> 按照气象划分，即3-5月为春季，6-8月为夏季，9-11月为秋季，12-2月为冬季
+```go
+// 获取季节
+carbon.Parse("2020-08-05 13:14:15").Season() // Summer
+
+// 本季节开始时间
+carbon.Parse("2020-08-05 13:14:15").StartOfSeason().ToDateTimeString() // 2020-06-01 00:00:00
+// 本季节结束时间
+carbon.Parse("2020-08-05 13:14:15").EndOfSeason().ToDateTimeString() // 2020-08-31 23:59:59
+
+// 是否是春季
+carbon.Parse("2020-08-05 13:14:15").IsSpring() // false
+// 是否是夏季
+carbon.Parse("2020-08-05 13:14:15").IsSummer() // true
+// 是否是秋季
+carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
+// 是否是冬季
+carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
+```
+
+##### 农历
+> 目前仅支持公历`1900`年至`2100`年的`200`年时间
+```go
+// 获取生肖
+carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
+
+// 获取农历节日
+carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
+
+// 获取农历年年份
+carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
+// 获取农历月月份
+carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
+// 获取农历闰月月份
+carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
+// 获取农历日日期
+carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
+
+// 获取农历年字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
+// 获取农历月字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
+// 获取农历日字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
+
+// 获取年干
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanYear() // 7
+// 获取年支
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiYear() // 1
+// 获取月干
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanMonth() // 10
+// 获取月支
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiMonth() // 8
+// 获取日干
+carbon.Parse("2020-08-05 13:14:15").Lunar().GanDay() // 7
+// 获取日支
+carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiDay() // 7
+
+// 获取年干字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanYearString() // 庚
+// 获取年支字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiYearString() // 子
+// 获取月干字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanMonthString() // 癸
+// 获取月支字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiMonthString() // 未
+// 获取日干字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanDayString() // 庚
+// 获取日支字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiDayString() // 辰
+
+// 获取干支纪年字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
+// 获取干支纪月字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
+// 获取干支纪日字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
+
+// 是否是农历闰年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
+// 是否是农历闰月
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
+
+// 是否是鼠年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
+// 是否是牛年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
+// 是否是虎年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
+// 是否是兔年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
+// 是否是龙年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
+// 是否是蛇年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
+// 是否是马年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
+// 是否是羊年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
+// 是否是猴年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
+// 是否是鸡年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
+// 是否是狗年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
+// 是否是猪年
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+```
+
+##### 国际化
+> 需要使用多语言时，请先把 `lang` 目录复制到项目目录下
+
+目前支持的语言有
+* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
+* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
+* [英语(en)](./lang/en.json "英语")
+* [日语(jp)](./lang/jp.json "日语")
+* [韩语(kr)](./lang/kr.json "韩语")
+
+目前支持的方法有
+* `DiffForHumans()`：输出对人类友好的可读格式时间差
+* `ToMonthString()`：输出完整月份字符串
+* `ToShortMonthString()`：输出缩写月份字符串
+* `ToWeekString()`：输出完整星期字符串
+* `ToShortWeekString()`：输出缩写星期字符串
+* `Constellation()`：获取星座
+* `Season()`：获取季节
+
+###### 设置区域
+```go
+lang := NewLanguage()
+if err := lang.SetLocale("zh-CN");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+
+c := carbon.SetLanguage(lang)
+c.Now().AddHours(1).DiffForHumans() // 1 小时后
+c.Now().AddHours(1).ToMonthString() // 八月
+c.Now().AddHours(1).ToShortMonthString() // 8月
+c.Now().AddHours(1).ToWeekString() // 星期二
+c.Now().AddHours(1).ToShortWeekString() // 周二
+c.Now().AddHours(1).Constellation() // 狮子座
+c.Now().AddHours(1).Season() // 夏季
+```
+###### 设置目录
+```go
+lang := NewLanguage()
+if err := lang.SetDir("lang");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+
+c := carbon.SetLanguage(lang)
+Now().AddHours(1).DiffForHumans() // 1 hour from now
+Now().AddHours(1).ToMonthString() // August
+Now().AddHours(1).ToShortMonthString() // Aug
+Now().AddHours(1).ToWeekString() // Tuesday
+Now().AddHours(1).ToShortWeekString() // Tue
+Now().AddHours(1).Constellation() // Leo
+Now().AddHours(1).Season() // Summer
+```
+
+###### 重写部分翻译资源(其余仍然按照指定的 `locale` 翻译)
+```go
+lang := NewLanguage()
+
+if err := lang.SetLocale("en");err != nil {
+	// 错误处理
+    log.Fatal(err)
+}
+
+resources := map[string]string {
+    "hour":"%dh",
+}
+lang.SetResources(resources)
+
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // 1 year from now
+c.Now().AddHours(1).DiffForHumans() // 1h from now
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
+c.Now().Season() // Summer
+```
+
+###### 重写全部翻译资源(无需指定 `locale`)
+```go
+lang := NewLanguage()
+resources := map[string]string {
+    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
+    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
+    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
+    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
+    "year":"1 yr|%d yrs",
+    "month":"1 mo|%d mos",
+    "week":"%dw",
+    "day":"%dd",
+    "hour":"%dh",
+    "minute":"%dm",
+    "second":"%ds",
+    "now": "just now",
+    "ago":"%s ago",
+    "from_now":"in %s",
+    "before":"%s before",
+    "after":"%s after",
+}
+lang.SetResources(resources)
+
+c := carbon.SetLanguage(lang)
+c.Now().AddYears(1).DiffForHumans() // in 1 yr
+c.Now().AddHours(1).DiffForHumans() // in 1h
+c.Now().ToMonthString() // August
+c.Now().ToShortMonthString() // Aug
+c.Now().ToWeekString() // Tuesday
+c.Now().ToShortWeekString() // Tue
+c.Now().Constellation() // Leo
+c.Now().Season() // Summer
+```
+
 ##### 数据库支持
-> 假设数据表为 users，字段有 id(int)、name(varchar)、age(int)、birthday(datetime)、graduated_at(datetime)、created_at(datetime)、updated_at(datetime)、date_time1(datetime)、date_time2(datetime)、date_time3(datetime)、date_time4(datetime)
+> 假设数据表为 `users`，字段有 `id(int)`、`name(varchar)`、`age(int)`、`birthday(datetime)`、`graduated_at(datetime)`、`created_at(datetime)`、`updated_at(datetime)`、`date_time1(datetime)`、`date_time2(datetime)`、`date_time3(datetime)`、`date_time4(datetime)`
 
 ###### 定义模型
 ```go
@@ -913,116 +1082,6 @@ func (c ToRssString) MarshalJSON() ([]byte, error) {
 }
 ```
 
-
-##### 国际化
-> 需要使用多语言时，请先把lang目录复制到项目目录下
-
-目前支持的语言有
-* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
-* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
-* [英语(en)](./lang/en.json "英语")
-* [日语(jp)](./lang/jp.json "日语")
-* [韩语(kr)](./lang/kr.json "韩语")
-
-目前支持的方法有
-* DiffForHumans()：输出对人类友好的可读格式时间差
-* ToMonthString()：输出完整月份字符串
-* ToShortMonthString()：输出缩写月份字符串
-* ToWeekString()：输出完整星期字符串
-* ToShortWeekString()：输出缩写星期字符串
-* Constellation()：获取星座
-
-###### 设置区域
-```go
-lang := NewLanguage()
-if err := lang.SetLocale("zh-CN");err != nil {
-	// 错误处理
-    log.Fatal(err)
-}
-
-c := carbon.SetLanguage(lang)
-c.Now().AddHours(1).DiffForHumans() // 1 小时后
-c.Now().AddHours(1).ToMonthString() // 八月
-c.Now().AddHours(1).ToShortMonthString() // 8月
-c.Now().AddHours(1).ToWeekString() // 星期二
-c.Now().AddHours(1).ToShortWeekString() // 周二
-c.Now().AddHours(1).Constellation() // 狮子座
-```
-###### 设置目录
-```go
-lang := NewLanguage()
-if err := lang.SetDir("lang");err != nil {
-	// 错误处理
-    log.Fatal(err)
-}
-
-c := carbon.SetLanguage(lang)
-Now().AddHours(1).DiffForHumans() // 1 hour from now
-Now().AddHours(1).ToMonthString() // August
-Now().AddHours(1).ToShortMonthString() // Aug
-Now().AddHours(1).ToWeekString() // Tuesday
-Now().AddHours(1).ToShortWeekString() // Tue
-Now().AddHours(1).Constellation() // Leo
-```
-
-###### 重写部分翻译资源(其余仍然按照指定的 locale 翻译)
-```go
-lang := NewLanguage()
-
-if err := lang.SetLocale("en");err != nil {
-	// 错误处理
-    log.Fatal(err)
-}
-
-resources := map[string]string {
-    "hour":"%dh",
-}
-lang.SetResources(resources)
-
-c := carbon.SetLanguage(lang)
-c.Now().AddYears(1).DiffForHumans() // 1 year from now
-c.Now().AddHours(1).DiffForHumans() // 1h from now
-c.Now().ToMonthString() // August
-c.Now().ToShortMonthString() // Aug
-c.Now().ToWeekString() // Tuesday
-c.Now().ToShortWeekString() // Tue
-c.Now().Constellation() // Leo
-```
-
-###### 重写全部翻译资源(无需指定 locale)
-```go
-lang := NewLanguage()
-resources := map[string]string {
-    "months": "January|February|March|April|May|June|July|August|September|October|November|December",
-    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
-    "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
-    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
-    "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
-    "year":"1 yr|%d yrs",
-    "month":"1 mo|%d mos",
-    "week":"%dw",
-    "day":"%dd",
-    "hour":"%dh",
-    "minute":"%dm",
-    "second":"%ds",
-    "now": "just now",
-    "ago":"%s ago",
-    "from_now":"in %s",
-    "before":"%s before",
-    "after":"%s after",
-}
-lang.SetResources(resources)
-
-c := carbon.SetLanguage(lang)
-c.Now().AddYears(1).DiffForHumans() // in 1 yr
-c.Now().AddHours(1).DiffForHumans() // in 1h
-c.Now().ToMonthString() // August
-c.Now().ToShortMonthString() // Aug
-c.Now().ToWeekString() // Tuesday
-c.Now().ToShortWeekString() // Tue
-c.Now().Constellation() // Leo
-```
-
 ##### 错误处理
 > 如果有多个错误发生，只返回第一个错误信息，前一个错误排除后才返回下一个错误信息
 
@@ -1059,7 +1118,7 @@ fmt.Println(c.ToDateTimeString())
 // 输出
 invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
 ```
-> 建议使用SetTimezone()、Parse()、ParseByFormat()、AddDuration()、SubDuration()、SetLocale()等方法时先进行错误处理判断，除非你能确保传入参数无误
+> 建议使用`SetTimezone()`、`Parse()`、`ParseByFormat()`、`AddDuration()`、`SubDuration()`、`SetLocale()`等方法时先进行错误处理判断，除非你能确保传入参数无误
 #### 附录
 ##### <a id="格式化符号表">格式化符号表</a>
 | 符号 | 描述 |  长度 | 范围 | 示例 |
@@ -1105,6 +1164,9 @@ invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for a
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
+* [overtrue/chinese-calendar](https://github.com/overtrue/chinese-calendar)
+* [moment/moment](https://github.com/moment/moment)
+* [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
 #### 相关链接
 * [更新日志](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
