@@ -10,6 +10,7 @@ func TestCarbon_Constellation1(t *testing.T) {
 		output string // 期望输出值
 	}{
 		{"", ""},
+		{"0", ""},
 		{"0000-00-00", ""},
 		{"2020-01-05", "Capricorn"},
 		{"2020-02-05", "Aquarius"},
@@ -41,11 +42,13 @@ func TestCarbon_Constellation(t *testing.T) {
 		output string // 期望输出值
 	}{
 		{"", "en", ""},
+		{"0", "en", ""},
 		{"0000-00-00", "en", ""},
 		{"2020-08-05", "en", "Leo"},
 		{"2020-08-05", "zh-CN", "狮子座"},
 		{"2020-08-05", "zh-Tw", "獅子座"},
 		{"2020-08-05", "jp", "ししざ"},
+		{"2020-08-05", "kr", "처녀자리"},
 	}
 
 	for _, v := range Tests {
@@ -63,6 +66,7 @@ func TestCarbon_IsAries(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-03-21", true},
 		{"2020-04-19", true},
@@ -74,11 +78,11 @@ func TestCarbon_IsAries(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is aries, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is aries, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -90,6 +94,7 @@ func TestCarbon_IsTaurus(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-04-20", true},
 		{"2020-05-20", true},
@@ -101,11 +106,11 @@ func TestCarbon_IsTaurus(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is taurus, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is taurus, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -117,6 +122,7 @@ func TestCarbon_IsGemini(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-05-21", true},
 		{"2020-06-21", true},
@@ -128,11 +134,11 @@ func TestCarbon_IsGemini(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is gemini, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is gemini, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -144,6 +150,7 @@ func TestCarbon_IsCancer(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-06-22", true},
 		{"2020-07-22", true},
@@ -155,11 +162,11 @@ func TestCarbon_IsCancer(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is cancer, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is cancer, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -171,6 +178,7 @@ func TestCarbon_IsLeo(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-07-23", true},
 		{"2020-08-05", true},
@@ -183,11 +191,11 @@ func TestCarbon_IsLeo(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is leo, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is leo, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -199,6 +207,7 @@ func TestCarbon_IsVirgo(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-08-23", true},
 		{"2020-09-22", true},
@@ -226,6 +235,7 @@ func TestCarbon_IsLibra(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-09-23", true},
 		{"2020-10-23", true},
@@ -237,11 +247,11 @@ func TestCarbon_IsLibra(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is libra, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is libra, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -253,6 +263,7 @@ func TestCarbon_IsScorpio(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-10-24", true},
 		{"2020-11-22", true},
@@ -264,11 +275,11 @@ func TestCarbon_IsScorpio(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is scorpio, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is scorpio, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -280,6 +291,7 @@ func TestCarbon_IsSagittarius(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-11-23", true},
 		{"2020-12-21", true},
@@ -291,11 +303,11 @@ func TestCarbon_IsSagittarius(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is sagittarius, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is sagittarius, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -307,6 +319,7 @@ func TestCarbon_IsCapricorn(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-12-22", true},
 		{"2020-01-19", true},
@@ -318,11 +331,11 @@ func TestCarbon_IsCapricorn(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is capricorn, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is capricorn, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -334,6 +347,7 @@ func TestCarbon_IsAquarius(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-01-20", true},
 		{"2020-02-18", true},
@@ -345,11 +359,11 @@ func TestCarbon_IsAquarius(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is aquarius, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is aquarius, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}
@@ -361,6 +375,7 @@ func TestCarbon_IsPisces(t *testing.T) {
 		output bool   // 期望输出值
 	}{
 		{"", false},
+		{"0", false},
 		{"0000-00-00", false},
 		{"2020-02-19", true},
 		{"2020-03-20", true},
@@ -372,11 +387,11 @@ func TestCarbon_IsPisces(t *testing.T) {
 
 		if output == true {
 			if v.output == false {
-				t.Errorf("Input %s is pisces, expected true, but got false\n", v.input)
+				t.Errorf("Input %s, expected true, but got false\n", v.input)
 			}
 		} else {
 			if v.output == true {
-				t.Errorf("Input %s is pisces, expected false, but got true\n", v.input)
+				t.Errorf("Input %s, expected false, but got true\n", v.input)
 			}
 		}
 	}

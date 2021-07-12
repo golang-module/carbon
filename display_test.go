@@ -166,6 +166,7 @@ func TestCarbon_ToMonthString(t *testing.T) {
 		{"2020-08-05", "zh-CN", "八月"},
 		{"2020-08-05", "zh-Tw", "八月"},
 		{"2020-08-05", "jp", "八月"},
+		{"2020-08-05", "kr", "팔월"},
 	}
 
 	for _, v := range Tests {
@@ -189,6 +190,7 @@ func TestCarbon_ToShortMonthString(t *testing.T) {
 		{"2020-08-05", "zh-CN", "8月"},
 		{"2020-08-05", "zh-Tw", "8月"},
 		{"2020-08-05", "jp", "8月"},
+		{"2020-08-05", "kr", "8월"},
 	}
 
 	for _, v := range Tests {
@@ -212,6 +214,7 @@ func TestCarbon_ToWeekString(t *testing.T) {
 		{"2020-08-05", "zh-CN", "星期三"},
 		{"2020-08-05", "zh-Tw", "星期三"},
 		{"2020-08-05", "jp", "水曜日"},
+		{"2020-08-05", "kr", "수요일"},
 	}
 
 	for _, v := range Tests {
@@ -235,6 +238,7 @@ func TestCarbon_ToShortWeekString(t *testing.T) {
 		{"2020-08-05", "zh-CN", "周三"},
 		{"2020-08-05", "zh-Tw", "週三"},
 		{"2020-08-05", "jp", "週三"},
+		{"2020-08-05", "kr", "수요일"},
 	}
 
 	for _, v := range Tests {
