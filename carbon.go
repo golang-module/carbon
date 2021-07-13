@@ -145,7 +145,7 @@ type Carbon struct {
 	Error error
 }
 
-// NewCarbon 新建 Carbon 结构体
+// NewCarbon 初始化 Carbon 实例
 func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
