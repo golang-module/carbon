@@ -798,44 +798,11 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
 
 // 获取农历年字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // 获取农历月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
 // 获取农历日字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
-
-// 获取年干
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanYear() // 7
-// 获取年支
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiYear() // 1
-// 获取月干
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanMonth() // 10
-// 获取月支
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiMonth() // 8
-// 获取日干
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanDay() // 7
-// 获取日支
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiDay() // 7
-
-// 获取年干字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanYearString() // 庚
-// 获取年支字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiYearString() // 子
-// 获取月干字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanMonthString() // 癸
-// 获取月支字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiMonthString() // 未
-// 获取日干字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanDayString() // 庚
-// 获取日支字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiDayString() // 辰
-
-// 获取干支纪年字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
-// 获取干支纪月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
-// 获取干支纪日字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 
 // 是否是农历闰年
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true

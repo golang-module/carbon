@@ -790,45 +790,11 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
 
 // Get year in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseYearString() // 二零二零
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // Get month in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseMonthString() // 六月
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
 // Get day in chinese
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToChineseDayString() // 十六
-
-
-// Get index of year in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanYear() // 7
-// Get index of year in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiYear() // 1
-// Get index of month in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanMonth() // 10
-// Get index of month in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiMonth() // 8
-// Get index of day in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().GanDay() // 7
-// Get index of day in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ZhiDay() // 7
-
-// Get string of year in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanYearString() // 庚
-// Get string of year in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiYearString() // 子
-// Get string of month in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanMonthString() // 癸
-// Get string of month in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiMonthString() // 未
-// Get string of day in heavenly stem
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanDayString() // 庚
-// Get string of day in earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToZhiDayString() // 辰
-
-// Get string of year in heavenly stem and earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiYearString() // 庚子
-// Get string of month in heavenly stem and earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiMonthString() // 癸未
-// Get string of day in heavenly stem and earthly branch
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToGanZhiDayString() // 庚辰
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 
 // Is leap year
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true

@@ -12,14 +12,9 @@ var (
 	// 中国农历数字
 	chineseNumbers = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
 	// 中国农历月份
-	chineseMonths = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "冬", "腊"}
+	chineseMonths = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
 	// 中国农历日期前缀
 	chineseDayPrefixes = []string{"初", "十", "廿", "卅"}
-
-	// 天干
-	heavenlyStems = []string{"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"}
-	// 地支
-	earthlyBranches = []string{"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"}
 
 	// 生肖
 	animals = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
@@ -55,14 +50,12 @@ var (
 
 // lunar 定义 lunar 结构体
 type lunar struct {
-	carbon           Carbon // 公历
-	year, month, day int    // 农历年、月、日
-	isLeapMonth      bool   // 是否是闰月
+	year, month, day int  // 农历年、月、日
+	isLeapMonth      bool // 是否是闰月
 }
 
 // Lunar 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
-	l.carbon = c
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
 	leapMonths, daysInYear, daysInMonth, leapMonth := 14, 365, 30, 0
 	// 有效范围检验
@@ -216,8 +209,8 @@ func (l lunar) Day() int {
 	return l.day
 }
 
-// ToChineseYearString 获取农历年字符串
-func (l lunar) ToChineseYearString() string {
+// ToYearString 获取农历年字符串
+func (l lunar) ToYearString() string {
 	if l.year == 0 {
 		return ""
 	}
@@ -228,16 +221,16 @@ func (l lunar) ToChineseYearString() string {
 	return year
 }
 
-// ToChineseMonthString 获取农历月字符串
-func (l lunar) ToChineseMonthString() string {
+// ToMonthString 获取农历月字符串
+func (l lunar) ToMonthString() string {
 	if l.month == 0 {
 		return ""
 	}
-	return chineseMonths[l.month-1] + "月"
+	return chineseMonths[l.month-1]
 }
 
-// ToChineseDayString 获取农历日字符串
-func (l lunar) ToChineseDayString() string {
+// ToDayString 获取农历日字符串
+func (l lunar) ToDayString() string {
 	if l.day == 0 {
 		return ""
 	}
@@ -253,140 +246,6 @@ func (l lunar) ToChineseDayString() string {
 		day = chineseDayPrefixes[(l.day/10)] + chineseNumbers[l.day%10]
 	}
 	return day
-}
-
-// GanYear 获取年干
-func (l lunar) GanYear() int {
-	if l.year == 0 {
-		return 0
-	}
-	return (l.year - 3) % 10
-}
-
-// ZhiYear 获取年支
-func (l lunar) ZhiYear() int {
-	if l.year == 0 {
-		return 0
-	}
-	return (l.year - 3) % 12
-}
-
-// GanMonth 获取月干
-func (l lunar) GanMonth() int {
-	if l.month == 0 {
-		return 0
-	}
-	index := l.GanYear()*2 + l.month
-	switch {
-	case index > 20:
-		index = index % 10
-	case index > 10:
-		index = index - 10
-	}
-	return index
-}
-
-// ZhiMonth 获取月支
-func (l lunar) ZhiMonth() int {
-	if l.month == 0 {
-		return 0
-	}
-	index := l.month + 2
-	switch l.month {
-	case 11:
-		index = 1
-	case 12:
-		index = 2
-	}
-	return index
-}
-
-// GanDay 获取日干
-func (l lunar) GanDay() int {
-	if l.day == 0 {
-		return 0
-	}
-	return ((l.carbon.Year()-1)*5 + (l.carbon.Year()-1)/4 + l.carbon.DayOfYear()) % 60 % 10
-}
-
-// ZhiDay 获取日支
-func (l lunar) ZhiDay() int {
-	if l.day == 0 {
-		return 0
-	}
-	return ((l.carbon.Year()-1)*5 + (l.carbon.Year()-1)/4 + l.carbon.DayOfYear()) % 60 % 12
-}
-
-// ToGanYearString 获取年干字符串
-func (l lunar) ToGanYearString() string {
-	if l.year == 0 {
-		return ""
-	}
-	return heavenlyStems[l.GanYear()-1]
-}
-
-// ToZhiYearString 获取年支字符串
-func (l lunar) ToZhiYearString() string {
-	if l.year == 0 {
-		return ""
-	}
-	return earthlyBranches[l.ZhiYear()-1]
-}
-
-// ToGanMonthString 获取月干字符串
-func (l lunar) ToGanMonthString() string {
-	if l.month == 0 {
-		return ""
-	}
-	return heavenlyStems[l.GanMonth()-1]
-}
-
-// ToZhiMonthString 获取月支字符串
-func (l lunar) ToZhiMonthString() string {
-	if l.month == 0 {
-		return ""
-	}
-	return earthlyBranches[l.ZhiMonth()-1]
-}
-
-// ToGanDayString 获取日干字符串
-func (l lunar) ToGanDayString() string {
-	if l.month == 0 {
-		return ""
-	}
-	return heavenlyStems[l.GanDay()-1]
-}
-
-// ToZhiDayString 获取日支字符串
-func (l lunar) ToZhiDayString() string {
-	if l.month == 0 {
-		return ""
-	}
-	return earthlyBranches[l.ZhiDay()-1]
-}
-
-// ToGanZhiYearString 获取干支纪年字符串
-func (l lunar) ToGanZhiYearString() string {
-	if l.year == 0 {
-		return ""
-	}
-	return l.ToGanYearString() + l.ToZhiYearString()
-}
-
-// ToGanZhiMonthString 获取干支纪月字符串
-func (l lunar) ToGanZhiMonthString() string {
-	if l.carbon.IsZero() {
-		return ""
-	}
-	return l.ToGanMonthString() + l.ToZhiMonthString()
-}
-
-// ToGanZhiDayString 获取干支纪日字符串
-func (l lunar) ToGanZhiDayString() string {
-	if l.year == 0 {
-		return ""
-	}
-	return l.ToGanDayString() + l.ToZhiDayString()
 }
 
 // IsLeapYear 是否是闰年
