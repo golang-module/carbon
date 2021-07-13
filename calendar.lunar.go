@@ -63,7 +63,7 @@ func (c Carbon) Lunar() (l lunar) {
 		return
 	}
 	// 计算距离1900年1月31日相差的天数
-	offset := int(c.DiffInDaysWithAbs(Parse("1900-01-31")))
+	offset := int(c.DiffInDaysWithAbs(CreateFromDateTime(minYear, 1, 31, 0, 0, 0)))
 	for l.year = minYear; l.year <= maxYear && offset > 0; l.year++ {
 		daysInYear = l.getDaysInYear()
 		offset -= daysInYear

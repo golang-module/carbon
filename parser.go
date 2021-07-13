@@ -35,7 +35,7 @@ func (c Carbon) Parse(value string) Carbon {
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例(默认时区)
 func Parse(value string) Carbon {
-	return New().Parse(value)
+	return NewCarbon().Parse(value)
 }
 
 // ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例
@@ -49,7 +49,7 @@ func (c Carbon) ParseByFormat(value string, format string) Carbon {
 
 // ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例(默认时区)
 func ParseByFormat(value string, format string) Carbon {
-	return New().ParseByFormat(value, format)
+	return NewCarbon().ParseByFormat(value, format)
 }
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例
@@ -67,5 +67,5 @@ func (c Carbon) ParseByLayout(value string, layout string) Carbon {
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例(默认时区)
 func ParseByLayout(value string, layout string) Carbon {
-	return New().ParseByLayout(value, layout)
+	return NewCarbon().ParseByLayout(value, layout)
 }

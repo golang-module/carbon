@@ -145,14 +145,14 @@ type Carbon struct {
 	Error error
 }
 
-// New 新建 Carbon 结构体
-func New() Carbon {
+// NewCarbon 新建 Carbon 结构体
+func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
 // Time2Carbon 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
-	c := New()
+	c := NewCarbon()
 	c.Time = tt
 	return c
 }
@@ -170,7 +170,7 @@ func (c Carbon) Now() Carbon {
 
 // Now 当前(默认时区)
 func Now() Carbon {
-	return New().Now()
+	return NewCarbon().Now()
 }
 
 // Tomorrow 明天
@@ -185,7 +185,7 @@ func (c Carbon) Tomorrow() Carbon {
 
 // Tomorrow 明天(默认时区)
 func Tomorrow() Carbon {
-	return New().Tomorrow()
+	return NewCarbon().Tomorrow()
 }
 
 // Yesterday 昨天
@@ -200,5 +200,5 @@ func (c Carbon) Yesterday() Carbon {
 
 // Yesterday 昨天(默认时区)
 func Yesterday() Carbon {
-	return New().Yesterday()
+	return NewCarbon().Yesterday()
 }
