@@ -3,7 +3,8 @@
 // @Page github.com/golang-module/carbon
 // @Version v1.4.2
 // @Author gouguoyin
-// @Email mail@gouguoyin.cn
+// @Blog www.gouguoyin.cn
+// @Email contact@gouguoyin.cn
 
 package carbon
 
@@ -145,7 +146,7 @@ type Carbon struct {
 	Error error
 }
 
-// NewCarbon 新建 Carbon 结构体
+// NewCarbon 初始化 Carbon 实例
 func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
