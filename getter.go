@@ -181,7 +181,7 @@ func (c Carbon) Microsecond() int {
 	if c.IsZero() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Nanosecond() / 1e9
+	return c.Time.In(c.Loc).Nanosecond() / 1e3
 }
 
 // Nanosecond 获取当前纳秒数
