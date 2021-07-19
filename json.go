@@ -1,7 +1,9 @@
 package carbon
 
 import (
+	"bytes"
 	"fmt"
+	"strconv"
 )
 
 type ToDateTimeString struct {
@@ -36,34 +38,118 @@ type ToTimestampWithNanosecond struct {
 	Carbon
 }
 
-func (c ToDateTimeString) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
+func (t ToDateTimeString) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToDateTimeString())), nil
 }
 
-func (c ToDateString) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.ToDateString())), nil
+func (t *ToDateTimeString) UnmarshalJSON(b []byte) error {
+	c := Parse(string(bytes.Trim(b, `"`)))
+	if c.Error == nil {
+		*t = ToDateTimeString{c}
+	}
+	return nil
 }
 
-func (c ToTimeString) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.ToTimeString())), nil
+func (t ToDateString) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToDateString())), nil
 }
 
-func (c ToTimestamp) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, c.ToTimestamp())), nil
+func (t *ToDateString) UnmarshalJSON(b []byte) error {
+	c := Parse(string(bytes.Trim(b, `"`)))
+	if c.Error == nil {
+		*t = ToDateString{c}
+	}
+	return nil
 }
 
-func (c ToTimestampWithSecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithSecond())), nil
+func (t ToTimeString) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeString())), nil
 }
 
-func (c ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMillisecond())), nil
+func (t *ToTimeString) UnmarshalJSON(b []byte) error {
+	c := ParseByFormat(string(bytes.Trim(b, `"`)), "H:i:s")
+	if c.Error == nil {
+		*t = ToTimeString{c}
+	}
+	return nil
 }
 
-func (c ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithMicrosecond())), nil
+func (t ToTimestamp) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.ToTimestamp())), nil
 }
 
-func (c ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, c.ToTimestampWithNanosecond())), nil
+func (t *ToTimestamp) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestamp(ts)
+	if c.Error == nil {
+		*t = ToTimestamp{c}
+	}
+	return nil
+}
+
+func (t ToTimestampWithSecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithSecond())), nil
+}
+
+func (t *ToTimestampWithSecond) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestamp(ts)
+	if c.Error == nil {
+		*t = ToTimestampWithSecond{c}
+	}
+	return nil
+}
+
+func (t ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithMillisecond())), nil
+}
+
+func (t *ToTimestampWithMillisecond) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestamp(ts)
+	if c.Error == nil {
+		*t = ToTimestampWithMillisecond{c}
+	}
+	return nil
+}
+
+func (t ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithMicrosecond())), nil
+}
+
+func (t *ToTimestampWithMicrosecond) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestamp(ts)
+	if c.Error == nil {
+		*t = ToTimestampWithMicrosecond{c}
+	}
+	return nil
+}
+
+func (t ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithNanosecond())), nil
+}
+
+func (t *ToTimestampWithNanosecond) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestamp(ts)
+	if c.Error == nil {
+		*t = ToTimestampWithNanosecond{c}
+	}
+	return nil
 }
