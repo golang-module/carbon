@@ -76,8 +76,8 @@ func (c Carbon) ToMonthString() string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(c.Lang.resources) == 0 {
+		c.Lang.SetLocale(defaultLocale)
 	}
 	if months, ok := c.Lang.resources["months"]; ok {
 		slice := strings.Split(months, "|")
@@ -91,14 +91,10 @@ func (c Carbon) ToShortMonthString() string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(c.Lang.resources) == 0 {
+		c.Lang.SetLocale(defaultLocale)
 	}
 	if months, ok := c.Lang.resources["months_short"]; ok {
-		slice := strings.Split(months, "|")
-		return slice[c.Month()-1]
-	}
-	if months, ok := c.Lang.resources["months"]; ok {
 		slice := strings.Split(months, "|")
 		return slice[c.Month()-1]
 	}
@@ -110,8 +106,8 @@ func (c Carbon) ToWeekString() string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(c.Lang.resources) == 0 {
+		c.Lang.SetLocale(defaultLocale)
 	}
 	if months, ok := c.Lang.resources["weeks"]; ok {
 		slice := strings.Split(months, "|")
@@ -125,14 +121,10 @@ func (c Carbon) ToShortWeekString() string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(c.Lang.resources) == 0 {
+		c.Lang.SetLocale(defaultLocale)
 	}
 	if months, ok := c.Lang.resources["weeks_short"]; ok {
-		slice := strings.Split(months, "|")
-		return slice[c.Week()]
-	}
-	if months, ok := c.Lang.resources["weeks"]; ok {
 		slice := strings.Split(months, "|")
 		return slice[c.Week()]
 	}
@@ -161,7 +153,7 @@ func (c Carbon) ToFormatString(format string) string {
 			switch runes[i] {
 			case '\\': // 原样输出，不解析
 				buffer.WriteRune(runes[i+1])
-				i += 2
+				i++
 				continue
 			case 'W': // ISO-8601 格式数字表示的年份中的第几周，取值范围 1-52
 				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
