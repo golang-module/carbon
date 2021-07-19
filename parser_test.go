@@ -1,113 +1,90 @@
 package carbon
 
 import (
+	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_Parse(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output string // 期望输出值
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"0000-00-00 00:00:00", ""},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15"},
-		{"20200805131415", "2020-08-05 13:14:15"},
-		{"20200805", "2020-08-05 00:00:00"},
-		{"2020-08-05", "2020-08-05 00:00:00"},
-		{"2020-08-05T13:14:15+08:00", "2020-08-05 13:14:15"},
-		{"12345678", ""}, // 异常情况
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:15"},
+		{7, "20200805131415", "2020-08-05 13:14:15"},
+		{8, "20200805", "2020-08-05 00:00:00"},
+		{9, "2020-08-05", "2020-08-05 00:00:00"},
+		{10, "2020-08-05T13:14:15+08:00", "2020-08-05 13:14:15"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input)
-
-		if output.Error != nil {
-			t.Logf("catch an exception in Parse():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-
-	for _, v := range Tests {
-		output := SetTimezone(PRC).Parse(v.input)
-
-		if output.Error != nil {
-			t.Logf("catch an exception in Parse():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-var ParseByFormatTests = []struct {
-	input  string // 输入值
-	format string // 输入参数
-	output string // 期望输出值
-}{
-	{"2020|08|05 13:14:15", "Y|m|d H:i:s", "2020-08-05 13:14:15"},
-	{"It is 2020|08|05 13:14:15", "It is Y|m|d H:i:s", "2020-08-05 13:14:15"},
-	{"今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒", "2020-08-05 13:14:15"},
-	{"12345678", "XXXX", ""}, // 异常情况
-}
+func TestCarbon_ParseByFormat(t *testing.T) {
+	assert := assert.New(t)
 
-func TestCarbon_ParseByFormat1(t *testing.T) {
-	for _, v := range ParseByFormatTests {
-		output := ParseByFormat(v.input, v.format)
+	tests := []struct {
+		id     int    // 测试id
+		input  string // 输入值
+		format string // 输入参数
+		output string // 期望输出值
+	}{
+		{1, "", "Y|m|d H:i:s", ""},
+		{2, "0", "Y|m|d H:i:s", ""},
+		{3, "0000-00-00", "Y|m|d H:i:s", ""},
+		{4, "00:00:00", "Y|m|d H:i:s", ""},
+		{5, "0000-00-00 00:00:00", "Y|m|d H:i:s", ""},
 
-		if output.Error != nil {
-			t.Logf("catch an exception in ParseByFormat():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
+		{6, "2020|08|05 13:14:15", "Y|m|d H:i:s", "2020-08-05 13:14:15"},
+		{7, "It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s", "2020-08-05 13:14:15"},
+		{8, "今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒", "2020-08-05 13:14:15"},
+	}
+
+	for _, test := range tests {
+		c := ParseByFormat(test.input, test.format)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-func TestCarbon_ParseByFormat2(t *testing.T) {
-	for _, v := range ParseByFormatTests {
-		output := SetTimezone("XXXX").ParseByFormat(v.input, v.format)
+func TestCarbon_ParseByLayout(t *testing.T) {
+	assert := assert.New(t)
 
-		if output.Error != nil {
-			t.Logf("catch an exception in ParseByFormat():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
+	tests := []struct {
+		id     int    // 测试id
+		input  string // 输入值
+		format string // 输入参数
+		output string // 期望输出值
+	}{
+		{1, "", "2006-01-02", ""},
+		{2, "0", "2006-01-02", ""},
+		{3, "0000-00-00", "2006-01-02", ""},
+		{4, "00:00:00", "15:04:05", ""},
+		{5, "0000-00-00 00:00:00", "2006-01-02 15:04:05", ""},
+
+		{6, "2020|08|05 13:14:15", "2006|01|02 15:04:05", "2020-08-05 13:14:15"},
+		{7, "It is 2020|08|05 13:14:15", "It is 2006|01|02 15:04:05", "2020-08-05 13:14:15"},
+		{8, "今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒", "2020-08-05 13:14:15"},
 	}
-}
 
-var ParseByLayoutTests = []struct {
-	input  string // 输入值
-	format string // 输入参数
-	output string // 期望输出值
-}{
-	{"2020|08|05 13:14:15", "2006|01|02 15:04:05", "2020-08-05 13:14:15"},
-	{"It is 2020|08|05 13:14:15", "It is 2006|01|02 15:04:05", "2020-08-05 13:14:15"},
-	{"今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒", "2020-08-05 13:14:15"},
-	{"12345678", "XXXX", ""}, // 异常情况
-}
-
-func TestCarbon_ParseByLayout1(t *testing.T) {
-	for _, v := range ParseByLayoutTests {
-		output := ParseByLayout(v.input, v.format)
-
-		if output.Error != nil {
-			t.Logf("catch an exception in ParseByLayout():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-}
-
-func TestCarbon_ParseByLayout2(t *testing.T) {
-	for _, v := range ParseByLayoutTests {
-		output := SetTimezone("XXXX").ParseByLayout(v.input, v.format)
-
-		if output.Error != nil {
-			t.Logf("catch an exception in ParseByLayout():%v", output.Error)
-		} else if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output.ToDateTimeString())
-		}
+	for _, test := range tests {
+		c := ParseByLayout(test.input, test.format)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }

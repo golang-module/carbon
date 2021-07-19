@@ -3,10 +3,14 @@ package carbon
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_StartOfCentury(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -15,6 +19,7 @@ func TestCarbon_StartOfCentury(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-01 00:00:00", "2000-01-01 00:00:00"},
 		{"2020-01-31 23:59:59", "2000-01-01 00:00:00"},
 		{"2020-02-01 13:14:15", "2000-01-01 00:00:00"},
@@ -22,17 +27,17 @@ func TestCarbon_StartOfCentury(t *testing.T) {
 		{"2020-02-29", "2000-01-01 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfCentury().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfCentury()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfCentury(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -41,6 +46,7 @@ func TestCarbon_EndOfCentury(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-01 00:00:00", "2999-12-31 23:59:59"},
 		{"2020-01-31 23:59:59", "2999-12-31 23:59:59"},
 		{"2020-02-01 13:14:15", "2999-12-31 23:59:59"},
@@ -48,17 +54,17 @@ func TestCarbon_EndOfCentury(t *testing.T) {
 		{"2020-02-29", "2999-12-31 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfCentury().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfCentury()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfDecade(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -67,6 +73,7 @@ func TestCarbon_StartOfDecade(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-31 23:59:59", "2020-01-01 00:00:00"},
 		{"2021-01-01 00:00:00", "2020-01-01 00:00:00"},
 		{"2029-01-31 23:59:59", "2020-01-01 00:00:00"},
@@ -75,17 +82,17 @@ func TestCarbon_StartOfDecade(t *testing.T) {
 		{"2020-02-29", "2020-01-01 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfDecade().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfDecade()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfDecade(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -94,6 +101,7 @@ func TestCarbon_EndOfDecade(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-31 23:59:59", "2029-12-31 23:59:59"},
 		{"2021-01-01 00:00:00", "2029-12-31 23:59:59"},
 		{"2029-01-31 23:59:59", "2029-12-31 23:59:59"},
@@ -102,17 +110,17 @@ func TestCarbon_EndOfDecade(t *testing.T) {
 		{"2020-02-29", "2029-12-31 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfDecade().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfDecade()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfYear(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -121,6 +129,7 @@ func TestCarbon_StartOfYear(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-01 00:00:00", "2020-01-01 00:00:00"},
 		{"2020-01-31 23:59:59", "2020-01-01 00:00:00"},
 		{"2020-02-01 13:14:15", "2020-01-01 00:00:00"},
@@ -128,17 +137,17 @@ func TestCarbon_StartOfYear(t *testing.T) {
 		{"2020-02-29", "2020-01-01 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfYear().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfYear()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfYear(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -147,6 +156,7 @@ func TestCarbon_EndOfYear(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-01 00:00:00", "2020-12-31 23:59:59"},
 		{"2020-01-31 23:59:59", "2020-12-31 23:59:59"},
 		{"2020-02-01 13:14:15", "2020-12-31 23:59:59"},
@@ -154,17 +164,17 @@ func TestCarbon_EndOfYear(t *testing.T) {
 		{"2020-02-29", "2020-12-31 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfYear().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfYear()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfQuarter(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -173,6 +183,7 @@ func TestCarbon_StartOfQuarter(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-01 00:00:00"},
 		{"2020-02-15 00:00:00", "2020-01-01 00:00:00"},
 		{"2020-03-15 00:00:00", "2020-01-01 00:00:00"},
@@ -187,17 +198,17 @@ func TestCarbon_StartOfQuarter(t *testing.T) {
 		{"2020-12-15", "2020-10-01 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfQuarter().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfQuarter()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfQuarter(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -206,6 +217,7 @@ func TestCarbon_EndOfQuarter(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-03-31 23:59:59"},
 		{"2020-02-15 00:00:00", "2020-03-31 23:59:59"},
 		{"2020-03-15 00:00:00", "2020-03-31 23:59:59"},
@@ -220,17 +232,17 @@ func TestCarbon_EndOfQuarter(t *testing.T) {
 		{"2020-12-15", "2020-12-31 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfQuarter().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfQuarter()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfMonth(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -239,6 +251,7 @@ func TestCarbon_StartOfMonth(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-01 00:00:00"},
 		{"2020-02-15 00:00:00", "2020-02-01 00:00:00"},
 		{"2020-03-15 00:00:00", "2020-03-01 00:00:00"},
@@ -253,17 +266,17 @@ func TestCarbon_StartOfMonth(t *testing.T) {
 		{"2020-12-15", "2020-12-01 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfMonth().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfMonth()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfMonth(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -272,6 +285,7 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-31 23:59:59"},
 		{"2020-02-15 00:00:00", "2020-02-29 23:59:59"},
 		{"2020-03-15 00:00:00", "2020-03-31 23:59:59"},
@@ -286,25 +300,26 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 		{"2020-12-15", "2020-12-31 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfMonth().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfMonth()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfWeek(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string       // 输入值
 		week   time.Weekday // 输入参数
 		output string       // 期望输出值
 	}{
 		{"", time.Sunday, ""},
-		{"00-00-00 00:00:00", time.Sunday, ""},
+		{"0000-00-00 00:00:00", time.Sunday, ""},
 		{"", time.Monday, ""},
-		{"00-00-00 00:00:00", time.Monday, ""},
+		{"0000-00-00 00:00:00", time.Monday, ""},
+
 		{"2021-06-13", time.Sunday, "2021-06-13 00:00:00"},
 		{"2021-06-14", time.Sunday, "2021-06-13 00:00:00"},
 		{"2021-06-18", time.Sunday, "2021-06-13 00:00:00"},
@@ -315,46 +330,50 @@ func TestCarbon_StartOfWeek(t *testing.T) {
 		{"2021-06-20", time.Monday, "2021-06-14 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfWeek(v.week).ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfWeek(test.week)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfWeek(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string       // 输入值
 		week   time.Weekday // 输入参数
 		output string       // 期望输出值
 	}{
 		{"", time.Sunday, ""},
-		{"00-00-00 00:00:00", time.Sunday, ""},
+		{"0000-00-00 00:00:00", time.Sunday, ""},
 		{"", time.Monday, ""},
-		{"00-00-00 00:00:00", time.Monday, ""},
+		{"0000-00-00 00:00:00", time.Monday, ""},
+
 		{"2021-06-13", time.Sunday, "2021-06-19 23:59:59"},
 		{"2021-06-14", time.Sunday, "2021-06-19 23:59:59"},
 		{"2021-06-18", time.Sunday, "2021-06-19 23:59:59"},
+		{"2021-07-17", time.Sunday, "2021-07-17 23:59:59"},
+		{"2021-07-18", time.Sunday, "2021-07-24 23:59:59"},
 		{"2021-06-13", time.Monday, "2021-06-13 23:59:59"},
 		{"2021-06-14", time.Monday, "2021-06-20 23:59:59"},
 		{"2021-06-18", time.Monday, "2021-06-20 23:59:59"},
 		{"2021-06-19", time.Monday, "2021-06-20 23:59:59"},
-		{"2021-06-20", time.Monday, "2021-06-20 23:59:59"},
+		{"2021-07-17", time.Monday, "2021-07-18 23:59:59"},
+		{"2021-07-18", time.Monday, "2021-07-18 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfWeek(v.week).ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfWeek(test.week)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfDay(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -363,6 +382,7 @@ func TestCarbon_StartOfDay(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 00:00:00"},
 		{"2020-02-15 00:00:00", "2020-02-15 00:00:00"},
 		{"2020-03-15 00:00:00", "2020-03-15 00:00:00"},
@@ -377,17 +397,17 @@ func TestCarbon_StartOfDay(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfDay().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfDay()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfDay(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -396,6 +416,7 @@ func TestCarbon_EndOfDay(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 23:59:59"},
 		{"2020-02-15 00:00:00", "2020-02-15 23:59:59"},
 		{"2020-03-15 00:00:00", "2020-03-15 23:59:59"},
@@ -410,17 +431,17 @@ func TestCarbon_EndOfDay(t *testing.T) {
 		{"2020-12-15", "2020-12-15 23:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfDay().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfDay()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfHour(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -429,6 +450,7 @@ func TestCarbon_StartOfHour(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 00:00:00"},
 		{"2020-02-15 00:00:00", "2020-02-15 00:00:00"},
 		{"2020-03-15 00:00:00", "2020-03-15 00:00:00"},
@@ -443,17 +465,17 @@ func TestCarbon_StartOfHour(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfHour().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfHour()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfHour(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -462,6 +484,7 @@ func TestCarbon_EndOfHour(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 00:59:59"},
 		{"2020-02-15 00:00:00", "2020-02-15 00:59:59"},
 		{"2020-03-15 00:00:00", "2020-03-15 00:59:59"},
@@ -476,17 +499,17 @@ func TestCarbon_EndOfHour(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:59:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfHour().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfHour()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfMinute(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -495,6 +518,7 @@ func TestCarbon_StartOfMinute(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 00:00:00"},
 		{"2020-02-15 00:00:00", "2020-02-15 00:00:00"},
 		{"2020-03-15 00:00:00", "2020-03-15 00:00:00"},
@@ -509,17 +533,17 @@ func TestCarbon_StartOfMinute(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:00"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfMinute().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfMinute()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_EndOfMinute(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -528,6 +552,7 @@ func TestCarbon_EndOfMinute(t *testing.T) {
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00", "2020-01-15 00:00:59"},
 		{"2020-02-15 00:00:00", "2020-02-15 00:00:59"},
 		{"2020-03-15 00:00:00", "2020-03-15 00:00:59"},
@@ -542,17 +567,17 @@ func TestCarbon_EndOfMinute(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:59"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfMinute().ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfMinute()
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output)
 	}
 }
 
 func TestCarbon_StartOfSecond(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -560,7 +585,8 @@ func TestCarbon_StartOfSecond(t *testing.T) {
 		{"0", ""},
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
-		{"0000-00-00 00:00:00.123", ""},
+		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00.123", "2020-01-15 00:00:00.0"},
 		{"2020-02-15 00:00:00.123", "2020-02-15 00:00:00.0"},
 		{"2020-03-15 00:00:00.123", "2020-03-15 00:00:00.0"},
@@ -575,17 +601,17 @@ func TestCarbon_StartOfSecond(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:00.0"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).StartOfSecond().Format("Y-m-d H:i:s.u")
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).StartOfSecond()
+		assert.Nil(c.Error)
+		assert.Equal(c.Format("Y-m-d H:i:s.u"), test.output)
 	}
 }
 
 func TestCarbon_EndOfSecond(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
 		output string // 期望输出值
 	}{
@@ -593,7 +619,8 @@ func TestCarbon_EndOfSecond(t *testing.T) {
 		{"0", ""},
 		{"0000-00-00", ""},
 		{"00:00:00", ""},
-		{"0000-00-00 00:00:00.123", ""},
+		{"0000-00-00 00:00:00", ""},
+
 		{"2020-01-15 00:00:00.123", "2020-01-15 00:00:00.999"},
 		{"2020-02-15 00:00:00.123", "2020-02-15 00:00:00.999"},
 		{"2020-03-15 00:00:00.123", "2020-03-15 00:00:00.999"},
@@ -608,11 +635,9 @@ func TestCarbon_EndOfSecond(t *testing.T) {
 		{"2020-12-15", "2020-12-15 00:00:00.999"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).EndOfSecond().Format("Y-m-d H:i:s.u")
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).EndOfSecond()
+		assert.Nil(c.Error)
+		assert.Equal(c.Format("Y-m-d H:i:s.u"), test.output)
 	}
 }

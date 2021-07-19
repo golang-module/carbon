@@ -2,60 +2,47 @@ package carbon
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestLanguage_SetLocale(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
-		output bool   // 期望输出值
+		output error  // 期望输出值
 	}{
-		{"en", true},
-		{"zh-CN", true},
-		{"zh-XX", false},
+		{"en", nil},
+		{"zh-CN", nil},
 	}
 
-	for _, v := range Tests {
-		output := NewLanguage().SetLocale(v.input)
-
-		if output == nil {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		assert.ErrorIs(NewLanguage().SetLocale(test.input), test.output)
 	}
 }
 
 func TestLanguage_SetDir(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
 		input  string // 输入值
-		output bool   // 期望输出值
+		output error  // 期望输出值
 	}{
-		{"lang", true},
-		{"xxxx", false},
+		{"lang", nil},
 	}
 
-	for _, v := range Tests {
-		output := NewLanguage().SetDir(v.input)
-
-		if output == nil {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		assert.ErrorIs(NewLanguage().SetDir(test.input), test.output)
 	}
 }
 
-func TestLanguage_SetResources(t *testing.T) {
+func TestLanguage_SetResources1(t *testing.T) {
+	assert := assert.New(t)
+
 	lang := NewLanguage()
 	resources := map[string]string{
+		"seasons":  "spring|summer|autumn|winter",
 		"year":     "1 yr|%d yrs",
 		"month":    "1 mo|%d mos",
 		"week":     "%dw",
@@ -71,7 +58,7 @@ func TestLanguage_SetResources(t *testing.T) {
 	}
 	lang.SetResources(resources)
 
-	Tests := []struct {
+	tests := []struct {
 		input  Carbon // 输入值
 		output string // 期望输出值
 	}{
@@ -92,11 +79,60 @@ func TestLanguage_SetResources(t *testing.T) {
 		{Now().SubDays(10), "1w ago"},
 	}
 
-	for _, v := range Tests {
-		output := (v.input).SetLanguage(lang).DiffForHumans()
+	for _, test := range tests {
+		c := test.input.SetLanguage(lang)
+		assert.Nil(c.Error)
+		assert.Equal(c.DiffForHumans(), test.output)
+	}
+}
 
-		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input.ToDateTimeString(), v.output, output)
-		}
+func TestLanguage_SetResources2(t *testing.T) {
+	assert := assert.New(t)
+
+	lang := NewLanguage()
+	resources := map[string]string{
+		"xxx": "xxxx",
+	}
+	lang.SetResources(resources)
+
+	tests := []struct {
+		input  string // 输入值
+		output string // 期望输出值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+
+		{"0000-00-00 00:00:00", ""},
+		{"2021-08-05 13:14:15", ""},
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).DiffForHumans(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).Constellation(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).Season(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).ToWeekString(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).ToShortWeekString(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).ToMonthString(), test.output)
+	}
+
+	for _, test := range tests {
+		assert.Equal(Parse(test.input).SetLanguage(lang).ToShortMonthString(), test.output)
 	}
 }

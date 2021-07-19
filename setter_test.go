@@ -1,278 +1,248 @@
 package carbon
 
 import (
-	"fmt"
+	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
-var TimezoneTests = []struct {
-	input    string // 输入值
-	timezone string // 输入参数
-	output   string // 期望输出值
-}{
-	{"2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
-	{"2020-08-05", Tokyo, "2020-08-05 00:00:00"},
-	{"2020-08-05", "Hangzhou", "panic"}, // 异常情况
-}
+func TestCarbon_SetTimezone(t *testing.T) {
+	assert := assert.New(t)
 
-func TestCarbon_SetTimezone1(t *testing.T) {
-	for _, v := range TimezoneTests {
-		output := SetTimezone(v.timezone).Parse(v.input)
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		timezone string // 输入参数
+		output   string // 期望输出值
+	}{
+		{1, "2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
+		{2, "2020-08-05", Tokyo, "2020-08-05 00:00:00"},
+	}
 
-		if output.Error != nil {
-			fmt.Println("catch an exception in SetTimezone():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output.ToDateTimeString())
-		}
+	for _, test := range tests {
+		c := SetTimezone(test.timezone).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-func TestCarbon_SetTimezone2(t *testing.T) {
-	for _, v := range TimezoneTests {
-		output := SetTimezone(PRC).SetTimezone(v.timezone).Parse(v.input)
-
-		if output.Error != nil {
-			fmt.Println("catch an exception in SetTimezone():", output.Error)
-			return
-		}
-
-		if output.ToDateTimeString() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-}
-
-var LocaleTests = []struct {
-	input  string // 输入参数
-	output string // 期望输出值
-}{
-	{"en", "en"},
-	{"zh-CN", "zh-CN"},
-	{"XXXX", "panic"}, // 异常情况
-}
-
-func TestCarbon_SetLocale(t *testing.T) {
-	for _, v := range LocaleTests {
-		output := SetLocale(v.input)
-
-		if output.Error != nil {
-			fmt.Println("catch an exception in SetLocale():", output.Error)
-			return
-		}
-
-		if output.Locale() != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output.ToDateTimeString())
-		}
-	}
-}
-
-func TestCarbon_SetLanguage1(t *testing.T) {
+func TestCarbon_SetLanguage(t *testing.T) {
 	lang := NewLanguage()
 	resources := map[string]string{
-		"day": "%dd",
+		"seasons": "spring|summer|autumn|winter",
 	}
+
 	if lang.SetLocale("en") == nil {
 		lang.SetResources(resources)
 	}
 
-	Tests := []struct {
-		input  Carbon // 输入值
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
+		input  string // 输入值
 		output string // 期望输出值
 	}{
-		{Now(), "just now"},
-		{Now().AddYears(1), "1 year from now"},
-		{Now().SubYears(1), "1 year ago"},
-		{Now().AddYears(10), "10 years from now"},
-		{Now().SubYears(10), "10 years ago"},
-
-		{Now().AddMonths(1), "1 month from now"},
-		{Now().SubMonths(1), "1 month ago"},
-		{Now().AddMonths(10), "10 months from now"},
-		{Now().SubMonths(10), "10 months ago"},
-
-		{Now().AddDays(1), "1d from now"},
-		{Now().SubDays(1), "1d ago"},
-		{Now().AddDays(10), "1 week from now"},
-		{Now().SubDays(10), "1 week ago"},
+		{1, "", ""},
+		{2, "2020-08-05", "summer"},
 	}
 
-	for _, v := range Tests {
-		output := (v.input).SetLanguage(lang).DiffForHumans()
-
-		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input.ToDateTimeString(), v.output, output)
-		}
-	}
-}
-
-func TestCarbon_SetLanguage2(t *testing.T) {
-	lang := NewLanguage()
-	resources := map[string]string{
-		"year":     "1 yr|%d yrs",
-		"month":    "1 mo|%d mos",
-		"week":     "%dw",
-		"day":      "%dd",
-		"hour":     "%dh",
-		"minute":   "%dm",
-		"second":   "%ds",
-		"now":      "just now",
-		"ago":      "%s ago",
-		"from_now": "in %s",
-		"before":   "%s before",
-		"after":    "%s after",
-	}
-	lang.SetResources(resources)
-
-	Tests := []struct {
-		input  Carbon // 输入值
-		output string // 期望输出值
-	}{
-		{Now(), "just now"},
-		{Now().AddYears(1), "in 1 yr"},
-		{Now().SubYears(1), "1 yr ago"},
-		{Now().AddYears(10), "in 10 yrs"},
-		{Now().SubYears(10), "10 yrs ago"},
-
-		{Now().AddMonths(1), "in 1 mo"},
-		{Now().SubMonths(1), "1 mo ago"},
-		{Now().AddMonths(10), "in 10 mos"},
-		{Now().SubMonths(10), "10 mos ago"},
-
-		{Now().AddDays(1), "in 1d"},
-		{Now().SubDays(1), "1d ago"},
-		{Now().AddDays(10), "in 1w"},
-		{Now().SubDays(10), "1w ago"},
+	for _, test := range tests {
+		c := SetLanguage(lang).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.Season(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 
-	for _, v := range Tests {
-		output := (v.input).SetLanguage(lang).DiffForHumans()
-
-		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input.ToDateTimeString(), v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetLanguage(lang)
+		assert.Nil(c.Error)
+		assert.Equal(c.Season(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetYear(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		year   int    // 输入参数
 		output string // 期望输出值
 	}{
-		{"2020-01-01", 2019, "2019-01-01"},
-		{"2020-01-31", 2019, "2019-01-31"},
-		{"2020-02-01", 2019, "2019-02-01"},
-		{"2020-02-28", 2019, "2019-02-28"},
-		{"2020-02-29", 2019, "2019-03-01"},
+		{1, "2020-01-01", 2019, "2019-01-01"},
+		{2, "2020-01-31", 2019, "2019-01-31"},
+		{3, "2020-02-01", 2019, "2019-02-01"},
+		{4, "2020-02-28", 2019, "2019-02-28"},
+		{5, "2020-02-29", 2019, "2019-03-01"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetYear(v.year).ToDateString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetYear(test.year)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetMonth(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		month  int    // 输入参数
 		output string // 期望输出值
 	}{
-		{"2020-01-01", 2, "2020-02-01"},
-		{"2020-01-30", 2, "2020-03-01"},
-		{"2020-01-31", 2, "2020-03-02"},
-		{"2020-08-05", 2, "2020-02-05"},
+		{1, "2020-01-01", 2, "2020-02-01"},
+		{2, "2020-01-30", 2, "2020-03-01"},
+		{3, "2020-01-31", 2, "2020-03-02"},
+		{4, "2020-08-05", 2, "2020-02-05"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetMonth(v.month).ToDateString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetMonth(test.month)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetDay(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		day    int    // 输入参数
 		output string // 期望输出值
 	}{
-		{"2020-01-01", 31, "2020-01-31"},
-		{"2020-02-01", 31, "2020-03-02"},
-		{"2020-02-28", 31, "2020-03-02"},
-		{"2020-02-29", 31, "2020-03-02"},
+		{1, "2020-01-01", 31, "2020-01-31"},
+		{2, "2020-02-01", 31, "2020-03-02"},
+		{3, "2020-02-28", 31, "2020-03-02"},
+		{4, "2020-02-29", 31, "2020-03-02"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetDay(v.day).ToDateString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetDay(test.day)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetHour(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		hour   int    // 输入参数
 		output string // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", 10, "2020-08-05 10:14:15"},
-		{"2020-08-05 13:14:15", 24, "2020-08-06 00:14:15"},
+		{1, "2020-08-05 13:14:15", 10, "2020-08-05 10:14:15"},
+		{2, "2020-08-05 13:14:15", 24, "2020-08-06 00:14:15"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetHour(v.hour).ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetHour(test.hour)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetMinute(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		minute int    // 输入参数
 		output string // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", 10, "2020-08-05 13:10:15"},
-		{"2020-08-05 13:14:15", 60, "2020-08-05 14:00:15"},
+		{1, "2020-08-05 13:14:15", 10, "2020-08-05 13:10:15"},
+		{2, "2020-08-05 13:14:15", 60, "2020-08-05 14:00:15"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetMinute(v.minute).ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetMinute(test.minute)
+		assert.Nil(c.Error)
+		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_SetSecond(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		second int    // 输入参数
-		output string // 期望输出值
+		output int    // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", 10, "2020-08-05 13:14:10"},
-		{"2020-08-05 13:14:15", 60, "2020-08-05 13:15:00"},
+		{1, "2020-08-05 13:14:15", 10, 10},
+		{2, "2020-08-05 13:14:15", 59, 59},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).SetSecond(v.second).ToDateTimeString()
+	for _, test := range tests {
+		c := Parse(test.input).SetSecond(test.second)
+		assert.Nil(c.Error)
+		assert.Equal(c.Second(), test.output, "Current test id is "+strconv.Itoa(test.id))
+	}
+}
 
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+func TestCarbon_SetMillisecond(t *testing.T) {
+	assert := assert.New(t)
+	tests := []struct {
+		id          int    // 测试id
+		input       string // 输入值
+		millisecond int    // 输入参数
+		output      int    // 期望输出值
+	}{
+		{1, "2020-08-05 13:14:15", 100, 100},
+		{2, "2020-08-05 13:14:15", 999, 999},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SetMillisecond(test.millisecond)
+		assert.Nil(c.Error)
+		assert.Equal(c.Millisecond(), test.output, "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SetMicrosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id          int    // 测试id
+		input       string // 输入值
+		microsecond int    // 输入参数
+		output      int    // 期望输出值
+	}{
+		{1, "2020-08-05 13:14:15", 100000, 100000},
+		{2, "2020-08-05 13:14:15", 999999, 999999},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SetMicrosecond(test.microsecond)
+		assert.Nil(c.Error)
+		assert.Equal(c.Microsecond(), test.output, "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SetNanosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id         int    // 测试id
+		input      string // 输入值
+		nanosecond int    // 输入参数
+		output     int    // 期望输出值
+	}{
+		{1, "2020-08-05 13:14:15", 100000000, 100000000},
+		{2, "2020-08-05 13:14:15", 999999999, 999999999},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SetNanosecond(test.nanosecond)
+		assert.Nil(c.Error)
+		assert.Equal(c.Nanosecond(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
