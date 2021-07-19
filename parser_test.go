@@ -31,7 +31,7 @@ func TestCarbon_Parse(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(c.ToDateTimeStringWithTimezone(PRC), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
