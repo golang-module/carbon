@@ -3,6 +3,7 @@ package carbon
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -40,7 +41,14 @@ func format2layout(format string) string {
 		if layout, ok := formats[byte(runes[i])]; ok {
 			buffer.WriteString(layout)
 		} else {
-			buffer.WriteRune(runes[i])
+			switch runes[i] {
+			case '\\': // 原样输出，不解析
+				buffer.WriteRune(runes[i+1])
+				i++
+				continue
+			default:
+				buffer.WriteRune(runes[i])
+			}
 		}
 	}
 	return buffer.String()
@@ -50,7 +58,7 @@ func format2layout(format string) string {
 func getLocationByTimezone(timezone string) (*time.Location, error) {
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
-		err = errors.New("invalid timezone \"" + timezone + "\", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone")
+		err = errors.New(fmt.Sprintf("invalid timezone %q, please see the file %q for all valid timezones", timezone, "$GOROOT/lib/time/zoneinfo.zip"))
 	}
 	return loc, err
 }
@@ -59,7 +67,7 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 func parseByDuration(duration string) (time.Duration, error) {
 	td, err := time.ParseDuration(duration)
 	if err != nil {
-		err = errors.New("invalid duration \"" + duration + "\"")
+		err = errors.New(fmt.Sprintf("invalid duration %q, please make sure the duration is valid", duration))
 	}
 	return td, err
 }
