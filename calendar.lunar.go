@@ -121,7 +121,7 @@ func (l lunar) getDaysInYear() int {
 			sum++
 		}
 	}
-	return (sum + l.getDaysInLeapMonth())
+	return sum + l.getDaysInLeapMonth()
 }
 
 // getDaysInMonth 获取该月总天数
@@ -201,7 +201,7 @@ func (l lunar) LeapMonth() int {
 	if l.year == 0 {
 		return 0
 	}
-	return (lunarTerms[l.year-minYear] & 0xf)
+	return lunarTerms[l.year-minYear] & 0xf
 }
 
 // Day 获取农历日
@@ -248,6 +248,22 @@ func (l lunar) ToDayString() string {
 	return day
 }
 
+// ToString 获取农历年月日字符串
+func (l lunar) ToString() string {
+	if l.year == 0 {
+		return ""
+	}
+	return l.String()
+}
+
+// String 实现 Stringer 接口
+func (l lunar) String() string {
+	if l.year == 0 {
+		return ""
+	}
+	return l.ToYearString() + "年" + l.ToMonthString() + "月" + l.ToDayString()
+}
+
 // IsLeapYear 是否是闰年
 func (l lunar) IsLeapYear() bool {
 	if l.year == 0 {
@@ -258,9 +274,6 @@ func (l lunar) IsLeapYear() bool {
 
 // IsLeapMonth 是否是闰月
 func (l lunar) IsLeapMonth() bool {
-	if l.year == 0 {
-		return false
-	}
 	if l.month == 0 {
 		return false
 	}
