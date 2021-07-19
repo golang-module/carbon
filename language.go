@@ -3,6 +3,7 @@ package carbon
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -11,7 +12,7 @@ import (
 
 var (
 	// 默认目录
-	defaultDir = "lang"
+	defaultDir = "./lang"
 	// 默认区域
 	defaultLocale = "en"
 )
@@ -39,10 +40,10 @@ func (lang *Language) SetLocale(locale string) error {
 	fileName := lang.dir + string(os.PathSeparator) + locale + ".json"
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		return errors.New("invalid locale \"" + locale + "\", please see the " + lang.dir + " directory for all valid locale")
+		return errors.New(fmt.Sprintf("invalid locale %q, please see the directory %q for all valid locales", locale, lang.dir))
 	}
 	if err := json.Unmarshal(bytes, &lang.resources); err != nil {
-		return err
+		return errors.New(fmt.Sprintf("invalid file %q, please make sure the json file is valid", fileName))
 	}
 	lang.locale = locale
 	return nil
@@ -52,7 +53,7 @@ func (lang *Language) SetLocale(locale string) error {
 func (lang *Language) SetDir(dir string) error {
 	fi, err := os.Stat(dir)
 	if err != nil || !fi.IsDir() {
-		return errors.New("invalid directory \"" + dir + "\", please make sure the directory exists")
+		return errors.New(fmt.Sprintf("invalid directory %q, please make sure the directory exists", dir))
 	}
 	lang.dir = dir
 	return nil
@@ -73,8 +74,8 @@ func (lang *Language) SetResources(resources map[string]string) {
 
 // translate 翻译转换
 func (lang *Language) translate(unit string, diff int64) string {
-	if len(lang.resources) == 0 && lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(lang.resources) == 0 {
+		lang.SetLocale(defaultLocale)
 	}
 	slice := strings.Split(lang.resources[unit], "|")
 	if len(slice) == 1 {
