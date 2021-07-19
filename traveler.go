@@ -5,7 +5,7 @@ import "time"
 // AddDurations 按照持续时间字符串增加时间
 // 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
-	if c.Error != nil {
+	if c.IsZero() {
 		return c
 	}
 	td, err := parseByDuration(duration)
@@ -62,12 +62,18 @@ func (c Carbon) SubCenturyNoOverflow() Carbon {
 
 // AddYears N年后
 func (c Carbon) AddYears(years int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	c.Time = c.Time.AddDate(years, 0, 0)
 	return c
 }
 
 // AddYearsNoOverflow N年后(月份不溢出)
 func (c Carbon) AddYearsNoOverflow(years int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	// 获取N年后本月的最后一天
 	last := time.Date(c.Year()+years, time.Month(c.Month()), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
 	day := c.Day()
@@ -90,6 +96,9 @@ func (c Carbon) AddYearNoOverflow() Carbon {
 
 // SubYears N年前
 func (c Carbon) SubYears(years int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	return c.AddYears(-years)
 }
 
@@ -150,12 +159,18 @@ func (c Carbon) SubQuarterNoOverflow() Carbon {
 
 // AddMonths N月后
 func (c Carbon) AddMonths(months int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	c.Time = c.Time.In(c.Loc).AddDate(0, months, 0)
 	return c
 }
 
 // AddMonthsNoOverflow N月后(月份不溢出)
 func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	month := c.Time.Month() + time.Month(months)
 	// 获取N月后的最后一天
 	last := time.Date(c.Year(), month, 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
@@ -219,6 +234,9 @@ func (c Carbon) SubWeek() Carbon {
 
 // AddDays N天后
 func (c Carbon) AddDays(days int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	c.Time = c.Time.In(c.Loc).AddDate(0, 0, days)
 	return c
 }
@@ -240,6 +258,9 @@ func (c Carbon) SubDay() Carbon {
 
 // AddHours N小时后
 func (c Carbon) AddHours(hours int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	td := time.Duration(hours) * time.Hour
 	c.Time = c.Time.Add(td)
 	return c
@@ -262,6 +283,9 @@ func (c Carbon) SubHour() Carbon {
 
 // AddMinutes N分钟后
 func (c Carbon) AddMinutes(minutes int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	td := time.Duration(minutes) * time.Minute
 	c.Time = c.Time.Add(td)
 	return c
@@ -284,6 +308,9 @@ func (c Carbon) SubMinute() Carbon {
 
 // AddSeconds N秒钟后
 func (c Carbon) AddSeconds(seconds int) Carbon {
+	if c.IsZero() {
+		return c
+	}
 	td := time.Duration(seconds) * time.Second
 	c.Time = c.Time.Add(td)
 	return c

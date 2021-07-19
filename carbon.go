@@ -1,9 +1,10 @@
 // @Title carbon
 // @Description A simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.4.2
+// @Version v1.4.3
 // @Author gouguoyin
-// @Email mail@gouguoyin.cn
+// @Blog www.gouguoyin.cn
+// @Email contact@gouguoyin.cn
 
 package carbon
 

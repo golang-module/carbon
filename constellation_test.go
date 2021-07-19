@@ -1,398 +1,382 @@
 package carbon
 
 import (
+	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_Constellation1(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值1
 		output string // 期望输出值
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"2020-01-05", "Capricorn"},
-		{"2020-02-05", "Aquarius"},
-		{"2020-03-05", "Pisces"},
-		{"2020-04-05", "Aries"},
-		{"2020-05-05", "Taurus"},
-		{"2020-06-05", "Gemini"},
-		{"2020-07-05", "Cancer"},
-		{"2020-08-05", "Leo"},
-		{"2020-09-05", "Virgo"},
-		{"2020-10-05", "Libra"},
-		{"2020-11-05", "Scorpio"},
-		{"2020-12-05", "Sagittarius"},
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-01-05", "Capricorn"},
+		{7, "2020-02-05", "Aquarius"},
+		{8, "2020-03-05", "Pisces"},
+		{9, "2020-04-05", "Aries"},
+		{10, "2020-05-05", "Taurus"},
+		{11, "2020-06-05", "Gemini"},
+		{12, "2020-07-05", "Cancer"},
+		{13, "2020-08-05", "Leo"},
+		{14, "2020-09-05", "Virgo"},
+		{15, "2020-10-05", "Libra"},
+		{16, "2020-11-05", "Scorpio"},
+		{17, "2020-12-05", "Sagittarius"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).Constellation()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.Constellation(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-func TestCarbon_Constellation(t *testing.T) {
-	Tests := []struct {
-		input1 string // 输入值1
-		input2 string // 输入值2
+func TestCarbon_Constellation2(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
+		input  string // 输入值
+		param  string // 参数值
 		output string // 期望输出值
 	}{
-		{"", "en", ""},
-		{"0", "en", ""},
-		{"0000-00-00", "en", ""},
-		{"2020-08-05", "en", "Leo"},
-		{"2020-08-05", "zh-CN", "狮子座"},
-		{"2020-08-05", "zh-Tw", "獅子座"},
-		{"2020-08-05", "jp", "ししざ"},
-		{"2020-08-05", "kr", "처녀자리"},
+		{1, "", "en", ""},
+		{2, "0", "en", ""},
+		{3, "0000-00-00", "en", ""},
+		{4, "2020-08-05", "en", "Leo"},
+		{5, "2020-08-05", "zh-CN", "狮子座"},
+		{6, "2020-08-05", "zh-Tw", "獅子座"},
+		{7, "2020-08-05", "jp", "ししざ"},
+		{8, "2020-08-05", "kr", "처녀자리"},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input1).SetLocale(v.input2).Constellation()
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s", v.input1, v.output, output)
-		}
+	for _, test := range tests {
+		c := Parse(test.input).SetLocale(test.param)
+		assert.Nil(c.Error)
+		assert.Equal(c.Constellation(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsAries(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-03-21", true},
-		{"2020-04-19", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-03-21", true},
+		{7, "2020-04-19", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsAries()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsAries(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsTaurus(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-04-20", true},
-		{"2020-05-20", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-04-20", true},
+		{7, "2020-05-20", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsTaurus()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsTaurus(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsGemini(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-05-21", true},
-		{"2020-06-21", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-05-21", true},
+		{7, "2020-06-21", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsGemini()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsGemini(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsCancer(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-06-22", true},
-		{"2020-07-22", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-06-22", true},
+		{7, "2020-07-22", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsCancer()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsCancer(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsLeo(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-07-23", true},
-		{"2020-08-05", true},
-		{"2020-08-22", true},
-		{"2020-08-23", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-07-23", true},
+		{7, "2020-08-05", true},
+		{8, "2020-08-22", true},
+		{9, "2020-08-23", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsLeo()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsLeo(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsVirgo(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-08-23", true},
-		{"2020-09-22", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-08-23", true},
+		{7, "2020-09-22", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsVirgo()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsVirgo(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsLibra(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-09-23", true},
-		{"2020-10-23", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-09-23", true},
+		{7, "2020-10-23", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsLibra()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsLibra(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsScorpio(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-10-24", true},
-		{"2020-11-22", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-10-24", true},
+		{7, "2020-11-22", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsScorpio()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsScorpio(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsSagittarius(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-11-23", true},
-		{"2020-12-21", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-11-23", true},
+		{7, "2020-12-21", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsSagittarius()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsSagittarius(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsCapricorn(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-12-22", true},
-		{"2020-01-19", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-12-22", true},
+		{7, "2020-01-19", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsCapricorn()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsCapricorn(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsAquarius(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-01-20", true},
-		{"2020-02-18", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-01-20", true},
+		{7, "2020-02-18", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsAquarius()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsAquarius(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_IsPisces(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		output bool   // 期望输出值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"2020-02-19", true},
-		{"2020-03-20", true},
-		{"2020-08-05", false},
+		{1, "", false},
+		{2, "0", false},
+		{3, "0000-00-00", false},
+		{4, "00:00:00", false},
+		{5, "0000-00-00 00:00:00", false},
+
+		{6, "2020-02-19", true},
+		{7, "2020-03-20", true},
+		{8, "2020-08-05", false},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).IsPisces()
-
-		if output == true {
-			if v.output == false {
-				t.Errorf("Input %s, expected true, but got false\n", v.input)
-			}
-		} else {
-			if v.output == true {
-				t.Errorf("Input %s, expected false, but got true\n", v.input)
-			}
-		}
+	for _, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(c.IsPisces(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }

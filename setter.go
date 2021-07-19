@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // SetTimezone 设置时区
 func (c Carbon) SetTimezone(name string) Carbon {
@@ -17,13 +19,7 @@ func SetTimezone(name string) Carbon {
 
 // SetLanguage 设置语言对象
 func (c Carbon) SetLanguage(lang *Language) Carbon {
-	if len(c.Lang.resources) == 0 {
-		c.Lang = lang
-		return c
-	}
-	for k, v := range lang.resources {
-		c.Lang.resources[k] = v
-	}
+	c.Lang = lang
 	return c
 }
 
@@ -93,7 +89,7 @@ func (c Carbon) SetMillisecond(millisecond int) Carbon {
 
 // SetMicrosecond 设置微秒
 func (c Carbon) SetMicrosecond(microsecond int) Carbon {
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e9, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e3, c.Loc)
 	return c
 }
 

@@ -10,8 +10,8 @@ func (c Carbon) Season() string {
 	if c.IsZero() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 && c.Lang.SetLocale(defaultLocale) != nil {
-		return ""
+	if len(c.Lang.resources) == 0 {
+		c.Lang.SetLocale(defaultLocale)
 	}
 	index := -1
 	switch {

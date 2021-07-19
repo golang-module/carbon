@@ -8,6 +8,9 @@ import (
 // CreateFromTimestamp 从时间戳创建 Carbon 实例
 func (c Carbon) CreateFromTimestamp(timestamp int64) Carbon {
 	ts := timestamp
+	if ts == 0 {
+		return c
+	}
 	switch len(strconv.FormatInt(timestamp, 10)) {
 	case 10:
 		ts = timestamp

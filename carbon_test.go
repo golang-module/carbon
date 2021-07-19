@@ -3,87 +3,56 @@ package carbon
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_Now(t *testing.T) {
-	expected := time.Now().Format(DateTimeFormat)
+	assert := assert.New(t)
 
-	output := Now().Time.Format(DateTimeFormat)
-
-	if expected != output {
-		t.Fatalf("Expected %s, but got %s", expected, output)
-	}
-
-	output = SetTimezone(PRC).Now().Time.Format(DateTimeFormat)
-
-	if expected != output {
-		t.Fatalf("Expected %s, but got %s", expected, output)
-	}
-
+	actual := time.Now().Format(DateFormat)
+	expected := Now().ToDateString()
+	assert.Equal(expected, actual)
 }
 
 func TestCarbon_Yesterday(t *testing.T) {
-	expected := time.Now().AddDate(0, 0, -1).Format(DateTimeFormat)
+	assert := assert.New(t)
 
-	output := Yesterday().Time.Format(DateTimeFormat)
+	c1 := Yesterday()
+	actual := time.Now().AddDate(0, 0, -1).Format(DateFormat)
+	assert.Nil(c1.Error)
+	assert.Equal(c1.ToDateString(), actual)
 
-	if expected != output {
-		t.Fatalf("Expected %s, but got %s", expected, output)
-	}
-
-	output = SetTimezone(PRC).Parse("2020-08-05").Yesterday().Time.Format(DateFormat)
-
-	if "2020-08-04" != output {
-		t.Fatalf("Expected %s, but got %s", expected, output)
-	}
+	c2 := Parse("2020-08-05").Yesterday()
+	assert.Nil(c2.Error)
+	assert.Equal(c2.ToDateString(), "2020-08-04", "It should be equal to 2020-08-04")
 }
 
 func TestCarbon_Tomorrow(t *testing.T) {
-	expected := time.Now().AddDate(0, 0, 1).Format(DateTimeFormat)
+	assert := assert.New(t)
 
-	output := Tomorrow().Time.Format(DateTimeFormat)
+	c1 := Tomorrow()
+	actual := time.Now().AddDate(0, 0, 1).Format(DateFormat)
+	assert.Nil(c1.Error)
+	assert.Equal(c1.ToDateString(), actual)
 
-	if expected != output {
-		t.Errorf("Expected %s, but got %s", expected, output)
-	}
-
-	output = SetTimezone(PRC).Parse("2020-08-05").Tomorrow().Time.Format(DateFormat)
-
-	if "2020-08-06" != output {
-		t.Errorf("Expected %s, but got %s", expected, output)
-	}
+	c2 := Parse("2020-08-05").Tomorrow()
+	assert.Nil(c2.Error)
+	assert.Equal(c2.ToDateString(), "2020-08-06", "It should be equal to 2020-08-06")
 }
 
 func TestCarbon_Time2Carbon(t *testing.T) {
-	Tests := []struct {
-		time   time.Time // // 输入参数
-		output string    // 期望输出值
-	}{
-		{time.Now(), time.Now().Format(DateTimeFormat)},
-	}
+	assert := assert.New(t)
 
-	for _, v := range Tests {
-		output := Time2Carbon(v.time).ToDateTimeString()
-
-		if output != v.output {
-			t.Errorf("Expected %s, but got %s", v.output, output)
-		}
-	}
+	actual := time.Now().Format(DateTimeFormat)
+	expected := Time2Carbon(time.Now()).ToDateTimeString()
+	assert.Equal(expected, actual)
 }
 
 func TestCarbon_Carbon2Time(t *testing.T) {
-	Tests := []struct {
-		input  string // 输入值
-		output string // 期望输出值
-	}{
-		{"2020-08-05", "2020-08-05"},
-	}
+	assert := assert.New(t)
 
-	for _, v := range Tests {
-		output := Parse(v.input).Carbon2Time().Format("2006-01-02")
-
-		if output != v.output {
-			t.Errorf("Input %s, expected %s, but got %s\n", v.input, v.output, output)
-		}
-	}
+	actual := time.Now().Format(DateTimeFormat)
+	expected := Now().Carbon2Time().Format(DateTimeFormat)
+	assert.Equal(expected, actual)
 }

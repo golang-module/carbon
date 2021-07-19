@@ -32,6 +32,7 @@ import (
 ##### 昨天、今天、明天
 ```go
 // 今天此刻
+fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
 // 今天日期
 carbon.Now().ToDateString() // 2020-08-05
@@ -50,6 +51,7 @@ carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
 carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 01:14:15
 
 // 昨天此刻
+fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
 // 昨天日期
 carbon.Yesterday().ToDateString() // 2020-08-04
@@ -70,6 +72,7 @@ carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
 
 // 明天此刻
+fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
 // 明天日期
 carbon.Tomorrow().ToDateString() // 2020-08-06
@@ -122,9 +125,10 @@ carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00
 ```
 
 ##### 将特殊格式时间字符串解析成 Carbon 实例
+> 如果使用的字母与格式化字符冲突时，请使用\符号转义该字符
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByFormat("It is 2020-08-05 13:14:15", "It is Y-m-d H:i:s").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
@@ -604,12 +608,12 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc7231StringWithTimezone(carbon.LosAngele
 // 输出字符串
 fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
-// 输出格式化字符串，Format() 是 ToFormatString() 的简写
+// 输出格式化字符串，Format() 是 ToFormatString() 的简写(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
-
+carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is 2020-08-31 13:14:15
 ```
 >更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
 
@@ -760,6 +764,7 @@ carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 
 ##### 季节
 > 按照气象划分，即3-5月为春季，6-8月为夏季，9-11月为秋季，12-2月为冬季
+
 ```go
 // 获取季节
 carbon.Parse("2020-08-05 13:14:15").Season() // Summer
@@ -779,8 +784,9 @@ carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
-##### 农历
-> 目前仅支持公历`1900`年至`2100`年的`200`年时间
+#####  农历
+> 目前仅支持公元`1900`年至`2100`年的`200`年时间跨度
+
 ```go
 // 获取生肖
 carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
@@ -803,6 +809,9 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
 // 获取农历日字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
+// 获取农历年月日字符串
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 二零二零年六月十六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToString() // 二零二零年六月十六
 
 // 是否是农历闰年
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
@@ -835,7 +844,91 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
 ```
 
-##### 国际化
+##### JSON 支持
+
+###### 定义模型
+```go
+type Person struct {
+    ID  int64  `json:"id"`
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Birthday carbon.ToDateTimeString `json:"birthday"`
+    GraduatedAt carbon.ToDateString `json:"graduated_at"`
+    CreatedAt carbon.ToTimeString `json:"created_at"`
+    UpdatedAt carbon.ToTimestamp `json:"updated_at"`
+    DateTime1 carbon.ToTimestampWithSecond `json:"date_time1"`
+    DateTime2 carbon.ToTimestampWithMillisecond `json:"date_time2"`
+    DateTime3 carbon.ToTimestampWithMicrosecond `json:"date_time3"`
+    DateTime4 carbon.ToTimestampWithNanosecond `json:"date_time4"`
+}
+```
+
+###### 实例化模型
+```go
+person := Person {
+	ID:          153,
+	Name:        "勾国印",
+	Age:         18,
+	Birthday:    ToDateTimeString{Now().SubYears(18)},
+	GraduatedAt: ToDateString{Parse("2020-08-05 13:14:15")},
+	CreatedAt:   ToTimeString{Parse("2021-08-05 13:14:15")},
+	UpdatedAt:   ToTimestamp{Parse("2022-08-05 13:14:15")},
+	DateTime1:   ToTimestampWithSecond{Parse("2023-08-05 13:14:15")},
+	DateTime2:   ToTimestampWithMillisecond{Parse("2024-08-05 13:14:15")},
+	DateTime3:   ToTimestampWithMicrosecond{Parse("2025-08-05 13:14:15")},
+	DateTime4:   ToTimestampWithNanosecond{Parse("2025-08-05 13:14:15")},
+}
+```
+
+###### JSON 编码
+```go
+data, err := json.Marshal(&person)
+if err != nil {
+	t.Fatal(err)
+}
+fmt.Printf("%s",data)
+// 输出
+{
+	"id":153,
+	"name":"勾国印",
+	"age":18,
+	"birthday":"2003-07-16 16:22:02",
+	"graduated_at":"2020-08-05",
+	"created_at":"13:14:15",
+	"updated_at":1659676455,
+	"date_time1":1691212455,
+	"date_time2":1722834855000,
+	"date_time3":1754370855000000,
+	"date_time4":1754370855000000000
+}
+```
+
+###### JSON 解码
+```go
+str := `{
+	"id":153,
+	"name":"勾国印",
+	"age":18,
+	"birthday":"2003-07-16 16:22:02",
+	"graduated_at":"2020-08-05",
+	"created_at":"13:14:15",
+	"updated_at":1659676455,
+	"date_time1":1691212455,
+	"date_time2":1722834855000,
+	"date_time3":1754370855000000,
+	"date_time4":1754370855000000000
+}`
+person := new(Person)
+err := json.Unmarshal([]byte(str), &person)
+if err != nil {
+	t.Fatal(err)
+}
+fmt.Printf("%+v", *person)
+// 输出
+{ID:153 Name:勾国印 Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 CreatedAt:0000-01-01 13:14:15 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+```
+
+##### 国际化支持
 > 需要使用多语言时，请先把 `lang` 目录复制到项目目录下
 
 目前支持的语言有
@@ -889,7 +982,7 @@ Now().AddHours(1).Constellation() // Leo
 Now().AddHours(1).Season() // Summer
 ```
 
-###### 重写部分翻译资源(其余仍然按照指定的 `locale` 翻译)
+###### 重写部分翻译资源(其余仍然按照指定的 `locale` 文件内容翻译)
 ```go
 lang := NewLanguage()
 
@@ -918,6 +1011,7 @@ c.Now().Season() // Summer
 ```go
 lang := NewLanguage()
 resources := map[string]string {
+    "seasons": "Spring|Summer|Autumn|Winter",
     "months": "January|February|March|April|May|June|July|August|September|October|November|December",
     "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
     "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
@@ -949,120 +1043,21 @@ c.Now().Constellation() // Leo
 c.Now().Season() // Summer
 ```
 
-##### 数据库支持
-> 假设数据表为 `users`，字段有 `id(int)`、`name(varchar)`、`age(int)`、`birthday(datetime)`、`graduated_at(datetime)`、`created_at(datetime)`、`updated_at(datetime)`、`date_time1(datetime)`、`date_time2(datetime)`、`date_time3(datetime)`、`date_time4(datetime)`
-
-###### 定义模型
-```go
-type UserModel struct {
-    ID  int64  `json:"id"`
-    Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.ToDateTimeString `json:"birthday"`
-    GraduatedAt carbon.ToDateString `json:"graduated_at"`
-    CreatedAt carbon.ToTimeString `json:"created_at"`
-    UpdatedAt carbon.ToTimestamp `json:"updated_at"`
-    DateTime1 carbon.ToTimestampWithSecond `json:"date_time1"`
-    DateTime2 carbon.ToTimestampWithMillisecond `json:"date_time2"`
-    DateTime3 carbon.ToTimestampWithMicrosecond `json:"date_time3"`
-    DateTime4 carbon.ToTimestampWithNanosecond `json:"date_time4"`
-}
-```
-
-###### 实例化模型
-```go
-user := UserModel {
-    ID: 1153,
-    Name: "勾国印",
-    Age: 18,
-    Birthday: carbon.ToDateTimeString{carbon.Now().SubYears(18)},
-    GraduatedAt: carbon.ToDateString{carbon.Parse("2012-09-09")},
-    CreatedAt: carbon.ToTimeString{carbon.Now()},
-    UpdatedAt: carbon.ToTimestamp{carbon.Now()},
-    DateTime1: carbon.ToTimestampWithSecond{carbon.Now()},
-    DateTime2: carbon.ToTimestampWithMillisecond{carbon.Now()},
-    DateTime3: carbon.ToTimestampWithMicrosecond{carbon.Now()},
-    DateTime4: carbon.ToTimestampWithNanosecond{carbon.Now()},
-}
-```
-
-###### 输出模型字段
-```go
-user.ID // 1153
-user.Name // 勾国印
-user.Age // 18
-user.Birthday.ToDateTimeString() // 2012-08-05 13:14:15
-user.GraduatedAt.ToDateString() // 2012-09-09
-user.CreatedAt.ToTimeString() // 13:14:15
-user.UpdatedAt.ToTimestamp() // 1596604455
-user.DateTime1.ToTimestampWithSecond() // 1596604455
-user.DateTime2.ToTimestampWithMillisecond() // 1596604455000
-user.DateTime3.ToTimestampWithMicrosecond() // 1596604455000000
-user.DateTime4.ToTimestampWithNanosecond() // 1596604455000000000
-```
-
-###### JSON 输出模型
-```go
-data, _ := json.Marshal(&user)
-fmt.Print(string(data))
-// 输出
-{
-    "id": 1153,
-    "name": "勾国印",
-    "age": 18,
-    "birthday": "2012-08-05 13:14:15",
-    "graduated_at": "2012-09-09",
-    "created_at": "13:14:15",
-    "updated_at": 1596604455,
-    "date_time1": 1596604455,
-    "date_time2": 1596604455000,
-    "date_time3": 1596604455000000,
-    "date_time4": 1596604455000000000,
-}
-```
-
-###### 输出自定义格式
-```go
-// 定义输出格式
-type ToRssString struct {
-    carbon.Carbon
-}
-
-// 定义模型
-type UserModel struct {
-    Birthday carbon.ToRssString `json:"birthday"`
-}
-
-// 实例化模型
-user := UserModel {
-    Birthday: carbon.ToRssString{carbon.Now()},
-}
-
-// 重写MarshalJSON方法
-func (c ToRssString) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.ToRssString())), nil
-}
-
-// json.Marshal(&user)输出
-{
-    "birthday": "Wed, 05 Aug 2020 13:14:15 +0800",
-}
-```
-
 ##### 错误处理
 > 如果有多个错误发生，只返回第一个错误信息，前一个错误排除后才返回下一个错误信息
 
 ###### 场景一
 ```go
-c := carbon.SetTimezone(PRC).Parse("123456")
+c := carbon.SetTimezone(PRC).Parse("XXXX")
 if c.Error != nil {
     // 错误处理...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-the value "123456" can't parse string as time
+the value "XXXX" and the layout "2006-01-02 15:04:05" don't match, so the value can't parse to carbon
 ```
+
 ###### 场景二
 ```go
 c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
@@ -1072,7 +1067,7 @@ if c.Error != nil {
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
+invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 ###### 场景三
 ```go
@@ -1083,7 +1078,7 @@ if c.Error != nil {
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-invalid timezone "XXXX", please see the $GOROOT/lib/time/zoneinfo.zip file for all valid timezone
+invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezone
 ```
 > 建议使用`SetTimezone()`、`Parse()`、`ParseByFormat()`、`AddDuration()`、`SubDuration()`、`SetLocale()`等方法时先进行错误处理判断，除非你能确保传入参数无误
 #### 附录

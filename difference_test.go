@@ -1,410 +1,444 @@
 package carbon
 
 import (
+	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_DiffInYears(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", -2},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
+		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
+		{3, "2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
+		{4, "2020-08-05 13:14:15", "2018-08-28 13:14:59", -2},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInYears(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInYears(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func Test1Carbon_DiffInYearsWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", 2},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
+		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
+		{3, "2020-08-05 13:14:15", "2021-08-28 13:14:59", 1},
+		{4, "2020-08-05 13:14:15", "2018-08-28 13:14:59", 2},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInYearsWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInYearsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInMonths(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-31 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", -24},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
+		{2, "2020-12-31 13:14:15", "2021-01-31 13:14:15", 1},
+		{3, "2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
+		{4, "2020-08-05 13:14:15", "2018-08-28 13:14:59", -24},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInMonths(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInMonths(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
-		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
-		{"2020-08-05 13:14:15", "2018-08-28 13:14:59", 24},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
+		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
+		{3, "2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
+		{4, "2020-08-05 13:14:15", "2018-08-28 13:14:59", 24},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInMonthsWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInMonthsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInWeeks(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
+		{2, "2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
+		{3, "2020-08-05 13:14:15", "2020-07-28 13:14:59", -1},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInWeeks(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInWeeks(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-07-28 13:14:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
+		{2, "2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
+		{3, "2020-08-05 13:14:15", "2020-07-28 13:14:59", 1},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-12 13:14:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-12 13:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-12 13:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInWeeksWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInWeeksWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInDays(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
+		{2, "2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
+		{3, "2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInDays(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInDays(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
+		{2, "2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
+		{3, "2020-08-05 13:14:15", "2020-08-04 13:14:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:00:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-06 13:00:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-06 13:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-06 13:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInDaysWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInDaysWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInHours(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
+		{2, "2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
+		{3, "2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInHours(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInHours(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
+		{1, "2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
+		{2, "2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
+		{3, "2020-08-05 13:14:15", "2020-08-05 12:14:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:14:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:14:59", 0},
+		{7, "2020-08-05 13:14:15", "2020-08-05 14:14:00", 0},
+		{8, "2020-08-05 13:14:15", "2020-08-05 14:14:15", 1},
+		{9, "2020-08-05 13:14:15", "2020-08-05 14:14:59", 1},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInHoursWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInHoursWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInMinutes(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
+		{1, "2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
+		{2, "2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
+		{3, "2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
+		{7, "2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
+		{8, "2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
+		{9, "2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInMinutes(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInMinutes(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
-		{"2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
+		{1, "2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
+		{2, "2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
+		{3, "2020-08-05 13:14:15", "2020-08-05 13:13:59", 0},
+		{4, "2020-08-05 13:14:15", "2020-08-05 13:15:00", 0},
+		{5, "2020-08-05 13:14:15", "2020-08-05 13:15:15", 1},
+		{6, "2020-08-05 13:14:15", "2020-08-05 13:15:59", 1},
+		{7, "2020-08-05 13:14:15", "2020-08-05 13:16:00", 1},
+		{8, "2020-08-05 13:14:15", "2020-08-05 13:16:15", 2},
+		{9, "2020-08-05 13:14:15", "2020-08-05 13:16:59", 2},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInMinutesWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInMinutesWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInSeconds(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
-		{"2020-08-05 13:14:20", "2020-08-05 13:14:15", -5},
+		{1, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{2, "2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
+		{3, "2020-08-05 13:14:20", "2020-08-05 13:14:15", -5},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInSeconds(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInSeconds(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  string // 输入值
 		param  string // 参数值
 		output int64  // 期望输出值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
-		{"2020-08-05 13:14:20", "2020-08-05 13:14:15", 5},
+		{1, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
+		{2, "2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
+		{3, "2020-08-05 13:14:20", "2020-08-05 13:14:15", 5},
 	}
 
-	for _, v := range Tests {
-		output := Parse(v.input).DiffInSecondsWithAbs(Parse(v.param))
-
-		if output != v.output {
-			t.Errorf("Input start time %s and end time %s, expected %d, but got %d", v.input, v.param, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := Parse(test.input), Parse(test.param)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.DiffInSecondsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffForHumans1(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  Carbon // 输入值
 		output string // 期望输出值
 	}{
-		{Now(), "just now"},
-		{Now().AddYears(1), "1 year from now"},
-		{Now().SubYears(1), "1 year ago"},
-		{Now().AddYears(10), "10 years from now"},
-		{Now().SubYears(10), "10 years ago"},
+		{1, Now(), "just now"},
+		{2, Now().AddYears(1), "1 year from now"},
+		{3, Now().SubYears(1), "1 year ago"},
+		{4, Now().AddYears(10), "10 years from now"},
+		{5, Now().SubYears(10), "10 years ago"},
 
-		{Now().AddMonths(1), "1 month from now"},
-		{Now().SubMonths(1), "1 month ago"},
-		{Now().AddMonths(10), "10 months from now"},
-		{Now().SubMonths(10), "10 months ago"},
+		{6, Now().AddMonths(1), "1 month from now"},
+		{7, Now().SubMonths(1), "1 month ago"},
+		{8, Now().AddMonths(10), "10 months from now"},
+		{9, Now().SubMonths(10), "10 months ago"},
 
-		{Now().AddDays(1), "1 day from now"},
-		{Now().SubDays(1), "1 day ago"},
-		{Now().AddDays(10), "1 week from now"},
-		{Now().SubDays(10), "1 week ago"},
+		{10, Now().AddDays(1), "1 day from now"},
+		{11, Now().SubDays(1), "1 day ago"},
+		{12, Now().AddDays(10), "1 week from now"},
+		{13, Now().SubDays(10), "1 week ago"},
 
-		{Now().AddHours(1), "1 hour from now"},
-		{Now().SubHours(1), "1 hour ago"},
-		{Now().AddHours(10), "10 hours from now"},
-		{Now().SubHours(10), "10 hours ago"},
+		{14, Now().AddHours(1), "1 hour from now"},
+		{15, Now().SubHours(1), "1 hour ago"},
+		{16, Now().AddHours(10), "10 hours from now"},
+		{17, Now().SubHours(10), "10 hours ago"},
 
-		{Now().AddMinutes(1), "1 minute from now"},
-		{Now().SubMinutes(1), "1 minute ago"},
-		{Now().AddMinutes(10), "10 minutes from now"},
-		{Now().SubMinutes(10), "10 minutes ago"},
+		{18, Now().AddMinutes(1), "1 minute from now"},
+		{19, Now().SubMinutes(1), "1 minute ago"},
+		{20, Now().AddMinutes(10), "10 minutes from now"},
+		{21, Now().SubMinutes(10), "10 minutes ago"},
 
-		{Now().AddSeconds(1), "1 second from now"},
-		{Now().SubSeconds(1), "1 second ago"},
-		{Now().AddSeconds(10), "10 seconds from now"},
-		{Now().SubSeconds(10), "10 seconds ago"},
+		{22, Now().AddSeconds(1), "1 second from now"},
+		{23, Now().SubSeconds(1), "1 second ago"},
+		{24, Now().AddSeconds(10), "10 seconds from now"},
+		{25, Now().SubSeconds(10), "10 seconds ago"},
 	}
 
-	for _, v := range Tests {
-		output := (v.input).DiffForHumans()
-
-		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c := test.input
+		assert.Nil(c.Error)
+		assert.Equal(c.DiffForHumans(), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
 func TestCarbon_DiffForHumans2(t *testing.T) {
-	Tests := []struct {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id     int    // 测试id
 		input  Carbon // 输入值
 		param  Carbon // 参数值
 		output string // 期望输出值
 	}{
-		{Now(), Now(), "刚刚"},
-		{Now().AddYears(1), Now(), "1 年后"},
-		{Now().SubYears(1), Now(), "1 年前"},
-		{Now().AddYears(10), Now(), "10 年后"},
-		{Now().SubYears(10), Now(), "10 年前"},
+		{1, Now(), Now(), "刚刚"},
+		{2, Now().AddYears(1), Now(), "1 年后"},
+		{3, Now().SubYears(1), Now(), "1 年前"},
+		{4, Now().AddYears(10), Now(), "10 年后"},
+		{5, Now().SubYears(10), Now(), "10 年前"},
 
-		{Now().AddMonths(1), Now(), "1 个月后"},
-		{Now().SubMonths(1), Now(), "1 个月前"},
-		{Now().AddMonths(10), Now(), "10 个月后"},
-		{Now().SubMonths(10), Now(), "10 个月前"},
+		{6, Now().AddMonths(1), Now(), "1 个月后"},
+		{7, Now().SubMonths(1), Now(), "1 个月前"},
+		{8, Now().AddMonths(10), Now(), "10 个月后"},
+		{9, Now().SubMonths(10), Now(), "10 个月前"},
 	}
 
-	for _, v := range Tests {
-		output := (v.input).SetLocale("zh-CN").DiffForHumans(v.param)
-
-		if output != v.output {
-			t.Errorf("Input time %s, expected %s, but got %s", v.input, v.output, output)
-		}
+	for _, test := range tests {
+		c1, c2 := test.input, test.param
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(c1.SetLocale("zh-CN").DiffForHumans(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
 	}
 }

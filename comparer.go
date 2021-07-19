@@ -4,7 +4,7 @@ import "time"
 
 // IsZero 是否是零值
 func (c Carbon) IsZero() bool {
-	return c.Time.IsZero()
+	return c.Time.IsZero() || c.Error != nil
 }
 
 // IsNow 是否是当前时间
