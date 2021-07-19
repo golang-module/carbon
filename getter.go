@@ -102,22 +102,21 @@ func (c Carbon) Year() int {
 }
 
 // Quarter 获取当前季度
-func (c Carbon) Quarter() int {
+func (c Carbon) Quarter() (quarter int) {
 	if c.IsZero() {
 		return 0
 	}
 	switch {
 	case c.Month() >= 10:
-		return 4
+		quarter = 4
 	case c.Month() >= 7:
-		return 3
+		quarter = 3
 	case c.Month() >= 4:
-		return 2
+		quarter = 2
 	case c.Month() >= 1:
-		return 1
-	default:
-		return 0
+		quarter = 1
 	}
+	return
 }
 
 // Month 获取当前月
@@ -160,7 +159,7 @@ func (c Carbon) Minute() int {
 	return c.Time.In(c.Loc).Minute()
 }
 
-// Second 获取当前秒数
+// Second 获取当前秒数，1-2位数字
 func (c Carbon) Second() int {
 	if c.IsZero() {
 		return 0
@@ -168,7 +167,7 @@ func (c Carbon) Second() int {
 	return c.Time.In(c.Loc).Second()
 }
 
-// Millisecond 获取当前毫秒数
+// Millisecond 获取当前毫秒数，3位数字
 func (c Carbon) Millisecond() int {
 	if c.IsZero() {
 		return 0
@@ -176,7 +175,7 @@ func (c Carbon) Millisecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e6
 }
 
-// Microsecond 获取当前微秒数
+// Microsecond 获取当前微秒数，6位数字
 func (c Carbon) Microsecond() int {
 	if c.IsZero() {
 		return 0
@@ -184,7 +183,7 @@ func (c Carbon) Microsecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e3
 }
 
-// Nanosecond 获取当前纳秒数
+// Nanosecond 获取当前纳秒数，9位数字
 func (c Carbon) Nanosecond() int {
 	if c.IsZero() {
 		return 0
