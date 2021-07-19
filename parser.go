@@ -2,6 +2,7 @@ package carbon
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -9,9 +10,6 @@ import (
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例
 func (c Carbon) Parse(value string) Carbon {
-	if c.Error != nil {
-		return c
-	}
 	layout := DateTimeFormat
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
@@ -40,7 +38,7 @@ func Parse(value string) Carbon {
 
 // ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByFormat(value string, format string) Carbon {
-	if c.Error != nil {
+	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
 	layout := format2layout(format)
@@ -54,14 +52,15 @@ func ParseByFormat(value string, format string) Carbon {
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByLayout(value string, layout string) Carbon {
-	if c.Loc == nil {
-		c.Loc = time.Local
+	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
+		return c
 	}
 	tt, err := time.ParseInLocation(layout, value, c.Loc)
-	c.Time = tt
 	if err != nil {
-		c.Error = errors.New("the value \"" + value + "\" can't parse string as time")
+		c.Error = errors.New(fmt.Sprintf("the value %q and the layout %q don't match, so the value can't parse to carbon", value, layout))
+		return c
 	}
+	c.Time = tt
 	return c
 }
 
