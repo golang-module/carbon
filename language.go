@@ -15,6 +15,7 @@ var (
 	defaultLocale = "en"
 )
 
+// 定义 Language 结构体
 type Language struct {
 	dir       string            // 目录
 	locale    string            // 区域

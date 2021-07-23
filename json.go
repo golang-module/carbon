@@ -6,42 +6,42 @@ import (
 	"strconv"
 )
 
-// 日期时间字符串
+// ToDateTimeString 日期时间字符串
 type ToDateTimeString struct {
 	Carbon
 }
 
-// 日期字符串
+// ToDateString 日期字符串
 type ToDateString struct {
 	Carbon
 }
 
-// 时间字符串
+// ToTimeString 时间字符串
 type ToTimeString struct {
 	Carbon
 }
 
-// 秒级时间戳
+// ToTimestamp 秒级时间戳
 type ToTimestamp struct {
 	Carbon
 }
 
-// 秒级时间戳
+// ToTimestampWithSecond 秒级时间戳
 type ToTimestampWithSecond struct {
 	Carbon
 }
 
-// 毫秒级时间戳
+// ToTimestampWithMillisecond 毫秒级时间戳
 type ToTimestampWithMillisecond struct {
 	Carbon
 }
 
-// 微秒级时间戳
+// ToTimestampWithMicrosecond 微秒级时间戳
 type ToTimestampWithMicrosecond struct {
 	Carbon
 }
 
-// 纳秒级时间戳
+// ToTimestampWithNanosecond 纳秒级时间戳
 type ToTimestampWithNanosecond struct {
 	Carbon
 }
