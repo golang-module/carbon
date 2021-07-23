@@ -7,7 +7,7 @@ import (
 
 // Season 获取当前季节(以气象划分)，支持i18n
 func (c Carbon) Season() string {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return ""
 	}
 	if len(c.Lang.resources) == 0 {
@@ -33,7 +33,7 @@ func (c Carbon) Season() string {
 
 // StartOfSeason 本季节开始时间
 func (c Carbon) StartOfSeason() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
@@ -46,7 +46,7 @@ func (c Carbon) StartOfSeason() Carbon {
 
 // EndOfSeason 本季节结束时间
 func (c Carbon) EndOfSeason() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
@@ -63,7 +63,7 @@ func (c Carbon) EndOfSeason() Carbon {
 
 // IsSpring 是否是春季
 func (c Carbon) IsSpring() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 3 || c.Month() == 4 || c.Month() == 5 {
@@ -74,7 +74,7 @@ func (c Carbon) IsSpring() bool {
 
 // IsSummer 是否是夏季
 func (c Carbon) IsSummer() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 6 || c.Month() == 7 || c.Month() == 8 {
@@ -85,7 +85,7 @@ func (c Carbon) IsSummer() bool {
 
 // IsAutumn 是否是秋季
 func (c Carbon) IsAutumn() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 9 || c.Month() == 10 || c.Month() == 11 {
@@ -96,7 +96,7 @@ func (c Carbon) IsAutumn() bool {
 
 // IsWinter 是否是冬季
 func (c Carbon) IsWinter() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 12 || c.Month() == 1 || c.Month() == 2 {
