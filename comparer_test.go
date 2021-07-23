@@ -1142,7 +1142,7 @@ func TestCarbon_Between(t *testing.T) {
 	}
 }
 
-func TestCarbon_BetweenStartIncluded(t *testing.T) {
+func TestCarbon_BetweenIncludedStart(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -1163,11 +1163,11 @@ func TestCarbon_BetweenStartIncluded(t *testing.T) {
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
 		assert.Nil(c3.Error)
-		assert.Equal(test.expected, c1.BetweenStartIncluded(c2, c3), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.BetweenIncludedStart(c2, c3), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-func TestCarbon_BetweenEndIncluded(t *testing.T) {
+func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -1188,11 +1188,11 @@ func TestCarbon_BetweenEndIncluded(t *testing.T) {
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
 		assert.Nil(c3.Error)
-		assert.Equal(test.expected, c1.BetweenEndIncluded(c2, c3), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.BetweenIncludedEnd(c2, c3), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
-func TestCarbon_BetweenBothIncluded(t *testing.T) {
+func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -1214,6 +1214,6 @@ func TestCarbon_BetweenBothIncluded(t *testing.T) {
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
 		assert.Nil(c3.Error)
-		assert.Equal(test.expected, c1.BetweenBothIncluded(c2, c3), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.BetweenIncludedBoth(c2, c3), "Current test id is "+strconv.Itoa(test.id))
 	}
 }

@@ -311,24 +311,24 @@ func (c Carbon) Between(start Carbon, end Carbon) bool {
 	return false
 }
 
-// BetweenStartIncluded 是否在两个时间之间(包括开始时间)
-func (c Carbon) BetweenStartIncluded(start Carbon, end Carbon) bool {
+// BetweenIncludedStart 是否在两个时间之间(包括开始时间)
+func (c Carbon) BetweenIncludedStart(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lt(end) {
 		return true
 	}
 	return false
 }
 
-// BetweenEndIncluded 是否在两个时间之间(包括结束时间)
-func (c Carbon) BetweenEndIncluded(start Carbon, end Carbon) bool {
+// BetweenIncludedEnd 是否在两个时间之间(包括结束时间)
+func (c Carbon) BetweenIncludedEnd(start Carbon, end Carbon) bool {
 	if c.Gt(start) && c.Lte(end) {
 		return true
 	}
 	return false
 }
 
-// BetweenBothIncluded 是否在两个时间之间(包括这两个时间)
-func (c Carbon) BetweenBothIncluded(start Carbon, end Carbon) bool {
+// BetweenIncludedBoth 是否在两个时间之间(包括这两个时间)
+func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lte(end) {
 		return true
 	}
