@@ -13,7 +13,7 @@ func TestCarbon_Parse(t *testing.T) {
 	tests := []struct {
 		id     int    // 测试id
 		input  string // 输入值
-		output string // 期望输出值
+		output string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -29,10 +29,25 @@ func TestCarbon_Parse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeStringWithTimezone(PRC), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_Parse(t *testing.T) {
+	value, timezone := "2020-13-50", "xxx"
+	c1 := Parse(value)
+	assert.Equal(t, invalidValueError(value), c1.Error, "Should catch an exception in Parse()")
+
+	c2 := Parse(value, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in Parse()")
 }
 
 func TestCarbon_ParseByFormat(t *testing.T) {
@@ -42,7 +57,7 @@ func TestCarbon_ParseByFormat(t *testing.T) {
 		id     int    // 测试id
 		input  string // 输入值
 		format string // 输入参数
-		output string // 期望输出值
+		output string // 期望值
 	}{
 		{1, "", "Y|m|d H:i:s", ""},
 		{2, "0", "Y|m|d H:i:s", ""},
@@ -56,10 +71,25 @@ func TestCarbon_ParseByFormat(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := ParseByFormat(test.input, test.format)
+		c := SetTimezone(PRC).ParseByFormat(test.input, test.format)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := ParseByFormat(test.input, test.format, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_ParseByFormat(t *testing.T) {
+	value, format, timezone := "2020-08-50", "Y-m-d", "xxx"
+	c1 := ParseByFormat(value, format)
+	assert.Equal(t, invalidFormatError(value, format), c1.Error, "Should catch an exception in ParseByFormat()")
+
+	c2 := ParseByFormat(value, format, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByFormat()")
 }
 
 func TestCarbon_ParseByLayout(t *testing.T) {
@@ -68,8 +98,8 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 	tests := []struct {
 		id     int    // 测试id
 		input  string // 输入值
-		format string // 输入参数
-		output string // 期望输出值
+		layout string // 输入参数
+		output string // 期望值
 	}{
 		{1, "", "2006-01-02", ""},
 		{2, "0", "2006-01-02", ""},
@@ -83,8 +113,23 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := ParseByLayout(test.input, test.format)
+		c := SetTimezone(PRC).ParseByLayout(test.input, test.layout)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := ParseByLayout(test.input, test.layout, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.output, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_ParseByLayout(t *testing.T) {
+	value, layout, timezone := "2020-08-50", "2006-01-02", "xxx"
+	c1 := ParseByLayout(value, layout)
+	assert.Equal(t, invalidLayoutError(value, layout), c1.Error, "Should catch an exception in ParseByLayout()")
+
+	c2 := ParseByLayout(value, layout, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByLayout()")
 }
