@@ -13,21 +13,36 @@ func TestCarbon_CreateFromTimestamp(t *testing.T) {
 	tests := []struct {
 		id        int    // 测试id
 		timestamp int64  // 输入参数
-		output    string // 期望输出值
+		expected  string // 期望值
 	}{
-		{1, 0, ""},
-		{2, 123456, "1970-01-01 08:00:00"},
-		{3, 1577855655, "2020-01-01 13:14:15"},
-		{4, 1604074084682, "2020-10-31 00:08:04"},
-		{5, 1604074196366540, "2020-10-31 00:09:56"},
-		{6, 1604074298500312000, "2020-10-31 00:11:38"},
+		{1, -1, "1970-01-01 07:59:59"},
+		{2, 0, "1970-01-01 08:00:00"},
+		{4, 1577855655, "2020-01-01 13:14:15"},
+		{5, 1604074084682, "2020-10-31 00:08:04"},
+		{6, 1604074196366540, "2020-10-31 00:09:56"},
+		{7, 1604074298500312000, "2020-10-31 00:11:38"},
 	}
 
 	for _, test := range tests {
-		c := CreateFromTimestamp(test.timestamp)
+		c := SetTimezone(PRC).CreateFromTimestamp(test.timestamp)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := CreateFromTimestamp(test.timestamp, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_CreateFromTimestamp(t *testing.T) {
+	timestamp, timezone := int64(1577855655), "xxx"
+	c1 := SetTimezone(timezone).CreateFromTimestamp(timestamp)
+	assert.Equal(t, invalidTimezoneError(timezone), c1.Error, "Should catch an exception in CreateFromTimestamp()")
+
+	c2 := CreateFromTimestamp(timestamp, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in CreateFromTimestamp()")
 }
 
 func TestCarbon_CreateFromDateTime(t *testing.T) {
@@ -36,7 +51,7 @@ func TestCarbon_CreateFromDateTime(t *testing.T) {
 	tests := []struct {
 		id                                     int    // 测试id
 		year, month, day, hour, minute, second int    // 输入参数
-		output                                 string // 期望输出值
+		expected                               string // 期望值
 	}{
 		{1, 2020, 1, 1, 13, 14, 15, "2020-01-01 13:14:15"},
 		{2, 2020, 1, 31, 13, 14, 15, "2020-01-31 13:14:15"},
@@ -46,20 +61,35 @@ func TestCarbon_CreateFromDateTime(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := CreateFromDateTime(test.year, test.month, test.day, test.hour, test.minute, test.second)
+		c := SetTimezone(PRC).CreateFromDateTime(test.year, test.month, test.day, test.hour, test.minute, test.second)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := CreateFromDateTime(test.year, test.month, test.day, test.hour, test.minute, test.second, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_CreateFromDateTime(t *testing.T) {
+	year, month, day, hour, minute, second, timezone := 2020, 1, 1, 13, 14, 15, "xxx"
+	c1 := SetTimezone(timezone).CreateFromDateTime(year, month, day, hour, minute, second)
+	assert.Equal(t, invalidTimezoneError(timezone), c1.Error, "Should catch an exception in CreateFromDateTime()")
+
+	c2 := CreateFromDateTime(year, month, day, hour, minute, second, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in CreateFromDateTime()")
 }
 
 func TestCarbon_CreateFromDate(t *testing.T) {
 	assert := assert.New(t)
 
-	clock := Now().ToTimeString()
+	clock := Now(PRC).ToTimeString()
 	tests := []struct {
 		id               int    // 测试id
 		year, month, day int    // 输入参数
-		output           string // 期望输出值
+		expected         string // 期望值
 	}{
 		{1, 2020, 1, 1, "2020-01-01 " + clock},
 		{2, 2020, 1, 31, "2020-01-31 " + clock},
@@ -69,20 +99,35 @@ func TestCarbon_CreateFromDate(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := CreateFromDate(test.year, test.month, test.day)
+		c := SetTimezone(PRC).CreateFromDate(test.year, test.month, test.day)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := CreateFromDate(test.year, test.month, test.day, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_CreateFromDate(t *testing.T) {
+	year, month, day, timezone := 13, 14, 15, "xxx"
+	c1 := SetTimezone(timezone).CreateFromDate(year, month, day)
+	assert.Equal(t, invalidTimezoneError(timezone), c1.Error, "Should catch an exception in CreateFromDate()")
+
+	c2 := CreateFromDate(year, month, day, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in CreateFromDate()")
 }
 
 func TestCarbon_CreateFromTime(t *testing.T) {
 	assert := assert.New(t)
 
-	date := Now().ToDateString()
+	date := Now(PRC).ToDateString()
 	tests := []struct {
 		id                   int    // 测试id
 		hour, minute, second int    // 输入参数
-		output               string // 期望输出值
+		expected             string // 期望值
 	}{
 		{1, 0, 0, 0, date + " 00:00:00"},
 		{2, 00, 00, 15, date + " 00:00:15"},
@@ -91,8 +136,23 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := CreateFromTime(test.hour, test.minute, test.second)
+		c := SetTimezone(PRC).CreateFromTime(test.hour, test.minute, test.second)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
+
+	for _, test := range tests {
+		c := CreateFromTime(test.hour, test.minute, test.second, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestError_CreateFromTime(t *testing.T) {
+	hour, minute, second, timezone := 13, 14, 15, "xxx"
+	c1 := SetTimezone(timezone).CreateFromTime(hour, minute, second)
+	assert.Equal(t, invalidTimezoneError(timezone), c1.Error, "Should catch an exception in CreateFromTime()")
+
+	c2 := CreateFromTime(hour, minute, second, timezone)
+	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in CreateFromTime()")
 }

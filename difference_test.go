@@ -11,10 +11,10 @@ func TestCarbon_DiffInYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -26,7 +26,7 @@ func TestCarbon_DiffInYears(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInYears(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInYears(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -34,10 +34,10 @@ func Test1Carbon_DiffInYearsWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -49,7 +49,7 @@ func Test1Carbon_DiffInYearsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInYearsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInYearsWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -57,12 +57,13 @@ func TestCarbon_DiffInMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
+		{4, "2020-08-05 13:14:15", "2020-09-06 13:14:59", 1},
 		{2, "2020-12-31 13:14:15", "2021-01-31 13:14:15", 1},
 		{3, "2020-08-05 13:14:15", "2021-08-28 13:14:59", 12},
 		{4, "2020-08-05 13:14:15", "2018-08-28 13:14:59", -24},
@@ -72,7 +73,7 @@ func TestCarbon_DiffInMonths(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInMonths(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInMonths(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -80,10 +81,10 @@ func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{2, "2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -95,7 +96,7 @@ func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInMonthsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInMonthsWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -103,10 +104,10 @@ func TestCarbon_DiffInWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
 		{2, "2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
@@ -123,7 +124,7 @@ func TestCarbon_DiffInWeeks(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInWeeks(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInWeeks(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -131,10 +132,10 @@ func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
 		{2, "2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
@@ -151,7 +152,7 @@ func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInWeeksWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInWeeksWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -159,10 +160,10 @@ func TestCarbon_DiffInDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
 		{2, "2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
@@ -179,7 +180,7 @@ func TestCarbon_DiffInDays(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInDays(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInDays(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -187,10 +188,10 @@ func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
 		{2, "2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
@@ -207,7 +208,7 @@ func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInDaysWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInDaysWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -215,10 +216,10 @@ func TestCarbon_DiffInHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
 		{2, "2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
@@ -235,7 +236,7 @@ func TestCarbon_DiffInHours(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInHours(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInHours(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -243,10 +244,10 @@ func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
 		{2, "2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
@@ -263,7 +264,7 @@ func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInHoursWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInHoursWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -271,10 +272,10 @@ func TestCarbon_DiffInMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
 		{2, "2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
@@ -291,7 +292,7 @@ func TestCarbon_DiffInMinutes(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInMinutes(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInMinutes(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -299,10 +300,10 @@ func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
 		{2, "2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
@@ -319,7 +320,7 @@ func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInMinutesWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInMinutesWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -327,10 +328,10 @@ func TestCarbon_DiffInSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
 		{2, "2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
@@ -341,7 +342,7 @@ func TestCarbon_DiffInSeconds(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInSeconds(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInSeconds(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -349,10 +350,10 @@ func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数值
-		output int64  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数值
+		expected int64  // 期望值
 	}{
 		{1, "2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
 		{2, "2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
@@ -363,7 +364,7 @@ func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.DiffInSecondsWithAbs(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.DiffInSecondsWithAbs(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -371,9 +372,9 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  Carbon // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    Carbon // 输入值
+		expected string // 期望值
 	}{
 		{1, Now(), "just now"},
 		{2, Now().AddYears(1), "1 year from now"},
@@ -410,7 +411,7 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 	for _, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
-		assert.Equal(c.DiffForHumans(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.DiffForHumans(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -418,10 +419,10 @@ func TestCarbon_DiffForHumans2(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  Carbon // 输入值
-		param  Carbon // 参数值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    Carbon // 输入值
+		param    Carbon // 参数值
+		expected string // 期望值
 	}{
 		{1, Now(), Now(), "刚刚"},
 		{2, Now().AddYears(1), Now(), "1 年后"},
@@ -439,6 +440,6 @@ func TestCarbon_DiffForHumans2(t *testing.T) {
 		c1, c2 := test.input, test.param
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(c1.SetLocale("zh-CN").DiffForHumans(c2), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c1.SetLocale("zh-CN").DiffForHumans(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }

@@ -4,12 +4,20 @@ import "time"
 
 // IsZero 是否是零值
 func (c Carbon) IsZero() bool {
-	return c.Time.IsZero() || c.Error != nil
+	return c.Time.IsZero()
+}
+
+// IsInvalid 是否是无效的
+func (c Carbon) IsInvalid() bool {
+	if c.Error != nil || c.IsZero() {
+		return true
+	}
+	return false
 }
 
 // IsNow 是否是当前时间
 func (c Carbon) IsNow() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToTimestamp() == c.Now().ToTimestamp()
@@ -17,7 +25,7 @@ func (c Carbon) IsNow() bool {
 
 // IsFuture 是否是未来时间
 func (c Carbon) IsFuture() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToTimestamp() > c.Now().ToTimestamp()
@@ -25,7 +33,7 @@ func (c Carbon) IsFuture() bool {
 
 // IsPast 是否是过去时间
 func (c Carbon) IsPast() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToTimestamp() < c.Now().ToTimestamp()
@@ -33,7 +41,7 @@ func (c Carbon) IsPast() bool {
 
 // IsLeapYear 是否是闰年
 func (c Carbon) IsLeapYear() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	year := c.Time.In(c.Loc).Year()
@@ -45,7 +53,7 @@ func (c Carbon) IsLeapYear() bool {
 
 // IsLongYear 是否是长年
 func (c Carbon) IsLongYear() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	_, w := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.Loc).ISOWeek()
@@ -54,7 +62,7 @@ func (c Carbon) IsLongYear() bool {
 
 // IsJanuary 是否是一月
 func (c Carbon) IsJanuary() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.January
@@ -62,7 +70,7 @@ func (c Carbon) IsJanuary() bool {
 
 // IsMonday 是否是二月
 func (c Carbon) IsFebruary() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.February
@@ -70,7 +78,7 @@ func (c Carbon) IsFebruary() bool {
 
 // IsMarch 是否是三月
 func (c Carbon) IsMarch() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.March
@@ -78,7 +86,7 @@ func (c Carbon) IsMarch() bool {
 
 // IsApril 是否是四月
 func (c Carbon) IsApril() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.April
@@ -86,7 +94,7 @@ func (c Carbon) IsApril() bool {
 
 // IsMay 是否是五月
 func (c Carbon) IsMay() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.May
@@ -94,7 +102,7 @@ func (c Carbon) IsMay() bool {
 
 // IsJune 是否是六月
 func (c Carbon) IsJune() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.June
@@ -102,7 +110,7 @@ func (c Carbon) IsJune() bool {
 
 // IsJuly 是否是七月
 func (c Carbon) IsJuly() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.July
@@ -110,7 +118,7 @@ func (c Carbon) IsJuly() bool {
 
 // IsAugust 是否是八月
 func (c Carbon) IsAugust() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.August
@@ -118,7 +126,7 @@ func (c Carbon) IsAugust() bool {
 
 // IsSeptember 是否是九月
 func (c Carbon) IsSeptember() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.September
@@ -126,7 +134,7 @@ func (c Carbon) IsSeptember() bool {
 
 // IsOctober 是否是十月
 func (c Carbon) IsOctober() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.October
@@ -134,7 +142,7 @@ func (c Carbon) IsOctober() bool {
 
 // IsNovember 是否是十一月
 func (c Carbon) IsNovember() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.November
@@ -142,7 +150,7 @@ func (c Carbon) IsNovember() bool {
 
 // IsDecember 是否是十二月
 func (c Carbon) IsDecember() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Month() == time.December
@@ -150,7 +158,7 @@ func (c Carbon) IsDecember() bool {
 
 // IsMonday 是否是周一
 func (c Carbon) IsMonday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Monday
@@ -158,7 +166,7 @@ func (c Carbon) IsMonday() bool {
 
 // IsTuesday 是否是周二
 func (c Carbon) IsTuesday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Tuesday
@@ -166,7 +174,7 @@ func (c Carbon) IsTuesday() bool {
 
 // IsWednesday 是否是周三
 func (c Carbon) IsWednesday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Wednesday
@@ -174,7 +182,7 @@ func (c Carbon) IsWednesday() bool {
 
 // IsThursday 是否是周四
 func (c Carbon) IsThursday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Thursday
@@ -182,7 +190,7 @@ func (c Carbon) IsThursday() bool {
 
 // IsFriday 是否是周五
 func (c Carbon) IsFriday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Friday
@@ -190,7 +198,7 @@ func (c Carbon) IsFriday() bool {
 
 // IsSaturday 是否是周六
 func (c Carbon) IsSaturday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Saturday
@@ -198,7 +206,7 @@ func (c Carbon) IsSaturday() bool {
 
 // IsSunday 是否是周日
 func (c Carbon) IsSunday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.Time.In(c.Loc).Weekday() == time.Sunday
@@ -206,7 +214,7 @@ func (c Carbon) IsSunday() bool {
 
 // IsWeekday 是否是工作日
 func (c Carbon) IsWeekday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return !c.IsSaturday() && !c.IsSunday()
@@ -214,7 +222,7 @@ func (c Carbon) IsWeekday() bool {
 
 // IsWeekend 是否是周末
 func (c Carbon) IsWeekend() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.IsSaturday() || c.IsSunday()
@@ -222,7 +230,7 @@ func (c Carbon) IsWeekend() bool {
 
 // IsYesterday 是否是昨天
 func (c Carbon) IsYesterday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToDateString() == Now().SubDay().ToDateString()
@@ -230,7 +238,7 @@ func (c Carbon) IsYesterday() bool {
 
 // IsToday 是否是今天
 func (c Carbon) IsToday() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToDateString() == c.Now().ToDateString()
@@ -238,7 +246,7 @@ func (c Carbon) IsToday() bool {
 
 // IsTomorrow 是否是明天
 func (c Carbon) IsTomorrow() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.ToDateString() == Now().AddDay().ToDateString()
@@ -303,24 +311,24 @@ func (c Carbon) Between(start Carbon, end Carbon) bool {
 	return false
 }
 
-// BetweenIncludedStartTime 是否在两个时间之间(包括开始时间)
-func (c Carbon) BetweenIncludedStartTime(start Carbon, end Carbon) bool {
+// BetweenStartIncluded 是否在两个时间之间(包括开始时间)
+func (c Carbon) BetweenStartIncluded(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lt(end) {
 		return true
 	}
 	return false
 }
 
-// BetweenIncludedEndTime 是否在两个时间之间(包括结束时间)
-func (c Carbon) BetweenIncludedEndTime(start Carbon, end Carbon) bool {
+// BetweenEndIncluded 是否在两个时间之间(包括结束时间)
+func (c Carbon) BetweenEndIncluded(start Carbon, end Carbon) bool {
 	if c.Gt(start) && c.Lte(end) {
 		return true
 	}
 	return false
 }
 
-// BetweenIncludedBoth 是否在两个时间之间(包括这两个时间)
-func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
+// BetweenBothIncluded 是否在两个时间之间(包括这两个时间)
+func (c Carbon) BetweenBothIncluded(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lte(end) {
 		return true
 	}

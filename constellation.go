@@ -4,7 +4,7 @@ import "strings"
 
 // Constellation 获取星座，支持i18n
 func (c Carbon) Constellation() string {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return ""
 	}
 	if len(c.Lang.resources) == 0 {
@@ -46,7 +46,7 @@ func (c Carbon) Constellation() string {
 
 // IsAries 是否是白羊座
 func (c Carbon) IsAries() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 3 && c.Day() >= 21 {
@@ -60,7 +60,7 @@ func (c Carbon) IsAries() bool {
 
 // IsTaurus 是否是金牛座
 func (c Carbon) IsTaurus() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 4 && c.Day() >= 20 {
@@ -74,7 +74,7 @@ func (c Carbon) IsTaurus() bool {
 
 // IsGemini 是否是双子座
 func (c Carbon) IsGemini() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 5 && c.Day() >= 21 {
@@ -88,7 +88,7 @@ func (c Carbon) IsGemini() bool {
 
 // IsCancer 是否是巨蟹座
 func (c Carbon) IsCancer() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 6 && c.Day() >= 22 {
@@ -102,7 +102,7 @@ func (c Carbon) IsCancer() bool {
 
 // IsLeo 是否是狮子座
 func (c Carbon) IsLeo() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 7 && c.Day() >= 23 {
@@ -116,7 +116,7 @@ func (c Carbon) IsLeo() bool {
 
 // IsVirgo 是否是处女座
 func (c Carbon) IsVirgo() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 8 && c.Day() >= 23 {
@@ -130,7 +130,7 @@ func (c Carbon) IsVirgo() bool {
 
 // IsLibra 是否是天秤座
 func (c Carbon) IsLibra() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 9 && c.Day() >= 23 {
@@ -144,7 +144,7 @@ func (c Carbon) IsLibra() bool {
 
 // IsScorpio 是否是天蝎座
 func (c Carbon) IsScorpio() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 10 && c.Day() >= 24 {
@@ -158,7 +158,7 @@ func (c Carbon) IsScorpio() bool {
 
 // IsSagittarius 是否是射手座
 func (c Carbon) IsSagittarius() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 11 && c.Day() >= 22 {
@@ -172,7 +172,7 @@ func (c Carbon) IsSagittarius() bool {
 
 // IsCapricorn 是否是摩羯座
 func (c Carbon) IsCapricorn() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 12 && c.Day() >= 22 {
@@ -186,7 +186,7 @@ func (c Carbon) IsCapricorn() bool {
 
 // IsAquarius 是否是水瓶座
 func (c Carbon) IsAquarius() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 1 && c.Day() >= 20 {
@@ -200,7 +200,7 @@ func (c Carbon) IsAquarius() bool {
 
 // IsPisces 是否是双鱼座
 func (c Carbon) IsPisces() bool {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return false
 	}
 	if c.Month() == 2 && c.Day() >= 19 {

@@ -2,8 +2,6 @@ package carbon
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -40,10 +38,10 @@ func (lang *Language) SetLocale(locale string) error {
 	fileName := lang.dir + string(os.PathSeparator) + locale + ".json"
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		return errors.New(fmt.Sprintf("invalid locale %q, please see the directory %q for all valid locales", locale, lang.dir))
+		return invalidLocaleError(locale, lang.dir)
 	}
 	if err := json.Unmarshal(bytes, &lang.resources); err != nil {
-		return errors.New(fmt.Sprintf("invalid file %q, please make sure the json file is valid", fileName))
+		return invalidJsonFileError(fileName)
 	}
 	lang.locale = locale
 	return nil
@@ -53,7 +51,7 @@ func (lang *Language) SetLocale(locale string) error {
 func (lang *Language) SetDir(dir string) error {
 	fi, err := os.Stat(dir)
 	if err != nil || !fi.IsDir() {
-		return errors.New(fmt.Sprintf("invalid directory %q, please make sure the directory exists", dir))
+		return invalidDirError(dir)
 	}
 	lang.dir = dir
 	return nil

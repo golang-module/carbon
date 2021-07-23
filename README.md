@@ -1,7 +1,12 @@
 # Carbon  #
+[![Build Status](https://github.com/golang-module/carbon/workflows/Go/badge.svg)](https://github.com/golang-module/carbon/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
+[![codecov](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
+[![Go doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+
 中文 | [English](./README.en.md)
 
-carbon 是一个轻量级、语义化、对开发者友好的 Golang 时间处理库，支持链式调用和 gorm、xorm、zorm 等主流 orm。
+carbon 是一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用和 gorm、xorm、zorm 等主流 orm。
 
 如果您觉得不错，请给个 star 吧
 
@@ -48,7 +53,8 @@ carbon.Now().ToTimestampWithMicrosecond() // 1596604455000000
 // 今天纳秒级时间戳
 carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
 // 指定时区的今天此刻
-carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 01:14:15
+carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 
 // 昨天此刻
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -60,16 +66,17 @@ carbon.Yesterday().ToTimeString() // 13:14:15
 // 昨天秒级时间戳
 carbon.Yesterday().ToTimestamp() // 1596518055
 carbon.Yesterday().ToTimestampWithSecond() // 1596518055
-// 明天毫秒级时间戳
+// 昨天毫秒级时间戳
 carbon.Yesterday().ToTimestampWithMillisecond() // 1596518055000
-// 明天微秒级时间戳
+// 昨天微秒级时间戳
 carbon.Yesterday().ToTimestampWithMicrosecond() // 1596518055000000
-// 明天纳秒级时间戳
+// 昨天纳秒级时间戳
 carbon.Yesterday().ToTimestampWithNanosecond() // 1596518055000000000
-// 指定时区的昨天此刻
-carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 01:14:15
 // 指定日期的昨天此刻
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
+// 指定时区的昨天此刻
+carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 
 // 明天此刻
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -87,61 +94,79 @@ carbon.Tomorrow().ToTimestampWithMillisecond() // 1596690855000
 carbon.Tomorrow().ToTimestampWithMicrosecond() // 1596690855000000
 // 明天纳秒级时间戳
 carbon.Tomorrow().ToTimestampWithNanosecond() // 1596690855000000000
-// 指定时区的明天此刻
-carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 01:14:15
 // 指定日期的明天此刻
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
+// 指定时区的明天此刻
+carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 ```
 
-##### 创建 Carbon 实例
+##### 创建 carbon 实例
 ```go
-// 从秒级时间戳创建 Carbon 实例
+// 从秒级时间戳创建 carbon 实例
+carbon.CreateFromTimestamp(-1).ToDateTimeString() // 1970-01-01 07:59:59
+carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToDateTimeString() // 1970-01-01 08:59:59
+carbon.CreateFromTimestamp(0).ToDateTimeString() // 1970-01-01 08:00:00
+carbon.CreateFromTimestamp(0, carbon.Tokyo).ToDateTimeString() // 1970-01-01 09:00:00
 carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
-// 从毫秒级时间戳创建 Carbon 实例
+carbon.CreateFromTimestamp(1596604455, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// 从毫秒级时间戳创建 carbon 实例
 carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
-// 从微秒级时间戳创建 Carbon 实例
+carbon.CreateFromTimestamp(1596604455000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// 从微秒级时间戳创建 carbon 实例
 carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
-// 从纳级时间戳创建 Carbon 实例
+carbon.CreateFromTimestamp(1596604455000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// 从纳级时间戳创建 carbon 实例
 carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTimestamp(1596604455000000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
-// 从年月日时分秒创建 Carbon 实例
+// 从年月日时分秒创建 carbon 实例
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// 从年月日创建 carbon 实例(时分秒默认为当前时分秒)
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
-// 从时分秒创建 Carbon 实例(年月日默认为当前年月日)
+carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// 从时分秒创建 carbon 实例(年月日默认为当前年月日)
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 将标准格式时间字符串解析成 Carbon 实例
+##### 将标准格式时间字符串解析成 carbon 实例
 ```go
 carbon.Parse("").ToDateTimeString() // 空字符串
+carbon.Parse("0").ToDateTimeString() // 空字符串
 carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空字符串
 carbon.Parse("0000-00-00").ToDateTimeString() // 空字符串
+carbon.Parse("00:00:00").ToDateTimeString() // 空字符串
+
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
-carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 将特殊格式时间字符串解析成 Carbon 实例
-> 如果使用的字母与格式化字符冲突时，请使用\符号转义该字符
+##### 通过格式化字符将字符串解析成 carbon 实例
+> 如果使用的字母与格式化字符冲突时，请使用转义符转义该字母
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 将布局时间字符串解析成 Carbon 实例
+##### 通过布局字符将字符串解析成 carbon 实例
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
 ##### carbon 和 time.Time 互转
 ```go
-// 将 time.Time 转换成 Carbon
+// 将 time.Time 转换成 carbon
 carbon.Time2Carbon(time.Now())
 // 将 Carbon 转换成 time.Time
 carbon.Now().Carbon2Time()
@@ -405,6 +430,17 @@ carbon.Parse("0000-00-00").IsZero() // true
 carbon.Parse("00:00:00").IsZero() // true
 carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
+carbon.Parse("2020-08-05").SetTimezone("xxx").IsZero() // false
+
+// 是否是无效时间
+carbon.Parse("").IsInvalid() // true
+carbon.Parse("0").IsInvalid() // true
+carbon.Parse("0000-00-00 00:00:00").IsInvalid() // true
+carbon.Parse("0000-00-00").IsInvalid() // true
+carbon.Parse("00:00:00").IsInvalid() // true
+carbon.Parse("2020-08-05 00:00:00").IsInvalid() // false
+carbon.Parse("2020-08-05").IsInvalid() // false
+carbon.Parse("2020-08-05").SetTimezone("xxx").IsInvalid() // true
 
 // 是否是当前时间
 carbon.Now().IsNow() // true
@@ -517,22 +553,22 @@ carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-05 13:14:15"),
 carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
 // 是否在两个时间之间(包括开始时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenStartIncluded(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenStartIncluded(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
 // 是否在两个时间之间(包括结束时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenEndIncluded(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenEndIncluded(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
 // 是否在两个时间之间(包括这两个时间)
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
-carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenBothIncluded(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
+carbon.Parse("2020-08-05 13:14:15").BetweenBothIncluded(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
 
 ```
 
 ##### 时间输出
 ```go
-// 输出秒级时间戳
+// 输出秒级时间戳, ToTimestamp() 是ToTimestampWithSecond()的简写
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithSecond() // 1596604455
 // 输出毫秒级时间戳
@@ -544,114 +580,99 @@ carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000
 
 // 输出日期时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToDateTimeStringWithTimezone(carbon.LosAngeles) // 2020-08-04 22:14:15
+carbon.Parse("2020-08-05 13:14:15").ToDateTimeString(carbon.Tokyo) // 2020-08-05 14:14:15
+// 输出简写日期时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString() // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
+
 // 输出日期字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-carbon.Parse("2020-08-05 13:14:15").ToDateStringWithTimezone(carbon.LosAngeles) // 2020-08-04
+carbon.Parse("2020-08-05 13:14:15").ToDateString(carbon.Tokyo) // 2020-08-05
+// 输出简写日期字符串
+carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
+carbon.Parse("2020-08-05 13:14:15").ToShortDateString(carbon.Tokyo) // 20200805
+
 // 输出时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToTimeStringWithTimezone(carbon.LosAngeles) // 22:14:15
+carbon.Parse("2020-08-05 13:14:15").ToTimeString(carbon.Tokyo) // 14:14:15
+// 输出简写时间字符串
+carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
+carbon.Parse("2020-08-05 13:14:15").ToShortTimeString(carbon.Tokyo) // 141415
 
 // 输出 Ansic 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-carbon.Parse("2020-08-05 13:14:15").ToAnsicStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 2020
+carbon.Parse("2020-08-05 13:14:15").ToAnsicString(carbon.Tokyo) // Wed Aug  5 14:14:15 2020
 // 输出 Atom 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToAtomStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
+carbon.Parse("2020-08-05 13:14:15").ToAtomString(carbon.Tokyo) // 2020-08-05T14:14:15+08:00
 // 输出 UnixDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-carbon.Parse("2020-08-05 13:14:15").ToUnixDateStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 PDT 2020
+carbon.Parse("2020-08-05 13:14:15").ToUnixDateString(carbon.Tokyo) // Wed Aug  5 14:14:15 JST 2020
 // 输出 RubyDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
-carbon.Parse("2020-08-05 13:14:15").ToRubyDateStringWithTimezone(carbon.LosAngeles) // Tue Aug 04 22:14:15 -0700 2020
+carbon.Parse("2020-08-05 13:14:15").ToRubyDateString(carbon.Tokyo) // Wed Aug 05 14:14:15 +0900 2020
 // 输出 Kitchen 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-carbon.Parse("2020-08-05 13:14:15").ToKitchenStringWithTimezone(carbon.LosAngeles) // 10:14PM
+carbon.Parse("2020-08-05 13:14:15").ToKitchenString(carbon.Tokyo) // 2:14PM
 // 输出 Cookie 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToCookieStringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-2020 22:14:15 PDT
+carbon.Parse("2020-08-05 13:14:15").ToCookieString(carbon.Tokyo) // Wednesday, 05-Aug-2020 14:14:15 JST
 // 输出 DayDateTime 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeStringWithTimezone(carbon.LosAngeles) // Tue, Aug 4, 2020 10:14 PM
+carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString(carbon.Tokyo) // Wed, Aug 5, 2020 2:14 PM
 // 输出 RSS 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRssStringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
+carbon.Parse("2020-08-05 13:14:15").ToRssString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // 输出 W3C 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToW3cStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
+carbon.Parse("2020-08-05 13:14:15").ToW3cString(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 
+// 输出 ISO8601 格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToIso8601String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToIso8601String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // 输出 RFC822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc822StringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 PDT
+carbon.Parse("2020-08-05 13:14:15").ToRfc822String(carbon.Tokyo) // 05 Aug 20 14:14 JST
 // 输出 RFC822Z 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc822zStringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 -0700
+carbon.Parse("2020-08-05 13:14:15").ToRfc822zString(carbon.Tokyo) // 05 Aug 20 14:14 +0900
 // 输出 RFC850 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc850StringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-20 22:14:15 PDT
+carbon.Parse("2020-08-05 13:14:15").ToRfc850String(carbon.Tokyo) // Wednesday, 05-Aug-20 14:14:15 JST
 // 输出 RFC1036 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1036StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 20 22:14:15 -0700
+carbon.Parse("2020-08-05 13:14:15").ToRfc1036String(carbon.Tokyo) // Wed, 05 Aug 20 14:14:15 +0900
 // 输出 RFC1123 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123StringWithTimezone() // Tue, 04 Aug 2020 22:14:15 PDT
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 JST
 // 输出 RFC2822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc2822StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
+carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // 输出 RFC3339 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToRfc3339StringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
+carbon.Parse("2020-08-05 13:14:15").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // 输出 RFC7231 格式字符串
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
 
 // 输出字符串
-fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
-// 输出格式化字符串，Format() 是 ToFormatString() 的简写(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15 +0900 JST
+
+// 输出指定布局的字符串,Layout()是ToLayoutString()的简写
+carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-31 13:14:15
+carbon.Parse("2020-08-05 13:14:15").Layout("2006-01-02 15:04:05", carbon.Tokyo) // 2020-08-31 14:14:15
+
+// 输出指定格式的字符串,Format()是ToFormatString()的简写(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
 carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is 2020-08-31 13:14:15
+carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-08-31 14:14:15
 ```
->更多格式化输出符号请查看附录 <a href="#格式化符号表">格式化符号表</a>
-
-##### 时间设置
-```go
-// 设置时区
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-
-// 设置语言
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
-
-// 设置年
-carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
-carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
-
-// 设置月
-carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
-
-// 设置日
-carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
-carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
-
-// 设置时
-carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
-carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
-
-// 设置分
-carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
-carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
-
-// 设置秒
-carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
-carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
-```
+>更多格式化输出符号请查看附录 <a href="#format-sign-table">格式化符号表</a>
 
 ##### 时间获取
 ```go
@@ -707,10 +728,18 @@ carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
 carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 
 // 获取时区
-carbon.SetTimezone(carbon.PRC).Timezone() // PRC
-carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+carbon.SetTimezone(carbon.PRC).Timezone() // CST
+carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
 
-// 获取当前语言
+// 获取位置
+carbon.SetTimezone(carbon.PRC).Location() // PRC
+carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+
+// 获取距离UTC时区的偏移量，单位秒
+carbon.SetTimezone(carbon.PRC).Offset() // 28800
+carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+
+// 获取当前区域
 carbon.Now().Locale() // en
 carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 
@@ -730,6 +759,42 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
 > 关于第几周`WeekOfYear()`和`WeekOfMonth()`的计算如有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715)
+
+##### 时间设置
+```go
+// 设置时区
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+
+// 设置区域
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+
+// 设置年
+carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
+carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+
+// 设置月
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+
+// 设置日
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// 设置时
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// 设置分
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// 设置秒
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+```
 
 ##### 星座
 ```go
@@ -1044,51 +1109,52 @@ c.Now().Season() // Summer
 ```
 
 ##### 错误处理
-> 如果有多个错误发生，只返回第一个错误信息，前一个错误排除后才返回下一个错误信息
+> 如果有多个错误发生，只返回第一个错误，前一个错误排除后才返回下一个错误
 
 ###### 场景一
 ```go
-c := carbon.SetTimezone(PRC).Parse("XXXX")
+c := carbon.SetTimezone(PRC).Parse("xxx")
 if c.Error != nil {
     // 错误处理...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-the value "XXXX" and the layout "2006-01-02 15:04:05" don't match, so the value can't parse to carbon
+cannot parse "xxx" to carbon, please make sure the value is valid
 ```
 
 ###### 场景二
 ```go
-c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
+c := carbon.SetTimezone("xxx").Parse("2020-08-05")
 if c.Error != nil {
     // 错误处理...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 ###### 场景三
 ```go
-c := carbon.SetTimezone("XXXX").Parse("12345678")
+c := carbon.SetTimezone("xxx").Parse("12345678")
 if c.Error != nil {
     // 错误处理...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezone
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezone
 ```
 > 建议使用`SetTimezone()`、`Parse()`、`ParseByFormat()`、`AddDuration()`、`SubDuration()`、`SetLocale()`等方法时先进行错误处理判断，除非你能确保传入参数无误
+
 #### 附录
-##### <a id="格式化符号表">格式化符号表</a>
+##### <a id="format-sign-table">格式化符号表</a>
 | 符号 | 描述 |  长度 | 范围 | 示例 |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | d | 月份中的第几天，有前导零 | 2 | 01-31 | 05 |
 | D | 缩写单词表示的周几 | 3 | Mon-Sun | Wed |
 | j | 月份中的第几天，没有前导零 | - |1-31 | 5 |
-| S | 月份中的第几天，英文缩写后缀，一般和j配合使用 | 2 | st/nd/rd/th | th |
+| S | 第几天的英文缩写后缀，一般和j配合使用 | 2 | st/nd/rd/th | th |
 | l | 完整单词表示的周几 | - | Monday-Sunday | Wednesday |
 | F | 完整单词表示的月份 | - | January-December | August |
 | m | 数字表示的月份，有前导零 | 2 | 01-12 | 08 |
@@ -1113,11 +1179,13 @@ invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for
 | N | ISO-8601 格式数字表示的星期中的第几天 | 1 | 1-7 | 6 |
 | L | 是否为闰年，如果是闰年为 1，否则为 0 | 1 | 0-1 | 1 |
 | U | 秒级时间戳 | 10 | - | 1611818268 |
-| u | 毫秒 | - | - | 999 |
+| u | 毫秒 | 3 | - | 999 |
 | w | 数字表示的周几 | 1 | 0-6 | 6 |
 | t | 月份中的总天数 | 2 | 28-31 | 30 |
 | z | 年份中的第几天 | - | 0-365 | 15 |
-| e | 时区标识 | - | - | America/New_York |
+| e | 当前位置 | - | - | America/New_York |
+| Q | 当前季节 | 1 | 1-4 | 1 |
+| C | 当前世纪数 | - | 0-99 | 21 |
 
 #### 参考项目
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)

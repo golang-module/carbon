@@ -2,8 +2,6 @@ package carbon
 
 import (
 	"bytes"
-	"errors"
-	"fmt"
 	"time"
 )
 
@@ -58,16 +56,16 @@ func format2layout(format string) string {
 func getLocationByTimezone(timezone string) (*time.Location, error) {
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("invalid timezone %q, please see the file %q for all valid timezones", timezone, "$GOROOT/lib/time/zoneinfo.zip"))
+		err = invalidTimezoneError(timezone)
 	}
 	return loc, err
 }
 
-// parseByDuration 通过持续时间解析
+// parseByDuration 通过持续时长解析
 func parseByDuration(duration string) (time.Duration, error) {
 	td, err := time.ParseDuration(duration)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("invalid duration %q, please make sure the duration is valid", duration))
+		err = invalidDurationError(duration)
 	}
 	return td, err
 }

@@ -1,14 +1,16 @@
 // @Title carbon
 // @Description A simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.4.3
+// @Version v1.4.4
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
 
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // 时区常量
 const (
@@ -126,6 +128,7 @@ const (
 	RFC2822Format       = time.RFC1123Z
 	RFC3339Format       = time.RFC3339
 	KitchenFormat       = time.Kitchen
+	Iso8601Format       = "2006-01-02T15:04:05-07:00"
 	CookieFormat        = "Monday, 02-Jan-2006 15:04:05 MST"
 	RFC1036Format       = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC7231Format       = "Mon, 02 Jan 2006 15:04:05 GMT"
@@ -164,18 +167,34 @@ func (c Carbon) Carbon2Time() time.Time {
 }
 
 // Now 当前
-func (c Carbon) Now() Carbon {
+func (c Carbon) Now(timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	c.Time = time.Now().In(c.Loc)
 	return c
 }
 
-// Now 当前(默认时区)
-func Now() Carbon {
-	return NewCarbon().Now()
+// Now 当前
+func Now(timezone ...string) Carbon {
+	return NewCarbon().Now(timezone...)
 }
 
 // Tomorrow 明天
-func (c Carbon) Tomorrow() Carbon {
+func (c Carbon) Tomorrow(timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	if c.IsZero() {
 		c.Time = time.Now().In(c.Loc).AddDate(0, 0, 1)
 	} else {
@@ -184,13 +203,21 @@ func (c Carbon) Tomorrow() Carbon {
 	return c
 }
 
-// Tomorrow 明天(默认时区)
-func Tomorrow() Carbon {
-	return NewCarbon().Tomorrow()
+// Tomorrow 明天
+func Tomorrow(timezone ...string) Carbon {
+	return NewCarbon().Tomorrow(timezone...)
 }
 
 // Yesterday 昨天
-func (c Carbon) Yesterday() Carbon {
+func (c Carbon) Yesterday(timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	if c.IsZero() {
 		c.Time = time.Now().In(c.Loc).AddDate(0, 0, -1)
 	} else {
@@ -199,7 +226,7 @@ func (c Carbon) Yesterday() Carbon {
 	return c
 }
 
-// Yesterday 昨天(默认时区)
-func Yesterday() Carbon {
-	return NewCarbon().Yesterday()
+// Yesterday 昨天
+func Yesterday(timezone ...string) Carbon {
+	return NewCarbon().Yesterday(timezone...)
 }

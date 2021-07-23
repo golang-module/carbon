@@ -1,15 +1,21 @@
 package carbon
 
 import (
-	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
 )
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例
-func (c Carbon) Parse(value string) Carbon {
+func (c Carbon) Parse(value string, timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	layout := DateTimeFormat
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
@@ -28,36 +34,60 @@ func (c Carbon) Parse(value string) Carbon {
 			layout = ShortDateTimeFormat
 		}
 	}
+	if c.ParseByLayout(value, layout).Error != nil {
+		c.Error = invalidValueError(value)
+		return c
+	}
 	return c.ParseByLayout(value, layout)
 }
 
 // Parse 将标准格式时间字符串解析成 Carbon 实例(默认时区)
-func Parse(value string) Carbon {
-	return NewCarbon().Parse(value)
+func Parse(value string, timezone ...string) Carbon {
+	return NewCarbon().Parse(value, timezone...)
 }
 
 // ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例
-func (c Carbon) ParseByFormat(value string, format string) Carbon {
+func (c Carbon) ParseByFormat(value string, format string, timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
 	layout := format2layout(format)
+	if c.ParseByLayout(value, layout).Error != nil {
+		c.Error = invalidFormatError(value, format)
+		return c
+	}
 	return c.ParseByLayout(value, layout)
 }
 
 // ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例(默认时区)
-func ParseByFormat(value string, format string) Carbon {
-	return NewCarbon().ParseByFormat(value, format)
+func ParseByFormat(value string, format string, timezone ...string) Carbon {
+	return NewCarbon().ParseByFormat(value, format, timezone...)
 }
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例
-func (c Carbon) ParseByLayout(value string, layout string) Carbon {
+func (c Carbon) ParseByLayout(value string, layout string, timezone ...string) Carbon {
+	if len(timezone) == 1 {
+		loc, err := getLocationByTimezone(timezone[0])
+		c.Loc = loc
+		c.Error = err
+	}
+	if c.Error != nil {
+		return c
+	}
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
 	tt, err := time.ParseInLocation(layout, value, c.Loc)
 	if err != nil {
-		c.Error = errors.New(fmt.Sprintf("the value %q and the layout %q don't match, so the value can't parse to carbon", value, layout))
+		c.Error = invalidLayoutError(value, layout)
 		return c
 	}
 	c.Time = tt
@@ -65,6 +95,6 @@ func (c Carbon) ParseByLayout(value string, layout string) Carbon {
 }
 
 // ParseByLayout 将布局时间字符串解析成 Carbon 实例(默认时区)
-func ParseByLayout(value string, layout string) Carbon {
-	return NewCarbon().ParseByLayout(value, layout)
+func ParseByLayout(value string, layout string, timezone ...string) Carbon {
+	return NewCarbon().ParseByLayout(value, layout, timezone...)
 }

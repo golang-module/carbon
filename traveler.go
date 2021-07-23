@@ -2,19 +2,19 @@ package carbon
 
 import "time"
 
-// AddDurations 按照持续时间字符串增加时间
+// AddDurations 按照持续时长字符串增加时间
 // 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsZero() {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.Time = c.Time.Add(td)
+	c.Time = c.Time.In(c.Loc).Add(td)
 	c.Error = err
 	return c
 }
 
-// SubDurations 按照持续时间字符串减少时间
+// SubDurations 按照持续时长字符串减少时间
 // 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
@@ -65,7 +65,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsZero() {
 		return c
 	}
-	c.Time = c.Time.AddDate(years, 0, 0)
+	c.Time = c.Time.In(c.Loc).AddDate(years, 0, 0)
 	return c
 }
 
@@ -171,9 +171,9 @@ func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	if c.IsZero() {
 		return c
 	}
-	month := c.Time.Month() + time.Month(months)
+	month := c.Month() + months
 	// 获取N月后的最后一天
-	last := time.Date(c.Year(), month, 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
+	last := time.Date(c.Year(), time.Month(month), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
 	day := c.Day()
 	if c.Day() > last.Day() {
 		day = last.Day()
@@ -262,7 +262,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.Time = c.Time.Add(td)
+	c.Time = c.Time.In(c.Loc).Add(td)
 	return c
 }
 

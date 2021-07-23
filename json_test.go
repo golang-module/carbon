@@ -22,8 +22,8 @@ type Person struct {
 
 func TestCarbon_MarshalJSON1(t *testing.T) {
 	person := Person{
-		ID:          153,
-		Name:        "勾国印",
+		ID:          1,
+		Name:        "gouguoyin",
 		Age:         18,
 		Birthday:    ToDateTimeString{Now().SubYears(18)},
 		GraduatedAt: ToDateString{Parse("2020-08-05 13:14:15")},
@@ -43,8 +43,8 @@ func TestCarbon_MarshalJSON1(t *testing.T) {
 
 func TestCarbon_MarshalJSON2(t *testing.T) {
 	person := Person{
-		ID:          153,
-		Name:        "勾国印",
+		ID:          1,
+		Name:        "gouguoyin",
 		Age:         18,
 		Birthday:    ToDateTimeString{Parse("")},
 		GraduatedAt: ToDateString{Parse("0")},
@@ -64,8 +64,8 @@ func TestCarbon_MarshalJSON2(t *testing.T) {
 
 func TestCarbon_UnmarshalJSON1(t *testing.T) {
 	str := `{
-		"id":153,
-		"name":"勾国印",
+		"id":1,
+		"name":"gouguoyin",
 		"age":18,
 		"birthday":"2003-07-16 16:22:02",
 		"graduated_at":"2020-08-05",
@@ -106,9 +106,8 @@ func TestCarbon_UnmarshalJSON2(t *testing.T) {
 	fmt.Printf("Json string parse to person2:\n%+v\n", *person)
 }
 
-// 错误情况
-func TestCarbon_UnmarshalJSON3(t *testing.T) {
-	str := `xxxx`
+func TestError_UnmarshalJSON(t *testing.T) {
+	str := `xxx`
 	person := new(Person)
 	err := json.Unmarshal([]byte(str), &person)
 	if err != nil {

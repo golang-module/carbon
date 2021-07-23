@@ -2,7 +2,7 @@ package carbon
 
 // DaysInYear 获取本年的总天数
 func (c Carbon) DaysInYear() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	days := DaysPerNormalYear
@@ -14,7 +14,7 @@ func (c Carbon) DaysInYear() int {
 
 // DaysInMonth 获取本月的总天数
 func (c Carbon) DaysInMonth() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.EndOfMonth().Time.In(c.Loc).Day()
@@ -22,7 +22,7 @@ func (c Carbon) DaysInMonth() int {
 
 // MonthOfYear 获取本年的第几月(从1开始)
 func (c Carbon) MonthOfYear() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return int(c.Time.In(c.Loc).Month())
@@ -30,7 +30,7 @@ func (c Carbon) MonthOfYear() int {
 
 // DayOfYear 获取本年的第几天(从1开始)
 func (c Carbon) DayOfYear() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).YearDay()
@@ -38,7 +38,7 @@ func (c Carbon) DayOfYear() int {
 
 // DayOfMonth 获取本月的第几天(从1开始)
 func (c Carbon) DayOfMonth() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Day()
@@ -46,7 +46,7 @@ func (c Carbon) DayOfMonth() int {
 
 // DayOfWeek 获取本周的第几天(从1开始)
 func (c Carbon) DayOfWeek() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	day := int(c.Time.In(c.Loc).Weekday())
@@ -58,7 +58,7 @@ func (c Carbon) DayOfWeek() int {
 
 // WeekOfYear 获取本年的第几周(从1开始)
 func (c Carbon) WeekOfYear() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	_, week := c.Time.In(c.Loc).ISOWeek()
@@ -67,7 +67,7 @@ func (c Carbon) WeekOfYear() int {
 
 // WeekOfMonth 获取本月的第几周(从1开始)
 func (c Carbon) WeekOfMonth() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	day := c.Time.In(c.Loc).Day()
@@ -79,7 +79,7 @@ func (c Carbon) WeekOfMonth() int {
 
 // Century 获取当前世纪
 func (c Carbon) Century() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Year()/YearsPerCentury + 1
@@ -87,7 +87,7 @@ func (c Carbon) Century() int {
 
 // Decade 获取当前年代
 func (c Carbon) Decade() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Year() % YearsPerCentury / YearsPerDecade * YearsPerDecade
@@ -95,7 +95,7 @@ func (c Carbon) Decade() int {
 
 // Year 获取当前年
 func (c Carbon) Year() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Year()
@@ -103,7 +103,7 @@ func (c Carbon) Year() int {
 
 // Quarter 获取当前季度
 func (c Carbon) Quarter() (quarter int) {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	switch {
@@ -121,7 +121,7 @@ func (c Carbon) Quarter() (quarter int) {
 
 // Month 获取当前月
 func (c Carbon) Month() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.MonthOfYear()
@@ -129,7 +129,7 @@ func (c Carbon) Month() int {
 
 // Week 获取当前周(从0开始)
 func (c Carbon) Week() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return -1
 	}
 	return int(c.Time.In(c.Loc).Weekday())
@@ -137,7 +137,7 @@ func (c Carbon) Week() int {
 
 // Day 获取当前日
 func (c Carbon) Day() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.DayOfMonth()
@@ -145,7 +145,7 @@ func (c Carbon) Day() int {
 
 // Hour 获取当前小时
 func (c Carbon) Hour() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Hour()
@@ -153,7 +153,7 @@ func (c Carbon) Hour() int {
 
 // Minute 获取当前分钟数
 func (c Carbon) Minute() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Minute()
@@ -161,7 +161,7 @@ func (c Carbon) Minute() int {
 
 // Second 获取当前秒数，1-2位数字
 func (c Carbon) Second() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Second()
@@ -169,7 +169,7 @@ func (c Carbon) Second() int {
 
 // Millisecond 获取当前毫秒数，3位数字
 func (c Carbon) Millisecond() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Nanosecond() / 1e6
@@ -177,7 +177,7 @@ func (c Carbon) Millisecond() int {
 
 // Microsecond 获取当前微秒数，6位数字
 func (c Carbon) Microsecond() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Nanosecond() / 1e3
@@ -185,15 +185,27 @@ func (c Carbon) Microsecond() int {
 
 // Nanosecond 获取当前纳秒数，9位数字
 func (c Carbon) Nanosecond() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	return c.Time.In(c.Loc).Nanosecond()
 }
 
+// Location 获取位置
+func (c Carbon) Location() string {
+	return c.Loc.String()
+}
+
 // Timezone 获取时区
 func (c Carbon) Timezone() string {
-	return c.Loc.String()
+	name, _ := c.Time.Zone()
+	return name
+}
+
+// Offset 获取距离UTC时区的偏移量，单位秒
+func (c Carbon) Offset() int {
+	_, offset := c.Time.Zone()
+	return offset
 }
 
 // Locale 获取语言区域
@@ -203,7 +215,7 @@ func (c Carbon) Locale() string {
 
 // Age 获取年龄
 func (c Carbon) Age() int {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return 0
 	}
 	now := Now()

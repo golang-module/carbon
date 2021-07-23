@@ -11,9 +11,9 @@ func TestCarbon_Season1(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -38,7 +38,7 @@ func TestCarbon_Season1(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Season(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Season(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -46,10 +46,10 @@ func TestCarbon_Season2(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		param  string // 参数
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		param    string // 参数
+		expected string // 期望值
 	}{
 		{1, "", "en", ""},
 		{2, "0", "en", ""},
@@ -59,7 +59,7 @@ func TestCarbon_Season2(t *testing.T) {
 
 		{6, "2020-08-05", "en", "Summer"},
 		{7, "2020-08-05", "zh-CN", "夏季"},
-		{8, "2020-08-05", "zh-Tw", "夏季"},
+		{8, "2020-08-05", "zh-TW", "夏季"},
 		{9, "2020-08-05", "jp", "なつ"},
 		{10, "2020-08-05", "kr", "여름"},
 	}
@@ -67,7 +67,7 @@ func TestCarbon_Season2(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).SetLocale(test.param)
 		assert.Nil(c.Error)
-		assert.Equal(c.Season(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Season(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -75,9 +75,9 @@ func TestCarbon_StartOfSeason(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -104,7 +104,7 @@ func TestCarbon_StartOfSeason(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfSeason()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -112,9 +112,9 @@ func TestCarbon_EndOfSeason(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -141,7 +141,7 @@ func TestCarbon_EndOfSeason(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfSeason()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -149,9 +149,9 @@ func TestCarbon_IsSpring(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -176,7 +176,7 @@ func TestCarbon_IsSpring(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.IsSpring(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.IsSpring(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -184,9 +184,9 @@ func TestCarbon_IsSummer(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -211,7 +211,7 @@ func TestCarbon_IsSummer(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.IsSummer(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.IsSummer(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -219,9 +219,9 @@ func TestCarbon_IsAutumn(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -246,7 +246,7 @@ func TestCarbon_IsAutumn(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.IsAutumn(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.IsAutumn(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -254,9 +254,9 @@ func TestCarbon_IsWinter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -281,6 +281,6 @@ func TestCarbon_IsWinter(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.IsWinter(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.IsWinter(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }

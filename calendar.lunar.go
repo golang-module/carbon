@@ -56,6 +56,10 @@ type lunar struct {
 
 // Lunar 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
+	if c.IsInvalid() {
+		return
+	}
+	c = c.SetTimezone(PRC)
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
 	leapMonths, daysInYear, daysInMonth, leapMonth := 14, 365, 30, 0
 	// 有效范围检验
