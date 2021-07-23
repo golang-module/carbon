@@ -12,9 +12,9 @@ func TestLunar_Animal(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -39,12 +39,13 @@ func TestLunar_Animal(t *testing.T) {
 		{20, "2020-08-05", "鼠"},
 		{21, "2021-05-12", "牛"},
 		{22, "2021-08-05", "牛"},
+		{22, "2200-08-05", ""},
 	}
 
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().Animal(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().Animal(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -52,9 +53,9 @@ func TestLunar_Festival(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -81,7 +82,7 @@ func TestLunar_Festival(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().Festival(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().Festival(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -89,9 +90,9 @@ func TestLunar_Year(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output int    // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected int    // 期望值
 	}{
 		{1, "", 0},
 		{2, "0", 0},
@@ -110,7 +111,7 @@ func TestLunar_Year(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().Year(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().Year(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -118,9 +119,9 @@ func TestLunar_Month(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output int    // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected int    // 期望值
 	}{
 		{1, "", 0},
 		{2, "0", 0},
@@ -137,7 +138,7 @@ func TestLunar_Month(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().Month(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().Month(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -145,9 +146,9 @@ func TestLunar_Day(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output int    // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected int    // 期望值
 	}{
 		{1, "", 0},
 		{2, "0", 0},
@@ -164,7 +165,7 @@ func TestLunar_Day(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().Day(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().Day(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -172,9 +173,9 @@ func TestLunar_LeapMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output int    // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected int    // 期望值
 	}{
 		{1, "", 0},
 		{2, "0", 0},
@@ -191,7 +192,7 @@ func TestLunar_LeapMonth(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().LeapMonth(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().LeapMonth(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -199,9 +200,9 @@ func TestLunar_ToYearString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -220,7 +221,7 @@ func TestLunar_ToYearString(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().ToYearString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().ToYearString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -228,9 +229,9 @@ func TestLunar_ToMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -260,7 +261,7 @@ func TestLunar_ToMonthString(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().ToMonthString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().ToMonthString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -268,9 +269,9 @@ func TestLunar_ToDayString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -298,7 +299,7 @@ func TestLunar_ToDayString(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().ToDayString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().ToDayString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -306,9 +307,9 @@ func TestLunar_String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -334,7 +335,7 @@ func TestLunar_String(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(fmt.Sprintf("%s", c.Lunar()), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, fmt.Sprintf("%s", c.Lunar()), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -342,9 +343,9 @@ func TestLunar_ToString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -370,7 +371,7 @@ func TestLunar_ToString(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().ToString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().ToString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -378,9 +379,9 @@ func TestLunar_IsLeapYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -398,7 +399,7 @@ func TestLunar_IsLeapYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsLeapYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsLeapYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -406,9 +407,9 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -426,7 +427,7 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsLeapMonth(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsLeapMonth(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -434,9 +435,9 @@ func TestLunar_IsRatYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -453,7 +454,7 @@ func TestLunar_IsRatYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsRatYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsRatYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -461,9 +462,9 @@ func TestLunar_IsOxYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -480,7 +481,7 @@ func TestLunar_IsOxYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsOxYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsOxYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -488,9 +489,9 @@ func TestLunar_IsTigerYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -508,7 +509,7 @@ func TestLunar_IsTigerYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsTigerYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsTigerYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -516,9 +517,9 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -536,7 +537,7 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsRabbitYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsRabbitYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -544,9 +545,9 @@ func TestLunar_IsDragonYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -564,7 +565,7 @@ func TestLunar_IsDragonYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsDragonYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsDragonYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -572,9 +573,9 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -592,7 +593,7 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsSnakeYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsSnakeYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -600,9 +601,9 @@ func TestLunar_IsHorseYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -620,7 +621,7 @@ func TestLunar_IsHorseYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsHorseYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsHorseYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -628,9 +629,9 @@ func TestLunar_IsGoatYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -648,7 +649,7 @@ func TestLunar_IsGoatYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsGoatYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsGoatYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -656,9 +657,9 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -676,7 +677,7 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsMonkeyYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsMonkeyYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -684,9 +685,9 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -704,7 +705,7 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsRoosterYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsRoosterYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -712,9 +713,9 @@ func TestLunar_IsDogYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -732,7 +733,7 @@ func TestLunar_IsDogYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsDogYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsDogYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -740,9 +741,9 @@ func TestLunar_IsPigYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output bool   // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected bool   // 期望值
 	}{
 		{1, "", false},
 		{2, "0", false},
@@ -760,6 +761,6 @@ func TestLunar_IsPigYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(c.Lunar().IsPigYear(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Lunar().IsPigYear(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
