@@ -11,33 +11,45 @@ func TestLanguage_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output error  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected error  // 期望值
 	}{
 		{1, "en", nil},
 		{2, "zh-CN", nil},
 	}
 
 	for _, test := range tests {
-		assert.ErrorIs(NewLanguage().SetLocale(test.input), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.ErrorIs(test.expected, NewLanguage().SetLocale(test.input), "Current test id is "+strconv.Itoa(test.id))
 	}
+}
+
+func TestError_SetLocale(t *testing.T) {
+	locale, lang := "xxx", NewLanguage()
+	actual := lang.SetLocale(locale)
+	assert.Equal(t, invalidLocaleError(locale, lang.dir), actual, "Should catch an exception in SetLocale()")
 }
 
 func TestLanguage_SetDir(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output error  // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected error  // 期望值
 	}{
 		{1, "lang", nil},
 	}
 
 	for _, test := range tests {
-		assert.ErrorIs(NewLanguage().SetDir(test.input), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.ErrorIs(test.expected, NewLanguage().SetDir(test.input), "Current test id is "+strconv.Itoa(test.id))
 	}
+}
+
+func TestError_SetDir(t *testing.T) {
+	dir := "./demo"
+	actual := NewLanguage().SetDir(dir)
+	assert.Equal(t, invalidDirError(dir), actual, "Should catch an exception in SetDir()")
 }
 
 func TestLanguage_SetResources1(t *testing.T) {
@@ -62,9 +74,9 @@ func TestLanguage_SetResources1(t *testing.T) {
 	lang.SetResources(resources)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  Carbon // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    Carbon // 输入值
+		expected string // 期望值
 	}{
 		{1, Now(), "just now"},
 		{2, Now().AddYears(1), "in 1 yr"},
@@ -86,7 +98,7 @@ func TestLanguage_SetResources1(t *testing.T) {
 	for _, test := range tests {
 		c := test.input.SetLanguage(lang)
 		assert.Nil(c.Error)
-		assert.Equal(c.DiffForHumans(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.DiffForHumans(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -98,11 +110,12 @@ func TestLanguage_SetResources2(t *testing.T) {
 		"xxx": "xxxx",
 	}
 	lang.SetResources(resources)
+	lang.SetLocale("en")
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -114,30 +127,30 @@ func TestLanguage_SetResources2(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).DiffForHumans(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).DiffForHumans(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).Constellation(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).Constellation(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).Season(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).Season(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).ToWeekString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToWeekString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).ToShortWeekString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToShortWeekString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).ToMonthString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToMonthString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
-		assert.Equal(Parse(test.input).SetLanguage(lang).ToShortMonthString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToShortMonthString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
