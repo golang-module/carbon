@@ -15,14 +15,14 @@ var (
 	defaultLocale = "en"
 )
 
-// 定义 Language 结构体
+// Language 定义 Language 结构体
 type Language struct {
 	dir       string            // 目录
 	locale    string            // 区域
 	resources map[string]string // 资源
 }
 
-// NewLanguage 初始化 Language 实例
+// NewLanguage 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{
 		dir:       defaultDir,
