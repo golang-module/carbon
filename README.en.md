@@ -1,4 +1,9 @@
 # Carbon
+[![Build Status](https://github.com/golang-module/carbon/workflows/Go/badge.svg)](https://github.com/golang-module/carbon/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
+[![codecov](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
+[![Go doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+
 English | [Chinese](./README.md)
 
 #### Introduction
@@ -30,7 +35,7 @@ import (
 #### Usage and example
 > The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
 
-##### Yesterday,today and tomorrow
+##### Yesterday, today and tomorrow
 ```go
 // Datetime of today
 fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
@@ -49,7 +54,8 @@ carbon.Now().ToTimestampWithMicrosecond() // 1596604455000000
 // Timestamp with nanosecond of today
 carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
 // Datetime of today in specific timezone
-carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 01:14:15
+carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 
 // Datetime of yesterday 
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -67,10 +73,11 @@ carbon.Yesterday().ToTimestampWithMillisecond() // 1596518055000
 carbon.Yesterday().ToTimestampWithMicrosecond() // 1596518055000000
 // Timestamp with nanosecond of yesterday
 carbon.Yesterday().ToTimestampWithNanosecond() // 1596518055000000000
-// Datetime of yesterday in specific timezone
-carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 01:14:15
 // Datetime of yesterday in specific day
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
+// Datetime of yesterday in specific timezone
+carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 
 // Datetime of tomorrow
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -88,32 +95,44 @@ carbon.Tomorrow().ToTimestampWithMillisecond() // 1596690855000
 carbon.Tomorrow().ToTimestampWithMicrosecond() // 1596690855000000
 // Timestamp with nanosecond of tomorrow
 carbon.Tomorrow().ToTimestampWithNanosecond() // 1596690855000000000
-// Datetime of tomorrow in specific timezone
-carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 01:14:15
 // Datetime of tomorrow in specific day
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
+// Datetime of tomorrow in specific timezone
+carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
+carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 ```
 
 ##### Create carbon instance
 ```go
-// Create Carbon instance from timestamp with second
+// Create carbon instance from timestamp with second
+carbon.CreateFromTimestamp(-1).ToDateTimeString() // 1970-01-01 07:59:59
+carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToDateTimeString() // 1970-01-01 08:59:59
+carbon.CreateFromTimestamp(0).ToDateTimeString() // 1970-01-01 08:00:00
+carbon.CreateFromTimestamp(0, carbon.Tokyo).ToDateTimeString() // 1970-01-01 09:00:00
 carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from timestamp with millisecond
+carbon.CreateFromTimestamp(1596604455, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create carbon instance from timestamp with millisecond
 carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from timestamp with microsecond
+carbon.CreateFromTimestamp(1596604455000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create carbon instance from timestamp with microsecond
 carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from timestamp with nanosecond
+carbon.CreateFromTimestamp(1596604455000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create carbon instance from timestamp with nanosecond
 carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTimestamp(1596604455000000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
-// Create Carbon instance from year,month,day,hour,minute and second
+// Create carbon instance from year, month, day, hour, minute and second
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from year,month and day
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create carbon instance from year, month and day
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
-// Create Carbon instance from hour,minute and second
+carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create carbon instance from hour, minute and second
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### Parse by standard string as carbon
+##### Parse as carbon by standard string
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
 carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
@@ -122,21 +141,24 @@ carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
-carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 00:00:00
+carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### Parse by format string as carbon
+##### Parse as carbon by format string
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### Parse by layout string as carbon
+##### Parse as carbon by layout string
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
+carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
 ##### Convert between carbon and time.Time
@@ -206,7 +228,7 @@ carbon.Parse("2020-08-05 13:14:15").StartOfSecond().Format("Y-m-d H:i:s.u") // 2
 carbon.Parse("2020-08-05 13:14:15").EndOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.999
 ```
 
-##### Addition and Subtraction
+##### Addition and subtraction
 ```go
 // Add three centuries
 carbon.Parse("2020-02-29 13:14:15").AddCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
@@ -381,13 +403,13 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // Difference in seconds with absolute value
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
-// Difference for humans
+// Difference for humans from now time
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
 carbon.Parse("2021-08-05 13:14:15").DiffForHumans() // 1 year from now
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans() // 2 years from now
-
+// Difference for humans from another time
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
@@ -396,7 +418,7 @@ carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 
 ##### Comparison
 ```go
-// Is zero time
+// Whether is zero time
 carbon.Parse("").IsZero() // true
 carbon.Parse("0").IsZero() // true
 carbon.Parse("0000-00-00 00:00:00").IsZero() // true
@@ -404,251 +426,247 @@ carbon.Parse("0000-00-00").IsZero() // true
 carbon.Parse("00:00:00").IsZero() // true
 carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
+carbon.Parse("2020-08-05").SetTimezone("xxx").IsZero() // false
 
-// Is now time
+// Whether is invalid time
+carbon.Parse("").IsInvalid() // true
+carbon.Parse("0").IsInvalid() // true
+carbon.Parse("0000-00-00 00:00:00").IsInvalid() // true
+carbon.Parse("0000-00-00").IsInvalid() // true
+carbon.Parse("00:00:00").IsInvalid() // true
+carbon.Parse("2020-08-05 00:00:00").IsInvalid() // false
+carbon.Parse("2020-08-05").IsInvalid() // false
+carbon.Parse("2020-08-05").SetTimezone("xxx").IsInvalid() // true
+
+// Whether is now time
 carbon.Now().IsNow() // true
-// Is future time
+// Whether is future time
 carbon.Tomorrow().IsFuture() // true
-// Is pass time
+// Whether is pass time
 carbon.Yesterday().IsPast() // true
 
-// Is leap year
+// Whether is leap year
 carbon.Parse("2020-08-05 13:14:15").IsLeapYear() // true
-// Is long year
+// Whether is long year
 carbon.Parse("2020-08-05 13:14:15").IsLongYear() // true
 
-// Is january 
+// Whether is january 
 carbon.Parse("2020-08-05 13:14:15").IsJanuary() // false
-// Is february
+// Whether is february
 carbon.Parse("2020-08-05 13:14:15").IsFebruary() // false
-// Is march
+// Whether is march
 carbon.Parse("2020-08-05 13:14:15").IsMarch() // false
-// Is april
+// Whether is april
 carbon.Parse("2020-08-05 13:14:15").IsApril()  // false
-// Is may
+// Whether is may
 carbon.Parse("2020-08-05 13:14:15").IsMay() // false
-// Is june
+// Whether is june
 carbon.Parse("2020-08-05 13:14:15").IsJune() // false
-// Is july
+// Whether is july
 carbon.Parse("2020-08-05 13:14:15").IsJuly() // false
-// Is august
+// Whether is august
 carbon.Parse("2020-08-05 13:14:15").IsAugust() // false
-// Is september
+// Whether is september
 carbon.Parse("2020-08-05 13:14:15").IsSeptember() // true
-// Is october
+// Whether is october
 carbon.Parse("2020-08-05 13:14:15").IsOctober() // false
-// Is november
+// Whether is november
 carbon.Parse("2020-08-05 13:14:15").IsNovember() // false
-// Is december
+// Whether is december
 carbon.Parse("2020-08-05 13:14:15").IsDecember() // false
 
-// Is monday
+// Whether is monday
 carbon.Parse("2020-08-05 13:14:15").IsMonday() // false
-// Is tuesday
+// Whether is tuesday
 carbon.Parse("2020-08-05 13:14:15").IsTuesday() // true
-// Is wednesday
+// Whether is wednesday
 carbon.Parse("2020-08-05 13:14:15").IsWednesday() // false
-// Is thursday
+// Whether is thursday
 carbon.Parse("2020-08-05 13:14:15").IsThursday()  // false
-// Is friday
+// Whether is friday
 carbon.Parse("2020-08-05 13:14:15").IsFriday() // false
-// Is saturday
+// Whether is saturday
 carbon.Parse("2020-08-05 13:14:15").IsSaturday() // false
-// Is sunday
+// Whether is sunday
 carbon.Parse("2020-08-05 13:14:15").IsSunday() // false
-// Is weekday
+// Whether is weekday
 carbon.Parse("2020-08-05 13:14:15").IsWeekday() // false
-// Is weekend
+// Whether is weekend
 carbon.Parse("2020-08-05 13:14:15").IsWeekend() // true
 
-// Is yesterday
+// Whether is yesterday
 carbon.Parse("2020-08-04 13:14:15").IsYesterday() // true
 carbon.Parse("2020-08-04 00:00:00").IsYesterday() // true
 carbon.Parse("2020-08-04").IsYesterday() // true
-// Is today
+// Whether is today
 carbon.Parse("2020-08-05 13:14:15").IsToday() // true
 carbon.Parse("2020-08-05 00:00:00").IsToday() // true
 carbon.Parse("2020-08-05").IsToday() // true
-// Is tomorrow
+// Whether is tomorrow
 carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
 carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
 carbon.Parse("2020-08-06").IsTomorrow() // true
 
-// Greater than
+// Whether greater than
 carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-04 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-05 13:14:15")) // false
 carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-04 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare(">", carbon.Parse("2020-08-05 13:14:15")) // false
 
-// Less than
+// Whether less than
 carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Lt(carbon.Parse("2020-08-05 13:14:15")) // false
 carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare("<", carbon.Parse("2020-08-05 13:14:15")) // false
 
-// Equal
+// Whether equal
 carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Eq(carbon.Parse("2020-08-05 13:14:00")) // false
 carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare("=", carbon.Parse("2020-08-05 13:14:00")) // false
 
-// Not equal
+// Whether ot equal
 carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Ne(carbon.Parse("2020-08-05 13:14:15")) // false
 carbon.Parse("2020-08-05 13:14:15").Compare("!=", carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare("<>", carbon.Parse("2020-08-05 13:14:15")) // false
 
-// Greater than or equal
+// Whether greater than or equal
 carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-04 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Gte(carbon.Parse("2020-08-05 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-04 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare(">=", carbon.Parse("2020-08-05 13:14:15")) // true
 
-// Less than or equal
+// Whether less than or equal
 carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Lte(carbon.Parse("2020-08-05 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Compare("<=", carbon.Parse("2020-08-05 13:14:15")) // true
 
-// Between
+// Whether between
 carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // false
 carbon.Parse("2020-08-05 13:14:15").Between(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
-// Between included start time
+// Whether between included start time
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedStartTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
-// Between included end time
+// Whether between included end time
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEndTime(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 
-// Between included both
+// Whether between included both
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
 ```
 
 ##### Output   
 ```go
-// To timestamp with second
+// Output timestamp with second, ToTimestamp() is short for ToTimestampWithSecond()
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithSecond() // 1596604455
-// To timestamp with millisecond
+// Output timestamp with millisecond
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMillisecond() // 1596604455000
-// To timestamp with microsecond
+// Output timestamp with microsecond
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithMicrosecond() // 1596604455000000
-// To timestamp with nanosecond
+// Output timestamp with nanosecond
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithNanosecond() // 1596604455000000000
 
-// To string of datetime format
+// Output datetime format string
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToDateTimeStringWithTimezone(carbon.LosAngeles) // 2020-08-04 22:14:15
-// To string of date format
+carbon.Parse("2020-08-05 13:14:15").ToDateTimeString(carbon.Tokyo) // 2020-08-05 14:14:15
+// Output short datetime format string
+carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString() // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
+
+// Output date format string
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-carbon.Parse("2020-08-05 13:14:15").ToDateStringWithTimezone(carbon.LosAngeles) // 2020-08-04
-// To string of time format
+carbon.Parse("2020-08-05 13:14:15").ToDateString(carbon.Tokyo) // 2020-08-05
+// Output short date format string
+carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
+carbon.Parse("2020-08-05 13:14:15").ToShortDateString(carbon.Tokyo) // 20200805
+
+// Output time format string
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToTimeStringWithTimezone(carbon.LosAngeles) // 22:14:15
+carbon.Parse("2020-08-05 13:14:15").ToTimeString(carbon.Tokyo) // 14:14:15
+// Output short time format string
+carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
+carbon.Parse("2020-08-05 13:14:15").ToShortTimeString(carbon.Tokyo) // 141415
 
-// To string of Ansic format
+// Output Ansic format string
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-carbon.Parse("2020-08-05 13:14:15").ToAnsicStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 2020
-// To string of Atom format
+carbon.Parse("2020-08-05 13:14:15").ToAnsicString(carbon.Tokyo) // Wed Aug  5 14:14:15 2020
+// Output Atom format string
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToAtomStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
-// To string of UnixDate format  
+carbon.Parse("2020-08-05 13:14:15").ToAtomString(carbon.Tokyo) // 2020-08-05T14:14:15+08:00
+// Output UnixDate format string
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-carbon.Parse("2020-08-05 13:14:15").ToUnixDateStringWithTimezone(carbon.LosAngeles) // Tue Aug  4 22:14:15 PDT 2020
-// To string of RubyDate format 
+carbon.Parse("2020-08-05 13:14:15").ToUnixDateString(carbon.Tokyo) // Wed Aug  5 14:14:15 JST 2020
+// Output RubyDate format string
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
-carbon.Parse("2020-08-05 13:14:15").ToRubyDateStringWithTimezone(carbon.LosAngeles) // Tue Aug 04 22:14:15 -0700 2020
-// To string of Kitchen format
+carbon.Parse("2020-08-05 13:14:15").ToRubyDateString(carbon.Tokyo) // Wed Aug 05 14:14:15 +0900 2020
+// Output Kitchen format string
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-carbon.Parse("2020-08-05 13:14:15").ToKitchenStringWithTimezone(carbon.LosAngeles) // 10:14PM
-// To string of Cookie format
+carbon.Parse("2020-08-05 13:14:15").ToKitchenString(carbon.Tokyo) // 2:14PM
+// Output Cookie format string
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToCookieStringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-2020 22:14:15 PDT
-// To string of DayDateTime format
+carbon.Parse("2020-08-05 13:14:15").ToCookieString(carbon.Tokyo) // Wednesday, 05-Aug-2020 14:14:15 JST
+// Output DayDateTime format string
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeStringWithTimezone(carbon.LosAngeles) // Tue, Aug 4, 2020 10:14 PM
-// To string of RSS format
+carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString(carbon.Tokyo) // Wed, Aug 5, 2020 2:14 PM
+// Output RSS format string
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRssStringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
-// To string of W3C format
+carbon.Parse("2020-08-05 13:14:15").ToRssString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
+// Output W3C format string
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToW3cStringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
+carbon.Parse("2020-08-05 13:14:15").ToW3cString(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 
-// To string of RFC822 format
+// Output ISO8601 format string
+carbon.Parse("2020-08-05 13:14:15").ToIso8601String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15").ToIso8601String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
+// Output RFC822 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc822StringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 PDT
-// To string of RFC822Z format
+carbon.Parse("2020-08-05 13:14:15").ToRfc822String(carbon.Tokyo) // 05 Aug 20 14:14 JST
+// Output RFC822Z format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc822zStringWithTimezone(carbon.LosAngeles) // 04 Aug 20 22:14 -0700
-// To string of RFC850 format
+carbon.Parse("2020-08-05 13:14:15").ToRfc822zString(carbon.Tokyo) // 05 Aug 20 14:14 +0900
+// Output RFC850 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc850StringWithTimezone(carbon.LosAngeles) // Tuesday, 04-Aug-20 22:14:15 PDT
-// To string of RFC1036 format
+carbon.Parse("2020-08-05 13:14:15").ToRfc850String(carbon.Tokyo) // Wednesday, 05-Aug-20 14:14:15 JST
+// Output RFC1036 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1036StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 20 22:14:15 -0700
-// To string of RFC1123 format
+carbon.Parse("2020-08-05 13:14:15").ToRfc1036String(carbon.Tokyo) // Wed, 05 Aug 20 14:14:15 +0900
+// Output RFC1123 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123StringWithTimezone() // Tue, 04 Aug 2020 22:14:15 PDT
-// To string of RFC2822 format
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 JST
+// Output RFC2822 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc2822StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 -0700
-// To string of RFC3339 format 
+carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
+// Output RFC3339 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToRfc3339StringWithTimezone(carbon.LosAngeles) // 2020-08-04T22:14:15-07:00
-// To string of RFC7231 format
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 05:14:15 GMT
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231StringWithTimezone(carbon.LosAngeles) // Tue, 04 Aug 2020 22:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
+// Output RFC7231 format string
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
 
-// To string
-fmt.Println(carbon.Parse("2020-08-05")) // 2020-08-05 00:00:00
+// Output string
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
-// To string of sign format，Format() is short of ToFormatString()
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("YmdHis") // 20200805131415
-carbon.Parse("2020-08-05 13:14:15").ToFormatString("Y年m月d H时i分s秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15 +0900 JST
+
+// Output string by layout, Layout() is short for ToLayoutString()
+carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
+carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-31 13:14:15
+carbon.Parse("2020-08-05 13:14:15").Layout("2006-01-02 15:04:05", carbon.Tokyo) // 2020-08-31 14:14:15
+
+// Output string by format, Format() is short for ToFormatString()
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
+carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
 carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is 2020-08-31 13:14:15
+carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-08-31 14:14:15
 ```
-> For more format signs, please see the <a href="#format-sign-table">Format sign table</a>
-
-##### Setter
-```go
-// Set timezone
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-
-// Set locale
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
-
-// Set year
-carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
-carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
-
-// Set month
-carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
-
-// Set day
-carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
-carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
-
-// Set hour
-carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
-carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
-
-// Set minute
-carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
-carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
-
-// Set second
-carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
-carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
-```
+> For more supported format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
 ##### Getter
 ```go
@@ -701,8 +719,16 @@ carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
 carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 
 // Get timezone name
-carbon.SetTimezone(carbon.PRC).Timezone() // PRC
-carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+carbon.SetTimezone(carbon.PRC).Timezone() // CST
+carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+
+// Get location name
+carbon.SetTimezone(carbon.PRC).Location() // PRC
+carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+
+// Get offset seconds from the UTC timezone
+carbon.SetTimezone(carbon.PRC).Offset() // 28800
+carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
 
 // Get locale name
 carbon.Now().SetLocale("en").Locale() // en
@@ -723,41 +749,77 @@ carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
 
+##### Setter
+```go
+// Set timezone
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+
+// Set locale
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+
+// Set year
+carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
+carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+
+// Set month
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+
+// Set day
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// Set hour
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// Set minute
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// Set second
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+```
+
 ##### Constellation
 ```go
-// Get constellation
+// Get constellation name
 carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
 
-// Is aries
+// Whether is aries
 carbon.Parse("2020-08-05 13:14:15").IsAries() // false
-// Is taurus
+// Whether is taurus
 carbon.Parse("2020-08-05 13:14:15").IsTaurus() // false
-// Is gemini
+// Whether is gemini
 carbon.Parse("2020-08-05 13:14:15").IsGemini() // false
-// Is cancer
+// Whether is cancer
 carbon.Parse("2020-08-05 13:14:15").IsCancer() // false
-// Is leo
+// Whether is leo
 carbon.Parse("2020-08-05 13:14:15").IsLeo() // true
-// Is virgo
+// Whether is virgo
 carbon.Parse("2020-08-05 13:14:15").IsVirgo() // false
-// Is libra
+// Whether is libra
 carbon.Parse("2020-08-05 13:14:15").IsLibra() // false
-// Is scorpio
+// Whether is scorpio
 carbon.Parse("2020-08-05 13:14:15").IsScorpio() // false
-// Is sagittarius
+// Whether is sagittarius
 carbon.Parse("2020-08-05 13:14:15").IsSagittarius() // false
-// Is capricorn
+// Whether is capricorn
 carbon.Parse("2020-08-05 13:14:15").IsCapricorn() // false
-// Is aquarius
+// Whether is aquarius
 carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
-// Is pisces
+// Whether is pisces
 carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
 ##### Season
 > According to the meteorological division, March to May is spring, June to August is summer, September to November is autumn, and December to February is winter
 ```go
-// Get season
+// Get season name
 carbon.Parse("2020-08-05 13:14:15").Season() // Summer
 
 // Start of the season
@@ -765,13 +827,13 @@ carbon.Parse("2020-08-05 13:14:15").StartOfSeason().ToDateTimeString() // 2020-0
 // End of the season
 carbon.Parse("2020-08-05 13:14:15").EndOfSeason().ToDateTimeString() // 2020-08-31 23:59:59
 
-// Is spring
+// Whether is spring
 carbon.Parse("2020-08-05 13:14:15").IsSpring() // false
-// Is summer
+// Whether is summer
 carbon.Parse("2020-08-05 13:14:15").IsSummer() // true
-// Is autumn
+// Whether is autumn
 carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
-// Is winter
+// Whether is winter
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
@@ -803,34 +865,34 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 二零二零年六月十六
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToString() // 二零二零年六月十六
 
-// Is leap year
+// Whether is leap year
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
-// Is leap month
+// Whether is leap month
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
 
-// Is year of the rat
+// Whether is year of the rat
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
-// Is year of the ox
+// Whether is year of the ox
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
-// Is year of the tiger
+// Whether is year of the tiger
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
-// Is year of the rabbit
+// Whether is year of the rabbit
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
-// Is year of the dragon
+// Whether is year of the dragon
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
-// Is year of the snake
+// Whether is year of the snake
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
-// Is year of the horse
+// Whether is year of the horse
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
-// Is year of the goat
+// Whether is year of the goat
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
-// Is year of the monkey
+// Whether is year of the monkey
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
-// Is year of the rooster
+// Whether is year of the rooster
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
-// Is year of the dog
+// Whether is year of the dog
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
-// Is year of the dig
+// Whether is year of the dig
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
 ```
 
@@ -856,8 +918,8 @@ type Person struct {
 ###### Instantiate model
 ```go
 person := Person {
-	ID:          153,
-	Name:        "勾国印",
+	ID:          1,
+	Name:        "gouguoyin",
 	Age:         18,
 	Birthday:    ToDateTimeString{Now().SubYears(18)},
 	GraduatedAt: ToDateString{Parse("2020-08-05 13:14:15")},
@@ -879,8 +941,8 @@ if err != nil {
 fmt.Printf("%s",data)
 // output
 {
-	"id":153,
-	"name":"勾国印",
+	"id":1,
+	"name":"gouguoyin",
 	"age":18,
 	"birthday":"2003-07-16 16:22:02",
 	"graduated_at":"2020-08-05",
@@ -896,8 +958,8 @@ fmt.Printf("%s",data)
 ###### JSON decode
 ```go
 str := `{
-	"id":153,
-	"name":"勾国印",
+	"id":1,
+	"name":"gouguoyin",
 	"age":18,
 	"birthday":"2003-07-16 16:22:02",
 	"graduated_at":"2020-08-05",
@@ -915,7 +977,7 @@ if err != nil {
 }
 fmt.Printf("%+v", *person)
 // output
-{ID:153 Name:勾国印 Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 CreatedAt:0000-01-01 13:14:15 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 CreatedAt:0000-01-01 13:14:15 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
 
 ##### I18n
@@ -1035,41 +1097,41 @@ c.Now().Season() // Summer
 ```
 
 ##### Error handling
-> If more than one error occurs, only the first error message is returned
+> If more than one error occurs, only the first error is returned
 
 ###### Scene one
 ```go
-c := carbon.SetTimezone(PRC).Parse("XXXX")
+c := carbon.SetTimezone(PRC).Parse("xxx")
 if c.Error != nil {
     // Error handle...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
-the value "XXXX" and the layout "2006-01-02 15:04:05" don't match, so the value can't parse to carbon
+cannot parse "xxx" to carbon, please make sure the value is valid
 ```
 
 ###### Scene two
 ```go
-c := carbon.SetTimezone("XXXX").Parse("2020-08-05")
+c := carbon.SetTimezone("xxx").Parse("2020-08-05")
 if c.Error != nil {
     // Error handle...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
-invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 ###### Scene three
 ```go
-c := carbon.SetTimezone("XXXX").Parse("12345678")
+c := carbon.SetTimezone("xxx").Parse("12345678")
 if c.Error != nil {
     // Error handle...
     log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // Output
-invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 
 #### Appendix
@@ -1105,11 +1167,13 @@ invalid timezone "XXXX", please see the file "$GOROOT/lib/time/zoneinfo.zip" for
 | N | ISO-8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
 | L | Whether it's a leap year | 1 | 0-1 | 1 |
 | U | Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) | 10 | - | 1611818268 |
-| u | Microseconds| - | - | 999 |
+| u | Millisecond| 3 | - | 999 |
 | w | Numeric representation of the day of the week | 1 | 0-6 | 6 |
 | t | Number of days in the given month | 2 | 28-31 | 30 |
 | z | The day of the year (starting from 0) | - | 0-365 | 15 |
-| e | Timezone identifier | - | - | America/New_York |
+| e | Location | - | - | America/New_York |
+| Q | Quarter | 1 | 1-4 | 1 |
+| C | Century | - | 0-99 | 21 |
 
 #### Reference
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
