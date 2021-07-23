@@ -307,7 +307,7 @@ func (c Carbon) ToUnixDateString(timezone ...string) string {
 	return c.Time.In(c.Loc).Format(UnixDateFormat)
 }
 
-// ToUnixDateString 输出 RubyDate 格式字符串
+// ToRubyDateString 输出 RubyDate 格式字符串
 func (c Carbon) ToRubyDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""

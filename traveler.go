@@ -2,7 +2,7 @@ package carbon
 
 import "time"
 
-// AddDurations 按照持续时长字符串增加时间
+// AddDuration 按照持续时长字符串增加时间
 // 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsZero() {
@@ -14,7 +14,7 @@ func (c Carbon) AddDuration(duration string) Carbon {
 	return c
 }
 
-// SubDurations 按照持续时长字符串减少时间
+// SubDuration 按照持续时长字符串减少时间
 // 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
@@ -132,7 +132,7 @@ func (c Carbon) AddQuarter() Carbon {
 	return c.AddQuarters(1)
 }
 
-// NextQuarters 1季度后(月份不溢出)
+// AddQuarterNoOverflow 1季度后(月份不溢出)
 func (c Carbon) AddQuarterNoOverflow() Carbon {
 	return c.AddQuartersNoOverflow(1)
 }

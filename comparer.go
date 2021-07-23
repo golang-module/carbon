@@ -68,7 +68,7 @@ func (c Carbon) IsJanuary() bool {
 	return c.Time.In(c.Loc).Month() == time.January
 }
 
-// IsMonday 是否是二月
+// IsFebruary 是否是二月
 func (c Carbon) IsFebruary() bool {
 	if c.IsInvalid() {
 		return false
