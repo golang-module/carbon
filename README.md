@@ -568,7 +568,7 @@ carbon.Parse("2020-08-05 13:14:15").BetweenBothIncluded(carbon.Parse("2020-08-04
 
 ##### 时间输出
 ```go
-// 输出秒级时间戳, ToTimestamp() 是 ToTimestampWithSecond() 的简写
+// 输出秒级时间戳, ToTimestamp() 是ToTimestampWithSecond()的简写
 carbon.Parse("2020-08-05 13:14:15").ToTimestamp() // 1596604455
 carbon.Parse("2020-08-05 13:14:15").ToTimestampWithSecond() // 1596604455
 // 输出毫秒级时间戳
