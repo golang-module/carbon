@@ -12,9 +12,9 @@ func TestCarbon_StartOfCentury(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -32,7 +32,7 @@ func TestCarbon_StartOfCentury(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfCentury()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -40,9 +40,9 @@ func TestCarbon_EndOfCentury(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -60,7 +60,7 @@ func TestCarbon_EndOfCentury(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfCentury()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -68,9 +68,9 @@ func TestCarbon_StartOfDecade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -89,7 +89,7 @@ func TestCarbon_StartOfDecade(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfDecade()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -97,9 +97,9 @@ func TestCarbon_EndOfDecade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -118,7 +118,7 @@ func TestCarbon_EndOfDecade(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfDecade()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -126,9 +126,9 @@ func TestCarbon_StartOfYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -146,7 +146,7 @@ func TestCarbon_StartOfYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfYear()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -154,9 +154,9 @@ func TestCarbon_EndOfYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -174,7 +174,7 @@ func TestCarbon_EndOfYear(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfYear()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -182,9 +182,9 @@ func TestCarbon_StartOfQuarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -209,7 +209,7 @@ func TestCarbon_StartOfQuarter(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfQuarter()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -217,9 +217,9 @@ func TestCarbon_EndOfQuarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -244,7 +244,7 @@ func TestCarbon_EndOfQuarter(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfQuarter()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -252,9 +252,9 @@ func TestCarbon_StartOfMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -279,7 +279,7 @@ func TestCarbon_StartOfMonth(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfMonth()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -287,9 +287,9 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -314,7 +314,7 @@ func TestCarbon_EndOfMonth(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfMonth()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -322,10 +322,10 @@ func TestCarbon_StartOfWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int          // 测试id
-		input  string       // 输入值
-		week   time.Weekday // 输入参数
-		output string       // 期望输出值
+		id       int          // 测试id
+		input    string       // 输入值
+		week     time.Weekday // 输入参数
+		expected string       // 期望值
 	}{
 		{1, "", time.Sunday, ""},
 		{2, "0000-00-00 00:00:00", time.Sunday, ""},
@@ -345,7 +345,7 @@ func TestCarbon_StartOfWeek(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfWeek(test.week)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -353,10 +353,10 @@ func TestCarbon_EndOfWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int          // 测试id
-		input  string       // 输入值
-		week   time.Weekday // 输入参数
-		output string       // 期望输出值
+		id       int          // 测试id
+		input    string       // 输入值
+		week     time.Weekday // 输入参数
+		expected string       // 期望值
 	}{
 		{1, "", time.Sunday, ""},
 		{2, "0000-00-00 00:00:00", time.Sunday, ""},
@@ -379,7 +379,7 @@ func TestCarbon_EndOfWeek(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfWeek(test.week)
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -387,9 +387,9 @@ func TestCarbon_StartOfDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -414,7 +414,7 @@ func TestCarbon_StartOfDay(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfDay()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -422,9 +422,9 @@ func TestCarbon_EndOfDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -449,7 +449,7 @@ func TestCarbon_EndOfDay(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfDay()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -457,9 +457,9 @@ func TestCarbon_StartOfHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -484,7 +484,7 @@ func TestCarbon_StartOfHour(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfHour()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -492,9 +492,9 @@ func TestCarbon_EndOfHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -519,7 +519,7 @@ func TestCarbon_EndOfHour(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfHour()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -527,9 +527,9 @@ func TestCarbon_StartOfMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -554,7 +554,7 @@ func TestCarbon_StartOfMinute(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfMinute()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -562,9 +562,9 @@ func TestCarbon_EndOfMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -589,7 +589,7 @@ func TestCarbon_EndOfMinute(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfMinute()
 		assert.Nil(c.Error)
-		assert.Equal(c.ToDateTimeString(), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -597,9 +597,9 @@ func TestCarbon_StartOfSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -624,7 +624,7 @@ func TestCarbon_StartOfSecond(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).StartOfSecond()
 		assert.Nil(c.Error)
-		assert.Equal(c.Format("Y-m-d H:i:s.u"), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Format("Y-m-d H:i:s.u"), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -632,9 +632,9 @@ func TestCarbon_EndOfSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		id     int    // 测试id
-		input  string // 输入值
-		output string // 期望输出值
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
 	}{
 		{1, "", ""},
 		{2, "0", ""},
@@ -659,6 +659,6 @@ func TestCarbon_EndOfSecond(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input).EndOfSecond()
 		assert.Nil(c.Error)
-		assert.Equal(c.Format("Y-m-d H:i:s.u"), test.output, "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.Format("Y-m-d H:i:s.u"), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
