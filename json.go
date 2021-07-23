@@ -6,42 +6,52 @@ import (
 	"strconv"
 )
 
+// 日期时间字符串
 type ToDateTimeString struct {
 	Carbon
 }
 
+// 日期字符串
 type ToDateString struct {
 	Carbon
 }
 
+// 时间字符串
 type ToTimeString struct {
 	Carbon
 }
 
+// 秒级时间戳
 type ToTimestamp struct {
 	Carbon
 }
 
+// 秒级时间戳
 type ToTimestampWithSecond struct {
 	Carbon
 }
 
+// 毫秒级时间戳
 type ToTimestampWithMillisecond struct {
 	Carbon
 }
 
+// 微秒级时间戳
 type ToTimestampWithMicrosecond struct {
 	Carbon
 }
 
+// 纳秒级时间戳
 type ToTimestampWithNanosecond struct {
 	Carbon
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToDateTimeString) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, t.ToDateTimeString())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToDateTimeString) UnmarshalJSON(b []byte) error {
 	c := Parse(string(bytes.Trim(b, `"`)))
 	if c.Error == nil {
@@ -50,10 +60,12 @@ func (t *ToDateTimeString) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToDateString) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, t.ToDateString())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToDateString) UnmarshalJSON(b []byte) error {
 	c := Parse(string(bytes.Trim(b, `"`)))
 	if c.Error == nil {
@@ -62,10 +74,12 @@ func (t *ToDateString) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimeString) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeString())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimeString) UnmarshalJSON(b []byte) error {
 	c := ParseByFormat(string(bytes.Trim(b, `"`)), "H:i:s")
 	if c.Error == nil {
@@ -74,10 +88,12 @@ func (t *ToTimeString) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimestamp) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, t.ToTimestamp())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimestamp) UnmarshalJSON(b []byte) error {
 	ts, err := strconv.ParseInt(string(b), 10, 64)
 	if ts == 0 || err != nil {
@@ -90,10 +106,12 @@ func (t *ToTimestamp) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimestampWithSecond) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithSecond())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimestampWithSecond) UnmarshalJSON(b []byte) error {
 	ts, err := strconv.ParseInt(string(b), 10, 64)
 	if ts == 0 || err != nil {
@@ -106,10 +124,12 @@ func (t *ToTimestampWithSecond) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimestampWithMillisecond) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithMillisecond())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimestampWithMillisecond) UnmarshalJSON(b []byte) error {
 	ts, err := strconv.ParseInt(string(b), 10, 64)
 	if ts == 0 || err != nil {
@@ -122,10 +142,12 @@ func (t *ToTimestampWithMillisecond) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimestampWithMicrosecond) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithMicrosecond())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimestampWithMicrosecond) UnmarshalJSON(b []byte) error {
 	ts, err := strconv.ParseInt(string(b), 10, 64)
 	if ts == 0 || err != nil {
@@ -138,10 +160,12 @@ func (t *ToTimestampWithMicrosecond) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t ToTimestampWithNanosecond) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`%d`, t.ToTimestampWithNanosecond())), nil
 }
 
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
 func (t *ToTimestampWithNanosecond) UnmarshalJSON(b []byte) error {
 	ts, err := strconv.ParseInt(string(b), 10, 64)
 	if ts == 0 || err != nil {
