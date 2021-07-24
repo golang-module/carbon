@@ -1,21 +1,7 @@
 ---
-name: issue template for report bug
-about: my description of issue template 2
+name: issue template
+about: This issue template apply to bug reports,feature proposals,and documentation requests
 ---
-<!--
-    🛑 DON'T REMOVE ME.
-    This issue template apply to all
-      - bug reports,
-      - feature proposals,
-      - and documentation requests
-
-    Having all those informations will allow us to know exactly
-    what you expect and answer you faster and precisely (answer
-    that matches your carbon version, golang version and usage).
-    
-    Note: Comments between <!- - and - -> won't appear in the final
-    issue (See [Preview] tab).
--->
 Hello,
 
 I encountered an issue with the following code:
@@ -23,7 +9,7 @@ I encountered an issue with the following code:
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString()
 ```
 
-carbon version: **PUT HERE YOUR CARBON VERSION (exact version, not the range)**
+carbon version: **PUT HERE YOUR CARBON VERSION**
 
 golang version: **PUT HERE YOUR GOLANG VERSION**
 
