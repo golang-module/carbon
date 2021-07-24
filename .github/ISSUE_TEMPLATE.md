@@ -1,3 +1,7 @@
+---
+name: issue template for report bug
+about: my description of issue template 2
+---
 <!--
     🛑 DON'T REMOVE ME.
     This issue template apply to all
