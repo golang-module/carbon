@@ -1,6 +1,6 @@
 ---
-name: issue template
-about: This issue template apply to bug reports,feature proposals,and documentation requests
+name: Bug report
+about: Something isn't working as expected
 ---
 Hello,
 
