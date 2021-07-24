@@ -1,6 +1,6 @@
 ---
 name: Documentation Improvement
-about: Improvements or additions to documentation
+about: Improvements or additions to document
 label: Documentation
 ---
 
