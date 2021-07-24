@@ -11,7 +11,7 @@ jobs:
   test:
     strategy:
         matrix:
-          vm-os: [ubuntu-latest, macOS-latest, windows-latest]
+          vm-os: [ubuntu-latest]
           go-version: [1.14, 1.15, 1.16]
     runs-on: ubuntu-latest
     steps:
