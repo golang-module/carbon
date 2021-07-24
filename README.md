@@ -748,6 +748,7 @@ carbon.Now().SetLocale("zh-CN").Season() // 夏季
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
+> If you have any doubt about 'WeekOfYear()' and 'WeekOfMonth()', please refer to [ISO8601 standard](https://baike.baidu.com/item/ISO%208601/3910715#3)
 
 ##### Setter
 ```go
