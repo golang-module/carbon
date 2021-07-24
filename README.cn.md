@@ -563,8 +563,8 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEnd(carbon.Parse("2020-08-04 
 // 是否在两个时间之间(包括这两个时间)
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
-
 ```
+> 关于长年(LongYear)的定义, 请查看 https://en.wikipedia.org/wiki/ISO_8601#Week_dates
 
 ##### 时间输出
 ```go
