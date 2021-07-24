@@ -1188,3 +1188,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [overtrue/chinese-calendar](https://github.com/overtrue/chinese-calendar)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### Links
+* [updatelog](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+* [segmentfault](https://segmentfault.com/t/go-carbon)
+* [oschina](https://www.oschina.net/p/go-carbon)

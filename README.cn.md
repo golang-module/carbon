@@ -758,7 +758,7 @@ carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
-> 关于如果对`WeekOfYear()`和`WeekOfMonth()`有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715#3)
+> 如果对`WeekOfYear()`和`WeekOfMonth()`有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715#3)
 
 ##### 时间设置
 ```go
