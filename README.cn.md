@@ -1159,19 +1159,19 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | F | 完整单词表示的月份 | - | January-December | August |
 | m | 数字表示的月份，有前导零 | 2 | 01-12 | 08 |
 | M | 缩写单词表示的月份 | 3 | Jan-Dec | Aug |
-| n | 数字表示的月份，没有前导零 | - | 1-12 | 8 |
-| y | 年份，有前导零 | 2 | 00-99 | 20 |
-| Y | 年份 | 4 | 0000-9999 | 2020 |
-| a | 小写的上下午缩写字母 | 2 | am/pm | pm |
-| A | 大写的上下午缩写字母 | 2 | AM/PM | PM |
-| g | 小时，12 小时格式，没有前导零 | - | 1-12 | 1 |
-| G | 小时，24 小时格式，没有前导零 | - | 0-23 | 15 |
-| h | 小时，12 小时格式，有前导零 | 2 | 00-11 | 03 |
-| H | 小时，24 小时格式，有前导零 | 2 | 00-23 | 15 |
-| i | 分钟，有前导零 | 2 | 01-59 | 14 |
-| s | 秒数，有前导零 | 2 | 01-59 | 15 |
-| c | ISO8601 格式的日期 | - | - | 2020-08-05T15:19:21+00:00 |
-| r | RFC822 格式的日期 | - | - | Thu, 21 Dec 2020 16:01:07 +0200 |
+| n | 数字表示的月份 | - | 1-12 | 8 |
+| Y | 4 位数字完整表示的年份 | 4 | 0000-99999 | 2020 |
+| y | 2 位数字表示的年份 | 4 | 0000-9999 | 20 |
+| a | 小写的上午和下午标识 | 2 | am/pm | pm |
+| A | 大写的上午和下午标识 | 2 | AM/PM | PM |
+| g | 小时，12 小时格式 | - | 1-12 | 1 |
+| G | 小时，24 小时格式 | - | 0-23 | 15 |
+| h | 小时，12 小时格式 | 2 | 00-11 | 03 |
+| H | 小时，24 小时格式 | 2 | 00-23 | 15 |
+| i | 分钟 | 2 | 01-59 | 14 |
+| s | 秒数 | 2 | 01-59 | 15 |
+| c | ISO8601 格式日期 | - | - | 2020-08-05T15:19:21+00:00 |
+| r | RFC822 格式日期 | - | - | Thu, 21 Dec 2020 16:01:07 +0200 |
 | O | 与格林威治时间相差的小时数 | - | - | +0200 |
 | P | 与格林威治时间相差的小时数，小时和分钟之间有冒号分隔 | - | - | +02:00 |
 | T | 时区缩写 | - | - | EST |
@@ -1179,7 +1179,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | N | ISO-8601 格式数字表示的星期中的第几天 | 1 | 1-7 | 6 |
 | L | 是否为闰年，如果是闰年为 1，否则为 0 | 1 | 0-1 | 1 |
 | U | 秒级时间戳 | 10 | - | 1611818268 |
-| u | 毫秒 | 3 | - | 999 |
+| u | 毫秒 | 3 | 000-999 | 999 |
 | w | 数字表示的周几 | 1 | 0-6 | 6 |
 | t | 月份中的总天数 | 2 | 28-31 | 30 |
 | z | 年份中的第几天 | - | 0-365 | 15 |
@@ -1189,7 +1189,6 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 #### 参考项目
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
-* [uniplaces/carbon](https://github.com/uniplaces/carbon)
 * [jinzhu/now](https://github.com/jinzhu/now)
 * [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
