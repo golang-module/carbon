@@ -41,12 +41,12 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	return c.ParseByLayout(value, layout)
 }
 
-// Parse 将标准格式时间字符串解析成 Carbon 实例(默认时区)
+// Parse 将标准时间字符串解析成 Carbon 实例(默认时区)
 func Parse(value string, timezone ...string) Carbon {
 	return NewCarbon().Parse(value, timezone...)
 }
 
-// ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例
+// ParseByFormat 通过格式化字符将字符串解析成 carbon 实例
 func (c Carbon) ParseByFormat(value string, format string, timezone ...string) Carbon {
 	if len(timezone) == 1 {
 		loc, err := getLocationByTimezone(timezone[0])
@@ -67,12 +67,12 @@ func (c Carbon) ParseByFormat(value string, format string, timezone ...string) C
 	return c.ParseByLayout(value, layout)
 }
 
-// ParseByFormat 将特殊格式时间字符串解析成 Carbon 实例(默认时区)
+// ParseByFormat 通过布局字符将字符串解析成 carbon 实例
 func ParseByFormat(value string, format string, timezone ...string) Carbon {
 	return NewCarbon().ParseByFormat(value, format, timezone...)
 }
 
-// ParseByLayout 将布局时间字符串解析成 Carbon 实例
+// ParseByLayout 通过布局字符将字符串解析成 carbon 实例
 func (c Carbon) ParseByLayout(value string, layout string, timezone ...string) Carbon {
 	if len(timezone) == 1 {
 		loc, err := getLocationByTimezone(timezone[0])
