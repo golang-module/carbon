@@ -135,6 +135,7 @@ carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05
 ##### Parse as carbon by standard string
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
+carbon.Parse("0").ToDateTimeString() // empty string
 carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
 carbon.Parse("0000-00-00").ToDateTimeString() // empty string
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
