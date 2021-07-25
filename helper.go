@@ -17,8 +17,8 @@ var formats = map[byte]string{
 	'n': "1",                         // Month:  Numeric representation of a month, without leading zeros. Eg: 1 through 12.
 	'Y': "2006",                      // Year:   A full numeric representation of a year, 4 digits. Eg: 1999 or 2003.
 	'y': "06",                        // Year:   A two digit representation of a year. Eg: 99 or 03.
-	'a': "pm",                        // Time:   Lowercase Ante meridiem and Post meridiem. Eg: am or pm.
-	'A': "PM",                        // Time:   Uppercase Ante meridiem and Post meridiem. Eg: AM or PM.
+	'a': "pm",                        // Time:   Lowercase morning or afternoon sign. Eg: am or pm.
+	'A': "PM",                        // Time:   Uppercase morning or afternoon sign. Eg: AM or PM.
 	'g': "3",                         // Time:   12-hour format of an hour without leading zeros. Eg: 1 through 12.
 	'h': "03",                        // Time:   12-hour format of an hour with leading zeros. Eg: 01 through 12.
 	'H': "15",                        // Time:   24-hour format of an hour with leading zeros. Eg: 00 through 23.
