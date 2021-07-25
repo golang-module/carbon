@@ -13,9 +13,11 @@ jobs:
         matrix:
           vm-os: [ubuntu-latest]
           go-version: [1.14, 1.15, 1.16]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.vm-os }}
+    env:
+      GO111MODULE: on
+      GOPROXY: https://proxy.golang.org
     steps:
- 
     - name: Install go ${{ matrix.go-version }} 
       uses: actions/setup-go@v2
       with:

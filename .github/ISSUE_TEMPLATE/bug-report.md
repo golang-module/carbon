@@ -1,6 +1,6 @@
 ---
-name: Bug report
-about: Something isn't working as expected
+name: "\U0001F41B Bug report"
+about: Report a reproducible bug or regression.
 label: Bug
 ---
 Hello,
