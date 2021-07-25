@@ -53,7 +53,7 @@ carbon.Now().ToTimestampWithMillisecond() // 1596604455000
 carbon.Now().ToTimestampWithMicrosecond() // 1596604455000000
 // Timestamp with nanosecond of today
 carbon.Now().ToTimestampWithNanosecond() // 1596604455000000000
-// Datetime of today in specific timezone
+// Datetime of today in given timezone
 carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 
@@ -73,9 +73,9 @@ carbon.Yesterday().ToTimestampWithMillisecond() // 1596518055000
 carbon.Yesterday().ToTimestampWithMicrosecond() // 1596518055000000
 // Timestamp with nanosecond of yesterday
 carbon.Yesterday().ToTimestampWithNanosecond() // 1596518055000000000
-// Datetime of yesterday in specific day
+// Datetime of yesterday in given day
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
-// Datetime of yesterday in specific timezone
+// Datetime of yesterday in given timezone
 carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 
@@ -95,9 +95,9 @@ carbon.Tomorrow().ToTimestampWithMillisecond() // 1596690855000
 carbon.Tomorrow().ToTimestampWithMicrosecond() // 1596690855000000
 // Timestamp with nanosecond of tomorrow
 carbon.Tomorrow().ToTimestampWithNanosecond() // 1596690855000000000
-// Datetime of tomorrow in specific day
+// Datetime of tomorrow in given day
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
-// Datetime of tomorrow in specific timezone
+// Datetime of tomorrow in given timezone
 carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 ```
@@ -1038,7 +1038,7 @@ Now().AddHours(1).Constellation() // Leo
 Now().AddHours(1).Season() // Summer
 ```
 
-###### Set some resources(the rest still translate from the specific locale)
+###### Set some resources(the rest still translate from the given locale)
 ```go
 lang := NewLanguage()
 
