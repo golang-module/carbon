@@ -1153,8 +1153,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | n | Numeric representation of a month, without leading zeros | - | 1-12 | 8 |
 | y | A two digit representation of a year | 2 | 00-99 | 20 |
 | Y | A full numeric representation of a year, 4 digits | 4 | 0000-9999 | 2020 |
-| a | Lowercase Ante meridiem and Post meridiem | 2 | am/pm | pm |
-| A | Uppercase Ante meridiem and Post meridiem | 2 | AM/PM | PM |
+| a | Lowercase morning or afternoon sign | 2 | am/pm | pm |
+| A | Uppercase morning or afternoon sign | 2 | AM/PM | PM |
 | g | 12-hour format of an hour without leading zeros | - | 1-12 | 1 |
 | G | 24-hour format of an hour without leading zeros | - | 0-23 | 15 |
 | h | 12-hour format of an hour with leading zeros | 2 | 00-11 | 03 |
