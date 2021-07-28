@@ -1146,7 +1146,7 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToRfc1123ZString(t *testing.T) {
+func TestCarbon_ToRfc1123zString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -1167,13 +1167,13 @@ func TestCarbon_ToRfc1123ZString(t *testing.T) {
 	for _, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc1123ZString(), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToRfc1123zString(), "Current test id is "+strconv.Itoa(test.id))
 	}
 
 	for _, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc1123ZString(PRC), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToRfc1123zString(PRC), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
