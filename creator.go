@@ -33,7 +33,7 @@ func (c Carbon) CreateFromTimestamp(timestamp int64, timezone ...string) Carbon 
 	return c
 }
 
-// CreateFromTimestamp 从时间戳创建 Carbon 实例(默认时区)
+// CreateFromTimestamp 从时间戳创建 Carbon 实例
 func CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTimestamp(timestamp, timezone...)
 }
