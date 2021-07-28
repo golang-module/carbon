@@ -613,7 +613,7 @@ carbon.Parse("2020-08-05 13:14:15").ToKitchenString(carbon.Tokyo) // 2:14PM
 // Output Cookie format string
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
 carbon.Parse("2020-08-05 13:14:15").ToCookieString(carbon.Tokyo) // Wednesday, 05-Aug-2020 14:14:15 JST
-// Output DayDateTime format string
+// Output output day, date and time format string
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString(carbon.Tokyo) // Wed, Aug 5, 2020 2:14 PM
 // Output RSS format string
@@ -641,6 +641,9 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc1036String(carbon.Tokyo) // Wed, 05 Aug
 // Output RFC1123 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 JST
+// Output RFC1123Z format string
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString() // Wed, 05 Aug 2020 13:14:15 +0800
+carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 0800
 // Output RFC2822 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
@@ -651,7 +654,11 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc3339String(carbon.Tokyo) // 2020-08-05T
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
 
-// Output string
+// Output date and time format string
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo)) // 2020-08-05 13:14:15
+
+// Output "2006-01-02 15:04:05.999999999 -0700 MST" format string
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15 +0900 JST
 
@@ -1181,11 +1188,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### Reference
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
 * [jinzhu/now](https://github.com/jinzhu/now/)
-* [araddon/dateparse](https://github.com/araddon/dateparse)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
 * [kofoworola/godate](https://github.com/kofoworola/godate)
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
-* [overtrue/chinese-calendar](https://github.com/overtrue/chinese-calendar)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
@@ -1193,3 +1198,4 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [changelog](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 * [segmentfault](https://segmentfault.com/t/go-carbon)
 * [oschina](https://www.oschina.net/p/go-carbon)
+* [juejin](https://juejin.cn/column/6988159448736858120)
