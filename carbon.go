@@ -141,7 +141,8 @@ const (
 	ShortTimeFormat     = "150405"
 )
 
-// Carbon 定义 Carbon 结构体
+// Carbon define Carbon structure
+// 定义 Carbon 结构体
 type Carbon struct {
 	Time  time.Time
 	Loc   *time.Location
@@ -149,24 +150,28 @@ type Carbon struct {
 	Error error
 }
 
-// NewCarbon 初始化 Carbon 结构体
+// NewCarbon return a new Carbon instance
+// 初始化 Carbon 结构体
 func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
-// Time2Carbon 将 time.Time 转换成 Carbon
+// Time2Carbon convert time.Time to Carbon
+// 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
 	c.Time = tt
 	return c
 }
 
-// Carbon2Time 将 Carbon 转换成 time.Time
+// Carbon2Time convert Carbon to time.Time
+// 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
 	return c.Time.In(c.Loc)
 }
 
-// Now 当前
+// Now return a Carbon instance for now
+// 当前
 func (c Carbon) Now(timezone ...string) Carbon {
 	if len(timezone) == 1 {
 		loc, err := getLocationByTimezone(timezone[0])
@@ -180,12 +185,14 @@ func (c Carbon) Now(timezone ...string) Carbon {
 	return c
 }
 
-// Now 当前
+// Now return a Carbon instance for now
+// 当前
 func Now(timezone ...string) Carbon {
 	return NewCarbon().Now(timezone...)
 }
 
-// Tomorrow 明天
+// Tomorrow return a Carbon instance for tomorrow
+// 明天
 func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	if len(timezone) == 1 {
 		loc, err := getLocationByTimezone(timezone[0])
@@ -203,12 +210,14 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	return c
 }
 
-// Tomorrow 明天
+// Tomorrow return a Carbon instance for tomorrow
+// 明天
 func Tomorrow(timezone ...string) Carbon {
 	return NewCarbon().Tomorrow(timezone...)
 }
 
-// Yesterday 昨天
+// Yesterday return a Carbon instance for yesterday
+// 昨天
 func (c Carbon) Yesterday(timezone ...string) Carbon {
 	if len(timezone) == 1 {
 		loc, err := getLocationByTimezone(timezone[0])
@@ -226,7 +235,8 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 	return c
 }
 
-// Yesterday 昨天
+// Yesterday return a Carbon instance for yesterday
+// 昨天
 func Yesterday(timezone ...string) Carbon {
 	return NewCarbon().Yesterday(timezone...)
 }

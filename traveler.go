@@ -2,8 +2,8 @@ package carbon
 
 import "time"
 
-// AddDuration 按照持续时长字符串增加时间
-// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// AddDuration add duration
+// 按照持续时长字符串增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsZero() {
 		return c
@@ -14,53 +14,62 @@ func (c Carbon) AddDuration(duration string) Carbon {
 	return c
 }
 
-// SubDuration 按照持续时长字符串减少时间
-// 支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// SubDuration subtraction duration
+// SubDuration 按照持续时长字符串减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
 }
 
-// AddCenturies N世纪后
+// AddCenturies add centuries
+// N世纪后
 func (c Carbon) AddCenturies(centuries int) Carbon {
 	return c.AddYears(YearsPerCentury * centuries)
 }
 
-// AddCenturiesNoOverflow N世纪后(月份不溢出)
+// AddCenturiesNoOverflow add centuries without overflowing month
+// N世纪后(月份不溢出)
 func (c Carbon) AddCenturiesNoOverflow(centuries int) Carbon {
 	return c.AddYearsNoOverflow(centuries * YearsPerCentury)
 }
 
-// AddCentury 1世纪后
+// AddCentury add century
+// 1世纪后
 func (c Carbon) AddCentury() Carbon {
 	return c.AddCenturies(1)
 }
 
-// AddCenturyNoOverflow 1世纪后(月份不溢出)
+// AddCenturyNoOverflow add century without overflowing month
+// 1世纪后(月份不溢出)
 func (c Carbon) AddCenturyNoOverflow() Carbon {
 	return c.AddCenturiesNoOverflow(1)
 }
 
-// SubCenturies N世纪前
+// SubCenturies subtraction centuries
+// N世纪前
 func (c Carbon) SubCenturies(centuries int) Carbon {
 	return c.SubYears(YearsPerCentury * centuries)
 }
 
-// SubCenturiesNoOverflow N世纪前(月份不溢出)
+// SubCenturiesNoOverflow subtraction centuries without overflowing month
+// N世纪前(月份不溢出)
 func (c Carbon) SubCenturiesNoOverflow(centuries int) Carbon {
 	return c.SubYearsNoOverflow(centuries * YearsPerCentury)
 }
 
-// SubCentury 1世纪前
+// SubCentury subtraction century
+// 1世纪前
 func (c Carbon) SubCentury() Carbon {
 	return c.SubCenturies(1)
 }
 
-// SubCenturyNoOverflow 1世纪前(月份不溢出)
+// SubCenturyNoOverflow subtraction century without overflowing month
+// 1世纪前(月份不溢出)
 func (c Carbon) SubCenturyNoOverflow() Carbon {
 	return c.SubCenturiesNoOverflow(1)
 }
 
-// AddYears N年后
+// AddYears add years
+// N年后
 func (c Carbon) AddYears(years int) Carbon {
 	if c.IsZero() {
 		return c
@@ -69,7 +78,8 @@ func (c Carbon) AddYears(years int) Carbon {
 	return c
 }
 
-// AddYearsNoOverflow N年后(月份不溢出)
+// AddYearsNoOverflow add years without overflowing month
+// N年后(月份不溢出)
 func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 	if c.IsZero() {
 		return c
@@ -84,17 +94,20 @@ func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 	return c
 }
 
-// AddYear 1年后
+// AddYear add year
+// 1年后
 func (c Carbon) AddYear() Carbon {
 	return c.AddYears(1)
 }
 
-// AddYearNoOverflow 1年后(月份不溢出)
+// AddYearNoOverflow add year without overflowing month
+// 1年后(月份不溢出)
 func (c Carbon) AddYearNoOverflow() Carbon {
 	return c.AddYearsNoOverflow(1)
 }
 
-// SubYears N年前
+// SubYears subtraction years
+// N年前
 func (c Carbon) SubYears(years int) Carbon {
 	if c.IsZero() {
 		return c
@@ -102,62 +115,74 @@ func (c Carbon) SubYears(years int) Carbon {
 	return c.AddYears(-years)
 }
 
-// SubYearsNoOverflow N年前(月份不溢出)
+// SubYearsNoOverflow subtraction years without overflowing month
+// N年前(月份不溢出)
 func (c Carbon) SubYearsNoOverflow(years int) Carbon {
 	return c.AddYearsNoOverflow(-years)
 }
 
-// SubYear 1年前
+// SubYear subtraction year
+// 1年前
 func (c Carbon) SubYear() Carbon {
 	return c.SubYears(1)
 }
 
-// SubYearNoOverflow 1年前(月份不溢出)
+// SubYearNoOverflow subtraction year without overflowing month
+// 1年前(月份不溢出)
 func (c Carbon) SubYearNoOverflow() Carbon {
 	return c.SubYearsNoOverflow(1)
 }
 
-// AddQuarters N季度后
+// AddQuarters add quarters
+// N季度后
 func (c Carbon) AddQuarters(quarters int) Carbon {
 	return c.AddMonths(quarters * MonthsPerQuarter)
 }
 
-// AddQuartersNoOverflow N季度后(月份不溢出)
+// AddQuartersNoOverflow add quarters without overflowing month
+// N季度后(月份不溢出)
 func (c Carbon) AddQuartersNoOverflow(quarters int) Carbon {
 	return c.AddMonthsNoOverflow(quarters * MonthsPerQuarter)
 }
 
-// AddQuarter 1季度后
+// AddQuarter add quarter
+// 1季度后
 func (c Carbon) AddQuarter() Carbon {
 	return c.AddQuarters(1)
 }
 
-// AddQuarterNoOverflow 1季度后(月份不溢出)
+// AddQuarterNoOverflow add quarter without overflowing month
+// 1季度后(月份不溢出)
 func (c Carbon) AddQuarterNoOverflow() Carbon {
 	return c.AddQuartersNoOverflow(1)
 }
 
-// SubQuarters N季度前
+// SubQuarters subtraction quarters
+// N季度前
 func (c Carbon) SubQuarters(quarters int) Carbon {
 	return c.AddQuarters(-quarters)
 }
 
-// SubQuartersNoOverflow N季度前(月份不溢出)
+// SubQuartersNoOverflow subtraction quarters without overflowing month
+// N季度前(月份不溢出)
 func (c Carbon) SubQuartersNoOverflow(quarters int) Carbon {
 	return c.AddMonthsNoOverflow(-quarters * MonthsPerQuarter)
 }
 
-// SubQuarter 1季度前
+// SubQuarter subtraction quarter
+// 1季度前
 func (c Carbon) SubQuarter() Carbon {
 	return c.SubQuarters(1)
 }
 
-// SubQuarterNoOverflow 1季度前(月份不溢出)
+// SubQuarterNoOverflow subtraction quarter without overflowing month
+// 1季度前(月份不溢出)
 func (c Carbon) SubQuarterNoOverflow() Carbon {
 	return c.SubQuartersNoOverflow(1)
 }
 
-// AddMonths N月后
+// AddMonths add months
+// N月后
 func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsZero() {
 		return c
@@ -166,7 +191,8 @@ func (c Carbon) AddMonths(months int) Carbon {
 	return c
 }
 
-// AddMonthsNoOverflow N月后(月份不溢出)
+// AddMonthsNoOverflow add months without overflowing month
+// N月后(月份不溢出)
 func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	if c.IsZero() {
 		return c
@@ -182,57 +208,68 @@ func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	return c
 }
 
-// AddMonth 1月后
+// AddMonth add month
+// 1月后
 func (c Carbon) AddMonth() Carbon {
 	return c.AddMonths(1)
 }
 
-// AddMonthNoOverflow 1月后(月份不溢出)
+// AddMonthNoOverflow add month without overflowing month
+// 1月后(月份不溢出)
 func (c Carbon) AddMonthNoOverflow() Carbon {
 	return c.AddMonthsNoOverflow(1)
 }
 
-// SubMonths N月前
+// SubMonths subtraction months
+// N月前
 func (c Carbon) SubMonths(months int) Carbon {
 	return c.AddMonths(-months)
 }
 
-// SubMonthsNoOverflow N月前(月份不溢出)
+// SubMonthsNoOverflow subtraction months without overflowing month
+// N月前(月份不溢出)
 func (c Carbon) SubMonthsNoOverflow(months int) Carbon {
 	return c.AddMonthsNoOverflow(-months)
 }
 
-// SubMonth 1月前
+// SubMonth subtraction months
+// 1月前
 func (c Carbon) SubMonth() Carbon {
 	return c.SubMonths(1)
 }
 
-// SubMonthNoOverflow 1月前(月份不溢出)
+// SubMonthNoOverflow subtraction months without overflowing month
+// 1月前(月份不溢出)
 func (c Carbon) SubMonthNoOverflow() Carbon {
 	return c.SubMonthsNoOverflow(1)
 }
 
-// AddWeeks N周后
+// AddWeeks add weeks
+// N周后
 func (c Carbon) AddWeeks(weeks int) Carbon {
 	return c.AddDays(weeks * DaysPerWeek)
 }
 
-// AddWeek 1周后
+// AddWeek add week
+// 1周后
 func (c Carbon) AddWeek() Carbon {
 	return c.AddWeeks(1)
 }
 
-// SubWeeks N周前
+// SubWeeks subtraction weeks
+// N周前
 func (c Carbon) SubWeeks(weeks int) Carbon {
 	return c.SubDays(weeks * DaysPerWeek)
 }
 
-// SubWeek 1周前
+// SubWeek subtraction week
+// 1周前
 func (c Carbon) SubWeek() Carbon {
 	return c.SubWeeks(1)
 }
 
-// AddDays N天后
+// AddDays add days
+// N天后
 func (c Carbon) AddDays(days int) Carbon {
 	if c.IsZero() {
 		return c
@@ -241,22 +278,26 @@ func (c Carbon) AddDays(days int) Carbon {
 	return c
 }
 
-// AddDay 1天后
+// AddDay add day
+// 1天后
 func (c Carbon) AddDay() Carbon {
 	return c.AddDays(1)
 }
 
-// SubDays N天前
+// SubDays subtraction days
+// N天前
 func (c Carbon) SubDays(days int) Carbon {
 	return c.AddDays(-days)
 }
 
-// SubDay 1天前
+// SubDay subtraction day
+// 1天前
 func (c Carbon) SubDay() Carbon {
 	return c.SubDays(1)
 }
 
-// AddHours N小时后
+// AddHours add hours
+// N小时后
 func (c Carbon) AddHours(hours int) Carbon {
 	if c.IsZero() {
 		return c
@@ -266,22 +307,26 @@ func (c Carbon) AddHours(hours int) Carbon {
 	return c
 }
 
-// AddHour 1小时后
+// AddHour add hour
+// 1小时后
 func (c Carbon) AddHour() Carbon {
 	return c.AddHours(1)
 }
 
-// SubHours N小时前
+// SubHours subtraction hours
+// N小时前
 func (c Carbon) SubHours(hours int) Carbon {
 	return c.AddHours(-hours)
 }
 
-// SubHour 1小时前
+// SubHour subtraction hour
+// 1小时前
 func (c Carbon) SubHour() Carbon {
 	return c.SubHours(1)
 }
 
-// AddMinutes N分钟后
+// AddMinutes add minutes
+// N分钟后
 func (c Carbon) AddMinutes(minutes int) Carbon {
 	if c.IsZero() {
 		return c
@@ -291,22 +336,26 @@ func (c Carbon) AddMinutes(minutes int) Carbon {
 	return c
 }
 
-// AddMinute 1分钟后
+// AddMinute add minute
+// 1分钟后
 func (c Carbon) AddMinute() Carbon {
 	return c.AddMinutes(1)
 }
 
-// SubMinutes N分钟前
+// SubMinutes subtraction ninutes
+// N分钟前
 func (c Carbon) SubMinutes(minutes int) Carbon {
 	return c.AddMinutes(-minutes)
 }
 
-// SubMinute 1分钟前
+// SubMinute subtraction minute
+// 1分钟前
 func (c Carbon) SubMinute() Carbon {
 	return c.SubMinutes(1)
 }
 
-// AddSeconds N秒钟后
+// AddSeconds add seconds
+// N秒钟后
 func (c Carbon) AddSeconds(seconds int) Carbon {
 	if c.IsZero() {
 		return c
@@ -316,17 +365,20 @@ func (c Carbon) AddSeconds(seconds int) Carbon {
 	return c
 }
 
-// AddSecond 1秒钟后
+// AddSecond add second
+// 1秒钟后
 func (c Carbon) AddSecond() Carbon {
 	return c.AddSeconds(1)
 }
 
-// SubSeconds N秒钟前
+// SubSeconds subtraction seconds
+// N秒钟前
 func (c Carbon) SubSeconds(seconds int) Carbon {
 	return c.AddSeconds(-seconds)
 }
 
-// SubSecond 1秒钟前
+// SubSecond subtraction second
+// 1秒钟前
 func (c Carbon) SubSecond() Carbon {
 	return c.SubSeconds(1)
 }

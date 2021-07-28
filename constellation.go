@@ -2,7 +2,8 @@ package carbon
 
 import "strings"
 
-// Constellation 获取星座，支持i18n
+// Constellation get constellation name, i18n is supported
+// 获取星座，支持i18n
 func (c Carbon) Constellation() string {
 	if c.IsInvalid() {
 		return ""
@@ -44,7 +45,8 @@ func (c Carbon) Constellation() string {
 	return ""
 }
 
-// IsAries 是否是白羊座
+// IsAries whether is Aries Aries
+// 是否是白羊座
 func (c Carbon) IsAries() bool {
 	if c.IsInvalid() {
 		return false
@@ -58,7 +60,8 @@ func (c Carbon) IsAries() bool {
 	return false
 }
 
-// IsTaurus 是否是金牛座
+// IsTaurus whether is Taurus
+// 是否是金牛座
 func (c Carbon) IsTaurus() bool {
 	if c.IsInvalid() {
 		return false
@@ -72,7 +75,8 @@ func (c Carbon) IsTaurus() bool {
 	return false
 }
 
-// IsGemini 是否是双子座
+// IsGemini whether is Gemini
+// 是否是双子座
 func (c Carbon) IsGemini() bool {
 	if c.IsInvalid() {
 		return false
@@ -86,7 +90,8 @@ func (c Carbon) IsGemini() bool {
 	return false
 }
 
-// IsCancer 是否是巨蟹座
+// IsCancer whether is Cancer
+// 是否是巨蟹座
 func (c Carbon) IsCancer() bool {
 	if c.IsInvalid() {
 		return false
@@ -100,7 +105,8 @@ func (c Carbon) IsCancer() bool {
 	return false
 }
 
-// IsLeo 是否是狮子座
+// IsLeo whether is Leo
+// 是否是狮子座
 func (c Carbon) IsLeo() bool {
 	if c.IsInvalid() {
 		return false
@@ -114,7 +120,8 @@ func (c Carbon) IsLeo() bool {
 	return false
 }
 
-// IsVirgo 是否是处女座
+// IsVirgo whether is Virgo
+// 是否是处女座
 func (c Carbon) IsVirgo() bool {
 	if c.IsInvalid() {
 		return false
@@ -128,7 +135,8 @@ func (c Carbon) IsVirgo() bool {
 	return false
 }
 
-// IsLibra 是否是天秤座
+// IsLibra whether is Libra
+// 是否是天秤座
 func (c Carbon) IsLibra() bool {
 	if c.IsInvalid() {
 		return false
@@ -142,7 +150,8 @@ func (c Carbon) IsLibra() bool {
 	return false
 }
 
-// IsScorpio 是否是天蝎座
+// IsScorpio whether is Scorpio
+// 是否是天蝎座
 func (c Carbon) IsScorpio() bool {
 	if c.IsInvalid() {
 		return false
@@ -156,7 +165,8 @@ func (c Carbon) IsScorpio() bool {
 	return false
 }
 
-// IsSagittarius 是否是射手座
+// IsSagittarius whether is Sagittarius
+// 是否是射手座
 func (c Carbon) IsSagittarius() bool {
 	if c.IsInvalid() {
 		return false
@@ -170,7 +180,8 @@ func (c Carbon) IsSagittarius() bool {
 	return false
 }
 
-// IsCapricorn 是否是摩羯座
+// IsCapricorn whether is Capricorn
+// 是否是摩羯座
 func (c Carbon) IsCapricorn() bool {
 	if c.IsInvalid() {
 		return false
@@ -184,7 +195,8 @@ func (c Carbon) IsCapricorn() bool {
 	return false
 }
 
-// IsAquarius 是否是水瓶座
+// IsAquarius whether is Aquarius
+// 是否是水瓶座
 func (c Carbon) IsAquarius() bool {
 	if c.IsInvalid() {
 		return false
@@ -198,7 +210,8 @@ func (c Carbon) IsAquarius() bool {
 	return false
 }
 
-// IsPisces 是否是双鱼座
+// IsPisces whether is Pisces
+// 是否是双鱼座
 func (c Carbon) IsPisces() bool {
 	if c.IsInvalid() {
 		return false

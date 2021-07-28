@@ -9,20 +9,24 @@ import (
 )
 
 var (
+	// default language dir
 	// 默认目录
 	defaultDir = "./lang"
+	// default language locale
 	// 默认区域
 	defaultLocale = "en"
 )
 
 // Language 定义 Language 结构体
+// define Language structure
 type Language struct {
 	dir       string            // 目录
 	locale    string            // 区域
 	resources map[string]string // 资源
 }
 
-// NewLanguage 初始化 Language 结构体
+// NewLanguage return a new Language instance
+// 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{
 		dir:       defaultDir,
@@ -31,7 +35,8 @@ func NewLanguage() *Language {
 	}
 }
 
-// SetLocale 设置区域
+// SetLocale set language locale
+// 设置区域
 func (lang *Language) SetLocale(locale string) error {
 	if len(lang.resources) != 0 {
 		return nil
@@ -48,7 +53,8 @@ func (lang *Language) SetLocale(locale string) error {
 	return nil
 }
 
-// SetDir 设置目录
+// SetDir set language directory
+// 设置目录
 func (lang *Language) SetDir(dir string) error {
 	fi, err := os.Stat(dir)
 	if err != nil || !fi.IsDir() {
@@ -58,7 +64,8 @@ func (lang *Language) SetDir(dir string) error {
 	return nil
 }
 
-// SetResources 设置资源
+// SetResources set language resources
+// 设置资源
 func (lang *Language) SetResources(resources map[string]string) {
 	if len(lang.resources) == 0 {
 		lang.resources = resources
@@ -71,7 +78,8 @@ func (lang *Language) SetResources(resources map[string]string) {
 	}
 }
 
-// translate 翻译转换
+// translate translate by unit string
+// 翻译转换
 func (lang *Language) translate(unit string, diff int64) string {
 	if len(lang.resources) == 0 {
 		lang.SetLocale(defaultLocale)
