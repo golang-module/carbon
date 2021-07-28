@@ -1,5 +1,7 @@
 package carbon
 
+import "math"
+
 // DaysInYear 获取本年的总天数
 func (c Carbon) DaysInYear() int {
 	if c.IsInvalid() {
@@ -70,11 +72,11 @@ func (c Carbon) WeekOfMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	day := c.Time.In(c.Loc).Day()
-	if day < DaysPerWeek {
-		return 1
+	day := c.Day()
+	if day%DaysPerWeek != 0 {
+		return day/DaysPerWeek + 1
 	}
-	return day%DaysPerWeek + 1
+	return int(math.Ceil(float64(day / DaysPerWeek)))
 }
 
 // Century 获取当前世纪
