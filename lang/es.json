@@ -1,0 +1,23 @@
+{
+	"seasons": "Primavera|Verano|Otoño|Invierno",
+	"months": "Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre",
+	"months_short": "Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic",
+	"weeks": "Domingo|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado",
+	"weeks_short": "Dom|Lun|Mar|Mie|Jue|Vie|Sab",
+
+	"constellations": "Aries|Tauro|Geminis|Cancer|Leo|Virgo|Libra|Escorpio|Sagitario|Capricornio|Acuario|Piscis",
+
+	"year":"1 año|%d años",
+	"month":"1 mes|%d meses",
+	"week":"1 semana|%d semanas",
+	"day":"1 día|%d días",
+	"hour":"1 hora|%d horas",
+	"minute":"1 minuto|%d minutos",
+	"second":"1 segundo|%d segundos",
+	"now": "ahora",
+	"ago":"hace %s",
+	"from_now":"%s desde ahora",
+	"before":"%s antes",
+	"after":"%s después"
+}
+© 2021 GitHub, Inc.
