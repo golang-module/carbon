@@ -45,7 +45,7 @@ func (c Carbon) Constellation() string {
 	return ""
 }
 
-// IsAries whether is Aries Aries
+// IsAries whether is Aries
 // 是否是白羊座
 func (c Carbon) IsAries() bool {
 	if c.IsInvalid() {

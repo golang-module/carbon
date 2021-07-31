@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCarbon_Constellation1(t *testing.T) {
+func TestCarbon_Constellation(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -37,32 +37,6 @@ func TestCarbon_Constellation1(t *testing.T) {
 
 	for _, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Constellation(), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_Constellation2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "2020-08-05", "en", "Leo"},
-		{5, "2020-08-05", "zh-CN", "狮子座"},
-		{6, "2020-08-05", "zh-TW", "獅子座"},
-		{7, "2020-08-05", "jp", "ししざ"},
-		{8, "2020-08-05", "kr", "처녀자리"},
-	}
-
-	for _, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input).SetLocale(test.param)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Constellation(), "Current test id is "+strconv.Itoa(test.id))
 	}
