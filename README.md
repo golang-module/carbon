@@ -1001,6 +1001,7 @@ The following languages are supported
 * [English(en)](./lang/en.json "English")
 * [Japanese(jp)](./lang/jp.json "Japanese")
 * [Korean(kr)](./lang/kr.json "Korean")
+* [Spanish(es)](./lang/es.json "Spanish")
 
 The following methods are supported
 * `DiffForHumans()`：to string difference in human friendly readable format

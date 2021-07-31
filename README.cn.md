@@ -1011,6 +1011,7 @@ fmt.Printf("%+v", *person)
 * [英语(en)](./lang/en.json "英语")
 * [日语(jp)](./lang/jp.json "日语")
 * [韩语(kr)](./lang/kr.json "韩语")
+* [西班牙语(es)](./lang/es.json "西班牙语")
 
 目前支持的方法有
 * `DiffForHumans()`：输出对人类友好的可读格式时间差
