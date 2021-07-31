@@ -202,7 +202,7 @@ func TestCarbon_ToString(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToMonthString1(t *testing.T) {
+func TestCarbon_ToMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -243,42 +243,7 @@ func TestCarbon_ToMonthString1(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToMonthString2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "00:00:00", "en", ""},
-		{5, "0000-00-00 00:00:00", "en", ""},
-
-		{6, "2020-08-05", "en", "August"},
-		{7, "2020-08-05", "zh-CN", "八月"},
-		{8, "2020-08-05", "zh-TW", "八月"},
-		{9, "2020-08-05", "jp", "はちがつ"},
-		{10, "2020-08-05", "kr", "팔월"},
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.SetLocale(test.param).ToMonthString(), "Current test id is "+strconv.Itoa(test.id))
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.SetLocale(test.param).ToMonthString(PRC), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_ToShortMonthString1(t *testing.T) {
+func TestCarbon_ToShortMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -319,42 +284,7 @@ func TestCarbon_ToShortMonthString1(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToShortMonthString2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "00:00:00", "en", ""},
-		{5, "0000-00-00 00:00:00", "en", ""},
-
-		{6, "2020-08-05", "en", "Aug"},
-		{7, "2020-08-05", "zh-CN", "8月"},
-		{8, "2020-08-05", "zh-TW", "8月"},
-		{9, "2020-08-05", "jp", "8がつ"},
-		{10, "2020-08-05", "kr", "8월"},
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortMonthString(), "Current test id is "+strconv.Itoa(test.id))
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortMonthString(PRC), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_ToWeekString1(t *testing.T) {
+func TestCarbon_ToWeekString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -390,42 +320,7 @@ func TestCarbon_ToWeekString1(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToWeekString2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "00:00:00", "en", ""},
-		{5, "0000-00-00 00:00:00", "en", ""},
-
-		{6, "2020-08-05", "en", "Wednesday"},
-		{7, "2020-08-05", "zh-CN", "星期三"},
-		{8, "2020-08-05", "zh-TW", "星期三"},
-		{9, "2020-08-05", "jp", "もくようび"},
-		{10, "2020-08-05", "kr", "수요일"},
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToWeekString(), "Current test id is "+strconv.Itoa(test.id))
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToWeekString(PRC), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_ToShortWeekString1(t *testing.T) {
+func TestCarbon_ToShortWeekString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -456,41 +351,6 @@ func TestCarbon_ToShortWeekString1(t *testing.T) {
 
 	for _, test := range tests {
 		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortWeekString(PRC), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_ToShortWeekString2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "00:00:00", "en", ""},
-		{5, "0000-00-00 00:00:00", "en", ""},
-
-		{6, "2020-08-05", "en", "Wed"},
-		{7, "2020-08-05", "zh-CN", "周三"},
-		{8, "2020-08-05", "zh-TW", "週三"},
-		{9, "2020-08-05", "jp", "週三"},
-		{10, "2020-08-05", "kr", "수요일"},
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortWeekString(), "Current test id is "+strconv.Itoa(test.id))
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input, PRC).SetLocale(test.param)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortWeekString(PRC), "Current test id is "+strconv.Itoa(test.id))
 	}
