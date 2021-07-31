@@ -75,30 +75,48 @@ func TestLanguage_SetResources1(t *testing.T) {
 
 	tests := []struct {
 		id       int    // 测试id
-		input    Carbon // 输入值
+		input1   string // 输入值
+		input2   string // 输入值
 		expected string // 期望值
 	}{
-		{1, Now(), "just now"},
-		{2, Now().AddYears(1), "in 1 yr"},
-		{3, Now().SubYears(1), "1 yr ago"},
-		{4, Now().AddYears(10), "in 10 yrs"},
-		{5, Now().SubYears(10), "10 yrs ago"},
+		{1, "2020-08-05 13:14:15", "2020-08-05 13:14:15", "just now"},
+		{2, "2020-08-05 13:14:15", "2021-08-05 13:14:15", "1 yr before"},
+		{3, "2020-08-05 13:14:15", "2019-08-05 13:14:15", "1 yr after"},
+		{4, "2020-08-05 13:14:15", "2030-08-05 13:14:15", "10 yrs before"},
+		{5, "2020-08-05 13:14:15", "2010-08-05 13:14:15", "10 yrs after"},
 
-		{6, Now().AddMonths(1), "in 1 mo"},
-		{7, Now().SubMonths(1), "1 mo ago"},
-		{8, Now().AddMonths(10), "in 10 mos"},
-		{9, Now().SubMonths(10), "10 mos ago"},
+		{6, "2020-08-05 13:14:15", "2020-09-05 13:14:15", "1 mo before"},
+		{7, "2020-08-05 13:14:15", "2020-07-05 13:14:15", "1 mo after"},
+		{8, "2020-08-05 13:14:15", "2021-06-05 13:14:15", "10 mos before"},
+		{9, "2020-08-05 13:14:15", "2019-10-05 13:14:15", "10 mos after"},
 
-		{10, Now().AddDays(1), "in 1d"},
-		{11, Now().SubDays(1), "1d ago"},
-		{12, Now().AddDays(10), "in 1w"},
-		{13, Now().SubDays(10), "1w ago"},
+		{10, "2020-08-05 13:14:15", "2020-08-06 13:14:15", "1d before"},
+		{11, "2020-08-05 13:14:15", "2020-08-04 13:14:15", "1d after"},
+		{12, "2020-08-05 13:14:15", "2020-08-15 13:14:15", "1w before"},
+		{13, "2020-08-05 13:14:15", "2020-07-26 13:14:15", "1w after"},
+
+		{14, "2020-08-05 13:14:15", "2020-08-05 14:14:15", "1h before"},
+		{15, "2020-08-05 13:14:15", "2020-08-05 12:14:15", "1h after"},
+		{16, "2020-08-05 13:14:15", "2020-08-05 23:14:15", "10h before"},
+		{17, "2020-08-05 13:14:15", "2020-08-05 03:14:15", "10h after"},
+
+		{18, "2020-08-05 13:14:15", "2020-08-05 13:15:15", "1m before"},
+		{19, "2020-08-05 13:14:15", "2020-08-05 13:13:15", "1m after"},
+		{20, "2020-08-05 13:14:15", "2020-08-05 13:24:15", "10m before"},
+		{21, "2020-08-05 13:14:15", "2020-08-05 13:04:15", "10m after"},
+
+		{22, "2020-08-05 13:14:15", "2020-08-05 13:14:16", "1s before"},
+		{23, "2020-08-05 13:14:15", "2020-08-05 13:14:14", "1s after"},
+		{24, "2020-08-05 13:14:15", "2020-08-05 13:14:25", "10s before"},
+		{25, "2020-08-05 13:14:15", "2020-08-05 13:14:05", "10s after"},
 	}
 
 	for _, test := range tests {
-		c := test.input.SetLanguage(lang)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.DiffForHumans(), "Current test id is "+strconv.Itoa(test.id))
+		c1 := Parse(test.input1)
+		c2 := Parse(test.input2)
+		assert.Nil(c1.Error)
+		assert.Nil(c2.Error)
+		assert.Equal(test.expected, c1.SetLanguage(lang).DiffForHumans(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
@@ -107,7 +125,7 @@ func TestLanguage_SetResources2(t *testing.T) {
 
 	lang := NewLanguage()
 	resources := map[string]string{
-		"xxx": "xxxx",
+		"xxx": "xxx",
 	}
 	lang.SetResources(resources)
 	lang.SetLocale("en")
