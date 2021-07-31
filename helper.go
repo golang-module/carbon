@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// General formatting symbols
+// formats common formatting symbols
 // 常规格式化符号
 var formats = map[byte]string{
 	'd': "02",                        // Day:    Day of the month, 2 digits with leading zeros. Eg: 01 to 31.
@@ -32,7 +32,7 @@ var formats = map[byte]string{
 	'r': "Mon, 02 Jan 06 15:04 MST",  // Format: RFC 2822 formatted date. Eg: Thu, 21 Dec 2000 16:01:07 +0200.
 }
 
-// format2layout convert format to layout
+// format2layout convert a format string into a layout string
 // format 转 layout
 func format2layout(format string) string {
 	runes := []rune(format)
