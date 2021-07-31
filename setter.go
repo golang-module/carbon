@@ -19,7 +19,8 @@ func SetTimezone(name string) Carbon {
 	return NewCarbon().SetTimezone(name)
 }
 
-// SetLanguage 设置语言对象
+// SetLanguage set language
+// 设置语言对象
 func (c Carbon) SetLanguage(lang *Language) Carbon {
 	c.Lang = lang
 	return c
