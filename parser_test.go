@@ -84,12 +84,14 @@ func TestCarbon_ParseByFormat(t *testing.T) {
 }
 
 func TestError_ParseByFormat(t *testing.T) {
+	assert := assert.New(t)
+
 	value, format, timezone := "2020-08-50", "Y-m-d", "xxx"
 	c1 := ParseByFormat(value, format)
-	assert.Equal(t, invalidFormatError(value, format), c1.Error, "Should catch an exception in ParseByFormat()")
+	assert.Equal(invalidFormatError(value, format), c1.Error, "Should catch an exception in ParseByFormat()")
 
 	c2 := ParseByFormat(value, format, timezone)
-	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByFormat()")
+	assert.Equal(invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByFormat()")
 }
 
 func TestCarbon_ParseByLayout(t *testing.T) {
@@ -126,10 +128,12 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 }
 
 func TestError_ParseByLayout(t *testing.T) {
+	assert := assert.New(t)
+
 	value, layout, timezone := "2020-08-50", "2006-01-02", "xxx"
 	c1 := ParseByLayout(value, layout)
-	assert.Equal(t, invalidLayoutError(value, layout), c1.Error, "Should catch an exception in ParseByLayout()")
+	assert.Equal(invalidLayoutError(value, layout), c1.Error, "Should catch an exception in ParseByLayout()")
 
 	c2 := ParseByLayout(value, layout, timezone)
-	assert.Equal(t, invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByLayout()")
+	assert.Equal(invalidTimezoneError(timezone), c2.Error, "Should catch an exception in ParseByLayout()")
 }

@@ -81,7 +81,7 @@ func TestCarbon_UnmarshalJSON1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Printf("Json string parse to person1:\n%+v\n", *person)
+	fmt.Printf("Json string parse to person:\n%+v\n", *person)
 }
 
 func TestCarbon_UnmarshalJSON2(t *testing.T) {
@@ -103,7 +103,7 @@ func TestCarbon_UnmarshalJSON2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Printf("Json string parse to person2:\n%+v\n", *person)
+	fmt.Printf("Json string parse to person:\n%+v\n", *person)
 }
 
 func TestError_UnmarshalJSON(t *testing.T) {

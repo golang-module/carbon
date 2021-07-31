@@ -157,11 +157,13 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 		{4, "00:00:00", false},
 		{5, "0000-00-00 00:00:00", false},
 
-		{6, "2016-01-01", true},
-		{7, "2017-01-01", false},
-		{8, "2018-01-01", false},
-		{9, "2019-01-01", false},
-		{10, "2020-01-01", true},
+		{6, "2015-01-01", false},
+		{7, "2016-01-01", true},
+		{8, "2017-01-01", false},
+		{9, "2018-01-01", false},
+		{10, "2019-01-01", false},
+		{11, "2020-01-01", true},
+		{12, "2021-01-01", false},
 	}
 
 	for _, test := range tests {
@@ -191,6 +193,7 @@ func TestCarbon_IsLongYear(t *testing.T) {
 		{9, "2018-01-01", false},
 		{10, "2019-01-01", false},
 		{11, "2020-01-01", true},
+		{12, "2021-01-01", false},
 	}
 
 	for _, test := range tests {
