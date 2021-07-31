@@ -2,13 +2,13 @@ package carbon
 
 import "time"
 
-// IsZero whether is zero
+// IsZero whether is zero time
 // 是否是零值
 func (c Carbon) IsZero() bool {
 	return c.Time.IsZero()
 }
 
-// IsInvalid whether is invalid
+// IsInvalid whether is invalid time
 // 是否是无效的
 func (c Carbon) IsInvalid() bool {
 	if c.Error != nil || c.IsZero() {
@@ -17,7 +17,7 @@ func (c Carbon) IsInvalid() bool {
 	return false
 }
 
-// IsNow whether is now
+// IsNow whether is now time
 // 是否是当前时间
 func (c Carbon) IsNow() bool {
 	if c.IsInvalid() {
@@ -26,7 +26,7 @@ func (c Carbon) IsNow() bool {
 	return c.ToTimestamp() == c.Now().ToTimestamp()
 }
 
-// IsFuture whether is future
+// IsFuture whether is future time
 // 是否是未来时间
 func (c Carbon) IsFuture() bool {
 	if c.IsInvalid() {
@@ -35,7 +35,7 @@ func (c Carbon) IsFuture() bool {
 	return c.ToTimestamp() > c.Now().ToTimestamp()
 }
 
-// IsPast whether is past
+// IsPast whether is past time
 // 是否是过去时间
 func (c Carbon) IsPast() bool {
 	if c.IsInvalid() {
@@ -44,7 +44,7 @@ func (c Carbon) IsPast() bool {
 	return c.ToTimestamp() < c.Now().ToTimestamp()
 }
 
-// IsLeapYear whether is leap year
+// IsLeapYear whether is a leap year
 // 是否是闰年
 func (c Carbon) IsLeapYear() bool {
 	if c.IsInvalid() {
@@ -57,7 +57,7 @@ func (c Carbon) IsLeapYear() bool {
 	return false
 }
 
-// IsLongYear whether is long year, see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+// IsLongYear whether is a long year, see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
 // 是否是长年
 func (c Carbon) IsLongYear() bool {
 	if c.IsInvalid() {
@@ -283,7 +283,7 @@ func (c Carbon) IsTomorrow() bool {
 	return c.ToDateString() == Now().AddDay().ToDateString()
 }
 
-// Compare comparison by operator
+// Compare comparison by a operator
 // 时间比较
 func (c Carbon) Compare(operator string, t Carbon) bool {
 	switch operator {
@@ -341,7 +341,7 @@ func (c Carbon) Lte(t Carbon) bool {
 	return c.Lt(t) || c.Eq(t)
 }
 
-// Between whether between two Carbon instance, exclude start Carbon instance and end Carbon instance
+// Between whether between two Carbon instances, excluded the start and end Carbon instance
 // 是否在两个时间之间(不包括这两个时间)
 func (c Carbon) Between(start Carbon, end Carbon) bool {
 	if c.Gt(start) && c.Lt(end) {
@@ -350,7 +350,7 @@ func (c Carbon) Between(start Carbon, end Carbon) bool {
 	return false
 }
 
-// BetweenIncludedStart whether between two Carbon instance, include start Carbon instance
+// BetweenIncludedStart whether between two Carbon instances, included the start Carbon instance
 // 是否在两个时间之间(包括开始时间)
 func (c Carbon) BetweenIncludedStart(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lt(end) {
@@ -359,7 +359,7 @@ func (c Carbon) BetweenIncludedStart(start Carbon, end Carbon) bool {
 	return false
 }
 
-// BetweenIncludedEnd whether between two Carbon instance, include end Carbon instance
+// BetweenIncludedEnd whether between two Carbon instances, included the end Carbon instance
 // 是否在两个时间之间(包括结束时间)
 func (c Carbon) BetweenIncludedEnd(start Carbon, end Carbon) bool {
 	if c.Gt(start) && c.Lte(end) {
@@ -368,7 +368,7 @@ func (c Carbon) BetweenIncludedEnd(start Carbon, end Carbon) bool {
 	return false
 }
 
-// BetweenIncludedBoth whether between two Carbon instance, include start Carbon instance and end Carbon instance
+// BetweenIncludedBoth whether between two Carbon instances, included the start and end Carbon instance
 // 是否在两个时间之间(包括这两个时间)
 func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
 	if c.Gte(start) && c.Lte(end) {
