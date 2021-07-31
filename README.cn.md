@@ -1,8 +1,10 @@
 # Carbon  #
 [![Build Status](https://github.com/golang-module/carbon/workflows/Go/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
-[![codecov](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
-[![Go doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+[![Go Code Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
+[![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
+[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+![License](https://img.shields.io/github/license/golang-module/carbon)
 
 中文 | [English](README.md)
 
@@ -101,37 +103,37 @@ carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 ```
 
-##### 创建 carbon 实例
+##### 创建 Carbon 实例
 ```go
-// 从秒级时间戳创建 carbon 实例
+// 从秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestamp(-1).ToDateTimeString() // 1970-01-01 07:59:59
 carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToDateTimeString() // 1970-01-01 08:59:59
 carbon.CreateFromTimestamp(0).ToDateTimeString() // 1970-01-01 08:00:00
 carbon.CreateFromTimestamp(0, carbon.Tokyo).ToDateTimeString() // 1970-01-01 09:00:00
 carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromTimestamp(1596604455, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-// 从毫秒级时间戳创建 carbon 实例
+// 从毫秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromTimestamp(1596604455000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-// 从微秒级时间戳创建 carbon 实例
+// 从微秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromTimestamp(1596604455000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-// 从纳级时间戳创建 carbon 实例
+// 从纳级时间戳创建 Carbon 实例
 carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromTimestamp(1596604455000000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
-// 从年月日时分秒创建 carbon 实例
+// 从年月日时分秒创建 Carbon 实例
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-// 从年月日创建 carbon 实例(时分秒默认为当前时分秒)
+// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-// 从时分秒创建 carbon 实例(年月日默认为当前年月日)
+// 从时分秒创建 Carbon 实例(年月日默认为当前年月日)
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 将标准格式时间字符串解析成 carbon 实例
+##### 将标准格式时间字符串解析成 Carbon 实例
 ```go
 carbon.Parse("").ToDateTimeString() // 空字符串
 carbon.Parse("0").ToDateTimeString() // 空字符串
@@ -147,7 +149,7 @@ carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 13:14
 carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 通过格式化字符将字符串解析成 carbon 实例
+##### 通过格式化字符将字符串解析成 Carbon 实例
 > 如果使用的字母与格式化字符冲突时，请使用转义符转义该字母
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
@@ -156,7 +158,7 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 通过布局字符将字符串解析成 carbon 实例
+##### 通过布局字符将字符串解析成 Carbon 实例
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -164,9 +166,9 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### carbon 和 time.Time 互转
+##### Carbon 和 time.Time 互转
 ```go
-// 将 time.Time 转换成 carbon
+// 将 time.Time 转换成 Carbon
 carbon.Time2Carbon(time.Now())
 // 将 Carbon 转换成 time.Time
 carbon.Now().Carbon2Time()
