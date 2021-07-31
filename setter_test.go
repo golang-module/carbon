@@ -16,14 +16,16 @@ func TestCarbon_SetTimezone(t *testing.T) {
 		timezone string // 输入参数
 		expected string // 期望值
 	}{
-		{1, "2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
-		{2, "2020-08-05", Tokyo, "2020-08-05 00:00:00"},
+		{1, "0000-00-00 00:00:00", PRC, ""},
+		{2, "2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
+		{3, "2020-08-05 13:14:15", Tokyo, "2020-08-05 12:14:15"},
+		{4, "2020-08-05 13:14:15", London, "2020-08-05 20:14:15"},
 	}
 
 	for _, test := range tests {
 		c := SetTimezone(test.timezone).Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
+		assert.Equal(test.expected, c.ToDateTimeString(PRC), "Current test id is "+strconv.Itoa(test.id))
 	}
 }
 
