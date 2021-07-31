@@ -156,7 +156,7 @@ func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
-// Time2Carbon convert time.Time to Carbon
+// Time2Carbon convert time.Time into Carbon
 // 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
@@ -164,7 +164,7 @@ func Time2Carbon(tt time.Time) Carbon {
 	return c
 }
 
-// Carbon2Time convert Carbon to time.Time
+// Carbon2Time convert Carbon into time.Time
 // 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
 	return c.Time.In(c.Loc)
@@ -173,8 +173,8 @@ func (c Carbon) Carbon2Time() time.Time {
 // Now return a Carbon instance for now
 // 当前
 func (c Carbon) Now(timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -194,8 +194,8 @@ func Now(timezone ...string) Carbon {
 // Tomorrow return a Carbon instance for tomorrow
 // 明天
 func (c Carbon) Tomorrow(timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -219,8 +219,8 @@ func Tomorrow(timezone ...string) Carbon {
 // Yesterday return a Carbon instance for yesterday
 // 昨天
 func (c Carbon) Yesterday(timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
