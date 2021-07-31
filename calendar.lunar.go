@@ -7,22 +7,15 @@ import (
 )
 
 var (
-	// 支持的最小和最大年份
-	minYear, maxYear = 1900, 2100
-	// 中国农历数字
-	chineseNumbers = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
-	// 中国农历月份
-	chineseMonths = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
-	// 中国农历日期前缀
+	minYear, maxYear   = 1900, 2100
+	chineseNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
+	chineseMonths      = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
 	chineseDayPrefixes = []string{"初", "十", "廿", "卅"}
 
-	// 生肖
 	animals = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
 
-	// 节日
 	festivals = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
 
-	// 农历
 	lunarTerms = []int{
 		0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, //1900-1909
 		0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, //1910-1919
@@ -55,7 +48,7 @@ type lunar struct {
 	isLeapMonth      bool // 是否是闰月
 }
 
-// Lunar convert the Gregorian calendar to the lunar calendar
+// Lunar convert the Gregorian calendar into the lunar calendar
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	if c.IsInvalid() {
@@ -119,7 +112,7 @@ func (c Carbon) Lunar() (l lunar) {
 	return
 }
 
-// getDaysInYear get days in year
+// getDaysInYear get days in lunar year
 // 获取该年总天数
 func (l lunar) getDaysInYear() int {
 	var i, sum = 0, 348
@@ -131,7 +124,7 @@ func (l lunar) getDaysInYear() int {
 	return sum + l.getDaysInLeapMonth()
 }
 
-// getDaysInMonth get days in month
+// getDaysInMonth get days in lunar month
 // 获取该月总天数
 func (l lunar) getDaysInMonth() int {
 	if (lunarTerms[l.year-minYear] & (0x10000 >> uint(l.month))) == 0 {
@@ -140,7 +133,7 @@ func (l lunar) getDaysInMonth() int {
 	return 30
 }
 
-// getDaysInLeapMonth get days in leap month
+// getDaysInLeapMonth get days in lunar leap month
 // 获取闰月总天数
 func (l lunar) getDaysInLeapMonth() int {
 	if l.LeapMonth() == 0 {
@@ -152,7 +145,7 @@ func (l lunar) getDaysInLeapMonth() int {
 	return 29
 }
 
-// Animal get animal name
+// Animal get lunar animal name
 // 获取生肖
 func (l lunar) Animal() string {
 	if l.year == 0 {
@@ -161,7 +154,7 @@ func (l lunar) Animal() string {
 	return animals[l.year%MonthsPerYear]
 }
 
-// Festival get festival name
+// Festival get lunar festival name
 // 获取农历节日
 func (l lunar) Festival() string {
 	if l.year == 0 {
@@ -224,7 +217,7 @@ func (l lunar) Day() int {
 	return l.day
 }
 
-// ToYearString get lunar year string
+// ToYearString output a lunar year string
 // 获取农历年字符串
 func (l lunar) ToYearString() string {
 	if l.year == 0 {
@@ -237,7 +230,7 @@ func (l lunar) ToYearString() string {
 	return year
 }
 
-// ToMonthString get lunar month string
+// ToMonthString output a lunar month string
 // 获取农历月字符串
 func (l lunar) ToMonthString() string {
 	if l.month == 0 {
@@ -246,7 +239,7 @@ func (l lunar) ToMonthString() string {
 	return chineseMonths[l.month-1]
 }
 
-// ToDayString get lunar day string
+// ToDayString output a lunar day string
 // 获取农历日字符串
 func (l lunar) ToDayString() string {
 	if l.day == 0 {
@@ -266,7 +259,7 @@ func (l lunar) ToDayString() string {
 	return day
 }
 
-// ToString get lunar year, month and day string
+// ToString output a lunar year, month and day string
 // 获取农历年月日字符串
 func (l lunar) ToString() string {
 	if l.year == 0 {
@@ -302,7 +295,7 @@ func (l lunar) IsLeapMonth() bool {
 	return l.month == l.LeapMonth()
 }
 
-// IsRatYear whether is year of rat
+// IsRatYear whether is year of Rat
 // 是否是鼠年
 func (l lunar) IsRatYear() bool {
 	if l.year == 0 {
@@ -314,7 +307,7 @@ func (l lunar) IsRatYear() bool {
 	return false
 }
 
-// IsOxYear whether is year of ox
+// IsOxYear whether is year of Ox
 // 是否是牛年
 func (l lunar) IsOxYear() bool {
 	if l.year == 0 {
@@ -326,7 +319,7 @@ func (l lunar) IsOxYear() bool {
 	return false
 }
 
-// IsTigerYear whether is year of tiger
+// IsTigerYear whether is year of Tiger
 // 是否是虎年
 func (l lunar) IsTigerYear() bool {
 	if l.year == 0 {
@@ -338,7 +331,7 @@ func (l lunar) IsTigerYear() bool {
 	return false
 }
 
-// IsRabbitYear whether is year of rabbit
+// IsRabbitYear whether is year of Rabbit
 // 是否是兔年
 func (l lunar) IsRabbitYear() bool {
 	if l.year == 0 {
@@ -350,7 +343,7 @@ func (l lunar) IsRabbitYear() bool {
 	return false
 }
 
-// IsDragonYear whether is year of dragon
+// IsDragonYear whether is year of Dragon
 // 是否是龙年
 func (l lunar) IsDragonYear() bool {
 	if l.year == 0 {
@@ -362,7 +355,7 @@ func (l lunar) IsDragonYear() bool {
 	return false
 }
 
-// IsSnakeYear whether is year of snake
+// IsSnakeYear whether is year of Snake
 // 是否是蛇年
 func (l lunar) IsSnakeYear() bool {
 	if l.year == 0 {
@@ -374,7 +367,7 @@ func (l lunar) IsSnakeYear() bool {
 	return false
 }
 
-// IsHorseYear whether is year of horse
+// IsHorseYear whether is year of Horse
 // 是否是马年
 func (l lunar) IsHorseYear() bool {
 	if l.year == 0 {
@@ -386,7 +379,7 @@ func (l lunar) IsHorseYear() bool {
 	return false
 }
 
-// IsGoatYear whether is year of goat
+// IsGoatYear whether is year of Goat
 // 是否是羊年
 func (l lunar) IsGoatYear() bool {
 	if l.year == 0 {
@@ -398,7 +391,7 @@ func (l lunar) IsGoatYear() bool {
 	return false
 }
 
-// IsMonkeyYear whether is year of monkey
+// IsMonkeyYear whether is year of Monkey
 // 是否是猴年
 func (l lunar) IsMonkeyYear() bool {
 	if l.year == 0 {
@@ -410,7 +403,7 @@ func (l lunar) IsMonkeyYear() bool {
 	return false
 }
 
-// IsRoosterYear whether is year of rooster
+// IsRoosterYear whether is year of Rooster
 // 是否是鸡年
 func (l lunar) IsRoosterYear() bool {
 	if l.year == 0 {
@@ -422,7 +415,7 @@ func (l lunar) IsRoosterYear() bool {
 	return false
 }
 
-// IsDogYear whether is year of dog
+// IsDogYear whether is year of Dog
 // 是否是狗年
 func (l lunar) IsDogYear() bool {
 	if l.year == 0 {
@@ -434,7 +427,7 @@ func (l lunar) IsDogYear() bool {
 	return false
 }
 
-// IsPigYear whether is year of pig
+// IsPigYear whether is year of Pig
 // 是否是猪年
 func (l lunar) IsPigYear() bool {
 	if l.year == 0 {
