@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCarbon_Season1(t *testing.T) {
+func TestCarbon_Season(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -36,36 +36,7 @@ func TestCarbon_Season1(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Season(), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_Season2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		param    string // 参数
-		expected string // 期望值
-	}{
-		{1, "", "en", ""},
-		{2, "0", "en", ""},
-		{3, "0000-00-00", "en", ""},
-		{4, "00:00:00", "en", ""},
-		{5, "0000-00-00 00:00:00", "en", ""},
-
-		{6, "2020-08-05", "en", "Summer"},
-		{7, "2020-08-05", "zh-CN", "夏季"},
-		{8, "2020-08-05", "zh-TW", "夏季"},
-		{9, "2020-08-05", "jp", "なつ"},
-		{10, "2020-08-05", "kr", "여름"},
-	}
-
-	for _, test := range tests {
-		c := Parse(test.input).SetLocale(test.param)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Season(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -102,7 +73,7 @@ func TestCarbon_StartOfSeason(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input).StartOfSeason()
+		c := SetTimezone(PRC).Parse(test.input).StartOfSeason()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -139,7 +110,7 @@ func TestCarbon_EndOfSeason(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input).EndOfSeason()
+		c := SetTimezone(PRC).Parse(test.input).EndOfSeason()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -174,7 +145,7 @@ func TestCarbon_IsSpring(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.IsSpring(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -209,7 +180,7 @@ func TestCarbon_IsSummer(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.IsSummer(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -244,7 +215,7 @@ func TestCarbon_IsAutumn(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.IsAutumn(), "Current test id is "+strconv.Itoa(test.id))
 	}
@@ -279,7 +250,7 @@ func TestCarbon_IsWinter(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c := Parse(test.input)
+		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.IsWinter(), "Current test id is "+strconv.Itoa(test.id))
 	}
