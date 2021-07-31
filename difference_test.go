@@ -368,7 +368,7 @@ func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffForHumans1(t *testing.T) {
+func TestCarbon_DiffForHumans(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -377,15 +377,24 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 		expected string // 期望值
 	}{
 		{1, Now(), "just now"},
+
 		{2, Now().AddYears(1), "1 year from now"},
 		{3, Now().SubYears(1), "1 year ago"},
 		{4, Now().AddYears(10), "10 years from now"},
 		{5, Now().SubYears(10), "10 years ago"},
+		{2, Now().AddYearsNoOverflow(1), "1 year from now"},
+		{3, Now().SubYearsNoOverflow(1), "1 year ago"},
+		{4, Now().AddYearsNoOverflow(10), "10 years from now"},
+		{5, Now().SubYearsNoOverflow(10), "10 years ago"},
 
 		{6, Now().AddMonths(1), "1 month from now"},
-		{7, Now().SubMonths(1), "1 month ago"},
+		{7, Now().SubMonths(1), "4 weeks ago"},
 		{8, Now().AddMonths(10), "10 months from now"},
-		{9, Now().SubMonths(10), "10 months ago"},
+		{9, Now().SubMonths(10), "9 months ago"},
+		{6, Now().AddMonthsNoOverflow(1), "1 month from now"},
+		{7, Now().SubMonthsNoOverflow(1), "1 month ago"},
+		{8, Now().AddMonthsNoOverflow(10), "10 months from now"},
+		{9, Now().SubMonthsNoOverflow(10), "10 months ago"},
 
 		{10, Now().AddDays(1), "1 day from now"},
 		{11, Now().SubDays(1), "1 day ago"},
@@ -412,34 +421,5 @@ func TestCarbon_DiffForHumans1(t *testing.T) {
 		c := test.input
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.DiffForHumans(), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestCarbon_DiffForHumans2(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    Carbon // 输入值
-		param    Carbon // 参数值
-		expected string // 期望值
-	}{
-		{1, Now(), Now(), "刚刚"},
-		{2, Now().AddYears(1), Now(), "1 年后"},
-		{3, Now().SubYears(1), Now(), "1 年前"},
-		{4, Now().AddYears(10), Now(), "10 年后"},
-		{5, Now().SubYears(10), Now(), "10 年前"},
-
-		{6, Now().AddMonths(1), Now(), "1 个月后"},
-		{7, Now().SubMonths(1), Now(), "1 个月前"},
-		{8, Now().AddMonths(10), Now(), "10 个月后"},
-		{9, Now().SubMonths(10), Now(), "10 个月前"},
-	}
-
-	for _, test := range tests {
-		c1, c2 := test.input, test.param
-		assert.Nil(c1.Error)
-		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.SetLocale("zh-CN").DiffForHumans(c2), "Current test id is "+strconv.Itoa(test.id))
 	}
 }

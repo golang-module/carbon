@@ -8,8 +8,8 @@ import (
 // CreateFromTimestamp create a Carbon instance from a given timestamp, second, millisecond, microsecond and nanosecond are supported
 // 从给定的时间戳创建 Carbon 实例，支持秒、毫秒、微秒和纳秒
 func (c Carbon) CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -43,8 +43,8 @@ func CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 // CreateFromDateTime create a Carbon instance from a given date and time
 // 从给定的年月日时分秒创建 Carbon 实例
 func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int, timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -64,8 +64,8 @@ func CreateFromDateTime(year int, month int, day int, hour int, minute int, seco
 // CreateFromDate create a Carbon instance from a given date
 // 从给定的年月日创建 Carbon 实例
 func (c Carbon) CreateFromDate(year int, month int, day int, timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -86,8 +86,8 @@ func CreateFromDate(year int, month int, day int, timezone ...string) Carbon {
 // CreateFromTime create a Carbon instance from a given time
 // 从给定的时分秒创建 Carbon 实例
 func (c Carbon) CreateFromTime(hour int, minute int, second int, timezone ...string) Carbon {
-	if len(timezone) == 1 {
-		loc, err := getLocationByTimezone(timezone[0])
+	if len(timezone) > 0 {
+		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
 		c.Loc = loc
 		c.Error = err
 	}
@@ -99,7 +99,7 @@ func (c Carbon) CreateFromTime(hour int, minute int, second int, timezone ...str
 	return c
 }
 
-// CreateFromTime create a Carbon instance just from a given time
+// CreateFromTime create a Carbon instance from a given time
 // 从给定的时分秒创建 Carbon 实例
 func CreateFromTime(hour int, minute int, second int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTime(hour, minute, second, timezone...)
