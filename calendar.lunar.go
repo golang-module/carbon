@@ -56,7 +56,7 @@ func (c Carbon) Lunar() (l lunar) {
 	}
 	c = c.SetTimezone(PRC)
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
-	leapMonths, daysInYear, daysInMonth, leapMonth := 14, 365, 30, 0
+	daysInYear, daysInMonth, leapMonth := 365, 30, 0
 	// 有效范围检验
 	if c.Year() < minYear || c.Year() > maxYear {
 		return
@@ -66,12 +66,10 @@ func (c Carbon) Lunar() (l lunar) {
 	for l.year = minYear; l.year <= maxYear && offset > 0; l.year++ {
 		daysInYear = l.getDaysInYear()
 		offset -= daysInYear
-		leapMonths += 12
 	}
 	if offset < 0 {
 		offset += daysInYear
 		l.year--
-		leapMonths -= 12
 	}
 	l.isLeapMonth = false
 	// 获取闰月月份
@@ -88,9 +86,6 @@ func (c Carbon) Lunar() (l lunar) {
 		if l.isLeapMonth && l.month == (leapMonth+1) {
 			l.isLeapMonth = false
 		}
-		if !l.isLeapMonth {
-			leapMonths++
-		}
 	}
 	// offset为0时，并且刚才计算的月份是闰月，要校正
 	if offset == 0 && leapMonth > 0 && l.month == leapMonth+1 {
@@ -99,14 +94,12 @@ func (c Carbon) Lunar() (l lunar) {
 		} else {
 			l.isLeapMonth = true
 			l.month--
-			leapMonths--
 		}
 	}
 	// offset小于0时，也要校正
 	if offset < 0 {
 		offset += daysInMonth
 		l.month--
-		leapMonths--
 	}
 	l.day = offset + 1
 	return
