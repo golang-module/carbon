@@ -378,19 +378,11 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 	}{
 		{1, Now(), "just now"},
 
-		{2, Now().AddYears(1), "1 year from now"},
-		{3, Now().SubYears(1), "1 year ago"},
-		{4, Now().AddYears(10), "10 years from now"},
-		{5, Now().SubYears(10), "10 years ago"},
 		{2, Now().AddYearsNoOverflow(1), "1 year from now"},
 		{3, Now().SubYearsNoOverflow(1), "1 year ago"},
 		{4, Now().AddYearsNoOverflow(10), "10 years from now"},
 		{5, Now().SubYearsNoOverflow(10), "10 years ago"},
 
-		{6, Now().AddMonths(1), "1 month from now"},
-		{7, Now().SubMonths(1), "4 weeks ago"},
-		{8, Now().AddMonths(10), "10 months from now"},
-		{9, Now().SubMonths(10), "9 months ago"},
 		{6, Now().AddMonthsNoOverflow(1), "1 month from now"},
 		{7, Now().SubMonthsNoOverflow(1), "1 month ago"},
 		{8, Now().AddMonthsNoOverflow(10), "10 months from now"},
