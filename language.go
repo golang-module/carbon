@@ -9,20 +9,16 @@ import (
 )
 
 var (
-	// default language dir
-	// 默认目录
-	defaultDir = "./lang"
-	// default language locale
-	// 默认区域
+	defaultDir    = "./lang"
 	defaultLocale = "en"
 )
 
 // Language 定义 Language 结构体
 // define Language structure
 type Language struct {
-	dir       string            // 目录
-	locale    string            // 区域
-	resources map[string]string // 资源
+	dir       string
+	locale    string
+	resources map[string]string
 }
 
 // NewLanguage return a new Language instance
@@ -80,16 +76,19 @@ func (lang *Language) SetResources(resources map[string]string) {
 
 // translate translate by unit string
 // 翻译转换
-func (lang *Language) translate(unit string, diff int64) string {
+func (lang *Language) translate(unit string, number int64) string {
 	if len(lang.resources) == 0 {
 		lang.SetLocale(defaultLocale)
 	}
 	slice := strings.Split(lang.resources[unit], "|")
-	if len(slice) == 1 {
-		return strings.Replace(slice[0], "%d", strconv.FormatInt(diff, 10), 1)
+	if len(slice) == 0 {
+		return ""
 	}
-	if diff > 1 {
-		return strings.Replace(slice[1], "%d", strconv.FormatInt(diff, 10), 1)
+	if len(slice) == 1 {
+		return strings.Replace(slice[0], "%d", strconv.FormatInt(number, 10), 1)
+	}
+	if number > 1 {
+		return strings.Replace(slice[1], "%d", strconv.FormatInt(number, 10), 1)
 	}
 	return slice[0]
 }
