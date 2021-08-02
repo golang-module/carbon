@@ -6,9 +6,9 @@
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
-中文 | [English](README.md)
+简体中文 | [English](README.md)
 
-carbon 是一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用和 gorm、xorm、zorm 等主流 orm
+一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用
 
 如果您觉得不错，请给个 star 吧
 
@@ -699,11 +699,11 @@ carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
 carbon.Parse("2019-12-31 13:14:15").WeekOfYear() // 1
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
 
-// 获取本月第几天(从1开始)
+// 获取本月第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// 获取本月第几周(从1开始)
+// 获取本月第几周
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// 获取本周第几天(从1开始)
+// 获取本周第几天
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 carbon.Parse("2020-08-09 13:14:15").Week() // 7
 
@@ -767,7 +767,6 @@ carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 
 ```
-> 如果对`WeekOfYear()`和`WeekOfMonth()`有疑惑请查看 [ISO8601标准](https://baike.baidu.com/item/ISO%208601/3910715#3)
 
 ##### 时间设置
 ```go
@@ -1012,6 +1011,7 @@ fmt.Printf("%+v", *person)
 * [日语(jp)](./lang/jp.json "日语")
 * [韩语(kr)](./lang/kr.json "韩语")
 * [西班牙语(es)](./lang/es.json "西班牙语")
+* [法语(fr)](./lang/fr.json "法语")
 
 目前支持的方法有
 * `DiffForHumans()`：输出对人类友好的可读格式时间差

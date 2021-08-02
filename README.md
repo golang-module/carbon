@@ -6,7 +6,7 @@
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
-English | [Chinese](README.cn.md)
+English | [简体中文](README.cn.md)
 
 #### Introduction
 A simple, semantic and developer-friendly golang package for datetime
@@ -689,15 +689,15 @@ carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
 carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
 carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
 
-// Get day of the year (start with 1)
+// Get day of the year
 carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// Get week of the year (start with 1)
+// Get week of the year
 carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-// Get day of the month (start with 1)
+// Get day of the month
 carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// Get week of the month (start with 1)
+// Get week of the month
 carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// Get day of the week (start with 1)
+// Get day of the week
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // Get current century
@@ -759,7 +759,6 @@ carbon.Now().SetLocale("zh-CN").Season() // 夏季
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```
-> If you have any doubt about 'WeekOfYear()' and 'WeekOfMonth()', please see [ISO8601 standard](https://baike.baidu.com/item/ISO%208601/3910715#3)
 
 ##### Setter
 ```go
@@ -829,7 +828,7 @@ carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
 ##### Season
-> According to the meteorological division, March to May is spring, June to August is summer, September to November is autumn, and December to February is winter
+> According to the meteorological division method, March to May is spring, June to August is summer, September to November is autumn, and December to February is winter
 ```go
 // Get season name
 carbon.Parse("2020-08-05 13:14:15").Season() // Summer
@@ -1002,6 +1001,7 @@ The following languages are supported
 * [Japanese(jp)](./lang/jp.json "Japanese")
 * [Korean(kr)](./lang/kr.json "Korean")
 * [Spanish(es)](./lang/es.json "Spanish")
+* [French(fr)](./lang/fr.json "French")
 
 The following methods are supported
 * `DiffForHumans()`：to string difference in human friendly readable format
