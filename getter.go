@@ -23,7 +23,7 @@ func (c Carbon) DaysInMonth() int {
 }
 
 // MonthOfYear get month of year
-// 获取本年的第几月(从1开始)
+// 获取本年的第几月
 func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
 		return 0
@@ -31,8 +31,8 @@ func (c Carbon) MonthOfYear() int {
 	return int(c.Time.In(c.Loc).Month())
 }
 
-// DayOfYear get day of year, start from 1
-// 获取本年的第几天(从1开始)
+// DayOfYear get day of year
+// 获取本年的第几天
 func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
 		return 0
@@ -40,8 +40,8 @@ func (c Carbon) DayOfYear() int {
 	return c.Time.In(c.Loc).YearDay()
 }
 
-// DayOfMonth get day of month, start from 1
-// 获取本月的第几天(从1开始)
+// DayOfMonth get day of month
+// 获取本月的第几天
 func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
 		return 0
@@ -49,8 +49,8 @@ func (c Carbon) DayOfMonth() int {
 	return c.Time.In(c.Loc).Day()
 }
 
-// DayOfWeek get day of week, start from 1
-// 获取本周的第几天(从1开始)
+// DayOfWeek get day of week
+// 获取本周的第几天
 func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
 		return 0
@@ -62,8 +62,8 @@ func (c Carbon) DayOfWeek() int {
 	return day
 }
 
-// WeekOfYear get week of year, start from 1
-// 获取本年的第几周(从1开始)
+// WeekOfYear get week of year. see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+// 获取本年的第几周
 func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
 		return 0
@@ -72,8 +72,8 @@ func (c Carbon) WeekOfYear() int {
 	return week
 }
 
-// WeekOfMonth get week of month, start from 1
-// 获取本月的第几周(从1开始)
+// WeekOfMonth get week of month
+// 获取本月的第几周
 func (c Carbon) WeekOfMonth() int {
 	if c.IsInvalid() {
 		return 0
