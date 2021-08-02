@@ -91,7 +91,9 @@ func (c Carbon) ToMonthString(timezone ...string) string {
 	}
 	if months, ok := c.Lang.resources["months"]; ok {
 		slice := strings.Split(months, "|")
-		return slice[c.Month()-1]
+		if len(slice) == 12 {
+			return slice[c.Month()-1]
+		}
 	}
 	return ""
 }
@@ -112,7 +114,9 @@ func (c Carbon) ToShortMonthString(timezone ...string) string {
 	}
 	if months, ok := c.Lang.resources["months_short"]; ok {
 		slice := strings.Split(months, "|")
-		return slice[c.Month()-1]
+		if len(slice) == 12 {
+			return slice[c.Month()-1]
+		}
 	}
 	return ""
 }
@@ -133,7 +137,9 @@ func (c Carbon) ToWeekString(timezone ...string) string {
 	}
 	if months, ok := c.Lang.resources["weeks"]; ok {
 		slice := strings.Split(months, "|")
-		return slice[c.Week()]
+		if len(slice) == 7 {
+			return slice[c.Week()]
+		}
 	}
 	return ""
 }
@@ -154,7 +160,9 @@ func (c Carbon) ToShortWeekString(timezone ...string) string {
 	}
 	if months, ok := c.Lang.resources["weeks_short"]; ok {
 		slice := strings.Split(months, "|")
-		return slice[c.Week()]
+		if len(slice) == 7 {
+			return slice[c.Week()]
+		}
 	}
 	return ""
 }
