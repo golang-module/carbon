@@ -1,10 +1,9 @@
 {
-	"seasons": "Spring|Summer|Autumn|Winter",
 	"months": "January|February|March|April|May|June|July|August|September|October|November|December",
 	"months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
 	"weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
 	"weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
-
+	"seasons": "Spring|Summer|Autumn|Winter",
 	"constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces",
 
 	"year":"1 year|%d years",
