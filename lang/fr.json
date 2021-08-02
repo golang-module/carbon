@@ -1,0 +1,21 @@
+{
+	"months": "Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre",
+	"months_short": "Janv|Févr|Mars|Avr|Mai|Juin|Juil|Août|Sept|Oct|Nov|Déc",
+	"weeks": "Dimanche|Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi",
+	"weeks_short": "Dim|Lun|Mar|Mer|Jeu|Ven|Sam",
+	"seasons": "Printemps|Été|Automne|Hiver",
+	"constellations": "Bélier|Taureau|Gémeaux|Cancer|Lion|Vierge|Balance|Scorpion|Sagittaire|Capricorne|Verseau|Poisson",
+
+	"year":"1 an|%d ans",
+	"month":"%d mois",
+	"week":"1 semaine|%d semaines",
+	"day":"1 jour|%d jours",
+	"hour":"1 heure|%d heures",
+	"minute":"1 minute|%d minutes",
+	"second":"1 seconde|%d secondes",
+	"now": "juste",
+	"ago":"l y a %s",
+	"from_now":"dans %s",
+	"before":"%s avant",
+	"after":"%s après"
+}
