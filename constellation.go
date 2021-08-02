@@ -40,7 +40,9 @@ func (c Carbon) Constellation() string {
 	}
 	if constellations, ok := c.Lang.resources["constellations"]; ok {
 		slice := strings.Split(constellations, "|")
-		return slice[index]
+		if len(slice) == 12 {
+			return slice[index]
+		}
 	}
 	return ""
 }

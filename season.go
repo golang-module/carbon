@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Season get season name according to the meteorological division, i18n is supported
+// Season get season name according to the meteorological division method, i18n is supported
 // 获取当前季节(以气象划分)，支持i18n
 func (c Carbon) Season() string {
 	if c.IsInvalid() {
@@ -27,7 +27,9 @@ func (c Carbon) Season() string {
 	}
 	if seasons, ok := c.Lang.resources["seasons"]; ok {
 		slice := strings.Split(seasons, "|")
-		return slice[index]
+		if len(slice) == 4 {
+			return slice[index]
+		}
 	}
 	return ""
 }
