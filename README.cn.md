@@ -8,9 +8,7 @@
 
 简体中文 | [English](README.md)
 
-一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用
-
-目前已被[awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")收录
+一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调, 已被[awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")收录
 
 如果您觉得不错，请给个 star 吧
 
