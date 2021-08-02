@@ -11,9 +11,7 @@ English | [简体中文](README.cn.md)
 #### Introduction
 A simple, semantic and developer-friendly golang package for datetime
 
-It has been included by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")
-
-If you think it is helpful, please give me a star
+It has been included by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"), if you think it is helpful, please give me a star
 
 github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
