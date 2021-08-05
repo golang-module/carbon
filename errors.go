@@ -28,18 +28,3 @@ var invalidLayoutError = func(value, layout string) error {
 var invalidFormatError = func(value, format string) error {
 	return fmt.Errorf("cannot parse %q as format %q to carbon, please make sure the value and format match", value, format)
 }
-
-// 无效的区域错误
-var invalidLocaleError = func(locale, directory string) error {
-	return fmt.Errorf("invalid locale %q, please see the directory %q for all valid locales", locale, directory)
-}
-
-// 无效的目录错误
-var invalidDirError = func(dir string) error {
-	return fmt.Errorf("invalid directory %q, please make sure the directory exists", dir)
-}
-
-// 无效的json文件错误
-var invalidJsonFileError = func(file string) error {
-	return fmt.Errorf("invalid json file %q, please make sure the json file is valid", file)
-}
