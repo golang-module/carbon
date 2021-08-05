@@ -1,4 +1,4 @@
-// As a part of the package carbon
+// Package lang is a part of the package carbon
 package lang
 
 import (
