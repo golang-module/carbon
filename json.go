@@ -6,42 +6,42 @@ import (
 	"strconv"
 )
 
-// ToDateTimeString 日期时间字符串
+// ToDateTimeString define ToDateTimeString structure
 type ToDateTimeString struct {
 	Carbon
 }
 
-// ToDateString 日期字符串
+// ToDateString define ToDateTimeString structure
 type ToDateString struct {
 	Carbon
 }
 
-// ToTimeString 时间字符串
+// ToTimeString define ToTimeString structure
 type ToTimeString struct {
 	Carbon
 }
 
-// ToTimestamp 秒级时间戳
+// ToTimestamp define ToTimestamp structure
 type ToTimestamp struct {
 	Carbon
 }
 
-// ToTimestampWithSecond 秒级时间戳
+// ToTimestampWithSecond define ToTimestampWithSecond structure
 type ToTimestampWithSecond struct {
 	Carbon
 }
 
-// ToTimestampWithMillisecond 毫秒级时间戳
+// ToTimestampWithMillisecond define ToTimestampWithMillisecond structure
 type ToTimestampWithMillisecond struct {
 	Carbon
 }
 
-// ToTimestampWithMicrosecond 微秒级时间戳
+// ToTimestampWithMicrosecond define ToTimestampWithMicrosecond structure
 type ToTimestampWithMicrosecond struct {
 	Carbon
 }
 
-// ToTimestampWithNanosecond 纳秒级时间戳
+// ToTimestampWithNanosecond define ToTimestampWithNanosecond structure
 type ToTimestampWithNanosecond struct {
 	Carbon
 }
