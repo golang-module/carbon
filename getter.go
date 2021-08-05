@@ -6,11 +6,10 @@ func (c Carbon) DaysInYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	days := DaysPerNormalYear
 	if c.IsLeapYear() {
-		days = DaysPerLeapYear
+		return DaysPerLeapYear
 	}
-	return days
+	return DaysPerNormalYear
 }
 
 // DaysInMonth get days in month
@@ -186,7 +185,7 @@ func (c Carbon) Second() int {
 }
 
 // Millisecond get current millisecond
-// 获取当前毫秒数
+// 获取当前毫秒数，3位数字
 func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
@@ -195,7 +194,7 @@ func (c Carbon) Millisecond() int {
 }
 
 // Microsecond get current microsecond
-// 获取当前微秒数
+// 获取当前微秒数，6位数字
 func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
