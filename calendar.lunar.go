@@ -45,21 +45,19 @@ type lunar struct {
 	isLeapMonth      bool // 是否是闰月
 }
 
-// Lunar convert the Gregorian calendar into the lunar calendar
+// Lunar convert the gregorian calendar into the lunar calendar
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	if c.IsInvalid() {
 		return
 	}
-	c = c.SetTimezone(PRC)
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
 	daysInYear, daysInMonth, leapMonth := 365, 30, 0
 	// 有效范围检验
 	if c.Year() < minYear || c.Year() > maxYear {
 		return
 	}
-	// 计算距离1900年1月31日相差的天数
-	offset := int(c.DiffInDaysWithAbs(CreateFromDateTime(minYear, 1, 31, 0, 0, 0)))
+	offset := int(c.DiffInDaysWithAbs(c.CreateFromDateTime(minYear, 1, 31, 0, 0, 0)))
 	for l.year = minYear; l.year <= maxYear && offset > 0; l.year++ {
 		daysInYear = l.getDaysInYear()
 		offset -= daysInYear
@@ -69,7 +67,6 @@ func (c Carbon) Lunar() (l lunar) {
 		l.year--
 	}
 	l.isLeapMonth = false
-	// 获取闰月月份
 	leapMonth = l.LeapMonth()
 	for l.month = 1; l.month <= 12 && offset > 0; l.month++ {
 		if leapMonth > 0 && l.month == (leapMonth+1) && !l.isLeapMonth {
@@ -249,22 +246,22 @@ func (l lunar) ToDayString() string {
 	return day
 }
 
-// ToString output a lunar year, month and day string
-// 获取农历年月日字符串
-func (l lunar) ToString() string {
+// ToString output a lunar date string
+// 获取农历日期字符串
+func (l lunar) ToDateString() string {
 	if l.year == 0 {
 		return ""
 	}
-	return l.String()
+	return l.ToYearString() + "年" + l.ToMonthString() + "月" + l.ToDayString()
 }
 
-// String implement Stringer interface
+// String output a string in YYYY-MM-DD format, implement Stringer interface
 // 实现 Stringer 接口
 func (l lunar) String() string {
 	if l.year == 0 {
 		return ""
 	}
-	return l.ToYearString() + "年" + l.ToMonthString() + "月" + l.ToDayString()
+	return fmt.Sprintf("%d-%02d-%02d", l.year, l.month, l.day)
 }
 
 // IsLeapYear whether is leap year
