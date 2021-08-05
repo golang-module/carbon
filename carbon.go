@@ -1,11 +1,12 @@
 // @Title carbon
 // @Description A simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.4.6
+// @Version v1.4.7
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
 
+// A simple, semantic and developer-friendly golang package for datetime
 package carbon
 
 import (
@@ -132,7 +133,7 @@ const (
 	CookieFormat        = "Monday, 02-Jan-2006 15:04:05 MST"
 	RFC1036Format       = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC7231Format       = "Mon, 02 Jan 2006 15:04:05 GMT"
-	DayDateTimeFormat   = "Mon, Aug 2, 2006 3:04 PM"
+	DayDateTimeFormat   = "Mon, Jan 2, 2006 3:04 PM"
 	DateTimeFormat      = "2006-01-02 15:04:05"
 	DateFormat          = "2006-01-02"
 	TimeFormat          = "15:04:05"
