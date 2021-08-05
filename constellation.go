@@ -1,6 +1,8 @@
 package carbon
 
-import "strings"
+import (
+	"strings"
+)
 
 // Constellation get constellation name, i18n is supported
 // 获取星座，支持i18n
