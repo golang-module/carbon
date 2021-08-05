@@ -1,7 +1,7 @@
 ---
 name: "❓ Ask question"
 about: Ask a question about carbon
-label: Question
+labels: Question
 ---
 
 <!--

@@ -1,7 +1,7 @@
 ---
 name: "\U0001F41B Bug report"
 about: Report a reproducible bug or regression.
-label: Bug
+labels: Bug
 ---
 Hello,
 
@@ -10,9 +10,11 @@ I encountered an issue with the following code:
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString()
 ```
 
-carbon version: **PUT HERE YOUR CARBON VERSION**
+golang version: **such as 1.14**
 
-golang version: **PUT HERE YOUR GOLANG VERSION**
+carbon version: **such as 1.4.6**
+
+time zone: **such as Japan**
 
 I expected to get:
 
