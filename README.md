@@ -6,7 +6,7 @@
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
-English | [简体中文](README.cn.md)
+English | [简体中文](README.cn.md) | [日本語](README.jp.md) 
 
 #### Introduction
 A simple, semantic and developer-friendly golang package for datetime
@@ -235,89 +235,93 @@ carbon.Parse("2020-08-05 13:14:15").EndOfSecond().Format("Y-m-d H:i:s.u") // 202
 ```go
 // Add three centuries
 carbon.Parse("2020-02-29 13:14:15").AddCenturies(3).ToDateTimeString() // 2320-02-29 13:14:15
-// Add three centuries with no overflow
+// Add three centuries without overflowing month
 carbon.Parse("2020-02-29 13:14:15").AddCenturiesNoOverflow(3).ToDateTimeString() // 2320-02-29 13:14:15
-
 // Add one century
 carbon.Parse("2020-02-29 13:14:15").AddCentury().ToDateTimeString() // 2120-02-29 13:14:15
-// Add one century with no overflow
+// Add one century without overflowing month
 carbon.Parse("2020-02-29 13:14:15").AddCenturyNoOverflow().ToDateTimeString() // 2120-02-29 13:14:15
-
 // Subtract three centuries
 carbon.Parse("2020-02-29 13:14:15").SubCenturies(3).ToDateTimeString() // 1720-02-29 13:14:15
-// Subtract three centuries with no overflow
+// Subtract three centuries without overflowing month
 carbon.Parse("2020-02-29 13:14:15").SubCenturiesNoOverflow(3).ToDateTimeString() // 1720-02-29 13:14:15
-
 // Subtract one century
 carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-29 13:14:15
-// Subtract one century with no overflow
+// Subtract one century without overflowing month
 carbon.Parse("2020-02-29 13:14:15").SubCenturyNoOverflow().ToDateTimeString() // 1920-02-20 13:14:15
+
+// Add three decades
+carbon.Parse("2020-02-29 13:14:15").Decades(3).ToDateTimeString() // 2050-03-01 13:14:15
+// Add three decades without overflowing month
+carbon.Parse("2020-02-29 13:14:15").AddDecadesNoOverflow(3).ToDateTimeString() // 2050-02-28 13:14:15
+// Add one decade
+carbon.Parse("2020-02-29 13:14:15").AddDecade().ToDateTimeString() // 2030-03-01 13:14:15
+// Add one decade without overflowing month
+carbon.Parse("2020-02-29 13:14:15").AddDecadeNoOverflow().ToDateTimeString() // 2030-02-28 13:14:15
+// Subtract three decades
+carbon.Parse("2020-02-29 13:14:15").SubDecades(3).ToDateTimeString() // 1990-03-01 13:14:15
+// Subtract three decades without overflowing month
+carbon.Parse("2020-02-29 13:14:15").SubDecadesNoOverflow(3).ToDateTimeString() // 1990-02-28 13:14:15
+// Subtract one decade
+carbon.Parse("2020-02-29 13:14:15").SubDecade().ToDateTimeString() // 2010-03-01 13:14:15
+// Subtract one decade without overflowing month
+carbon.Parse("2020-02-29 13:14:15").SubDecadeNoOverflow().ToDateTimeString() // 2010-02-28 13:14:15
 
 // Add three years
 carbon.Parse("2020-02-29 13:14:15").AddYears(3).ToDateTimeString() // 2023-03-01 13:14:15
-// Add three years with no overflow
+// Add three years without overflowing month
 carbon.Parse("2020-02-29 13:14:15").AddYearsNoOverflow(3).ToDateTimeString() // 2023-02-28 13:14:15
-
 // Add one year
 carbon.Parse("2020-02-29 13:14:15").AddYear().ToDateTimeString() // 2021-03-01 13:14:15
-// Add one year with no overflow
+// Add one year without overflowing month
 carbon.Parse("2020-02-29 13:14:15").AddYearNoOverflow().ToDateTimeString() // 2021-02-28 13:14:15
-
 // Subtract three years
 carbon.Parse("2020-02-29 13:14:15").SubYears(3).ToDateTimeString() // 2017-03-01 13:14:15
-// Subtract three years with no overflow
+// Subtract three years without overflowing month
 carbon.Parse("2020-02-29 13:14:15").SubYearsNoOverflow(3).ToDateTimeString() // 2017-02-28 13:14:15
-
 // Subtract one year
 carbon.Parse("2020-02-29 13:14:15").SubYear().ToDateTimeString() // 2019-03-01 13:14:15
-// Subtract one year with no overflow
+// Subtract one year without overflowing month
 carbon.Parse("2020-02-29 13:14:15").SubYearNoOverflow().ToDateTimeString() // 2019-02-28 13:14:15
 
 // Add three quarters
 carbon.Parse("2019-08-31 13:14:15").AddQuarters(3).ToDateTimeString() // 2019-03-02 13:14:15
-// Add three quarters with no overflow
+// Add three quarters without overflowing month
 carbon.Parse("2019-08-31 13:14:15").AddQuartersNoOverflow(3).ToDateTimeString() // 2019-02-29 13:14:15
-
 // Add one quarter
 carbon.Parse("2019-11-30 13:14:15").AddQuarter().ToDateTimeString() // 2020-03-01 13:14:15
-// Add one quarter with no overflow
+// Add one quarter without overflowing month
 carbon.Parse("2019-11-30 13:14:15").AddQuarterNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
-
 // Subtract three quarters
 carbon.Parse("2019-08-31 13:14:15").SubQuarters(3).ToDateTimeString() // 2019-03-03 13:14:15
-// Subtract three quarters with no overflow
+// Subtract three quarters without overflowing month
 carbon.Parse("2019-08-31 13:14:15").SubQuartersNoOverflow(3).ToDateTimeString() // 2019-02-28 13:14:15
-
 // Subtract one quarter
 carbon.Parse("2020-05-31 13:14:15").SubQuarter().ToDateTimeString() // 2020-03-02 13:14:15
-// Subtract one quarter with no overflow
+// Subtract one quarter without overflowing month
 carbon.Parse("2020-05-31 13:14:15").SubQuarterNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Add three months
 carbon.Parse("2020-02-29 13:14:15").AddMonths(3).ToDateTimeString() // 2020-05-29 13:14:15
-// Add three months with no overflow
+// Add three months without overflowing month
 carbon.Parse("2020-02-29 13:14:15").AddMonthsNoOverflow(3).ToDateTimeString() // 2020-05-29 13:14:15
-
 // Add one month
 carbon.Parse("2020-01-31 13:14:15").AddMonth().ToDateTimeString() // 2020-03-02 13:14:15
-// Add one month with no overflow
+// Add one month without overflowing month
 carbon.Parse("2020-01-31 13:14:15").AddMonthNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
-
 // Subtract three months
 carbon.Parse("2020-02-29 13:14:15").SubMonths(3).ToDateTimeString() // 2019-11-29 13:14:15
-// Subtract three months with no overflow
+// Subtract three months without overflowing month
 carbon.Parse("2020-02-29 13:14:15").SubMonthsNoOverflow(3).ToDateTimeString() // 2019-11-29 13:14:15
-
 // Subtract one month
 carbon.Parse("2020-03-31 13:14:15").SubMonth().ToDateTimeString() // 2020-03-02 13:14:15
-// Subtract one month with no overflow
+// Subtract one month without overflowing month
 carbon.Parse("2020-03-31 13:14:15").SubMonthNoOverflow().ToDateTimeString() // 2020-02-29 13:14:15
 
 // Add three weeks
 carbon.Parse("2020-02-29 13:14:15").AddWeeks(3).ToDateTimeString() // 2020-03-21 13:14:15
 // Add one week
 carbon.Parse("2020-02-29 13:14:15").AddWeek().ToDateTimeString() // 2020-03-07 13:14:15
-
 // Subtract three weeks
 carbon.Parse("2020-02-29 13:14:15").SubWeeks(3).ToDateTimeString() // 2020-02-08 13:14:15
 // Subtract three week
@@ -327,7 +331,6 @@ carbon.Parse("2020-02-29 13:14:15").SubWeek().ToDateTimeString() // 2020-02-22 1
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString() // 2020-08-08 13:14:15
 // Add one day
 carbon.Parse("2020-08-05 13:14:15").AddDay().ToDateTimeString() // 2020-08-05 13:14:15
-
 // Subtract three days
 carbon.Parse("2020-08-05 13:14:15").SubDays(3).ToDateTimeString() // 2020-08-02 13:14:15
 // Subtract one day
@@ -340,7 +343,6 @@ carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5h").ToDateTimeString() // 20
 carbon.Parse("2020-08-05 13:14:15").AddDuration("2h30m").ToDateTimeString() // 2020-08-05 15:44:15
 // Add one hour
 carbon.Parse("2020-08-05 13:14:15").AddHour().ToDateTimeString() // 2020-08-05 14:14:15
-
 // Subtract three hours
 carbon.Parse("2020-08-05 13:14:15").SubHours(3).ToDateTimeString() // 2020-08-05 10:14:15
 // Subtract two and a half hours
@@ -356,7 +358,6 @@ carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5m").ToDateTimeString() // 20
 carbon.Parse("2020-08-05 13:14:15").AddDuration("2m30s").ToDateTimeString() // 2020-08-05 13:16:45
 // Add one minute
 carbon.Parse("2020-08-05 13:14:15").AddMinute().ToDateTimeString() // 2020-08-05 13:15:15
-
 // Subtract three minutes
 carbon.Parse("2020-08-05 13:14:15").SubMinutes(3).ToDateTimeString() // 2020-08-05 13:11:15
 // Subtract two and a half minutes
@@ -370,7 +371,6 @@ carbon.Parse("2020-08-05 13:14:15").AddSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").AddDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:17
 // Add one second
 carbon.Parse("2020-08-05 13:14:15").AddSecond().ToDateTimeString() // 2020-08-05 13:14:16
-
 // Subtract three seconds
 carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-05 13:14:12
 // Subtract two and a half seconds
@@ -406,13 +406,13 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // Difference in seconds with absolute value
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
-// Difference for humans from now time
+// Difference in human friendly readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
 carbon.Parse("2021-08-05 13:14:15").DiffForHumans() // 1 year from now
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans() // 2 years from now
-// Difference for humans from another time
+// Difference in human friendly readable format from now time
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
@@ -768,16 +768,18 @@ carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
 
 // Set locale
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month before
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans()) // 1 月前
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
 
 // Set year
-carbon.Parse("2019-08-05").SetYear(2020).ToDateString() // 2020-08-05
-carbon.Parse("2020-02-29").SetYear(2019).ToDateString() // 2019-03-01
+carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
+// Set year without overflowing month
+carbon.Parse("2020-02-29").SetYearNoOverflow(2021).ToDateString() // 2021-02-28
 
 // Set month
 carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-carbon.Parse("2020-08-05").SetMonth(2).ToDateString() // 2020-02-05
+// Set month without overflowing month
+carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
 
 // Set day
 carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
@@ -851,60 +853,61 @@ carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ##### Lunar
 > Currently only `200` years from `1900` to `2100` are supported
 ```go
-// Get year of animal
-carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
+// Get Chinese Lunar year of animal
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Animal() // 鼠
 
-// Get festival of lunar
-carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
+// Get Chinese lunar festival
+carbon.Parse("2021-02-12 13:14:15", carbon.PRC).Lunar().Festival() // 春节
 
-// Get year of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// Get month of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// Get leap month of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// Get day of lunar
-carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
+// Get Chinese lunar year
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Year() // 2020
+// Get Chinese lunar month
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Month() // 6
+// Get Chinese lunar leap month
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().LeapMonth() // 4
+// Get Chinese lunar day
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Day() // 16
+// Get Chinese lunar date as string in YYYY-MM-DD format
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar()) // 2020-06-16
 
-// Get lunar year
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
-// Get lunar month
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
-// Get lunar day
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
-// Get a full string
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 二零二零年六月十六
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToString() // 二零二零年六月十六
+// Get Chinese lunar year as string
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToYearString() // 二零二零
+// Get Chinese lunar month as string
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToMonthString() // 六
+// Get Chinese lunar day as string
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToDayString() // 十六
+// Get Chinese lunar date as string
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToDateString() // 二零二零年六月十六
 
 // Whether is a leap year
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsLeapYear() // true
 // Whether is a leap month
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsLeapMonth() // false
 
 // Whether is a year of the rat
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRatYear() // true
 // Whether is a year of the ox
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsOxYear() // false
 // Whether is a year of the tiger
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsTigerYear() // false
 // Whether is a year of the rabbit
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRabbitYear() // false
 // Whether is a year of the dragon
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsDragonYear() // false
 // Whether is a year of the snake
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsSnakeYear() // false
 // Whether is a year of the horse
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsHorseYear() // false
 // Whether is a year of the goat
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsGoatYear() // false
 // Whether is a year of the monkey
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsMonkeyYear() // false
 // Whether is a year of the rooster
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRoosterYear() // false
 // Whether is a year of the dog
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsDogYear() // false
 // Whether is a year of the dig
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsPigYear() // false
 ```
 
 ##### JSON handling
@@ -992,25 +995,24 @@ fmt.Printf("%+v", *person)
 ```
 
 ##### I18n
-> If you need to use i18n, please copy Lang directory to project directory first
 
 The following languages are supported
-* [simplified Chinese(zh-CN)](./lang/zh-CN.json "simplified Chinese")
-* [traditional Chinese(zh-TW)](./lang/zh-TW.json "traditional Chinese")
-* [English(en)](./lang/en.json "English")
+* [Simplified Chinese(zh-CN)](./lang/zh-CN.json "Simplified Chinese")：translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Traditional Chinese(zh-TW)](./lang/zh-TW.json "Traditional Chinese")：translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [English(en)](./lang/en.json "English")：translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
 * [Japanese(jp)](./lang/jp.json "Japanese")
 * [Korean(kr)](./lang/kr.json "Korean")
-* [Spanish(es)](./lang/es.json "Spanish")
-* [French(fr)](./lang/fr.json "French")
+* [Spanish(es)](./lang/es.json "Spanish")：translated by [hgisinger](https://github.com/hgisinger "hgisinger")
+* [German(de)](./lang/de.json "German")：translated by [benzammour](https://github.com/benzammour "benzammour")
 
 The following methods are supported
-* `DiffForHumans()`：to string difference in human friendly readable format
-* `ToMonthString()`：to string of month
-* `ToShortMonthString()`：to string of short month
-* `ToWeekString()`：to string of week
-* `ToShortWeekString()`：to string of short week
 * `Constellation()`：get constellation name
 * `Season()`：get season name
+* `DiffForHumans()`：get the difference in human friendly readable format
+* `ToMonthString()`：output a string in month format
+* `ToShortMonthString()`：output a string in short month format
+* `ToWeekString()`：output a string in week format
+* `ToShortWeekString()`：output a string in short week format
 
 ###### Set locale
 ```go
@@ -1030,25 +1032,7 @@ c.Now().AddHours(1).Constellation() // 狮子座
 c.Now().AddHours(1).Season() // 夏季
 ```
 
-###### Set dir
-```go
-lang := NewLanguage()
-if err := lang.SetDir("lang");err != nil {
-    // Error handle...
-    log.Fatal(err)
-}
-
-c := carbon.SetLanguage(lang)
-Now().AddHours(1).DiffForHumans() // 1 hour from now
-Now().AddHours(1).ToMonthString() // August
-Now().AddHours(1).ToShortMonthString() // Aug
-Now().AddHours(1).ToWeekString() // Tuesday
-Now().AddHours(1).ToShortWeekString() // Tue
-Now().AddHours(1).Constellation() // Leo
-Now().AddHours(1).Season() // Summer
-```
-
-###### Set some resources(the rest still translate from the given locale)
+###### Reset some resources(the rests still translate from the given locale)
 ```go
 lang := NewLanguage()
 
@@ -1073,15 +1057,15 @@ c.Now().Constellation() // Leo
 c.Now().Season() // Summer
 ```
 
-###### Set all resources
+###### Reset all resources
 ```go
 lang := NewLanguage()
 resources := map[string]string {
-    "seasons": "Spring|Summer|Autumn|Winter",
     "months": "January|February|March|April|May|June|July|August|September|October|November|December",
     "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
     "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
     "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "seasons": "Spring|Summer|Autumn|Winter",
     "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
     "year":"1 yr|%d yrs",
     "month":"1 mo|%d mos",
@@ -1176,8 +1160,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | O | Difference to Greenwich time (GMT) without colon between hours and minutes | - | - | +0200 |
 | P | Difference to Greenwich time (GMT) with colon between hours and minutes | - | - | +02:00 |
 | T | Timezone abbreviation | - | - | EST |
-| W | ISO-8601 numeric representation of the week of the year | - | 1-52 | 42 |
-| N | ISO-8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
+| W | ISO8601 numeric representation of the week of the year | - | 1-52 | 42 |
+| N | ISO8601 numeric representation of the day of the week | 1 | 1-7 | 6 |
 | L | Whether it's a leap year | 1 | 0-1 | 1 |
 | U | Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) | 10 | - | 1611818268 |
 | u | Millisecond| 3 | - | 999 |
@@ -1195,9 +1179,3 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
-
-#### Links
-* [changelog](https://github.com/golang-module/carbon/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
-* [segmentfault](https://segmentfault.com/t/go-carbon)
-* [oschina](https://www.oschina.net/p/go-carbon)
-* [juejin](https://juejin.cn/column/6988159448736858120)
