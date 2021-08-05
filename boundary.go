@@ -7,7 +7,7 @@ import (
 // StartOfCentury return a Carbon instance for start of the century
 // 本世纪开始时间
 func (c Carbon) StartOfCentury() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury, 1, 1, 0, 0, 0, 0, c.Loc)
@@ -17,7 +17,7 @@ func (c Carbon) StartOfCentury() Carbon {
 // EndOfCentury return a Carbon instance for end of the century
 // 本世纪结束时间
 func (c Carbon) EndOfCentury() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+999, 12, 31, 23, 59, 59, 999999999, c.Loc)
@@ -27,7 +27,7 @@ func (c Carbon) EndOfCentury() Carbon {
 // StartOfDecade return a Carbon instance for start of the decade
 // 本年代开始时间
 func (c Carbon) StartOfDecade() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade, 1, 1, 0, 0, 0, 0, c.Loc)
@@ -37,7 +37,7 @@ func (c Carbon) StartOfDecade() Carbon {
 // EndOfDecade return a Carbon instance for end of the decade
 // 本年代结束时间
 func (c Carbon) EndOfDecade() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade+9, 12, 31, 23, 59, 59, 999999999, c.Loc)
@@ -47,7 +47,7 @@ func (c Carbon) EndOfDecade() Carbon {
 // StartOfYear return a Carbon instance for start of the year
 // 本年开始时间
 func (c Carbon) StartOfYear() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), 1, 1, 0, 0, 0, 0, c.Loc)
@@ -57,7 +57,7 @@ func (c Carbon) StartOfYear() Carbon {
 // EndOfYear return a Carbon instance for end of the year
 // 本年结束时间
 func (c Carbon) EndOfYear() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), 12, 31, 23, 59, 59, 999999999, c.Loc)
@@ -67,7 +67,7 @@ func (c Carbon) EndOfYear() Carbon {
 // StartOfQuarter return a Carbon instance for start of the quarter
 // 本季度开始时间
 func (c Carbon) StartOfQuarter() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(3*c.Quarter()-2), 1, 0, 0, 0, 0, c.Loc)
@@ -77,7 +77,7 @@ func (c Carbon) StartOfQuarter() Carbon {
 // EndOfQuarter return a Carbon instance for end of the quarter
 // 本季度结束时间
 func (c Carbon) EndOfQuarter() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	quarter, day := c.Quarter(), 30
@@ -94,7 +94,7 @@ func (c Carbon) EndOfQuarter() Carbon {
 // StartOfMonth return a Carbon instance for start of the month
 // 本月开始时间
 func (c Carbon) StartOfMonth() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 0, 0, 0, 0, c.Loc)
@@ -104,7 +104,7 @@ func (c Carbon) StartOfMonth() Carbon {
 // EndOfMonth return a Carbon instance for end of the month
 // 本月结束时间
 func (c Carbon) EndOfMonth() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
@@ -114,7 +114,7 @@ func (c Carbon) EndOfMonth() Carbon {
 // StartOfWeek return a Carbon instance for start of the week
 // 本周开始时间
 func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	weekDay := c.Time.In(c.Loc).Weekday()
@@ -131,7 +131,7 @@ func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
 // EndOfWeek return a Carbon instance for end of the week
 // 本周结束时间
 func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	weekDay := c.Time.In(c.Loc).Weekday()
@@ -151,7 +151,7 @@ func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
 // StartOfDay return a Carbon instance for start of the day
 // 本日开始时间
 func (c Carbon) StartOfDay() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 0, 0, 0, 0, c.Loc)
@@ -161,7 +161,7 @@ func (c Carbon) StartOfDay() Carbon {
 // EndOfDay return a Carbon instance for end of the day
 // 本日结束时间
 func (c Carbon) EndOfDay() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 23, 59, 59, 999999999, c.Loc)
@@ -171,7 +171,7 @@ func (c Carbon) EndOfDay() Carbon {
 // StartOfHour return a Carbon instance for start of the hour
 // 小时开始时间
 func (c Carbon) StartOfHour() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 0, 0, 0, c.Loc)
@@ -181,7 +181,7 @@ func (c Carbon) StartOfHour() Carbon {
 // EndOfHour return a Carbon instance for end of the hour
 // 小时结束时间
 func (c Carbon) EndOfHour() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 59, 59, 999999999, c.Loc)
@@ -191,7 +191,7 @@ func (c Carbon) EndOfHour() Carbon {
 // StartOfMinute return a Carbon instance for start of the minute
 // 分钟开始时间
 func (c Carbon) StartOfMinute() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 0, 0, c.Loc)
@@ -201,7 +201,7 @@ func (c Carbon) StartOfMinute() Carbon {
 // EndOfMinute return a Carbon instance for end of the minute
 // 分钟结束时间
 func (c Carbon) EndOfMinute() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 59, 999999999, c.Loc)
@@ -211,7 +211,7 @@ func (c Carbon) EndOfMinute() Carbon {
 // StartOfSecond return a Carbon instance for start of the second
 // 秒开始时间
 func (c Carbon) StartOfSecond() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 0, c.Loc)
@@ -221,7 +221,7 @@ func (c Carbon) StartOfSecond() Carbon {
 // EndOfSecond return a Carbon instance for end of the second
 // 秒结束时间
 func (c Carbon) EndOfSecond() Carbon {
-	if c.IsZero() {
+	if c.IsInvalid() {
 		return c
 	}
 	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 999999999, c.Loc)
