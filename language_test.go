@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -24,32 +25,11 @@ func TestLanguage_SetLocale(t *testing.T) {
 	}
 }
 
-func TestError_SetLocale(t *testing.T) {
+func TestLangError_SetLocale(t *testing.T) {
 	locale, lang := "xxx", NewLanguage()
+	expected := fmt.Errorf("invalid locale %q, please see the directory %q for all valid locales", locale, "./lang/")
 	actual := lang.SetLocale(locale)
-	assert.Equal(t, invalidLocaleError(locale, lang.dir), actual, "Should catch an exception in SetLocale()")
-}
-
-func TestLanguage_SetDir(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		id       int    // 测试id
-		input    string // 输入值
-		expected error  // 期望值
-	}{
-		{1, "lang", nil},
-	}
-
-	for _, test := range tests {
-		assert.ErrorIs(test.expected, NewLanguage().SetDir(test.input), "Current test id is "+strconv.Itoa(test.id))
-	}
-}
-
-func TestError_SetDir(t *testing.T) {
-	dir := "./demo"
-	actual := NewLanguage().SetDir(dir)
-	assert.Equal(t, invalidDirError(dir), actual, "Should catch an exception in SetDir()")
+	assert.Equal(t, expected, actual, "It should catch an exception in SetLocale()")
 }
 
 func TestLanguage_SetResources1(t *testing.T) {

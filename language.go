@@ -1,15 +1,13 @@
 package carbon
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/golang-module/carbon/lang"
 )
 
 var (
-	defaultDir    = "./lang"
 	defaultLocale = "en"
 )
 
@@ -25,7 +23,6 @@ type Language struct {
 // 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{
-		dir:       defaultDir,
 		locale:    defaultLocale,
 		resources: make(map[string]string),
 	}
@@ -33,57 +30,41 @@ func NewLanguage() *Language {
 
 // SetLocale set language locale
 // 设置区域
-func (lang *Language) SetLocale(locale string) error {
-	if len(lang.resources) != 0 {
+func (l *Language) SetLocale(locale string) error {
+	if len(l.resources) != 0 {
 		return nil
 	}
-	fileName := lang.dir + string(os.PathSeparator) + locale + ".json"
-	bytes, err := ioutil.ReadFile(fileName)
+	resources, err := lang.LoadLocale(locale)
 	if err != nil {
-		return invalidLocaleError(locale, lang.dir)
+		l.locale = locale
+		return err
 	}
-	if err := json.Unmarshal(bytes, &lang.resources); err != nil {
-		return invalidJsonFileError(fileName)
-	}
-	lang.locale = locale
-	return nil
-}
-
-// SetDir set language directory
-// 设置目录
-func (lang *Language) SetDir(dir string) error {
-	fi, err := os.Stat(dir)
-	if err != nil || !fi.IsDir() {
-		return invalidDirError(dir)
-	}
-	lang.dir = dir
+	l.locale = locale
+	l.resources = resources
 	return nil
 }
 
 // SetResources set language resources
 // 设置资源
-func (lang *Language) SetResources(resources map[string]string) {
-	if len(lang.resources) == 0 {
-		lang.resources = resources
+func (l *Language) SetResources(resources map[string]string) {
+	if len(l.resources) == 0 {
+		l.resources = resources
 		return
 	}
 	for k, v := range resources {
-		if _, ok := lang.resources[k]; ok {
-			lang.resources[k] = v
+		if _, ok := l.resources[k]; ok {
+			l.resources[k] = v
 		}
 	}
 }
 
 // translate translate by unit string
 // 翻译转换
-func (lang *Language) translate(unit string, number int64) string {
-	if len(lang.resources) == 0 {
-		lang.SetLocale(defaultLocale)
+func (l *Language) translate(unit string, number int64) string {
+	if len(l.resources) == 0 {
+		l.SetLocale(defaultLocale)
 	}
-	slice := strings.Split(lang.resources[unit], "|")
-	if len(slice) == 0 {
-		return ""
-	}
+	slice := strings.Split(l.resources[unit], "|")
 	if len(slice) == 1 {
 		return strings.Replace(slice[0], "%d", strconv.FormatInt(number, 10), 1)
 	}
