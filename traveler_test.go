@@ -305,6 +305,234 @@ func TestCarbon_SubCenturyNoOverflow(t *testing.T) {
 	}
 }
 
+func TestCarbon_AddDecades(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		decades  int    // 输入参数
+		expected string // 期望值
+	}{
+		{1, "", 3, ""},
+		{2, "0", 3, ""},
+		{3, "0000-00-00", 3, ""},
+		{4, "00:00:00", 3, ""},
+		{5, "0000-00-00 00:00:00", 3, ""},
+
+		{6, "2020-01-01", 3, "2050-01-01"},
+		{7, "2020-01-31", 3, "2050-01-31"},
+		{8, "2020-02-01", 3, "2050-02-01"},
+		{9, "2020-02-28", 3, "2050-02-28"},
+		{10, "2020-02-29", 3, "2050-03-01"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).AddDecades(test.decades)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_AddDecadesNoOverflow(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id        int    // 测试id
+		input     string // 输入值
+		centuries int    // 输入参数
+		expected  string // 期望值
+	}{
+		{1, "", 3, ""},
+		{2, "0", 3, ""},
+		{3, "0000-00-00", 3, ""},
+		{4, "00:00:00", 3, ""},
+		{5, "0000-00-00 00:00:00", 3, ""},
+
+		{6, "2020-01-01", 3, "2050-01-01"},
+		{7, "2020-01-31", 3, "2050-01-31"},
+		{8, "2020-02-01", 3, "2050-02-01"},
+		{9, "2020-02-28", 3, "2050-02-28"},
+		{10, "2020-02-29", 3, "2050-02-28"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).AddDecadesNoOverflow(test.centuries)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_AddDecade(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-01-01", "2030-01-01"},
+		{7, "2020-01-31", "2030-01-31"},
+		{8, "2020-02-01", "2030-02-01"},
+		{9, "2020-02-28", "2030-02-28"},
+		{10, "2020-02-29", "2030-03-01"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).AddDecade()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_AddDecadeNoOverflow(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-01-01", "2030-01-01"},
+		{7, "2020-01-31", "2030-01-31"},
+		{8, "2020-02-01", "2030-02-01"},
+		{9, "2020-02-28", "2030-02-28"},
+		{10, "2020-02-29", "2030-02-28"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).AddDecadeNoOverflow()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SubDecades(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		decades  int    // 输入参数
+		expected string // 期望值
+	}{
+		{1, "", 3, ""},
+		{2, "0", 3, ""},
+		{3, "0000-00-00", 3, ""},
+		{4, "00:00:00", 3, ""},
+		{5, "0000-00-00 00:00:00", 3, ""},
+
+		{6, "2020-01-01", 3, "1990-01-01"},
+		{7, "2020-01-31", 3, "1990-01-31"},
+		{8, "2020-02-01", 3, "1990-02-01"},
+		{9, "2020-02-28", 3, "1990-02-28"},
+		{10, "2020-02-29", 3, "1990-03-01"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SubDecades(test.decades)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SubDecadesNoOverflow(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id        int    // 测试id
+		input     string // 输入值
+		centuries int    // 输入参数
+		expected  string // 期望值
+	}{
+		{1, "", 3, ""},
+		{2, "0", 3, ""},
+		{3, "0000-00-00", 3, ""},
+		{4, "00:00:00", 3, ""},
+		{5, "0000-00-00 00:00:00", 3, ""},
+
+		{6, "2020-01-01", 3, "1990-01-01"},
+		{7, "2020-01-31", 3, "1990-01-31"},
+		{8, "2020-02-01", 3, "1990-02-01"},
+		{9, "2020-02-28", 3, "1990-02-28"},
+		{10, "2020-02-29", 3, "1990-02-28"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SubDecadesNoOverflow(test.centuries)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SubDecade(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-01-01", "2010-01-01"},
+		{7, "2020-01-31", "2010-01-31"},
+		{8, "2020-02-01", "2010-02-01"},
+		{9, "2020-02-28", "2010-02-28"},
+		{10, "2020-02-29", "2010-03-01"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SubDecade()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
+func TestCarbon_SubDecadeNoOverflow(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		id       int    // 测试id
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{1, "", ""},
+		{2, "0", ""},
+		{3, "0000-00-00", ""},
+		{4, "00:00:00", ""},
+		{5, "0000-00-00 00:00:00", ""},
+
+		{6, "2020-01-01", "2010-01-01"},
+		{7, "2020-01-31", "2010-01-31"},
+		{8, "2020-02-01", "2010-02-01"},
+		{9, "2020-02-28", "2010-02-28"},
+		{10, "2020-02-29", "2010-02-28"},
+	}
+
+	for _, test := range tests {
+		c := Parse(test.input).SubDecadeNoOverflow()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test id is "+strconv.Itoa(test.id))
+	}
+}
+
 func TestCarbon_AddYears(t *testing.T) {
 	assert := assert.New(t)
 
