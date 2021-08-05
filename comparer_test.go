@@ -33,7 +33,7 @@ func TestCarbon_IsZero(t *testing.T) {
 
 func TestError_IsZero(t *testing.T) {
 	c := Parse("2020-13-50")
-	assert.Equal(t, true, c.IsZero(), "Should catch an exception in IsZero()")
+	assert.Equal(t, true, c.IsZero(), "It should catch an exception in IsZero()")
 }
 
 func TestCarbon_IsInvalid(t *testing.T) {
@@ -62,7 +62,7 @@ func TestCarbon_IsInvalid(t *testing.T) {
 
 func TestError_IsInvalid(t *testing.T) {
 	c := SetTimezone("xxx")
-	assert.Equal(t, true, c.IsInvalid(), "Should catch an exception in IsInvalid()")
+	assert.Equal(t, true, c.IsInvalid(), "It should catch an exception in IsInvalid()")
 }
 
 func TestCarbon_IsNow(t *testing.T) {
