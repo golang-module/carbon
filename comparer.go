@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // IsZero whether is zero time
 // 是否是零值
