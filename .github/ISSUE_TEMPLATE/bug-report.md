@@ -10,9 +10,9 @@ I encountered an issue with the following code:
 carbon.Parse("2020-08-05 13:14:15").AddDays(3).ToDateTimeString()
 ```
 
-golang version: **such as 1.14**
+golang version: **such as 1.16**
 
-carbon version: **such as 1.4.6**
+carbon version: **such as 1.5.0**
 
 time zone: **such as Japan**
 
