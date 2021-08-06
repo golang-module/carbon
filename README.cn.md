@@ -1017,9 +1017,9 @@ fmt.Printf("%+v", *person)
 ##### 国际化支持
 
 目前支持的语言有
-* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
-* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
-* [英语(en)](./lang/en.json "英语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [英语(en)](./lang/en.json "英语")
+* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
+* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
 * [日语(jp)](./lang/jp.json "日语")
 * [韩语(kr)](./lang/kr.json "韩语")
 * [西班牙语(es)](./lang/es.json "西班牙语"): 由 [hgisinger](https://github.com/hgisinger "hgisinger") 翻译
