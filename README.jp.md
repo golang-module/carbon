@@ -1013,9 +1013,9 @@ fmt.Printf("%+v", *person)
 ##### 国際化サポート
 
 現在サポートされている言語
-* [英語(en)](./lang/en.json "英語")
 * [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")
 * [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")
+* [英語(en)](./lang/en.json "英語")
 * [日本語(jp)](./lang/jp.json "日本語")
 * [韓国語(kr)](./lang/kr.json "韓国語")
 * [スペイン語(es)](./lang/es.json "スペイン語")：[hgisinger](https://github.com/hgisinger "hgisinger") から翻訳されます

@@ -1007,9 +1007,9 @@ fmt.Printf("%+v", *person)
 ##### I18n
 
 The following languages are supported
-* [English(en)](./lang/en.json "English")
 * [Simplified Chinese(zh-CN)](./lang/zh-CN.json "Simplified Chinese")
 * [Traditional Chinese(zh-TW)](./lang/zh-TW.json "Traditional Chinese")
+* [English(en)](./lang/en.json "English")
 * [Japanese(jp)](./lang/jp.json "Japanese")
 * [Korean(kr)](./lang/kr.json "Korean")
 * [Spanish(es)](./lang/es.json "Spanish")：translated by [hgisinger](https://github.com/hgisinger "hgisinger")
