@@ -1,6 +1,6 @@
 # Carbon  #
 [![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
-[![Build Status](https://github.com/golang-module/carbon/workflows/Go/badge.svg)](https://github.com/golang-module/carbon/actions)
+[![Go Build](https://github.com/golang-module/carbon/actions/workflows/bulid.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
 [![Go Code Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
@@ -12,9 +12,9 @@
 
 Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go") 收录, 如果您觉得不错，请给个 star 吧
 
-github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
+[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
-gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
+[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
 #### 安装使用
 ```go
@@ -578,6 +578,141 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 ```
 > 关于长年(LongYear)的定义, 请查看 https://en.wikipedia.org/wiki/ISO_8601#Week_dates
 
+##### 时间设置
+```go
+// 设置时区
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+
+// 设置区域
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month ago
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
+
+// 设置年份
+carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
+// 设置年份(月份不溢出)
+carbon.Parse("2020-02-29").SetYearNoOverflow(2021).ToDateString() // 2021-02-28
+
+// 设置月份
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+// 设置月份(月份不溢出)
+carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
+
+// 设置日期
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// 设置小时
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// 设置分钟
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// 设置秒
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+
+// 设置毫秒
+carbon.Parse("2020-08-05 13:14:15").SetMillisecond(100).Millisecond() // 100
+carbon.Parse("2020-08-05 13:14:15").SetMillisecond(999).Millisecond() // 999
+
+// 设置微妙
+carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(100000).Microsecond() // 100000
+carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(999999).Microsecond() // 999999
+
+// 设置纳秒
+carbon.Parse("2020-08-05 13:14:15").SetNanosecond(100000000).Nanosecond() // 100000000
+carbon.Parse("2020-08-05 13:14:15").SetNanosecond(999999999).Nanosecond() // 999999999
+```
+
+##### 时间获取
+```go
+// 获取本年总天数
+carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
+carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
+// 获取本月总天数
+carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
+carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
+carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
+
+// 获取本年第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
+// 获取本年第几周
+carbon.Parse("2019-12-31 13:14:15").WeekOfYear() // 1
+carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
+
+// 获取本月第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
+// 获取本月第几周
+carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
+// 获取本周第几天
+carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+carbon.Parse("2020-08-09 13:14:15").Week() // 7
+
+// 获取当前世纪
+carbon.Parse("2020-08-05 13:14:15").Century() // 21
+// 获取当前年代
+carbon.Parse("2019-08-05 13:14:15").Decade() // 10
+carbon.Parse("2021-08-05 13:14:15").Decade() // 20
+// 获取当前年份
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// 获取当前季度
+carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
+// 获取当前月份
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// 获取当前周(从0开始)
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
+carbon.Parse("2020-08-09 13:14:15").Week() // 0
+// 获取当前天数
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// 获取当前小时
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// 获取当前分钟
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// 获取当前秒钟
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
+// 获取当前毫秒
+carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
+// 获取当前微秒
+carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
+// 获取当前纳秒
+carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
+
+// 获取时区
+carbon.SetTimezone(carbon.PRC).Timezone() // CST
+carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+
+// 获取位置
+carbon.SetTimezone(carbon.PRC).Location() // PRC
+carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+
+// 获取距离UTC时区的偏移量，单位秒
+carbon.SetTimezone(carbon.PRC).Offset() // 28800
+carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+
+// 获取当前区域
+carbon.Now().Locale() // en
+carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
+
+// 获取当前星座
+carbon.Now().Constellation() // Leo
+carbon.Now().SetLocale("en").Constellation() // Leo
+carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+
+// 获取当前季节
+carbon.Now().Season() // Summer
+carbon.Now().SetLocale("en").Season() // Summer
+carbon.Now().SetLocale("zh-CN").Season() // 夏季
+
+// 获取年龄
+carbon.Parse("2002-01-01 13:14:15").Age() // 17
+carbon.Parse("2002-12-31 13:14:15").Age() // 18
+
+```
+
 ##### 时间输出
 ```go
 // 输出秒级时间戳, ToTimestamp() 是ToTimestampWithSecond()的简写
@@ -692,129 +827,6 @@ carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is
 carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-08-05 14:14:15
 ```
 >更多格式化输出符号请查看附录 <a href="#format-sign-table">格式化符号表</a>
-
-##### 时间获取
-```go
-// 获取本年总天数
-carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
-carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
-// 获取本月总天数
-carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
-carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
-carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
-
-// 获取本年第几天
-carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// 获取本年第几周
-carbon.Parse("2019-12-31 13:14:15").WeekOfYear() // 1
-carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-
-// 获取本月第几天
-carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// 获取本月第几周
-carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// 获取本周第几天
-carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
-carbon.Parse("2020-08-09 13:14:15").Week() // 7
-
-// 获取当前世纪
-carbon.Parse("2020-08-05 13:14:15").Century() // 21
-// 获取当前年代
-carbon.Parse("2019-08-05 13:14:15").Decade() // 10
-carbon.Parse("2021-08-05 13:14:15").Decade() // 20
-// 获取当前年份
-carbon.Parse("2020-08-05 13:14:15").Year() // 2020
-// 获取当前季度
-carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
-// 获取当前月份
-carbon.Parse("2020-08-05 13:14:15").Month() // 8
-// 获取当前周(从0开始)
-carbon.Parse("2020-08-05 13:14:15").Week() // 3
-carbon.Parse("2020-08-09 13:14:15").Week() // 0
-// 获取当前天数
-carbon.Parse("2020-08-05 13:14:15").Day() // 5
-// 获取当前小时
-carbon.Parse("2020-08-05 13:14:15").Hour() // 13
-// 获取当前分钟
-carbon.Parse("2020-08-05 13:14:15").Minute() // 14
-// 获取当前秒钟
-carbon.Parse("2020-08-05 13:14:15").Second() // 15
-// 获取当前毫秒
-carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
-// 获取当前微秒
-carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
-// 获取当前纳秒
-carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
-
-// 获取时区
-carbon.SetTimezone(carbon.PRC).Timezone() // CST
-carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
-
-// 获取位置
-carbon.SetTimezone(carbon.PRC).Location() // PRC
-carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
-
-// 获取距离UTC时区的偏移量，单位秒
-carbon.SetTimezone(carbon.PRC).Offset() // 28800
-carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
-
-// 获取当前区域
-carbon.Now().Locale() // en
-carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
-
-// 获取当前星座
-carbon.Now().Constellation() // Leo
-carbon.Now().SetLocale("en").Constellation() // Leo
-carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
-
-// 获取当前季节
-carbon.Now().Season() // Summer
-carbon.Now().SetLocale("en").Season() // Summer
-carbon.Now().SetLocale("zh-CN").Season() // 夏季
-
-// 获取年龄
-carbon.Parse("2002-01-01 13:14:15").Age() // 17
-carbon.Parse("2002-12-31 13:14:15").Age() // 18
-
-```
-
-##### 时间设置
-```go
-// 设置时区
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
-
-// 设置区域
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month ago
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
-
-// 设置年
-carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
-// 设置年(月份不溢出)
-carbon.Parse("2020-02-29").SetYearNoOverflow(2021).ToDateString() // 2021-02-28
-
-// 设置月
-carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-// 设置月(月份不溢出)
-carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
-
-// 设置日
-carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
-carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
-
-// 设置时
-carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
-carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
-
-// 设置分
-carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
-carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
-
-// 设置秒
-carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
-carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
-```
 
 ##### 星座
 ```go
@@ -952,17 +964,17 @@ type Person struct {
 ###### 实例化模型
 ```go
 person := Person {
-	ID:          1,
-	Name:        "gouguoyin",
-	Age:         18,
-	Birthday:    ToDateTimeString{Now().SubYears(18)},
-	GraduatedAt: ToDateString{Parse("2020-08-05 13:14:15")},
-	CreatedAt:   ToTimeString{Parse("2021-08-05 13:14:15")},
-	UpdatedAt:   ToTimestamp{Parse("2022-08-05 13:14:15")},
-	DateTime1:   ToTimestampWithSecond{Parse("2023-08-05 13:14:15")},
-	DateTime2:   ToTimestampWithMillisecond{Parse("2024-08-05 13:14:15")},
-	DateTime3:   ToTimestampWithMicrosecond{Parse("2025-08-05 13:14:15")},
-	DateTime4:   ToTimestampWithNanosecond{Parse("2025-08-05 13:14:15")},
+    ID:          1,
+    Name:        "gouguoyin",
+    Age:         18,
+    Birthday:    carbon.ToDateTimeString{carbon.Now().SubYears(18)},
+    GraduatedAt: carbon.ToDateString{carbon.Parse("2020-08-05 13:14:15")},
+    CreatedAt:   carbon.ToTimeString{carbon.Parse("2021-08-05 13:14:15")},
+    UpdatedAt:   carbon.ToTimestamp{carbon.Parse("2022-08-05 13:14:15")},
+    DateTime1:   carbon.ToTimestampWithSecond{carbon.Parse("2023-08-05 13:14:15")},
+    DateTime2:   carbon.ToTimestampWithMillisecond{carbon.Parse("2024-08-05 13:14:15")},
+    DateTime3:   carbon.ToTimestampWithMicrosecond{carbon.Parse("2025-08-05 13:14:15")},
+    DateTime4:   carbon.ToTimestampWithNanosecond{carbon.Parse("2025-08-05 13:14:15")},
 }
 ```
 
@@ -991,13 +1003,12 @@ fmt.Printf("%s",data)
 
 ###### JSON 解码
 ```go
-str := `{
+jsonString := `{
 	"id":1,
 	"name":"gouguoyin",
 	"age":18,
 	"birthday":"2003-07-16 16:22:02",
 	"graduated_at":"2020-08-05",
-	"created_at":"13:14:15",
 	"updated_at":1659676455,
 	"date_time1":1691212455,
 	"date_time2":1722834855000,
@@ -1005,13 +1016,13 @@ str := `{
 	"date_time4":1754370855000000000
 }`
 person := new(Person)
-err := json.Unmarshal([]byte(str), &person)
+err := json.Unmarshal([]byte(jsonString), &person)
 if err != nil {
 	t.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // 输出
-{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 CreatedAt:0000-01-01 13:14:15 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
 
 ##### 国际化支持
@@ -1024,6 +1035,7 @@ fmt.Printf("%+v", *person)
 * [韩语(kr)](./lang/kr.json "韩语")
 * [西班牙语(es)](./lang/es.json "西班牙语"): 由 [hgisinger](https://github.com/hgisinger "hgisinger") 翻译
 * [德语(de)](./lang/de.json "德语"): 由 [benzammour](https://github.com/benzammour "benzammour") 翻译
+* [土耳其语(tr)](./lang/tr.json "土耳其语"): 由 [emresenyuva](https://github.com/emresenyuva "emresenyuva") 翻译
 
 目前支持的方法有
 * `Constellation()`：获取星座
@@ -1125,7 +1137,7 @@ if c.Error != nil {
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
-cannot parse "xxx" to carbon, please make sure the value is valid
+cannot parse "xxx" as carbon, please make sure the value is valid
 ```
 
 ###### 场景二

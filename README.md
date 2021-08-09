@@ -1,6 +1,6 @@
 # Carbon
 [![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
-[![Build Status](https://github.com/golang-module/carbon/workflows/Go/badge.svg)](https://github.com/golang-module/carbon/actions)
+[![Go Build](https://github.com/golang-module/carbon/actions/workflows/bulid.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
 [![Go Code Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
@@ -13,9 +13,9 @@ A simple, semantic and developer-friendly golang package for datetime
 
 Carbon has been included by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"), if you think it is helpful, please give me a star
 
-github:[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
+[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
-gitee:[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
+[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
 #### Installation
 ```go
@@ -572,7 +572,138 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedEnd(carbon.Parse("2020-08-04 
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-05 13:14:15"), carbon.Parse("2020-08-06 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04 13:14:15"), carbon.Parse("2020-08-05 13:14:15")) // true
 ```
-> For the definition of long year, please refer to https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+> For the definition of long year, please see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+
+##### Setter
+```go
+// Set timezone
+carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
+carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+
+// Set locale
+carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
+carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
+
+// Set year
+carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
+// Set year without overflowing month
+carbon.Parse("2020-02-29").SetYearNoOverflow(2021).ToDateString() // 2021-02-28
+
+// Set month
+carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
+// Set month without overflowing month
+carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
+
+// Set day
+carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
+carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
+
+// Set hour
+carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
+carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
+
+// Set minute
+carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
+carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
+
+// Set second
+carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
+carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
+
+// set millisecond
+carbon.Parse("2020-08-05 13:14:15").SetMillisecond(100).Millisecond() // 100
+carbon.Parse("2020-08-05 13:14:15").SetMillisecond(999).Millisecond() // 999
+
+// set microsecond
+carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(100000).Microsecond() // 100000
+carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(999999).Microsecond() // 999999
+
+// set nanosecond
+carbon.Parse("2020-08-05 13:14:15").SetNanosecond(100000000).Nanosecond() // 100000000
+carbon.Parse("2020-08-05 13:14:15").SetNanosecond(999999999).Nanosecond() // 999999999
+```
+
+##### Getter
+```go
+// Get total days of the year
+carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
+carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
+// Get total days of the month
+carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
+carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
+carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
+
+// Get day of the year
+carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
+// Get week of the year
+carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
+// Get day of the month
+carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
+// Get week of the month
+carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
+// Get day of the week
+carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
+
+// Get current century
+carbon.Parse("2020-08-05 13:14:15").Century() // 21
+// Get current decade
+carbon.Parse("2019-08-05 13:14:15").Decade() // 10
+carbon.Parse("2021-08-05 13:14:15").Decade() // 20
+// Get current year
+carbon.Parse("2020-08-05 13:14:15").Year() // 2020
+// Get current quarter
+carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
+// Get current month
+carbon.Parse("2020-08-05 13:14:15").Month() // 8
+// Get current week(start with 0)
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
+carbon.Parse("2020-08-05 13:14:15").Week() // 3
+// Get current day
+carbon.Parse("2020-08-05 13:14:15").Day() // 5
+// Get current hour
+carbon.Parse("2020-08-05 13:14:15").Hour() // 13
+// Get current minute
+carbon.Parse("2020-08-05 13:14:15").Minute() // 14
+// Get current second
+carbon.Parse("2020-08-05 13:14:15").Second() // 15
+// Get current millisecond
+carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
+// Get current microsecond
+carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
+// Get current nanosecond
+carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
+
+// Get timezone name
+carbon.SetTimezone(carbon.PRC).Timezone() // CST
+carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+
+// Get location name
+carbon.SetTimezone(carbon.PRC).Location() // PRC
+carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+
+// Get offset seconds from the UTC timezone
+carbon.SetTimezone(carbon.PRC).Offset() // 28800
+carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+
+// Get locale name
+carbon.Now().SetLocale("en").Locale() // en
+carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
+
+// Get constellation name
+carbon.Now().Constellation() // Leo
+carbon.Now().SetLocale("en").Constellation() // Leo
+carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+
+//Get season name
+carbon.Now().Season() // Summer
+carbon.Now().SetLocale("en").Season() // Summer
+carbon.Now().SetLocale("zh-CN").Season() // 夏季
+
+// Get current age
+carbon.Parse("2002-01-01 13:14:15").Age() // 17
+carbon.Parse("2002-12-31 13:14:15").Age() // 18
+```
 
 ##### Output   
 ```go
@@ -689,125 +820,6 @@ carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-
 ```
 > For more supported format signs, please see the <a href="#format-sign-table">Format sign table</a>
 
-##### Getter
-```go
-// Get total days of the year
-carbon.Parse("2019-08-05 13:14:15").DaysInYear() // 365
-carbon.Parse("2020-08-05 13:14:15").DaysInYear() // 366
-// Get total days of the month
-carbon.Parse("2020-02-01 13:14:15").DaysInMonth() // 29
-carbon.Parse("2020-04-01 13:14:15").DaysInMonth() // 30
-carbon.Parse("2020-08-01 13:14:15").DaysInMonth() // 31
-
-// Get day of the year
-carbon.Parse("2020-08-05 13:14:15").DayOfYear() // 218
-// Get week of the year
-carbon.Parse("2020-08-05 13:14:15").WeekOfYear() // 32
-// Get day of the month
-carbon.Parse("2020-08-05 13:14:15").DayOfMonth() // 5
-// Get week of the month
-carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
-// Get day of the week
-carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
-
-// Get current century
-carbon.Parse("2020-08-05 13:14:15").Century() // 21
-// Get current decade
-carbon.Parse("2019-08-05 13:14:15").Decade() // 10
-carbon.Parse("2021-08-05 13:14:15").Decade() // 20
-// Get current year
-carbon.Parse("2020-08-05 13:14:15").Year() // 2020
-// Get current quarter
-carbon.Parse("2020-08-05 13:14:15").Quarter() // 3
-// Get current month
-carbon.Parse("2020-08-05 13:14:15").Month() // 8
-// Get current week(start with 0)
-carbon.Parse("2020-08-05 13:14:15").Week() // 3
-carbon.Parse("2020-08-05 13:14:15").Week() // 3
-// Get current day
-carbon.Parse("2020-08-05 13:14:15").Day() // 5
-// Get current hour
-carbon.Parse("2020-08-05 13:14:15").Hour() // 13
-// Get current minute
-carbon.Parse("2020-08-05 13:14:15").Minute() // 14
-// Get current second
-carbon.Parse("2020-08-05 13:14:15").Second() // 15
-// Get current millisecond
-carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
-// Get current microsecond
-carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
-// Get current nanosecond
-carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
-
-// Get timezone name
-carbon.SetTimezone(carbon.PRC).Timezone() // CST
-carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
-
-// Get location name
-carbon.SetTimezone(carbon.PRC).Location() // PRC
-carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
-
-// Get offset seconds from the UTC timezone
-carbon.SetTimezone(carbon.PRC).Offset() // 28800
-carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
-
-// Get locale name
-carbon.Now().SetLocale("en").Locale() // en
-carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
-
-// Get constellation name
-carbon.Now().Constellation() // Leo
-carbon.Now().SetLocale("en").Constellation() // Leo
-carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
-
-//Get season name
-carbon.Now().Season() // Summer
-carbon.Now().SetLocale("en").Season() // Summer
-carbon.Now().SetLocale("zh-CN").Season() // 夏季
-
-// Get current age
-carbon.Parse("2002-01-01 13:14:15").Age() // 17
-carbon.Parse("2002-12-31 13:14:15").Age() // 18
-```
-
-##### Setter
-```go
-// Set timezone
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
-
-// Set locale
-carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
-
-// Set year
-carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
-// Set year without overflowing month
-carbon.Parse("2020-02-29").SetYearNoOverflow(2021).ToDateString() // 2021-02-28
-
-// Set month
-carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
-// Set month without overflowing month
-carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
-
-// Set day
-carbon.Parse("2019-08-05").SetDay(31).ToDateString() // 2020-08-31
-carbon.Parse("2020-02-01").SetDay(31).ToDateString() // 2020-03-02
-
-// Set hour
-carbon.Parse("2020-08-05 13:14:15").SetHour(10).ToDateTimeString() // 2020-08-05 10:14:15
-carbon.Parse("2020-08-05 13:14:15").SetHour(24).ToDateTimeString() // 2020-08-06 00:14:15
-
-// Set minute
-carbon.Parse("2020-08-05 13:14:15").SetMinute(10).ToDateTimeString() // 2020-08-05 13:10:15
-carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-05 14:00:15
-
-// Set second
-carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
-carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
-```
-
 ##### Constellation
 ```go
 // Get constellation name
@@ -860,7 +872,7 @@ carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
-##### Lunar
+##### Chinese Lunar
 > Currently only `200` years from `1900` to `2100` are supported
 ```go
 // Get Chinese Lunar year of animal
@@ -945,14 +957,14 @@ person := Person {
 	ID:          1,
 	Name:        "gouguoyin",
 	Age:         18,
-	Birthday:    ToDateTimeString{Now().SubYears(18)},
-	GraduatedAt: ToDateString{Parse("2020-08-05 13:14:15")},
-	CreatedAt:   ToTimeString{Parse("2021-08-05 13:14:15")},
-	UpdatedAt:   ToTimestamp{Parse("2022-08-05 13:14:15")},
-	DateTime1:   ToTimestampWithSecond{Parse("2023-08-05 13:14:15")},
-	DateTime2:   ToTimestampWithMillisecond{Parse("2024-08-05 13:14:15")},
-	DateTime3:   ToTimestampWithMicrosecond{Parse("2025-08-05 13:14:15")},
-	DateTime4:   ToTimestampWithNanosecond{Parse("2025-08-05 13:14:15")},
+	Birthday:    carbon.ToDateTimeString{carbon.Now().SubYears(18)},
+	GraduatedAt: carbon.ToDateString{carbon.Parse("2020-08-05 13:14:15")},
+	CreatedAt:   carbon.ToTimeString{carbon.Parse("2021-08-05 13:14:15")},
+	UpdatedAt:   carbon.ToTimestamp{carbon.Parse("2022-08-05 13:14:15")},
+	DateTime1:   carbon.ToTimestampWithSecond{carbon.Parse("2023-08-05 13:14:15")},
+	DateTime2:   carbon.ToTimestampWithMillisecond{carbon.Parse("2024-08-05 13:14:15")},
+	DateTime3:   carbon.ToTimestampWithMicrosecond{carbon.Parse("2025-08-05 13:14:15")},
+	DateTime4:   carbon.ToTimestampWithNanosecond{carbon.Parse("2025-08-05 13:14:15")},
 }
 ```
 
@@ -981,13 +993,12 @@ fmt.Printf("%s",data)
 
 ###### JSON decode
 ```go
-str := `{
+jsonString := `{
 	"id":1,
 	"name":"gouguoyin",
 	"age":18,
 	"birthday":"2003-07-16 16:22:02",
 	"graduated_at":"2020-08-05",
-	"created_at":"13:14:15",
 	"updated_at":1659676455,
 	"date_time1":1691212455,
 	"date_time2":1722834855000,
@@ -995,13 +1006,13 @@ str := `{
 	"date_time4":1754370855000000000
 }`
 person := new(Person)
-err := json.Unmarshal([]byte(str), &person)
+err := json.Unmarshal([]byte(jsonString), &person)
 if err != nil {
 	t.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // output
-{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 CreatedAt:0000-01-01 13:14:15 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 UpdatedAt:2022-08-05 13:14:15 DTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
 
 ##### I18n
@@ -1014,6 +1025,7 @@ The following languages are supported
 * [Korean(kr)](./lang/kr.json "Korean")
 * [Spanish(es)](./lang/es.json "Spanish")：translated by [hgisinger](https://github.com/hgisinger "hgisinger")
 * [German(de)](./lang/de.json "German")：translated by [benzammour](https://github.com/benzammour "benzammour")
+* [Turkish(tr)](./lang/tr.json "Turkish"): translated by [emresenyuva](https://github.com/emresenyuva "emresenyuva")
 
 The following methods are supported
 * `Constellation()`：get constellation name
@@ -1115,7 +1127,7 @@ if c.Error != nil {
 }
 fmt.Println(c.ToDateTimeString())
 // Output
-cannot parse "xxx" to carbon, please make sure the value is valid
+cannot parse "xxx" as carbon, please make sure the value is valid
 ```
 
 ###### Scene two
