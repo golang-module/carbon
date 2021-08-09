@@ -1,8 +1,8 @@
 # Carbon
 [![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
-[![Go Build](https://github.com/golang-module/carbon/actions/workflows/bulid.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
+[![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon)](https://goreportcard.com/report/github.com/golang-module/carbon)
-[![Go Code Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
+[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
@@ -1084,9 +1084,9 @@ c.Now().Season() // Summer
 lang := NewLanguage()
 resources := map[string]string {
     "months": "January|February|March|April|May|June|July|August|September|October|November|December",
-    "months_short": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
+    "short_months": "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec",
     "weeks": "Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday",
-    "weeks_short": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
+    "short_weeks": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
     "seasons": "Spring|Summer|Autumn|Winter",
     "constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricornus|Aquarius|Pisce",
     "year":"1 yr|%d yrs",
