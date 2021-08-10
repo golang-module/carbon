@@ -1,8 +1,8 @@
 {
 	"months": "Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre",
-	"months_short": "Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic",
+	"short_months": "Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic",
 	"weeks": "Domingo|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado",
-	"weeks_short": "Dom|Lun|Mar|Mie|Jue|Vie|Sab",
+	"short_weeks": "Dom|Lun|Mar|Mie|Jue|Vie|Sab",
 	"seasons": "Primavera|Verano|Otoño|Invierno",
 	"constellations": "Aries|Tauro|Geminis|Cancer|Leo|Virgo|Libra|Escorpio|Sagitario|Capricornio|Acuario|Piscis",
 

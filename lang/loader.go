@@ -1,4 +1,4 @@
-// Package lang is a part of the package carbon
+// Package lang is a part of the package carbon for i18n
 package lang
 
 import (
@@ -8,22 +8,21 @@ import (
 )
 
 var (
-	// 语言目录
+	// langDir language directory
 	langDir = "./lang/"
 
-	// 无效的区域错误
+	// invalidLocaleError returns an invalid locale error.
 	invalidLocaleError = func(locale string) error {
 		return fmt.Errorf("invalid locale %q, please see the directory %q for all valid locales", locale, langDir)
 	}
 
-	// 无效的json文件错误
+	// invalidJsonFileError returns an invalid json file error.
 	invalidJsonFileError = func(file string) error {
 		return fmt.Errorf("invalid json file %q, please make sure the json file is valid", langDir+file)
 	}
 )
 
-// LoadLocale load a given locale file
-// 加载本地化文件
+// LoadLocale loads a given locale file.
 func LoadLocale(locale string) (map[string]string, error) {
 	resources := make(map[string]string)
 	fileName := langDir + locale + ".json"
