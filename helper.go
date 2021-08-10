@@ -32,7 +32,7 @@ var formats = map[byte]string{
 	'r': "Mon, 02 Jan 06 15:04 MST",  // Format: RFC 2822 formatted date. Eg: Thu, 21 Dec 2000 16:01:07 +0200.
 }
 
-// format2layout convert a format string into a layout string
+// format2layout converts a format string into a layout string.
 // format 转 layout
 func format2layout(format string) string {
 	runes := []rune(format)
@@ -54,7 +54,7 @@ func format2layout(format string) string {
 	return buffer.String()
 }
 
-// getLocationByTimezone get a Location instance by a timezone string
+// getLocationByTimezone gets a Location instance by a timezone string.
 // 通过时区获取 Location 实例
 func getLocationByTimezone(timezone string) (*time.Location, error) {
 	loc, err := time.LoadLocation(timezone)
@@ -64,7 +64,7 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 	return loc, err
 }
 
-// parseByDuration parse as a Duration instance by a duration string
+// parseByDuration parses as a Duration instance by a duration string.
 // 通过持续时长解析
 func parseByDuration(duration string) (time.Duration, error) {
 	td, err := time.ParseDuration(duration)
@@ -74,7 +74,7 @@ func parseByDuration(duration string) (time.Duration, error) {
 	return td, err
 }
 
-// getAbsValue get absolute value
+// getAbsValue gets absolute value.
 // 获取绝对值
 func getAbsValue(value int64) int64 {
 	return (value ^ value>>31) - value>>31
