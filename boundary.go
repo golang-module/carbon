@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// StartOfCentury return a Carbon instance for start of the century
+// StartOfCentury returns a Carbon instance for start of the century.
 // 本世纪开始时间
 func (c Carbon) StartOfCentury() Carbon {
 	if c.IsInvalid() {
@@ -14,17 +14,17 @@ func (c Carbon) StartOfCentury() Carbon {
 	return c
 }
 
-// EndOfCentury return a Carbon instance for end of the century
+// EndOfCentury returns a Carbon instance for end of the century.
 // 本世纪结束时间
 func (c Carbon) EndOfCentury() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+999, 12, 31, 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+99, 12, 31, 23, 59, 59, 999999999, c.Loc)
 	return c
 }
 
-// StartOfDecade return a Carbon instance for start of the decade
+// StartOfDecade returns a Carbon instance for start of the decade.
 // 本年代开始时间
 func (c Carbon) StartOfDecade() Carbon {
 	if c.IsInvalid() {
@@ -34,7 +34,7 @@ func (c Carbon) StartOfDecade() Carbon {
 	return c
 }
 
-// EndOfDecade return a Carbon instance for end of the decade
+// EndOfDecade returns a Carbon instance for end of the decade.
 // 本年代结束时间
 func (c Carbon) EndOfDecade() Carbon {
 	if c.IsInvalid() {
@@ -44,7 +44,7 @@ func (c Carbon) EndOfDecade() Carbon {
 	return c
 }
 
-// StartOfYear return a Carbon instance for start of the year
+// StartOfYear returns a Carbon instance for start of the year.
 // 本年开始时间
 func (c Carbon) StartOfYear() Carbon {
 	if c.IsInvalid() {
@@ -54,7 +54,7 @@ func (c Carbon) StartOfYear() Carbon {
 	return c
 }
 
-// EndOfYear return a Carbon instance for end of the year
+// EndOfYear returns a Carbon instance for end of the year.
 // 本年结束时间
 func (c Carbon) EndOfYear() Carbon {
 	if c.IsInvalid() {
@@ -64,7 +64,7 @@ func (c Carbon) EndOfYear() Carbon {
 	return c
 }
 
-// StartOfQuarter return a Carbon instance for start of the quarter
+// StartOfQuarter returns a Carbon instance for start of the quarter.
 // 本季度开始时间
 func (c Carbon) StartOfQuarter() Carbon {
 	if c.IsInvalid() {
@@ -74,7 +74,7 @@ func (c Carbon) StartOfQuarter() Carbon {
 	return c
 }
 
-// EndOfQuarter return a Carbon instance for end of the quarter
+// EndOfQuarter returns a Carbon instance for end of the quarter.
 // 本季度结束时间
 func (c Carbon) EndOfQuarter() Carbon {
 	if c.IsInvalid() {
@@ -91,7 +91,7 @@ func (c Carbon) EndOfQuarter() Carbon {
 	return c
 }
 
-// StartOfMonth return a Carbon instance for start of the month
+// StartOfMonth returns a Carbon instance for start of the month.
 // 本月开始时间
 func (c Carbon) StartOfMonth() Carbon {
 	if c.IsInvalid() {
@@ -101,7 +101,7 @@ func (c Carbon) StartOfMonth() Carbon {
 	return c
 }
 
-// EndOfMonth return a Carbon instance for end of the month
+// EndOfMonth returns a Carbon instance for end of the month.
 // 本月结束时间
 func (c Carbon) EndOfMonth() Carbon {
 	if c.IsInvalid() {
@@ -111,7 +111,7 @@ func (c Carbon) EndOfMonth() Carbon {
 	return c
 }
 
-// StartOfWeek return a Carbon instance for start of the week
+// StartOfWeek returns a Carbon instance for start of the week.
 // 本周开始时间
 func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
 	if c.IsInvalid() {
@@ -128,7 +128,7 @@ func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
 	return c.SubDays(days).StartOfDay()
 }
 
-// EndOfWeek return a Carbon instance for end of the week
+// EndOfWeek returns a Carbon instance for end of the week.
 // 本周结束时间
 func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
 	if c.IsInvalid() {
@@ -148,7 +148,7 @@ func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
 	return c.AddDays(days).EndOfDay()
 }
 
-// StartOfDay return a Carbon instance for start of the day
+// StartOfDay returns a Carbon instance for start of the day.
 // 本日开始时间
 func (c Carbon) StartOfDay() Carbon {
 	if c.IsInvalid() {
@@ -158,7 +158,7 @@ func (c Carbon) StartOfDay() Carbon {
 	return c
 }
 
-// EndOfDay return a Carbon instance for end of the day
+// EndOfDay returns a Carbon instance for end of the day.
 // 本日结束时间
 func (c Carbon) EndOfDay() Carbon {
 	if c.IsInvalid() {
@@ -168,7 +168,7 @@ func (c Carbon) EndOfDay() Carbon {
 	return c
 }
 
-// StartOfHour return a Carbon instance for start of the hour
+// StartOfHour returns a Carbon instance for start of the hour.
 // 小时开始时间
 func (c Carbon) StartOfHour() Carbon {
 	if c.IsInvalid() {
@@ -178,7 +178,7 @@ func (c Carbon) StartOfHour() Carbon {
 	return c
 }
 
-// EndOfHour return a Carbon instance for end of the hour
+// EndOfHour returns a Carbon instance for end of the hour.
 // 小时结束时间
 func (c Carbon) EndOfHour() Carbon {
 	if c.IsInvalid() {
@@ -188,7 +188,7 @@ func (c Carbon) EndOfHour() Carbon {
 	return c
 }
 
-// StartOfMinute return a Carbon instance for start of the minute
+// StartOfMinute returns a Carbon instance for start of the minute.
 // 分钟开始时间
 func (c Carbon) StartOfMinute() Carbon {
 	if c.IsInvalid() {
@@ -198,7 +198,7 @@ func (c Carbon) StartOfMinute() Carbon {
 	return c
 }
 
-// EndOfMinute return a Carbon instance for end of the minute
+// EndOfMinute returns a Carbon instance for end of the minute.
 // 分钟结束时间
 func (c Carbon) EndOfMinute() Carbon {
 	if c.IsInvalid() {
@@ -208,7 +208,7 @@ func (c Carbon) EndOfMinute() Carbon {
 	return c
 }
 
-// StartOfSecond return a Carbon instance for start of the second
+// StartOfSecond returns a Carbon instance for start of the second.
 // 秒开始时间
 func (c Carbon) StartOfSecond() Carbon {
 	if c.IsInvalid() {
@@ -218,7 +218,7 @@ func (c Carbon) StartOfSecond() Carbon {
 	return c
 }
 
-// EndOfSecond return a Carbon instance for end of the second
+// EndOfSecond returns a Carbon instance for end of the second.
 // 秒结束时间
 func (c Carbon) EndOfSecond() Carbon {
 	if c.IsInvalid() {
