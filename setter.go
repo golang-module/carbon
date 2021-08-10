@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// SetTimezone set timezone
+// SetTimezone sets timezone.
 // 设置时区
 func (c Carbon) SetTimezone(name string) Carbon {
 	if c.Error != nil {
@@ -16,13 +16,13 @@ func (c Carbon) SetTimezone(name string) Carbon {
 	return c
 }
 
-// SetTimezone set timezone
+// SetTimezone sets timezone.
 // 设置时区
 func SetTimezone(name string) Carbon {
 	return NewCarbon().SetTimezone(name)
 }
 
-// SetLocale set locale
+// SetLocale sets locale.
 // 设置语言区域
 func (c Carbon) SetLocale(locale string) Carbon {
 	if c.Error != nil {
@@ -32,7 +32,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 	return c
 }
 
-// SetLocale set locale
+// SetLocale sets locale.
 // 设置语言区域
 func SetLocale(locale string) Carbon {
 	c := NewCarbon()
@@ -40,7 +40,7 @@ func SetLocale(locale string) Carbon {
 	return c
 }
 
-// SetLanguage set language
+// SetLanguage sets language.
 // 设置语言对象
 func (c Carbon) SetLanguage(lang *Language) Carbon {
 	if c.Error != nil {
@@ -50,18 +50,17 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 	return c
 }
 
-// SetLanguage set language
+// SetLanguage sets language.
 // 设置语言对象
 func SetLanguage(lang *Language) Carbon {
-	c := NewCarbon()
-	err := lang.SetLocale(lang.locale)
+	c, err := NewCarbon(), lang.SetLocale(lang.locale)
 	c.Lang = lang
 	c.Error = err
 	return c
 }
 
-// SetYear set year
-// 设置年
+// SetYear sets year.
+// 设置年份
 func (c Carbon) SetYear(year int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -70,8 +69,8 @@ func (c Carbon) SetYear(year int) Carbon {
 	return c
 }
 
-// SetYearNoOverflow set year without overflowing month
-// 设置年(月份不溢出)
+// SetYearNoOverflow sets year without overflowing month.
+// 设置年份(月份不溢出)
 func (c Carbon) SetYearNoOverflow(year int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -79,8 +78,8 @@ func (c Carbon) SetYearNoOverflow(year int) Carbon {
 	return c.AddYearsNoOverflow(year - c.Year())
 }
 
-// SetMonth set month
-// 设置月
+// SetMonth sets month.
+// 设置月份
 func (c Carbon) SetMonth(month int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -89,8 +88,8 @@ func (c Carbon) SetMonth(month int) Carbon {
 	return c
 }
 
-// SetMonthNoOverflow set month without overflowing month
-// 设置月(月份不溢出)
+// SetMonthNoOverflow sets month without overflowing month.
+// 设置月份(月份不溢出)
 func (c Carbon) SetMonthNoOverflow(month int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -98,8 +97,8 @@ func (c Carbon) SetMonthNoOverflow(month int) Carbon {
 	return c.AddMonthsNoOverflow(month - c.Month())
 }
 
-// SetDay set day
-// 设置日
+// SetDay sets day.
+// 设置日期
 func (c Carbon) SetDay(day int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -108,8 +107,8 @@ func (c Carbon) SetDay(day int) Carbon {
 	return c
 }
 
-// SetHour set hour
-// 设置时
+// SetHour sets hour.
+// 设置小时
 func (c Carbon) SetHour(hour int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -118,8 +117,8 @@ func (c Carbon) SetHour(hour int) Carbon {
 	return c
 }
 
-// SetMinute set minute
-// 设置分
+// SetMinute sets minute.
+// 设置分钟
 func (c Carbon) SetMinute(minute int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -128,8 +127,8 @@ func (c Carbon) SetMinute(minute int) Carbon {
 	return c
 }
 
-// SetSecond set second
-// 设置秒
+// SetSecond sets second.
+// 设置秒数
 func (c Carbon) SetSecond(second int) Carbon {
 	if c.IsInvalid() {
 		return c
@@ -138,7 +137,7 @@ func (c Carbon) SetSecond(second int) Carbon {
 	return c
 }
 
-// SetMillisecond set millisecond
+// SetMillisecond sets millisecond.
 // 设置毫秒
 func (c Carbon) SetMillisecond(millisecond int) Carbon {
 	if c.IsInvalid() {
@@ -148,7 +147,7 @@ func (c Carbon) SetMillisecond(millisecond int) Carbon {
 	return c
 }
 
-// SetMicrosecond set microsecond
+// SetMicrosecond sets microsecond.
 // 设置微秒
 func (c Carbon) SetMicrosecond(microsecond int) Carbon {
 	if c.IsInvalid() {
@@ -158,7 +157,7 @@ func (c Carbon) SetMicrosecond(microsecond int) Carbon {
 	return c
 }
 
-// SetNanosecond set nanosecond
+// SetNanosecond sets nanosecond.
 // 设置纳秒
 func (c Carbon) SetNanosecond(nanosecond int) Carbon {
 	if c.IsInvalid() {

@@ -1,6 +1,6 @@
 package carbon
 
-// DaysInYear get days in year
+// DaysInYear gets total days in year.
 // 获取本年的总天数
 func (c Carbon) DaysInYear() int {
 	if c.IsInvalid() {
@@ -12,7 +12,7 @@ func (c Carbon) DaysInYear() int {
 	return DaysPerNormalYear
 }
 
-// DaysInMonth get days in month
+// DaysInMonth gets total days in month.
 // 获取本月的总天数
 func (c Carbon) DaysInMonth() int {
 	if c.IsInvalid() {
@@ -21,7 +21,7 @@ func (c Carbon) DaysInMonth() int {
 	return c.EndOfMonth().Time.In(c.Loc).Day()
 }
 
-// MonthOfYear get month of year
+// MonthOfYear gets month of year.
 // 获取本年的第几月
 func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
@@ -30,7 +30,7 @@ func (c Carbon) MonthOfYear() int {
 	return int(c.Time.In(c.Loc).Month())
 }
 
-// DayOfYear get day of year
+// DayOfYear gets day of year.
 // 获取本年的第几天
 func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
@@ -39,7 +39,7 @@ func (c Carbon) DayOfYear() int {
 	return c.Time.In(c.Loc).YearDay()
 }
 
-// DayOfMonth get day of month
+// DayOfMonth gets day of month.
 // 获取本月的第几天
 func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
@@ -48,7 +48,7 @@ func (c Carbon) DayOfMonth() int {
 	return c.Time.In(c.Loc).Day()
 }
 
-// DayOfWeek get day of week
+// DayOfWeek gets day of week.
 // 获取本周的第几天
 func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
@@ -61,7 +61,7 @@ func (c Carbon) DayOfWeek() int {
 	return day
 }
 
-// WeekOfYear get week of year. see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
+// WeekOfYear gets week of year, see https://en.wikipedia.org/wiki/ISO_8601#Week_dates.
 // 获取本年的第几周
 func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
@@ -71,7 +71,7 @@ func (c Carbon) WeekOfYear() int {
 	return week
 }
 
-// WeekOfMonth get week of month
+// WeekOfMonth gets week of month.
 // 获取本月的第几周
 func (c Carbon) WeekOfMonth() int {
 	if c.IsInvalid() {
@@ -84,7 +84,7 @@ func (c Carbon) WeekOfMonth() int {
 	return days/DaysPerWeek + 1
 }
 
-// Century get current century
+// Century gets current century.
 // 获取当前世纪
 func (c Carbon) Century() int {
 	if c.IsInvalid() {
@@ -93,7 +93,7 @@ func (c Carbon) Century() int {
 	return c.Year()/YearsPerCentury + 1
 }
 
-// Decade get current decade
+// Decade gets current decade.
 // 获取当前年代
 func (c Carbon) Decade() int {
 	if c.IsInvalid() {
@@ -102,7 +102,7 @@ func (c Carbon) Decade() int {
 	return c.Year() % YearsPerCentury / YearsPerDecade * YearsPerDecade
 }
 
-// Year get current year
+// Year gets current year.
 // 获取当前年
 func (c Carbon) Year() int {
 	if c.IsInvalid() {
@@ -111,7 +111,7 @@ func (c Carbon) Year() int {
 	return c.Time.In(c.Loc).Year()
 }
 
-// Quarter get current quarter
+// Quarter gets current quarter.
 // 获取当前季度
 func (c Carbon) Quarter() (quarter int) {
 	if c.IsInvalid() {
@@ -130,7 +130,7 @@ func (c Carbon) Quarter() (quarter int) {
 	return
 }
 
-// Month get current month
+// Month gets current month.
 // 获取当前月
 func (c Carbon) Month() int {
 	if c.IsInvalid() {
@@ -139,7 +139,7 @@ func (c Carbon) Month() int {
 	return c.MonthOfYear()
 }
 
-// Week get current week, start from 0
+// Week gets current week, start from 0.
 // 获取当前周(从0开始)
 func (c Carbon) Week() int {
 	if c.IsInvalid() {
@@ -148,7 +148,7 @@ func (c Carbon) Week() int {
 	return int(c.Time.In(c.Loc).Weekday())
 }
 
-// Day get current day
+// Day gets current day.
 // 获取当前日
 func (c Carbon) Day() int {
 	if c.IsInvalid() {
@@ -157,7 +157,7 @@ func (c Carbon) Day() int {
 	return c.DayOfMonth()
 }
 
-// Hour get current hour
+// Hour gets current hour.
 // 获取当前小时
 func (c Carbon) Hour() int {
 	if c.IsInvalid() {
@@ -166,7 +166,7 @@ func (c Carbon) Hour() int {
 	return c.Time.In(c.Loc).Hour()
 }
 
-// Minute get current minute
+// Minute gets current minute.
 // 获取当前分钟数
 func (c Carbon) Minute() int {
 	if c.IsInvalid() {
@@ -175,7 +175,7 @@ func (c Carbon) Minute() int {
 	return c.Time.In(c.Loc).Minute()
 }
 
-// Second get current second
+// Second gets current second.
 // 获取当前秒数
 func (c Carbon) Second() int {
 	if c.IsInvalid() {
@@ -184,7 +184,7 @@ func (c Carbon) Second() int {
 	return c.Time.In(c.Loc).Second()
 }
 
-// Millisecond get current millisecond
+// Millisecond gets current millisecond.
 // 获取当前毫秒数，3位数字
 func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
@@ -193,7 +193,7 @@ func (c Carbon) Millisecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e6
 }
 
-// Microsecond get current microsecond
+// Microsecond gets current microsecond.
 // 获取当前微秒数，6位数字
 func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
@@ -202,7 +202,7 @@ func (c Carbon) Microsecond() int {
 	return c.Time.In(c.Loc).Nanosecond() / 1e3
 }
 
-// Nanosecond get current nanosecond
+// Nanosecond gets current nanosecond.
 // 获取当前纳秒数，9位数字
 func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
@@ -211,33 +211,33 @@ func (c Carbon) Nanosecond() int {
 	return c.Time.In(c.Loc).Nanosecond()
 }
 
-// Location get location name
+// Location gets location name.
 // 获取位置
 func (c Carbon) Location() string {
 	return c.Loc.String()
 }
 
-// Timezone get timezone name
+// Timezone gets timezone name.
 // 获取时区
 func (c Carbon) Timezone() string {
 	name, _ := c.Time.Zone()
 	return name
 }
 
-// Offset get offset seconds from the UTC timezone
+// Offset gets offset seconds from the UTC timezone.
 // 获取距离UTC时区的偏移量，单位秒
 func (c Carbon) Offset() int {
 	_, offset := c.Time.Zone()
 	return offset
 }
 
-// Locale get locale name
+// Locale gets locale name.
 // 获取语言区域
 func (c Carbon) Locale() string {
 	return c.Lang.locale
 }
 
-// Age get age
+// Age gets age.
 // 获取年龄
 func (c Carbon) Age() int {
 	if c.IsInvalid() {

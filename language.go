@@ -11,15 +11,15 @@ var (
 	defaultLocale = "en"
 )
 
-// Language 定义 Language 结构体
-// define Language structure
+// Language define Language structure.
+// 定义 Language 结构体
 type Language struct {
 	dir       string
 	locale    string
 	resources map[string]string
 }
 
-// NewLanguage return a new Language instance
+// NewLanguage return a new Language instance.
 // 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{
@@ -28,23 +28,22 @@ func NewLanguage() *Language {
 	}
 }
 
-// SetLocale set language locale
+// SetLocale sets language locale.
 // 设置区域
 func (l *Language) SetLocale(locale string) error {
 	if len(l.resources) != 0 {
 		return nil
 	}
+	l.locale = locale
 	resources, err := lang.LoadLocale(locale)
 	if err != nil {
-		l.locale = locale
 		return err
 	}
-	l.locale = locale
 	l.resources = resources
 	return nil
 }
 
-// SetResources set language resources
+// SetResources sets language resources.
 // 设置资源
 func (l *Language) SetResources(resources map[string]string) {
 	if len(l.resources) == 0 {
@@ -58,7 +57,7 @@ func (l *Language) SetResources(resources map[string]string) {
 	}
 }
 
-// translate translate by unit string
+// translate translates by unit string.
 // 翻译转换
 func (l *Language) translate(unit string, number int64) string {
 	if len(l.resources) == 0 {

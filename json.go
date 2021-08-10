@@ -6,42 +6,42 @@ import (
 	"strconv"
 )
 
-// ToDateTimeString define ToDateTimeString structure
+// ToDateTimeString defines ToDateTimeString structure.
 type ToDateTimeString struct {
 	Carbon
 }
 
-// ToDateString define ToDateTimeString structure
+// ToDateString defines ToDateTimeString structure.
 type ToDateString struct {
 	Carbon
 }
 
-// ToTimeString define ToTimeString structure
+// ToTimeString defines ToTimeString structure.
 type ToTimeString struct {
 	Carbon
 }
 
-// ToTimestamp define ToTimestamp structure
+// ToTimestamp defines ToTimestamp structure.
 type ToTimestamp struct {
 	Carbon
 }
 
-// ToTimestampWithSecond define ToTimestampWithSecond structure
+// ToTimestampWithSecond defines ToTimestampWithSecond structure.
 type ToTimestampWithSecond struct {
 	Carbon
 }
 
-// ToTimestampWithMillisecond define ToTimestampWithMillisecond structure
+// ToTimestampWithMillisecond defines ToTimestampWithMillisecond structure.
 type ToTimestampWithMillisecond struct {
 	Carbon
 }
 
-// ToTimestampWithMicrosecond define ToTimestampWithMicrosecond structure
+// ToTimestampWithMicrosecond defines ToTimestampWithMicrosecond structure.
 type ToTimestampWithMicrosecond struct {
 	Carbon
 }
 
-// ToTimestampWithNanosecond define ToTimestampWithNanosecond structure
+// ToTimestampWithNanosecond defines ToTimestampWithNanosecond structure.
 type ToTimestampWithNanosecond struct {
 	Carbon
 }

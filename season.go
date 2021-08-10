@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Season get season name according to the meteorological division method, i18n is supported
+// Season gets season name according to the meteorological division method, i18n is supported.
 // 获取当前季节(以气象划分)，支持i18n
 func (c Carbon) Season() string {
 	if c.IsInvalid() {
@@ -34,7 +34,7 @@ func (c Carbon) Season() string {
 	return ""
 }
 
-// StartOfSeason return a Carbon instance for start of the season
+// StartOfSeason returns a Carbon instance for start of the season.
 // 本季节开始时间
 func (c Carbon) StartOfSeason() Carbon {
 	if c.IsInvalid() {
@@ -48,7 +48,7 @@ func (c Carbon) StartOfSeason() Carbon {
 	return c
 }
 
-// EndOfSeason return a Carbon instance for end of the season
+// EndOfSeason returns a Carbon instance for end of the season.
 // 本季节结束时间
 func (c Carbon) EndOfSeason() Carbon {
 	if c.IsInvalid() {
@@ -66,7 +66,7 @@ func (c Carbon) EndOfSeason() Carbon {
 	return c
 }
 
-// IsSpring whether is spring
+// IsSpring whether is spring.
 // 是否是春季
 func (c Carbon) IsSpring() bool {
 	if c.IsInvalid() {
@@ -78,7 +78,7 @@ func (c Carbon) IsSpring() bool {
 	return false
 }
 
-// IsSummer whether is summer
+// IsSummer whether is summer.
 // 是否是夏季
 func (c Carbon) IsSummer() bool {
 	if c.IsInvalid() {
@@ -90,7 +90,7 @@ func (c Carbon) IsSummer() bool {
 	return false
 }
 
-// IsAutumn whether is autumn
+// IsAutumn whether is autumn.
 // 是否是秋季
 func (c Carbon) IsAutumn() bool {
 	if c.IsInvalid() {
@@ -102,7 +102,7 @@ func (c Carbon) IsAutumn() bool {
 	return false
 }
 
-// IsWinter whether is winter
+// IsWinter whether is winter.
 // 是否是冬季
 func (c Carbon) IsWinter() bool {
 	if c.IsInvalid() {
