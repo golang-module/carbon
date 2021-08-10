@@ -22,7 +22,7 @@ func TestCarbon_Now(t *testing.T) {
 func TestError_Now(t *testing.T) {
 	timezone := "xxx"
 	c := Now(timezone)
-	assert.Equal(t, invalidTimezoneError(timezone), c.Error, "It should catch an exception in Now()")
+	assert.NotNil(t, c.Error, "It should catch an exception in Now()")
 }
 
 func TestCarbon_Yesterday(t *testing.T) {
@@ -46,7 +46,7 @@ func TestCarbon_Yesterday(t *testing.T) {
 func TestError_Yesterday(t *testing.T) {
 	timezone := "xxx"
 	c := Yesterday(timezone)
-	assert.Equal(t, invalidTimezoneError(timezone), c.Error, "It should catch an exception in Yesterday()")
+	assert.NotNil(t, c.Error, "It should catch an exception in Yesterday()")
 }
 
 func TestCarbon_Tomorrow(t *testing.T) {
@@ -70,7 +70,7 @@ func TestCarbon_Tomorrow(t *testing.T) {
 func TestError_Tomorrow(t *testing.T) {
 	timezone := "xxx"
 	c := Tomorrow(timezone)
-	assert.Equal(t, invalidTimezoneError(timezone), c.Error, "It should catch an exception in Tomorrow()")
+	assert.NotNil(t, c.Error, "It should catch an exception in Tomorrow()")
 }
 
 func TestCarbon_Time2Carbon(t *testing.T) {
