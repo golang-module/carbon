@@ -5,17 +5,16 @@
 	"short_weeks": "週日|週一|週二|週三|週四|週五|週六",
 	"seasons": "はる|なつ|あき|ふゆ",
 	"constellations": "おひつじざ|おうしざ|ふたござ|かにざ|ししざ|おとめざ|てんびんざ|さそりざ|いてざ|やぎざ|みずがめざ|うおざ",
-
-	"year":"%d 年",
-	"month":"%d ヶ月",
-	"week":"%d 週間",
-	"day":"%d 日",
-	"hour":"%d 時間",
-	"minute":"%d 分",
-	"second":"%d 秒",
+	"year": "%d 年",
+	"month": "%d ヶ月",
+	"week": "%d 週間",
+	"day": "%d 日",
+	"hour": "%d 時間",
+	"minute": "%d 分",
+	"second": "%d 秒",
 	"now": "たった今",
-	"ago":"%s前",
-	"from_now":"%s後",
-	"before":"%s前",
-	"after":"%s後"
+	"ago": "%s前",
+	"from_now": "%s後",
+	"before": "%s前",
+	"after": "%s後"
 }
