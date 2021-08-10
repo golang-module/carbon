@@ -1,18 +1,19 @@
-// @Title carbon
-// @Description A simple, semantic and developer-friendly golang package for datetime
+// @Package carbon
+// @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.5.0
+// @Version v1.5.1
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
 
-// Package carbon is a simple, semantic and developer-friendly golang package for datetime
+// Package carbon is a simple, semantic and developer-friendly golang package for datetime.
 package carbon
 
 import (
 	"time"
 )
 
+// timezones constant
 // 时区常量
 const (
 	Local = "Local"
@@ -61,6 +62,7 @@ const (
 	Rome       = "Europe/Rome"         // 罗马
 )
 
+// months constant
 // 月份常量
 const (
 	January   = "January"   // 一月
@@ -77,6 +79,7 @@ const (
 	December  = "December"  // 十二月
 )
 
+// weeks constant
 // 星期常量
 const (
 	Monday    = "Monday"    // 周一
@@ -88,6 +91,7 @@ const (
 	Sunday    = "Sunday"    // 周日
 )
 
+// numbers constant
 // 数字常量
 const (
 	YearsPerMillennium         = 1000    // 每千年1000年
@@ -115,6 +119,7 @@ const (
 	MicrosecondsPerSecond      = 1000000 // 每秒1000000微秒
 )
 
+// formats constant
 // 时间格式化常量
 const (
 	AnsicFormat         = time.ANSIC
@@ -142,7 +147,7 @@ const (
 	ShortTimeFormat     = "150405"
 )
 
-// Carbon define Carbon structure
+// Carbon defines Carbon structure.
 // 定义 Carbon 结构体
 type Carbon struct {
 	Time  time.Time
@@ -151,13 +156,13 @@ type Carbon struct {
 	Error error
 }
 
-// NewCarbon return a new Carbon instance
+// NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
-// Time2Carbon convert time.Time into Carbon
+// Time2Carbon converts time.Time into Carbon
 // 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
@@ -165,13 +170,13 @@ func Time2Carbon(tt time.Time) Carbon {
 	return c
 }
 
-// Carbon2Time convert Carbon into time.Time
+// Carbon2Time converts Carbon into time.Time.
 // 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
 	return c.Time.In(c.Loc)
 }
 
-// Now return a Carbon instance for now
+// Now returns a Carbon instance for now.
 // 当前
 func (c Carbon) Now(timezone ...string) Carbon {
 	if len(timezone) > 0 {
@@ -186,13 +191,13 @@ func (c Carbon) Now(timezone ...string) Carbon {
 	return c
 }
 
-// Now return a Carbon instance for now
+// Now returns a Carbon instance for now.
 // 当前
 func Now(timezone ...string) Carbon {
 	return NewCarbon().Now(timezone...)
 }
 
-// Tomorrow return a Carbon instance for tomorrow
+// Tomorrow returns a Carbon instance for tomorrow.
 // 明天
 func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	if len(timezone) > 0 {
@@ -211,13 +216,13 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	return c
 }
 
-// Tomorrow return a Carbon instance for tomorrow
+// Tomorrow returns a Carbon instance for tomorrow.
 // 明天
 func Tomorrow(timezone ...string) Carbon {
 	return NewCarbon().Tomorrow(timezone...)
 }
 
-// Yesterday return a Carbon instance for yesterday
+// Yesterday returns a Carbon instance for yesterday.
 // 昨天
 func (c Carbon) Yesterday(timezone ...string) Carbon {
 	if len(timezone) > 0 {
@@ -236,7 +241,7 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 	return c
 }
 
-// Yesterday return a Carbon instance for yesterday
+// Yesterday returns a Carbon instance for yesterday.
 // 昨天
 func Yesterday(timezone ...string) Carbon {
 	return NewCarbon().Yesterday(timezone...)
