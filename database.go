@@ -16,7 +16,7 @@ func (c *Carbon) Scan(v interface{}) error {
 	return fmt.Errorf("can not convert %v to carbon", v)
 }
 
-// Value the interface providing the Value method for package database/sql/driver
+// Value the interface providing the Value method for package database/sql/driver.
 func (c Carbon) Value() (driver.Value, error) {
 	if c.IsZero() {
 		return nil, nil
