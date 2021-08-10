@@ -162,7 +162,7 @@ func NewCarbon() Carbon {
 	return Carbon{Loc: time.Local, Lang: NewLanguage()}
 }
 
-// Time2Carbon converts time.Time into Carbon
+// Time2Carbon converts time.Time into Carbon.
 // 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
