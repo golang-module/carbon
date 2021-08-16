@@ -433,7 +433,7 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
 // Difference in human friendly readable format
-carbon.Parse("2020-08-05 13:14:15").DiffForHumans()) // just now
+carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
 carbon.Parse("2021-08-05 13:14:15").DiffForHumans() // 1 year from now
