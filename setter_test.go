@@ -1,10 +1,9 @@
 package carbon
 
 import (
+	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_SetTimezone(t *testing.T) {
@@ -53,6 +52,12 @@ func TestCarbon_SetLocale(t *testing.T) {
 
 	for index, test := range tests {
 		c := SetLocale(test.locale).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToMonthString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetLocale(test.locale)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToMonthString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
@@ -220,6 +225,55 @@ func TestError_SetMonthNoOverflow(t *testing.T) {
 	value, month := "2020-08-50", 12
 	c := Parse(value).SetMonthNoOverflow(month)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMonthNoOverflow()")
+}
+
+func TestCarbon_SetWeekStartsAt(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		week     string // 输入参数
+		expected string // 期望值
+	}{
+		{"", Sunday, ""},
+		{"0000-00-00 00:00:00", Sunday, ""},
+		{"", Monday, ""},
+		{"0000-00-00 00:00:00", Monday, ""},
+
+		{"2021-06-13", Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-14", Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-18", Sunday, "2021-06-13 00:00:00"},
+
+		{"2021-06-13", Monday, "2021-06-07 00:00:00"},
+		{"2021-06-14", Monday, "2021-06-14 00:00:00"},
+		{"2021-06-18", Monday, "2021-06-14 00:00:00"},
+
+		{"2021-06-13", Tuesday, "2021-06-08 00:00:00"},
+		{"2021-06-14", Tuesday, "2021-06-08 00:00:00"},
+		{"2021-06-18", Tuesday, "2021-06-15 00:00:00"},
+
+		{"2021-06-13", Wednesday, "2021-06-09 00:00:00"},
+		{"2021-06-14", Wednesday, "2021-06-09 00:00:00"},
+		{"2021-06-18", Wednesday, "2021-06-16 00:00:00"},
+
+		{"2021-06-13", Thursday, "2021-06-10 00:00:00"},
+		{"2021-06-14", Thursday, "2021-06-10 00:00:00"},
+		{"2021-06-18", Thursday, "2021-06-17 00:00:00"},
+
+		{"2021-06-13", Friday, "2021-06-11 00:00:00"},
+		{"2021-06-14", Friday, "2021-06-11 00:00:00"},
+		{"2021-06-18", Friday, "2021-06-18 00:00:00"},
+
+		{"2021-06-13", Saturday, "2021-06-12 00:00:00"},
+		{"2021-06-14", Saturday, "2021-06-12 00:00:00"},
+		{"2021-06-18", Saturday, "2021-06-12 00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetWeekStartsAt(test.week).StartOfWeek()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
 }
 
 func TestCarbon_SetDay(t *testing.T) {

@@ -10,9 +10,7 @@ func (c Carbon) SetTimezone(name string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	loc, err := getLocationByTimezone(name)
-	c.Loc = loc
-	c.Error = err
+	c.loc, c.Error = getLocationByTimezone(name)
 	return c
 }
 
@@ -28,7 +26,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.Error = c.Lang.SetLocale(locale)
+	c.Error = c.lang.SetLocale(locale)
 	return c
 }
 
@@ -36,7 +34,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 // 设置语言区域
 func SetLocale(locale string) Carbon {
 	c := NewCarbon()
-	c.Error = c.Lang.SetLocale(locale)
+	c.Error = c.lang.SetLocale(locale)
 	return c
 }
 
@@ -46,7 +44,7 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.Lang = lang
+	c.lang = lang
 	return c
 }
 
@@ -54,7 +52,7 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 // 设置语言对象
 func SetLanguage(lang *Language) Carbon {
 	c, err := NewCarbon(), lang.SetLocale(lang.locale)
-	c.Lang = lang
+	c.lang = lang
 	c.Error = err
 	return c
 }
@@ -65,7 +63,7 @@ func (c Carbon) SetYear(year int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(year, time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(year, time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -84,7 +82,7 @@ func (c Carbon) SetMonth(month int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(month), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(month), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -97,13 +95,38 @@ func (c Carbon) SetMonthNoOverflow(month int) Carbon {
 	return c.AddMonthsNoOverflow(month - c.Month())
 }
 
+// SetWeekStartsAt sets start day of the week.
+// 设置一周的开始日期
+func (c Carbon) SetWeekStartsAt(day string) Carbon {
+	if c.IsInvalid() {
+		return c
+	}
+	switch day {
+	case Sunday:
+		c.weekStartsAt = time.Sunday
+	case Monday:
+		c.weekStartsAt = time.Monday
+	case Tuesday:
+		c.weekStartsAt = time.Tuesday
+	case Wednesday:
+		c.weekStartsAt = time.Wednesday
+	case Thursday:
+		c.weekStartsAt = time.Thursday
+	case Friday:
+		c.weekStartsAt = time.Friday
+	case Saturday:
+		c.weekStartsAt = time.Saturday
+	}
+	return c
+}
+
 // SetDay sets day.
 // 设置日期
 func (c Carbon) SetDay(day int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -113,7 +136,7 @@ func (c Carbon) SetHour(hour int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), hour, c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), hour, c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -123,7 +146,7 @@ func (c Carbon) SetMinute(minute int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), minute, c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), minute, c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -133,7 +156,7 @@ func (c Carbon) SetSecond(second int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), second, c.Nanosecond(), c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), second, c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -143,7 +166,7 @@ func (c Carbon) SetMillisecond(millisecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), millisecond*1e6, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), millisecond*1e6, c.loc)
 	return c
 }
 
@@ -153,7 +176,7 @@ func (c Carbon) SetMicrosecond(microsecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e3, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e3, c.loc)
 	return c
 }
 
@@ -163,6 +186,6 @@ func (c Carbon) SetNanosecond(nanosecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), nanosecond, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), nanosecond, c.loc)
 	return c
 }
