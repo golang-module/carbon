@@ -11,7 +11,7 @@ var (
 	defaultLocale = "en"
 )
 
-// Language define Language structure.
+// Language define a Language struct.
 // 定义 Language 结构体
 type Language struct {
 	dir       string
