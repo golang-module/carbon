@@ -28,7 +28,7 @@ import (
 )
 
 // 使用 gitee 库
-go get -u gitee.com/go -package/carbon
+go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
