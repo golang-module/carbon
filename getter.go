@@ -1,5 +1,7 @@
 package carbon
 
+import "time"
+
 // DaysInYear gets total days in year.
 // 获取本年的总天数
 func (c Carbon) DaysInYear() int {
@@ -18,7 +20,7 @@ func (c Carbon) DaysInMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.EndOfMonth().Time.In(c.Loc).Day()
+	return c.EndOfMonth().Time.In(c.loc).Day()
 }
 
 // MonthOfYear gets month of year.
@@ -27,7 +29,7 @@ func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return int(c.Time.In(c.Loc).Month())
+	return int(c.Time.In(c.loc).Month())
 }
 
 // DayOfYear gets day of year.
@@ -36,7 +38,7 @@ func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).YearDay()
+	return c.Time.In(c.loc).YearDay()
 }
 
 // DayOfMonth gets day of month.
@@ -45,7 +47,7 @@ func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Day()
+	return c.Time.In(c.loc).Day()
 }
 
 // DayOfWeek gets day of week.
@@ -54,7 +56,7 @@ func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	day := int(c.Time.In(c.Loc).Weekday())
+	day := int(c.Time.In(c.loc).Weekday())
 	if day == 0 {
 		return DaysPerWeek
 	}
@@ -67,7 +69,7 @@ func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	_, week := c.Time.In(c.Loc).ISOWeek()
+	_, week := c.Time.In(c.loc).ISOWeek()
 	return week
 }
 
@@ -108,7 +110,7 @@ func (c Carbon) Year() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Year()
+	return c.Time.In(c.loc).Year()
 }
 
 // Quarter gets current quarter.
@@ -145,7 +147,7 @@ func (c Carbon) Week() int {
 	if c.IsInvalid() {
 		return -1
 	}
-	return int(c.Time.In(c.Loc).Weekday())
+	return (c.DayOfWeek() + DaysPerWeek - int(c.weekStartsAt)) % DaysPerWeek
 }
 
 // Day gets current day.
@@ -163,7 +165,7 @@ func (c Carbon) Hour() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Hour()
+	return c.Time.In(c.loc).Hour()
 }
 
 // Minute gets current minute.
@@ -172,7 +174,7 @@ func (c Carbon) Minute() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Minute()
+	return c.Time.In(c.loc).Minute()
 }
 
 // Second gets current second.
@@ -181,7 +183,7 @@ func (c Carbon) Second() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Second()
+	return c.Time.In(c.loc).Second()
 }
 
 // Millisecond gets current millisecond.
@@ -190,7 +192,7 @@ func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Nanosecond() / 1e6
+	return c.Time.In(c.loc).Nanosecond() / 1e6
 }
 
 // Microsecond gets current microsecond.
@@ -199,7 +201,7 @@ func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Nanosecond() / 1e3
+	return c.Time.In(c.loc).Nanosecond() / 1e3
 }
 
 // Nanosecond gets current nanosecond.
@@ -208,13 +210,58 @@ func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.Loc).Nanosecond()
+	return c.Time.In(c.loc).Nanosecond()
+}
+
+// Timestamp gets timestamp with second, it is short for TimestampWithSecond.
+// 获取秒级时间戳, 是 TimestampWithSecond 的简写
+func (c Carbon) Timestamp() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.TimestampWithSecond()
+}
+
+// TimestampWithSecond gets timestamp with second.
+// 输出秒级时间戳
+func (c Carbon) TimestampWithSecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Time.In(c.loc).Unix()
+}
+
+// TimestampWithMillisecond gets timestamp with millisecond.
+// 获取毫秒级时间戳
+func (c Carbon) TimestampWithMillisecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Time.UnixNano() / int64(time.Millisecond)
+}
+
+// TimestampWithMicrosecond gets timestamp with microsecond.
+// 获取微秒级时间戳
+func (c Carbon) TimestampWithMicrosecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Time.UnixNano() / int64(time.Microsecond)
+}
+
+// TimestampWithNanosecond gets timestamp with nanosecond.
+// 获取纳秒级时间戳
+func (c Carbon) TimestampWithNanosecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Time.UnixNano()
 }
 
 // Location gets location name.
 // 获取位置
 func (c Carbon) Location() string {
-	return c.Loc.String()
+	return c.loc.String()
 }
 
 // Timezone gets timezone name.
@@ -234,7 +281,7 @@ func (c Carbon) Offset() int {
 // Locale gets locale name.
 // 获取语言区域
 func (c Carbon) Locale() string {
-	return c.Lang.locale
+	return c.lang.locale
 }
 
 // Age gets age.
@@ -244,7 +291,7 @@ func (c Carbon) Age() int {
 		return 0
 	}
 	now := Now()
-	if c.ToTimestamp() > now.ToTimestamp() {
+	if c.Timestamp() > now.Timestamp() {
 		return 0
 	}
 	return int(c.DiffInYears(now))

@@ -584,6 +584,141 @@ func TestCarbon_Nanosecond(t *testing.T) {
 	}
 }
 
+func TestCarbon_Timestamp(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected int64  // 期望值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
+
+		{"2020-01-01 13:14:15", 1577855655},
+		{"2020-01-31 13:14:15", 1580447655},
+		{"2020-02-01 13:14:15", 1580534055},
+		{"2020-02-28 13:14:15", 1582866855},
+		{"2020-02-29 13:14:15", 1582953255},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Timestamp(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_TimestampWithSecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected int64  // 期望值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
+
+		{"2020-01-01 13:14:15", 1577855655},
+		{"2020-01-31 13:14:15", 1580447655},
+		{"2020-02-01 13:14:15", 1580534055},
+		{"2020-02-28 13:14:15", 1582866855},
+		{"2020-02-29 13:14:15", 1582953255},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.TimestampWithSecond(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_TimestampWithMillisecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected int64  // 期望值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
+
+		{"2020-01-01 13:14:15", 1577855655000},
+		{"2020-01-31 13:14:15", 1580447655000},
+		{"2020-02-01 13:14:15", 1580534055000},
+		{"2020-02-28 13:14:15", 1582866855000},
+		{"2020-02-29 13:14:15", 1582953255000},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.TimestampWithMillisecond(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_TimestampWithMicrosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected int64  // 期望值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
+
+		{"2020-01-01 13:14:15", 1577855655000000},
+		{"2020-01-31 13:14:15", 1580447655000000},
+		{"2020-02-01 13:14:15", 1580534055000000},
+		{"2020-02-28 13:14:15", 1582866855000000},
+		{"2020-02-29 13:14:15", 1582953255000000},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.TimestampWithMicrosecond(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_TimestampWithNanosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected int64  // 期望值
+	}{
+		{"", 0},
+		{"0", 0},
+		{"0000-00-00", 0},
+		{"00:00:00", 0},
+		{"0000-00-00 00:00:00", 0},
+
+		{"2020-01-01 13:14:15", 1577855655000000000},
+		{"2020-01-31 13:14:15", 1580447655000000000},
+		{"2020-02-01 13:14:15", 1580534055000000000},
+		{"2020-02-28 13:14:15", 1582866855000000000},
+		{"2020-02-29 13:14:15", 1582953255000000000},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.TimestampWithNanosecond(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_Timezone(t *testing.T) {
 	assert := assert.New(t)
 
