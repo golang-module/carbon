@@ -42,7 +42,7 @@ var (
 	}
 )
 
-// lunar defines lunar structure.
+// lunar defines a lunar struct.
 // 定义 lunar 结构体
 type lunar struct {
 	year, month, day int  // 农历年、月、日
@@ -50,7 +50,7 @@ type lunar struct {
 	Error            error
 }
 
-// Lunar converts the gregorian calendar into the lunar calendar.
+// Lunar converts the gregorian calendar to the lunar calendar.
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	if c.IsInvalid() {
