@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.5.1
+// @Version v1.5.2
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
@@ -147,22 +147,23 @@ const (
 	ShortTimeFormat     = "150405"
 )
 
-// Carbon defines Carbon structure.
+// Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
-	Time  time.Time
-	Loc   *time.Location
-	Lang  *Language
-	Error error
+	Time         time.Time
+	weekStartsAt time.Weekday
+	loc          *time.Location
+	lang         *Language
+	Error        error
 }
 
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	return Carbon{Loc: time.Local, Lang: NewLanguage()}
+	return Carbon{weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
 }
 
-// Time2Carbon converts time.Time into Carbon.
+// Time2Carbon converts time.Time to Carbon.
 // 将 time.Time 转换成 Carbon
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
@@ -170,24 +171,22 @@ func Time2Carbon(tt time.Time) Carbon {
 	return c
 }
 
-// Carbon2Time converts Carbon into time.Time.
+// Carbon2Time converts Carbon to time.Time.
 // 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
-	return c.Time.In(c.Loc)
+	return c.Time.In(c.loc)
 }
 
 // Now returns a Carbon instance for now.
 // 当前
 func (c Carbon) Now(timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
-	c.Time = time.Now().In(c.Loc)
+	c.Time = time.Now().In(c.loc)
 	return c
 }
 
@@ -201,17 +200,15 @@ func Now(timezone ...string) Carbon {
 // 明天
 func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
 	if c.IsZero() {
-		c.Time = time.Now().In(c.Loc).AddDate(0, 0, 1)
+		c.Time = time.Now().In(c.loc).AddDate(0, 0, 1)
 	} else {
-		c.Time = c.Time.In(c.Loc).AddDate(0, 0, 1)
+		c.Time = c.Time.In(c.loc).AddDate(0, 0, 1)
 	}
 	return c
 }
@@ -226,17 +223,15 @@ func Tomorrow(timezone ...string) Carbon {
 // 昨天
 func (c Carbon) Yesterday(timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
 	if c.IsZero() {
-		c.Time = time.Now().In(c.Loc).AddDate(0, 0, -1)
+		c.Time = time.Now().In(c.loc).AddDate(0, 0, -1)
 	} else {
-		c.Time = c.Time.In(c.Loc).AddDate(0, 0, -1)
+		c.Time = c.Time.In(c.loc).AddDate(0, 0, -1)
 	}
 	return c
 }

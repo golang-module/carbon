@@ -10,7 +10,7 @@ func (c Carbon) StartOfCentury() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury, 1, 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury, 1, 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -20,7 +20,7 @@ func (c Carbon) EndOfCentury() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+99, 12, 31, 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year()/YearsPerCentury*YearsPerCentury+99, 12, 31, 23, 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -30,7 +30,7 @@ func (c Carbon) StartOfDecade() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade, 1, 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade, 1, 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -40,7 +40,7 @@ func (c Carbon) EndOfDecade() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade+9, 12, 31, 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year()/YearsPerDecade*YearsPerDecade+9, 12, 31, 23, 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -50,7 +50,7 @@ func (c Carbon) StartOfYear() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), 1, 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), 1, 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -60,7 +60,7 @@ func (c Carbon) EndOfYear() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), 12, 31, 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), 12, 31, 23, 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -70,7 +70,7 @@ func (c Carbon) StartOfQuarter() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(3*c.Quarter()-2), 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(3*c.Quarter()-2), 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -87,7 +87,7 @@ func (c Carbon) EndOfQuarter() Carbon {
 	case 2, 3:
 		day = 30
 	}
-	c.Time = time.Date(c.Year(), time.Month(3*quarter), day, 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(3*quarter), day, 23, 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -97,7 +97,7 @@ func (c Carbon) StartOfMonth() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -107,45 +107,28 @@ func (c Carbon) EndOfMonth() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 	return c
 }
 
 // StartOfWeek returns a Carbon instance for start of the week.
 // 本周开始时间
-func (c Carbon) StartOfWeek(weekStartDay time.Weekday) Carbon {
+func (c Carbon) StartOfWeek() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	weekDay := c.Time.In(c.Loc).Weekday()
-	if weekDay == weekStartDay {
-		return c.StartOfDay()
-	}
-	days := int(weekDay) - int(weekStartDay)
-	if weekDay == time.Sunday {
-		days = 6
-	}
-	return c.SubDays(days).StartOfDay()
+	dayOfWeek, weekStartsAt := c.DayOfWeek(), int(c.weekStartsAt)
+	return c.SubDays((DaysPerWeek + dayOfWeek - weekStartsAt) % DaysPerWeek).StartOfDay()
 }
 
 // EndOfWeek returns a Carbon instance for end of the week.
 // 本周结束时间
-func (c Carbon) EndOfWeek(weekStartDay time.Weekday) Carbon {
+func (c Carbon) EndOfWeek() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	weekDay := c.Time.In(c.Loc).Weekday()
-	if weekStartDay == 0 && weekDay == 6 {
-		return c.EndOfDay()
-	}
-	if weekStartDay == 1 && weekDay == 0 {
-		return c.EndOfDay()
-	}
-	days := 6 - int(weekDay) + int(weekStartDay)
-	if weekDay == time.Sunday {
-		days = 6
-	}
-	return c.AddDays(days).EndOfDay()
+	dayOfWeek, weekEndsAt := c.DayOfWeek(), int(c.weekStartsAt)+DaysPerWeek-1
+	return c.AddDays((DaysPerWeek - dayOfWeek + weekEndsAt) % DaysPerWeek).EndOfDay()
 }
 
 // StartOfDay returns a Carbon instance for start of the day.
@@ -154,7 +137,7 @@ func (c Carbon) StartOfDay() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -164,7 +147,7 @@ func (c Carbon) EndOfDay() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 23, 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), 23, 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -174,7 +157,7 @@ func (c Carbon) StartOfHour() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 0, 0, 0, c.loc)
 	return c
 }
 
@@ -184,7 +167,7 @@ func (c Carbon) EndOfHour() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 59, 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), 59, 59, 999999999, c.loc)
 	return c
 }
 
@@ -194,7 +177,7 @@ func (c Carbon) StartOfMinute() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 0, 0, c.loc)
 	return c
 }
 
@@ -204,7 +187,7 @@ func (c Carbon) EndOfMinute() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 59, 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), 59, 999999999, c.loc)
 	return c
 }
 
@@ -214,7 +197,7 @@ func (c Carbon) StartOfSecond() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 0, c.loc)
 	return c
 }
 
@@ -224,6 +207,6 @@ func (c Carbon) EndOfSecond() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 999999999, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), 999999999, c.loc)
 	return c
 }

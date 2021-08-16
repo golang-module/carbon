@@ -10,8 +10,8 @@ func (c Carbon) Constellation() string {
 	if c.IsInvalid() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 {
-		c.Lang.SetLocale(defaultLocale)
+	if len(c.lang.resources) == 0 {
+		c.lang.SetLocale(defaultLocale)
 	}
 	index := -1
 	switch {
@@ -40,7 +40,7 @@ func (c Carbon) Constellation() string {
 	case c.Month() == 2 && c.Day() >= 19, c.Month() == 3 && c.Day() <= 20:
 		index = 11 // 双鱼座
 	}
-	if constellations, ok := c.Lang.resources["constellations"]; ok {
+	if constellations, ok := c.lang.resources["constellations"]; ok {
 		slice := strings.Split(constellations, "|")
 		if len(slice) == 12 {
 			return slice[index]
@@ -169,7 +169,7 @@ func (c Carbon) IsScorpio() bool {
 	return false
 }
 
-// IsSagittarius whether is Sagittarius
+// IsSagittarius whether is Sagittarius.
 // 是否是射手座
 func (c Carbon) IsSagittarius() bool {
 	if c.IsInvalid() {

@@ -9,9 +9,7 @@ import (
 // 从给定的时间戳创建 Carbon 实例，支持秒、毫秒、微秒和纳秒
 func (c Carbon) CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
@@ -44,14 +42,12 @@ func CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 // 从给定的年月日时分秒创建 Carbon 实例
 func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minute int, second int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
+	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
@@ -65,15 +61,13 @@ func CreateFromDateTime(year int, month int, day int, hour int, minute int, seco
 // 从给定的年月日创建 Carbon 实例
 func (c Carbon) CreateFromDate(year int, month int, day int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
-	hour, minute, second := time.Now().In(c.Loc).Clock()
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
+	hour, minute, second := time.Now().In(c.loc).Clock()
+	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
@@ -87,15 +81,13 @@ func CreateFromDate(year int, month int, day int, timezone ...string) Carbon {
 // 从给定的时分秒创建 Carbon 实例
 func (c Carbon) CreateFromTime(hour int, minute int, second int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
 	}
-	year, month, day := time.Now().In(c.Loc).Date()
-	c.Time = time.Date(year, month, day, hour, minute, second, time.Now().Nanosecond(), c.Loc)
+	year, month, day := time.Now().In(c.loc).Date()
+	c.Time = time.Date(year, month, day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
