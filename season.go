@@ -11,8 +11,8 @@ func (c Carbon) Season() string {
 	if c.IsInvalid() {
 		return ""
 	}
-	if len(c.Lang.resources) == 0 {
-		c.Lang.SetLocale(defaultLocale)
+	if len(c.lang.resources) == 0 {
+		c.lang.SetLocale(defaultLocale)
 	}
 	index := -1
 	switch {
@@ -25,7 +25,7 @@ func (c Carbon) Season() string {
 	case c.Month() == 12 || c.Month() == 1 || c.Month() == 2:
 		index = 3
 	}
-	if seasons, ok := c.Lang.resources["seasons"]; ok {
+	if seasons, ok := c.lang.resources["seasons"]; ok {
 		slice := strings.Split(seasons, "|")
 		if len(slice) == 4 {
 			return slice[index]
@@ -41,10 +41,10 @@ func (c Carbon) StartOfSeason() Carbon {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
-		c.Time = time.Date(c.Year()-1, time.Month(12), 1, 0, 0, 0, 0, c.Loc)
+		c.Time = time.Date(c.Year()-1, time.Month(12), 1, 0, 0, 0, 0, c.loc)
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3), 1, 0, 0, 0, 0, c.Loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3), 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -55,14 +55,14 @@ func (c Carbon) EndOfSeason() Carbon {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
-		c.Time = time.Date(c.Year(), time.Month(2), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
+		c.Time = time.Date(c.Year(), time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 		return c
 	}
 	if c.Month() == 12 {
-		c.Time = time.Date(c.Year()+1, time.Month(2), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
+		c.Time = time.Date(c.Year()+1, time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3+2), 1, 23, 59, 59, 999999999, c.Loc).AddDate(0, 1, -1)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3+2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 	return c
 }
 

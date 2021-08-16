@@ -11,7 +11,7 @@ func (c Carbon) AddDuration(duration string) Carbon {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.Time = c.Time.In(c.Loc).Add(td)
+	c.Time = c.Time.In(c.loc).Add(td)
 	c.Error = err
 	return c
 }
@@ -124,7 +124,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.Loc).AddDate(years, 0, 0)
+	c.Time = c.Time.In(c.loc).AddDate(years, 0, 0)
 	return c
 }
 
@@ -135,12 +135,12 @@ func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 		return c
 	}
 	// 获取N年后本月的最后一天
-	last := time.Date(c.Year()+years, time.Month(c.Month()), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
+	last := time.Date(c.Year()+years, time.Month(c.Month()), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc).AddDate(0, 1, -1)
 	day := c.Day()
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -237,7 +237,7 @@ func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.Loc).AddDate(0, months, 0)
+	c.Time = c.Time.In(c.loc).AddDate(0, months, 0)
 	return c
 }
 
@@ -249,12 +249,12 @@ func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	}
 	month := c.Month() + months
 	// 获取N月后的最后一天
-	last := time.Date(c.Year(), time.Month(month), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc).AddDate(0, 1, -1)
+	last := time.Date(c.Year(), time.Month(month), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc).AddDate(0, 1, -1)
 	day := c.Day()
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.Loc)
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -324,7 +324,7 @@ func (c Carbon) AddDays(days int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.Loc).AddDate(0, 0, days)
+	c.Time = c.Time.In(c.loc).AddDate(0, 0, days)
 	return c
 }
 
@@ -353,7 +353,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.Time = c.Time.In(c.Loc).Add(td)
+	c.Time = c.Time.In(c.loc).Add(td)
 	return c
 }
 
