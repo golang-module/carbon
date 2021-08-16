@@ -25,7 +25,7 @@ func (c Carbon) IsNow() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToTimestamp() == c.Now().ToTimestamp()
+	return c.Timestamp() == c.Now().Timestamp()
 }
 
 // IsFuture whether is future time.
@@ -34,7 +34,7 @@ func (c Carbon) IsFuture() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToTimestamp() > c.Now().ToTimestamp()
+	return c.Timestamp() > c.Now().Timestamp()
 }
 
 // IsPast whether is past time.
@@ -43,7 +43,7 @@ func (c Carbon) IsPast() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToTimestamp() < c.Now().ToTimestamp()
+	return c.Timestamp() < c.Now().Timestamp()
 }
 
 // IsLeapYear whether is a leap year.
@@ -52,7 +52,7 @@ func (c Carbon) IsLeapYear() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	year := c.Time.In(c.Loc).Year()
+	year := c.Time.In(c.loc).Year()
 	if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
 		return true
 	}
@@ -65,7 +65,7 @@ func (c Carbon) IsLongYear() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	_, w := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.Loc).ISOWeek()
+	_, w := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.loc).ISOWeek()
 	return w == weeksPerLongYear
 }
 
@@ -75,7 +75,7 @@ func (c Carbon) IsJanuary() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.January
+	return c.Time.In(c.loc).Month() == time.January
 }
 
 // IsFebruary whether is February.
@@ -84,7 +84,7 @@ func (c Carbon) IsFebruary() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.February
+	return c.Time.In(c.loc).Month() == time.February
 }
 
 // IsMarch whether is March.
@@ -93,7 +93,7 @@ func (c Carbon) IsMarch() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.March
+	return c.Time.In(c.loc).Month() == time.March
 }
 
 // IsApril whether is April.
@@ -102,7 +102,7 @@ func (c Carbon) IsApril() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.April
+	return c.Time.In(c.loc).Month() == time.April
 }
 
 // IsMay whether is May.
@@ -111,7 +111,7 @@ func (c Carbon) IsMay() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.May
+	return c.Time.In(c.loc).Month() == time.May
 }
 
 // IsJune whether is June.
@@ -120,7 +120,7 @@ func (c Carbon) IsJune() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.June
+	return c.Time.In(c.loc).Month() == time.June
 }
 
 // IsJuly whether is July.
@@ -129,7 +129,7 @@ func (c Carbon) IsJuly() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.July
+	return c.Time.In(c.loc).Month() == time.July
 }
 
 // IsAugust whether is August.
@@ -138,7 +138,7 @@ func (c Carbon) IsAugust() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.August
+	return c.Time.In(c.loc).Month() == time.August
 }
 
 // IsSeptember whether is September.
@@ -147,7 +147,7 @@ func (c Carbon) IsSeptember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.September
+	return c.Time.In(c.loc).Month() == time.September
 }
 
 // IsOctober whether is October.
@@ -156,7 +156,7 @@ func (c Carbon) IsOctober() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.October
+	return c.Time.In(c.loc).Month() == time.October
 }
 
 // IsNovember whether is November.
@@ -165,7 +165,7 @@ func (c Carbon) IsNovember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.November
+	return c.Time.In(c.loc).Month() == time.November
 }
 
 // IsDecember whether is December.
@@ -174,7 +174,7 @@ func (c Carbon) IsDecember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Month() == time.December
+	return c.Time.In(c.loc).Month() == time.December
 }
 
 // IsMonday whether is Monday.
@@ -183,7 +183,7 @@ func (c Carbon) IsMonday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Monday
+	return c.Time.In(c.loc).Weekday() == time.Monday
 }
 
 // IsTuesday whether is Tuesday.
@@ -192,7 +192,7 @@ func (c Carbon) IsTuesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Tuesday
+	return c.Time.In(c.loc).Weekday() == time.Tuesday
 }
 
 // IsWednesday whether is Wednesday.
@@ -201,7 +201,7 @@ func (c Carbon) IsWednesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Wednesday
+	return c.Time.In(c.loc).Weekday() == time.Wednesday
 }
 
 // IsThursday whether is Thursday.
@@ -210,7 +210,7 @@ func (c Carbon) IsThursday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Thursday
+	return c.Time.In(c.loc).Weekday() == time.Thursday
 }
 
 // IsFriday whether is Friday.
@@ -219,7 +219,7 @@ func (c Carbon) IsFriday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Friday
+	return c.Time.In(c.loc).Weekday() == time.Friday
 }
 
 // IsSaturday whether is Saturday.
@@ -228,7 +228,7 @@ func (c Carbon) IsSaturday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Saturday
+	return c.Time.In(c.loc).Weekday() == time.Saturday
 }
 
 // IsSunday whether is Sunday.
@@ -237,7 +237,7 @@ func (c Carbon) IsSunday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Time.In(c.Loc).Weekday() == time.Sunday
+	return c.Time.In(c.loc).Weekday() == time.Sunday
 }
 
 // IsWeekday whether is weekday.
@@ -291,9 +291,7 @@ func (c Carbon) Compare(operator string, t Carbon) bool {
 	switch operator {
 	case "=":
 		return c.Eq(t)
-	case "<>":
-		return !c.Eq(t)
-	case "!=":
+	case "<>", "!=":
 		return !c.Eq(t)
 	case ">":
 		return c.Gt(t)
