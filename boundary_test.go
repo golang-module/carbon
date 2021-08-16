@@ -3,7 +3,6 @@ package carbon
 import (
 	"strconv"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -312,27 +311,23 @@ func TestCarbon_StartOfWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string       // 输入值
-		week     time.Weekday // 输入参数
-		expected string       // 期望值
+		input    string // 输入值
+		expected string // 期望值
 	}{
-		{"", time.Sunday, ""},
-		{"0000-00-00 00:00:00", time.Sunday, ""},
-		{"", time.Monday, ""},
-		{"0000-00-00 00:00:00", time.Monday, ""},
+		{"", ""},
+		{"0000-00-00 00:00:00", ""},
+		{"", ""},
+		{"0000-00-00 00:00:00", ""},
 
-		{"2021-06-13", time.Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-14", time.Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-18", time.Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-13", time.Monday, "2021-06-07 00:00:00"},
-		{"2021-06-14", time.Monday, "2021-06-14 00:00:00"},
-		{"2021-06-18", time.Monday, "2021-06-14 00:00:00"},
-		{"2021-06-19", time.Monday, "2021-06-14 00:00:00"},
-		{"2021-06-20", time.Monday, "2021-06-14 00:00:00"},
+		{"2021-06-13", "2021-06-13 00:00:00"},
+		{"2021-06-14", "2021-06-13 00:00:00"},
+		{"2021-06-18", "2021-06-13 00:00:00"},
+		{"2021-06-19", "2021-06-13 00:00:00"},
+		{"2021-06-20", "2021-06-20 00:00:00"},
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).StartOfWeek(test.week)
+		c := Parse(test.input).StartOfWeek()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -342,30 +337,23 @@ func TestCarbon_EndOfWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string       // 输入值
-		week     time.Weekday // 输入参数
-		expected string       // 期望值
+		input    string // 输入值
+		expected string // 期望值
 	}{
-		{"", time.Sunday, ""},
-		{"0000-00-00 00:00:00", time.Sunday, ""},
-		{"", time.Monday, ""},
-		{"0000-00-00 00:00:00", time.Monday, ""},
+		{"", ""},
+		{"0000-00-00 00:00:00", ""},
+		{"", ""},
+		{"0000-00-00 00:00:00", ""},
 
-		{"2021-06-13", time.Sunday, "2021-06-19 23:59:59"},
-		{"2021-06-14", time.Sunday, "2021-06-19 23:59:59"},
-		{"2021-06-18", time.Sunday, "2021-06-19 23:59:59"},
-		{"2021-07-17", time.Sunday, "2021-07-17 23:59:59"},
-		{"2021-07-18", time.Sunday, "2021-07-24 23:59:59"},
-		{"2021-06-13", time.Monday, "2021-06-13 23:59:59"},
-		{"2021-06-14", time.Monday, "2021-06-20 23:59:59"},
-		{"2021-06-18", time.Monday, "2021-06-20 23:59:59"},
-		{"2021-06-19", time.Monday, "2021-06-20 23:59:59"},
-		{"2021-07-17", time.Monday, "2021-07-18 23:59:59"},
-		{"2021-07-18", time.Monday, "2021-07-18 23:59:59"},
+		{"2021-06-13", "2021-06-19 23:59:59"},
+		{"2021-06-14", "2021-06-19 23:59:59"},
+		{"2021-06-18", "2021-06-19 23:59:59"},
+		{"2021-07-17", "2021-07-17 23:59:59"},
+		{"2021-07-18", "2021-07-24 23:59:59"},
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).EndOfWeek(test.week)
+		c := Parse(test.input).EndOfWeek()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
