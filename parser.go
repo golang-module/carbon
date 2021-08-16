@@ -10,9 +10,7 @@ import (
 // 将标准格式时间字符串解析成 Carbon 实例
 func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
@@ -52,9 +50,7 @@ func Parse(value string, timezone ...string) Carbon {
 // 通过格式化字符将字符串解析成 carbon 实例
 func (c Carbon) ParseByFormat(value string, format string, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
@@ -80,9 +76,7 @@ func ParseByFormat(value string, format string, timezone ...string) Carbon {
 // 通过布局字符将字符串解析成 carbon 实例
 func (c Carbon) ParseByLayout(value string, layout string, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		loc, err := getLocationByTimezone(timezone[len(timezone)-1])
-		c.Loc = loc
-		c.Error = err
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
 	if c.Error != nil {
 		return c
@@ -90,7 +84,7 @@ func (c Carbon) ParseByLayout(value string, layout string, timezone ...string) C
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
-	tt, err := time.ParseInLocation(layout, value, c.Loc)
+	tt, err := time.ParseInLocation(layout, value, c.loc)
 	if err != nil {
 		c.Error = invalidLayoutError(value, layout)
 		return c
