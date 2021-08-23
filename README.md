@@ -1048,7 +1048,7 @@ if err != nil {
     // Error handle...
     log.Fatal(err)
 }
-fmt.Printf("%v", *person)
+fmt.Printf("%+v", *person)
 // output
 {ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 UpdatedAt:2022-08-05 13:14:15 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
@@ -1066,6 +1066,7 @@ The following languages are supported
 * [German(de)](./lang/de.json "German")：translated by [benzammour](https://github.com/benzammour "benzammour")
 * [Turkish(tr)](./lang/tr.json "Turkish"): translated by [emresenyuva](https://github.com/emresenyuva "emresenyuva")
 * [Portuguese(pt)](./lang/pt.json "Portuguese"): translated by [felipear89](https://github.com/felipear89 "felipear89")
+* [Russian(ru)](./lang/ru.json "Russian"): translated by [zemlyak](https://github.com/zemlyak "zemlyak")
 
 The following methods are supported
 
