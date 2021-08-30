@@ -17,8 +17,6 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 
 [gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
 
-[carbon.robeeask.com](http://carbon.robeeask.com/ "carbon.robeeask.com")
-
 #### 安装使用
 
 ```go
@@ -1260,3 +1258,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### 相关链接
+
+* [robeeask社区](https://carbon.robeeask.com/ "robeeask社区")
+* [掘金社区](https://juejin.cn/column/6988159448736858120 "掘金社区")
+* [segmentfault社区](https://segmentfault.com/blog/carbon "segmentfault社区")
