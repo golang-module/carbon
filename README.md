@@ -22,6 +22,8 @@ it is helpful, please give me a star
 
 #### Installation
 
+> Make sure you have installed Go version `1.16` or higher
+
 ```go
 // By github
 go get -u github.com/golang-module/carbon
@@ -431,6 +433,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-0
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // Difference in seconds with absolute value
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+
+// Difference in string
+carbon.Now().DiffInString() // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
+// Difference in string with absolute value
+carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
 
 // Difference in human friendly readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
