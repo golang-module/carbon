@@ -25,7 +25,7 @@ func TestCarbon_Value(t *testing.T) {
 	c := Now()
 	v, err := c.Value()
 	assert.Nil(t, err)
-	assert.Equal(t, v, c.Time)
+	assert.Equal(t, v, c.time)
 }
 
 func TestError_Value(t *testing.T) {
