@@ -41,10 +41,10 @@ func (c Carbon) StartOfSeason() Carbon {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
-		c.Time = time.Date(c.Year()-1, time.Month(12), 1, 0, 0, 0, 0, c.loc)
+		c.time = time.Date(c.Year()-1, time.Month(12), 1, 0, 0, 0, 0, c.loc)
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3), 1, 0, 0, 0, 0, c.loc)
+	c.time = time.Date(c.Year(), time.Month(c.Month()/3*3), 1, 0, 0, 0, 0, c.loc)
 	return c
 }
 
@@ -55,14 +55,14 @@ func (c Carbon) EndOfSeason() Carbon {
 		return c
 	}
 	if c.Month() == 1 || c.Month() == 2 {
-		c.Time = time.Date(c.Year(), time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
+		c.time = time.Date(c.Year(), time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 		return c
 	}
 	if c.Month() == 12 {
-		c.Time = time.Date(c.Year()+1, time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
+		c.time = time.Date(c.Year()+1, time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 		return c
 	}
-	c.Time = time.Date(c.Year(), time.Month(c.Month()/3*3+2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
+	c.time = time.Date(c.Year(), time.Month(c.Month()/3*3+2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
 	return c
 }
 

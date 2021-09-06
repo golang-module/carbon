@@ -89,7 +89,7 @@ func (c Carbon) ParseByLayout(value string, layout string, timezone ...string) C
 		c.Error = invalidLayoutError(value, layout)
 		return c
 	}
-	c.Time = tt
+	c.time = tt
 	return c
 }
 

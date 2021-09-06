@@ -28,7 +28,7 @@ func (c Carbon) CreateFromTimestamp(timestamp int64, timezone ...string) Carbon 
 	case 19:
 		ts = timestamp / 1e9
 	}
-	c.Time = time.Unix(ts, 0)
+	c.time = time.Unix(ts, 0)
 	return c
 }
 
@@ -47,7 +47,7 @@ func (c Carbon) CreateFromDateTime(year int, month int, day int, hour int, minut
 	if c.Error != nil {
 		return c
 	}
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
+	c.time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
@@ -67,7 +67,7 @@ func (c Carbon) CreateFromDate(year int, month int, day int, timezone ...string)
 		return c
 	}
 	hour, minute, second := time.Now().In(c.loc).Clock()
-	c.Time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
+	c.time = time.Date(year, time.Month(month), day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
@@ -87,7 +87,7 @@ func (c Carbon) CreateFromTime(hour int, minute int, second int, timezone ...str
 		return c
 	}
 	year, month, day := time.Now().In(c.loc).Date()
-	c.Time = time.Date(year, month, day, hour, minute, second, time.Now().Nanosecond(), c.loc)
+	c.time = time.Date(year, month, day, hour, minute, second, time.Now().Nanosecond(), c.loc)
 	return c
 }
 
