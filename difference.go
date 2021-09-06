@@ -144,7 +144,7 @@ func (c Carbon) DiffInSeconds(carbon ...Carbon) int64 {
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return end.ToTimestamp() - c.ToTimestamp()
+	return end.Timestamp() - c.Timestamp()
 }
 
 // DiffInSecondsWithAbs gets the difference in seconds with absolute value.
@@ -157,6 +157,34 @@ func (c Carbon) DiffInSecondsWithAbs(carbon ...Carbon) int64 {
 	return getAbsValue(c.DiffInSeconds(end))
 }
 
+// DiffInString gets the difference in string, i18n is supported.
+// 相差字符串，支持i18n
+func (c Carbon) DiffInString(carbon ...Carbon) string {
+	end := c.Now()
+	if len(carbon) > 0 {
+		end = carbon[len(carbon)-1]
+	}
+	if c.Error != nil || end.Error != nil {
+		return ""
+	}
+	unit, value := c.diff(end)
+	return c.lang.translate(unit, value)
+}
+
+// DiffInString gets the difference in string with absolute value, i18n is supported.
+// 相差字符串，支持i18n
+func (c Carbon) DiffInStringWithAbs(carbon ...Carbon) string {
+	end := c.Now()
+	if len(carbon) > 0 {
+		end = carbon[len(carbon)-1]
+	}
+	if c.Error != nil || end.Error != nil {
+		return ""
+	}
+	unit, value := c.diff(end)
+	return c.lang.translate(unit, getAbsValue(value))
+}
+
 // DiffForHumans gets the difference in a human readable format, i18n is supported.
 // 获取对人类友好的可读格式时间差，支持i18n
 func (c Carbon) DiffForHumans(carbon ...Carbon) string {
@@ -164,40 +192,14 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	unit, diff := "", int64(0)
-	switch true {
-	case c.DiffInYearsWithAbs(end) > 0:
-		unit = "year"
-		diff = c.DiffInYearsWithAbs(end)
-		break
-	case c.DiffInMonthsWithAbs(end) > 0:
-		unit = "month"
-		diff = c.DiffInMonthsWithAbs(end)
-		break
-	case c.DiffInWeeksWithAbs(end) > 0:
-		unit = "week"
-		diff = c.DiffInWeeksWithAbs(end)
-		break
-	case c.DiffInDaysWithAbs(end) > 0:
-		unit = "day"
-		diff = c.DiffInDaysWithAbs(end)
-		break
-	case c.DiffInHoursWithAbs(end) > 0:
-		unit = "hour"
-		diff = c.DiffInHoursWithAbs(end)
-		break
-	case c.DiffInMinutesWithAbs(end) > 0:
-		unit = "minute"
-		diff = c.DiffInMinutesWithAbs(end)
-	case c.DiffInSecondsWithAbs(end) > 0:
-		unit = "second"
-		diff = c.DiffInSecondsWithAbs(end)
-	case c.DiffInSecondsWithAbs(end) == 0:
-		unit = "now"
-		diff = 0
-		return c.lang.translate(unit, diff)
+	if c.Error != nil || end.Error != nil {
+		return ""
 	}
-	translation := c.lang.translate(unit, diff)
+	unit, value := c.diff(end)
+	translation := c.lang.translate(unit, getAbsValue(value))
+	if unit == "now" {
+		return translation
+	}
 	if c.Lt(end) && len(carbon) == 0 {
 		return strings.Replace(c.lang.resources["ago"], "%s", translation, 1)
 	}
@@ -208,4 +210,41 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 		return strings.Replace(c.lang.resources["from_now"], "%s", translation, 1)
 	}
 	return strings.Replace(c.lang.resources["after"], "%s", translation, 1)
+}
+
+// diff gets the difference for unit and value.
+// 获取相差单位和差值
+func (c Carbon) diff(end Carbon) (unit string, value int64) {
+	switch true {
+	case c.DiffInYearsWithAbs(end) > 0:
+		unit = "year"
+		value = c.DiffInYears(end)
+		break
+	case c.DiffInMonthsWithAbs(end) > 0:
+		unit = "month"
+		value = c.DiffInMonths(end)
+		break
+	case c.DiffInWeeksWithAbs(end) > 0:
+		unit = "week"
+		value = c.DiffInWeeks(end)
+		break
+	case c.DiffInDaysWithAbs(end) > 0:
+		unit = "day"
+		value = c.DiffInDays(end)
+		break
+	case c.DiffInHoursWithAbs(end) > 0:
+		unit = "hour"
+		value = c.DiffInHours(end)
+		break
+	case c.DiffInMinutesWithAbs(end) > 0:
+		unit = "minute"
+		value = c.DiffInMinutes(end)
+	case c.DiffInSecondsWithAbs(end) > 0:
+		unit = "second"
+		value = c.DiffInSeconds(end)
+	case c.DiffInSecondsWithAbs(end) == 0:
+		unit = "now"
+		value = 0
+	}
+	return
 }

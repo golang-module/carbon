@@ -354,6 +354,127 @@ func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 	}
 }
 
+func TestCarbon_DiffInString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    Carbon // 输入值
+		expected string // 期望值
+	}{
+		{Now(), "just now"},
+
+		{Now().AddYearsNoOverflow(1), "-1 year"},
+		{Now().SubYearsNoOverflow(1), "1 year"},
+		{Now().AddYearsNoOverflow(10), "-10 years"},
+		{Now().SubYearsNoOverflow(10), "10 years"},
+
+		{Now().AddMonthsNoOverflow(1), "-1 month"},
+		{Now().SubMonthsNoOverflow(1), "1 month"},
+		{Now().AddMonthsNoOverflow(10), "-10 months"},
+		{Now().SubMonthsNoOverflow(10), "10 months"},
+
+		{Now().AddDays(1), "-1 day"},
+		{Now().SubDays(1), "1 day"},
+		{Now().AddDays(10), "-1 week"},
+		{Now().SubDays(10), "1 week"},
+
+		{Now().AddHours(1), "-1 hour"},
+		{Now().SubHours(1), "1 hour"},
+		{Now().AddHours(10), "-10 hours"},
+		{Now().SubHours(10), "10 hours"},
+
+		{Now().AddMinutes(1), "-1 minute"},
+		{Now().SubMinutes(1), "1 minute"},
+		{Now().AddMinutes(10), "-10 minutes"},
+		{Now().SubMinutes(10), "10 minutes"},
+
+		{Now().AddSeconds(1), "-1 second"},
+		{Now().SubSeconds(1), "1 second"},
+		{Now().AddSeconds(10), "-10 seconds"},
+		{Now().SubSeconds(10), "10 seconds"},
+	}
+
+	for index, test := range tests {
+		c := test.input
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.DiffInString(), "Current test index is "+strconv.Itoa(index))
+	}
+	for index, test := range tests {
+		c := test.input
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.DiffInString(Now()), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLangError_DiffInString(t *testing.T) {
+	lang := NewLanguage()
+	lang.SetLocale("xxx")
+	c := Now().SetLanguage(lang).AddMonths(1)
+	assert.NotNil(t, c.Error, "It should catch an exception in DiffInString()")
+	assert.Equal(t, "", c.DiffInString())
+}
+
+func TestCarbon_DiffInStringWithAbs(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    Carbon // 输入值
+		expected string // 期望值
+	}{
+		{Now(), "just now"},
+
+		{Now().AddYearsNoOverflow(1), "1 year"},
+		{Now().SubYearsNoOverflow(1), "1 year"},
+		{Now().AddYearsNoOverflow(10), "10 years"},
+		{Now().SubYearsNoOverflow(10), "10 years"},
+
+		{Now().AddMonthsNoOverflow(1), "1 month"},
+		{Now().SubMonthsNoOverflow(1), "1 month"},
+		{Now().AddMonthsNoOverflow(10), "10 months"},
+		{Now().SubMonthsNoOverflow(10), "10 months"},
+
+		{Now().AddDays(1), "1 day"},
+		{Now().SubDays(1), "1 day"},
+		{Now().AddDays(10), "1 week"},
+		{Now().SubDays(10), "1 week"},
+
+		{Now().AddHours(1), "1 hour"},
+		{Now().SubHours(1), "1 hour"},
+		{Now().AddHours(10), "10 hours"},
+		{Now().SubHours(10), "10 hours"},
+
+		{Now().AddMinutes(1), "1 minute"},
+		{Now().SubMinutes(1), "1 minute"},
+		{Now().AddMinutes(10), "10 minutes"},
+		{Now().SubMinutes(10), "10 minutes"},
+
+		{Now().AddSeconds(1), "1 second"},
+		{Now().SubSeconds(1), "1 second"},
+		{Now().AddSeconds(10), "10 seconds"},
+		{Now().SubSeconds(10), "10 seconds"},
+	}
+
+	for index, test := range tests {
+		c := test.input
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.DiffInStringWithAbs(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := test.input
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.DiffInStringWithAbs(Now()), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLangError_DiffInStringWithAbs(t *testing.T) {
+	lang := NewLanguage()
+	lang.SetLocale("xxx")
+	c := Now().SetLanguage(lang).AddMonths(1)
+	assert.NotNil(t, c.Error, "It should catch an exception in DiffInStringWithAbs()")
+	assert.Equal(t, "", c.DiffInStringWithAbs())
+}
+
 func TestCarbon_DiffForHumans(t *testing.T) {
 	assert := assert.New(t)
 
@@ -399,4 +520,12 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.DiffForHumans(), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestLangError_DiffForHumans(t *testing.T) {
+	lang := NewLanguage()
+	lang.SetLocale("xxx")
+	c := Now().SetLanguage(lang).AddMonths(1)
+	assert.NotNil(t, c.Error, "It should catch an exception in DiffForHumans()")
+	assert.Equal(t, "", c.DiffForHumans())
 }
