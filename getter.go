@@ -20,7 +20,7 @@ func (c Carbon) DaysInMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.EndOfMonth().Time.In(c.loc).Day()
+	return c.EndOfMonth().time.In(c.loc).Day()
 }
 
 // MonthOfYear gets month of year.
@@ -29,7 +29,7 @@ func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return int(c.Time.In(c.loc).Month())
+	return int(c.time.In(c.loc).Month())
 }
 
 // DayOfYear gets day of year.
@@ -38,7 +38,7 @@ func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).YearDay()
+	return c.time.In(c.loc).YearDay()
 }
 
 // DayOfMonth gets day of month.
@@ -47,7 +47,7 @@ func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Day()
+	return c.time.In(c.loc).Day()
 }
 
 // DayOfWeek gets day of week.
@@ -56,7 +56,7 @@ func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	day := int(c.Time.In(c.loc).Weekday())
+	day := int(c.time.In(c.loc).Weekday())
 	if day == 0 {
 		return DaysPerWeek
 	}
@@ -69,7 +69,7 @@ func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	_, week := c.Time.In(c.loc).ISOWeek()
+	_, week := c.time.In(c.loc).ISOWeek()
 	return week
 }
 
@@ -110,7 +110,7 @@ func (c Carbon) Year() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Year()
+	return c.time.In(c.loc).Year()
 }
 
 // Quarter gets current quarter.
@@ -165,7 +165,7 @@ func (c Carbon) Hour() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Hour()
+	return c.time.In(c.loc).Hour()
 }
 
 // Minute gets current minute.
@@ -174,7 +174,7 @@ func (c Carbon) Minute() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Minute()
+	return c.time.In(c.loc).Minute()
 }
 
 // Second gets current second.
@@ -183,7 +183,7 @@ func (c Carbon) Second() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Second()
+	return c.time.In(c.loc).Second()
 }
 
 // Millisecond gets current millisecond.
@@ -192,7 +192,7 @@ func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Nanosecond() / 1e6
+	return c.time.In(c.loc).Nanosecond() / 1e6
 }
 
 // Microsecond gets current microsecond.
@@ -201,7 +201,7 @@ func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Nanosecond() / 1e3
+	return c.time.In(c.loc).Nanosecond() / 1e3
 }
 
 // Nanosecond gets current nanosecond.
@@ -210,7 +210,7 @@ func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Nanosecond()
+	return c.time.In(c.loc).Nanosecond()
 }
 
 // Timestamp gets timestamp with second, it is short for TimestampWithSecond.
@@ -228,7 +228,7 @@ func (c Carbon) TimestampWithSecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.In(c.loc).Unix()
+	return c.time.In(c.loc).Unix()
 }
 
 // TimestampWithMillisecond gets timestamp with millisecond.
@@ -237,7 +237,7 @@ func (c Carbon) TimestampWithMillisecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.UnixNano() / int64(time.Millisecond)
+	return c.time.UnixNano() / int64(time.Millisecond)
 }
 
 // TimestampWithMicrosecond gets timestamp with microsecond.
@@ -246,7 +246,7 @@ func (c Carbon) TimestampWithMicrosecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.UnixNano() / int64(time.Microsecond)
+	return c.time.UnixNano() / int64(time.Microsecond)
 }
 
 // TimestampWithNanosecond gets timestamp with nanosecond.
@@ -255,7 +255,7 @@ func (c Carbon) TimestampWithNanosecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Time.UnixNano()
+	return c.time.UnixNano()
 }
 
 // Location gets location name.
@@ -267,14 +267,14 @@ func (c Carbon) Location() string {
 // Timezone gets timezone name.
 // 获取时区
 func (c Carbon) Timezone() string {
-	name, _ := c.Time.Zone()
+	name, _ := c.time.Zone()
 	return name
 }
 
 // Offset gets offset seconds from the UTC timezone.
 // 获取距离UTC时区的偏移量，单位秒
 func (c Carbon) Offset() int {
-	_, offset := c.Time.Zone()
+	_, offset := c.time.Zone()
 	return offset
 }
 
