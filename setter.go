@@ -26,7 +26,8 @@ func (c Carbon) SetLocale(locale string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.Error = c.lang.SetLocale(locale)
+	c.lang.SetLocale(locale)
+	c.Error = c.lang.Error
 	return c
 }
 
@@ -34,7 +35,8 @@ func (c Carbon) SetLocale(locale string) Carbon {
 // 设置语言区域
 func SetLocale(locale string) Carbon {
 	c := NewCarbon()
-	c.Error = c.lang.SetLocale(locale)
+	c.lang.SetLocale(locale)
+	c.Error = c.lang.Error
 	return c
 }
 
@@ -44,16 +46,16 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.lang = lang
+	c.lang, c.Error = lang, lang.Error
 	return c
 }
 
 // SetLanguage sets language.
 // 设置语言对象
 func SetLanguage(lang *Language) Carbon {
-	c, err := NewCarbon(), lang.SetLocale(lang.locale)
-	c.lang = lang
-	c.Error = err
+	c := NewCarbon()
+	lang.SetLocale(lang.locale)
+	c.lang, c.Error = lang, lang.Error
 	return c
 }
 
