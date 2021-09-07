@@ -19,6 +19,8 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 
 #### 安装使用
 
+##### Golang 版本小于1.16
+
 ```go
 // 使用 github 库
 go get -u github.com/golang-module/carbon
@@ -32,6 +34,24 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
+)
+```
+
+##### Golang 版本大于等于1.16
+
+```go
+// 使用 github 库
+go get -u github.com/golang-module/carbon/v2
+
+import (
+    "github.com/golang-module/carbon/v2"
+)
+
+// 使用 gitee 库
+go get -u gitee.com/go-package/carbon/v2
+
+import (
+    "gitee.com/go-package/carbon/v2"
 )
 ```
 
@@ -1258,3 +1278,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### 相关链接
+
+* [robeeask社区](https://carbon.robeeask.com/ "robeeask社区")
+* [掘金社区](https://juejin.cn/column/6988159448736858120 "掘金社区")
+* [segmentfault社区](https://segmentfault.com/blog/carbon "segmentfault社区")

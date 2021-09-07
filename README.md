@@ -22,6 +22,8 @@ it is helpful, please give me a star
 
 #### Installation
 
+##### Go version < 1.16
+
 ```go
 // By github
 go get -u github.com/golang-module/carbon
@@ -35,6 +37,24 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
+)               
+```
+
+##### Go version >= 1.16
+
+```go
+// By github
+go get -u github.com/golang-module/carbon/v2
+
+import (
+    "github.com/golang-module/carbon/v2"
+)
+
+// By gitee
+go get -u gitee.com/go-package/carbon/v2
+
+import (
+    "gitee.com/go-package/carbon/v2"
 )               
 ```
 
@@ -1253,3 +1273,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### Links
+
+* [robeeask](https://carbon.robeeask.com/ "robeeask")
+* [juejin](https://juejin.cn/column/6988159448736858120 "juejin")
+* [segmentfault](https://segmentfault.com/blog/carbon "segmentfault")
