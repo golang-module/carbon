@@ -6,6 +6,51 @@ import (
 	"strings"
 )
 
+// ToTimestamp outputs a timestamp with second(will be removed from v2.0, only keep Timestamp).
+// 输出秒级时间戳(将在v2.0版本移除，只保留 Timestamp)
+func (c Carbon) ToTimestamp() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Timestamp()
+}
+
+// ToTimestampWithSecond outputs a timestamp with second(will be removed from v2.0, only keep TimestampWithSecond).
+// 输出秒级时间戳(将在v2.0版本移除，只保留 TimestampWithSecond)
+func (c Carbon) ToTimestampWithSecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.TimestampWithSecond()
+}
+
+// ToTimestampWithMillisecond outputs a timestamp with millisecond(will be removed from v2.0, only keep TimestampWithMillisecond).
+// 输出毫秒级时间戳(将在v2.0版本移除，只保留 TimestampWithMillisecond)
+func (c Carbon) ToTimestampWithMillisecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.TimestampWithMillisecond()
+}
+
+// ToTimestampWithMicrosecond outputs a timestamp with microsecond(will be removed from v2.0, only keep TimestampWithMicrosecond).
+// 输出微秒级时间戳(将在v2.0版本移除，只保留 TimestampWithMicrosecond)
+func (c Carbon) ToTimestampWithMicrosecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.TimestampWithMicrosecond()
+}
+
+// ToTimestampWithNanosecond outputs a timestamp with nanosecond(will be removed from v2.0, only keep TimestampWithNanosecond).
+// 输出纳秒级时间戳(将在v2.0版本移除，只保留 TimestampWithNanosecond)
+func (c Carbon) ToTimestampWithNanosecond() int64 {
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.TimestampWithNanosecond()
+}
+
 // String outputs a string in date and time format, implement Stringer interface.
 // 实现 Stringer 接口
 func (c Carbon) String() string {
@@ -24,7 +69,7 @@ func (c Carbon) ToString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).String()
+	return c.Time.In(c.loc).String()
 }
 
 // ToMonthString outputs a string in month format, i18n is supported.
@@ -120,7 +165,7 @@ func (c Carbon) ToDayDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(DayDateTimeFormat)
+	return c.Time.In(c.loc).Format(DayDateTimeFormat)
 }
 
 // ToDateTimeString outputs a string in date and time format.
@@ -132,7 +177,7 @@ func (c Carbon) ToDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(DateTimeFormat)
+	return c.Time.In(c.loc).Format(DateTimeFormat)
 }
 
 // ToShortDateTimeString outputs a string in short date and time format.
@@ -144,7 +189,7 @@ func (c Carbon) ToShortDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(ShortDateTimeFormat)
+	return c.Time.In(c.loc).Format(ShortDateTimeFormat)
 }
 
 // ToDateString outputs a string in date format.
@@ -156,7 +201,7 @@ func (c Carbon) ToDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(DateFormat)
+	return c.Time.In(c.loc).Format(DateFormat)
 }
 
 // ToShortDateString outputs a string in short date format.
@@ -168,7 +213,7 @@ func (c Carbon) ToShortDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(ShortDateFormat)
+	return c.Time.In(c.loc).Format(ShortDateFormat)
 }
 
 // ToTimeString outputs a string in time format.
@@ -180,7 +225,7 @@ func (c Carbon) ToTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(TimeFormat)
+	return c.Time.In(c.loc).Format(TimeFormat)
 }
 
 // ToShortTimeString outputs a string in short time format.
@@ -192,7 +237,7 @@ func (c Carbon) ToShortTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(ShortTimeFormat)
+	return c.Time.In(c.loc).Format(ShortTimeFormat)
 }
 
 // ToAtomString outputs a string in ATOM format.
@@ -213,7 +258,7 @@ func (c Carbon) ToAnsicString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(AnsicFormat)
+	return c.Time.In(c.loc).Format(AnsicFormat)
 }
 
 // ToCookieString outputs a string in COOKIE format.
@@ -225,7 +270,7 @@ func (c Carbon) ToCookieString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(CookieFormat)
+	return c.Time.In(c.loc).Format(CookieFormat)
 }
 
 // ToRssString outputs a string in RSS format.
@@ -237,7 +282,7 @@ func (c Carbon) ToRssString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RssFormat)
+	return c.Time.In(c.loc).Format(RssFormat)
 }
 
 // ToW3cString outputs a string in W3C format.
@@ -258,7 +303,7 @@ func (c Carbon) ToUnixDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(UnixDateFormat)
+	return c.Time.In(c.loc).Format(UnixDateFormat)
 }
 
 // ToRubyDateString outputs a string in ruby date format.
@@ -270,7 +315,7 @@ func (c Carbon) ToRubyDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RubyDateFormat)
+	return c.Time.In(c.loc).Format(RubyDateFormat)
 }
 
 // ToKitchenString outputs a string in KITCHEN format.
@@ -282,7 +327,7 @@ func (c Carbon) ToKitchenString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(KitchenFormat)
+	return c.Time.In(c.loc).Format(KitchenFormat)
 }
 
 // ToIso8601String outputs a string in ISO8601 format.
@@ -294,7 +339,7 @@ func (c Carbon) ToIso8601String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(Iso8601Format)
+	return c.Time.In(c.loc).Format(Iso8601Format)
 }
 
 // ToRfc822String outputs a string in RFC822 format.
@@ -306,7 +351,7 @@ func (c Carbon) ToRfc822String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC822Format)
+	return c.Time.In(c.loc).Format(RFC822Format)
 }
 
 // ToRfc822zString outputs a string in RFC822Z format.
@@ -318,7 +363,7 @@ func (c Carbon) ToRfc822zString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC822ZFormat)
+	return c.Time.In(c.loc).Format(RFC822ZFormat)
 }
 
 // ToRfc850String outputs a string in RFC850 format.
@@ -330,7 +375,7 @@ func (c Carbon) ToRfc850String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC850Format)
+	return c.Time.In(c.loc).Format(RFC850Format)
 }
 
 // ToRfc1036String outputs a string in RFC1036 format.
@@ -342,7 +387,7 @@ func (c Carbon) ToRfc1036String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC1036Format)
+	return c.Time.In(c.loc).Format(RFC1036Format)
 }
 
 // ToRfc1123String outputs a string in RFC1123 format.
@@ -354,7 +399,7 @@ func (c Carbon) ToRfc1123String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC1123Format)
+	return c.Time.In(c.loc).Format(RFC1123Format)
 }
 
 // ToRfc1123zString outputs a string in RFC1123z format.
@@ -366,7 +411,7 @@ func (c Carbon) ToRfc1123zString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC1123ZFormat)
+	return c.Time.In(c.loc).Format(RFC1123ZFormat)
 }
 
 // ToRfc2822String outputs a string in RFC2822 format.
@@ -378,7 +423,7 @@ func (c Carbon) ToRfc2822String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC2822Format)
+	return c.Time.In(c.loc).Format(RFC2822Format)
 }
 
 // ToRfc3339String outputs a string in RFC3339 format.
@@ -390,7 +435,7 @@ func (c Carbon) ToRfc3339String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC3339Format)
+	return c.Time.In(c.loc).Format(RFC3339Format)
 }
 
 // ToRfc7231String outputs a string in RFC7231 format.
@@ -402,7 +447,7 @@ func (c Carbon) ToRfc7231String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(RFC7231Format)
+	return c.Time.In(c.loc).Format(RFC7231Format)
 }
 
 // ToLayoutString outputs a string by layout.
@@ -414,7 +459,7 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(layout)
+	return c.Time.In(c.loc).Format(layout)
 }
 
 // Layout outputs a string by layout, it is short for ToLayoutString.
@@ -438,7 +483,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(format); i++ {
 		if layout, ok := formats[byte(format[i])]; ok {
-			buffer.WriteString(c.time.In(c.loc).Format(layout))
+			buffer.WriteString(c.Time.In(c.loc).Format(layout))
 		} else {
 			switch format[i] {
 			case '\\': // 原样输出，不解析

@@ -78,8 +78,8 @@ func TestCarbon_SetLanguage(t *testing.T) {
 	resources := map[string]string{
 		"seasons": "spring|summer|autumn|winter",
 	}
-	lang.SetLocale("en")
-	if lang.Error == nil {
+
+	if lang.SetLocale("en") == nil {
 		lang.SetResources(resources)
 	}
 

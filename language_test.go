@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -11,19 +12,23 @@ func TestLanguage_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   string // 输入值
-		expected string // 期望值
+		input    string // 输入值
+		expected error  // 期望值
 	}{
-		{Now(), "en", "1 day after"},
-		{Tomorrow(), "zh-CN", "1 天后"},
+		{"en", nil},
+		{"zh-CN", nil},
 	}
 
 	for index, test := range tests {
-		lang := NewLanguage()
-		lang.SetLocale(test.input2)
-		assert.Equal(test.expected, (test.input1).AddDays(1).SetLanguage(lang).DiffForHumans(test.input1), "Current test index is "+strconv.Itoa(index))
+		assert.ErrorIs(test.expected, NewLanguage().SetLocale(test.input), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestLangError_SetLocale(t *testing.T) {
+	locale, lang := "xxx", NewLanguage()
+	expected := fmt.Errorf("invalid locale %q, please see the directory %q for all valid locales", locale, "./lang/")
+	actual := lang.SetLocale(locale)
+	assert.Equal(t, expected, actual, "It should catch an exception in SetLocale()")
 }
 
 func TestLanguage_SetResources1(t *testing.T) {

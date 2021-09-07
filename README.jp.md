@@ -19,8 +19,6 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 #### インストール使用
 
-> `1.16` 以降のバージョンのGoがインストールされていることを確認してください
-
 ```go
 // github倉庫を使う
 go get -u github.com/golang-module/carbon
@@ -433,15 +431,6 @@ carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-0
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // 何秒の差がありますか（絶対値）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
-
-// 時間差を文字列で表す
-carbon.Now().DiffInString() // just now
-carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
-carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
-// 時間差を文字列で表す（絶対値）
-carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
-carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
-carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
 
 // 人間に優しい読み取り可能なフォーマットの時間差を取得します
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now

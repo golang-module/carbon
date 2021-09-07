@@ -109,8 +109,8 @@ func (c Carbon) Lunar() (l lunar) {
 // getDaysInYear gets total days in lunar year.
 // 获取该年总天数
 func (l lunar) getDaysInYear() int {
-	var sum = 348
-	for i := 0x8000; i > 0x8; i >>= 1 {
+	var i, sum = 0, 348
+	for i = 0x8000; i > 0x8; i >>= 1 {
 		if (lunarTerms[l.year-minYear] & i) != 0 {
 			sum++
 		}
@@ -154,31 +154,34 @@ func (l lunar) Festival() string {
 	if l.year == 0 {
 		return ""
 	}
+	index := -1
 	switch {
 	case l.month == 1 && l.day == 1:
-		return festivals[0]
+		index = 0
 	case l.month == 1 && l.day == 15:
-		return festivals[1]
+		index = 1
 	case l.month == 5 && l.day == 5:
-		return festivals[2]
+		index = 2
 	case l.month == 7 && l.day == 7:
-		return festivals[3]
+		index = 3
 	case l.month == 7 && l.day == 15:
-		return festivals[4]
+		index = 4
 	case l.month == 8 && l.day == 15:
-		return festivals[5]
+		index = 5
 	case l.month == 9 && l.day == 9:
-		return festivals[6]
+		index = 6
 	case l.month == 10 && l.day == 1:
-		return festivals[7]
+		index = 7
 	case l.month == 10 && l.day == 15:
-		return festivals[8]
+		index = 8
 	case l.month == 12 && l.day == 8:
-		return festivals[9]
+		index = 9
 	case l.month == 12 && l.day == 23:
-		return festivals[10]
+		index = 10
+	default:
+		return ""
 	}
-	return ""
+	return festivals[index]
 }
 
 // Year gets lunar year.

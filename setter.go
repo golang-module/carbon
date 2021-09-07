@@ -26,8 +26,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.lang.SetLocale(locale)
-	c.Error = c.lang.Error
+	c.Error = c.lang.SetLocale(locale)
 	return c
 }
 
@@ -35,8 +34,7 @@ func (c Carbon) SetLocale(locale string) Carbon {
 // 设置语言区域
 func SetLocale(locale string) Carbon {
 	c := NewCarbon()
-	c.lang.SetLocale(locale)
-	c.Error = c.lang.Error
+	c.Error = c.lang.SetLocale(locale)
 	return c
 }
 
@@ -46,16 +44,16 @@ func (c Carbon) SetLanguage(lang *Language) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.lang, c.Error = lang, lang.Error
+	c.lang = lang
 	return c
 }
 
 // SetLanguage sets language.
 // 设置语言对象
 func SetLanguage(lang *Language) Carbon {
-	c := NewCarbon()
-	lang.SetLocale(lang.locale)
-	c.lang, c.Error = lang, lang.Error
+	c, err := NewCarbon(), lang.SetLocale(lang.locale)
+	c.lang = lang
+	c.Error = err
 	return c
 }
 
@@ -65,7 +63,7 @@ func (c Carbon) SetYear(year int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(year, time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(year, time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -84,7 +82,7 @@ func (c Carbon) SetMonth(month int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(month), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(c.Year(), time.Month(month), c.Day(), c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -128,7 +126,7 @@ func (c Carbon) SetDay(day int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -138,7 +136,7 @@ func (c Carbon) SetHour(hour int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), hour, c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), hour, c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -148,7 +146,7 @@ func (c Carbon) SetMinute(minute int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), minute, c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), minute, c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -158,7 +156,7 @@ func (c Carbon) SetSecond(second int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), second, c.Nanosecond(), c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), second, c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -168,7 +166,7 @@ func (c Carbon) SetMillisecond(millisecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), millisecond*1e6, c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), millisecond*1e6, c.loc)
 	return c
 }
 
@@ -178,7 +176,7 @@ func (c Carbon) SetMicrosecond(microsecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e3, c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), microsecond*1e3, c.loc)
 	return c
 }
 
@@ -188,6 +186,6 @@ func (c Carbon) SetNanosecond(nanosecond int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), nanosecond, c.loc)
+	c.Time = time.Date(c.Year(), time.Month(c.Month()), c.Day(), c.Hour(), c.Minute(), c.Second(), nanosecond, c.loc)
 	return c
 }
