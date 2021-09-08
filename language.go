@@ -25,7 +25,7 @@ var (
 	}
 )
 
-// Language define a Language struct.
+// Language defines a Language struct.
 // 定义 Language 结构体
 type Language struct {
 	dir       string
@@ -34,7 +34,7 @@ type Language struct {
 	Error     error
 }
 
-// NewLanguage return a new Language instance.
+// NewLanguage returns a new Language instance.
 // 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{

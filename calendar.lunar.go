@@ -148,7 +148,7 @@ func (l lunar) Animal() string {
 	return animals[l.year%MonthsPerYear]
 }
 
-// Festival get lunar festival name.
+// Festival gets lunar festival name.
 // 获取农历节日
 func (l lunar) Festival() string {
 	if l.year == 0 {
@@ -202,7 +202,7 @@ func (l lunar) LeapMonth() int {
 	return lunarTerms[l.year-minYear] & 0xf
 }
 
-// Day get lunar day.
+// Day gets lunar day.
 // 获取农历日
 func (l lunar) Day() int {
 	return l.day
