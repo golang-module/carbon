@@ -11,7 +11,7 @@ func (c Carbon) AddDuration(duration string) Carbon {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time = c.time.In(c.loc).Add(td)
+	c.Time = c.Time.In(c.loc).Add(td)
 	c.Error = err
 	return c
 }
@@ -124,7 +124,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(years, 0, 0)
+	c.Time = c.Time.In(c.loc).AddDate(years, 0, 0)
 	return c
 }
 
@@ -140,7 +140,7 @@ func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-	c.time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -237,7 +237,7 @@ func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(0, months, 0)
+	c.Time = c.Time.In(c.loc).AddDate(0, months, 0)
 	return c
 }
 
@@ -254,7 +254,7 @@ func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	if c.Day() > last.Day() {
 		day = last.Day()
 	}
-	c.time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
+	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
 	return c
 }
 
@@ -324,7 +324,7 @@ func (c Carbon) AddDays(days int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(0, 0, days)
+	c.Time = c.Time.In(c.loc).AddDate(0, 0, days)
 	return c
 }
 
@@ -353,7 +353,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.time = c.time.In(c.loc).Add(td)
+	c.Time = c.Time.In(c.loc).Add(td)
 	return c
 }
 
@@ -382,7 +382,7 @@ func (c Carbon) AddMinutes(minutes int) Carbon {
 		return c
 	}
 	td := time.Duration(minutes) * time.Minute
-	c.time = c.time.Add(td)
+	c.Time = c.Time.Add(td)
 	return c
 }
 
@@ -411,7 +411,7 @@ func (c Carbon) AddSeconds(seconds int) Carbon {
 		return c
 	}
 	td := time.Duration(seconds) * time.Second
-	c.time = c.time.Add(td)
+	c.Time = c.Time.Add(td)
 	return c
 }
 

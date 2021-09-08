@@ -1,16 +1,14 @@
 package carbon
 
 import (
-	"embed"
 	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
-)
 
-//go:embed lang
-var fs embed.FS
+	"github.com/gobuffalo/packr"
+)
 
 var (
 	// defaultDir default directory
@@ -51,13 +49,16 @@ func (lang *Language) SetLocale(locale string) {
 		return
 	}
 	lang.locale = locale
-	fileName := lang.dir + string(os.PathSeparator) + locale + ".json"
-	bytes, err := fs.ReadFile(fileName)
+	box := packr.NewBox(lang.dir)
+	localeName := locale + ".json"
+	bytes, err := box.Find(localeName)
+	localePath := lang.dir + string(os.PathSeparator) + localeName
 	if err != nil {
-		lang.Error = invalidLocaleError(fileName)
+		lang.Error = invalidLocaleError(localePath)
+		return
 	}
 	if json.Unmarshal(bytes, &lang.resources) != nil {
-		lang.Error = invalidLocaleError(fileName)
+		lang.Error = invalidLocaleError(localePath)
 	}
 }
 
