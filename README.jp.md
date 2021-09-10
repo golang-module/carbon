@@ -19,7 +19,7 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 #### インストール使用
 
-##### Golangバージョンは1.16より小さいです
+> `1.16` 以降のバージョンのGoがインストールされていることを確認してください
 
 ```go
 // github倉庫を使う
@@ -34,24 +34,6 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
-)
-```
-
-##### Golangバージョンは1.16以上です
-
-```go
-// github倉庫を使う
-go get -u github.com/golang-module/carbon/v2
-
-import (
-    "github.com/golang-module/carbon/v2"
-)
-
-// gitee倉庫を使う
-go get -u gitee.com/go-package/carbon/v2
-
-import (
-    "gitee.com/go-package/carbon/v2"
 )
 ```
 
@@ -451,6 +433,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-0
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // 何秒の差がありますか（絶対値）
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+
+// 時間差を文字列で表す
+carbon.Now().DiffInString() // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
+// 時間差を文字列で表す（絶対値）
+carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
 
 // 人間に優しい読み取り可能なフォーマットの時間差を取得します
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
@@ -1103,13 +1094,15 @@ fmt.Printf("%+v", *person)
 ###### エリアの設定
 
 ```go
-lang := NewLanguage()
-if err := lang.SetLocale("zh-CN"); err != nil {
-    // エラー処理
-    log.Fatal(err)
-}
+lang := carbon.NewLanguage()
+lang.SetLocale("zh-CN")
 
 c := carbon.SetLanguage(lang)
+if c.Error != nil {
+	// エラー処理
+	log.Fatal(err)
+}
+
 c.Now().AddHours(1).DiffForHumans() // 1 小时后
 c.Now().AddHours(1).ToMonthString() // 八月
 c.Now().AddHours(1).ToShortMonthString() // 8月
@@ -1122,12 +1115,8 @@ c.Now().AddHours(1).Season() // 夏季
 ###### 翻訳リソースの一部を書き換える(残りはまだ指定された `locale` ファイルの内容によって翻訳されます)
 
 ```go
-lang := NewLanguage()
-
-if err := lang.SetLocale("en"); err != nil {
-    // エラー処理
-    log.Fatal(err)
-}
+lang := carbon.NewLanguage()
+lang.SetLocale("en")
 
 resources := map[string]string {
     "hour": "%dh",
@@ -1135,6 +1124,11 @@ resources := map[string]string {
 lang.SetResources(resources)
 
 c := carbon.SetLanguage(lang)
+if c.Error != nil {
+	// エラー処理
+	log.Fatal(err)
+}
+
 c.Now().AddYears(1).DiffForHumans() // 1 year from now
 c.Now().AddHours(1).DiffForHumans() // 1h from now
 c.Now().ToMonthString() // August
@@ -1148,7 +1142,7 @@ c.Now().Season() // Summer
 ###### すべての翻訳リソースを書き換えます
 
 ```go
-lang := NewLanguage()
+lang := carbon.NewLanguage()
 resources := map[string]string {
 	"months": "january|february|march|april|may|june|july|august|september|october|november|december",
 	"short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
