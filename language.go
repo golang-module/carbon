@@ -55,6 +55,7 @@ func (lang *Language) SetLocale(locale string) {
 	bytes, err := fs.ReadFile(fileName)
 	if err != nil {
 		lang.Error = invalidLocaleError(fileName)
+		return
 	}
 	if json.Unmarshal(bytes, &lang.resources) != nil {
 		lang.Error = invalidLocaleError(fileName)
@@ -75,22 +76,22 @@ func (lang *Language) SetResources(resources map[string]string) {
 	}
 }
 
-// translate translates by unit string.
+// translate returns a translated string.
 // 翻译转换
-func (lang *Language) translate(unit string, vaule int64) string {
+func (lang *Language) translate(unit string, value int64) string {
 	if len(lang.resources) == 0 {
 		lang.SetLocale(defaultLocale)
 	}
 	slice := strings.Split(lang.resources[unit], "|")
-	number := getAbsValue(vaule)
+	number := getAbsValue(value)
 	if len(slice) == 1 {
-		return strings.Replace(slice[0], "%d", strconv.FormatInt(vaule, 10), 1)
+		return strings.Replace(slice[0], "%d", strconv.FormatInt(value, 10), 1)
 	}
 	if int64(len(slice)) <= number {
-		return strings.Replace(slice[len(slice)-1], "%d", strconv.FormatInt(vaule, 10), 1)
+		return strings.Replace(slice[len(slice)-1], "%d", strconv.FormatInt(value, 10), 1)
 	}
-	if !strings.Contains(slice[number-1], "%d") && vaule < 0 {
+	if !strings.Contains(slice[number-1], "%d") && value < 0 {
 		return "-" + slice[number-1]
 	}
-	return strings.Replace(slice[number-1], "%d", strconv.FormatInt(vaule, 10), 1)
+	return strings.Replace(slice[number-1], "%d", strconv.FormatInt(value, 10), 1)
 }
