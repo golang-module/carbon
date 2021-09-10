@@ -213,7 +213,7 @@ func (c Carbon) Nanosecond() int {
 	return c.time.In(c.loc).Nanosecond()
 }
 
-// Timestamp gets timestamp with second, it is short for TimestampWithSecond.
+// Timestamp gets timestamp with second, it is shorthand for TimestampWithSecond.
 // 获取秒级时间戳, 是 TimestampWithSecond 的简写
 func (c Carbon) Timestamp() int64 {
 	if c.IsInvalid() {

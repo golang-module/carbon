@@ -417,7 +417,7 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 	return c.time.In(c.loc).Format(layout)
 }
 
-// Layout outputs a string by layout, it is short for ToLayoutString.
+// Layout outputs a string by layout, it is shorthand for ToLayoutString.
 // 输出指定布局的时间字符串, 是 ToLayoutString 的简写
 func (c Carbon) Layout(layout string, timezone ...string) string {
 	if c.IsInvalid() {
@@ -492,7 +492,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	return buffer.String()
 }
 
-// Format outputs a string by format, it is short for ToFormatString.
+// Format outputs a string by format, it is shorthand for ToFormatString.
 // 输出指定格式的时间字符串, 是 ToFormatString 的简写
 func (c Carbon) Format(format string, timezone ...string) string {
 	if c.IsInvalid() {

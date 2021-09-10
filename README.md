@@ -22,7 +22,7 @@ it is helpful, please give me a star
 
 #### Installation
 
-##### Go version < 1.16
+> Make sure you have installed Go version `1.16` or higher
 
 ```go
 // By github
@@ -37,24 +37,6 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
-)               
-```
-
-##### Go version >= 1.16
-
-```go
-// By github
-go get -u github.com/golang-module/carbon/v2
-
-import (
-    "github.com/golang-module/carbon/v2"
-)
-
-// By gitee
-go get -u gitee.com/go-package/carbon/v2
-
-import (
-    "gitee.com/go-package/carbon/v2"
 )               
 ```
 
@@ -452,6 +434,15 @@ carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14
 // Difference in seconds with absolute value
 carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
 
+// Difference in string
+carbon.Now().DiffInString() // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
+// Difference in string with absolute value
+carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
+carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+
 // Difference in human friendly readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
@@ -719,7 +710,7 @@ carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
 // Get current nanosecond
 carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
 
-// Get timestamp with second, Timestamp() is short for TimestampWithSecond()
+// Get timestamp with second, Timestamp() is shorthand for TimestampWithSecond()
 carbon.Parse("2020-08-05 13:14:15").Timestamp() // 1596604455
 carbon.Parse("2020-08-05 13:14:15").TimestampWithSecond() // 1596604455
 // Get timestamp with millisecond
@@ -851,13 +842,13 @@ fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo)) // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15 +0900 JST
 
-// Output a string by layout, Layout() is short for ToLayoutString()
+// Output a string by layout, Layout() is shorthand for ToLayoutString()
 carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-05 13:14:15
 carbon.Parse("2020-08-05 13:14:15").Layout("2006-01-02 15:04:05", carbon.Tokyo) // 2020-08-05 14:14:15
 
-// Output a string by format, Format() is short for ToFormatString()
+// Output a string by format, Format() is shorthand for ToFormatString()
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
@@ -1273,3 +1264,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### Links
+
+* [robeeask](https://carbon.robeeask.com/ "robeeask")
+* [juejin](https://juejin.cn/column/6988159448736858120 "juejin")
+* [segmentfault](https://segmentfault.com/blog/carbon "segmentfault")
