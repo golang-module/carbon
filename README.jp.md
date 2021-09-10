@@ -1095,12 +1095,14 @@ fmt.Printf("%+v", *person)
 
 ```go
 lang := carbon.NewLanguage()
-if err := lang.SetLocale("zh-CN"); err != nil {
-    // エラー処理
-    log.Fatal(err)
-}
+lang.SetLocale("zh-CN")
 
 c := carbon.SetLanguage(lang)
+if c.Error != nil {
+	// エラー処理
+	log.Fatal(err)
+}
+
 c.Now().AddHours(1).DiffForHumans() // 1 小时后
 c.Now().AddHours(1).ToMonthString() // 八月
 c.Now().AddHours(1).ToShortMonthString() // 8月
@@ -1114,11 +1116,7 @@ c.Now().AddHours(1).Season() // 夏季
 
 ```go
 lang := carbon.NewLanguage()
-
-if err := lang.SetLocale("en"); err != nil {
-    // エラー処理
-    log.Fatal(err)
-}
+lang.SetLocale("en")
 
 resources := map[string]string {
     "hour": "%dh",
@@ -1126,6 +1124,11 @@ resources := map[string]string {
 lang.SetResources(resources)
 
 c := carbon.SetLanguage(lang)
+if c.Error != nil {
+	// エラー処理
+	log.Fatal(err)
+}
+
 c.Now().AddYears(1).DiffForHumans() // 1 year from now
 c.Now().AddHours(1).DiffForHumans() // 1h from now
 c.Now().ToMonthString() // August
