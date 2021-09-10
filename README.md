@@ -1040,7 +1040,7 @@ if err != nil {
     log.Fatal(err)
 }
 fmt.Printf("%s", data)
-// output
+// Output
 {
     "id": 1,
     "name": "gouguoyin",
@@ -1078,7 +1078,7 @@ if err != nil {
     log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
-// output
+// Output
 {ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 UpdatedAt:2022-08-05 13:14:15 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
 
@@ -1110,7 +1110,7 @@ The following methods are supported
 ###### Set locale
 
 ```go
-lang := NewLanguage()
+lang := carbon.NewLanguage()
 if err := lang.SetLocale("zh-CN"); err != nil {
     // Error handle...
     log.Fatal(err)
@@ -1129,7 +1129,7 @@ c.Now().AddHours(1).Season() // 夏季
 ###### Reset some resources(the rests still translate from the given locale)
 
 ```go
-lang := NewLanguage()
+lang := carbon.NewLanguage()
 
 if err := lang.SetLocale("en"); err != nil {
     // Error handle...
@@ -1155,7 +1155,7 @@ c.Now().Season() // Summer
 ###### Reset all resources
 
 ```go
-lang := NewLanguage()
+lang := carbon.NewLanguage()
 resources := map[string]string {
 	"months": "january|february|march|april|may|june|july|august|september|october|november|december",
 	"short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
@@ -1282,9 +1282,3 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
-
-#### Links
-
-* [robeeask](https://carbon.robeeask.com/ "robeeask")
-* [juejin](https://juejin.cn/column/6988159448736858120 "juejin")
-* [segmentfault](https://segmentfault.com/blog/carbon "segmentfault")
