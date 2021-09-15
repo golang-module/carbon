@@ -19,7 +19,7 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 
 #### 安装使用
 
-> 确保已安装 `1.16` 或更高版本的 Go
+##### Golang 版本小于1.16
 
 ```go
 // 使用 github 库
@@ -34,6 +34,24 @@ go get -u gitee.com/go-package/carbon
 
 import (
     "gitee.com/go-package/carbon"
+)
+```
+
+##### Golang 版本大于等于1.16
+
+```go
+// 使用 github 库
+go get -u github.com/golang-module/carbon/v2
+
+import (
+    "github.com/golang-module/carbon/v2"
+)
+
+// 使用 gitee 库
+go get -u gitee.com/go-package/carbon/v2
+
+import (
+    "gitee.com/go-package/carbon/v2"
 )
 ```
 
