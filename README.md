@@ -461,13 +461,13 @@ carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
 carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
 carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
 
-// Difference in human friendly readable format
+// Difference in a human-readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans() // 2 years ago
 carbon.Parse("2021-08-05 13:14:15").DiffForHumans() // 1 year from now
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans() // 2 years from now
-// Difference in human friendly readable format from now time
+// Difference in a human-readable format from now time
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
@@ -643,7 +643,7 @@ carbon.Parse("2020-01-31").SetMonth(2).ToDateString() // 2020-03-02
 // Set month without overflowing month
 carbon.Parse("2020-01-31").SetMonthNoOverflow(2).ToDateString() // 2020-02-29
 
-// set start day of the week
+// Set start day of the week
 carbon.Parse("2020-08-02").SetWeekStartsAt(carbon.Sunday).Week() // 0
 carbon.Parse("2020-08-02").SetWeekStartsAt(carbon.Monday).Week() // 6
 
@@ -663,15 +663,15 @@ carbon.Parse("2020-08-05 13:14:15").SetMinute(60).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SetSecond(10).ToDateTimeString() // 2020-08-05 13:14:10
 carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-05 13:15:00
 
-// set millisecond
+// Set millisecond
 carbon.Parse("2020-08-05 13:14:15").SetMillisecond(100).Millisecond() // 100
 carbon.Parse("2020-08-05 13:14:15").SetMillisecond(999).Millisecond() // 999
 
-// set microsecond
+// Set microsecond
 carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(100000).Microsecond() // 100000
 carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(999999).Microsecond() // 999999
 
-// set nanosecond
+// Set nanosecond
 carbon.Parse("2020-08-05 13:14:15").SetNanosecond(100000000).Nanosecond() // 100000000
 carbon.Parse("2020-08-05 13:14:15").SetNanosecond(999999999).Nanosecond() // 999999999
 ```
