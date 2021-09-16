@@ -66,7 +66,7 @@ func (c Carbon) EndOfSeason() Carbon {
 	return c
 }
 
-// IsSpring whether is spring.
+// IsSpring reports whether is spring.
 // 是否是春季
 func (c Carbon) IsSpring() bool {
 	if c.IsInvalid() {
@@ -78,7 +78,7 @@ func (c Carbon) IsSpring() bool {
 	return false
 }
 
-// IsSummer whether is summer.
+// IsSummer reports whether is summer.
 // 是否是夏季
 func (c Carbon) IsSummer() bool {
 	if c.IsInvalid() {
@@ -90,7 +90,7 @@ func (c Carbon) IsSummer() bool {
 	return false
 }
 
-// IsAutumn whether is autumn.
+// IsAutumn reports whether is autumn.
 // 是否是秋季
 func (c Carbon) IsAutumn() bool {
 	if c.IsInvalid() {
@@ -102,7 +102,7 @@ func (c Carbon) IsAutumn() bool {
 	return false
 }
 
-// IsWinter whether is winter.
+// IsWinter reports whether is winter.
 // 是否是冬季
 func (c Carbon) IsWinter() bool {
 	if c.IsInvalid() {

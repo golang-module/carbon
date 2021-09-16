@@ -294,7 +294,7 @@ func (c Carbon) ToIso8601String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(Iso8601Format)
+	return c.time.In(c.loc).Format(ISO8601Format)
 }
 
 // ToRfc822String outputs a string in RFC822 format.

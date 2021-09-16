@@ -134,8 +134,8 @@ const (
 	RFC2822Format       = time.RFC1123Z
 	RFC3339Format       = time.RFC3339
 	KitchenFormat       = time.Kitchen
-	Iso8601Format       = "2006-01-02T15:04:05-07:00"
 	CookieFormat        = "Monday, 02-Jan-2006 15:04:05 MST"
+	ISO8601Format       = "2006-01-02T15:04:05-07:00"
 	RFC1036Format       = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC7231Format       = "Mon, 02 Jan 2006 15:04:05 GMT"
 	DayDateTimeFormat   = "Mon, Jan 2, 2006 3:04 PM"

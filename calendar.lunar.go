@@ -193,7 +193,7 @@ func (l lunar) Month() int {
 	return l.month
 }
 
-// LeapMonth get lunar leap month.
+// LeapMonth gets lunar leap month.
 //获取农历闰月月份
 func (l lunar) LeapMonth() int {
 	if l.year == 0 {
@@ -268,7 +268,7 @@ func (l lunar) String() string {
 	return fmt.Sprintf("%d-%02d-%02d", l.year, l.month, l.day)
 }
 
-// IsLeapYear whether is leap year.
+// IsLeapYear reports whether is leap year.
 // 是否是闰年
 func (l lunar) IsLeapYear() bool {
 	if l.year == 0 {
@@ -277,7 +277,7 @@ func (l lunar) IsLeapYear() bool {
 	return l.LeapMonth() != 0
 }
 
-// IsLeapMonth whether is leap month.
+// IsLeapMonth reports whether is leap month.
 // 是否是闰月
 func (l lunar) IsLeapMonth() bool {
 	if l.month == 0 {
@@ -286,7 +286,7 @@ func (l lunar) IsLeapMonth() bool {
 	return l.month == l.LeapMonth()
 }
 
-// IsRatYear whether is year of Rat.
+// IsRatYear reports whether is year of Rat.
 // 是否是鼠年
 func (l lunar) IsRatYear() bool {
 	if l.year == 0 {
@@ -298,7 +298,7 @@ func (l lunar) IsRatYear() bool {
 	return false
 }
 
-// IsOxYear whether is year of Ox.
+// IsOxYear reports whether is year of Ox.
 // 是否是牛年
 func (l lunar) IsOxYear() bool {
 	if l.year == 0 {
@@ -310,7 +310,7 @@ func (l lunar) IsOxYear() bool {
 	return false
 }
 
-// IsTigerYear whether is year of Tiger.
+// IsTigerYear reports whether is year of Tiger.
 // 是否是虎年
 func (l lunar) IsTigerYear() bool {
 	if l.year == 0 {
@@ -322,7 +322,7 @@ func (l lunar) IsTigerYear() bool {
 	return false
 }
 
-// IsRabbitYear whether is year of Rabbit.
+// IsRabbitYear reports whether is year of Rabbit.
 // 是否是兔年
 func (l lunar) IsRabbitYear() bool {
 	if l.year == 0 {
@@ -334,7 +334,7 @@ func (l lunar) IsRabbitYear() bool {
 	return false
 }
 
-// IsDragonYear whether is year of Dragon.
+// IsDragonYear reports whether is year of Dragon.
 // 是否是龙年
 func (l lunar) IsDragonYear() bool {
 	if l.year == 0 {
@@ -346,7 +346,7 @@ func (l lunar) IsDragonYear() bool {
 	return false
 }
 
-// IsSnakeYear whether is year of Snake.
+// IsSnakeYear reports whether is year of Snake.
 // 是否是蛇年
 func (l lunar) IsSnakeYear() bool {
 	if l.year == 0 {
@@ -358,7 +358,7 @@ func (l lunar) IsSnakeYear() bool {
 	return false
 }
 
-// IsHorseYear whether is year of Horse.
+// IsHorseYear reports whether is year of Horse.
 // 是否是马年
 func (l lunar) IsHorseYear() bool {
 	if l.year == 0 {
@@ -370,7 +370,7 @@ func (l lunar) IsHorseYear() bool {
 	return false
 }
 
-// IsGoatYear whether is year of Goat.
+// IsGoatYear reports whether is year of Goat.
 // 是否是羊年
 func (l lunar) IsGoatYear() bool {
 	if l.year == 0 {
@@ -382,7 +382,7 @@ func (l lunar) IsGoatYear() bool {
 	return false
 }
 
-// IsMonkeyYear whether is year of Monkey.
+// IsMonkeyYear reports whether is year of Monkey.
 // 是否是猴年
 func (l lunar) IsMonkeyYear() bool {
 	if l.year == 0 {
@@ -394,7 +394,7 @@ func (l lunar) IsMonkeyYear() bool {
 	return false
 }
 
-// IsRoosterYear whether is year of Rooster.
+// IsRoosterYear reports whether is year of Rooster.
 // 是否是鸡年
 func (l lunar) IsRoosterYear() bool {
 	if l.year == 0 {
@@ -406,7 +406,7 @@ func (l lunar) IsRoosterYear() bool {
 	return false
 }
 
-// IsDogYear whether is year of Dog.
+// IsDogYear reports whether is year of Dog.
 // 是否是狗年
 func (l lunar) IsDogYear() bool {
 	if l.year == 0 {
@@ -418,7 +418,7 @@ func (l lunar) IsDogYear() bool {
 	return false
 }
 
-// IsPigYear whether is year of Pig.
+// IsPigYear reports whether is year of Pig.
 // 是否是猪年
 func (l lunar) IsPigYear() bool {
 	if l.year == 0 {
