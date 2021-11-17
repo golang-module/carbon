@@ -33,11 +33,12 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 			layout = ShortDateTimeFormat
 		}
 	}
-	if c.ParseByLayout(value, layout).Error != nil {
+	c = c.ParseByLayout(value, layout)
+	if c.Error != nil {
 		c.Error = invalidValueError(value)
 		return c
 	}
-	return c.ParseByLayout(value, layout)
+	return c
 }
 
 // Parse parses a standard string as a Carbon instance.
@@ -58,12 +59,12 @@ func (c Carbon) ParseByFormat(value string, format string, timezone ...string) C
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
-	layout := format2layout(format)
-	if c.ParseByLayout(value, layout).Error != nil {
+	c = c.ParseByLayout(value, format2layout(format))
+	if c.Error != nil {
 		c.Error = invalidFormatError(value, format)
 		return c
 	}
-	return c.ParseByLayout(value, layout)
+	return c
 }
 
 // ParseByFormat parses a string as a Carbon instance by format.
