@@ -31,20 +31,22 @@ func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	dy, dm, dd := end.Year()-c.Year(), end.Month()-c.Month(), end.Day()-c.Day()
-	if dd < 0 {
-		dm = dm - 1
+	startYear, startMonth, startDay := c.Date()
+	endYear, endMonth, endDay := end.Date()
+	diffYear, diffMonth, diffDay := endYear-startYear, endMonth-startMonth, endDay-startDay
+	if diffDay < 0 {
+		diffMonth = diffMonth - 1
 	}
-	if dy == 0 && dm == 0 {
+	if diffYear == 0 && diffMonth == 0 {
 		return int64(0)
 	}
-	if dy == 0 && dm != 0 && dd != 0 {
+	if diffYear == 0 && diffMonth != 0 && diffDay != 0 {
 		if int(end.DiffInHoursWithAbs(c)) < c.DaysInMonth()*HoursPerDay {
 			return int64(0)
 		}
-		return int64(dm)
+		return int64(diffMonth)
 	}
-	return int64(dy*MonthsPerYear + dm)
+	return int64(diffYear*MonthsPerYear + diffMonth)
 }
 
 // DiffInMonthsWithAbs gets the difference in months with absolute value.

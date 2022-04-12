@@ -37,7 +37,7 @@ func (c Carbon) IsFuture() bool {
 	return c.Timestamp() > c.Now().Timestamp()
 }
 
-// IsPast reports whether is past time.
+// IsPast reports whether is pastime.
 // 是否是过去时间
 func (c Carbon) IsPast() bool {
 	if c.IsInvalid() {
@@ -52,7 +52,7 @@ func (c Carbon) IsLeapYear() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	year := c.time.In(c.loc).Year()
+	year := c.Year()
 	if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
 		return true
 	}
@@ -65,7 +65,7 @@ func (c Carbon) IsLongYear() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	_, w := time.Date(c.Year(), time.December, 31, 0, 0, 0, 0, c.loc).ISOWeek()
+	_, w := time.Date(c.Year(), 12, 31, 0, 0, 0, 0, c.loc).ISOWeek()
 	return w == weeksPerLongYear
 }
 
@@ -75,7 +75,7 @@ func (c Carbon) IsJanuary() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.January
+	return c.Month() == int(time.January)
 }
 
 // IsFebruary reports whether is February.
@@ -84,7 +84,7 @@ func (c Carbon) IsFebruary() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.February
+	return c.Month() == int(time.February)
 }
 
 // IsMarch reports whether is March.
@@ -93,7 +93,7 @@ func (c Carbon) IsMarch() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.March
+	return c.Month() == int(time.March)
 }
 
 // IsApril reports whether is April.
@@ -102,7 +102,7 @@ func (c Carbon) IsApril() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.April
+	return c.Month() == int(time.April)
 }
 
 // IsMay reports whether is May.
@@ -111,7 +111,7 @@ func (c Carbon) IsMay() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.May
+	return c.Month() == int(time.May)
 }
 
 // IsJune reports whether is June.
@@ -120,7 +120,7 @@ func (c Carbon) IsJune() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.June
+	return c.Month() == int(time.June)
 }
 
 // IsJuly reports whether is July.
@@ -129,7 +129,7 @@ func (c Carbon) IsJuly() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.July
+	return c.Month() == int(time.July)
 }
 
 // IsAugust reports whether is August.
@@ -138,7 +138,7 @@ func (c Carbon) IsAugust() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.August
+	return c.Month() == int(time.August)
 }
 
 // IsSeptember reports whether is September.
@@ -147,7 +147,7 @@ func (c Carbon) IsSeptember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.September
+	return c.Month() == int(time.September)
 }
 
 // IsOctober reports whether is October.
@@ -156,7 +156,7 @@ func (c Carbon) IsOctober() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.October
+	return c.Month() == int(time.October)
 }
 
 // IsNovember reports whether is November.
@@ -165,7 +165,7 @@ func (c Carbon) IsNovember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.November
+	return c.Month() == int(time.November)
 }
 
 // IsDecember reports whether is December.
@@ -174,7 +174,7 @@ func (c Carbon) IsDecember() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Month() == time.December
+	return c.Month() == int(time.December)
 }
 
 // IsMonday reports whether is Monday.
