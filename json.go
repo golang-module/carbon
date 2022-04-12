@@ -16,8 +16,8 @@ type Date struct {
 	Carbon
 }
 
-// Time defines a Time struct.
-type Time struct {
+// TimestampWithSecond defines a TimestampWithSecond struct.
+type TimestampWithSecond struct {
 	Carbon
 }
 
@@ -26,13 +26,13 @@ type Timestamp struct {
 	Carbon
 }
 
-// TimestampWithSecond defines a TimestampWithSecond struct.
-type TimestampWithSecond struct {
+// TimestampWithMillisecond defines a TimestampWithMillisecond struct.
+type TimestampWithMillisecond struct {
 	Carbon
 }
 
-// TimestampWithMillisecond defines a TimestampWithMillisecond struct.
-type TimestampWithMillisecond struct {
+// TimestampMilli defines a TimestampMilli struct.
+type TimestampMilli struct {
 	Carbon
 }
 
@@ -41,8 +41,18 @@ type TimestampWithMicrosecond struct {
 	Carbon
 }
 
+// TimestampMicro defines a TimestampMicro struct.
+type TimestampMicro struct {
+	Carbon
+}
+
 // TimestampWithNanosecond defines a TimestampWithNanosecond struct.
 type TimestampWithNanosecond struct {
+	Carbon
+}
+
+// TimestampNano defines a TimestampNano struct.
+type TimestampNano struct {
 	Carbon
 }
 
@@ -70,20 +80,6 @@ func (t *Date) UnmarshalJSON(b []byte) error {
 	c := Parse(string(bytes.Trim(b, `"`)))
 	if c.Error == nil {
 		*t = Date{c}
-	}
-	return nil
-}
-
-// MarshalJSON implements the interface MarshalJSON for json.Marshal.
-func (t Time) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeString())), nil
-}
-
-// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
-func (t *Time) UnmarshalJSON(b []byte) error {
-	c := ParseByFormat(string(bytes.Trim(b, `"`)), "H:i:s")
-	if c.Error == nil {
-		*t = Time{c}
 	}
 	return nil
 }
@@ -135,9 +131,27 @@ func (t *TimestampWithMillisecond) UnmarshalJSON(b []byte) error {
 	if ts == 0 || err != nil {
 		return err
 	}
-	c := CreateFromTimestamp(ts)
+	c := CreateFromTimestampMilli(ts)
 	if c.Error == nil {
 		*t = TimestampWithMillisecond{c}
+	}
+	return nil
+}
+
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
+func (t TimestampMilli) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.TimestampMilli())), nil
+}
+
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
+func (t *TimestampMilli) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestampMilli(ts)
+	if c.Error == nil {
+		*t = TimestampMilli{c}
 	}
 	return nil
 }
@@ -153,9 +167,27 @@ func (t *TimestampWithMicrosecond) UnmarshalJSON(b []byte) error {
 	if ts == 0 || err != nil {
 		return err
 	}
-	c := CreateFromTimestamp(ts)
+	c := CreateFromTimestampMicro(ts)
 	if c.Error == nil {
 		*t = TimestampWithMicrosecond{c}
+	}
+	return nil
+}
+
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
+func (t TimestampMicro) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.TimestampMicro())), nil
+}
+
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
+func (t *TimestampMicro) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestampMicro(ts)
+	if c.Error == nil {
+		*t = TimestampMicro{c}
 	}
 	return nil
 }
@@ -171,9 +203,27 @@ func (t *TimestampWithNanosecond) UnmarshalJSON(b []byte) error {
 	if ts == 0 || err != nil {
 		return err
 	}
-	c := CreateFromTimestamp(ts)
+	c := CreateFromTimestampNano(ts)
 	if c.Error == nil {
 		*t = TimestampWithNanosecond{c}
 	}
 	return nil
+}
+
+// UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
+func (t *TimestampNano) UnmarshalJSON(b []byte) error {
+	ts, err := strconv.ParseInt(string(b), 10, 64)
+	if ts == 0 || err != nil {
+		return err
+	}
+	c := CreateFromTimestampNano(ts)
+	if c.Error == nil {
+		*t = TimestampNano{c}
+	}
+	return nil
+}
+
+// MarshalJSON implements the interface MarshalJSON for json.Marshal.
+func (t TimestampNano) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%d`, t.TimestampNano())), nil
 }
