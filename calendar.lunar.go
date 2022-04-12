@@ -60,8 +60,9 @@ func (c Carbon) Lunar() (l lunar) {
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
 	daysInYear, daysInMonth, leapMonth := 365, 30, 0
 	// 有效范围检验
-	if c.Year() < minYear || c.Year() > maxYear {
-		l.Error = invalidYearError(c.Year())
+	year := c.Year()
+	if year < minYear || year > maxYear {
+		l.Error = invalidYearError(year)
 		return
 	}
 	offset := int(c.DiffInDaysWithAbs(c.CreateFromDateTime(minYear, 1, 31, 0, 0, 0)))
@@ -250,7 +251,7 @@ func (l lunar) ToDayString() string {
 	return day
 }
 
-// ToString outputs a string in lunar date format.
+// ToDateString outputs a string in lunar date format.
 // 获取农历日期字符串
 func (l lunar) ToDateString() string {
 	if l.year == 0 {
