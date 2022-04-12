@@ -20,23 +20,26 @@ func TestCarbon_Parse(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15"},
-		{"20200805131415", "2020-08-05 13:14:15"},
-		{"20200805", "2020-08-05 00:00:00"},
-		{"2020-08-05", "2020-08-05 00:00:00"},
-		{"2020-08-05T13:14:15+08:00", "2020-08-05 13:14:15"},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:15 +0800 CST"},
+		{"20200805131415", "2020-08-05 13:14:15 +0800 CST"},
+		{"20200805", "2020-08-05 00:00:00 +0800 CST"},
+		{"2020-08-05", "2020-08-05 00:00:00 +0800 CST"},
+		{"2020-08-05T13:14:15+08:00", "2020-08-05 13:14:15 +0800 CST"},
+		{"2020-08-05T13:14:15.999+08:00", "2020-08-05 13:14:15.999 +0800 CST"},
+		{"2020-08-05T13:14:15.999999+08:00", "2020-08-05 13:14:15.999999 +0800 CST"},
+		{"2020-08-05T13:14:15.999999999+08:00", "2020-08-05 13:14:15.999999999 +0800 CST"},
 	}
 
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
-		assert.Equal(test.output, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.output, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.output, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.output, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
