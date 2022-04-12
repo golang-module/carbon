@@ -86,6 +86,39 @@ func (c Carbon) WeekOfMonth() int {
 	return days/DaysPerWeek + 1
 }
 
+// DateTime gets current year, month, day, hour, minute, and second.
+// 获取当前年月日时分秒
+func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
+	if c.IsInvalid() {
+		return 0, 0, 0, 0, 0, 0
+	}
+	carbon := c.time.In(c.loc)
+	var tm time.Month
+	year, tm, day = carbon.Date()
+	hour, minute, second = carbon.Clock()
+	return year, int(tm), day, hour, minute, second
+}
+
+// Date gets current year, month, and day.
+// 获取当前年月日
+func (c Carbon) Date() (year, month, day int) {
+	if c.IsInvalid() {
+		return 0, 0, 0
+	}
+	var tm time.Month
+	year, tm, day = c.time.In(c.loc).Date()
+	return year, int(tm), day
+}
+
+// Time gets current hour, minute, and second.
+// 获取当前时分秒
+func (c Carbon) Time() (hour, minute, second int) {
+	if c.IsInvalid() {
+		return 0, 0, 0
+	}
+	return c.time.In(c.loc).Clock()
+}
+
 // Century gets current century.
 // 获取当前世纪
 func (c Carbon) Century() int {
@@ -119,14 +152,15 @@ func (c Carbon) Quarter() (quarter int) {
 	if c.IsInvalid() {
 		return 0
 	}
+	month := c.Month()
 	switch {
-	case c.Month() >= 10:
+	case month >= 10:
 		quarter = 4
-	case c.Month() >= 7:
+	case month >= 7:
 		quarter = 3
-	case c.Month() >= 4:
+	case month >= 4:
 		quarter = 2
-	case c.Month() >= 1:
+	case month >= 1:
 		quarter = 1
 	}
 	return
@@ -135,9 +169,6 @@ func (c Carbon) Quarter() (quarter int) {
 // Month gets current month.
 // 获取当前月
 func (c Carbon) Month() int {
-	if c.IsInvalid() {
-		return 0
-	}
 	return c.MonthOfYear()
 }
 
@@ -153,9 +184,6 @@ func (c Carbon) Week() int {
 // Day gets current day.
 // 获取当前日
 func (c Carbon) Day() int {
-	if c.IsInvalid() {
-		return 0
-	}
 	return c.DayOfMonth()
 }
 
@@ -213,22 +241,19 @@ func (c Carbon) Nanosecond() int {
 	return c.time.In(c.loc).Nanosecond()
 }
 
-// Timestamp gets timestamp with second, it is shorthand for TimestampWithSecond.
-// 获取秒级时间戳, 是 TimestampWithSecond 的简写
-func (c Carbon) Timestamp() int64 {
-	if c.IsInvalid() {
-		return 0
-	}
-	return c.TimestampWithSecond()
-}
-
 // TimestampWithSecond gets timestamp with second.
 // 输出秒级时间戳
 func (c Carbon) TimestampWithSecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Unix()
+	return c.time.Unix()
+}
+
+// Timestamp gets timestamp with second, it is shorthand for TimestampWithSecond.
+// 获取秒级时间戳, 是 TimestampWithSecond 的简写
+func (c Carbon) Timestamp() int64 {
+	return c.TimestampWithSecond()
 }
 
 // TimestampWithMillisecond gets timestamp with millisecond.
@@ -237,7 +262,13 @@ func (c Carbon) TimestampWithMillisecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.UnixNano() / int64(time.Millisecond)
+	return c.time.Unix()*1e3 + int64(c.time.Nanosecond())/1e6
+}
+
+// TimestampMilli gets timestamp with millisecond, it is shorthand for TimestampWithMillisecond.
+// 获取毫秒级时间戳, 是 TimestampMilli 的简写
+func (c Carbon) TimestampMilli() int64 {
+	return c.TimestampWithMillisecond()
 }
 
 // TimestampWithMicrosecond gets timestamp with microsecond.
@@ -246,7 +277,13 @@ func (c Carbon) TimestampWithMicrosecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.UnixNano() / int64(time.Microsecond)
+	return c.time.Unix()*1e6 + int64(c.time.Nanosecond())/1e3
+}
+
+// TimestampMicro gets timestamp with microsecond, it is shorthand for TimestampWithMicrosecond.
+// 获取微秒级时间戳, 是 TimestampWithMicrosecond 的简写
+func (c Carbon) TimestampMicro() int64 {
+	return c.TimestampWithMicrosecond()
 }
 
 // TimestampWithNanosecond gets timestamp with nanosecond.
@@ -256,6 +293,12 @@ func (c Carbon) TimestampWithNanosecond() int64 {
 		return 0
 	}
 	return c.time.UnixNano()
+}
+
+// TimestampNano gets timestamp with nanosecond, it is shorthand for TimestampWithNanosecond.
+// 获取纳秒级时间戳, 是 TimestampWithNanosecond 的简写
+func (c Carbon) TimestampNano() int64 {
+	return c.TimestampWithNanosecond()
 }
 
 // Location gets location name.
