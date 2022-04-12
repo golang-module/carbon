@@ -77,13 +77,12 @@ carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 // Return timestamp with second of today
 carbon.Now().Timestamp() // 1596604455
-carbon.Now().TimestampWithSecond() // 1596604455
 // Return timestamp with millisecond of today
-carbon.Now().TimestampWithMillisecond() // 1596604455000
+carbon.Now().TimestampMilli() // 1596604455000
 // Return timestamp with microsecond of today
-carbon.Now().TimestampWithMicrosecond() // 1596604455000000
+carbon.Now().TimestampMicro() // 1596604455000000
 // Return timestamp with nanosecond of today
-carbon.Now().TimestampWithNanosecond() // 1596604455000000000
+carbon.Now().TimestampNano() // 1596604455000000000
 
 // Return datetime of yesterday 
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -99,13 +98,12 @@ carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 // Return timestamp with second of yesterday
 carbon.Yesterday().Timestamp() // 1596518055
-carbon.Yesterday().TimestampWithSecond() // 1596518055
 // Return timestamp with millisecond of yesterday
-carbon.Yesterday().TimestampWithMillisecond() // 1596518055000
+carbon.Yesterday().TimestampMilli() // 1596518055000
 // Return timestamp with microsecond of yesterday
-carbon.Yesterday().TimestampWithMicrosecond() // 1596518055000000
+carbon.Yesterday().TimestampMicro() // 1596518055000000
 // Return timestamp with nanosecond of yesterday
-carbon.Yesterday().TimestampWithNanosecond() // 1596518055000000000
+carbon.Yesterday().TimestampNano() // 1596518055000000000
 
 // Return datetime of tomorrow
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -121,38 +119,49 @@ carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 // Return timestamp with second of tomorrow
 carbon.Tomorrow().Timestamp() // 1596690855
-carbon.Tomorrow().TimestampWithSecond() // 1596690855
 // Return timestamp with millisecond of tomorrow
-carbon.Tomorrow().TimestampWithMillisecond() // 1596690855000
+carbon.Tomorrow().TimestampMilli() // 1596690855000
 // Return timestamp with microsecond of tomorrow
-carbon.Tomorrow().TimestampWithMicrosecond() // 1596690855000000
+carbon.Tomorrow().TimestampMicro() // 1596690855000000
 // Return timestamp with nanosecond of tomorrow
-carbon.Tomorrow().TimestampWithNanosecond() // 1596690855000000000
+carbon.Tomorrow().TimestampNano() // 1596690855000000000
 ```
 
 ##### Create a Carbon instance
 
 ```go
 // Create a Carbon instance from a given timestamp with second
-carbon.CreateFromTimestamp(-1).ToDateTimeString() // 1970-01-01 07:59:59
-carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToDateTimeString() // 1970-01-01 08:59:59
-carbon.CreateFromTimestamp(0).ToDateTimeString() // 1970-01-01 08:00:00
-carbon.CreateFromTimestamp(0, carbon.Tokyo).ToDateTimeString() // 1970-01-01 09:00:00
-carbon.CreateFromTimestamp(1596604455).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTimestamp(1596604455, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.CreateFromTimestamp(-1).ToString() // 1970-01-01 07:59:59 +0800 CST
+carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToString() // 1970-01-01 08:59:59 +0900 JST
+carbon.CreateFromTimestamp(0).ToString() // 1970-01-01 08:00:00 +0800 CST
+carbon.CreateFromTimestamp(0, carbon.Tokyo).ToString() // 1970-01-01 09:00:00 +0900 JST
+carbon.CreateFromTimestamp(1).ToString() // 1970-01-01 08:00:01 +0800 CST
+carbon.CreateFromTimestamp(1, carbon.Tokyo).ToString() // 1970-01-01 09:00:01 +0900 JST
+carbon.CreateFromTimestamp(1649735755).ToString() // 2022-04-12 11:55:55 +0800 CST
+carbon.CreateFromTimestamp(1649735755, carbon.Tokyo).ToString() // 2022-04-12 12:55:55 +0900 JST
 // Create a Carbon instance from a given timestamp with millisecond
-carbon.CreateFromTimestamp(1596604455000).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTimestamp(1596604455000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.CreateFromTimestampMilli(1649735755981).ToString() // 2022-04-12 11:55:55.981 +0800 CST
+carbon.CreateFromTimestampMilli(1649735755981, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981 +0900 JST
 // Create a Carbon instance from a given timestamp with microsecond
-carbon.CreateFromTimestamp(1596604455000000).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTimestamp(1596604455000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.CreateFromTimestampMicro(1649735755981566).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
+carbon.CreateFromTimestampMicro(1649735755981566, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 JST
 // Create a Carbon instance from a given timestamp with nanosecond
-carbon.CreateFromTimestamp(1596604455000000000).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTimestamp(1596604455000000000, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
+carbon.CreateFromTimestampNano(1649735755981566000, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 CST
 
-// Create a Carbon instance from a given year, month, day, hour, minute and second
+// Create a Carbon instance from a given date and time.
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+// Create a Carbon instance from a given date and time with millisecond. 
+carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
+carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999 +0900 JST
+// Create a Carbon instance from a given date and time with microsecond. 
+carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
+carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999 +0900 JST
+// Create a Carbon instance from a given date and time with nanosecond. 
+carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
+carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999999 +0900 JST
+
 // Create a Carbon instance from a given year, month and day
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
@@ -172,11 +181,13 @@ carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05").ToDateTimeString() // 2020-08-05 00:00:00
 carbon.Parse("20200805131415").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("20200805").ToDateTimeString() // 2020-08-05 00:00:00
-carbon.Parse("2020-08-05T13:14:15+08:00").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.Parse("2020-08-05T13:14:15+08:00").ToString() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05T13:14:15.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("2020-08-05T13:14:15.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a string as a carbon instance by format
+##### Parse a string as a Carbon instance by format
 
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
@@ -185,7 +196,7 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### Parse a string as a carbon instance by layout
+##### Parse a string as a Carbon instance by layout
 
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -194,7 +205,7 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### Convert between carbon and time.Time
+##### Convert between Carbon and Time
 
 ```go
 // Convert Time.time into Carbon
@@ -633,6 +644,18 @@ carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString(
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
 carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
 
+// Set year, month, day, hour, minute and second.
+carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToDateTimeString() // 2019-02-02 13:14:15
+carbon.Parse("2020-01-01").SetDateTime(2019, 2, 31, 13, 14, 15).ToDateTimeString() // 2019-03-03 13:14:15
+
+// Set year, month and day.
+carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToDateTimeString() // 2019-02-02 00:00:00
+carbon.Parse("2020-01-01").SetDate(2019, 2, 31).ToDateTimeString() // 2019-03-03 00:00:00
+
+// Set hour, minute and second.
+carbon.Parse("2020-01-01").SetTime(13, 14, 15).ToDateTimeString() // 2020-01-01 13:14:15
+carbon.Parse("2020-01-01").SetTime(13, 14, 90).ToDateTimeString() // 2020-01-01 13:15:30
+
 // Set year
 carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
 // Set year without overflowing month
@@ -698,6 +721,13 @@ carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
 // Get day of the week
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
+// Get current year, month, day, hour, minute and second
+carbon.Parse("2020-08-05 13:14:15").DateTime() // 2020,8,5,13,14,15
+// Get current year, month and day
+carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
+// Get current hour, minute and second
+carbon.Parse("2020-08-05 13:14:15").Time() // 13,14,15
+
 // Get current century
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
 // Get current decade
@@ -722,21 +752,20 @@ carbon.Parse("2020-08-05 13:14:15").Minute() // 14
 // Get current second
 carbon.Parse("2020-08-05 13:14:15").Second() // 15
 // Get current millisecond
-carbon.Parse("2020-08-05 13:14:15").Millisecond() // 1596604455000
+carbon.Parse("2020-08-05 13:14:15.999").Millisecond() // 999
 // Get current microsecond
-carbon.Parse("2020-08-05 13:14:15").Microsecond() // 1596604455000000
+carbon.Parse("2020-08-05 13:14:15.999").Microsecond() // 999000
 // Get current nanosecond
-carbon.Parse("2020-08-05 13:14:15").Nanosecond() // 1596604455000000000
+carbon.Parse("2020-08-05 13:14:15.999").Nanosecond() // 999000000
 
-// Get timestamp with second, Timestamp() is shorthand for TimestampWithSecond()
+// Get timestamp with second
 carbon.Parse("2020-08-05 13:14:15").Timestamp() // 1596604455
-carbon.Parse("2020-08-05 13:14:15").TimestampWithSecond() // 1596604455
 // Get timestamp with millisecond
-carbon.Parse("2020-08-05 13:14:15").TimestampWithMillisecond() // 1596604455000
+carbon.Parse("2020-08-05 13:14:15").TimestampMilli() // 1596604455000
 // Get timestamp with microsecond
-carbon.Parse("2020-08-05 13:14:15").TimestampWithMicrosecond() // 1596604455000000
+carbon.Parse("2020-08-05 13:14:15").TimestampMicro() // 1596604455000000
 // Get timestamp with nanosecond
-carbon.Parse("2020-08-05 13:14:15").TimestampWithNanosecond() // 1596604455000000000
+carbon.Parse("2020-08-05 13:14:15").TimestampNano() // 1596604455000000000
 
 // Get timezone name
 carbon.SetTimezone(carbon.PRC).Timezone() // CST
@@ -775,9 +804,28 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 // Output a string in date and time format
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString(carbon.Tokyo) // 2020-08-05 14:14:15
+// Output a string in date and time with millisecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString() // 2020-08-05 13:14:15.999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString(carbon.Tokyo) // 2020-08-05 14:14:15.999
+// Output a string in date and time with microsecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString() // 2020-08-05 13:14:15.999999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString(carbon.Tokyo) // 2020-08-05 14:14:15.999999
+// Output a string in date and time with nanosecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString() // 2020-08-05 13:14:15.999999999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString(carbon.Tokyo) // 2020-08-05 14:14:15.999999999
+
 // Output a string in short date and time format
-carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString() // 20200805131415
-carbon.Parse("2020-08-05 13:14:15").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString() // 20200805131415
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
+// Output a string in short date and time with millisecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString() // 20200805131415.999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString(carbon.Tokyo) // 20200805141415.999
+// Output a string in short date and time with microsecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString() // 20200805131415.999999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString(carbon.Tokyo) // 20200805141415.999999
+// Output a string in short date and time with nanosecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString(carbon.Tokyo) // 20200805141415.999999999
 
 // Output a in date format string
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
@@ -845,20 +893,30 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString(carbon.Tokyo) // Wed, 05 Au
 // Output a string in RFC2822 format
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
-// Output a string in RFC3339 format
-carbon.Parse("2020-08-05 13:14:15").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // Output a string in RFC7231 format
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
+
+// Output a string in RFC3339 format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
+// Output a string in RFC3339 with millisecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString() // 2020-08-05T13:14:15.999+08:00
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString(carbon.Tokyo) // 2020-08-05T13:14:15.999+09:00
+// Output a string in RFC3339 with microsecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 2020-08-05T13:14:15.999999+08:00
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString(carbon.Tokyo) // 2020-08-05T13:14:15.999999+09:00
+// Output a string in RFC3339 with nanosecond format
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
+carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString(carbon.Tokyo) // 2020-08-05T13:14:15.999999999+09:00
 
 // Output a string in date and time format
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo)) // 2020-08-05 13:14:15
 
 // Output a string in "2006-01-02 15:04:05.999999999 -0700 MST" format
-carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
-carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15 +0900 JST
+carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15.999999 +0900 JST
 
 // Output a string by layout, Layout() is shorthand for ToLayoutString()
 carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
@@ -999,17 +1057,14 @@ carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsPigYear() // false
 
 ```go
 type Person struct {
-    ID  int64  `json:"id"`
     Name string `json:"name"`
     Age int `json:"age"`
     Birthday carbon.DateTime `json:"birthday"`
     GraduatedAt carbon.Date `json:"graduated_at"`
-    CreatedAt carbon.Time `json:"created_at"`
-    UpdatedAt carbon.Timestamp `json:"updated_at"`
-    DateTime1 carbon.TimestampWithSecond `json:"date_time1"`
-    DateTime2 carbon.TimestampWithMillisecond `json:"date_time2"`
-    DateTime3 carbon.TimestampWithMicrosecond `json:"date_time3"`
-    DateTime4 carbon.TimestampWithNanosecond `json:"date_time4"`
+    DateTime1 carbon.Timestamp `json:"date_time1"`
+    DateTime2 carbon.TimestampMilli `json:"date_time2"`
+    DateTime3 carbon.TimestampMicro `json:"date_time3"`
+    DateTime4 carbon.TimestampNano `json:"date_time4"`
 }
 ```
 
@@ -1017,17 +1072,14 @@ type Person struct {
 
 ```go
 person := Person {
-    ID:          1,
-    Name:        "gouguoyin",
-    Age:         18,
-    Birthday:    carbon.DateTime{carbon.Now().SubYears(18)},
-    GraduatedAt: carbon.Date{carbon.Parse("2020-08-05 13:14:15")},
-    CreatedAt:   carbon.Time{carbon.Parse("2021-08-05 13:14:15")},
-    UpdatedAt:   carbon.Timestamp{carbon.Parse("2022-08-05 13:14:15")},
-    DateTime1:   carbon.TimestampWithSecond{carbon.Parse("2023-08-05 13:14:15")},
-    DateTime2:   carbon.TimestampWithMillisecond{carbon.Parse("2024-08-05 13:14:15")},
-    DateTime3:   carbon.TimestampWithMicrosecond{carbon.Parse("2025-08-05 13:14:15")},
-    DateTime4:   carbon.TimestampWithNanosecond{carbon.Parse("2025-08-05 13:14:15")},
+	Name:        "gouguoyin",
+	Age:         18,
+	Birthday:    carbon.DateTime{carbon.Now().SubYears(18)},
+	GraduatedAt: carbon.Date{carbon.Parse("2020-08-05 13:14:15")},
+	DateTime1:   carbon.Timestamp{carbon.Parse("2023-08-05 13:14:15")},
+	DateTime2:   carbon.TimestampMilli{carbon.Parse("2024-08-05 13:14:15")},
+	DateTime3:   carbon.TimestampMicro{carbon.Parse("2025-08-05 13:14:15")},
+	DateTime4:   carbon.TimestampNano{carbon.Parse("2025-08-05 13:14:15")},
 }
 ```
 
@@ -1042,13 +1094,10 @@ if err != nil {
 fmt.Printf("%s", data)
 // Output
 {
-    "id": 1,
     "name": "gouguoyin",
     "age": 18,
     "birthday": "2003-07-16 16:22:02",
     "graduated_at": "2020-08-05",
-    "created_at": "13:14:15",
-    "updated_at": 1659676455,
     "date_time1": 1691212455,
     "date_time2": 1722834855000,
     "date_time3": 1754370855000000,
@@ -1060,12 +1109,10 @@ fmt.Printf("%s", data)
 
 ```go
 jsonString := `{
-	"id": 1,
 	"name": "gouguoyin",
 	"age": 18,
 	"birthday": "2003-07-16 16:22:02",
 	"graduated_at": "2020-08-05",
-	"updated_at": 1659676455,
 	"date_time1": 1691212455,
 	"date_time2": 1722834855000,
 	"date_time3": 1754370855000000,
@@ -1079,7 +1126,7 @@ if err != nil {
 }
 fmt.Printf("%+v", *person)
 // Output
-{ID:1 Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 UpdatedAt:2022-08-05 13:14:15 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
 ```
 
 ##### I18n
