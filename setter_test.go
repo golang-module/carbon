@@ -117,6 +117,81 @@ func TestError_SetLanguage(t *testing.T) {
 	assert.NotNil(t, c2.Error, "It should catch an exception in SetLanguage()")
 }
 
+func TestCarbon_SetDateTime(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                                  string // 输入值
+		year, month, day, hour, minute, second int    // 输入参数
+		expected                               string // 期望值
+	}{
+		{"2020-01-01", 2019, 02, 02, 13, 14, 15, "2019-02-02 13:14:15"},
+		{"2020-01-01", 2019, 02, 31, 13, 14, 15, "2019-03-03 13:14:15"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetDateTime(test.year, test.month, test.day, test.hour, test.minute, test.second)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestError_SetDateTime(t *testing.T) {
+	input, year, month, day, hour, minute, second := "2020-08-50", 2020, 8, 50, 13, 14, 15
+	c := Parse(input).SetDateTime(year, month, day, hour, minute, second)
+	assert.NotNil(t, c.Error, "It should catch an exception in SetDateTime()")
+}
+
+func TestCarbon_SetDate(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input            string // 输入值
+		year, month, day int    // 输入参数
+		expected         string // 期望值
+	}{
+		{"2020-01-01", 2019, 02, 02, "2019-02-02 00:00:00"},
+		{"2020-01-01", 2019, 02, 31, "2019-03-03 00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetDate(test.year, test.month, test.day)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestError_SetDate(t *testing.T) {
+	input, year, month, day := "2020-08-50", 2020, 8, 50
+	c := Parse(input).SetDate(year, month, day)
+	assert.NotNil(t, c.Error, "It should catch an exception in SeDate()")
+}
+
+func TestCarbon_SetTime(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                string // 输入值
+		hour, minute, second int    // 输入参数
+		expected             string // 期望值
+	}{
+		{"2020-08-05", 13, 14, 15, "2020-08-05 13:14:15"},
+		{"2020-08-05", 13, 14, 90, "2020-08-05 13:15:30"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetTime(test.hour, test.minute, test.second)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestError_SetTime(t *testing.T) {
+	input, hour, minute, second := "2020-08-50", 13, 14, 15
+	c := Parse(input).SetTime(hour, minute, second)
+	assert.NotNil(t, c.Error, "It should catch an exception in SetTime()")
+}
+
 func TestCarbon_SetYear(t *testing.T) {
 	assert := assert.New(t)
 
@@ -162,8 +237,8 @@ func TestCarbon_SetYearNoOverflow(t *testing.T) {
 }
 
 func TestError_SetYear(t *testing.T) {
-	value, year := "2020-08-50", 2020
-	c := Parse(value).SetYear(year)
+	input, year := "2020-08-50", 2020
+	c := Parse(input).SetYear(year)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetYear()")
 }
 
@@ -216,14 +291,14 @@ func TestCarbon_SetMonthNoOverflow(t *testing.T) {
 }
 
 func TestError_SetMonth(t *testing.T) {
-	value, month := "2020-08-50", 12
-	c := Parse(value).SetMonth(month)
+	input, month := "2020-08-50", 12
+	c := Parse(input).SetMonth(month)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMonth()")
 }
 
 func TestError_SetMonthNoOverflow(t *testing.T) {
-	value, month := "2020-08-50", 12
-	c := Parse(value).SetMonthNoOverflow(month)
+	input, month := "2020-08-50", 12
+	c := Parse(input).SetMonthNoOverflow(month)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMonthNoOverflow()")
 }
 
@@ -298,8 +373,8 @@ func TestCarbon_SetDay(t *testing.T) {
 }
 
 func TestError_SetDay(t *testing.T) {
-	value, day := "2020-08-50", 30
-	c := Parse(value).SetDay(day)
+	input, day := "2020-08-50", 30
+	c := Parse(input).SetDay(day)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetDay()")
 }
 
@@ -348,8 +423,8 @@ func TestCarbon_SetMinute(t *testing.T) {
 }
 
 func TestError_SetMinute(t *testing.T) {
-	value, minute := "2020-08-50", 30
-	c := Parse(value).SetMinute(minute)
+	input, minute := "2020-08-50", 30
+	c := Parse(input).SetMinute(minute)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMinute()")
 }
 
@@ -373,8 +448,8 @@ func TestCarbon_SetSecond(t *testing.T) {
 }
 
 func TestError_SetSecond(t *testing.T) {
-	value, second := "2020-08-50", 30
-	c := Parse(value).SetSecond(second)
+	input, second := "2020-08-50", 30
+	c := Parse(input).SetSecond(second)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetSecond()")
 }
 
@@ -397,8 +472,8 @@ func TestCarbon_SetMillisecond(t *testing.T) {
 }
 
 func TestError_SetMillisecond(t *testing.T) {
-	value, millisecond := "2020-08-50", 100
-	c := Parse(value).SetMillisecond(millisecond)
+	input, millisecond := "2020-08-50", 100
+	c := Parse(input).SetMillisecond(millisecond)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMillisecond()")
 }
 
@@ -422,8 +497,8 @@ func TestCarbon_SetMicrosecond(t *testing.T) {
 }
 
 func TestError_SetMicrosecond(t *testing.T) {
-	value, microsecond := "2020-08-50", 100000
-	c := Parse(value).SetMicrosecond(microsecond)
+	input, microsecond := "2020-08-50", 100000
+	c := Parse(input).SetMicrosecond(microsecond)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetMicrosecond()")
 }
 
@@ -447,7 +522,7 @@ func TestCarbon_SetNanosecond(t *testing.T) {
 }
 
 func TestError_SetNanosecond(t *testing.T) {
-	value, nanosecond := "2020-08-50", 100000000
-	c := Parse(value).SetNanosecond(nanosecond)
+	input, nanosecond := "2020-08-50", 100000000
+	c := Parse(input).SetNanosecond(nanosecond)
 	assert.NotNil(t, c.Error, "It should catch an exception in SetNanosecond()")
 }
