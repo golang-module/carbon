@@ -9,9 +9,6 @@ import (
 // String outputs a string in date and time format, implement Stringer interface.
 // 实现 Stringer 接口
 func (c Carbon) String() string {
-	if c.IsInvalid() {
-		return ""
-	}
 	return c.ToDateTimeString()
 }
 
@@ -135,6 +132,42 @@ func (c Carbon) ToDateTimeString(timezone ...string) string {
 	return c.time.In(c.loc).Format(DateTimeFormat)
 }
 
+// ToDateTimeMilliString outputs a string in date and time with millisecond format.
+// 输出日期时间字符串，包含毫秒
+func (c Carbon) ToDateTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(DateTimeMilliFormat)
+}
+
+// ToDateTimeMicroString outputs a string in date and time with microsecond format.
+// 输出日期时间字符串，包含微秒
+func (c Carbon) ToDateTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(DateTimeMicroFormat)
+}
+
+// ToDateTimeNanoString outputs a string in date and time with nanosecond format.
+// 输出日期时间字符串，包含纳秒
+func (c Carbon) ToDateTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(DateTimeNanoFormat)
+}
+
 // ToShortDateTimeString outputs a string in short date and time format.
 // 输出简写日期时间字符串
 func (c Carbon) ToShortDateTimeString(timezone ...string) string {
@@ -145,6 +178,42 @@ func (c Carbon) ToShortDateTimeString(timezone ...string) string {
 		return ""
 	}
 	return c.time.In(c.loc).Format(ShortDateTimeFormat)
+}
+
+// ToShortDateTimeMilliString outputs a string in short date and time with millisecond format.
+// 输出简写日期时间字符串，包含毫秒
+func (c Carbon) ToShortDateTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(ShortDateTimeMilliFormat)
+}
+
+// ToShortDateTimeMicroString outputs a string in short date and time with microsecond format.
+// 输出简写日期时间字符串，包含微秒
+func (c Carbon) ToShortDateTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(ShortDateTimeMicroFormat)
+}
+
+// ToShortDateTimeNanoString outputs a string in short date and time with nanosecond format.
+// 输出简写日期时间字符串，包含纳秒
+func (c Carbon) ToShortDateTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(ShortDateTimeNanoFormat)
 }
 
 // ToDateString outputs a string in date format.
@@ -198,9 +267,6 @@ func (c Carbon) ToShortTimeString(timezone ...string) string {
 // ToAtomString outputs a string in ATOM format.
 // 输出 ATOM 格式字符串
 func (c Carbon) ToAtomString(timezone ...string) string {
-	if c.IsInvalid() {
-		return ""
-	}
 	return c.ToRfc3339String(timezone...)
 }
 
@@ -243,9 +309,6 @@ func (c Carbon) ToRssString(timezone ...string) string {
 // ToW3cString outputs a string in W3C format.
 // 输出 W3C 格式字符串
 func (c Carbon) ToW3cString(timezone ...string) string {
-	if c.IsInvalid() {
-		return ""
-	}
 	return c.ToRfc3339String(timezone...)
 }
 
@@ -393,6 +456,42 @@ func (c Carbon) ToRfc3339String(timezone ...string) string {
 	return c.time.In(c.loc).Format(RFC3339Format)
 }
 
+// ToRfc3339MilliString outputs a string in RFC3339 with millisecond format.
+// 输出 RFC3339 格式字符串，包含豪秒
+func (c Carbon) ToRfc3339MilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(RFC3339MilliFormat)
+}
+
+// ToRfc3339MicroString outputs a string in RFC3339 with microsecond format.
+// 输出 RFC3339 格式字符串，包含微秒
+func (c Carbon) ToRfc3339MicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(RFC3339MicroFormat)
+}
+
+// ToRfc3339NanoString outputs a string in RFC3339 with nanosecond format.
+// 输出 RFC3339 格式字符串，包含纳秒
+func (c Carbon) ToRfc3339NanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.time.In(c.loc).Format(RFC3339NanoFormat)
+}
+
 // ToRfc7231String outputs a string in RFC7231 format.
 // 输出 RFC7231 格式字符串
 func (c Carbon) ToRfc7231String(timezone ...string) string {
@@ -420,9 +519,6 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 // Layout outputs a string by layout, it is shorthand for ToLayoutString.
 // 输出指定布局的时间字符串, 是 ToLayoutString 的简写
 func (c Carbon) Layout(layout string, timezone ...string) string {
-	if c.IsInvalid() {
-		return ""
-	}
 	return c.ToLayoutString(layout, timezone...)
 }
 
@@ -437,7 +533,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	}
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(format); i++ {
-		if layout, ok := formats[byte(format[i])]; ok {
+		if layout, ok := formats[format[i]]; ok {
 			buffer.WriteString(c.time.In(c.loc).Format(layout))
 		} else {
 			switch format[i] {
@@ -495,8 +591,5 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 // Format outputs a string by format, it is shorthand for ToFormatString.
 // 输出指定格式的时间字符串, 是 ToFormatString 的简写
 func (c Carbon) Format(format string, timezone ...string) string {
-	if c.IsInvalid() {
-		return ""
-	}
 	return c.ToFormatString(format, timezone...)
 }
