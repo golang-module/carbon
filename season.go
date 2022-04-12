@@ -2,7 +2,6 @@ package carbon
 
 import (
 	"strings"
-	"time"
 )
 
 // Season gets season name according to the meteorological division method, i18n is supported.
@@ -15,14 +14,15 @@ func (c Carbon) Season() string {
 		c.lang.SetLocale(defaultLocale)
 	}
 	index := -1
+	month := c.Month()
 	switch {
-	case c.Month() == 3 || c.Month() == 4 || c.Month() == 5:
+	case month == 3 || month == 4 || month == 5:
 		index = 0
-	case c.Month() == 6 || c.Month() == 7 || c.Month() == 8:
+	case month == 6 || month == 7 || month == 8:
 		index = 1
-	case c.Month() == 9 || c.Month() == 10 || c.Month() == 11:
+	case month == 9 || month == 10 || month == 11:
 		index = 2
-	case c.Month() == 12 || c.Month() == 1 || c.Month() == 2:
+	case month == 12 || month == 1 || month == 2:
 		index = 3
 	}
 	if seasons, ok := c.lang.resources["seasons"]; ok {
@@ -40,12 +40,11 @@ func (c Carbon) StartOfSeason() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	if c.Month() == 1 || c.Month() == 2 {
-		c.time = time.Date(c.Year()-1, time.Month(12), 1, 0, 0, 0, 0, c.loc)
-		return c
+	year, month, _ := c.Date()
+	if month == 1 || month == 2 {
+		return c.create(year-1, 12, 1, 0, 0, 0, 0)
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()/3*3), 1, 0, 0, 0, 0, c.loc)
-	return c
+	return c.create(year, month/3*3, 1, 0, 0, 0, 0)
 }
 
 // EndOfSeason returns a Carbon instance for end of the season.
@@ -54,16 +53,14 @@ func (c Carbon) EndOfSeason() Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	if c.Month() == 1 || c.Month() == 2 {
-		c.time = time.Date(c.Year(), time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
-		return c
+	year, month, _ := c.Date()
+	if month == 1 || month == 2 {
+		return c.create(year, 3, 0, 23, 59, 59, 999999999)
 	}
-	if c.Month() == 12 {
-		c.time = time.Date(c.Year()+1, time.Month(2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
-		return c
+	if month == 12 {
+		return c.create(year+1, 3, 0, 23, 59, 59, 999999999)
 	}
-	c.time = time.Date(c.Year(), time.Month(c.Month()/3*3+2), 1, 23, 59, 59, 999999999, c.loc).AddDate(0, 1, -1)
-	return c
+	return c.create(year, month/3*3+3, 0, 23, 59, 59, 999999999)
 }
 
 // IsSpring reports whether is spring.
@@ -72,7 +69,8 @@ func (c Carbon) IsSpring() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	if c.Month() == 3 || c.Month() == 4 || c.Month() == 5 {
+	month := c.Month()
+	if month == 3 || month == 4 || month == 5 {
 		return true
 	}
 	return false
@@ -84,7 +82,8 @@ func (c Carbon) IsSummer() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	if c.Month() == 6 || c.Month() == 7 || c.Month() == 8 {
+	month := c.Month()
+	if month == 6 || month == 7 || month == 8 {
 		return true
 	}
 	return false
@@ -96,7 +95,8 @@ func (c Carbon) IsAutumn() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	if c.Month() == 9 || c.Month() == 10 || c.Month() == 11 {
+	month := c.Month()
+	if month == 9 || month == 10 || month == 11 {
 		return true
 	}
 	return false
@@ -108,7 +108,8 @@ func (c Carbon) IsWinter() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	if c.Month() == 12 || c.Month() == 1 || c.Month() == 2 {
+	month := c.Month()
+	if month == 12 || month == 1 || month == 2 {
 		return true
 	}
 	return false
