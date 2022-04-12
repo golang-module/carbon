@@ -131,9 +131,9 @@ func CreateFromDateTimeNano(year, month, day, hour, minute, second, nanosecond i
 // CreateFromDate creates a Carbon instance from a given date.
 // 从给定的年月日创建 Carbon 实例
 func (c Carbon) CreateFromDate(year, month, day int, timezone ...string) Carbon {
-	now := Now()
+	now := c.Now()
 	hour, minute, second := now.Time()
-	return c.create(year, month, day, hour, minute, second, time.Now().Nanosecond(), timezone...)
+	return c.create(year, month, day, hour, minute, second, now.Nanosecond(), timezone...)
 }
 
 // CreateFromDate creates a Carbon instance from a given date.
@@ -145,7 +145,7 @@ func CreateFromDate(year, month, day int, timezone ...string) Carbon {
 // CreateFromTime creates a Carbon instance from a given time.
 // 从给定的时分秒创建 Carbon 实例
 func (c Carbon) CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
-	now := Now()
+	now := c.Now()
 	year, month, day := now.Date()
 	return c.create(year, month, day, hour, minute, second, now.Nanosecond(), timezone...)
 }
