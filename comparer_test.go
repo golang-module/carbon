@@ -30,11 +30,6 @@ func TestCarbon_IsZero(t *testing.T) {
 	}
 }
 
-func TestError_IsZero(t *testing.T) {
-	c := Parse("2020-13-50")
-	assert.True(t, c.IsZero(), "It should catch an exception in IsZero()")
-}
-
 func TestCarbon_IsInvalid(t *testing.T) {
 	assert := assert.New(t)
 
@@ -56,11 +51,6 @@ func TestCarbon_IsInvalid(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.IsInvalid(), "Current test index is "+strconv.Itoa(index))
 	}
-}
-
-func TestError_IsInvalid(t *testing.T) {
-	c := SetTimezone("xxx")
-	assert.True(t, c.IsInvalid(), "It should catch an exception in IsInvalid()")
 }
 
 func TestCarbon_IsNow(t *testing.T) {
@@ -1177,4 +1167,10 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 		assert.Nil(c3.Error)
 		assert.Equal(test.expected, c1.BetweenIncludedBoth(c2, c3), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestError_Comparer(t *testing.T) {
+	c := Parse("2020-13-50")
+	assert.True(t, c.IsZero(), "It should catch an exception in IsZero()")
+	assert.True(t, c.IsInvalid(), "It should catch an exception in IsInvalid()")
 }

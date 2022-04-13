@@ -38,12 +38,6 @@ func TestCarbon_AddDuration(t *testing.T) {
 	}
 }
 
-func TestError_AddDuration(t *testing.T) {
-	duration := "10x"
-	c := Parse("2020-08-05").AddDuration(duration)
-	assert.NotNil(t, c.Error, "It should catch an exception in AddDuration()")
-}
-
 func TestCarbon_SubDuration(t *testing.T) {
 	assert := assert.New(t)
 
@@ -1739,4 +1733,10 @@ func TestCarbon_SubSecond(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestError_Traveler(t *testing.T) {
+	duration := "10x"
+	c := Parse("2020-08-05").AddDuration(duration)
+	assert.NotNil(t, c.Error, "It should catch an exception in AddDuration()")
 }

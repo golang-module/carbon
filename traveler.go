@@ -11,7 +11,7 @@ func (c Carbon) AddDuration(duration string) Carbon {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.Time = c.Time.In(c.loc).Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	c.Error = err
 	return c
 }
@@ -124,7 +124,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.loc).AddDate(years, 0, 0)
+	c.time = c.time.In(c.loc).AddDate(years, 0, 0)
 	return c
 }
 
@@ -134,14 +134,14 @@ func (c Carbon) AddYearsNoOverflow(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
+	nanosecond := c.Nanosecond()
+	year, month, day, hour, minute, second := c.DateTime()
 	// 获取N年后本月的最后一天
-	last := time.Date(c.Year()+years, time.Month(c.Month()), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc).AddDate(0, 1, -1)
-	day := c.Day()
-	if c.Day() > last.Day() {
-		day = last.Day()
+	lastYear, lastMonth, lastDay := c.create(year+years, month+1, 0, hour, minute, second, nanosecond).Date()
+	if day > lastDay {
+		day = lastDay
 	}
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
-	return c
+	return c.create(lastYear, lastMonth, day, hour, minute, second, nanosecond)
 }
 
 // AddYear adds one year.
@@ -237,7 +237,7 @@ func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.loc).AddDate(0, months, 0)
+	c.time = c.time.In(c.loc).AddDate(0, months, 0)
 	return c
 }
 
@@ -247,15 +247,14 @@ func (c Carbon) AddMonthsNoOverflow(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	month := c.Month() + months
+	nanosecond := c.Nanosecond()
+	year, month, day, hour, minute, second := c.DateTime()
 	// 获取N月后的最后一天
-	last := time.Date(c.Year(), time.Month(month), 1, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc).AddDate(0, 1, -1)
-	day := c.Day()
-	if c.Day() > last.Day() {
-		day = last.Day()
+	lastYear, lastMonth, lastDay := c.create(year, month+months+1, 0, hour, minute, second, nanosecond).Date()
+	if day > lastDay {
+		day = lastDay
 	}
-	c.Time = time.Date(last.Year(), last.Month(), day, c.Hour(), c.Minute(), c.Second(), c.Nanosecond(), c.loc)
-	return c
+	return c.create(lastYear, lastMonth, day, hour, minute, second, nanosecond)
 }
 
 // AddMonth adds one month.
@@ -324,7 +323,7 @@ func (c Carbon) AddDays(days int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.Time = c.Time.In(c.loc).AddDate(0, 0, days)
+	c.time = c.time.In(c.loc).AddDate(0, 0, days)
 	return c
 }
 
@@ -353,7 +352,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.Time = c.Time.In(c.loc).Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -382,7 +381,7 @@ func (c Carbon) AddMinutes(minutes int) Carbon {
 		return c
 	}
 	td := time.Duration(minutes) * time.Minute
-	c.Time = c.Time.Add(td)
+	c.time = c.time.Add(td)
 	return c
 }
 
@@ -411,7 +410,7 @@ func (c Carbon) AddSeconds(seconds int) Carbon {
 		return c
 	}
 	td := time.Duration(seconds) * time.Second
-	c.Time = c.Time.Add(td)
+	c.time = c.time.Add(td)
 	return c
 }
 
