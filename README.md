@@ -819,7 +819,7 @@ carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
 carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
 
 // Output a string in Ansic format
-carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
+carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
 // Output a string in Atom format
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
 // Output a string in unix date format
@@ -838,7 +838,14 @@ carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
 // Output a string in ISO8601 format
-carbon.Parse("2020-08-05 13:14:15").ToIso8601String() // 2020-08-05T13:14:15+08:00
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601String() // 2020-08-05T13:14:15+08:00
+// Output a string in ISO8601Milli format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString() // 2020-08-05T13:14:15.999+08:00
+// Output a string in ISO8601Micro format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString() // 2020-08-05T13:14:15.999999+08:00
+// Output a string in ISO8601Nano format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString() // 2020-08-05T13:14:15.999999999+08:00
+
 // Output a string in RFC822 format
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
 // Output a string in RFC822Z format
