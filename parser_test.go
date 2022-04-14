@@ -43,15 +43,6 @@ func TestCarbon_Parse(t *testing.T) {
 	}
 }
 
-func TestError_Parse(t *testing.T) {
-	value, timezone := "2020-13-50", "xxx"
-	c1 := Parse(value)
-	assert.NotNil(t, c1.Error, "It should catch an exception in Parse()")
-
-	c2 := Parse(value, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in Parse()")
-}
-
 func TestCarbon_ParseByFormat(t *testing.T) {
 	assert := assert.New(t)
 
@@ -83,17 +74,6 @@ func TestCarbon_ParseByFormat(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.output, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
-}
-
-func TestError_ParseByFormat(t *testing.T) {
-	assert := assert.New(t)
-
-	value, format, timezone := "2020-08-50", "Y-m-d", "xxx"
-	c1 := ParseByFormat(value, format)
-	assert.NotNil(t, c1.Error, "It should catch an exception in ParseByFormat()")
-
-	c2 := ParseByFormat(value, format, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in ParseByFormat()")
 }
 
 func TestCarbon_ParseByLayout(t *testing.T) {
@@ -128,13 +108,9 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 	}
 }
 
-func TestError_ParseByLayout(t *testing.T) {
-	assert := assert.New(t)
-
-	value, layout, timezone := "2020-08-50", "2006-01-02", "xxx"
-	c1 := ParseByLayout(value, layout)
-	assert.NotNil(t, c1.Error, "It should catch an exception in ParseByLayout()")
-
-	c2 := ParseByLayout(value, layout, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in ParseByLayout()")
+func TestError_Parse(t *testing.T) {
+	date, layout, format, timezone := "2020-08-50", "2006-01-02", DateFormat, "xxx"
+	assert.NotNil(t, Parse(date).Error, "It should catch an exception in Parse()")
+	assert.NotNil(t, ParseByLayout(date, layout, timezone).Error, "It should catch an exception in ParseByLayout()")
+	assert.NotNil(t, ParseByFormat(date, format, timezone).Error, "It should catch an exception in ParseByFormat()")
 }
