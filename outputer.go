@@ -279,7 +279,7 @@ func (c Carbon) ToANSICString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.time.In(c.loc).Format(ANSICString)
+	return c.time.In(c.loc).Format(ANSICFormat)
 }
 
 // ToCookieString outputs a string in "Monday, 02-Jan-2006 15:04:05 MST" format.

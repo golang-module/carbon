@@ -839,11 +839,11 @@ carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
 // Output a string in ISO8601 format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601String() // 2020-08-05T13:14:15+08:00
-// Output a string in ISO8601Milli format
+// Output a string in ISO8601 with millisecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString() // 2020-08-05T13:14:15.999+08:00
-// Output a string in ISO8601Micro format
+// Output a string in ISO8601 with microsecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString() // 2020-08-05T13:14:15.999999+08:00
-// Output a string in ISO8601Nano format
+// Output a string in ISO8601 with nanosecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
 // Output a string in RFC822 format

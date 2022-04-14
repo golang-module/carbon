@@ -10,26 +10,26 @@ jobs:
 
   test:
     strategy:
-        matrix:
-          vm-os: [ubuntu-latest]
-          go-version: [1.16, 1.17, 1.18]
+      matrix:
+        vm-os: [ubuntu-latest]
+        go-version: [1.16, 1.17, 1.18]
     runs-on: ${{ matrix.vm-os }}
     env:
       GO111MODULE: on
       GOPROXY: https://proxy.golang.org
     steps:
-    - name: Install go ${{ matrix.go-version }}
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ matrix.go-version }}
+      - name: Install go ${{ matrix.go-version }}
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
 
-    - name: Install dependencies
-      uses: actions/checkout@v2
+      - name: Install dependencies
+        uses: actions/checkout@v2
 
-    - name: Test and create coverage file
-      run: go test -coverprofile=coverage.txt -covermode=atomic
+      - name: Test and create coverage file
+        run: go test -coverprofile=coverage.txt -covermode=atomic
 
-    - name: Upload coverage file to codecov
-      uses: codecov/codecov-action@v1
-      with:
+      - name: Upload coverage file to codecov
+        uses: codecov/codecov-action@v1
+        with:
           token: ${{secrets.CODECOV_TOKEN}}

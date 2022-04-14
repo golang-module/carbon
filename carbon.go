@@ -119,7 +119,7 @@ const (
 // formats constant
 // 时间格式化常量
 const (
-	ANSICString              = time.ANSIC
+	ANSICFormat              = time.ANSIC
 	UnixDateFormat           = time.UnixDate
 	RubyDateFormat           = time.RubyDate
 	RFC822Format             = time.RFC822
