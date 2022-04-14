@@ -71,7 +71,6 @@ carbon.Now().ToDateString() // 2020-08-05
 carbon.Now().ToTimeString() // 13:14:15
 // 指定时区的今天此刻
 carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 // 今天秒级时间戳
 carbon.Now().Timestamp() // 1596604455
 // 今天毫秒级时间戳
@@ -92,7 +91,6 @@ carbon.Yesterday().ToTimeString() // 13:14:15
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
 // 指定时区的昨天此刻
 carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 // 昨天秒级时间戳
 carbon.Yesterday().Timestamp() // 1596518055
 // 昨天毫秒级时间戳
@@ -113,7 +111,6 @@ carbon.Tomorrow().ToTimeString() // 13:14:15
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
 // 指定时区的明天此刻
 carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 // 明天秒级时间戳
 carbon.Tomorrow().Timestamp() // 1596690855
 // 明天毫秒级时间戳
@@ -129,42 +126,29 @@ carbon.Tomorrow().TimestampNano() // 1596690855000000000
 ```go
 // 从秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestamp(-1).ToString() // 1970-01-01 07:59:59 +0800 CST
-carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToString() // 1970-01-01 08:59:59 +0900 JST
 carbon.CreateFromTimestamp(0).ToString() // 1970-01-01 08:00:00 +0800 CST
-carbon.CreateFromTimestamp(0, carbon.Tokyo).ToString() // 1970-01-01 09:00:00 +0900 JST
 carbon.CreateFromTimestamp(1).ToString() // 1970-01-01 08:00:01 +0800 CST
-carbon.CreateFromTimestamp(1, carbon.Tokyo).ToString() // 1970-01-01 09:00:01 +0900 JST
 carbon.CreateFromTimestamp(1649735755).ToString() // 2022-04-12 11:55:55 +0800 CST
-carbon.CreateFromTimestamp(1649735755, carbon.Tokyo).ToString() // 2022-04-12 12:55:55 +0900 JST
 // 从毫秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestampMilli(1649735755981).ToString() // 2022-04-12 11:55:55.981 +0800 CST
-carbon.CreateFromTimestampMilli(1649735755981, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981 +0900 JST
 // 从微秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestampMicro(1649735755981566).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
-carbon.CreateFromTimestampMicro(1649735755981566, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 JST
 // 从纳秒级时间戳创建 Carbon 实例
 carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
-carbon.CreateFromTimestampNano(1649735755981566000, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 CST
 
 // 从年月日时分秒创建 Carbon 实例
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 // 从年月日时分秒创建 Carbon 实例，包含毫秒
 carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
-carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999 +0900 JST
 // 从年月日时分秒创建 Carbon 实例，包含微秒
 carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
-carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999 +0900 JST
 // 从年月日时分秒创建 Carbon 实例，包含纳秒
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
-carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999999 +0900 JST
 
 // 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 // 从时分秒创建 Carbon 实例(年月日默认为当前年月日)
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
 ##### 将标准格式时间字符串解析成 Carbon 实例
@@ -298,7 +282,7 @@ carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-2
 carbon.Parse("2020-02-29 13:14:15").SubCenturyNoOverflow().ToDateTimeString() // 1920-02-29 13:14:15
 
 // 三个年代后
-carbon.Parse("2020-02-29 13:14:15").Decades(3).ToDateTimeString() // 2050-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").AddDecades(3).ToDateTimeString() // 2050-03-01 13:14:15
 // 三个年代后(月份不溢出)
 carbon.Parse("2020-02-29 13:14:15").AddDecadesNoOverflow(3).ToDateTimeString() // 2050-02-28 13:14:15
 // 一个年代后
@@ -727,6 +711,13 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // 获取当前年月日时分秒
 carbon.Parse("2020-08-05 13:14:15").DateTime() // 2020,8,5,13,14,15
+// 获取当前年月日时分秒毫秒
+carbon.Parse("2020-08-05 13:14:15").DateTimeMilli() // 2020,8,5,13,14,15,999
+// 获取当前年月日时分秒微秒
+carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
+// 获取当前年月日时分秒纳秒
+carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
+
 // 获取当前年月日
 carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
 // 获取当前时分秒
@@ -808,133 +799,95 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```go
 // 输出日期时间字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeString(carbon.Tokyo) // 2020-08-05 14:14:15
 // 输出日期时间字符串，包含毫秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString() // 2020-08-05 13:14:15.999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString(carbon.Tokyo) // 2020-08-05 14:14:15.999
 // 输出日期时间字符串，包含微秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString() // 2020-08-05 13:14:15.999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString(carbon.Tokyo) // 2020-08-05 14:14:15.999999
 // 输出日期时间字符串，包含纳秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString() // 2020-08-05 13:14:15.999999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString(carbon.Tokyo) // 2020-08-05 14:14:15.999999999
 
 // 输出简写日期时间字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString() // 20200805131415
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
 // 输出简写日期时间字符串，包含毫秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString() // 20200805131415.999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString(carbon.Tokyo) // 20200805141415.999
 // 输出简写日期时间字符串，包含微秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString() // 20200805131415.999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString(carbon.Tokyo) // 20200805141415.999999
 // 输出简写日期时间字符串，包含纳秒
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString(carbon.Tokyo) // 20200805141415.999999999
 
 // 输出日期字符串
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-carbon.Parse("2020-08-05 13:14:15").ToDateString(carbon.Tokyo) // 2020-08-05
 // 输出简写日期字符串
 carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
-carbon.Parse("2020-08-05 13:14:15").ToShortDateString(carbon.Tokyo) // 20200805
 
 // 输出时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToTimeString(carbon.Tokyo) // 14:14:15
 // 输出简写时间字符串
 carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
-carbon.Parse("2020-08-05 13:14:15").ToShortTimeString(carbon.Tokyo) // 141415
 
 // 输出 Ansic 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-carbon.Parse("2020-08-05 13:14:15").ToAnsicString(carbon.Tokyo) // Wed Aug  5 14:14:15 2020
 // 输出 Atom 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToAtomString(carbon.Tokyo) // 2020-08-05T14:14:15+08:00
 // 输出 UnixDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-carbon.Parse("2020-08-05 13:14:15").ToUnixDateString(carbon.Tokyo) // Wed Aug  5 14:14:15 JST 2020
 // 输出 RubyDate 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
-carbon.Parse("2020-08-05 13:14:15").ToRubyDateString(carbon.Tokyo) // Wed Aug 05 14:14:15 +0900 2020
 // 输出 Kitchen 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-carbon.Parse("2020-08-05 13:14:15").ToKitchenString(carbon.Tokyo) // 2:14PM
 // 输出 Cookie 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToCookieString(carbon.Tokyo) // Wednesday, 05-Aug-2020 14:14:15 JST
 // 输出 DayDateTime 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString(carbon.Tokyo) // Wed, Aug 5, 2020 2:14 PM
 // 输出 RSS 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRssString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // 输出 W3C 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToW3cString(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 
 // 输出 ISO8601 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToIso8601String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToIso8601String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // 输出 RFC822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc822String(carbon.Tokyo) // 05 Aug 20 14:14 JST
 // 输出 RFC822Z 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc822zString(carbon.Tokyo) // 05 Aug 20 14:14 +0900
 // 输出 RFC850 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc850String(carbon.Tokyo) // Wednesday, 05-Aug-20 14:14:15 JST
 // 输出 RFC1036 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1036String(carbon.Tokyo) // Wed, 05 Aug 20 14:14:15 +0900
 // 输出 RFC1123 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 JST
 // 输出 RFC1123Z 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 0800
 // 输出 RFC2822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // 输出 RFC7231 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
 
 // 输出 RFC3339 格式字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // 输出 RFC3339Milli 格式字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString() // 2020-08-05T13:14:15.999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString(carbon.Tokyo) // 2020-08-05T13:14:15.999+09:00
 // 输出 RFC3339Micro 格式字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 2020-08-05T13:14:15.999999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString(carbon.Tokyo) // 2020-08-05T13:14:15.999999+09:00
 // 输出 RFC3339Nano 格式字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString(carbon.Tokyo) // 2020-08-05T13:14:15.999999999+09:00
 
 // 输出日期时间字符串
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo)) // 2020-08-05 13:14:15
 
 // 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
-carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15999999 +0900 JST
 
 // 输出指定布局的字符串,Layout()是ToLayoutString()的简写
 carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").Layout("2006-01-02 15:04:05", carbon.Tokyo) // 2020-08-05 14:14:15
 
 // 输出指定格式的字符串,Format()是ToFormatString()的简写(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
 carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-08-05 14:14:15
 ```
 
 > 更多格式化输出符号请查看附录 <a href="#format-sign-table">格式化符号表</a>
