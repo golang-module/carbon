@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v2.1.0
+// @Version v2.1.1
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
@@ -130,11 +130,11 @@ const (
 	RssFormat                = time.RFC1123Z
 	KitchenFormat            = time.Kitchen
 	RFC2822Format            = time.RFC1123Z
+	CookieFormat             = "Monday, 02-Jan-2006 15:04:05 MST"
 	RFC3339Format            = "2006-01-02T15:04:05Z07:00"
 	RFC3339MilliFormat       = "2006-01-02T15:04:05.999Z07:00"
 	RFC3339MicroFormat       = "2006-01-02T15:04:05.999999Z07:00"
 	RFC3339NanoFormat        = "2006-01-02T15:04:05.999999999Z07:00"
-	CookieFormat             = "Monday, 02-Jan-2006 15:04:05 MST"
 	ISO8601Format            = "2006-01-02T15:04:05-07:00"
 	RFC1036Format            = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC7231Format            = "Mon, 02 Jan 2006 15:04:05 GMT"
