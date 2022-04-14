@@ -19,12 +19,6 @@ func TestCarbon_Now(t *testing.T) {
 	assert.Equal(expected2, actual2)
 }
 
-func TestError_Now(t *testing.T) {
-	timezone := "xxx"
-	c := Now(timezone)
-	assert.NotNil(t, c.Error, "It should catch an exception in Now()")
-}
-
 func TestCarbon_Yesterday(t *testing.T) {
 	assert := assert.New(t)
 
@@ -41,12 +35,6 @@ func TestCarbon_Yesterday(t *testing.T) {
 	c3 := Parse("2020-08-05").Yesterday()
 	assert.Nil(c3.Error)
 	assert.Equal("2020-08-04", c3.ToDateString(), "It should be equal to 2020-08-04")
-}
-
-func TestError_Yesterday(t *testing.T) {
-	timezone := "xxx"
-	c := Yesterday(timezone)
-	assert.NotNil(t, c.Error, "It should catch an exception in Yesterday()")
 }
 
 func TestCarbon_Tomorrow(t *testing.T) {
@@ -67,12 +55,6 @@ func TestCarbon_Tomorrow(t *testing.T) {
 	assert.Equal("2020-08-06", c3.ToDateString(), "It should be equal to 2020-08-06")
 }
 
-func TestError_Tomorrow(t *testing.T) {
-	timezone := "xxx"
-	c := Tomorrow(timezone)
-	assert.NotNil(t, c.Error, "It should catch an exception in Tomorrow()")
-}
-
 func TestCarbon_Time2Carbon(t *testing.T) {
 	assert := assert.New(t)
 
@@ -87,4 +69,11 @@ func TestCarbon_Carbon2Time(t *testing.T) {
 	expected := time.Now().Format(DateTimeFormat)
 	actual := Now().Carbon2Time().Format(DateTimeFormat)
 	assert.Equal(expected, actual)
+}
+
+func TestError_Carbon(t *testing.T) {
+	timezone := "xxx"
+	assert.NotNil(t, Now(timezone).Error, "It should catch an exception in Now()")
+	assert.NotNil(t, Tomorrow(timezone).Error, "It should catch an exception in Tomorrow()")
+	assert.NotNil(t, Yesterday(timezone).Error, "It should catch an exception in Yesterday()")
 }

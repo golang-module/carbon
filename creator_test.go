@@ -111,42 +111,6 @@ func TestCarbon_CreateFromTimestampNano(t *testing.T) {
 	}
 }
 
-func TestError_CreateFromTimestamp(t *testing.T) {
-	timestamp, timezone := int64(1577855655), "xxx"
-	c1 := SetTimezone(timezone).CreateFromTimestamp(timestamp)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromTimestamp()")
-
-	c2 := CreateFromTimestamp(timestamp, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromTimestamp()")
-}
-
-func TestError_CreateFromTimestampMilli(t *testing.T) {
-	timestamp, timezone := int64(1577855655), "xxx"
-	c1 := SetTimezone(timezone).CreateFromTimestampMilli(timestamp)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromTimestampMilli()")
-
-	c2 := CreateFromTimestampMilli(timestamp, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromTimestampMilli()")
-}
-
-func TestError_CreateFromTimestampMicro(t *testing.T) {
-	timestamp, timezone := int64(1577855655), "xxx"
-	c1 := SetTimezone(timezone).CreateFromTimestampMicro(timestamp)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromTimestampMicro()")
-
-	c2 := CreateFromTimestampMicro(timestamp, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromTimestampMicro()")
-}
-
-func TestError_CreateFromTimestampNano(t *testing.T) {
-	timestamp, timezone := int64(1577855655), "xxx"
-	c1 := SetTimezone(timezone).CreateFromTimestampNano(timestamp)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromTimestampNano()")
-
-	c2 := CreateFromTimestampNano(timestamp, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromTimestampNano()")
-}
-
 func TestCarbon_CreateFromDateTime(t *testing.T) {
 	assert := assert.New(t)
 
@@ -172,15 +136,6 @@ func TestCarbon_CreateFromDateTime(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
-}
-
-func TestError_CreateFromDateTime(t *testing.T) {
-	year, month, day, hour, minute, second, timezone := 2020, 1, 1, 13, 14, 15, "xxx"
-	c1 := SetTimezone(timezone).CreateFromDateTime(year, month, day, hour, minute, second)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromDateTime()")
-
-	c2 := CreateFromDateTime(year, month, day, hour, minute, second, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromDateTime()")
 }
 
 func TestCarbon_CreateFromDateTimeMilli(t *testing.T) {
@@ -292,15 +247,6 @@ func TestCarbon_CreateFromDate(t *testing.T) {
 	}
 }
 
-func TestError_CreateFromDate(t *testing.T) {
-	year, month, day, timezone := 13, 14, 15, "xxx"
-	c1 := SetTimezone(timezone).CreateFromDate(year, month, day)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromDate()")
-
-	c2 := CreateFromDate(year, month, day, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromDate()")
-}
-
 func TestCarbon_CreateFromTime(t *testing.T) {
 	assert := assert.New(t)
 
@@ -328,11 +274,15 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 	}
 }
 
-func TestError_CreateFromTime(t *testing.T) {
-	hour, minute, second, timezone := 13, 14, 15, "xxx"
-	c1 := SetTimezone(timezone).CreateFromTime(hour, minute, second)
-	assert.NotNil(t, c1.Error, "It should catch an exception in CreateFromTime()")
+func TestError_Creator(t *testing.T) {
+	year, month, day, hour, minute, second, timestamp, timezone := 2020, 8, 5, 13, 14, 15, int64(1577855655), "xxx"
 
-	c2 := CreateFromTime(hour, minute, second, timezone)
-	assert.NotNil(t, c2.Error, "It should catch an exception in CreateFromTime()")
+	c := SetTimezone(timezone)
+	assert.NotNil(t, c.CreateFromDateTime(year, month, day, hour, minute, second).Error, "It should catch an exception in CreateFromDateTime()")
+	assert.NotNil(t, c.CreateFromDate(year, month, day).Error, "It should catch an exception in CreateFromDate()")
+	assert.NotNil(t, c.CreateFromTime(hour, minute, second).Error, "It should catch an exception in CreateFromTime()")
+	assert.NotNil(t, c.CreateFromTimestamp(timestamp).Error, "It should catch an exception in CreateFromTime()")
+	assert.NotNil(t, c.CreateFromTimestampMilli(timestamp).Error, "It should catch an exception in CreateFromTimestampMilli()")
+	assert.NotNil(t, c.CreateFromTimestampMicro(timestamp).Error, "It should catch an exception in CreateFromTimestampMicro()")
+	assert.NotNil(t, c.CreateFromTimestampNano(timestamp).Error, "It should catch an exception in CreateFromTimestampNano()")
 }

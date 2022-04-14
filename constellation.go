@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// Constellation gets constellation name, i18n is supported.
+// Constellation gets constellation name like "Aries", i18n is supported.
 // 获取星座，支持i18n
 func (c Carbon) Constellation() string {
 	if c.IsInvalid() {

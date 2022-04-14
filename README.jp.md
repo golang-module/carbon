@@ -71,7 +71,6 @@ carbon.Now().ToDateString() // 2020-08-05
 carbon.Now().ToTimeString() // 13:14:15
 // タイムゾーン指定の今日
 carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Now().ToDateTimeString() // 2020-08-05 14:14:15
 // 今日は秒タイムスタンプ
 carbon.Now().Timestamp() // 1596604455
 // 今日のミリ秒タイムスタンプ
@@ -92,7 +91,6 @@ carbon.Yesterday().ToTimeString() // 13:14:15
 carbon.Parse("2021-01-28 13:14:15").Yesterday().ToDateTimeString() // 2021-01-27 13:14:15
 // タイムゾーン指定の昨日
 carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Yesterday().ToDateTimeString() // 2020-08-04 14:14:15
 // 昨日の秒タイムスタンプ
 carbon.Yesterday().Timestamp() // 1596518055
 // 昨日のミリ秒タイムスタンプ
@@ -113,7 +111,6 @@ carbon.Tomorrow().ToTimeString() // 13:14:15
 carbon.Parse("2021-01-28 13:14:15").Tomorrow().ToDateTimeString() // 2021-01-29 13:14:15
 // タイムゾーン指定の明日
 carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
-carbon.SetTimezone(Carbon.NewYork).Tomorrow().ToDateTimeString() // 2020-08-06 14:14:15
 // 明日の秒タイムスタンプ
 carbon.Tomorrow().Timestamp() // 1596690855
 // 明日のミリ秒タイムスタンプ
@@ -129,42 +126,29 @@ carbon.Tomorrow().TimestampNano() // 1596690855000000000
 ```go
 // 秒タイムスタンプから Carbon オブジェクトを作成します
 carbon.CreateFromTimestamp(-1).ToString() // 1970-01-01 07:59:59 +0800 CST
-carbon.CreateFromTimestamp(-1, carbon.Tokyo).ToString() // 1970-01-01 08:59:59 +0900 JST
 carbon.CreateFromTimestamp(0).ToString() // 1970-01-01 08:00:00 +0800 CST
-carbon.CreateFromTimestamp(0, carbon.Tokyo).ToString() // 1970-01-01 09:00:00 +0900 JST
 carbon.CreateFromTimestamp(1).ToString() // 1970-01-01 08:00:01 +0800 CST
-carbon.CreateFromTimestamp(1, carbon.Tokyo).ToString() // 1970-01-01 09:00:01 +0900 JST
 carbon.CreateFromTimestamp(1649735755).ToString() // 2022-04-12 11:55:55 +0800 CST
-carbon.CreateFromTimestamp(1649735755, carbon.Tokyo).ToString() // 2022-04-12 12:55:55 +0900 JST
 // ミリ秒のタイムスタンプから Carbon オブジェクトを作成します
 carbon.CreateFromTimestampMilli(1649735755981).ToString() // 2022-04-12 11:55:55.981 +0800 CST
-carbon.CreateFromTimestampMilli(1649735755981, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981 +0900 JST
 // マイクロ秒タイムスタンプから Carbon オブジェクトを作成します
 carbon.CreateFromTimestampMicro(1649735755981566).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
-carbon.CreateFromTimestampMicro(1649735755981566, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 JST
 // ナノタイムスタンプから Carbon オブジェクトを作成します
 carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
-carbon.CreateFromTimestampNano(1649735755981566000, carbon.Tokyo).ToString() // 2022-04-12 11:55:55.981566 +0900 CST
 
 // 年月日から分秒で Carbon オブジェクトを作成します
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 // 年月日から分秒で Carbon オブジェクトを作成します，，ミリ秒を含む
 carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
-carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999 +0900 JST
 // 年月日から分秒で Carbon オブジェクトを作成します，マイクロ秒を含む
 carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
-carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999 +0900 JST
 // 年月日から分秒で Carbon オブジェクトを作成します，ナノ秒を含む
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
-carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999, carbon.Tokyo).ToString() // 2020-01-01 13:14:15.999999999 +0900 JST
 
 // 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)
 carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromDate(2020, 8, 5, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 // 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)
 carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.CreateFromTime(13, 14, 15, carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
 ##### 標準形式の時間文字列を Carbon オブジェクトに解析します
@@ -192,7 +176,6 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToString() // 2020-08-05 13:
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
 ##### レイアウト文字を使用して文字列を Carbon オブジェクトに解析します
@@ -296,7 +279,7 @@ carbon.Parse("2020-02-29 13:14:15").SubCentury().ToDateTimeString() // 1920-02-2
 carbon.Parse("2020-02-29 13:14:15").SubCenturyNoOverflow().ToDateTimeString() // 1920-02-29 13:14:15
 
 // 三ヶ年代を追加
-carbon.Parse("2020-02-29 13:14:15").Decades(3).ToDateTimeString() // 2050-03-01 13:14:15
+carbon.Parse("2020-02-29 13:14:15").AddDecades(3).ToDateTimeString() // 2050-03-01 13:14:15
 // 三ヶ年代を追加(オーバーフローなし)
 carbon.Parse("2020-02-29 13:14:15").AddDecadesNoOverflow(3).ToDateTimeString() // 2050-02-28 13:14:15
 // 一ヶ年代を追加
@@ -725,6 +708,13 @@ carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // 現在の年月日時分秒を取得
 carbon.Parse("2020-08-05 13:14:15").DateTime() // 2020,8,5,13,14,15
+// 現在の年月日時分秒ミリ秒を取得
+carbon.Parse("2020-08-05 13:14:15").DateTimeMilli() // 2020,8,5,13,14,15,999
+// 現在の年月日時分秒マイクロ秒を取得
+carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
+// 現在の年月日時分秒ナノ秒を取得
+carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
+
 // 現在の年月日を取得
 carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
 // 現在の時分秒を取得
@@ -777,7 +767,7 @@ carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
 carbon.SetTimezone(carbon.PRC).Location() // PRC
 carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
 
-// UTCタイムゾーンからのオフセットを取得、単位秒
+// UTCタイムゾーンからのオフセットを取得，単位秒
 carbon.SetTimezone(carbon.PRC).Offset() // 28800
 carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
 
@@ -805,133 +795,95 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ```go
 // 日期时间文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToDateTimeString(carbon.Tokyo) // 2020-08-05 14:14:15
 // 日期时间文字列を出力，ミリ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString() // 2020-08-05 13:14:15.999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString(carbon.Tokyo) // 2020-08-05 14:14:15.999
 // 日期时间文字列を出力，マイクロ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString() // 2020-08-05 13:14:15.999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString(carbon.Tokyo) // 2020-08-05 14:14:15.999999
 // 日期时间文字列を出力，ナノ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString() // 2020-08-05 13:14:15.999999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString(carbon.Tokyo) // 2020-08-05 14:14:15.999999999
 
 // 略語日期时间文字列を出力
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString() // 20200805131415
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString(carbon.Tokyo) // 20200805141415
 // 略語日期时间文字列を出力，ミリ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString() // 20200805131415.999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString(carbon.Tokyo) // 20200805141415.999
 // 略語日期时间文字列を出力，マイクロ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString() // 20200805131415.999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString(carbon.Tokyo) // 20200805141415.999999
 // 略語日期时间文字列を出力，ナノ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString(carbon.Tokyo) // 20200805141415.999999999
 
 // 日期文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
-carbon.Parse("2020-08-05 13:14:15").ToDateString(carbon.Tokyo) // 2020-08-05
 // 略語日期文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
-carbon.Parse("2020-08-05 13:14:15").ToShortDateString(carbon.Tokyo) // 20200805
 
 // 時間文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-carbon.Parse("2020-08-05 13:14:15").ToTimeString(carbon.Tokyo) // 14:14:15
 // 略語時間文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
-carbon.Parse("2020-08-05 13:14:15").ToShortTimeString(carbon.Tokyo) // 141415
 
 // Ansic フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
-carbon.Parse("2020-08-05 13:14:15").ToAnsicString(carbon.Tokyo) // Wed Aug  5 14:14:15 2020
 // Atom フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToAtomString(carbon.Tokyo) // 2020-08-05T14:14:15+08:00
 // UnixDate フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-carbon.Parse("2020-08-05 13:14:15").ToUnixDateString(carbon.Tokyo) // Wed Aug  5 14:14:15 JST 2020
 // RubyDate フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
-carbon.Parse("2020-08-05 13:14:15").ToRubyDateString(carbon.Tokyo) // Wed Aug 05 14:14:15 +0900 2020
 // Kitchen フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-carbon.Parse("2020-08-05 13:14:15").ToKitchenString(carbon.Tokyo) // 2:14PM
 // Cookie フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToCookieString(carbon.Tokyo) // Wednesday, 05-Aug-2020 14:14:15 JST
 // DayDateTime フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString(carbon.Tokyo) // Wed, Aug 5, 2020 2:14 PM
 // RSS フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRssString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // W3C フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToW3cString(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 
 // ISO8601 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToIso8601String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05 13:14:15").ToIso8601String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // RFC822 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc822String(carbon.Tokyo) // 05 Aug 20 14:14 JST
 // RFC822Z フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc822zString(carbon.Tokyo) // 05 Aug 20 14:14 +0900
 // RFC850 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc850String(carbon.Tokyo) // Wednesday, 05-Aug-20 14:14:15 JST
 // RFC1036 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1036String(carbon.Tokyo) // Wed, 05 Aug 20 14:14:15 +0900
 // RFC1123 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 JST
 // RFC1123Z フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 0800
 // RFC2822 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-carbon.Parse("2020-08-05 13:14:15").ToRfc2822String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 +0900
 // RFC7231 フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231String(carbon.Tokyo) // Wed, 05 Aug 2020 14:14:15 GMT
 
 // RFC3339 フォーマット文字列を出力
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String(carbon.Tokyo) // 2020-08-05T14:14:15+09:00
 // RFC3339 フォーマット文字列を出力，ミリ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString() // 2020-08-05T13:14:15.999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString(carbon.Tokyo) // 2020-08-05T13:14:15.999+09:00
 // RFC3339 フォーマット文字列を出力，マイクロ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 2020-08-05T13:14:15.999999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString(carbon.Tokyo) // 2020-08-05T13:14:15.999999+09:00
 // RFC3339 フォーマット文字列を出力，ナノ秒を含む
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
-carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString(carbon.Tokyo) // 2020-08-05T13:14:15.999999999+09:00
 
 // 日付時間文字列を出力
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.Tokyo)) // 2020-08-05 13:14:15
 
 // "2006-01-02 15:04:05.999999999 -0700 MST" フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
-carbon.Parse("2020-08-05 13:14:15").ToString(carbon.Tokyo) // 2020-08-05 14:14:15999999 +0900 JST
 
 // レイアウトを指定する文字列を出力, Layout() は 是ToLayoutString() の略記です
 carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").Layout("2006-01-02 15:04:05", carbon.Tokyo) // 2020-08-05 14:14:15
 
 // 指定されたフォーマットの文字列を出力, Format() は 是ToFormatString() の略記です
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
 carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").Format("Y-m-d H:i:s", carbon.Tokyo) // 2020-08-05 14:14:15
 ```
 
 > もっとフォーマットした出力記号は付録を見てください <a href="#format-sign-table">書式設定記号表</a>
