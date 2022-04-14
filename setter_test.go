@@ -119,7 +119,7 @@ func TestCarbon_SetDateTimeMilli(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SetDateTimeMilli(test.year, test.month, test.day, test.hour, test.minute, test.second, test.millisecond)
+		c := Parse(test.input, PRC).SetDateTimeMilli(test.year, test.month, test.day, test.hour, test.minute, test.second, test.millisecond)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -138,7 +138,7 @@ func TestCarbon_SetDateTimeMicro(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SetDateTimeMicro(test.year, test.month, test.day, test.hour, test.minute, test.second, test.microsecond)
+		c := Parse(test.input, PRC).SetDateTimeMicro(test.year, test.month, test.day, test.hour, test.minute, test.second, test.microsecond)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -157,7 +157,7 @@ func TestCarbon_SetDateTimeNano(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SetDateTimeNano(test.year, test.month, test.day, test.hour, test.minute, test.second, test.nanosecond)
+		c := Parse(test.input, PRC).SetDateTimeNano(test.year, test.month, test.day, test.hour, test.minute, test.second, test.nanosecond)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
