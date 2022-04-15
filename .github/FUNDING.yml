@@ -1,6 +1,6 @@
 # These are supported funding model platforms
 
-github: # Replace with up to 4 GitHub Sponsors-enabled usernames e.g., [user1, user2]
+github: gouguoyin
 patreon: # Replace with a single Patreon username
 open_collective: go-carbon
 ko_fi: # Replace with a single Ko-fi username
@@ -10,4 +10,4 @@ liberapay: gouguoyin
 issuehunt: golang-module/carbon
 otechie: # Replace with a single Otechie username
 lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
-custom: ['https://www.gouguoyin.cn/zanzhu.html']
+custom: ['https://www.gouguoyin.com/zanzhu.html']
