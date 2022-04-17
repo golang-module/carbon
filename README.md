@@ -253,9 +253,9 @@ carbon.Parse("2020-08-05 13:14:15").StartOfMinute().ToDateTimeString() // 2020-0
 carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 
 // Start of the second
-carbon.Parse("2020-08-05 13:14:15").StartOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.0
+carbon.Parse("2020-08-05 13:14:15").StartOfSecond().ToString() // 2020-08-05 13:14:15 +0800 CST
 // End of the second
-carbon.Parse("2020-08-05 13:14:15").EndOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.999
+carbon.Parse("2020-08-05 13:14:15").EndOfSecond().ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### Addition and subtraction
@@ -413,46 +413,46 @@ carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05
 // Difference in years
 carbon.Parse("2021-08-05 13:14:15").DiffInYears(carbon.Parse("2020-08-05 13:14:15")) // -1
 // Difference in years with absolute value
-carbon.Parse("2021-08-05 13:14:15").DiffInYearsWithAbs(carbon.Parse("2020-08-05 13:14:15")) // 1
+carbon.Parse("2021-08-05 13:14:15").DiffAbsInYears(carbon.Parse("2020-08-05 13:14:15")) // 1
 
 // Difference in months
 carbon.Parse("2020-08-05 13:14:15").DiffInMonths(carbon.Parse("2020-07-05 13:14:15")) // -1
 // Difference in months with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInMonthsWithAbs(carbon.Parse("2020-07-05 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMonths(carbon.Parse("2020-07-05 13:14:15")) // 1
 
 // Difference in weeks
 carbon.Parse("2020-08-05 13:14:15").DiffInWeeks(carbon.Parse("2020-07-28 13:14:15")) // -1
 // Difference in weeks with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInWeeksWithAbs(carbon.Parse("2020-07-28 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInWeeks(carbon.Parse("2020-07-28 13:14:15")) // 1
 
 // Difference in days
 carbon.Parse("2020-08-05 13:14:15").DiffInDays(carbon.Parse("2020-08-04 13:14:15")) // -1
 // Difference in days with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInDaysWithAbs(carbon.Parse("2020-08-04 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInDays(carbon.Parse("2020-08-04 13:14:15")) // 1
 
 // Difference in hours
 carbon.Parse("2020-08-05 13:14:15").DiffInHours(carbon.Parse("2020-08-05 12:14:15")) // -1
 // Difference in hours with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInHoursWithAbs(carbon.Parse("2020-08-05 12:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInHours(carbon.Parse("2020-08-05 12:14:15")) // 1
 
 // Difference in minutes
 carbon.Parse("2020-08-05 13:14:15").DiffInMinutes(carbon.Parse("2020-08-05 13:13:15")) // -1
 // Difference in minutes with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-05 13:13:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMinutes(carbon.Parse("2020-08-05 13:13:15")) // 1
 
 // Difference in seconds
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // Difference in seconds with absolute value
-carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13:14:14")) // 1
 
 // Difference in string
 carbon.Now().DiffInString() // just now
 carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
 carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
 // Difference in string with absolute value
-carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
-carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
-carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+carbon.Now().DiffAbsInString(carbon.Now()) // just now
+carbon.Now().AddYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
+carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 
 // Difference in a human-readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
@@ -839,11 +839,11 @@ carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
 // Output a string in ISO8601 format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601String() // 2020-08-05T13:14:15+08:00
-// Output a string in ISO8601Milli format
+// Output a string in ISO8601 with millisecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString() // 2020-08-05T13:14:15.999+08:00
-// Output a string in ISO8601Micro format
+// Output a string in ISO8601 with microsecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString() // 2020-08-05T13:14:15.999999+08:00
-// Output a string in ISO8601Nano format
+// Output a string in ISO8601 with nanosecond format
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
 // Output a string in RFC822 format
@@ -1066,7 +1066,7 @@ fmt.Printf("%s", data)
 ###### JSON decode
 
 ```go
-jsonString := `{
+str := `{
 	"name": "gouguoyin",
 	"age": 18,
 	"birthday": "2003-07-16 16:22:02",
@@ -1077,7 +1077,7 @@ jsonString := `{
 	"date_time4": 1754370855000000000
 }`
 person := new(Person)
-err := json.Unmarshal([]byte(jsonString), &person)
+err := json.Unmarshal([]byte(str), &person)
 if err != nil {
     // Error handle...
     log.Fatal(err)
@@ -1091,13 +1091,15 @@ fmt.Printf("%+v", *person)
 
 The following languages are supported
 
-* [Simplified Chinese(zh-CN)](./lang/zh-CN.json "Simplified Chinese")
-* [Traditional Chinese(zh-TW)](./lang/zh-TW.json "Traditional Chinese")
 * [English(en)](./lang/en.json "English")
 * [Japanese(jp)](./lang/jp.json "Japanese")
 * [Korean(kr)](./lang/kr.json "Korean")
-* [Spanish(es)](./lang/es.json "Spanish")：translated by [hgisinger](https://github.com/hgisinger "hgisinger")
 * [German(de)](./lang/de.json "German")：translated by [benzammour](https://github.com/benzammour "benzammour")
+* [Simplified Chinese(zh-CN)](./lang/zh-CN.json "Simplified Chinese")：translated
+  by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Traditional Chinese(zh-TW)](./lang/zh-TW.json "Traditional Chinese")：translated
+  by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Spanish(es)](./lang/es.json "Spanish")：translated by [hgisinger](https://github.com/hgisinger "hgisinger")
 * [Turkish(tr)](./lang/tr.json "Turkish"): translated by [emresenyuva](https://github.com/emresenyuva "emresenyuva")
 * [Portuguese(pt)](./lang/pt.json "Portuguese"): translated by [felipear89](https://github.com/felipear89 "felipear89")
 * [Russian(ru)](./lang/ru.json "Russian"): translated by [zemlyak](https://github.com/zemlyak "zemlyak")

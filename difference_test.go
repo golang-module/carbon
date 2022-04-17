@@ -29,7 +29,7 @@ func TestCarbon_DiffInYears(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInYearsWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -47,7 +47,7 @@ func TestCarbon_DiffInYearsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInYearsWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInYears(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -74,7 +74,7 @@ func TestCarbon_DiffInMonths(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -92,7 +92,7 @@ func TestCarbon_DiffInMonthsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInMonthsWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInMonths(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -123,7 +123,7 @@ func TestCarbon_DiffInWeeks(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -146,7 +146,7 @@ func TestCarbon_DiffInWeeksWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInWeeksWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInWeeks(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -177,7 +177,7 @@ func TestCarbon_DiffInDays(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -200,7 +200,7 @@ func TestCarbon_DiffInDaysWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInDaysWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInDays(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -231,7 +231,7 @@ func TestCarbon_DiffInHours(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -254,7 +254,7 @@ func TestCarbon_DiffInHoursWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInHoursWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInHours(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -285,7 +285,7 @@ func TestCarbon_DiffInMinutes(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -308,7 +308,7 @@ func TestCarbon_DiffInMinutesWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInMinutesWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInMinutes(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -333,7 +333,7 @@ func TestCarbon_DiffInSeconds(t *testing.T) {
 	}
 }
 
-func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -350,7 +350,7 @@ func TestCarbon_DiffInSecondsWithAbs(t *testing.T) {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.DiffInSecondsWithAbs(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffAbsInSeconds(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -414,7 +414,7 @@ func TestLangError_DiffInString(t *testing.T) {
 	assert.Equal(t, "", c.DiffInString())
 }
 
-func TestCarbon_DiffInStringWithAbs(t *testing.T) {
+func TestCarbon_DiffAbsInString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -457,22 +457,22 @@ func TestCarbon_DiffInStringWithAbs(t *testing.T) {
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.DiffInStringWithAbs(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.DiffAbsInString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.DiffInStringWithAbs(Now()), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.DiffAbsInString(Now()), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
-func TestLangError_DiffInStringWithAbs(t *testing.T) {
+func TestLangError_DiffAbsInString(t *testing.T) {
 	lang := NewLanguage()
 	lang.SetLocale("xxx")
 	c := Now().SetLanguage(lang).AddMonths(1)
 	assert.NotNil(t, c.Error, "It should catch an exception in DiffInStringWithAbs()")
-	assert.Equal(t, "", c.DiffInStringWithAbs())
+	assert.Equal(t, "", c.DiffAbsInString())
 }
 
 func TestCarbon_DiffForHumans(t *testing.T) {

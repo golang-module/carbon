@@ -256,9 +256,9 @@ carbon.Parse("2020-08-05 13:14:15").StartOfMinute().ToDateTimeString() // 2020-0
 carbon.Parse("2020-08-05 13:14:15").EndOfMinute().ToDateTimeString() // 2020-08-05 13:14:59
 
 // 本秒开始时间
-carbon.Parse("2020-08-05 13:14:15").StartOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.0
+carbon.Parse("2020-08-05 13:14:15").StartOfSecond().ToString() // 2020-08-05 13:14:15 +0800 CST
 // 本秒结束时间
-carbon.Parse("2020-08-05 13:14:15").EndOfSecond().Format("Y-m-d H:i:s.u") // 2020-08-05 13:14:15.999
+carbon.Parse("2020-08-05 13:14:15").EndOfSecond().ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### 时间旅行
@@ -417,46 +417,46 @@ carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05
 // 相差多少年
 carbon.Parse("2021-08-05 13:14:15").DiffInYears(carbon.Parse("2020-08-05 13:14:15")) // -1
 // 相差多少年（绝对值）
-carbon.Parse("2021-08-05 13:14:15").DiffInYearsWithAbs(carbon.Parse("2020-08-05 13:14:15")) // 1
+carbon.Parse("2021-08-05 13:14:15").DiffAbsInYears(carbon.Parse("2020-08-05 13:14:15")) // 1
 
 // 相差多少月
 carbon.Parse("2020-08-05 13:14:15").DiffInMonths(carbon.Parse("2020-07-05 13:14:15")) // -1
 // 相差多少月（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInMonthsWithAbs(carbon.Parse("2020-07-05 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMonths(carbon.Parse("2020-07-05 13:14:15")) // 1
 
 // 相差多少周
 carbon.Parse("2020-08-05 13:14:15").DiffInWeeks(carbon.Parse("2020-07-28 13:14:15")) // -1
 // 相差多少周（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInWeeksWithAbs(carbon.Parse("2020-07-28 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInWeeks(carbon.Parse("2020-07-28 13:14:15")) // 1
 
 // 相差多少天
 carbon.Parse("2020-08-05 13:14:15").DiffInDays(carbon.Parse("2020-08-04 13:14:15")) // -1
 // 相差多少天（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInDaysWithAbs(carbon.Parse("2020-08-04 13:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInDays(carbon.Parse("2020-08-04 13:14:15")) // 1
 
 // 相差多少小时
 carbon.Parse("2020-08-05 13:14:15").DiffInHours(carbon.Parse("2020-08-05 12:14:15")) // -1
 // 相差多少小时（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInHoursWithAbs(carbon.Parse("2020-08-05 12:14:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInHours(carbon.Parse("2020-08-05 12:14:15")) // 1
 
 // 相差多少分
 carbon.Parse("2020-08-05 13:14:15").DiffInMinutes(carbon.Parse("2020-08-05 13:13:15")) // -1
 // 相差多少分（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInMinutesWithAbs(carbon.Parse("2020-08-05 13:13:15")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInMinutes(carbon.Parse("2020-08-05 13:13:15")) // 1
 
 // 相差多少秒
 carbon.Parse("2020-08-05 13:14:15").DiffInSeconds(carbon.Parse("2020-08-05 13:14:14")) // -1
 // 相差多少秒（绝对值）
-carbon.Parse("2020-08-05 13:14:15").DiffInSecondsWithAbs(carbon.Parse("2020-08-05 13:14:14")) // 1
+carbon.Parse("2020-08-05 13:14:15").DiffAbsInSeconds(carbon.Parse("2020-08-05 13:14:14")) // 1
 
 // 相差字符串
 carbon.Now().DiffInString() // just now
 carbon.Now().AddYearsNoOverflow(1).DiffInString() // -1 year
 carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
 // 相差字符串（绝对值）
-carbon.Now().DiffInStringWithAbs(carbon.Now()) // just now
-carbon.Now().AddYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
-carbon.Now().SubYearsNoOverflow(1).DiffInStringWithAbs(carbon.Now()) // 1 year
+carbon.Now().DiffAbsInString(carbon.Now()) // just now
+carbon.Now().AddYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
+carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 
 // 对人类友好的可读格式时间差
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
@@ -1073,7 +1073,7 @@ fmt.Printf("%s", data)
 ###### JSON 解码
 
 ```go
-jsonString := `{
+str := `{
 	"name": "gouguoyin",
 	"age": 18,
 	"birthday": "2003-07-16 16:22:02",
@@ -1084,7 +1084,7 @@ jsonString := `{
 	"date_time4": 1754370855000000000
 }`
 person := new(Person)
-err := json.Unmarshal([]byte(jsonString), &person)
+err := json.Unmarshal([]byte(str), &person)
 if err != nil {
     // 错误处理
     log.Fatal(err)
@@ -1098,13 +1098,13 @@ fmt.Printf("%+v", *person)
 
 目前支持的语言有
 
-* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文")
-* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文")
 * [英语(en)](./lang/en.json "英语")
 * [日语(jp)](./lang/jp.json "日语")
 * [韩语(kr)](./lang/kr.json "韩语")
-* [西班牙语(es)](./lang/es.json "西班牙语"): 由 [hgisinger](https://github.com/hgisinger "hgisinger") 翻译
 * [德语(de)](./lang/de.json "德语"): 由 [benzammour](https://github.com/benzammour "benzammour") 翻译
+* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [西班牙语(es)](./lang/es.json "西班牙语"): 由 [hgisinger](https://github.com/hgisinger "hgisinger") 翻译
 * [土耳其语(tr)](./lang/tr.json "土耳其语"): 由 [emresenyuva](https://github.com/emresenyuva "emresenyuva") 翻译
 * [葡萄牙语(pt)](./lang/pt.json "葡萄牙语"): 由 [felipear89](https://github.com/felipear89 "felipear89") 翻译
 * [俄罗斯语(ru)](./lang/ru.json "俄罗斯语"): 由 [zemlyak](https://github.com/zemlyak "zemlyak") 翻译

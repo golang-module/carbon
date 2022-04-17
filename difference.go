@@ -14,9 +14,9 @@ func (c Carbon) DiffInYears(carbon ...Carbon) int64 {
 	return c.DiffInMonths(end) / MonthsPerYear
 }
 
-// DiffInYearsWithAbs gets the difference in years with absolute value.
+// DiffAbsInYears gets the difference in years with absolute value.
 // 相差多少年(绝对值)
-func (c Carbon) DiffInYearsWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInYears(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -31,25 +31,27 @@ func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	dy, dm, dd := end.Year()-c.Year(), end.Month()-c.Month(), end.Day()-c.Day()
-	if dd < 0 {
-		dm = dm - 1
+	startYear, startMonth, startDay := c.Date()
+	endYear, endMonth, endDay := end.Date()
+	diffYear, diffMonth, diffDay := endYear-startYear, endMonth-startMonth, endDay-startDay
+	if diffDay < 0 {
+		diffMonth = diffMonth - 1
 	}
-	if dy == 0 && dm == 0 {
+	if diffYear == 0 && diffMonth == 0 {
 		return int64(0)
 	}
-	if dy == 0 && dm != 0 && dd != 0 {
-		if int(end.DiffInHoursWithAbs(c)) < c.DaysInMonth()*HoursPerDay {
+	if diffYear == 0 && diffMonth != 0 && diffDay != 0 {
+		if int(end.DiffAbsInHours(c)) < c.DaysInMonth()*HoursPerDay {
 			return int64(0)
 		}
-		return int64(dm)
+		return int64(diffMonth)
 	}
-	return int64(dy*MonthsPerYear + dm)
+	return int64(diffYear*MonthsPerYear + diffMonth)
 }
 
-// DiffInMonthsWithAbs gets the difference in months with absolute value.
+// DiffAbsInMonths gets the difference in months with absolute value.
 // 相差多少月(绝对值)
-func (c Carbon) DiffInMonthsWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInMonths(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -67,9 +69,9 @@ func (c Carbon) DiffInWeeks(carbon ...Carbon) int64 {
 	return c.DiffInDays(end) / DaysPerWeek
 }
 
-// DiffInWeeksWithAbs gets the difference in weeks with absolute value.
+// DiffAbsInWeeks gets the difference in weeks with absolute value.
 // 相差多少周(绝对值)
-func (c Carbon) DiffInWeeksWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInWeeks(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -87,9 +89,9 @@ func (c Carbon) DiffInDays(carbon ...Carbon) int64 {
 	return c.DiffInSeconds(end) / SecondsPerDay
 }
 
-// DiffInDaysWithAbs gets the difference in days with absolute value.
+// DiffAbsInDays gets the difference in days with absolute value.
 // 相差多少天(绝对值)
-func (c Carbon) DiffInDaysWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInDays(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -107,9 +109,9 @@ func (c Carbon) DiffInHours(carbon ...Carbon) int64 {
 	return c.DiffInSeconds(end) / SecondsPerHour
 }
 
-// DiffInHoursWithAbs gets the difference in hours with absolute value.
+// DiffAbsInHours gets the difference in hours with absolute value.
 // 相差多少小时(绝对值)
-func (c Carbon) DiffInHoursWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInHours(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -127,9 +129,9 @@ func (c Carbon) DiffInMinutes(carbon ...Carbon) int64 {
 	return c.DiffInSeconds(end) / SecondsPerMinute
 }
 
-// DiffInMinutesWithAbs gets the difference in minutes with absolute value.
+// DiffAbsInMinutes gets the difference in minutes with absolute value.
 // 相差多少分钟(绝对值)
-func (c Carbon) DiffInMinutesWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInMinutes(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -147,9 +149,9 @@ func (c Carbon) DiffInSeconds(carbon ...Carbon) int64 {
 	return end.Timestamp() - c.Timestamp()
 }
 
-// DiffInSecondsWithAbs gets the difference in seconds with absolute value.
+// DiffAbsInSeconds gets the difference in seconds with absolute value.
 // 相差多少秒(绝对值)
-func (c Carbon) DiffInSecondsWithAbs(carbon ...Carbon) int64 {
+func (c Carbon) DiffAbsInSeconds(carbon ...Carbon) int64 {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -171,9 +173,9 @@ func (c Carbon) DiffInString(carbon ...Carbon) string {
 	return c.lang.translate(unit, value)
 }
 
-// DiffInStringWithAbs gets the difference in string with absolute value, i18n is supported.
-// 相差字符串，支持i18n
-func (c Carbon) DiffInStringWithAbs(carbon ...Carbon) string {
+// DiffAbsInString gets the difference in string with absolute value, i18n is supported.
+// 相差字符串，支持i18n(绝对值)
+func (c Carbon) DiffAbsInString(carbon ...Carbon) string {
 	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
@@ -185,7 +187,7 @@ func (c Carbon) DiffInStringWithAbs(carbon ...Carbon) string {
 	return c.lang.translate(unit, getAbsValue(value))
 }
 
-// DiffForHumans gets the difference in a human readable format, i18n is supported.
+// DiffForHumans gets the difference in a human-readable format, i18n is supported.
 // 获取对人类友好的可读格式时间差，支持i18n
 func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 	end := c.Now()
@@ -216,33 +218,33 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 // 获取相差单位和差值
 func (c Carbon) diff(end Carbon) (unit string, value int64) {
 	switch true {
-	case c.DiffInYearsWithAbs(end) > 0:
+	case c.DiffAbsInYears(end) > 0:
 		unit = "year"
 		value = c.DiffInYears(end)
 		break
-	case c.DiffInMonthsWithAbs(end) > 0:
+	case c.DiffAbsInMonths(end) > 0:
 		unit = "month"
 		value = c.DiffInMonths(end)
 		break
-	case c.DiffInWeeksWithAbs(end) > 0:
+	case c.DiffAbsInWeeks(end) > 0:
 		unit = "week"
 		value = c.DiffInWeeks(end)
 		break
-	case c.DiffInDaysWithAbs(end) > 0:
+	case c.DiffAbsInDays(end) > 0:
 		unit = "day"
 		value = c.DiffInDays(end)
 		break
-	case c.DiffInHoursWithAbs(end) > 0:
+	case c.DiffAbsInHours(end) > 0:
 		unit = "hour"
 		value = c.DiffInHours(end)
 		break
-	case c.DiffInMinutesWithAbs(end) > 0:
+	case c.DiffAbsInMinutes(end) > 0:
 		unit = "minute"
 		value = c.DiffInMinutes(end)
-	case c.DiffInSecondsWithAbs(end) > 0:
+	case c.DiffAbsInSeconds(end) > 0:
 		unit = "second"
 		value = c.DiffInSeconds(end)
-	case c.DiffInSecondsWithAbs(end) == 0:
+	case c.DiffAbsInSeconds(end) == 0:
 		unit = "now"
 		value = 0
 	}
