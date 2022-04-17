@@ -635,8 +635,17 @@ carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month 
 carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
 
 // 年月日時分秒を設定する
-carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToDateTimeString() // 2019-02-02 13:14:15
-carbon.Parse("2020-01-01").SetDateTime(2019, 2, 31, 13, 14, 15).ToDateTimeString() // 2019-03-03 13:14:15
+carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToString() // 2019-02-02 13:14:15 +0800 CST
+carbon.Parse("2020-01-01").SetDateTime(2019, 2, 31, 13, 14, 15).ToString() // 2019-03-03 13:14:15 +0800 CST
+// 年月日時分秒ミリ秒を設定する
+carbon.Parse("2020-01-01").SetDateTimeMilli(2019, 2, 2, 13, 14, 15, 999).ToString() // 2019-02-02 13:14:15.999 +0800 CST
+carbon.Parse("2020-01-01").SetDateTimeMilli(2019, 2, 31, 13, 14, 15, 999).ToString() // 2019-03-03 13:14:15.999 +0800 CST
+// 年月日時分秒微秒を設定する
+carbon.Parse("2020-01-01").SetDateTimeMicro(2019, 2, 2, 13, 14, 15, 999999).ToString() // 2019-02-02 13:14:15.999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateTimeMicro(2019, 2, 31, 13, 14, 15, 999999).ToString() // 2019-03-03 13:14:15.999999 +0800 CST
+// 年月日時分秒ナノ秒を設定する
+carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 2, 13, 14, 15, 999999999).ToString() // 2019-02-02 13:14:15.999999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 31, 13, 14, 15, 999999999).ToString() // 2019-03-03 13:14:15.999999999 +0800 CST
 
 // 年月日を設定する
 carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToDateTimeString() // 2019-02-02 00:00:00
@@ -680,7 +689,7 @@ carbon.Parse("2020-08-05 13:14:15").SetSecond(60).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SetMillisecond(100).Millisecond() // 100
 carbon.Parse("2020-08-05 13:14:15").SetMillisecond(999).Millisecond() // 999
 
-// 微妙に設定
+// 微秒に設定
 carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(100000).Microsecond() // 100000
 carbon.Parse("2020-08-05 13:14:15").SetMicrosecond(999999).Microsecond() // 999999
 
