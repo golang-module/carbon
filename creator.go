@@ -157,7 +157,7 @@ func CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTime(hour, minute, second, timezone...)
 }
 
-// create a Carbon instance from a given time.
+// create a Carbon instance from a given time with nanosecond.
 // 从给定的时间创建 Carbon 实例
 func (c Carbon) create(year, month, day, hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
