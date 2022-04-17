@@ -92,10 +92,10 @@ func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
 	if c.IsInvalid() {
 		return
 	}
-	carbon := c.time.In(c.loc)
+	t := c.time.In(c.loc)
 	var tm time.Month
-	year, tm, day = carbon.Date()
-	hour, minute, second = carbon.Clock()
+	year, tm, day = t.Date()
+	hour, minute, second = t.Clock()
 	return year, int(tm), day, hour, minute, second
 }
 
@@ -180,7 +180,7 @@ func (c Carbon) Year() int {
 // 获取当前季度
 func (c Carbon) Quarter() (quarter int) {
 	if c.IsInvalid() {
-		return 0
+		return
 	}
 	month := c.Month()
 	switch {
