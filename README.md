@@ -163,6 +163,8 @@ carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
 carbon.Parse("0000-00-00").ToDateTimeString() // empty string
 carbon.Parse("00:00:00").ToDateTimeString() // empty string
 
+carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("20200805").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
@@ -171,9 +173,10 @@ carbon.Parse("2020-08-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +080
 carbon.Parse("2020-08-05T13:14:15.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
-carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("20200805131415").ToString() // 2020-08-05 13:14:15 +0800 CST
-carbon.Parse("20200805").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("20200805131415.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### Parse a string as a Carbon instance by format
