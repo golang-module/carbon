@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.6.1
+// @Version v1.6.2
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
@@ -119,7 +119,7 @@ const (
 // formats constant
 // 时间格式化常量
 const (
-	ANSICFormat              = time.ANSIC
+	ANSICSFormat             = time.ANSIC
 	UnixDateFormat           = time.UnixDate
 	RubyDateFormat           = time.RubyDate
 	RFC822Format             = time.RFC822
