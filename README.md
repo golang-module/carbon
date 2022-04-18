@@ -1307,7 +1307,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 # Contributors
 This project exists thanks to all the people who contribute. [[Contributors](https://github.com/golang-module/carbon/graphs/contributors)].
-<a href="https://github.com/gogf/gf/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=golang-module/carbon" /></a>
+<a href="https://github.com/gogf/gf/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=golang-module/carbon" style="max-width: 100%;height:50px;margin-top:20px"/></a>
 
 #### Donators
 
