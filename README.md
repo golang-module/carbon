@@ -1323,7 +1323,7 @@ This project exists thanks to all the people who contribute.
 
 `Carbon` is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and
 server hosting. If you want to support Carbon, you can [buy a cup of coffee](https://www.gouguoyin.cn/zanzhu.html) for
-developer
+developer.
 
 #### Thanks
 
