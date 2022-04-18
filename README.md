@@ -1305,15 +1305,6 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | C | Century | - | 0-99 | 21 |
 
 
-#### Contributors
-This project exists thanks to all the people who contribute. [[Contributors](https://github.com/golang-module/carbon/graphs/contributors)].
-
-<a href="https://github.com/gogf/gf/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=golang-module/carbon" style="height:50px;margin-top:20px;"/></a>
-
-#### Sponsors
-
-Carbon is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and serverless hosting. If you want to support Carbon, you can [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)
-
 #### References
 
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
@@ -1323,7 +1314,16 @@ Carbon is an open source project that runs on donations to pay the bills e.g. ou
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
+#### Contributors
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=golang-module/carbon" style="max-height:40px;margin-top:20px;"/></a>
+
+#### Sponsors
+
+`Carbon` is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and serverless hosting. If you want to support Carbon, you can [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)
+
 #### Thanks
-Carbon had been being developed with GoLand under the free JetBrains Open Source license(s) granted by JetBrains s.r.o., hence I would like to express my thanks here.
+`Carbon` had been being developed with GoLand under the free JetBrains Open Source license(s) granted by JetBrains s.r.o., hence I would like to express my thanks here.
 
 <a href="https://www.jetbrains.com/?from=GoFrame"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="120" alt="JetBrains"/></a>
