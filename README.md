@@ -1312,7 +1312,7 @@ This project exists thanks to all the people who contribute. [[Contributors](htt
 
 #### Donators
 
-If you love `Carbon`, why not [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)?
+Carbon is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and serverless hosting. If you want to support Carbon, you can [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)
 
 #### References
 
