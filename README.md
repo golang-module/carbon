@@ -1304,6 +1304,15 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | Q | Quarter | 1 | 1-4 | 1 |
 | C | Century | - | 0-99 | 21 |
 
+
+# Contributors
+This project exists thanks to all the people who contribute. [[Contributors](https://github.com/golang-module/carbon/graphs/contributors)].
+<a href="https://github.com/gogf/gf/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=golang-module/carbon" /></a>
+
+#### Donators
+
+If you love `Carbon`, why not [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)?
+
 #### References
 
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
