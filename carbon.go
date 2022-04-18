@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v1.6.0
+// @Version v1.6.2
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
@@ -97,7 +97,7 @@ const (
 	YearsPerMillennium = 1000   // 每千年1000年
 	YearsPerCentury    = 100    // 每世纪100年
 	YearsPerDecade     = 10     // 每十年10年
-	QuartersPerYear    = 4      // 每年4季度
+	QuartersPerYear    = 4      // 每年4个季度
 	MonthsPerYear      = 12     // 每年12月
 	MonthsPerQuarter   = 3      // 每季度3月
 	WeeksPerNormalYear = 52     // 每常规年52周
@@ -119,7 +119,7 @@ const (
 // formats constant
 // 时间格式化常量
 const (
-	AnsicFormat              = time.ANSIC
+	ANSICFormat              = time.ANSIC
 	UnixDateFormat           = time.UnixDate
 	RubyDateFormat           = time.RubyDate
 	RFC822Format             = time.RFC822
@@ -136,6 +136,9 @@ const (
 	RFC3339MicroFormat       = "2006-01-02T15:04:05.999999Z07:00"
 	RFC3339NanoFormat        = "2006-01-02T15:04:05.999999999Z07:00"
 	ISO8601Format            = "2006-01-02T15:04:05-07:00"
+	ISO8601MilliFormat       = "2006-01-02T15:04:05.999-07:00"
+	ISO8601MicroFormat       = "2006-01-02T15:04:05.999999-07:00"
+	ISO8601NanoFormat        = "2006-01-02T15:04:05.999999999-07:00"
 	RFC1036Format            = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC7231Format            = "Mon, 02 Jan 2006 15:04:05 GMT"
 	DayDateTimeFormat        = "Mon, Jan 2, 2006 3:04 PM"

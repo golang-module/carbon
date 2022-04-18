@@ -11,16 +11,22 @@ import (
 func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	layout := DateTimeFormat
 	if _, err := strconv.ParseInt(value, 10, 64); err == nil {
-		switch len(value) {
-		case 8:
+		switch {
+		case len(value) == 8:
 			layout = ShortDateFormat
-		case 14:
+		case len(value) == 14:
 			layout = ShortDateTimeFormat
 		}
 	} else {
 		switch {
 		case len(value) == 10 && strings.Count(value, "-") == 2:
 			layout = DateFormat
+		case len(value) == 18 && strings.Index(value, ".") == 14:
+			layout = ShortDateTimeMilliFormat
+		case len(value) == 21 && strings.Index(value, ".") == 14:
+			layout = ShortDateTimeMicroFormat
+		case len(value) == 24 && strings.Index(value, ".") == 14:
+			layout = ShortDateTimeNanoFormat
 		case len(value) == 25 && strings.Index(value, "T") == 10:
 			layout = RFC3339Format
 		case len(value) == 29 && strings.Index(value, "T") == 10 && strings.Index(value, ".") == 19:
