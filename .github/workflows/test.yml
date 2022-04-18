@@ -19,7 +19,7 @@ jobs:
       GOPROXY: https://proxy.golang.org
     steps:
       - name: Install go ${{ matrix.go-version }}
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -30,6 +30,6 @@ jobs:
         run: go test -coverprofile=coverage.txt -covermode=atomic
 
       - name: Upload coverage file to codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
