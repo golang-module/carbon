@@ -1321,9 +1321,13 @@ This project exists thanks to all the people who contribute.
 
 #### Sponsors
 
-`Carbon` is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and serverless hosting. If you want to support Carbon, you can [buy developer a cup of coffee](https://www.gouguoyin.cn/zanzhu.html)
+`Carbon` is an open source project that runs on donations to pay the bills e.g. our domain name, gitbook, netlify and
+server hosting. If you want to support Carbon, you can [buy a cup of coffee](https://www.gouguoyin.cn/zanzhu.html) for
+developer.
 
 #### Thanks
-`Carbon` had been being developed with GoLand under the free JetBrains Open Source license(s) granted by JetBrains s.r.o., hence I would like to express my thanks here.
 
-<a href="https://www.jetbrains.com/?from=GoFrame"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="100" alt="JetBrains"/></a>
+`Carbon` had been being developed with GoLand under the free JetBrains Open Source license, I would like to express my
+thanks here.
+
+<a href="https://www.jetbrains.com"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="100" alt="JetBrains"/></a>
