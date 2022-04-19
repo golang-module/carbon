@@ -1317,16 +1317,16 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
 #### 贡献者
-感谢以下所有为 `Carbon` 做出贡献的人
+感谢以下所有为 `Carbon` 做出贡献的人:
 
 <a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon" height=40px/></a>
 
 #### 赞助
 
-`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html)
+`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html) 
 
 #### 致谢
 
-`Carbon`已获取免费的 JetBrains 开源许可证，在此表示感谢。
+`Carbon`已获取免费的 JetBrains 开源许可证，在此表示感谢
 
 <a href="https://www.jetbrains.com"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="100" alt="JetBrains"/></a>
