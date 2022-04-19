@@ -264,7 +264,7 @@ func (c Carbon) IsYesterday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == Now().SubDay().ToDateString()
+	return c.ToDateString() == Yesterday().ToDateString()
 }
 
 // IsToday reports whether is today.
@@ -273,7 +273,7 @@ func (c Carbon) IsToday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == c.Now().ToDateString()
+	return c.ToDateString() == Now().ToDateString()
 }
 
 // IsTomorrow reports whether is tomorrow.
@@ -282,7 +282,7 @@ func (c Carbon) IsTomorrow() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == Now().AddDay().ToDateString()
+	return c.ToDateString() == Tomorrow().ToDateString()
 }
 
 // Compare compares by an operator.
