@@ -1323,7 +1323,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 #### 赞助
 
-`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html)
+`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html) 
 
 #### 致谢
 
