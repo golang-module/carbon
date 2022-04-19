@@ -1313,7 +1313,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
 #### 寄稿者
-`Carbon` に貢献してくれた以下のすべてに感謝します
+`Carbon` に貢献してくれた以下のすべてに感謝します:
 
 <a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon" height=40px/></a>
 
