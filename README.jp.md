@@ -1311,3 +1311,18 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [arrow-py/arrow](https://github.com/arrow-py/arrow)
 * [moment/moment](https://github.com/moment/moment)
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
+
+#### 寄稿者
+`Carbon` に貢献してくれた以下のすべてに感謝します:
+
+<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon" height=40px/></a>
+
+#### スポンサー
+
+`Carbon` は非営利のオープンソースプロジェクトです，`Carbon` をサポートしたい場合は、開発者のために [コーヒーを1杯購入](https://www.gouguoyin.cn/zanzhu.html) できます
+
+#### ありがとう
+
+`Carbon` は無料の JetBrains オープンソースライセンスを取得しました，これに感謝します
+
+<a href="https://www.jetbrains.com"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="100" alt="JetBrains"/></a>
