@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+// Version carbon version
+// 版本号
+const Version = "1.6.2"
+
 // timezones constant
 // 时区常量
 const (
