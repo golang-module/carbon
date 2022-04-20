@@ -37,7 +37,7 @@ func (c Carbon) IsFuture() bool {
 	return c.Timestamp() > c.Now().Timestamp()
 }
 
-// IsPast reports whether is pastime.
+// IsPast reports whether is past time.
 // 是否是过去时间
 func (c Carbon) IsPast() bool {
 	if c.IsInvalid() {
