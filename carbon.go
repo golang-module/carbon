@@ -13,8 +13,8 @@ import (
 	"time"
 )
 
-// Version carbon version
-// 版本号
+// Version current version
+// 当前版本号
 const Version = "2.1.2"
 
 // timezones constant
