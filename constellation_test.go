@@ -11,7 +11,7 @@ func TestCarbon_Constellation(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值1
+		input    string // 输入值
 		expected string // 期望值
 	}{
 		{"", ""},
