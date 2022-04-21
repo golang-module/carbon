@@ -492,17 +492,6 @@ carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsZero() // false
 
-// 是否是夏令时
-carbon.Parse("").IsDST() // false
-carbon.Parse("0").IsDST() // false
-carbon.Parse("0000-00-00 00:00:00").IsDST() // false
-carbon.Parse("0000-00-00").IsDST() // false
-carbon.Parse("00:00:00").IsDST() // false
-carbon.Parse("2020-08-05").IsDST() // false
-carbon.Parse("2020-08-05").SetTimezone("xxx").IsDST() // false
-carbon.Parse("2009-01-01 12:00:00", carbon.PRC).IsDST() // false
-carbon.Parse("2009-01-01 12:00:00", carbon.Sydney).IsDST() // true
-
 // 是否是有效时间
 carbon.Parse("").IsValid() // false
 carbon.Parse("0").IsValid() // false

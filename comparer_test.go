@@ -30,31 +30,6 @@ func TestCarbon_IsZero(t *testing.T) {
 	}
 }
 
-func TestCarbon_IsDST(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		input    string // 输入值
-		timezone string // 时区
-		expected bool   // 期望值
-	}{
-		{"", PRC, false},
-		{"0", PRC, false},
-		{"0000-00-00", PRC, false},
-		{"00:00:00", PRC, false},
-		{"0000-00-00 00:00:00", PRC, false},
-
-		{"2009-01-01 12:00:00", PRC, false},
-		{"2009-01-01 12:00:00", Sydney, true},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, test.timezone)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsDST(), "Current test index is "+strconv.Itoa(index))
-	}
-}
-
 func TestCarbon_IsValid(t *testing.T) {
 	assert := assert.New(t)
 

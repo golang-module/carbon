@@ -10,15 +10,6 @@ func (c Carbon) IsZero() bool {
 	return c.time.IsZero()
 }
 
-// IsDST reports whether is in daylight savings time.
-// 是否是夏令时
-func (c Carbon) IsDST() bool {
-	if c.Error != nil || c.IsZero() {
-		return false
-	}
-	return c.time.IsDST()
-}
-
 // IsValid reports whether is valid time.
 // 是否是有效时间
 func (c Carbon) IsValid() bool {
