@@ -143,7 +143,7 @@ func CreateFromDate(year, month, day int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromDate(year, month, day, timezone...)
 }
 
-// CreateFromTime creates a Carbon instance from a given alone time.
+// CreateFromTime creates a Carbon instance from a given time.
 // 从给定的时分秒创建 Carbon 实例
 func (c Carbon) CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	now := c.Now(timezone...)
@@ -151,14 +151,14 @@ func (c Carbon) CreateFromTime(hour, minute, second int, timezone ...string) Car
 	return c.create(year, month, day, hour, minute, second, now.Nanosecond(), timezone...)
 }
 
-// CreateFromTime creates a Carbon instance from a given alone time.
+// CreateFromTime creates a Carbon instance from a given time.
 // 从给定的时分秒创建 Carbon 实例
 func CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTime(hour, minute, second, timezone...)
 }
 
-// create a Carbon instance from a given full date and time with nanosecond.
-// 从给定的时间创建 Carbon 实例
+// creates a Carbon instance from a given date and time with nanosecond.
+// 从给定的完整日期时间创建 Carbon 实例
 func (c Carbon) create(year, month, day, hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
