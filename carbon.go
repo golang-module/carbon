@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Version v2.1.2
+// @Version v2.1.3
 // @Author gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
@@ -15,7 +15,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.1.2"
+const Version = "2.1.3"
 
 // timezones constant
 // 时区常量
@@ -64,6 +64,9 @@ const (
 	Berlin     = "Europe/Berlin"       // 柏林
 	Paris      = "Europe/Paris"        // 巴黎
 	Rome       = "Europe/Rome"         // 罗马
+	Sydney     = "Australia/Sydney"    // 悉尼
+	Melbourne  = "Australia/Melbourne" // 墨尔本
+	Darwin     = "Australia/Darwin"    // 达尔文
 )
 
 // months constant
@@ -219,9 +222,9 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 		return c
 	}
 	if c.IsZero() {
-		c.time = time.Now().In(c.loc).AddDate(0, 0, 1)
+		c.time = c.Now().Carbon2Time().AddDate(0, 0, 1)
 	} else {
-		c.time = c.time.In(c.loc).AddDate(0, 0, 1)
+		c.time = c.Carbon2Time().AddDate(0, 0, 1)
 	}
 	return c
 }
@@ -242,9 +245,9 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 		return c
 	}
 	if c.IsZero() {
-		c.time = time.Now().In(c.loc).AddDate(0, 0, -1)
+		c.time = c.Now().Carbon2Time().AddDate(0, 0, -1)
 	} else {
-		c.time = c.time.In(c.loc).AddDate(0, 0, -1)
+		c.time = c.Carbon2Time().AddDate(0, 0, -1)
 	}
 	return c
 }
