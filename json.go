@@ -16,7 +16,7 @@ type Date struct {
 	Carbon
 }
 
-// TimestampWithSecond defines a TimestampWithSecond struct.
+// TimestampWithSecond defines a TimestampWithSecond struct, it will be replaced by Timestamp.
 type TimestampWithSecond struct {
 	Carbon
 }
@@ -26,7 +26,7 @@ type Timestamp struct {
 	Carbon
 }
 
-// TimestampWithMillisecond defines a TimestampWithMillisecond struct.
+// TimestampWithMillisecond defines a TimestampWithMillisecond struct, it will be replaced by TimestampMilli.
 type TimestampWithMillisecond struct {
 	Carbon
 }
@@ -36,7 +36,7 @@ type TimestampMilli struct {
 	Carbon
 }
 
-// TimestampWithMicrosecond defines a TimestampWithMicrosecond struct.
+// TimestampWithMicrosecond defines a TimestampWithMicrosecond struct, it will be replaced by TimestampMicro.
 type TimestampWithMicrosecond struct {
 	Carbon
 }
@@ -46,7 +46,7 @@ type TimestampMicro struct {
 	Carbon
 }
 
-// TimestampWithNanosecond defines a TimestampWithNanosecond struct.
+// TimestampWithNanosecond defines a TimestampWithNanosecond struct, it will be replaced by TimestampNano.
 type TimestampWithNanosecond struct {
 	Carbon
 }
@@ -104,7 +104,7 @@ func (t *Timestamp) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t TimestampWithSecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, t.TimestampWithSecond())), nil
+	return []byte(fmt.Sprintf(`%d`, t.Timestamp())), nil
 }
 
 // UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
@@ -122,7 +122,7 @@ func (t *TimestampWithSecond) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t TimestampWithMillisecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, t.TimestampWithMillisecond())), nil
+	return []byte(fmt.Sprintf(`%d`, t.TimestampMilli())), nil
 }
 
 // UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
@@ -158,7 +158,7 @@ func (t *TimestampMilli) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t TimestampWithMicrosecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, t.TimestampWithMicrosecond())), nil
+	return []byte(fmt.Sprintf(`%d`, t.TimestampMicro())), nil
 }
 
 // UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
@@ -194,7 +194,7 @@ func (t *TimestampMicro) UnmarshalJSON(b []byte) error {
 
 // MarshalJSON implements the interface MarshalJSON for json.Marshal.
 func (t TimestampWithNanosecond) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%d`, t.TimestampWithNanosecond())), nil
+	return []byte(fmt.Sprintf(`%d`, t.TimestampNano())), nil
 }
 
 // UnmarshalJSON implements the interface UnmarshalJSON for json.Unmarshal.
