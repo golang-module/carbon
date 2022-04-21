@@ -30,6 +30,29 @@ func TestCarbon_IsZero(t *testing.T) {
 	}
 }
 
+func TestCarbon_IsValid(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-08-05", true},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.IsValid(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_IsInvalid(t *testing.T) {
 	assert := assert.New(t)
 
@@ -1170,7 +1193,19 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 }
 
 func TestError_Comparer(t *testing.T) {
-	c := Parse("2020-13-50")
-	assert.True(t, c.IsZero(), "It should catch an exception in IsZero()")
-	assert.True(t, c.IsInvalid(), "It should catch an exception in IsInvalid()")
+	time1, time2, time3, operator := "2020-13-50", "xxx", "xxx", ">"
+	assert.True(t, Parse(time1).IsZero(), "It should catch an exception in IsZero()")
+	assert.True(t, Parse(time1).IsInvalid(), "It should catch an exception in IsInvalid()")
+	assert.True(t, Parse(time1).IsInvalid(), "It should catch an exception in IsInvalid()")
+	assert.True(t, Parse(time1).Ne(Parse(time2)), "It should catch an exception in Ne()")
+	assert.False(t, Parse(time1).Compare(operator, Parse(time2)), "It should catch an exception in Compare()")
+	assert.False(t, Parse(time1).Gt(Parse(time2)), "It should catch an exception in Gt()")
+	assert.False(t, Parse(time1).Lt(Parse(time2)), "It should catch an exception in Lt()")
+	assert.False(t, Parse(time1).Eq(Parse(time2)), "It should catch an exception in Eq()")
+	assert.False(t, Parse(time1).Gte(Parse(time2)), "It should catch an exception in Gte()")
+	assert.False(t, Parse(time1).Lte(Parse(time2)), "It should catch an exception in Lte()")
+	assert.False(t, Parse(time1).Between(Parse(time2), Parse(time3)), "It should catch an exception in Between()")
+	assert.False(t, Parse(time1).BetweenIncludedStart(Parse(time2), Parse(time3)), "It should catch an exception in BetweenIncludedStart()")
+	assert.False(t, Parse(time1).BetweenIncludedEnd(Parse(time2), Parse(time3)), "It should catch an exception in BetweenIncludedEnd()")
+	assert.False(t, Parse(time1).BetweenIncludedBoth(Parse(time2), Parse(time3)), "It should catch an exception in BetweenIncludedBoth()")
 }
