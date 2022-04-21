@@ -492,6 +492,16 @@ carbon.Parse("2020-08-05 00:00:00").IsZero() // false
 carbon.Parse("2020-08-05").IsZero() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsZero() // false
 
+// 是否是有效时间
+carbon.Parse("").IsValid() // false
+carbon.Parse("0").IsValid() // false
+carbon.Parse("0000-00-00 00:00:00").IsValid() // false
+carbon.Parse("0000-00-00").IsValid() // false
+carbon.Parse("00:00:00").IsValid() // false
+carbon.Parse("2020-08-05 00:00:00").IsValid() // true
+carbon.Parse("2020-08-05").IsValid() // true
+carbon.Parse("2020-08-05").SetTimezone("xxx").IsValid() // false
+
 // 是否是无效时间
 carbon.Parse("").IsInvalid() // true
 carbon.Parse("0").IsInvalid() // true
@@ -736,9 +746,9 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
 carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
 
 // 获取当前年月日
-carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
+carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
 // 获取当前时分秒
-carbon.Parse("2020-08-05 13:14:15").Time() // 13,14,15
+carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
 
 // 获取当前世纪
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -977,60 +987,95 @@ carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 
 ```go
 // 获取农历生肖
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Animal() // 鼠
+carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
 
 // 获取农历节日
-carbon.Parse("2021-02-12 13:14:15", carbon.PRC).Lunar().Festival() // 春节
+carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
+
+// 获取农历年月日时分秒
+carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
+// 获取农历年月日
+carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
+// 获取农历时分秒
+carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
 
 // 获取农历年年份
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Year() // 2020
+carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
 // 获取农历月月份
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Month() // 6
+carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 // 获取农历闰月月份
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().LeapMonth() // 4
+carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // 获取农历日日期
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().Day() // 16
-// 获取农历 YYYY-MM-DD 格式字符串
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar()) // 2020-06-16
+carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
+// 获取农历 YYYY-MM-DD HH::ii::ss 格式字符串
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 
 // 获取农历年字符串
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToYearString() // 二零二零
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // 获取农历月字符串
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToMonthString() // 六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
 // 获取农历天字符串
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToDayString() // 十六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 获取农历日期字符串
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().ToDateString() // 二零二零年六月十六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
 
 // 是否是农历闰年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsLeapYear() // true
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
 // 是否是农历闰月
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsLeapMonth() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
 
 // 是否是鼠年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRatYear() // true
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
 // 是否是牛年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsOxYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
 // 是否是虎年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsTigerYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
 // 是否是兔年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRabbitYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
 // 是否是龙年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsDragonYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
 // 是否是蛇年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsSnakeYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
 // 是否是马年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsHorseYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
 // 是否是羊年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsGoatYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
 // 是否是猴年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsMonkeyYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
 // 是否是鸡年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsRoosterYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 // 是否是狗年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsDogYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // 是否是猪年
-carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Lunar().IsPigYear() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+
+// 获取农历时辰
+carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
+
+// 是否是子时
+carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
+// 是否是丑时
+carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
+// 是否是寅时
+carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
+// 是否是卯时
+carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
+// 是否是辰时
+carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
+// 是否是巳时
+carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
+// 是否是午时
+carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
+// 是否是未时
+carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
+// 是否是申时
+carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
+// 是否是酉时
+carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
+// 是否是戌时
+carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
+// 是否是亥时
+carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
 ##### JSON 支持
@@ -1317,16 +1362,16 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 * [iamkun/dayjs](https://github.com/iamkun/dayjs)
 
 #### 贡献者
-感谢以下所有为 `Carbon` 做出贡献的人:
+感谢以下所有为 `Carbon` 做出贡献的人：
 
 <a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=120" height=45px/></a>
 
 #### 赞助
 
-`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html)
+`Carbon` 是一个非商业开源项目, 如果你想支持 `Carbon`, 你可以为开发者 [购买一杯咖啡](https://www.gouguoyin.cn/zanzhu.html) 
 
 #### 致谢
 
-`Carbon`已获取免费的 JetBrains 开源许可证，在此表示感谢。
+`Carbon`已获取免费的 JetBrains 开源许可证，在此表示感谢
 
 <a href="https://www.jetbrains.com"><img src="https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png" height="100" alt="JetBrains"/></a>
