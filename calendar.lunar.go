@@ -6,13 +6,12 @@ import (
 )
 
 var (
-	minYear, maxYear   = 1900, 2100
-	chineseNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
-	chineseMonths      = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
-	chineseTimes       = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
-	chineseDayPrefixes = []string{"初", "十", "廿", "卅"}
-	animals            = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
-	festivals          = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
+	minYear, maxYear = 1900, 2100
+	chineseNumbers   = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
+	chineseMonths    = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
+	chineseTimes     = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
+	chineseAnimals   = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
+	chineseFestivals = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
 
 	lunarTerms = []int{
 		0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
@@ -152,40 +151,40 @@ func (l lunar) Animal() string {
 	if l.isInvalid {
 		return ""
 	}
-	return animals[l.year%MonthsPerYear]
+	return chineseAnimals[l.year%MonthsPerYear]
 }
 
 // Festival gets lunar festival name.
 // 获取农历节日
-func (l lunar) Festival() string {
+func (l lunar) Festival() (festival string) {
 	if l.isInvalid {
-		return ""
+		return
 	}
 	switch {
 	case l.month == 1 && l.day == 1:
-		return festivals[0]
+		festival = chineseFestivals[0]
 	case l.month == 1 && l.day == 15:
-		return festivals[1]
+		festival = chineseFestivals[1]
 	case l.month == 5 && l.day == 5:
-		return festivals[2]
+		festival = chineseFestivals[2]
 	case l.month == 7 && l.day == 7:
-		return festivals[3]
+		festival = chineseFestivals[3]
 	case l.month == 7 && l.day == 15:
-		return festivals[4]
+		festival = chineseFestivals[4]
 	case l.month == 8 && l.day == 15:
-		return festivals[5]
+		festival = chineseFestivals[5]
 	case l.month == 9 && l.day == 9:
-		return festivals[6]
+		festival = chineseFestivals[6]
 	case l.month == 10 && l.day == 1:
-		return festivals[7]
+		festival = chineseFestivals[7]
 	case l.month == 10 && l.day == 15:
-		return festivals[8]
+		festival = chineseFestivals[8]
 	case l.month == 12 && l.day == 8:
-		return festivals[9]
+		festival = chineseFestivals[9]
 	case l.month == 12 && l.day == 23:
-		return festivals[10]
+		festival = chineseFestivals[10]
 	}
-	return ""
+	return
 }
 
 // Year gets lunar year.
@@ -248,22 +247,28 @@ func (l lunar) ToMonthString() string {
 
 // ToDayString outputs a string in lunar day format.
 // 获取农历日字符串
-func (l lunar) ToDayString() string {
+func (l lunar) ToDayString() (day string) {
 	if l.isInvalid {
-		return ""
+		return
 	}
-	day := ""
-	switch l.day {
-	case 10:
-		day = "初十"
-	case 20:
-		day = "二十"
-	case 30:
+	num := chineseNumbers[l.day%10]
+	switch {
+	case l.day > 30:
+		day = "卅" + num
+	case l.day == 30:
 		day = "三十"
-	default:
-		day = chineseDayPrefixes[(l.day/10)] + chineseNumbers[l.day%10]
+	case l.day > 20:
+		day = "廿" + num
+	case l.day == 20:
+		day = "二十"
+	case l.day > 10:
+		day = "十" + num
+	case l.day == 10:
+		day = "初十"
+	case l.day < 10:
+		day = "初" + num
 	}
-	return day
+	return
 }
 
 // ToDateString outputs a string in lunar date format.
