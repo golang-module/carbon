@@ -754,9 +754,9 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
 carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
 
 // 現在の年月日を取得
-carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
+carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
 // 現在の時分秒を取得
-carbon.Parse("2020-08-05 13:14:15").Time() // 13,14,15
+carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
 
 // 現在の世紀を取得
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -999,16 +999,23 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
 // 中国の旧暦の祝日を獲得します
 carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
 
-// 中国の旧正月を取得する
+// 中国の年月日時分秒を取得する
+carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
+// 中国の年月日を取得する
+carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
+// 中国の時分秒を取得する
+carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
+
+// 中国の年を取得する
 carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// 中国の太陰月を取得する
+// 中国の月を取得する
 carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// 中国の旧暦のうるう月を取得する
+// 中国の閏月を取得する
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// 中国の太陰暦を取得する
+// 中国のああを取得する
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// 中国の旧正月 YYYY-MM-DD フォーマット文字列を取得します
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16
+// 中国の旧正月 YYYY-MM-DD HH::ii::ss フォーマット文字列を取得します
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 
 // 中国の旧正月文字列を取得します
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
@@ -1048,6 +1055,34 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // 豚年かどうか
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+
+// 旧正月を取得する
+carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
+
+// であるかどうかね時
+carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
+// であるかどううし時
+carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
+// であるかどうとら時
+carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
+// であるかどうう時
+carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
+// であるかどうたつ時
+carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
+// であるかどうみ時
+carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
+// であるかどううま時
+carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
+// であるかどうひつじ時
+carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
+// であるかどうさる時
+carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
+// であるかどうとり時
+carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
+// であるかどういぬ時
+carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
+// であるかどうい時
+carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
 ##### JSON 処理

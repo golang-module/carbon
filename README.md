@@ -753,9 +753,9 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
 carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
 
 // Get current year, month and day
-carbon.Parse("2020-08-05 13:14:15").Date() // 2020,8,5
+carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
 // Get current hour, minute and second
-carbon.Parse("2020-08-05 13:14:15").Time() // 13,14,15
+carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
 
 // Get current century
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -998,6 +998,13 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
 // Get Chinese lunar festival
 carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
 
+// Get Chinese lunar year, month, day, hour, minute and second
+carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
+// Get Chinese lunar year, month and day
+carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
+// Get Chinese lunar hour, minute and second
+carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
+
 // Get Chinese lunar year
 carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
 // Get Chinese lunar month
@@ -1006,8 +1013,8 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // Get Chinese lunar day
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// Get Chinese lunar date as string in YYYY-MM-DD format
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16
+// Get Chinese lunar date as string in YYYY-MM-DD HH::ii::ss format
+fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 
 // Get Chinese lunar year as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
@@ -1047,6 +1054,34 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // Whether is a year of the dig
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
+
+// Get Chinese double-hour
+carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
+
+// Whether is FirstDoubleHour
+carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
+// Whether is SecondDoubleHour
+carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
+// Whether is ThirdDoubleHour
+carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
+// Whether is FourthDoubleHour
+carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
+// Whether is FifthDoubleHour
+carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
+// Whether is SixthDoubleHour
+carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
+// Whether is SeventhDoubleHour
+carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
+// Whether is EighthDoubleHour
+carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
+// Whether is NinthDoubleHour
+carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
+// Whether is TenthDoubleHour
+carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
+// Whether is EleventhDoubleHour
+carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
+// Whether is TwelfthDoubleHour
+carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
 ##### JSON handling
