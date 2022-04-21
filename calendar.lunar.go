@@ -55,9 +55,13 @@ type lunar struct {
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	carbon := c.SetTimezone(PRC)
-	l.isInvalid = false
-	if carbon.IsInvalid() {
+	l.isInvalid, l.isLeapMonth = false, false
+	if carbon.Error != nil {
 		l.Error = carbon.Error
+		l.isInvalid = true
+		return
+	}
+	if carbon.IsZero() {
 		l.isInvalid = true
 		return
 	}
@@ -79,7 +83,6 @@ func (c Carbon) Lunar() (l lunar) {
 		offset += daysInYear
 		l.year--
 	}
-	l.isLeapMonth = false
 	leapMonth = l.LeapMonth()
 	for l.month = 1; l.month <= 12 && offset > 0; l.month++ {
 		if leapMonth > 0 && l.month == (leapMonth+1) && !l.isLeapMonth {
