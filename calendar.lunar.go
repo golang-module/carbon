@@ -145,7 +145,7 @@ func (l lunar) getDaysInLeapMonth() int {
 	return 29
 }
 
-// Animal gets lunar animal name.
+// Animal gets lunar animal name like "猴".
 // 获取生肖
 func (l lunar) Animal() string {
 	if l.isInvalid {
@@ -154,7 +154,7 @@ func (l lunar) Animal() string {
 	return chineseAnimals[l.year%MonthsPerYear]
 }
 
-// Festival gets lunar festival name.
+// Festival gets lunar festival name like "春节".
 // 获取农历节日
 func (l lunar) Festival() (festival string) {
 	if l.isInvalid {
@@ -187,7 +187,34 @@ func (l lunar) Festival() (festival string) {
 	return
 }
 
-// Year gets lunar year.
+// DateTime gets lunar year, month, day, hour, minute, and second like 2020, 8, 5, 13, 14, 15.
+// 获取农历年月日时分秒
+func (l lunar) DateTime() (year, month, day, hour, minute, second int) {
+	if l.isInvalid {
+		return
+	}
+	return l.year, l.month, l.day, l.hour, l.minute, l.second
+}
+
+// Date gets lunar year, month and day like 2020, 8, 5.
+// 获取农历时分秒
+func (l lunar) Date() (year, month, day int) {
+	if l.isInvalid {
+		return
+	}
+	return l.year, l.month, l.day
+}
+
+// Time gets lunar hour, minute, and second like 13, 14, 15.
+// 获取农历时分秒
+func (l lunar) Time() (hour, minute, second int) {
+	if l.isInvalid {
+		return
+	}
+	return l.hour, l.minute, l.second
+}
+
+// Year gets lunar year like 2020.
 // 获取农历年
 func (l lunar) Year() int {
 	if l.isInvalid {
@@ -196,7 +223,7 @@ func (l lunar) Year() int {
 	return l.year
 }
 
-// Month gets lunar month.
+// Month gets lunar month like 8.
 // 获取农历月
 func (l lunar) Month() int {
 	if l.isInvalid {
@@ -205,7 +232,7 @@ func (l lunar) Month() int {
 	return l.month
 }
 
-// LeapMonth gets lunar leap month.
+// LeapMonth gets lunar leap month like 8.
 // 获取农历闰月月份
 func (l lunar) LeapMonth() int {
 	if l.isInvalid {
@@ -214,7 +241,7 @@ func (l lunar) LeapMonth() int {
 	return lunarTerms[l.year-minYear] & 0xf
 }
 
-// Day gets lunar day.
+// Day gets lunar day like 5.
 // 获取农历日
 func (l lunar) Day() int {
 	if l.isInvalid {
@@ -223,7 +250,7 @@ func (l lunar) Day() int {
 	return l.day
 }
 
-// ToYearString outputs a string in lunar year format.
+// ToYearString outputs a string in lunar year format like "二零二零".
 // 获取农历年字符串
 func (l lunar) ToYearString() string {
 	if l.isInvalid {
@@ -236,7 +263,7 @@ func (l lunar) ToYearString() string {
 	return year
 }
 
-// ToMonthString outputs a string in lunar month format.
+// ToMonthString outputs a string in lunar month format like "正".
 // 获取农历月字符串
 func (l lunar) ToMonthString() string {
 	if l.isInvalid {
@@ -245,7 +272,7 @@ func (l lunar) ToMonthString() string {
 	return chineseMonths[l.month-1]
 }
 
-// ToDayString outputs a string in lunar day format.
+// ToDayString outputs a string in lunar day format like "廿一".
 // 获取农历日字符串
 func (l lunar) ToDayString() (day string) {
 	if l.isInvalid {
@@ -253,8 +280,6 @@ func (l lunar) ToDayString() (day string) {
 	}
 	num := chineseNumbers[l.day%10]
 	switch {
-	case l.day > 30:
-		day = "卅" + num
 	case l.day == 30:
 		day = "三十"
 	case l.day > 20:
@@ -271,7 +296,7 @@ func (l lunar) ToDayString() (day string) {
 	return
 }
 
-// ToDateString outputs a string in lunar date format.
+// ToDateString outputs a string in lunar date format like "二零二零年腊月初五".
 // 获取农历日期字符串
 func (l lunar) ToDateString() string {
 	if l.isInvalid {
@@ -280,8 +305,8 @@ func (l lunar) ToDateString() string {
 	return l.ToYearString() + "年" + l.ToMonthString() + "月" + l.ToDayString()
 }
 
-// String outputs a string in YYYY-MM-DD format, implement Stringer interface.
-// 输出 YYYY-MM-DD 格式字符串， 实现 Stringer 接口
+// String outputs a string in YYYY-MM-DD HH::ii::ss format, implement Stringer interface.
+// 输出 YYYY-MM-DD HH::ii::ss 格式字符串， 实现 Stringer 接口
 func (l lunar) String() string {
 	if l.isInvalid {
 		return ""
@@ -451,7 +476,7 @@ func (l lunar) IsPigYear() bool {
 	return false
 }
 
-// DoubleHour gets double-hour name like "子时", i18n is supported.
+// DoubleHour gets double-hour name like "子时".
 // 获取当前时辰
 func (l lunar) DoubleHour() (dh string) {
 	if l.isInvalid {

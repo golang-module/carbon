@@ -86,6 +86,87 @@ func TestLunar_Festival(t *testing.T) {
 	}
 }
 
+func TestLunar_DateTime(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                                  string // 输入值
+		year, month, day, hour, minute, second int    // 期望值
+	}{
+		{"", 0, 0, 0, 0, 0, 0},
+		{"0", 0, 0, 0, 0, 0, 0},
+		{"0000-00-00", 0, 0, 0, 0, 0, 0},
+		{"00:00:00", 0, 0, 0, 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0, 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 2020, 6, 16, 13, 14, 15},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		year, month, day, hour, minute, second := c.Lunar().DateTime()
+		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_Date(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input            string // 输入值
+		year, month, day int    // 期望值
+	}{
+		{"", 0, 0, 0},
+		{"0", 0, 0, 0},
+		{"0000-00-00", 0, 0, 0},
+		{"00:00:00", 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 2020, 6, 16},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		year, month, day := c.Lunar().Date()
+		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_Time(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                string // 输入值
+		hour, minute, second int    // 期望值
+	}{
+		{"", 0, 0, 0},
+		{"0", 0, 0, 0},
+		{"0000-00-00", 0, 0, 0},
+		{"00:00:00", 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 13, 14, 15},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		hour, minute, second := c.Lunar().Time()
+		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestLunar_Year(t *testing.T) {
 	assert := assert.New(t)
 
@@ -321,6 +402,7 @@ func TestLunar_ToDayString(t *testing.T) {
 		{"2020-11-01", "十六"},
 		{"2020-12-01", "十七"},
 		{"2021-01-03", "二十"},
+		{"2021-01-05", "廿二"},
 		{"2021-04-11", "三十"},
 	}
 
