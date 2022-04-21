@@ -10,6 +10,7 @@ var (
 	chineseNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
 	chineseMonths      = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
 	chineseDayPrefixes = []string{"初", "十", "廿", "卅"}
+	chineseTimes       = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
 	animals            = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
 	festivals          = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
 
@@ -46,6 +47,8 @@ var (
 // 定义 lunar 结构体
 type lunar struct {
 	year, month, day int  // 农历年、月、日
+	hour, minute     int  // 农历时间：子时、丑时...
+	isZeroTime       bool // 时间是否为空
 	isLeapMonth      bool // 是否是闰月
 	Error            error
 }
@@ -55,6 +58,7 @@ type lunar struct {
 func (c Carbon) Lunar() (l lunar) {
 	if c.IsInvalid() {
 		l.Error = c.Error
+		l.isZeroTime = true
 		return
 	}
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
@@ -104,6 +108,8 @@ func (c Carbon) Lunar() (l lunar) {
 		l.month--
 	}
 	l.day = offset + 1
+	hour, minute, _ := c.Time()
+	l.hour, l.minute = hour, minute
 	return
 }
 
@@ -426,6 +432,200 @@ func (l lunar) IsPigYear() bool {
 		return false
 	}
 	if l.year%MonthsPerYear == 3 {
+		return true
+	}
+	return false
+}
+
+// 获取当前时辰
+func (l lunar) DoubleHour() string {
+	if l.isZeroTime {
+		return ""
+	}
+	hour, minute := l.hour, l.minute
+	switch {
+	case hour >= 23, hour == 0 && minute <= 59:
+		return chineseTimes[0] // 子时
+	case hour >= 1 && hour < 3:
+		return chineseTimes[1] // 丑时
+	case hour >= 3 && hour < 5:
+		return chineseTimes[2] //寅时
+	case hour >= 5 && hour < 7:
+		return chineseTimes[3] //卯时
+	case hour >= 7 && hour < 9:
+		return chineseTimes[4] // 辰时
+	case hour >= 9 && hour < 11:
+		return chineseTimes[5] //巳时
+	case hour >= 11 && hour < 13:
+		return chineseTimes[6] // 午时
+	case hour >= 13 && hour < 15:
+		return chineseTimes[7] //未时
+	case hour >= 15 && hour < 17:
+		return chineseTimes[8] // 申时
+	case hour >= 17 && hour < 19:
+		return chineseTimes[9] //酉时
+	case hour >= 19 && hour < 21:
+		return chineseTimes[10] //戌时
+	case hour >= 21 && hour < 23:
+		return chineseTimes[11] //亥时
+	}
+	return ""
+}
+
+// IsFirstDoubleHour reports whether is FirstDoubleHour
+// 是否是子时
+func (l lunar) IsFirstDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour, minute := l.hour, l.minute
+	if hour >= 23 {
+		return true
+	}
+	if hour == 0 && minute <= 59 {
+		return true
+	}
+	return false
+}
+
+// IsSecondDoubleHour reports whether is SecondDoubleHour
+// 是否是丑时
+func (l lunar) IsSecondDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 1 && hour < 3 {
+		return true
+	}
+	return false
+}
+
+// IsThirdDoubleHour reports whether is ThirdDoubleHour
+// 是否是寅时
+func (l lunar) IsThirdDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 3 && hour < 5 {
+		return true
+	}
+	return false
+}
+
+// IsFourthDoubleHour reports whether is FourthDoubleHour
+// 是否是卯时
+func (l lunar) IsFourthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 5 && hour < 7 {
+		return true
+	}
+	return false
+}
+
+// IsFifthDoubleHour reports whether is FifthDoubleHour
+// 是否是辰时
+func (l lunar) IsFifthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 7 && hour < 9 {
+		return true
+	}
+	return false
+}
+
+// IsSixthDoubleHour reports whether is SixthDoubleHour
+// 是否是巳时
+func (l lunar) IsSixthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 9 && hour < 11 {
+		return true
+	}
+	return false
+}
+
+// IsSeventhDoubleHour reports whether is SeventhDoubleHour
+// 是否是午时
+func (l lunar) IsSeventhDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 11 && hour < 13 {
+		return true
+	}
+	return false
+}
+
+// IsEighthDoubleHour reports whether is EighthDoubleHour
+// 是否是未时
+func (l lunar) IsEighthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 13 && hour < 15 {
+		return true
+	}
+	return false
+}
+
+// IsNinthDoubleHour reports whether is NinthDoubleHour
+// 是否是申时
+func (l lunar) IsNinthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 15 && hour < 17 {
+		return true
+	}
+	return false
+}
+
+// IsTenthDoubleHour reports whether is TenthDoubleHour
+// 是否是酉时
+func (l lunar) IsTenthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 17 && hour < 19 {
+		return true
+	}
+	return false
+}
+
+// IsEleventhDoubleHour reports whether is EleventhDoubleHour
+// 是否是戌时
+func (l lunar) IsEleventhDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 19 && hour < 21 {
+		return true
+	}
+	return false
+}
+
+// IsTwelfthDoubleHour reports whether is TwelfthDoubleHour
+// 是否是亥时
+func (l lunar) IsTwelfthDoubleHour() bool {
+	if l.isZeroTime {
+		return false
+	}
+	hour := l.hour
+	if hour >= 21 && hour < 23 {
 		return true
 	}
 	return false
