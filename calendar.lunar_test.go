@@ -44,7 +44,7 @@ func TestLunar_Animal(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().Animal(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -80,7 +80,7 @@ func TestLunar_Festival(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().Festival(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -103,7 +103,7 @@ func TestLunar_DateTime(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		year, month, day, hour, minute, second := c.Lunar().DateTime()
 		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
@@ -132,7 +132,7 @@ func TestLunar_Date(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		year, month, day := c.Lunar().Date()
 		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
@@ -158,7 +158,7 @@ func TestLunar_Time(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		hour, minute, second := c.Lunar().Time()
 		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
@@ -189,7 +189,7 @@ func TestLunar_Year(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().Year(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -223,7 +223,7 @@ func TestLunar_Month(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().Month(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -276,7 +276,7 @@ func TestLunar_Day(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().Day(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -302,7 +302,7 @@ func TestLunar_LeapMonth(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().LeapMonth(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -330,7 +330,7 @@ func TestLunar_ToYearString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().ToYearString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -369,7 +369,7 @@ func TestLunar_ToMonthString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().ToMonthString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -407,7 +407,7 @@ func TestLunar_ToDayString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().ToDayString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -442,7 +442,7 @@ func TestLunar_String(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, fmt.Sprintf("%s", c.Lunar()), "Current test index is "+strconv.Itoa(index))
 	}
@@ -531,7 +531,7 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsLeapMonth(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -859,12 +859,6 @@ func TestLunar_IsPigYear(t *testing.T) {
 	}
 }
 
-func TestError_Lunar(t *testing.T) {
-	year, month, day := 1840, 1, 1
-	c := CreateFromDate(year, month, day).Lunar()
-	assert.NotNil(t, c.Error, "It should catch an exception in Lunar()")
-}
-
 func TestLunar_DoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
@@ -895,7 +889,7 @@ func TestLunar_DoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().DoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -921,7 +915,7 @@ func TestLunar_IsFirstDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsFirstDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -946,7 +940,7 @@ func TestLunar_IsSecondDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsSecondDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -971,7 +965,7 @@ func TestLunar_IsThirdDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsThirdDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -995,7 +989,7 @@ func TestLunar_IsFourthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsFourthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1020,7 +1014,7 @@ func TestLunar_IsFifthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsFifthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1045,7 +1039,7 @@ func TestLunar_IsSixthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsSixthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1070,7 +1064,7 @@ func TestLunar_IsSeventhDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsSeventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1095,7 +1089,7 @@ func TestLunar_IsEighthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsEighthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1120,7 +1114,7 @@ func TestLunar_IsNinthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsNinthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1145,7 +1139,7 @@ func TestLunar_IsTenthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsTenthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1170,7 +1164,7 @@ func TestLunar_IsEleventhDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsEleventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1195,8 +1189,14 @@ func TestLunar_IsTwelfthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
+		c := Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Lunar().IsTwelfthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestError_Lunar(t *testing.T) {
+	year, month, day, timezone := 1840, 1, 1, "xxx"
+	c := CreateFromDate(year, month, day, timezone).Lunar()
+	assert.NotNil(t, c.Error, "It should catch an exception in Lunar()")
 }
