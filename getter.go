@@ -20,7 +20,7 @@ func (c Carbon) DaysInMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.EndOfMonth().time.In(c.loc).Day()
+	return c.EndOfMonth().Carbon2Time().Day()
 }
 
 // MonthOfYear gets month of year like 12.
@@ -29,7 +29,7 @@ func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return int(c.time.In(c.loc).Month())
+	return int(c.Carbon2Time().Month())
 }
 
 // DayOfYear gets day of year like 365.
@@ -38,7 +38,7 @@ func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).YearDay()
+	return c.Carbon2Time().YearDay()
 }
 
 // DayOfMonth gets day of month like 30.
@@ -47,7 +47,7 @@ func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Day()
+	return c.Carbon2Time().Day()
 }
 
 // DayOfWeek gets day of week like 6.
@@ -56,7 +56,7 @@ func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	day := int(c.time.In(c.loc).Weekday())
+	day := int(c.Carbon2Time().Weekday())
 	if day == 0 {
 		return DaysPerWeek
 	}
@@ -69,7 +69,7 @@ func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	_, week := c.time.In(c.loc).ISOWeek()
+	_, week := c.Carbon2Time().ISOWeek()
 	return week
 }
 
@@ -92,7 +92,7 @@ func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
 	if c.IsInvalid() {
 		return
 	}
-	t := c.time.In(c.loc)
+	t := c.Carbon2Time()
 	var tm time.Month
 	year, tm, day = t.Date()
 	hour, minute, second = t.Clock()
@@ -136,7 +136,7 @@ func (c Carbon) Date() (year, month, day int) {
 		return
 	}
 	var tm time.Month
-	year, tm, day = c.time.In(c.loc).Date()
+	year, tm, day = c.Carbon2Time().Date()
 	return year, int(tm), day
 }
 
@@ -146,7 +146,7 @@ func (c Carbon) Time() (hour, minute, second int) {
 	if c.IsInvalid() {
 		return
 	}
-	return c.time.In(c.loc).Clock()
+	return c.Carbon2Time().Clock()
 }
 
 // Century gets current century like 21.
@@ -173,7 +173,7 @@ func (c Carbon) Year() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Year()
+	return c.Carbon2Time().Year()
 }
 
 // Quarter gets current quarter like 3.
@@ -223,7 +223,7 @@ func (c Carbon) Hour() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Hour()
+	return c.Carbon2Time().Hour()
 }
 
 // Minute gets current minute like 14.
@@ -232,7 +232,7 @@ func (c Carbon) Minute() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Minute()
+	return c.Carbon2Time().Minute()
 }
 
 // Second gets current second like 15.
@@ -241,7 +241,7 @@ func (c Carbon) Second() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Second()
+	return c.Carbon2Time().Second()
 }
 
 // Millisecond gets current millisecond like 999.
@@ -250,7 +250,7 @@ func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Nanosecond() / 1e6
+	return c.Carbon2Time().Nanosecond() / 1e6
 }
 
 // Microsecond gets current microsecond like 999999.
@@ -259,7 +259,7 @@ func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Nanosecond() / 1e3
+	return c.Carbon2Time().Nanosecond() / 1e3
 }
 
 // Nanosecond gets current nanosecond like 999999999.
@@ -268,10 +268,10 @@ func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.In(c.loc).Nanosecond()
+	return c.Carbon2Time().Nanosecond()
 }
 
-// TimestampWithSecond gets timestamp with second like 1596604455.
+// TimestampWithSecond gets timestamp with second like 1596604455, it will be replaced by Timestamp.
 // 输出秒级时间戳
 func (c Carbon) TimestampWithSecond() int64 {
 	if c.IsInvalid() {
@@ -286,7 +286,7 @@ func (c Carbon) Timestamp() int64 {
 	return c.TimestampWithSecond()
 }
 
-// TimestampWithMillisecond gets timestamp with millisecond like 1596604455000.
+// TimestampWithMillisecond gets timestamp with millisecond like 1596604455000, it will be replaced by TimestampMilli.
 // 获取毫秒级时间戳
 func (c Carbon) TimestampWithMillisecond() int64 {
 	if c.IsInvalid() {
@@ -301,7 +301,7 @@ func (c Carbon) TimestampMilli() int64 {
 	return c.TimestampWithMillisecond()
 }
 
-// TimestampWithMicrosecond gets timestamp with microsecond like 1596604455000000.
+// TimestampWithMicrosecond gets timestamp with microsecond like 1596604455000000, it will be replaced by TimestampMicro.
 // 获取微秒级时间戳
 func (c Carbon) TimestampWithMicrosecond() int64 {
 	if c.IsInvalid() {
@@ -316,7 +316,7 @@ func (c Carbon) TimestampMicro() int64 {
 	return c.TimestampWithMicrosecond()
 }
 
-// TimestampWithNanosecond gets timestamp with nanosecond like 1596604455000000000.
+// TimestampWithNanosecond gets timestamp with nanosecond like 1596604455000000000, it will be replaced by TimestampNano.
 // 获取纳秒级时间戳
 func (c Carbon) TimestampWithNanosecond() int64 {
 	if c.IsInvalid() {
