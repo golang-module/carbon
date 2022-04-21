@@ -161,28 +161,29 @@ func (l lunar) Festival() (festival string) {
 	if l.isInvalid {
 		return
 	}
+	month, day := l.month, l.day
 	switch {
-	case l.month == 1 && l.day == 1:
+	case month == 1 && day == 1:
 		festival = chineseFestivals[0]
-	case l.month == 1 && l.day == 15:
+	case month == 1 && day == 15:
 		festival = chineseFestivals[1]
-	case l.month == 5 && l.day == 5:
+	case month == 5 && day == 5:
 		festival = chineseFestivals[2]
-	case l.month == 7 && l.day == 7:
+	case month == 7 && day == 7:
 		festival = chineseFestivals[3]
-	case l.month == 7 && l.day == 15:
+	case month == 7 && day == 15:
 		festival = chineseFestivals[4]
-	case l.month == 8 && l.day == 15:
+	case month == 8 && day == 15:
 		festival = chineseFestivals[5]
-	case l.month == 9 && l.day == 9:
+	case month == 9 && day == 9:
 		festival = chineseFestivals[6]
-	case l.month == 10 && l.day == 1:
+	case month == 10 && day == 1:
 		festival = chineseFestivals[7]
-	case l.month == 10 && l.day == 15:
+	case month == 10 && day == 15:
 		festival = chineseFestivals[8]
-	case l.month == 12 && l.day == 8:
+	case month == 12 && day == 8:
 		festival = chineseFestivals[9]
-	case l.month == 12 && l.day == 23:
+	case month == 12 && day == 23:
 		festival = chineseFestivals[10]
 	}
 	return
