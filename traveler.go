@@ -5,19 +5,19 @@ import (
 )
 
 // AddDuration adds one duration.
-// 按照持续时长字符串增加时间,支持整数/浮点数和符号ns(纳秒)、us(微秒)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照持续时长字符串增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time = c.time.In(c.loc).Add(td)
+	c.time = c.Carbon2Time().Add(td)
 	c.Error = err
 	return c
 }
 
 // SubDuration subtracts one duration.
-// 按照持续时长字符串减少时间,支持整数/浮点数和符号ns(纳秒)、us(微秒)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照持续时长字符串减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
 }
@@ -124,7 +124,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(years, 0, 0)
+	c.time = c.Carbon2Time().AddDate(years, 0, 0)
 	return c
 }
 
@@ -237,7 +237,7 @@ func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(0, months, 0)
+	c.time = c.Carbon2Time().AddDate(0, months, 0)
 	return c
 }
 
@@ -323,7 +323,7 @@ func (c Carbon) AddDays(days int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.time.In(c.loc).AddDate(0, 0, days)
+	c.time = c.Carbon2Time().AddDate(0, 0, days)
 	return c
 }
 
@@ -352,7 +352,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.time = c.time.In(c.loc).Add(td)
+	c.time = c.Carbon2Time().Add(td)
 	return c
 }
 
@@ -381,7 +381,7 @@ func (c Carbon) AddMinutes(minutes int) Carbon {
 		return c
 	}
 	td := time.Duration(minutes) * time.Minute
-	c.time = c.time.Add(td)
+	c.time = c.Carbon2Time().Add(td)
 	return c
 }
 
@@ -410,7 +410,7 @@ func (c Carbon) AddSeconds(seconds int) Carbon {
 		return c
 	}
 	td := time.Duration(seconds) * time.Second
-	c.time = c.time.Add(td)
+	c.time = c.Carbon2Time().Add(td)
 	return c
 }
 
