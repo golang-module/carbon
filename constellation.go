@@ -17,29 +17,29 @@ func (c Carbon) Constellation() string {
 	_, month, day := c.Date()
 	switch {
 	case month == 3 && day >= 21, month == 4 && day <= 19:
-		index = 0 // 白羊座
+		index = 0 // Aries
 	case month == 4 && day >= 20, month == 5 && day <= 20:
-		index = 1 // 金牛座
+		index = 1 // Taurus
 	case month == 5 && day >= 21, month == 6 && day <= 21:
-		index = 2 // 双子座
+		index = 2 // Gemini
 	case month == 6 && day >= 22, month == 7 && day <= 22:
-		index = 3 // 巨蟹座
+		index = 3 // Cancer
 	case month == 7 && day >= 23, month == 8 && day <= 22:
-		index = 4 // 狮子座
+		index = 4 // Leo
 	case month == 8 && day >= 23, month == 9 && day <= 22:
-		index = 5 // 处女座
+		index = 5 // Virgo
 	case month == 9 && day >= 23, month == 10 && day <= 23:
-		index = 6 // 天秤座
+		index = 6 // Libra
 	case month == 10 && day >= 24, month == 11 && day <= 22:
-		index = 7 // 天蝎座
+		index = 7 // Scorpio
 	case month == 11 && day >= 23, month == 12 && day <= 21:
-		index = 8 // 射手座
+		index = 8 // Sagittarius
 	case month == 12 && day >= 22, month == 1 && day <= 19:
-		index = 9 // 摩羯座
+		index = 9 // Capricorn
 	case month == 1 && day >= 20, month == 2 && day <= 18:
-		index = 10 // 水瓶座
+		index = 10 // Aquarius
 	case month == 2 && day >= 19, month == 3 && day <= 20:
-		index = 11 // 双鱼座
+		index = 11 // Aquarius
 	}
 	if constellations, ok := c.lang.resources["constellations"]; ok {
 		slice := strings.Split(constellations, "|")
