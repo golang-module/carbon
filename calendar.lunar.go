@@ -55,6 +55,7 @@ type lunar struct {
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	carbon := c.SetTimezone(PRC)
+	l.isInvalid = false
 	if carbon.IsInvalid() {
 		l.Error = carbon.Error
 		l.isInvalid = true
