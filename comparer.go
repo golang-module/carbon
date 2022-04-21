@@ -10,13 +10,28 @@ func (c Carbon) IsZero() bool {
 	return c.time.IsZero()
 }
 
-// IsInvalid reports whether is invalid time.
-// 是否是无效时间
-func (c Carbon) IsInvalid() bool {
+// IsDST reports whether is in daylight savings time.
+// 是否是夏令时
+func (c Carbon) IsDST() bool {
 	if c.Error != nil || c.IsZero() {
+		return false
+	}
+	return c.time.IsDST()
+}
+
+// IsValid reports whether is valid time.
+// 是否是有效时间
+func (c Carbon) IsValid() bool {
+	if c.Error == nil && !c.IsZero() {
 		return true
 	}
 	return false
+}
+
+// IsInvalid reports whether is invalid time.
+// 是否是无效时间
+func (c Carbon) IsInvalid() bool {
+	return !c.IsValid()
 }
 
 // IsNow reports whether is now time.
@@ -183,7 +198,7 @@ func (c Carbon) IsMonday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Monday
+	return c.Carbon2Time().Weekday() == time.Monday
 }
 
 // IsTuesday reports whether is Tuesday.
@@ -192,7 +207,7 @@ func (c Carbon) IsTuesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Tuesday
+	return c.Carbon2Time().Weekday() == time.Tuesday
 }
 
 // IsWednesday reports whether is Wednesday.
@@ -201,7 +216,7 @@ func (c Carbon) IsWednesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Wednesday
+	return c.Carbon2Time().Weekday() == time.Wednesday
 }
 
 // IsThursday reports whether is Thursday.
@@ -210,7 +225,7 @@ func (c Carbon) IsThursday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Thursday
+	return c.Carbon2Time().Weekday() == time.Thursday
 }
 
 // IsFriday reports whether is Friday.
@@ -219,7 +234,7 @@ func (c Carbon) IsFriday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Friday
+	return c.Carbon2Time().Weekday() == time.Friday
 }
 
 // IsSaturday reports whether is Saturday.
@@ -228,7 +243,7 @@ func (c Carbon) IsSaturday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Saturday
+	return c.Carbon2Time().Weekday() == time.Saturday
 }
 
 // IsSunday reports whether is Sunday.
@@ -237,7 +252,7 @@ func (c Carbon) IsSunday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.time.In(c.loc).Weekday() == time.Sunday
+	return c.Carbon2Time().Weekday() == time.Sunday
 }
 
 // IsWeekday reports whether is weekday.
@@ -288,6 +303,9 @@ func (c Carbon) IsTomorrow() bool {
 // Compare compares by an operator.
 // 时间比较
 func (c Carbon) Compare(operator string, t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	switch operator {
 	case "=":
 		return c.Eq(t)
@@ -308,18 +326,27 @@ func (c Carbon) Compare(operator string, t Carbon) bool {
 // Gt reports whether greater than.
 // 是否大于
 func (c Carbon) Gt(t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	return c.time.After(t.time)
 }
 
 // Lt reports whether less than.
 // 是否小于
 func (c Carbon) Lt(t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	return c.time.Before(t.time)
 }
 
 // Eq reports whether equal.
 // 是否等于
 func (c Carbon) Eq(t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	return c.time.Equal(t.time)
 }
 
@@ -332,18 +359,27 @@ func (c Carbon) Ne(t Carbon) bool {
 // Gte reports whether greater than or equal.
 // 是否大于等于
 func (c Carbon) Gte(t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	return c.Gt(t) || c.Eq(t)
 }
 
 // Lte reports whether less than or equal.
 // 是否小于等于
 func (c Carbon) Lte(t Carbon) bool {
+	if c.IsInvalid() || t.IsInvalid() {
+		return false
+	}
 	return c.Lt(t) || c.Eq(t)
 }
 
 // Between reports whether between two times, excluded the start and end time.
 // 是否在两个时间之间(不包括这两个时间)
 func (c Carbon) Between(start Carbon, end Carbon) bool {
+	if c.IsInvalid() || start.IsInvalid() || end.IsInvalid() {
+		return false
+	}
 	if c.Gt(start) && c.Lt(end) {
 		return true
 	}
@@ -353,6 +389,9 @@ func (c Carbon) Between(start Carbon, end Carbon) bool {
 // BetweenIncludedStart reports whether between two times, included the start time.
 // 是否在两个时间之间(包括开始时间)
 func (c Carbon) BetweenIncludedStart(start Carbon, end Carbon) bool {
+	if c.IsInvalid() || start.IsInvalid() || end.IsInvalid() {
+		return false
+	}
 	if c.Gte(start) && c.Lt(end) {
 		return true
 	}
@@ -362,6 +401,9 @@ func (c Carbon) BetweenIncludedStart(start Carbon, end Carbon) bool {
 // BetweenIncludedEnd reports whether between two times, included the end time.
 // 是否在两个时间之间(包括结束时间)
 func (c Carbon) BetweenIncludedEnd(start Carbon, end Carbon) bool {
+	if c.IsInvalid() || start.IsInvalid() || end.IsInvalid() {
+		return false
+	}
 	if c.Gt(start) && c.Lte(end) {
 		return true
 	}
@@ -371,6 +413,9 @@ func (c Carbon) BetweenIncludedEnd(start Carbon, end Carbon) bool {
 // BetweenIncludedBoth reports whether between two times, included the start and end time.
 // 是否在两个时间之间(包括这两个时间)
 func (c Carbon) BetweenIncludedBoth(start Carbon, end Carbon) bool {
+	if c.IsInvalid() || start.IsInvalid() || end.IsInvalid() {
+		return false
+	}
 	if c.Gte(start) && c.Lte(end) {
 		return true
 	}
