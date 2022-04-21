@@ -86,6 +86,87 @@ func TestLunar_Festival(t *testing.T) {
 	}
 }
 
+func TestLunar_DateTime(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                                  string // 输入值
+		year, month, day, hour, minute, second int    // 期望值
+	}{
+		{"", 0, 0, 0, 0, 0, 0},
+		{"0", 0, 0, 0, 0, 0, 0},
+		{"0000-00-00", 0, 0, 0, 0, 0, 0},
+		{"00:00:00", 0, 0, 0, 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0, 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 2020, 6, 16, 13, 14, 15},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		year, month, day, hour, minute, second := c.Lunar().DateTime()
+		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_Date(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input            string // 输入值
+		year, month, day int    // 期望值
+	}{
+		{"", 0, 0, 0},
+		{"0", 0, 0, 0},
+		{"0000-00-00", 0, 0, 0},
+		{"00:00:00", 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 2020, 6, 16},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		year, month, day := c.Lunar().Date()
+		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_Time(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                string // 输入值
+		hour, minute, second int    // 期望值
+	}{
+		{"", 0, 0, 0},
+		{"0", 0, 0, 0},
+		{"0000-00-00", 0, 0, 0},
+		{"00:00:00", 0, 0, 0},
+		{"0000-00-00 00:00:00", 0, 0, 0},
+
+		{"2020-08-05 13:14:15", 13, 14, 15},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		hour, minute, second := c.Lunar().Time()
+		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestLunar_Year(t *testing.T) {
 	assert := assert.New(t)
 
@@ -321,6 +402,7 @@ func TestLunar_ToDayString(t *testing.T) {
 		{"2020-11-01", "十六"},
 		{"2020-12-01", "十七"},
 		{"2021-01-03", "二十"},
+		{"2021-01-05", "廿二"},
 		{"2021-04-11", "三十"},
 	}
 
@@ -344,19 +426,19 @@ func TestLunar_String(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01", "2019-12-07"},
-		{"2020-02-01", "2020-01-08"},
-		{"2020-03-01", "2020-02-08"},
-		{"2020-04-01", "2020-03-09"},
-		{"2020-04-23", "2020-04-01"},
-		{"2020-05-01", "2020-04-09"},
-		{"2020-06-01", "2020-04-10"},
-		{"2020-07-01", "2020-05-11"},
-		{"2020-08-01", "2020-06-12"},
-		{"2020-09-01", "2020-07-14"},
-		{"2020-10-01", "2020-08-15"},
-		{"2020-11-01", "2020-09-16"},
-		{"2020-12-01", "2020-10-17"},
+		{"2020-01-01", "2019-12-07 00:00:00"},
+		{"2020-02-01", "2020-01-08 00:00:00"},
+		{"2020-03-01", "2020-02-08 00:00:00"},
+		{"2020-04-01", "2020-03-09 00:00:00"},
+		{"2020-04-23", "2020-04-01 00:00:00"},
+		{"2020-05-01", "2020-04-09 00:00:00"},
+		{"2020-06-01", "2020-04-10 00:00:00"},
+		{"2020-07-01", "2020-05-11 00:00:00"},
+		{"2020-08-01", "2020-06-12 00:00:00"},
+		{"2020-09-01", "2020-07-14 00:00:00"},
+		{"2020-10-01", "2020-08-15 00:00:00"},
+		{"2020-11-01", "2020-09-16 00:00:00"},
+		{"2020-12-01", "2020-10-17 00:00:00"},
 	}
 
 	for index, test := range tests {
@@ -781,4 +863,340 @@ func TestError_Lunar(t *testing.T) {
 	year, month, day := 1840, 1, 1
 	c := CreateFromDate(year, month, day).Lunar()
 	assert.NotNil(t, c.Error, "It should catch an exception in Lunar()")
+}
+
+func TestLunar_DoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值1
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-01-05 23:23:45", "子时"},
+		{"2020-01-05 00:59:45", "子时"},
+		{"2020-02-05 01:00:00", "丑时"},
+		{"2020-02-05 03:40:00", "寅时"},
+		{"2020-02-05 05:00:00", "卯时"},
+		{"2020-02-05 07:30:00", "辰时"},
+		{"2020-02-05 09:00:00", "巳时"},
+		{"2020-02-05 11:00:00", "午时"},
+		{"2020-02-05 13:00:00", "未时"},
+		{"2020-02-05 15:00:00", "申时"},
+		{"2020-02-05 14:59:00", "未时"},
+		{"2020-02-05 17:00:00", "酉时"},
+		{"2020-02-05 19:00:00", "戌时"},
+		{"2020-02-05 21:00:00", "亥时"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().DoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsFirstDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 00:00:00", true},
+		{"2020-04-19 00:59:59", true},
+		{"2020-08-05 23:00:00", true},
+		{"2020-08-05 01:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsFirstDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsSecondDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 01:00:00", true},
+		{"2020-04-19 02:59:59", true},
+		{"2020-08-05 03:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsSecondDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsThirdDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 03:00:00", true},
+		{"2020-04-19 04:59:59", true},
+		{"2020-08-05 05:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsThirdDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+func TestLunar_IsFourthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 05:00:00", true},
+		{"2020-04-19 06:59:59", true},
+		{"2020-08-05 07:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsFourthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsFifthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 07:00:00", true},
+		{"2020-04-19 08:59:59", true},
+		{"2020-08-05 09:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsFifthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsSixthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 09:00:00", true},
+		{"2020-04-19 10:59:59", true},
+		{"2020-08-05 11:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsSixthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsSeventhDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 11:00:00", true},
+		{"2020-04-19 12:59:59", true},
+		{"2020-08-05 13:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsSeventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsEighthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 13:00:00", true},
+		{"2020-04-19 14:59:59", true},
+		{"2020-08-05 15:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsEighthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsNinthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 15:00:00", true},
+		{"2020-04-19 16:59:59", true},
+		{"2020-08-05 17:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsNinthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsTenthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 17:00:00", true},
+		{"2020-04-19 18:59:59", true},
+		{"2020-08-05 19:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsTenthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsEleventhDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 19:00:00", true},
+		{"2020-04-19 20:59:59", true},
+		{"2020-08-05 21:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsEleventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestLunar_IsTwelfthDoubleHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected bool   // 期望值
+	}{
+		{"", false},
+		{"0", false},
+		{"0000-00-00", false},
+		{"00:00:00", false},
+		{"0000-00-00 00:00:00", false},
+
+		{"2020-03-21 21:00:00", true},
+		{"2020-04-19 22:59:59", true},
+		{"2020-08-05 23:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Lunar().IsTwelfthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
 }
