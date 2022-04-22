@@ -7,11 +7,11 @@ import (
 
 var (
 	minYear, maxYear = 1900, 2100
-	chineseNumbers   = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
-	chineseMonths    = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
-	chineseTimes     = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
-	chineseAnimals   = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
-	chineseFestivals = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
+	lunarNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
+	lunarMonths      = []string{"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "腊月"}
+	lunarTimes       = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
+	lunarAnimals     = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
+	lunarFestivals   = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
 
 	lunarTerms = []int{
 		0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
@@ -154,7 +154,7 @@ func (l lunar) Animal() string {
 	if l.isInvalid {
 		return ""
 	}
-	return chineseAnimals[l.year%MonthsPerYear]
+	return lunarAnimals[l.year%MonthsPerYear]
 }
 
 // Festival gets lunar festival name like "春节".
@@ -166,27 +166,27 @@ func (l lunar) Festival() (festival string) {
 	month, day := l.month, l.day
 	switch {
 	case month == 1 && day == 1:
-		festival = chineseFestivals[0]
+		festival = lunarFestivals[0]
 	case month == 1 && day == 15:
-		festival = chineseFestivals[1]
+		festival = lunarFestivals[1]
 	case month == 5 && day == 5:
-		festival = chineseFestivals[2]
+		festival = lunarFestivals[2]
 	case month == 7 && day == 7:
-		festival = chineseFestivals[3]
+		festival = lunarFestivals[3]
 	case month == 7 && day == 15:
-		festival = chineseFestivals[4]
+		festival = lunarFestivals[4]
 	case month == 8 && day == 15:
-		festival = chineseFestivals[5]
+		festival = lunarFestivals[5]
 	case month == 9 && day == 9:
-		festival = chineseFestivals[6]
+		festival = lunarFestivals[6]
 	case month == 10 && day == 1:
-		festival = chineseFestivals[7]
+		festival = lunarFestivals[7]
 	case month == 10 && day == 15:
-		festival = chineseFestivals[8]
+		festival = lunarFestivals[8]
 	case month == 12 && day == 8:
-		festival = chineseFestivals[9]
+		festival = lunarFestivals[9]
 	case month == 12 && day == 23:
-		festival = chineseFestivals[10]
+		festival = lunarFestivals[10]
 	}
 	return
 }
@@ -261,7 +261,7 @@ func (l lunar) ToYearString() string {
 		return ""
 	}
 	year := fmt.Sprintf("%d", l.year)
-	for i, replace := range chineseNumbers {
+	for i, replace := range lunarNumbers {
 		year = strings.Replace(year, fmt.Sprintf("%d", i), replace, -1)
 	}
 	return year
@@ -273,7 +273,7 @@ func (l lunar) ToMonthString() string {
 	if l.isInvalid {
 		return ""
 	}
-	return chineseMonths[l.month-1]
+	return lunarMonths[l.month-1]
 }
 
 // ToDayString outputs a string in lunar day format like "廿一".
@@ -282,7 +282,7 @@ func (l lunar) ToDayString() (day string) {
 	if l.isInvalid {
 		return
 	}
-	num := chineseNumbers[l.day%10]
+	num := lunarNumbers[l.day%10]
 	switch {
 	case l.day == 30:
 		day = "三十"
@@ -306,7 +306,7 @@ func (l lunar) ToDateString() string {
 	if l.isInvalid {
 		return ""
 	}
-	return l.ToYearString() + "年" + l.ToMonthString() + "月" + l.ToDayString()
+	return l.ToYearString() + "年" + l.ToMonthString() + l.ToDayString()
 }
 
 // String outputs a string in YYYY-MM-DD HH::ii::ss format, implement Stringer interface.
@@ -489,29 +489,29 @@ func (l lunar) DoubleHour() (dh string) {
 	hour, minute := l.hour, l.minute
 	switch {
 	case hour >= 23, hour == 0 && minute <= 59:
-		dh = chineseTimes[0] // FirstDoubleHour
+		dh = lunarTimes[0] // FirstDoubleHour
 	case hour >= 1 && hour < 3:
-		dh = chineseTimes[1] // SecondDoubleHour
+		dh = lunarTimes[1] // SecondDoubleHour
 	case hour >= 3 && hour < 5:
-		dh = chineseTimes[2] // ThirdDoubleHour
+		dh = lunarTimes[2] // ThirdDoubleHour
 	case hour >= 5 && hour < 7:
-		dh = chineseTimes[3] // FourthDoubleHour
+		dh = lunarTimes[3] // FourthDoubleHour
 	case hour >= 7 && hour < 9:
-		dh = chineseTimes[4] // FifthDoubleHour
+		dh = lunarTimes[4] // FifthDoubleHour
 	case hour >= 9 && hour < 11:
-		dh = chineseTimes[5] // SixthDoubleHour
+		dh = lunarTimes[5] // SixthDoubleHour
 	case hour >= 11 && hour < 13:
-		dh = chineseTimes[6] // SeventhDoubleHour
+		dh = lunarTimes[6] // SeventhDoubleHour
 	case hour >= 13 && hour < 15:
-		dh = chineseTimes[7] // EighthDoubleHour
+		dh = lunarTimes[7] // EighthDoubleHour
 	case hour >= 15 && hour < 17:
-		dh = chineseTimes[8] // NinthDoubleHour
+		dh = lunarTimes[8] // NinthDoubleHour
 	case hour >= 17 && hour < 19:
-		dh = chineseTimes[9] // TenthDoubleHour
+		dh = lunarTimes[9] // TenthDoubleHour
 	case hour >= 19 && hour < 21:
-		dh = chineseTimes[10] // EleventhDoubleHour
+		dh = lunarTimes[10] // EleventhDoubleHour
 	case hour >= 21 && hour < 23:
-		dh = chineseTimes[11] // TwelfthDoubleHour
+		dh = lunarTimes[11] // TwelfthDoubleHour
 	}
 	return
 }

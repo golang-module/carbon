@@ -1008,7 +1008,7 @@ fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:
 // Get Chinese lunar year as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // Get Chinese lunar month as string
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
 // Get Chinese lunar day as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // Get Chinese lunar date as string

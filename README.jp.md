@@ -1009,7 +1009,7 @@ fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:
 // 中国の旧正月文字列を取得します
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // 中国の旧正月文字列を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
 // 中国の旧正月の日文字列を取得します
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 中国の旧正月日付文字列を取得します
