@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // DaysInYear gets total days in year like 365.
 // 获取本年的总天数
