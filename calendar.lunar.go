@@ -92,15 +92,10 @@ func (c Carbon) Lunar() (l lunar) {
 			daysInMonth = l.getDaysInMonth()
 		}
 		offset -= daysInMonth
-		if l.isLeapMonth && l.month == (leapMonth+1) {
-			l.isLeapMonth = false
-		}
 	}
 	// offset为0时，并且刚才计算的月份是闰月，要校正
 	if offset == 0 && leapMonth > 0 && l.month == leapMonth+1 {
-		if l.isLeapMonth {
-			l.isLeapMonth = false
-		} else {
+		if !l.isLeapMonth {
 			l.isLeapMonth = true
 			l.month--
 		}
