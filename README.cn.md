@@ -1013,7 +1013,7 @@ fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:
 // 获取农历年字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // 获取农历月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六
+carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
 // 获取农历天字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 获取农历日期字符串
