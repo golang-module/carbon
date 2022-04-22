@@ -92,10 +92,15 @@ func (c Carbon) Lunar() (l lunar) {
 			daysInMonth = l.getDaysInMonth()
 		}
 		offset -= daysInMonth
+		if l.isLeapMonth && l.month == (leapMonth+1) {
+			l.isLeapMonth = false
+		}
 	}
 	// offset为0时，并且刚才计算的月份是闰月，要校正
 	if offset == 0 && leapMonth > 0 && l.month == leapMonth+1 {
-		if !l.isLeapMonth {
+		if l.isLeapMonth {
+			l.isLeapMonth = false
+		} else {
 			l.isLeapMonth = true
 			l.month--
 		}
@@ -262,7 +267,7 @@ func (l lunar) ToYearString() string {
 	return year
 }
 
-// ToMonthString outputs a string in lunar month format like "正".
+// ToMonthString outputs a string in lunar month format like "正月".
 // 获取农历月字符串
 func (l lunar) ToMonthString() string {
 	if l.isInvalid {
