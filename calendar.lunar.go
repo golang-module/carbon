@@ -55,12 +55,8 @@ type lunar struct {
 // 将公历转为农历
 func (c Carbon) Lunar() (l lunar) {
 	l.isInvalid, l.isLeapMonth = false, false
-	if c.Error != nil {
+	if c.IsInvalid() {
 		l.Error = c.Error
-		l.isInvalid = true
-		return
-	}
-	if c.IsZero() {
 		l.isInvalid = true
 		return
 	}
