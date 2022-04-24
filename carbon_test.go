@@ -11,11 +11,11 @@ func TestCarbon_Now(t *testing.T) {
 	assert := assert.New(t)
 
 	actual1 := Now().ToDateString()
-	expected1 := time.Now().Format(DateFormat)
+	expected1 := time.Now().Format(DateLayout)
 	assert.Equal(expected1, actual1)
 
 	actual2 := Now(Local).ToDateString()
-	expected2 := time.Now().In(time.Local).Format(DateFormat)
+	expected2 := time.Now().In(time.Local).Format(DateLayout)
 	assert.Equal(expected2, actual2)
 }
 
@@ -23,12 +23,12 @@ func TestCarbon_Yesterday(t *testing.T) {
 	assert := assert.New(t)
 
 	c1 := Yesterday()
-	expected1 := time.Now().AddDate(0, 0, -1).Format(DateFormat)
+	expected1 := time.Now().AddDate(0, 0, -1).Format(DateLayout)
 	assert.Nil(c1.Error)
 	assert.Equal(expected1, c1.ToDateString())
 
 	c2 := Yesterday(Local)
-	expected2 := time.Now().In(time.Local).AddDate(0, 0, -1).Format(DateFormat)
+	expected2 := time.Now().In(time.Local).AddDate(0, 0, -1).Format(DateLayout)
 	assert.Nil(c2.Error)
 	assert.Equal(expected2, c2.ToDateString())
 
@@ -41,12 +41,12 @@ func TestCarbon_Tomorrow(t *testing.T) {
 	assert := assert.New(t)
 
 	c1 := Tomorrow()
-	expected1 := time.Now().AddDate(0, 0, 1).Format(DateFormat)
+	expected1 := time.Now().AddDate(0, 0, 1).Format(DateLayout)
 	assert.Nil(c1.Error)
 	assert.Equal(expected1, c1.ToDateString())
 
 	c2 := Tomorrow(Local)
-	expected2 := time.Now().In(time.Local).AddDate(0, 0, 1).Format(DateFormat)
+	expected2 := time.Now().In(time.Local).AddDate(0, 0, 1).Format(DateLayout)
 	assert.Nil(c2.Error)
 	assert.Equal(expected2, c2.ToDateString())
 
@@ -58,7 +58,7 @@ func TestCarbon_Tomorrow(t *testing.T) {
 func TestCarbon_Time2Carbon(t *testing.T) {
 	assert := assert.New(t)
 
-	expected := time.Now().Format(DateTimeFormat)
+	expected := time.Now().Format(DateTimeLayout)
 	actual := Time2Carbon(time.Now()).ToDateTimeString()
 	assert.Equal(expected, actual)
 }
@@ -66,8 +66,8 @@ func TestCarbon_Time2Carbon(t *testing.T) {
 func TestCarbon_Carbon2Time(t *testing.T) {
 	assert := assert.New(t)
 
-	expected := time.Now().Format(DateTimeFormat)
-	actual := Now().Carbon2Time().Format(DateTimeFormat)
+	expected := time.Now().Format(DateTimeLayout)
+	actual := Now().Carbon2Time().Format(DateTimeLayout)
 	assert.Equal(expected, actual)
 }
 

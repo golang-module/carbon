@@ -9,32 +9,32 @@ import (
 // Parse parses a standard string as a Carbon instance.
 // 将标准格式时间字符串解析成 Carbon 实例
 func (c Carbon) Parse(value string, timezone ...string) Carbon {
-	layout := DateTimeFormat
+	layout := DateTimeLayout
 	if _, err := strconv.ParseInt(value, 10, 64); err == nil {
 		switch {
 		case len(value) == 8:
-			layout = ShortDateFormat
+			layout = ShortDateLayout
 		case len(value) == 14:
-			layout = ShortDateTimeFormat
+			layout = ShortDateTimeLayout
 		}
 	} else {
 		switch {
 		case len(value) == 10 && strings.Count(value, "-") == 2:
-			layout = DateFormat
+			layout = DateLayout
 		case len(value) == 18 && strings.Index(value, ".") == 14:
-			layout = ShortDateTimeMilliFormat
+			layout = ShortDateTimeMilliLayout
 		case len(value) == 21 && strings.Index(value, ".") == 14:
-			layout = ShortDateTimeMicroFormat
+			layout = ShortDateTimeMicroLayout
 		case len(value) == 24 && strings.Index(value, ".") == 14:
-			layout = ShortDateTimeNanoFormat
+			layout = ShortDateTimeNanoLayout
 		case len(value) == 25 && strings.Index(value, "T") == 10:
-			layout = RFC3339Format
+			layout = RFC3339Layout
 		case len(value) == 29 && strings.Index(value, "T") == 10 && strings.Index(value, ".") == 19:
-			layout = RFC3339MilliFormat
+			layout = RFC3339MilliLayout
 		case len(value) == 32 && strings.Index(value, "T") == 10 && strings.Index(value, ".") == 19:
-			layout = RFC3339MicroFormat
+			layout = RFC3339MicroLayout
 		case len(value) == 35 && strings.Index(value, "T") == 10 && strings.Index(value, ".") == 19:
-			layout = RFC3339NanoFormat
+			layout = RFC3339NanoLayout
 		}
 	}
 	carbon := c.ParseByLayout(value, layout, timezone...)

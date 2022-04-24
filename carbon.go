@@ -122,44 +122,44 @@ const (
 	SecondsPerMinute   = 60     // 每分钟60秒
 )
 
-// formats constant
-// 时间格式化常量
+// layouts constant
+// 时间布局常量
 const (
-	ANSICFormat              = time.ANSIC
-	UnixDateFormat           = time.UnixDate
-	RubyDateFormat           = time.RubyDate
-	RFC822Format             = time.RFC822
-	RFC822ZFormat            = time.RFC822Z
-	RFC850Format             = time.RFC850
-	RFC1123Format            = time.RFC1123
-	RFC1123ZFormat           = time.RFC1123Z
-	RssFormat                = time.RFC1123Z
-	KitchenFormat            = time.Kitchen
-	RFC2822Format            = time.RFC1123Z
-	CookieFormat             = "Monday, 02-Jan-2006 15:04:05 MST"
-	RFC3339Format            = "2006-01-02T15:04:05Z07:00"
-	RFC3339MilliFormat       = "2006-01-02T15:04:05.999Z07:00"
-	RFC3339MicroFormat       = "2006-01-02T15:04:05.999999Z07:00"
-	RFC3339NanoFormat        = "2006-01-02T15:04:05.999999999Z07:00"
-	ISO8601Format            = "2006-01-02T15:04:05-07:00"
-	ISO8601MilliFormat       = "2006-01-02T15:04:05.999-07:00"
-	ISO8601MicroFormat       = "2006-01-02T15:04:05.999999-07:00"
-	ISO8601NanoFormat        = "2006-01-02T15:04:05.999999999-07:00"
-	RFC1036Format            = "Mon, 02 Jan 06 15:04:05 -0700"
-	RFC7231Format            = "Mon, 02 Jan 2006 15:04:05 GMT"
-	DayDateTimeFormat        = "Mon, Jan 2, 2006 3:04 PM"
-	DateTimeFormat           = "2006-01-02 15:04:05"
-	DateTimeMilliFormat      = "2006-01-02 15:04:05.999"
-	DateTimeMicroFormat      = "2006-01-02 15:04:05.999999"
-	DateTimeNanoFormat       = "2006-01-02 15:04:05.999999999"
-	DateFormat               = "2006-01-02"
-	TimeFormat               = "15:04:05"
-	ShortDateTimeFormat      = "20060102150405"
-	ShortDateTimeMilliFormat = "20060102150405.999"
-	ShortDateTimeMicroFormat = "20060102150405.999999"
-	ShortDateTimeNanoFormat  = "20060102150405.999999999"
-	ShortDateFormat          = "20060102"
-	ShortTimeFormat          = "150405"
+	ANSICLayout              = time.ANSIC
+	UnixDateLayout           = time.UnixDate
+	RubyDateLayout           = time.RubyDate
+	RFC822Layout             = time.RFC822
+	RFC822ZLayout            = time.RFC822Z
+	RFC850Layout             = time.RFC850
+	RFC1123Layout            = time.RFC1123
+	RFC1123ZLayout           = time.RFC1123Z
+	RssLayout                = time.RFC1123Z
+	KitchenLayout            = time.Kitchen
+	RFC2822Layout            = time.RFC1123Z
+	CookieLayout             = "Monday, 02-Jan-2006 15:04:05 MST"
+	RFC3339Layout            = "2006-01-02T15:04:05Z07:00"
+	RFC3339MilliLayout       = "2006-01-02T15:04:05.999Z07:00"
+	RFC3339MicroLayout       = "2006-01-02T15:04:05.999999Z07:00"
+	RFC3339NanoLayout        = "2006-01-02T15:04:05.999999999Z07:00"
+	ISO8601Layout            = "2006-01-02T15:04:05-07:00"
+	ISO8601MilliLayout       = "2006-01-02T15:04:05.999-07:00"
+	ISO8601MicroLayout       = "2006-01-02T15:04:05.999999-07:00"
+	ISO8601NanoLayout        = "2006-01-02T15:04:05.999999999-07:00"
+	RFC1036Layout            = "Mon, 02 Jan 06 15:04:05 -0700"
+	RFC7231Layout            = "Mon, 02 Jan 2006 15:04:05 GMT"
+	DayDateTimeLayout        = "Mon, Jan 2, 2006 3:04 PM"
+	DateTimeLayout           = "2006-01-02 15:04:05"
+	DateTimeMilliLayout      = "2006-01-02 15:04:05.999"
+	DateTimeMicroLayout      = "2006-01-02 15:04:05.999999"
+	DateTimeNanoLayout       = "2006-01-02 15:04:05.999999999"
+	DateLayout               = "2006-01-02"
+	TimeLayout               = "15:04:05"
+	ShortDateTimeLayout      = "20060102150405"
+	ShortDateTimeMilliLayout = "20060102150405.999"
+	ShortDateTimeMicroLayout = "20060102150405.999999"
+	ShortDateTimeNanoLayout  = "20060102150405.999999999"
+	ShortDateLayout          = "20060102"
+	ShortTimeLayout          = "150405"
 )
 
 // Carbon defines a Carbon struct.
@@ -222,9 +222,9 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	}
 	if c.IsZero() {
 		c.time = c.Now().Carbon2Time().AddDate(0, 0, 1)
-	} else {
-		c.time = c.Carbon2Time().AddDate(0, 0, 1)
+		return c
 	}
+	c.time = c.Carbon2Time().AddDate(0, 0, 1)
 	return c
 }
 
@@ -245,9 +245,9 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 	}
 	if c.IsZero() {
 		c.time = c.Now().Carbon2Time().AddDate(0, 0, -1)
-	} else {
-		c.time = c.Carbon2Time().AddDate(0, 0, -1)
+		return c
 	}
+	c.time = c.Carbon2Time().AddDate(0, 0, -1)
 	return c
 }
 

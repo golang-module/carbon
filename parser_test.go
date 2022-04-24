@@ -112,7 +112,7 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 }
 
 func TestError_Parse(t *testing.T) {
-	date, layout, format, timezone := "2020-08-50", "2006-01-02", DateFormat, "xxx"
+	date, layout, format, timezone := "2020-08-50", "2006-01-02", DateLayout, "xxx"
 	assert.NotNil(t, Parse(date).Error, "It should catch an exception in Parse()")
 	assert.NotNil(t, ParseByLayout(date, layout, timezone).Error, "It should catch an exception in ParseByLayout()")
 	assert.NotNil(t, ParseByFormat(date, format, timezone).Error, "It should catch an exception in ParseByFormat()")
