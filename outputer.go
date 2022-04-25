@@ -541,7 +541,7 @@ func (c Carbon) ToRfc7231String(timezone ...string) string {
 }
 
 // ToLayoutString outputs a string by layout.
-// 输出指定布局的时间字符串
+// 输出指定布局模板的时间字符串
 func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
@@ -553,13 +553,13 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 }
 
 // Layout outputs a string by layout, it is shorthand for ToLayoutString.
-// 输出指定布局的时间字符串, 是 ToLayoutString 的简写
+// 输出指定布局模板的时间字符串, 是 ToLayoutString 的简写
 func (c Carbon) Layout(layout string, timezone ...string) string {
 	return c.ToLayoutString(layout, timezone...)
 }
 
 // ToFormatString outputs a string by format.
-// 输出指定格式的时间字符串
+// 输出指定格式模板的时间字符串
 func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
@@ -625,7 +625,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 }
 
 // Format outputs a string by format, it is shorthand for ToFormatString.
-// 输出指定格式的时间字符串, 是 ToFormatString 的简写
+// 输出指定格式模板的时间字符串, 是 ToFormatString 的简写
 func (c Carbon) Format(format string, timezone ...string) string {
 	return c.ToFormatString(format, timezone...)
 }
