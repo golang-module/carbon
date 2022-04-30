@@ -415,6 +415,33 @@ carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // Subtract one second
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
+
+// Add three milliseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMilliseconds(3).ToString() // 2020-08-05 13:14:15.225222222 +0800 CST
+// Add one millisecond
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMillisecond().ToString() // 2020-08-05 13:14:15.223222222 +0800 CST
+// Subtract three milliseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMilliseconds(3).ToString() // 2020-08-05 13:14:15.219222222 +0800 CST
+// Subtract one millisecond
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMillisecond().ToString() // 2020-08-05 13:14:15.221222222 +0800 CST
+
+// Add three microseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicroseconds(3).ToString() // 2020-08-05 13:14:15.222225222 +0800 CST
+// Add one microsecond
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicrosecond().ToString() // 2020-08-05 13:14:15.222223222 +0800 CST
+// Subtract three microseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicroseconds(3).ToString() // 2020-08-05 13:14:15.222219222 +0800 CST
+// Subtract one microsecond
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicrosecond().ToString() // 2020-08-05 13:14:15.222221222 +0800 CST
+
+// Add three nanoseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanoseconds(3).ToString() // 2020-08-05 13:14:15.222222225 +0800 CST
+// Add one nanosecond
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanossecond().ToString() // 2020-08-05 13:14:15.222222223 +0800 CST
+// Subtract three nanoseconds
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanosseconds(3).ToString() // 2020-08-05 13:14:15.222222219 +0800 CST
+// Subtract one nanosecond
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanossecond().ToString() // 2020-08-05 13:14:15.222222221 +0800 CST
 ```
 
 ##### Difference
@@ -743,8 +770,21 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,99999999
 
 // Get current year, month and day
 carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
+// Get current year, month, day and millisecond
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMilli() // 2020,8,5,999
+// Get current year, month, day and microsecond
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMicro() // 2020,8,5,999999
+// Get current year, month, day and nanosecond
+carbon.Parse("2020-08-05 13:14:15.999999999").DateNano() // 2020,8,5,999999999
+
 // Get current hour, minute and second
 carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
+// Get current hour, minute ,second and millisecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMilli() // 13,14,15,999
+// Get current hour, minute ,second and microsecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMicro() // 13,14,15,999999
+// Get current hour, minute ,second and nanosecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeNano() // 13,14,15,999999999
 
 // Get current century
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -837,15 +877,41 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString()
 // Output a string in short date and time with nanosecond format
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
 
-// Output a in date format string
-carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+// Output a in date format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateString() // 2020-08-05
+// Output a in date with millisecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMilliString() // 2020-08-05.999
+// Output a in date with microsecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMicroString() // 2020-08-05.999999
+// Output a in date with nanosecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateNanoString() // 2020-08-05.999999999
+
 // Output a string in short date format
-carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateString() // 20200805
+// Output a string in short date with millisecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMilliString() // 20200805.999
+// Output a string in short date with microsecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMicroString() // 20200805.999999
+// Output a string in short date with nanosecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateNanoString() // 20200805.999999999
 
 // Output a string in time format
-carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeString() // 13:14:15
+// Output a string in time with millisecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMilliString() // 13:14:15.999
+// Output a string in time with microsecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMicroString() // 13:14:15.999999
+// Output a string in time with nanosecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeNanoString() // 13:14:15.999999999
+
 // Output a string in short time format
-carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeString() // 131415
+// Output a string in short time with millisecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMilliString() // 131415.999
+// Output a string in short time with microsecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415.999999
+// Output a string in short time with nanosecond format
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
 
 // Output a string in ANSIC format
 carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020

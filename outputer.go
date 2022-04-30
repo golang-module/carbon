@@ -228,6 +228,42 @@ func (c Carbon) ToDateString(timezone ...string) string {
 	return c.Carbon2Time().Format(DateLayout)
 }
 
+// ToDateMilliString outputs a string in "2006-01-02.999" layout.
+// 输出 "2006-01-02.999" 格式字符串
+func (c Carbon) ToDateMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateMilliLayout)
+}
+
+// ToDateMicroString outputs a string in "2006-01-02.999999" layout.
+// 输出 "2006-01-02.999999" 格式字符串
+func (c Carbon) ToDateMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateMicroLayout)
+}
+
+// ToDateNanoString outputs a string in "2006-01-02.999999999" layout.
+// 输出 "2006-01-02.999999999" 格式字符串
+func (c Carbon) ToDateNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateNanoLayout)
+}
+
 // ToShortDateString outputs a string in "20060102" layout.
 // 输出 "20060102" 格式字符串
 func (c Carbon) ToShortDateString(timezone ...string) string {
@@ -238,6 +274,42 @@ func (c Carbon) ToShortDateString(timezone ...string) string {
 		return ""
 	}
 	return c.Carbon2Time().Format(ShortDateLayout)
+}
+
+// ToShortDateMilliString outputs a string in "20060102.999" layout.
+// 输出 "20060102.999" 格式字符串
+func (c Carbon) ToShortDateMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateMilliLayout)
+}
+
+// ToShortDateMicroString outputs a string in "20060102.999999" layout.
+// 输出 "20060102.999999" 格式字符串
+func (c Carbon) ToShortDateMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateMicroLayout)
+}
+
+// ToShortDateNanoString outputs a string in "20060102.999999999" layout.
+// 输出 "20060102.999999999" 格式字符串
+func (c Carbon) ToShortDateNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateNanoLayout)
 }
 
 // ToTimeString outputs a string in "15:04:05" layout.
@@ -252,6 +324,42 @@ func (c Carbon) ToTimeString(timezone ...string) string {
 	return c.Carbon2Time().Format(TimeLayout)
 }
 
+// ToTimeMilliString outputs a string in "15:04:05.999" layout.
+// 输出 "15:04:05.999" 格式字符串
+func (c Carbon) ToTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeMilliLayout)
+}
+
+// ToTimeMicroString outputs a string in "15:04:05.999999" layout.
+// 输出 "15:04:05.999999" 格式字符串
+func (c Carbon) ToTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeMicroLayout)
+}
+
+// ToTimeNanoString outputs a string in "15:04:05.999999999" layout.
+// 输出 "15:04:05.999999999" 格式字符串
+func (c Carbon) ToTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeNanoLayout)
+}
+
 // ToShortTimeString outputs a string in "150405" layout.
 // 输出 "150405" 格式字符串
 func (c Carbon) ToShortTimeString(timezone ...string) string {
@@ -262,6 +370,42 @@ func (c Carbon) ToShortTimeString(timezone ...string) string {
 		return ""
 	}
 	return c.Carbon2Time().Format(ShortTimeLayout)
+}
+
+// ToShortTimeMilliString outputs a string in "150405.999" layout.
+// 输出 "150405.999" 格式字符串
+func (c Carbon) ToShortTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeMilliLayout)
+}
+
+// ToShortTimeMicroString outputs a string in "150405.999999" layout.
+// 输出 "150405.999999" 格式字符串
+func (c Carbon) ToShortTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeMicroLayout)
+}
+
+// ToShortTimeNanoString outputs a string in "150405.999999999" layout.
+// 输出 "150405.999999999" 格式字符串
+func (c Carbon) ToShortTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeNanoLayout)
 }
 
 // ToAtomString outputs a string in "2006-01-02T15:04:05Z07:00" layout.

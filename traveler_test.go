@@ -1419,11 +1419,7 @@ func TestCarbon_AddHours(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 16:14:15"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 16:14:15"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 16:14:15"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 16:14:15"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 16:14:15"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 16:14:15"},
 	}
 
 	for index, test := range tests {
@@ -1447,11 +1443,7 @@ func TestCarbon_SubHours(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 10:14:15"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 10:14:15"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 10:14:15"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 10:14:15"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 10:14:15"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 10:14:15"},
 	}
 
 	for index, test := range tests {
@@ -1474,11 +1466,7 @@ func TestCarbon_AddHour(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 14:14:15"},
-		{"2020-01-31 13:14:15", "2020-01-31 14:14:15"},
-		{"2020-02-01 13:14:15", "2020-02-01 14:14:15"},
-		{"2020-02-28 13:14:15", "2020-02-28 14:14:15"},
-		{"2020-02-29 13:14:15", "2020-02-29 14:14:15"},
+		{"2020-08-05 13:14:15", "2020-08-05 14:14:15"},
 	}
 
 	for index, test := range tests {
@@ -1501,11 +1489,7 @@ func TestCarbon_SubHour(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 12:14:15"},
-		{"2020-01-31 13:14:15", "2020-01-31 12:14:15"},
-		{"2020-02-01 13:14:15", "2020-02-01 12:14:15"},
-		{"2020-02-28 13:14:15", "2020-02-28 12:14:15"},
-		{"2020-02-29 13:14:15", "2020-02-29 12:14:15"},
+		{"2020-08-05 13:14:15", "2020-08-05 12:14:15"},
 	}
 
 	for index, test := range tests {
@@ -1529,11 +1513,7 @@ func TestCarbon_AddMinutes(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 13:17:15"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 13:17:15"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 13:17:15"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 13:17:15"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 13:17:15"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 13:17:15"},
 	}
 
 	for index, test := range tests {
@@ -1557,11 +1537,7 @@ func TestCarbon_SubMinutes(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 13:11:15"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 13:11:15"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 13:11:15"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 13:11:15"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 13:11:15"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 13:11:15"},
 	}
 
 	for index, test := range tests {
@@ -1584,11 +1560,7 @@ func TestCarbon_AddMinute(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 13:15:15"},
-		{"2020-01-31 13:14:15", "2020-01-31 13:15:15"},
-		{"2020-02-01 13:14:15", "2020-02-01 13:15:15"},
-		{"2020-02-28 13:14:15", "2020-02-28 13:15:15"},
-		{"2020-02-29 13:14:15", "2020-02-29 13:15:15"},
+		{"2020-08-05 13:14:15", "2020-08-05 13:15:15"},
 	}
 
 	for index, test := range tests {
@@ -1611,11 +1583,7 @@ func TestCarbon_SubMinute(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 13:13:15"},
-		{"2020-01-31 13:14:15", "2020-01-31 13:13:15"},
-		{"2020-02-01 13:14:15", "2020-02-01 13:13:15"},
-		{"2020-02-28 13:14:15", "2020-02-28 13:13:15"},
-		{"2020-02-29 13:14:15", "2020-02-29 13:13:15"},
+		{"2020-08-05 13:14:15", "2020-08-05 13:13:15"},
 	}
 
 	for index, test := range tests {
@@ -1639,11 +1607,7 @@ func TestCarbon_AddSeconds(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 13:14:18"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 13:14:18"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 13:14:18"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 13:14:18"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 13:14:18"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 13:14:18"},
 	}
 
 	for index, test := range tests {
@@ -1667,11 +1631,7 @@ func TestCarbon_SubSeconds(t *testing.T) {
 		{"00:00:00", 3, ""},
 		{"0000-00-00 00:00:00", 3, ""},
 
-		{"2020-01-01 13:14:15", 3, "2020-01-01 13:14:12"},
-		{"2020-01-31 13:14:15", 3, "2020-01-31 13:14:12"},
-		{"2020-02-01 13:14:15", 3, "2020-02-01 13:14:12"},
-		{"2020-02-28 13:14:15", 3, "2020-02-28 13:14:12"},
-		{"2020-02-29 13:14:15", 3, "2020-02-29 13:14:12"},
+		{"2020-08-05 13:14:15", 3, "2020-08-05 13:14:12"},
 	}
 
 	for index, test := range tests {
@@ -1694,11 +1654,7 @@ func TestCarbon_AddSecond(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 13:14:16"},
-		{"2020-01-31 13:14:15", "2020-01-31 13:14:16"},
-		{"2020-02-01 13:14:15", "2020-02-01 13:14:16"},
-		{"2020-02-28 13:14:15", "2020-02-28 13:14:16"},
-		{"2020-02-29 13:14:15", "2020-02-29 13:14:16"},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:16"},
 	}
 
 	for index, test := range tests {
@@ -1721,17 +1677,295 @@ func TestCarbon_SubSecond(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
-		{"2020-01-01 13:14:15", "2020-01-01 13:14:14"},
-		{"2020-01-31 13:14:15", "2020-01-31 13:14:14"},
-		{"2020-02-01 13:14:15", "2020-02-01 13:14:14"},
-		{"2020-02-28 13:14:15", "2020-02-28 13:14:14"},
-		{"2020-02-29 13:14:15", "2020-02-29 13:14:14"},
+		{"2020-08-05 13:14:15", "2020-08-05 13:14:14"},
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input).SubSecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddMilliseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input        string // 输入值
+		milliseconds int
+		expected     string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.225222222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddMilliseconds(test.milliseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubMilliseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input        string // 输入值
+		milliseconds int
+		expected     string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.219222222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubMilliseconds(test.milliseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddMillisecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.223222222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddMillisecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubMillisecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.221222222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubMillisecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddMicroseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input        string // 输入值
+		microseconds int
+		expected     string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222225222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddMicroseconds(test.microseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubMicroseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input        string // 输入值
+		microseconds int
+		expected     string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222219222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubMicroseconds(test.microseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddMicrosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222223222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddMicrosecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubMicrosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222221222 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubMicrosecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddNanoseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input       string // 输入值
+		nanoseconds int
+		expected    string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222222225 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddNanoseconds(test.nanoseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubNanoseconds(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input       string // 输入值
+		nanoseconds int
+		expected    string // 期望值
+	}{
+		{"", 3, ""},
+		{"0", 3, ""},
+		{"0000-00-00", 3, ""},
+		{"00:00:00", 3, ""},
+		{"0000-00-00 00:00:00", 3, ""},
+
+		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222222219 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubNanoseconds(test.nanoseconds)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_AddNanosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222222223 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).AddNanosecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SubNanosecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222222221 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC).SubNanosecond()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 

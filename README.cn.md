@@ -417,6 +417,33 @@ carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // 一秒钟前
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
+
+// 三毫秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMilliseconds(3).ToString() // 2020-08-05 13:14:15.225222222 +0800 CST
+// 一毫秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMillisecond().ToString() // 2020-08-05 13:14:15.223222222 +0800 CST
+// 三毫秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMilliseconds(3).ToString() // 2020-08-05 13:14:15.219222222 +0800 CST
+// 一毫秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMillisecond().ToString() // 2020-08-05 13:14:15.221222222 +0800 CST
+
+// 三微秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicroseconds(3).ToString() // 2020-08-05 13:14:15.222225222 +0800 CST
+// 一微秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicrosecond().ToString() // 2020-08-05 13:14:15.222223222 +0800 CST
+// 三微秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicroseconds(3).ToString() // 2020-08-05 13:14:15.222219222 +0800 CST
+// 一微秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicrosecond().ToString() // 2020-08-05 13:14:15.222221222 +0800 CST
+
+// 三纳秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanoseconds(3).ToString() // 2020-08-05 13:14:15.222222225 +0800 CST
+// 一纳秒后
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanossecond().ToString() // 2020-08-05 13:14:15.222222223 +0800 CST
+// 三纳秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanosseconds(3).ToString() // 2020-08-05 13:14:15.222222219 +0800 CST
+// 一纳秒前
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanossecond().ToString() // 2020-08-05 13:14:15.222222221 +0800 CST
 ```
 
 ##### 时间差
@@ -747,8 +774,21 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,99999999
 
 // 获取当前年月日
 carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
+// 获取当前年月日毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMilli() // 2020,8,5,999
+// 获取当前年月日微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMicro() // 2020,8,5,999999
+// 获取当前年月日纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").DateNano() // 2020,8,5,999999999
+
 // 获取当前时分秒
 carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
+// 获取当前时分秒毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMilli() // 13,14,15,999
+// 获取当前时分秒微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMicro() // 13,14,15,999999
+// 获取当前时分秒纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeNano() // 13,14,15,999999999
 
 // 获取当前世纪
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -843,16 +883,42 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString()
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
 
 // 输出日期字符串
-carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateString() // 2020-08-05
+// 输出日期字符串，包含毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMilliString() // 2020-08-05.999
+// 输出日期字符串，包含微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMicroString() // 2020-08-05.999999
+// 输出日期字符串，包含纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateNanoString() // 2020-08-05.999999999
+
 // 输出简写日期字符串
-carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateString() // 20200805
+// 输出简写日期字符串，包含毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMilliString() // 20200805.999
+// 输出简写日期字符串，包含微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMicroString() // 20200805.999999
+// 输出简写日期字符串，包含纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateNanoString() // 20200805.999999999
 
 // 输出时间字符串
-carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-// 输出简写时间字符串
-carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeString() // 13:14:15
+// 输出时间字符串，包含毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMilliString() // 13:14:15.999
+// 输出时间字符串，包含微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMicroString() // 13:14:15.999999
+// 输出时间字符串，包含纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeNanoString() // 13:14:15.999999999
 
-// 输出 Ansic 格式字符串
+// 输出简写时间字符串
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeString() // 131415
+// 输出简写时间字符串，包含毫秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMilliString() // 131415.999
+// 输出简写时间字符串，包含微秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415.999999
+// 输出简写时间字符串，包含纳秒
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
+
+// 输出 ANSIC 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
 // 输出 Atom 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
