@@ -509,6 +509,96 @@ func TestCarbon_ToDateString(t *testing.T) {
 	}
 }
 
+func TestCarbon_ToDateMilliString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05.999"},
+		{"2020-08-05", "2020-08-05"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateMilliString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToDateMicroString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05.999999"},
+		{"2020-08-05", "2020-08-05"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateMicroString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToDateNanoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05.999999999"},
+		{"2020-08-05", "2020-08-05"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateNanoString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_ToShortDateString(t *testing.T) {
 	assert := assert.New(t)
 
@@ -536,6 +626,96 @@ func TestCarbon_ToShortDateString(t *testing.T) {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortDateString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortDateMilliString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "20200805.999"},
+		{"2020-08-05", "20200805"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateMilliString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortDateNanoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "20200805.999999999"},
+		{"2020-08-05", "20200805"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateNanoString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortDateMicroString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "20200805.999999"},
+		{"2020-08-05", "20200805"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortDateMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -569,6 +749,96 @@ func TestCarbon_ToTimeString(t *testing.T) {
 	}
 }
 
+func TestCarbon_ToTimeMilliString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "13:14:15.999"},
+		{"2020-08-05", "00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeMilliString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToTimeMicroString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "13:14:15.999999"},
+		{"2020-08-05", "00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToTimeNanoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "13:14:15.999999999"},
+		{"2020-08-05", "00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToTimeNanoString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_ToShortTimeString(t *testing.T) {
 	assert := assert.New(t)
 
@@ -596,6 +866,96 @@ func TestCarbon_ToShortTimeString(t *testing.T) {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortTimeString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortTimeMilliString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "131415.999"},
+		{"2020-08-05", "000000"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeMilliString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortTimeMicroString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "131415.999999"},
+		{"2020-08-05", "000000"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToShortTimeNanoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string // 输入值
+		expected string // 期望值
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "131415.999999999"},
+		{"2020-08-05", "000000"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToShortTimeNanoString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
