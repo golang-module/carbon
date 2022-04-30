@@ -142,6 +142,39 @@ func (c Carbon) Date() (year, month, day int) {
 	return year, int(tm), day
 }
 
+// DateMilli gets current year, month, day and millisecond like 2020, 8, 5, 999.
+// 获取当前年月日毫秒
+func (c Carbon) DateMilli() (year, month, day, millisecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	var tm time.Month
+	year, tm, day = c.Carbon2Time().Date()
+	return year, int(tm), day, c.Millisecond()
+}
+
+// DateMicro gets current year, month, day and microsecond like 2020, 8, 5, 999999.
+// 获取当前年月日微秒
+func (c Carbon) DateMicro() (year, month, day, microsecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	var tm time.Month
+	year, tm, day = c.Carbon2Time().Date()
+	return year, int(tm), day, c.Microsecond()
+}
+
+// DateNano gets current year, month, day and nanosecond like 2020, 8, 5, 999999999.
+// 获取当前年月日纳秒
+func (c Carbon) DateNano() (year, month, day, nanosecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	var tm time.Month
+	year, tm, day = c.Carbon2Time().Date()
+	return year, int(tm), day, c.Nanosecond()
+}
+
 // Time gets current hour, minute, and second like 13, 14, 15.
 // 获取当前时分秒
 func (c Carbon) Time() (hour, minute, second int) {
@@ -149,6 +182,36 @@ func (c Carbon) Time() (hour, minute, second int) {
 		return
 	}
 	return c.Carbon2Time().Clock()
+}
+
+// TimeMilli gets current hour, minute, second and millisecond like 13, 14, 15, 999.
+// 获取当前时分秒毫秒
+func (c Carbon) TimeMilli() (hour, minute, second, millisecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	hour, minute, second = c.Carbon2Time().Clock()
+	return hour, minute, second, c.Millisecond()
+}
+
+// TimeMicro gets current hour, minute, second and microsecond like 13, 14, 15, 999999.
+// 获取当前时分秒微秒
+func (c Carbon) TimeMicro() (hour, minute, second, microsecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	hour, minute, second = c.Carbon2Time().Clock()
+	return hour, minute, second, c.Microsecond()
+}
+
+// TimeNano gets current hour, minute, second and nanosecond like 13, 14, 15, 999999999.
+// 获取当前时分秒纳秒
+func (c Carbon) TimeNano() (hour, minute, second, nanosecond int) {
+	if c.IsInvalid() {
+		return
+	}
+	hour, minute, second = c.Carbon2Time().Clock()
+	return hour, minute, second, c.Nanosecond()
 }
 
 // Century gets current century like 21.
