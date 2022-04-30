@@ -1705,7 +1705,7 @@ func TestCarbon_AddMilliseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddMilliseconds(test.milliseconds)
+		c := Parse(test.input, PRC).AddMilliseconds(test.milliseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1729,7 +1729,7 @@ func TestCarbon_SubMilliseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubMilliseconds(test.milliseconds)
+		c := Parse(test.input, PRC).SubMilliseconds(test.milliseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1752,7 +1752,7 @@ func TestCarbon_AddMillisecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddMillisecond()
+		c := Parse(test.input, PRC).AddMillisecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1775,7 +1775,7 @@ func TestCarbon_SubMillisecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubMillisecond()
+		c := Parse(test.input, PRC).SubMillisecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1799,7 +1799,7 @@ func TestCarbon_AddMicroseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddMicroseconds(test.microseconds)
+		c := Parse(test.input, PRC).AddMicroseconds(test.microseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1823,7 +1823,7 @@ func TestCarbon_SubMicroseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubMicroseconds(test.microseconds)
+		c := Parse(test.input, PRC).SubMicroseconds(test.microseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1846,7 +1846,7 @@ func TestCarbon_AddMicrosecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddMicrosecond()
+		c := Parse(test.input, PRC).AddMicrosecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1869,7 +1869,7 @@ func TestCarbon_SubMicrosecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubMicrosecond()
+		c := Parse(test.input, PRC).SubMicrosecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1893,7 +1893,7 @@ func TestCarbon_AddNanoseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddNanoseconds(test.nanoseconds)
+		c := Parse(test.input, PRC).AddNanoseconds(test.nanoseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1917,7 +1917,7 @@ func TestCarbon_SubNanoseconds(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubNanoseconds(test.nanoseconds)
+		c := Parse(test.input, PRC).SubNanoseconds(test.nanoseconds)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1940,7 +1940,7 @@ func TestCarbon_AddNanosecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).AddNanosecond()
+		c := Parse(test.input, PRC).AddNanosecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -1963,7 +1963,7 @@ func TestCarbon_SubNanosecond(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SubNanosecond()
+		c := Parse(test.input, PRC).SubNanosecond()
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
