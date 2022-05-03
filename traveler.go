@@ -501,7 +501,7 @@ func (c Carbon) AddNanoseconds(nanoseconds int) Carbon {
 	return c
 }
 
-// AddNanosecond adds one nanoseconds.
+// AddNanosecond adds one nanosecond.
 // 1纳秒后
 func (c Carbon) AddNanosecond() Carbon {
 	return c.AddNanoseconds(1)
