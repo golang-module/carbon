@@ -671,7 +671,7 @@ carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString(
 
 // 設定ロケール
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
+carbon.Parse("2020-07-05 13:14:15").SetLocale("jp").DiffForHumans() // 1 ヶ月前
 
 // 年月日時分秒を設定する
 carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToString() // 2019-02-02 13:14:15 +0800 CST
@@ -845,12 +845,12 @@ carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 // 星座を取得
 carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
-carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+carbon.Now().SetLocale("jp").Constellation() // 獅子座
 
 // 季節を取得
 carbon.Now().Season() // Summer
 carbon.Now().SetLocale("en").Season() // Summer
-carbon.Now().SetLocale("zh-CN").Season() // 夏季
+carbon.Now().SetLocale("jp").Season() // 夏か
 
 // 年齢を取得
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
