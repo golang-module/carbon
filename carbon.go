@@ -19,14 +19,15 @@ const Version = "1.6.5"
 // timezones constant
 // 时区常量
 const (
-	Local = "Local"
-	CET   = "CET"
-	EET   = "EET"
-	EST   = "EST"
-	GMT   = "GMT"
-	UTC   = "UTC"
-	UCT   = "UCT"
-	MST   = "MST"
+	Local = "Local" // 本地时间
+	UTC   = "UTC"   // 世界协调时间
+	GMT   = "GMT"   // 格林尼治标准时间
+	CST   = "CST"   // 中国标准时间
+	EET   = "EET"   // 欧洲东部标准时间
+	WET   = "WET"   // 欧洲西部标准时间
+	CET   = "CET"   // 欧洲中部标准时间
+	EST   = "EST"   // 美国东部标准时间
+	MST   = "MST"   // 美国山地标准时间
 
 	Cuba      = "Cuba"      // 古巴
 	Egypt     = "Egypt"     // 埃及
