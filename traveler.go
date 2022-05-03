@@ -507,10 +507,10 @@ func (c Carbon) AddNanosecond() Carbon {
 	return c.AddNanoseconds(1)
 }
 
-// SubNanoseconds subtracts some nanosecond.
+// SubNanoseconds subtracts some nanoseconds.
 // N纳秒前
-func (c Carbon) SubNanoseconds(nanosecond int) Carbon {
-	return c.AddNanoseconds(-nanosecond)
+func (c Carbon) SubNanoseconds(nanoseconds int) Carbon {
+	return c.AddNanoseconds(-nanoseconds)
 }
 
 // SubNanosecond subtracts one nanosecond.
