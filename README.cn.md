@@ -15,7 +15,7 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 
 [github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
-[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
+[gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
 #### 安装使用
 
@@ -30,10 +30,10 @@ import (
 )
 
 // 使用 gitee 库
-go get -u gitee.com/go-package/carbon
+go get -u gitee.com/golang-module/carbon
 
 import (
-    "gitee.com/go-package/carbon"
+    "gitee.com/golang-module/carbon"
 )
 ```
 
@@ -48,10 +48,10 @@ import (
 )
 
 // 使用 gitee 库
-go get -u gitee.com/go-package/carbon/v2
+go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/go-package/carbon/v2"
+    "gitee.com/golang-module/carbon/v2"
 )
 ```
 
@@ -137,18 +137,31 @@ carbon.CreateFromTimestampMicro(1649735755981566).ToString() // 2022-04-12 11:55
 carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
 
 // 从年月日时分秒创建 Carbon 实例
-carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
 // 从年月日时分秒创建 Carbon 实例，包含毫秒
-carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
+carbon.CreateFromDateTimeMilli(2020, 8, 5, 13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
 // 从年月日时分秒创建 Carbon 实例，包含微秒
-carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
+carbon.CreateFromDateTimeMicro(2020, 8, 5, 13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 // 从年月日时分秒创建 Carbon 实例，包含纳秒
-carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
+carbon.CreateFromDateTimeNano(2020, 8, 5, 13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
 // 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)
-carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
+// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含毫秒
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含微秒
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含纳秒
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 // 从时分秒创建 Carbon 实例(年月日默认为当前年月日)
-carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
+// 从时分秒创建 Carbon 实例(年月日默认为当前年月日)，包含毫秒
+carbon.CreateFromTimeMilli(13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 从时分秒创建 Carbon 实例(年月日默认为当前年月日)，包含微秒
+carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 从时分秒创建 Carbon 实例(年月日默认为当前年月日)，包含纳秒
+carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### 将标准格式时间字符串解析成 Carbon 实例

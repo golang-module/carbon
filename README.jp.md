@@ -15,7 +15,7 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 [github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
-[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
+[gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
 #### インストール使用
 
@@ -30,10 +30,10 @@ import (
 )
 
 // gitee倉庫を使う
-go get -u gitee.com/go-package/carbon
+go get -u gitee.com/golang-module/carbon
 
 import (
-    "gitee.com/go-package/carbon"
+    "gitee.com/golang-module/carbon"
 )
 ```
 
@@ -48,10 +48,10 @@ import (
 )
 
 // gitee倉庫を使う
-go get -u gitee.com/go-package/carbon/v2
+go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/go-package/carbon/v2"
+    "gitee.com/golang-module/carbon/v2"
 )
 ```
 
@@ -138,7 +138,7 @@ carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:
 
 // 年月日から分秒で Carbon オブジェクトを作成します
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// 年月日から分秒で Carbon オブジェクトを作成します，，ミリ秒を含む
+// 年月日から分秒で Carbon オブジェクトを作成します，ミリ秒を含む
 carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
 // 年月日から分秒で Carbon オブジェクトを作成します，マイクロ秒を含む
 carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
@@ -146,9 +146,22 @@ carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 202
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
 
 // 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)
-carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ミリ秒を含む
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，マイクロ秒を含む
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ナノ秒を含む
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 // 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)
-carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，ミリ秒を含む
+carbon.CreateFromTimeMilli(13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，マイクロ秒を含む
+carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，ナノ秒を含む
+carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### 標準形式の時間文字列を Carbon オブジェクトに解析します
