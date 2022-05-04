@@ -33,10 +33,10 @@ import (
 )
 
 // By gitee
-go get -u gitee.com/go-package/carbon
+go get -u gitee.com/golang-module/carbon
 
 import (
-    "gitee.com/go-package/carbon"
+    "gitee.com/golang-module/carbon"
 )               
 ```
 
@@ -51,10 +51,10 @@ import (
 )
 
 // By gitee
-go get -u gitee.com/go-package/carbon/v2
+go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/go-package/carbon/v2"
+    "gitee.com/golang-module/carbon/v2"
 )               
 ```
 
@@ -139,19 +139,32 @@ carbon.CreateFromTimestampMicro(1649735755981566).ToString() // 2022-04-12 11:55
 // Create a Carbon instance from a given timestamp with nanosecond
 carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:55:55.981566 +0800 CST
 
-// Create a Carbon instance from a given date and time.
-carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// Create a Carbon instance from a given date and time with millisecond. 
-carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
-// Create a Carbon instance from a given date and time with microsecond. 
-carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
-// Create a Carbon instance from a given date and time with nanosecond. 
-carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
+// Create a Carbon instance from a given date and time
+carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
+// Create a Carbon instance from a given date and time with millisecond
+carbon.CreateFromDateTimeMilli(2020, 8, 5, 13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// Create a Carbon instance from a given date and time with microsecond
+carbon.CreateFromDateTimeMicro(2020, 8, 5, 13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// Create a Carbon instance from a given date and time with nanosecond
+carbon.CreateFromDateTimeNano(2020, 8, 5, 13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
 // Create a Carbon instance from a given year, month and day
-carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
+// Create a Carbon instance from a given year, month and day with millisecond
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// Create a Carbon instance from a given year, month and day with microsecond
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// Create a Carbon instance from a given year, month and day with nanosecond
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 // Create a Carbon instance from a given hour, minute and second
-carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
+// Create a Carbon instance from a given hour, minute and second with millisecond
+carbon.CreateFromTimeMilli(13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// Create a Carbon instance from a given hour, minute and second with microsecond
+carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// Create a Carbon instance from a given hour, minute and second with nanosecond
+carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### Parse a standard string as a Carbon instance
