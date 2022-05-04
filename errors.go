@@ -29,7 +29,7 @@ var invalidLayoutError = func(value, layout string) error {
 }
 
 // invalidFormatError returns an invalid format error.
-// 无效的格式化字符错误
+// 无效的格式模板错误
 var invalidFormatError = func(value, format string) error {
 	return fmt.Errorf("cannot parse %q as carbon by format %q, please make sure the value and format match", value, format)
 }
