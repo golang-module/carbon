@@ -1203,20 +1203,20 @@ type Person struct {
 ```go
 now := carbon.Now()
 person := Person {
-Name:        "gouguoyin",
-Age:          18,
-Birthday1:    carbon.DateTime{now.SubYears(18)},
-Birthday2:    carbon.DateTime{now.SubYears(18)},
-Birthday3:    carbon.DateTime{now.SubYears(18)},
-Birthday4:    carbon.DateTime{now.SubYears(18)},
-GraduatedAt1: carbon.Date{now},
-GraduatedAt2: carbon.Date{now},
-GraduatedAt3: carbon.Date{now},
-GraduatedAt4: carbon.Date{now},
-CreatedAt1:   carbon.Timestamp{now},
-CreatedAt2:   carbon.TimestampMilli{now},
-CreatedAt3:   carbon.TimestampMicro{now},
-CreatedAt4:   carbon.TimestampNano{now},
+	Name:        "gouguoyin",
+	Age:          18,
+	Birthday1:    carbon.DateTime{now.SubYears(18)},
+	Birthday2:    carbon.DateTime{now.SubYears(18)},
+	Birthday3:    carbon.DateTime{now.SubYears(18)},
+	Birthday4:    carbon.DateTime{now.SubYears(18)},
+	GraduatedAt1: carbon.Date{now},
+	GraduatedAt2: carbon.Date{now},
+	GraduatedAt3: carbon.Date{now},
+	GraduatedAt4: carbon.Date{now},
+	CreatedAt1:   carbon.Timestamp{now},
+	CreatedAt2:   carbon.TimestampMilli{now},
+	CreatedAt3:   carbon.TimestampMicro{now},
+	CreatedAt4:   carbon.TimestampNano{now},
 }
 ```
 
