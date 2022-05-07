@@ -89,7 +89,7 @@ func (c Carbon) WeekOfMonth() int {
 }
 
 // DateTime gets current year, month, day, hour, minute, and second like 2020, 8, 5, 13, 14, 15.
-// 获取当前年月日时分秒
+// 获取当前年、月、日、时、分、秒
 func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
 	if c.IsInvalid() {
 		return
@@ -102,7 +102,7 @@ func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
 }
 
 // DateTimeMilli gets current year, month, day, hour, minute, second and millisecond like 2020, 8, 5, 13, 14, 15, 999.
-// 获取当前年月日时分秒毫秒
+// 获取当前年、月、日、时、分、秒、毫秒
 func (c Carbon) DateTimeMilli() (year, month, day, hour, minute, second, millisecond int) {
 	if c.IsInvalid() {
 		return
@@ -112,7 +112,7 @@ func (c Carbon) DateTimeMilli() (year, month, day, hour, minute, second, millise
 }
 
 // DateTimeMicro gets current year, month, day, hour, minute, second and microsecond like 2020, 8, 5, 13, 14, 15, 999999.
-// 获取当前年月日时分秒微秒
+// 获取当前年、月、日、时、分、秒、微秒
 func (c Carbon) DateTimeMicro() (year, month, day, hour, minute, second, microsecond int) {
 	if c.IsInvalid() {
 		return
@@ -122,7 +122,7 @@ func (c Carbon) DateTimeMicro() (year, month, day, hour, minute, second, microse
 }
 
 // DateTimeNano gets current year, month, day, hour, minute, second and nanosecond like 2020, 8, 5, 13, 14, 15, 999999999.
-// 获取当前年月日时分秒纳秒
+// 获取当前年、月、日、时、分、秒、纳秒
 func (c Carbon) DateTimeNano() (year, month, day, hour, minute, second, nanosecond int) {
 	if c.IsInvalid() {
 		return
@@ -132,7 +132,7 @@ func (c Carbon) DateTimeNano() (year, month, day, hour, minute, second, nanoseco
 }
 
 // Date gets current year, month, and day like 2020, 8, 5.
-// 获取当前年月日
+// 获取当前年、月、日
 func (c Carbon) Date() (year, month, day int) {
 	if c.IsInvalid() {
 		return
@@ -143,7 +143,7 @@ func (c Carbon) Date() (year, month, day int) {
 }
 
 // DateMilli gets current year, month, day and millisecond like 2020, 8, 5, 999.
-// 获取当前年月日毫秒
+// 获取当前年、月、日、毫秒
 func (c Carbon) DateMilli() (year, month, day, millisecond int) {
 	if c.IsInvalid() {
 		return
@@ -154,7 +154,7 @@ func (c Carbon) DateMilli() (year, month, day, millisecond int) {
 }
 
 // DateMicro gets current year, month, day and microsecond like 2020, 8, 5, 999999.
-// 获取当前年月日微秒
+// 获取当前年、月、日、微秒
 func (c Carbon) DateMicro() (year, month, day, microsecond int) {
 	if c.IsInvalid() {
 		return
@@ -165,7 +165,7 @@ func (c Carbon) DateMicro() (year, month, day, microsecond int) {
 }
 
 // DateNano gets current year, month, day and nanosecond like 2020, 8, 5, 999999999.
-// 获取当前年月日纳秒
+// 获取当前年、月、日、纳秒
 func (c Carbon) DateNano() (year, month, day, nanosecond int) {
 	if c.IsInvalid() {
 		return
@@ -176,7 +176,7 @@ func (c Carbon) DateNano() (year, month, day, nanosecond int) {
 }
 
 // Time gets current hour, minute, and second like 13, 14, 15.
-// 获取当前时分秒
+// 获取当前时、分、秒
 func (c Carbon) Time() (hour, minute, second int) {
 	if c.IsInvalid() {
 		return
@@ -185,7 +185,7 @@ func (c Carbon) Time() (hour, minute, second int) {
 }
 
 // TimeMilli gets current hour, minute, second and millisecond like 13, 14, 15, 999.
-// 获取当前时分秒毫秒
+// 获取当前时、分、秒、毫秒
 func (c Carbon) TimeMilli() (hour, minute, second, millisecond int) {
 	if c.IsInvalid() {
 		return
@@ -195,7 +195,7 @@ func (c Carbon) TimeMilli() (hour, minute, second, millisecond int) {
 }
 
 // TimeMicro gets current hour, minute, second and microsecond like 13, 14, 15, 999999.
-// 获取当前时分秒微秒
+// 获取当前时、分、秒、微秒
 func (c Carbon) TimeMicro() (hour, minute, second, microsecond int) {
 	if c.IsInvalid() {
 		return
@@ -205,7 +205,7 @@ func (c Carbon) TimeMicro() (hour, minute, second, microsecond int) {
 }
 
 // TimeNano gets current hour, minute, second and nanosecond like 13, 14, 15, 999999999.
-// 获取当前时分秒纳秒
+// 获取当前时、分、秒、纳秒
 func (c Carbon) TimeNano() (hour, minute, second, nanosecond int) {
 	if c.IsInvalid() {
 		return
@@ -310,7 +310,7 @@ func (c Carbon) Second() int {
 }
 
 // Millisecond gets current millisecond like 999.
-// 获取当前毫秒数，3位数字
+// 获取当前毫秒数
 func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
@@ -319,7 +319,7 @@ func (c Carbon) Millisecond() int {
 }
 
 // Microsecond gets current microsecond like 999999.
-// 获取当前微秒数，6位数字
+// 获取当前微秒数
 func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
@@ -328,7 +328,7 @@ func (c Carbon) Microsecond() int {
 }
 
 // Nanosecond gets current nanosecond like 999999999.
-// 获取当前纳秒数，9位数字
+// 获取当前纳秒数
 func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
 		return 0
@@ -336,64 +336,42 @@ func (c Carbon) Nanosecond() int {
 	return c.Carbon2Time().Nanosecond()
 }
 
-// TimestampWithSecond gets timestamp with second like 1596604455, it will be replaced by Timestamp.
+// Timestamp gets timestamp with second like 1596604455.
 // 输出秒级时间戳
-func (c Carbon) TimestampWithSecond() int64 {
-	if c.IsInvalid() {
-		return 0
-	}
-	return c.time.Unix()
-}
-
-// Timestamp gets timestamp with second like 1596604455, it is shorthand for TimestampWithSecond.
-// 获取秒级时间戳, 是 TimestampWithSecond 的简写
 func (c Carbon) Timestamp() int64 {
-	return c.TimestampWithSecond()
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Carbon2Time().Unix()
 }
 
-// TimestampWithMillisecond gets timestamp with millisecond like 1596604455000, it will be replaced by TimestampMilli.
+// TimestampMilli gets timestamp with millisecond like 1596604455000.
 // 获取毫秒级时间戳
-func (c Carbon) TimestampWithMillisecond() int64 {
-	if c.IsInvalid() {
-		return 0
-	}
-	return c.time.Unix()*1e3 + int64(c.time.Nanosecond())/1e6
-}
-
-// TimestampMilli gets timestamp with millisecond like 1596604455000, it is shorthand for TimestampWithMillisecond.
-// 获取毫秒级时间戳, 是 TimestampMilli 的简写
 func (c Carbon) TimestampMilli() int64 {
-	return c.TimestampWithMillisecond()
+	if c.IsInvalid() {
+		return 0
+	}
+	t := c.Carbon2Time()
+	return t.Unix()*1e3 + int64(t.Nanosecond())/1e6
 }
 
-// TimestampWithMicrosecond gets timestamp with microsecond like 1596604455000000, it will be replaced by TimestampMicro.
+// TimestampMicro gets timestamp with microsecond like 1596604455000000.
 // 获取微秒级时间戳
-func (c Carbon) TimestampWithMicrosecond() int64 {
-	if c.IsInvalid() {
-		return 0
-	}
-	return c.time.Unix()*1e6 + int64(c.time.Nanosecond())/1e3
-}
-
-// TimestampMicro gets timestamp with microsecond like 1596604455000000, it is shorthand for TimestampWithMicrosecond.
-// 获取微秒级时间戳, 是 TimestampWithMicrosecond 的简写
 func (c Carbon) TimestampMicro() int64 {
-	return c.TimestampWithMicrosecond()
-}
-
-// TimestampWithNanosecond gets timestamp with nanosecond like 1596604455000000000, it will be replaced by TimestampNano.
-// 获取纳秒级时间戳
-func (c Carbon) TimestampWithNanosecond() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.time.UnixNano()
+	t := c.Carbon2Time()
+	return t.Unix()*1e6 + int64(t.Nanosecond())/1e3
 }
 
-// TimestampNano gets timestamp with nanosecond like 1596604455000000000, it is shorthand for TimestampWithNanosecond.
-// 获取纳秒级时间戳, 是 TimestampWithNanosecond 的简写
+// TimestampNano gets timestamp with nanosecond like 1596604455000000000.
+// 获取纳秒级时间戳
 func (c Carbon) TimestampNano() int64 {
-	return c.TimestampWithNanosecond()
+	if c.IsInvalid() {
+		return 0
+	}
+	return c.Carbon2Time().UnixNano()
 }
 
 // Location gets location name like "PRC".
@@ -405,14 +383,14 @@ func (c Carbon) Location() string {
 // Timezone gets timezone name like "CST".
 // 获取时区
 func (c Carbon) Timezone() string {
-	name, _ := c.time.Zone()
+	name, _ := c.Carbon2Time().Zone()
 	return name
 }
 
 // Offset gets offset seconds from the UTC timezone like 28800.
 // 获取距离UTC时区的偏移量，单位秒
 func (c Carbon) Offset() int {
-	_, offset := c.time.Zone()
+	_, offset := c.Carbon2Time().Zone()
 	return offset
 }
 
