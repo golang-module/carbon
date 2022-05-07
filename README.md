@@ -62,7 +62,7 @@ import (
 
 > The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
 
-##### Yesterday, today and tomorrow
+##### Yesterday, today and tomorrow1
 
 ```go
 // Return datetime of today
