@@ -54,7 +54,7 @@ import (
 go get -u gitee.com/golang-module/carbon
 
 import (
-    "gitee.com/golang-module/carbon"
+	"gitee.com/golang-module/carbon"
 )               
 ```
 
