@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// String outputs a string in date and time format, implement Stringer interface.
+// String implements the interface Stringer for Carbon struct.
 // 实现 Stringer 接口
 func (c Carbon) String() string {
 	return c.ToDateTimeString()
