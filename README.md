@@ -29,14 +29,14 @@ it is helpful, please give me a star
 go get -u github.com/golang-module/carbon/v2
 
 import (
-"github.com/golang-module/carbon/v2"
+	"github.com/golang-module/carbon/v2"
 )
 
 // By gitee
 go get -u gitee.com/golang-module/carbon/v2
 
 import (
-"gitee.com/golang-module/carbon/v2"
+	"gitee.com/golang-module/carbon/v2"
 )               
 ```
 
@@ -47,7 +47,7 @@ import (
 go get -u github.com/golang-module/carbon
 
 import (
-"github.com/golang-module/carbon"
+	"github.com/golang-module/carbon"
 )
 
 // By gitee
@@ -62,7 +62,7 @@ import (
 
 > The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
 
-##### Yesterday, today and tomorrow1
+##### Yesterday, today and tomorrow
 
 ```go
 // Return datetime of today
