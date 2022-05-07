@@ -26,14 +26,14 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 go get -u github.com/golang-module/carbon/v2
 
 import (
-"github.com/golang-module/carbon/v2"
+    "github.com/golang-module/carbon/v2"
 )
 
 // 使用 gitee 库
 go get -u gitee.com/golang-module/carbon/v2
 
 import (
-"gitee.com/golang-module/carbon/v2"
+    "gitee.com/golang-module/carbon/v2"
 )
 ```
 
@@ -44,7 +44,7 @@ import (
 go get -u github.com/golang-module/carbon
 
 import (
-"github.com/golang-module/carbon"
+    "github.com/golang-module/carbon"
 )
 
 // 使用 gitee 库
@@ -59,7 +59,7 @@ import (
 
 > 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15
 
-##### 昨天、今天、明天1
+##### 昨天、今天、明天
 
 ```go
 // 今天此刻
