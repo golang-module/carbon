@@ -1201,21 +1201,22 @@ type Person struct {
 ###### 初期化モデル
 
 ```go
+now := carbon.Now()
 person := Person {
-	Name:        "gouguoyin",
-	Age:          18,
-	Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
-	Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
-	Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
-	Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
-	GraduatedAt1: carbon.Date{carbon.Now()},
-	GraduatedAt2: carbon.Date{carbon.Now()},
-	GraduatedAt3: carbon.Date{carbon.Now()},
-	GraduatedAt4: carbon.Date{carbon.Now()},
-	CreatedAt1:   carbon.Timestamp{carbon.Now()},
-	CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
-	CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
-	CreatedAt4:   carbon.TimestampNano{carbon.Now()},
+Name:        "gouguoyin",
+Age:          18,
+Birthday1:    carbon.DateTime{now.SubYears(18)},
+Birthday2:    carbon.DateTime{now.SubYears(18)},
+Birthday3:    carbon.DateTime{now.SubYears(18)},
+Birthday4:    carbon.DateTime{now.SubYears(18)},
+GraduatedAt1: carbon.Date{now},
+GraduatedAt2: carbon.Date{now},
+GraduatedAt3: carbon.Date{now},
+GraduatedAt4: carbon.Date{now},
+CreatedAt1:   carbon.Timestamp{now},
+CreatedAt2:   carbon.TimestampMilli{now},
+CreatedAt3:   carbon.TimestampMicro{now},
+CreatedAt4:   carbon.TimestampNano{now},
 }
 ```
 
