@@ -22,24 +22,6 @@ it is helpful, please give me a star
 
 #### Installation
 
-##### Go version < 1.16
-
-```go
-// By github
-go get -u github.com/golang-module/carbon
-
-import (
-    "github.com/golang-module/carbon"
-)
-
-// By gitee
-go get -u gitee.com/golang-module/carbon
-
-import (
-    "gitee.com/golang-module/carbon"
-)               
-```
-
 ##### Go version >= 1.16
 
 ```go
@@ -47,14 +29,32 @@ import (
 go get -u github.com/golang-module/carbon/v2
 
 import (
-    "github.com/golang-module/carbon/v2"
+"github.com/golang-module/carbon/v2"
 )
 
 // By gitee
 go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/golang-module/carbon/v2"
+"gitee.com/golang-module/carbon/v2"
+)               
+```
+
+##### Go version < 1.16
+
+```go
+// By github
+go get -u github.com/golang-module/carbon
+
+import (
+"github.com/golang-module/carbon"
+)
+
+// By gitee
+go get -u gitee.com/golang-module/carbon
+
+import (
+    "gitee.com/golang-module/carbon"
 )               
 ```
 
@@ -689,26 +689,44 @@ carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString(
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
 carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
 
-// Set year, month, day, hour, minute and second.
+// Set year, month, day, hour, minute and second
 carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToString() // 2019-02-02 13:14:15 +0800 CST
 carbon.Parse("2020-01-01").SetDateTime(2019, 2, 31, 13, 14, 15).ToString() // 2019-03-03 13:14:15 +0800 CST
-// Set year, month, day, hour, minute and second with millisecond.
+// Set year, month, day, hour, minute, second and millisecond
 carbon.Parse("2020-01-01").SetDateTimeMilli(2019, 2, 2, 13, 14, 15, 999).ToString() // 2019-02-02 13:14:15.999 +0800 CST
 carbon.Parse("2020-01-01").SetDateTimeMilli(2019, 2, 31, 13, 14, 15, 999).ToString() // 2019-03-03 13:14:15.999 +0800 CST
-// Set year, month, day, hour, minute and second with microsecond.
+// Set year, month, day, hour, minute, second and microsecond
 carbon.Parse("2020-01-01").SetDateTimeMicro(2019, 2, 2, 13, 14, 15, 999999).ToString() // 2019-02-02 13:14:15.999999 +0800 CST
 carbon.Parse("2020-01-01").SetDateTimeMicro(2019, 2, 31, 13, 14, 15, 999999).ToString() // 2019-03-03 13:14:15.999999 +0800 CST
-// Set year, month, day, hour, minute and second with nanosecond.
+// Set year, month, day, hour, minute, second and nanosecond
 carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 2, 13, 14, 15, 999999999).ToString() // 2019-02-02 13:14:15.999999999 +0800 CST
 carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 31, 13, 14, 15, 999999999).ToString() // 2019-03-03 13:14:15.999999999 +0800 CST
 
-// Set year, month and day.
-carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToDateTimeString() // 2019-02-02 00:00:00
-carbon.Parse("2020-01-01").SetDate(2019, 2, 31).ToDateTimeString() // 2019-03-03 00:00:00
+// Set year, month and day
+carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToString() // 2019-02-02 00:00:00 +0800 CST
+carbon.Parse("2020-01-01").SetDate(2019, 2, 31).ToString() // 2019-03-03 00:00:00 +0800 CST
+// Set year, month, day and millisecond
+carbon.Parse("2020-01-01").SetDateMilli(2019, 2, 2, 999).ToString() // 2019-02-02 00:00:00.999 +0800 CST
+carbon.Parse("2020-01-01").SetDateMilli(2019, 2, 31, 999).ToString() // 2019-03-03 00:00:00.999 +0800 CST
+// Set year, month, day and microsecond
+carbon.Parse("2020-01-01").SetDateMicro(2019, 2, 2, 999999).ToString() // 2019-02-02 00:00:00.999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateMicro(2019, 2, 31, 999999).ToString() // 2019-03-03 00:00:00.999999 +0800 CST
+// Set year, month, day and nanosecond
+carbon.Parse("2020-01-01").SetDateNano(2019, 2, 2, 999999999).ToString() // 2019-02-02 00:00:00.999999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateNano(2019, 2, 31, 999999999).ToString() // 2019-03-03 00:00:00.999999999 +0800 CST
 
-// Set hour, minute and second.
-carbon.Parse("2020-01-01").SetTime(13, 14, 15).ToDateTimeString() // 2020-01-01 13:14:15
-carbon.Parse("2020-01-01").SetTime(13, 14, 90).ToDateTimeString() // 2020-01-01 13:15:30
+// Set hour, minute and second
+carbon.Parse("2020-01-01").SetTime(13, 14, 15).ToString() // 2020-01-01 13:14:15 +0800 CST
+carbon.Parse("2020-01-01").SetTime(13, 14, 90).ToString() // 2020-01-01 13:15:30 +0800 CST
+// Set hour, minute, second and millisecond
+carbon.Parse("2020-01-01").SetTimeMilli(13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeMilli(13, 14, 90, 999).ToString() // 2020-01-01 13:15:30.999 +0800 CST
+// Set hour, minute, second and microsecond
+carbon.Parse("2020-01-01").SetTimeMicro(13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeMicro(13, 14, 90, 999999).ToString() // 2020-01-01 13:15:30.999999 +0800 CST
+// Set hour, minute, second and nanosecond
+carbon.Parse("2020-01-01").SetTimeNano(13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeNano(13, 14, 90, 999999999).ToString() // 2020-01-01 13:15:30.999999999 +0800 CST
 
 // Set year
 carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
@@ -1162,14 +1180,20 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ```go
 type Person struct {
-    Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.DateTime `json:"birthday"`
-    GraduatedAt carbon.Date `json:"graduated_at"`
-    DateTime1 carbon.Timestamp `json:"date_time1"`
-    DateTime2 carbon.TimestampMilli `json:"date_time2"`
-    DateTime3 carbon.TimestampMicro `json:"date_time3"`
-    DateTime4 carbon.TimestampNano `json:"date_time4"`
+Name string `json:"name"`
+Age int `json:"age"`
+Birthday1 carbon.DateTime `json:"birthday"`
+Birthday2 carbon.DateTimeMilli `json:"birthday"`
+Birthday3 carbon.DateTimeMicro `json:"birthday"`
+Birthday4 carbon.DateTimeNano `json:"birthday"`
+GraduatedAt1 carbon.Date `json:"graduated_at"`
+GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
+GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
+GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+CreatedAt1 carbon.Timestamp `json:"created_at1"`
+CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
+CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
+CreatedAt4 carbon.TimestampNano `json:"created_at4"`
 }
 ```
 
@@ -1177,14 +1201,20 @@ type Person struct {
 
 ```go
 person := Person {
-	Name:        "gouguoyin",
-	Age:         18,
-	Birthday:    carbon.DateTime{carbon.Now().SubYears(18)},
-	GraduatedAt: carbon.Date{carbon.Parse("2020-08-05 13:14:15")},
-	DateTime1:   carbon.Timestamp{carbon.Parse("2023-08-05 13:14:15")},
-	DateTime2:   carbon.TimestampMilli{carbon.Parse("2024-08-05 13:14:15")},
-	DateTime3:   carbon.TimestampMicro{carbon.Parse("2025-08-05 13:14:15")},
-	DateTime4:   carbon.TimestampNano{carbon.Parse("2025-08-05 13:14:15")},
+Name:        "gouguoyin",
+Age:          18,
+Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+GraduatedAt1: carbon.Date{carbon.Now()},
+GraduatedAt2: carbon.Date{carbon.Now()},
+GraduatedAt3: carbon.Date{carbon.Now()},
+GraduatedAt4: carbon.Date{carbon.Now()},
+CreatedAt1:   carbon.Timestamp{carbon.Now()},
+CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1193,20 +1223,26 @@ person := Person {
 ```go
 data, err := json.Marshal(&person)
 if err != nil {
-    // Error handle...
-    log.Fatal(err)
+// Error handle...
+log.Fatal(err)
 }
 fmt.Printf("%s", data)
 // Output
 {
-    "name": "gouguoyin",
-    "age": 18,
-    "birthday": "2003-07-16 16:22:02",
-    "graduated_at": "2020-08-05",
-    "date_time1": 1691212455,
-    "date_time2": 1722834855000,
-    "date_time3": 1754370855000000,
-    "date_time4": 1754370855000000000
+"name": "gouguoyin",
+"age": 18,
+"birthday1": "2003-07-16 16:22:02",
+"birthday2": "2003-07-16 16:22:02.999",
+"birthday3": "2003-07-16 16:22:02.999999",
+"birthday4": "2003-07-16 16:22:02.999999999",
+"graduated_at1": "2020-08-05",
+"graduated_at2": "2020-08-05.999",
+"graduated_at3": "2020-08-05.999999",
+"graduated_at4": "2020-08-05.999999999",
+"created_at1": 1596604455,
+"created_at2": 1596604455999,
+"created_at3": 1596604455999999,
+"created_at4": 1596604455999999999
 }
 ```
 
@@ -1216,22 +1252,28 @@ fmt.Printf("%s", data)
 str := `{
 	"name": "gouguoyin",
 	"age": 18,
-	"birthday": "2003-07-16 16:22:02",
-	"graduated_at": "2020-08-05",
-	"date_time1": 1691212455,
-	"date_time2": 1722834855000,
-	"date_time3": 1754370855000000,
-	"date_time4": 1754370855000000000
+	"birthday1": "2003-07-16 16:22:02",
+	"birthday2": "2003-07-16 16:22:02.999",
+	"birthday3": "2003-07-16 16:22:02.999999",
+	"birthday4": "2003-07-16 16:22:02.999999999",
+	"graduated_at1": "2020-08-05",
+	"graduated_at2": "2020-08-05.999",
+	"graduated_at3": "2020-08-05.999999",
+	"graduated_at4": "2020-08-05.999999999",
+	"created_at1": 1596604455,
+	"created_at2": 1596604455999,
+	"created_at3": 1596604455999999,
+	"created_at4": 1596604455999999999
 }`
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
 if err != nil {
-    // Error handle...
-    log.Fatal(err)
+// Error handle...
+log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // Output
-{Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{Name:gouguoyin Age:18 Birthday1:2003-07-16 16:22:02 Birthday2:2003-07-16 16:22:02.999 Birthday3:2003-07-16 16:22:02.999999 Birthday4:2003-07-16 16:22:02.999999999 GraduatedAt1:2020-08-05 GraduatedAt2:2020-08-05.999 GraduatedAt3:2020-08-05.999999 GraduatedAt4:2020-08-05.999999999 CreatedAt1:2020-08-05 13:14:15 CreatedAt2:2020-08-05 13:14:15.999 CreatedAt3:2020-08-05 13:14:15.999999 CreatedAt4:2020-08-05 13:14:15.999999999}
 ```
 
 ##### I18n
@@ -1351,36 +1393,8 @@ c.Now().Season() // summer
 
 > If more than one error occurs, only the first error is returned
 
-###### Scene one
-
-```go
-c := carbon.SetTimezone(PRC).Parse("xxx")
-if c.Error != nil {
-    // Error handle...
-    log.Fatal(c.Error)
-}
-fmt.Println(c.ToDateTimeString())
-// Output
-cannot parse "xxx" as carbon, please make sure the value is valid
-```
-
-###### Scene two
-
 ```go
 c := carbon.SetTimezone("xxx").Parse("2020-08-05")
-if c.Error != nil {
-    // Error handle...
-    log.Fatal(c.Error)
-}
-fmt.Println(c.ToDateTimeString())
-// Output
-invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
-```
-
-###### Scene three
-
-```go
-c := carbon.SetTimezone("xxx").Parse("12345678")
 if c.Error != nil {
     // Error handle...
     log.Fatal(c.Error)
