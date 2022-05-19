@@ -1480,7 +1480,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 1、v1とv2のバージョンの違いは何ですか？
 > APIのv1バージョンとv2バージョンに違いはありませんが `language.go`
-> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.16`
+> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](https://github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.16`
 > の後に組み込みの標準ライブラリ [embed](https://pkg.go.dev/embed) によって実装されています。v2バージョンをお勧めします。
 
 #### 参考文献
