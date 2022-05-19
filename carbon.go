@@ -1,7 +1,7 @@
 // @Package carbon
 // @Description a simple, semantic and developer-friendly golang package for datetime
 // @Page github.com/golang-module/carbon
-// @Author gouguoyin
+// @Developer gouguoyin
 // @Blog www.gouguoyin.cn
 // @Email contact@gouguoyin.cn
 
@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "1.6.6"
+const Version = "1.6.7"
 
 // timezones constant
 // 时区常量
