@@ -938,6 +938,187 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 	}
 }
 
+func TestCarbon_IsSameCentury(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05"), Parse("3020-08-05"), false},
+		{Parse("2020-08-05"), Parse("2099-08-05"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameCentury(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameDecade(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05"), Parse("2030-08-05"), false},
+		{Parse("2020-08-05"), Parse("2021-08-05"), true},
+		{Parse("2020-01-01"), Parse("2120-01-31"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameDecade(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameYear(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05"), Parse("2021-08-05"), false},
+		{Parse("2020-01-01"), Parse("2020-12-31"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameYear(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameQuarter(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05"), Parse("2020-01-05"), false},
+		{Parse("2020-01-01"), Parse("2020-01-31"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameQuarter(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameMonth(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05"), Parse("2021-08-05"), false},
+		{Parse("2020-01-01"), Parse("2020-01-31"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameMonth(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameDay(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		{Parse("2020-08-05 00:00:00"), Parse("2020-08-05 13:14:15"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameDay(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameHour(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:00:00"), Parse("2020-08-05 13:14:15"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameHour(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameMinute(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:00"), Parse("2020-08-05 13:14:15"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameMinute(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsSameSecond(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   Carbon // 输入值
+		input2   Carbon // 输入值
+		expected bool   // 期望值
+	}{
+		{Parse(""), Parse(""), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
+	}
+
+	for index, test := range tests {
+		assert.Nil(test.input1.Error)
+		assert.Nil(test.input2.Error)
+		assert.Equal(test.expected, test.input1.IsSameSecond(test.input2), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_Compare(t *testing.T) {
 	assert := assert.New(t)
 
