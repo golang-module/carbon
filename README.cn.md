@@ -1215,20 +1215,20 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ```go
 type Person struct {
-Name string `json:"name"`
-Age int `json:"age"`
-Birthday1 carbon.DateTime `json:"birthday"`
-Birthday2 carbon.DateTimeMilli `json:"birthday"`
-Birthday3 carbon.DateTimeMicro `json:"birthday"`
-Birthday4 carbon.DateTimeNano `json:"birthday"`
-GraduatedAt1 carbon.Date `json:"graduated_at"`
-GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
-GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
-GraduatedAt4 carbon.DateNano `json:"graduated_at"`
-CreatedAt1 carbon.Timestamp `json:"created_at1"`
-CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
-CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
-CreatedAt4 carbon.TimestampNano `json:"created_at4"`
+	Name string `json:"name"`
+	Age int `json:"age"`
+	Birthday1 carbon.DateTime `json:"birthday"`
+	Birthday2 carbon.DateTimeMilli `json:"birthday"`
+	Birthday3 carbon.DateTimeMicro `json:"birthday"`
+	Birthday4 carbon.DateTimeNano `json:"birthday"`
+	GraduatedAt1 carbon.Date `json:"graduated_at"`
+	GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
+	GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
+	GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+	CreatedAt1 carbon.Timestamp `json:"created_at1"`
+	CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
+	CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
+	CreatedAt4 carbon.TimestampNano `json:"created_at4"`
 }
 ```
 
@@ -1236,20 +1236,20 @@ CreatedAt4 carbon.TimestampNano `json:"created_at4"`
 
 ```go
 person := Person {
-Name:        "gouguoyin",
-Age:          18,
-Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
-GraduatedAt1: carbon.Date{carbon.Now()},
-GraduatedAt2: carbon.Date{carbon.Now()},
-GraduatedAt3: carbon.Date{carbon.Now()},
-GraduatedAt4: carbon.Date{carbon.Now()},
-CreatedAt1:   carbon.Timestamp{carbon.Now()},
-CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
-CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
-CreatedAt4:   carbon.TimestampNano{carbon.Now()},
+	Name:        "gouguoyin",
+	Age:          18,
+	Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+	GraduatedAt1: carbon.Date{carbon.Now()},
+	GraduatedAt2: carbon.Date{carbon.Now()},
+	GraduatedAt3: carbon.Date{carbon.Now()},
+	GraduatedAt4: carbon.Date{carbon.Now()},
+	CreatedAt1:   carbon.Timestamp{carbon.Now()},
+	CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+	CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+	CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1258,26 +1258,26 @@ CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 ```go
 data, err := json.Marshal(&person)
 if err != nil {
-// 错误处理
-log.Fatal(err)
+	// 错误处理
+	log.Fatal(err)
 }
 fmt.Printf("%s", data)
 // 输出
 {
-"name": "gouguoyin",
-"age": 18,
-"birthday1": "2003-07-16 16:22:02",
-"birthday2": "2003-07-16 16:22:02.999",
-"birthday3": "2003-07-16 16:22:02.999999",
-"birthday4": "2003-07-16 16:22:02.999999999",
-"graduated_at1": "2020-08-05",
-"graduated_at2": "2020-08-05.999",
-"graduated_at3": "2020-08-05.999999",
-"graduated_at4": "2020-08-05.999999999",
-"created_at1": 1596604455,
-"created_at2": 1596604455999,
-"created_at3": 1596604455999999,
-"created_at4": 1596604455999999999
+	"name": "gouguoyin",
+	"age": 18,
+	"birthday1": "2003-07-16 16:22:02",
+	"birthday2": "2003-07-16 16:22:02.999",
+	"birthday3": "2003-07-16 16:22:02.999999",
+	"birthday4": "2003-07-16 16:22:02.999999999",
+	"graduated_at1": "2020-08-05",
+	"graduated_at2": "2020-08-05.999",
+	"graduated_at3": "2020-08-05.999999",
+	"graduated_at4": "2020-08-05.999999999",
+	"created_at1": 1596604455,
+	"created_at2": 1596604455999,
+	"created_at3": 1596604455999999,
+	"created_at4": 1596604455999999999
 }
 ```
 
@@ -1303,8 +1303,8 @@ str := `{
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
 if err != nil {
-// 错误处理
-log.Fatal(err)
+	// 错误处理
+	log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // 输出
@@ -1498,7 +1498,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### 贡献者
 感谢以下所有为 `Carbon` 做出贡献的人：
 
-<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=120&columns=16"/></a>
+<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=100&columns=16"/></a>
 
 #### 赞助
 
