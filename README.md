@@ -1230,20 +1230,20 @@ type Person struct {
 
 ```go
 person := Person {
-Name:        "gouguoyin",
-Age:          18,
-Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
-GraduatedAt1: carbon.Date{carbon.Now()},
-GraduatedAt2: carbon.Date{carbon.Now()},
-GraduatedAt3: carbon.Date{carbon.Now()},
-GraduatedAt4: carbon.Date{carbon.Now()},
-CreatedAt1:   carbon.Timestamp{carbon.Now()},
-CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
-CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
-CreatedAt4:   carbon.TimestampNano{carbon.Now()},
+	Name:        "gouguoyin",
+	Age:          18,
+	Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+	GraduatedAt1: carbon.Date{carbon.Now()},
+	GraduatedAt2: carbon.Date{carbon.Now()},
+	GraduatedAt3: carbon.Date{carbon.Now()},
+	GraduatedAt4: carbon.Date{carbon.Now()},
+	CreatedAt1:   carbon.Timestamp{carbon.Now()},
+	CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+	CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+	CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1252,26 +1252,26 @@ CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 ```go
 data, err := json.Marshal(&person)
 if err != nil {
-// Error handle...
-log.Fatal(err)
+	// Error handle...
+	log.Fatal(err)
 }
 fmt.Printf("%s", data)
 // Output
 {
-"name": "gouguoyin",
-"age": 18,
-"birthday1": "2003-07-16 16:22:02",
-"birthday2": "2003-07-16 16:22:02.999",
-"birthday3": "2003-07-16 16:22:02.999999",
-"birthday4": "2003-07-16 16:22:02.999999999",
-"graduated_at1": "2020-08-05",
-"graduated_at2": "2020-08-05.999",
-"graduated_at3": "2020-08-05.999999",
-"graduated_at4": "2020-08-05.999999999",
-"created_at1": 1596604455,
-"created_at2": 1596604455999,
-"created_at3": 1596604455999999,
-"created_at4": 1596604455999999999
+	"name": "gouguoyin",
+	"age": 18,
+	"birthday1": "2003-07-16 16:22:02",
+	"birthday2": "2003-07-16 16:22:02.999",
+	"birthday3": "2003-07-16 16:22:02.999999",
+	"birthday4": "2003-07-16 16:22:02.999999999",
+	"graduated_at1": "2020-08-05",
+	"graduated_at2": "2020-08-05.999",
+	"graduated_at3": "2020-08-05.999999",
+	"graduated_at4": "2020-08-05.999999999",
+	"created_at1": 1596604455,
+	"created_at2": 1596604455999,
+	"created_at3": 1596604455999999,
+	"created_at4": 1596604455999999999
 }
 ```
 
@@ -1297,8 +1297,8 @@ str := `{
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
 if err != nil {
-// Error handle...
-log.Fatal(err)
+	// Error handle...
+	log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // Output
