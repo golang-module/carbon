@@ -1008,7 +1008,7 @@ func TestCarbon_IsSameQuarter(t *testing.T) {
 		expected bool   // 期望值
 	}{
 		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("2020-09-05"), false},
+		{Parse("2020-08-05"), Parse("2020-01-05"), false},
 		{Parse("2020-01-01"), Parse("2020-01-31"), true},
 	}
 
