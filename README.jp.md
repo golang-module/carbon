@@ -54,7 +54,9 @@ import (
     "gitee.com/golang-module/carbon"
 )
 ```
+> v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください。
 
+人気のある問題
 #### 使い方の例
 
 > デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は2020-08-05 13:14:15と仮定します
@@ -621,6 +623,34 @@ carbon.Parse("2020-08-05").IsToday() // true
 carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
 carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
 carbon.Parse("2020-08-06").IsTomorrow() // true
+
+// 同じ世紀ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameCentury(carbon.Parse("3020-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameCentury(carbon.Parse("2099-08-05 13:14:15")) // true
+// 同じ時代ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameDecade(carbon.Parse("2030-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameDecade(carbon.Parse("2120-08-05 13:14:15")) // true
+// 同じ年ですか
+carbon.Parse("2020-08-05 00:00:00").IsSameYear(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameYear(carbon.Parse("2020-12-31 13:14:15")) // true
+// 同じ季節ですか
+carbon.Parse("2020-08-05 00:00:00").IsSameQuarter(carbon.Parse("2020-09-05 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameQuarter(carbon.Parse("2021-01-31 13:14:15")) // true
+// 同じ月ですか
+carbon.Parse("2020-01-01 00:00:00").IsSameMonth(carbon.Parse("2021-01-31 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameMonth(carbon.Parse("2020-01-31 13:14:15")) // true
+// 同じ日ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameDay(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 00:00:00").IsSameDay(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ時間ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameHour(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:00:00").IsSameHour(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ分ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameMinute(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:00").IsSameMinute(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ秒ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameSecond(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameSecond(carbon.Parse("2020-08-05 13:14:15")) // true
 
 // 大きいかどうか
 carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-04 13:14:15")) // true
@@ -1201,22 +1231,21 @@ type Person struct {
 ###### 初期化モデル
 
 ```go
-now := carbon.Now()
 person := Person {
-	Name:        "gouguoyin",
-	Age:          18,
-	Birthday1:    carbon.DateTime{now.SubYears(18)},
-	Birthday2:    carbon.DateTime{now.SubYears(18)},
-	Birthday3:    carbon.DateTime{now.SubYears(18)},
-	Birthday4:    carbon.DateTime{now.SubYears(18)},
-	GraduatedAt1: carbon.Date{now},
-	GraduatedAt2: carbon.Date{now},
-	GraduatedAt3: carbon.Date{now},
-	GraduatedAt4: carbon.Date{now},
-	CreatedAt1:   carbon.Timestamp{now},
-	CreatedAt2:   carbon.TimestampMilli{now},
-	CreatedAt3:   carbon.TimestampMicro{now},
-	CreatedAt4:   carbon.TimestampNano{now},
+Name:        "gouguoyin",
+Age:          18,
+Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+GraduatedAt1: carbon.Date{carbon.Now()},
+GraduatedAt2: carbon.Date{carbon.Now()},
+GraduatedAt3: carbon.Date{carbon.Now()},
+GraduatedAt4: carbon.Date{carbon.Now()},
+CreatedAt1:   carbon.Timestamp{carbon.Now()},
+CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1293,6 +1322,7 @@ fmt.Printf("%+v", *person)
 * [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") から翻訳されます
 * [ロシア語(ru)](./lang/ru.json "ロシア語")：[zemlyak](https://github.com/zemlyak "zemlyak") から翻訳されます
 * [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") から翻訳されます
+* [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") から翻訳されます
 
 現在サポートされている方法
 
@@ -1445,6 +1475,13 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | e | 位置 | - | - | America/New_York |
 | Q | 季節 | 1 | 1-4 | 1 |
 | C | 世紀 | - | 0-99 | 21 |
+
+#### 人気のある問題
+
+1、v1とv2のバージョンの違いは何ですか？
+> APIのv1バージョンとv2バージョンに違いはありませんが `language.go`
+> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.16`
+> の後に組み込みの標準ライブラリ [embed](https://pkg.go.dev/embed) によって実装されています。v2バージョンをお勧めします。
 
 #### 参考文献
 
