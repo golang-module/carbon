@@ -1236,20 +1236,20 @@ type Person struct {
 
 ```go
 person := Person {
-Name:        "gouguoyin",
-Age:          18,
-Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
-Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
-GraduatedAt1: carbon.Date{carbon.Now()},
-GraduatedAt2: carbon.Date{carbon.Now()},
-GraduatedAt3: carbon.Date{carbon.Now()},
-GraduatedAt4: carbon.Date{carbon.Now()},
-CreatedAt1:   carbon.Timestamp{carbon.Now()},
-CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
-CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
-CreatedAt4:   carbon.TimestampNano{carbon.Now()},
+	Name:        "gouguoyin",
+	Age:          18,
+	Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+	GraduatedAt1: carbon.Date{carbon.Now()},
+	GraduatedAt2: carbon.Date{carbon.Now()},
+	GraduatedAt3: carbon.Date{carbon.Now()},
+	GraduatedAt4: carbon.Date{carbon.Now()},
+	CreatedAt1:   carbon.Timestamp{carbon.Now()},
+	CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+	CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+	CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1498,7 +1498,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### 贡献者
 感谢以下所有为 `Carbon` 做出贡献的人：
 
-<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=120&columns=16"/></a>
+<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=100&columns=16"/></a>
 
 #### 赞助
 
