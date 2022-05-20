@@ -754,23 +754,23 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				} else {
 					buffer.WriteString("0")
 				}
-			case 'G': // 24-hour format without leading zeros, value range 0-23
+			case 'G': // 24-hour format without leading zeros, ranging from 0-23
 				buffer.WriteString(strconv.Itoa(c.Hour()))
 			case 'U': // timestamp with second, such as 1611818268
 				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
 			case 'u': // current millisecond, such as 999
 				buffer.WriteString(strconv.Itoa(c.Millisecond()))
-			case 'w': // day of the week represented by the number, value range is 0-6
+			case 'w': // day of the week represented by the number, ranging from 0-6
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek() - 1))
-			case 't': // number of days in the month, value range is 28-31
+			case 't': // number of days in the month, ranging from 28-31
 				buffer.WriteString(strconv.Itoa(c.DaysInMonth()))
 			case 'z': // day of the year, value range 0-365
 				buffer.WriteString(strconv.Itoa(c.DayOfYear() - 1))
 			case 'e': // current location, such as UTC，GMT，Atlantic/Azores
 				buffer.WriteString(c.Location())
-			case 'Q': // current quarter, value range 1-4
+			case 'Q': // current quarter, ranging from 1-4
 				buffer.WriteString(strconv.Itoa(c.Quarter()))
-			case 'C': // current century, value range is 0-99
+			case 'C': // current century, ranging from 0-99
 				buffer.WriteString(strconv.Itoa(c.Century()))
 			default:
 				buffer.WriteByte(format[i])
