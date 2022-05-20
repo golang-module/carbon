@@ -1481,7 +1481,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 1、What is the difference between v1 and v2?
 > There is no difference between v1 and v2 of the API, but the implementation of the translation resource files
 > in `language.go` is different. The v1 is implemented by the third-party extension
-> library [packr](github.com/gobuffalo/packr), and the v2 is implemented by the standard
+> library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard
 > library [embed](https://pkg.go.dev/embed) after `golang1.16`. The v2 is recommended.
 
 #### References
