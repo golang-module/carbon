@@ -714,11 +714,12 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(format); i++ {
 		if layout, ok := formats[format[i]]; ok {
+			// support for i18n specific symbols
 			switch format[i] {
-			case 'D': // Mon
-				buffer.WriteString(c.ToShortWeekString())
 			case 'l': // Monday
 				buffer.WriteString(c.ToWeekString())
+			case 'D': // Mon
+				buffer.WriteString(c.ToShortWeekString())
 			case 'F': // January
 				buffer.WriteString(c.ToMonthString())
 			case 'M': // Jan
