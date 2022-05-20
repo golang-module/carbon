@@ -737,7 +737,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
 			case 'N': // day of the week as a number in ISO-8601 format, ranging from 1-7
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek()))
-			case 'S': // 月份中第几天的英文缩写后缀，如st, nd, rd, th
+			case 'S': // abbreviated suffix for the day of the month, such as st, nd, rd, th
 				suffix := "th"
 				switch c.Day() {
 				case 1, 21, 31:
