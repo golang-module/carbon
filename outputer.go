@@ -714,16 +714,28 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(format); i++ {
 		if layout, ok := formats[format[i]]; ok {
-			buffer.WriteString(c.Carbon2Time().Format(layout))
+			// support for i18n specific symbols
+			switch format[i] {
+			case 'l': // Monday
+				buffer.WriteString(c.ToWeekString())
+			case 'D': // Mon
+				buffer.WriteString(c.ToShortWeekString())
+			case 'F': // January
+				buffer.WriteString(c.ToMonthString())
+			case 'M': // Jan
+				buffer.WriteString(c.ToShortMonthString())
+			default:
+				buffer.WriteString(c.Carbon2Time().Format(layout))
+			}
 		} else {
 			switch format[i] {
-			case '\\': // 原样输出，不解析
+			case '\\': // raw output, no parse
 				buffer.WriteByte(format[i+1])
 				i++
 				continue
-			case 'W': // ISO-8601 格式数字表示的年份中的第几周，取值范围 1-52
+			case 'W': // week number of the year in ISO-8601 format, ranging from 1-52
 				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
-			case 'N': // ISO-8601 格式数字表示的星期中的第几天，取值范围 1-7
+			case 'N': // day of the week as a number in ISO-8601 format, ranging from 1-7
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek()))
 			case 'S': // 月份中第几天的英文缩写后缀，如st, nd, rd, th
 				suffix := "th"
@@ -736,29 +748,29 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 					suffix = "rd"
 				}
 				buffer.WriteString(suffix)
-			case 'L': // 是否为闰年，如果是闰年为 1，否则为 0
+			case 'L': // whether it is a leap year, if it is a leap year, it is 1, otherwise it is 0
 				if c.IsLeapYear() {
 					buffer.WriteString("1")
 				} else {
 					buffer.WriteString("0")
 				}
-			case 'G': // 数字表示的小时，24 小时格式，没有前导零，取值范围 0-23
+			case 'G': // 24-hour format without leading zeros, value range 0-23
 				buffer.WriteString(strconv.Itoa(c.Hour()))
-			case 'U': // 秒级时间戳，如 1611818268
+			case 'U': // timestamp with second, such as 1611818268
 				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
-			case 'u': // 数字表示的毫秒，如 999
+			case 'u': // current millisecond, such as 999
 				buffer.WriteString(strconv.Itoa(c.Millisecond()))
-			case 'w': // 数字表示的星期中的第几天，取值范围 0-6
+			case 'w': // day of the week represented by the number, value range is 0-6
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek() - 1))
-			case 't': // 指定的月份有几天，取值范围 28-31
+			case 't': // number of days in the month, value range is 28-31
 				buffer.WriteString(strconv.Itoa(c.DaysInMonth()))
-			case 'z': // 年份中的第几天，取值范围 0-365
+			case 'z': // day of the year, value range 0-365
 				buffer.WriteString(strconv.Itoa(c.DayOfYear() - 1))
-			case 'e': // 当前位置，如 UTC，GMT，Atlantic/Azores
+			case 'e': // current location, such as UTC，GMT，Atlantic/Azores
 				buffer.WriteString(c.Location())
-			case 'Q': // 当前季度，取值范围 1-4
+			case 'Q': // current quarter, value range 1-4
 				buffer.WriteString(strconv.Itoa(c.Quarter()))
-			case 'C': // 当前世纪数，取值范围 0-99
+			case 'C': // current century, value range is 0-99
 				buffer.WriteString(strconv.Itoa(c.Century()))
 			default:
 				buffer.WriteByte(format[i])
