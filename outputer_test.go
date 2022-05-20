@@ -1723,57 +1723,63 @@ func TestCarbon_Format(t *testing.T) {
 
 	tests := []struct {
 		input    string // 输入值
-		param    string // 参数值
+		format   string // 参数值
+		locale   string // 参数值
 		expected string // 期望值
 	}{
-		{"", "Y年m月d日", ""},
-		{"0", "Y年m月d日", ""},
-		{"0000-00-00", "Y年m月d日", ""},
-		{"00:00:00", "Y年m月d日", ""},
-		{"0000-00-00 00:00:00", "Y年m月d日", ""},
+		{"", "Y年m月d日", "en", ""},
+		{"0", "Y年m月d日", "en", ""},
+		{"0000-00-00", "Y年m月d日", "en", ""},
+		{"00:00:00", "Y年m月d日", "en", ""},
+		{"0000-00-00 00:00:00", "Y年m月d日", "en", ""},
 
-		{"2020-08-05 13:14:15", "Y年m月d日", "2020年08月05日"},
-		{"2020-08-05 01:14:15", "j", "5"},
-		{"2020-08-05 01:14:15", "W", "32"},
-		{"2020-08-05 01:14:15", "M", "Aug"},
-		{"2020-08-05 01:14:15", "F", "August"},
-		{"2020-08-05 01:14:15", "N", "3"},
-		{"2020-08-05 01:14:15", "L", "1"},
-		{"2020-08-05 01:14:15", "L", "1"},
-		{"2021-08-05 01:14:15", "L", "0"},
-		{"2020-08-05 01:14:15", "G", "1"},
-		{"2020-08-05 13:14:15", "U", "1596604455"},
-		{"2020-08-05 13:14:15.999", "u", "999"},
-		{"2020-08-05 13:14:15", "w", "2"},
-		{"2020-08-05 13:14:15", "t", "31"},
-		{"2020-08-05 13:14:15", "z", "217"},
-		{"2020-08-05 13:14:15", "e", "PRC"},
-		{"2020-08-05 13:14:15", "Q", "3"},
-		{"2020-08-05 13:14:15", "C", "21"},
-		{"2020-08-05 13:14:15", "jS", "5th"},
-		{"2020-08-22 13:14:15", "jS", "22nd"},
-		{"2020-08-23 13:14:15", "jS", "23rd"},
-		{"2020-08-31 13:14:15", "jS", "31st"},
-		{"2020-08-31 13:14:15", "I\\t \\i\\s Y-m-d H:i:s", "It is 2020-08-31 13:14:15"},
-		{"2020-08-05 13:14:15", "上次上报时间:Y-m-d H:i:s，请每日按时打卡", "上次上报时间:2020-08-05 13:14:15，请每日按时打卡"},
-		{"2020-08-05 13:14:15", "l jS of F Y h:i:s A", "Wednesday 5th of August 2020 01:14:15 PM"},
+		{"2020-08-05 01:14:15", "D", "de", "Mi"},
+		{"2020-08-05 01:14:15", "l", "ru", "Среда"},
+		{"2020-08-05 01:14:15", "F", "jp", "はちがつ"},
+		{"2020-08-05 01:14:15", "M", "zh-CN", "8月"},
+
+		{"2020-08-05 13:14:15", "Y年m月d日", "en", "2020年08月05日"},
+		{"2020-08-05 01:14:15", "j", "en", "5"},
+		{"2020-08-05 01:14:15", "W", "en", "32"},
+		{"2020-08-05 01:14:15", "M", "en", "Aug"},
+		{"2020-08-05 01:14:15", "F", "en", "August"},
+		{"2020-08-05 01:14:15", "N", "en", "3"},
+		{"2020-08-05 01:14:15", "L", "en", "1"},
+		{"2020-08-05 01:14:15", "L", "en", "1"},
+		{"2021-08-05 01:14:15", "L", "en", "0"},
+		{"2020-08-05 01:14:15", "G", "en", "1"},
+		{"2020-08-05 13:14:15", "U", "en", "1596604455"},
+		{"2020-08-05 13:14:15.999", "u", "en", "999"},
+		{"2020-08-05 13:14:15", "w", "en", "2"},
+		{"2020-08-05 13:14:15", "t", "en", "31"},
+		{"2020-08-05 13:14:15", "z", "en", "217"},
+		{"2020-08-05 13:14:15", "e", "en", "PRC"},
+		{"2020-08-05 13:14:15", "Q", "en", "3"},
+		{"2020-08-05 13:14:15", "C", "en", "21"},
+		{"2020-08-05 13:14:15", "jS", "en", "5th"},
+		{"2020-08-22 13:14:15", "jS", "en", "22nd"},
+		{"2020-08-23 13:14:15", "jS", "en", "23rd"},
+		{"2020-08-31 13:14:15", "jS", "en", "31st"},
+		{"2020-08-31 13:14:15", "I\\t \\i\\s Y-m-d H:i:s", "en", "It is 2020-08-31 13:14:15"},
+		{"2020-08-05 13:14:15", "上次上报时间:Y-m-d H:i:s，请每日按时打卡", "en", "上次上报时间:2020-08-05 13:14:15，请每日按时打卡"},
+		{"2020-08-05 13:14:15", "l jS of F Y h:i:s A", "en", "Wednesday 5th of August 2020 01:14:15 PM"},
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Format(test.param), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.SetLocale(test.locale).Format(test.format), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToFormatString(test.param), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.SetLocale(test.locale).ToFormatString(test.format), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToFormatString(test.param, PRC), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.SetLocale(test.locale).ToFormatString(test.format, PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
