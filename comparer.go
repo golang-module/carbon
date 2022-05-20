@@ -333,7 +333,7 @@ func (c Carbon) IsSameMonth(t Carbon) bool {
 	if c.IsInvalid() || t.IsInvalid() {
 		return false
 	}
-	return c.Year() == t.Year() && c.Month() == t.Month()
+	return c.Format("Ym") == t.Format("Ym")
 }
 
 // IsSameDay reports whether is same day.
@@ -342,7 +342,7 @@ func (c Carbon) IsSameDay(t Carbon) bool {
 	if c.IsInvalid() || t.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == t.ToDateString()
+	return c.Format("Ymd") == t.Format("Ymd")
 }
 
 // IsSameHour reports whether is same hour.
@@ -351,7 +351,7 @@ func (c Carbon) IsSameHour(t Carbon) bool {
 	if c.IsInvalid() || t.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == t.ToDateString() && c.Hour() == t.Hour()
+	return c.Format("YmdH") == t.Format("YmdH")
 }
 
 // IsSameMinute reports whether is same minute.
@@ -360,7 +360,7 @@ func (c Carbon) IsSameMinute(t Carbon) bool {
 	if c.IsInvalid() || t.IsInvalid() {
 		return false
 	}
-	return c.ToDateString() == t.ToDateString() && c.Hour() == t.Hour() && c.Minute() == t.Minute()
+	return c.Format("YmdHi") == t.Format("YmdHi")
 }
 
 // IsSameSecond reports whether is same second.
@@ -369,7 +369,8 @@ func (c Carbon) IsSameSecond(t Carbon) bool {
 	if c.IsInvalid() || t.IsInvalid() {
 		return false
 	}
-	return c.ToDateTimeString() == t.ToDateTimeString()
+	return c.Format("YmdHis") == t.Format("YmdHis")
+
 }
 
 // Compare compares by an operator.
