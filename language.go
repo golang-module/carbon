@@ -14,12 +14,15 @@ var fs embed.FS
 
 var (
 	// default directory
+	// 默认目录
 	defaultDir = "lang"
 
 	// default locale
+	// 默认区域
 	defaultLocale = "en"
 
-	// returns an invalid locale error.
+	// invalid locale error
+	// 无效的区域错误
 	invalidLocaleError = func(locale string) error {
 		return fmt.Errorf("invalid locale file %q, please make sure the json file exists and is valid", locale)
 	}
