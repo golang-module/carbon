@@ -26,14 +26,14 @@ Carbon 已被 [awesome-go](https://github.com/avelino/awesome-go#date-and-time "
 go get -u github.com/golang-module/carbon/v2
 
 import (
-    "github.com/golang-module/carbon/v2"
+	"github.com/golang-module/carbon/v2"
 )
 
 // 使用 gitee 库
 go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/golang-module/carbon/v2"
+	"gitee.com/golang-module/carbon/v2"
 )
 ```
 
