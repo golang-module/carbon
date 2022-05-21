@@ -214,7 +214,7 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 	return strings.Replace(c.lang.resources["after"], "%s", translation, 1)
 }
 
-// diff gets the difference for unit and value.
+// gets the difference for unit and value.
 // 获取相差单位和差值
 func (c Carbon) diff(end Carbon) (unit string, value int64) {
 	switch true {

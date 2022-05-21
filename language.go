@@ -13,13 +13,13 @@ import (
 var fs embed.FS
 
 var (
-	// defaultDir default directory
+	// default directory
 	defaultDir = "lang"
 
-	// defaultLocale default locale
+	// default locale
 	defaultLocale = "en"
 
-	// invalidLocaleError returns an invalid locale error.
+	// returns an invalid locale error.
 	invalidLocaleError = func(locale string) error {
 		return fmt.Errorf("invalid locale file %q, please make sure the json file exists and is valid", locale)
 	}
@@ -76,7 +76,7 @@ func (lang *Language) SetResources(resources map[string]string) {
 	}
 }
 
-// translate returns a translated string.
+// returns a translated string.
 // 翻译转换
 func (lang *Language) translate(unit string, value int64) string {
 	if len(lang.resources) == 0 {

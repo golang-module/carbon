@@ -5,19 +5,18 @@ import (
 )
 
 // AddDuration adds one duration.
-// 按照持续时长字符串增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照时长增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time = c.Carbon2Time().Add(td)
-	c.Error = err
+	c.time, c.Error = c.Carbon2Time().Add(td), err
 	return c
 }
 
 // SubDuration subtracts one duration.
-// 按照持续时长字符串减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照时长减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
 }
