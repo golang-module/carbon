@@ -1341,7 +1341,7 @@ lang := carbon.NewLanguage()
 lang.SetLocale("en")
 
 c := carbon.SetLanguage(lang)
-    if c.Error != nil {
+if c.Error != nil {
     // Error handle...
     log.Fatal(err)
 }
