@@ -716,15 +716,15 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 		if layout, ok := formats[format[i]]; ok {
 			// support for i18n specific symbols
 			switch format[i] {
-			case 'l': // Monday
+			case 'l': // week, such as Monday
 				buffer.WriteString(c.ToWeekString())
-			case 'D': // Mon
+			case 'D': // short week, such as Mon
 				buffer.WriteString(c.ToShortWeekString())
-			case 'F': // January
+			case 'F': // month, such as January
 				buffer.WriteString(c.ToMonthString())
-			case 'M': // Jan
+			case 'M': // short month, such as Jan
 				buffer.WriteString(c.ToShortMonthString())
-			default:
+			default: // common symbols
 				buffer.WriteString(c.Carbon2Time().Format(layout))
 			}
 		} else {
@@ -754,7 +754,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				} else {
 					buffer.WriteString("0")
 				}
-			case 'G': // 24-hour format without leading zeros, ranging from 0-23
+			case 'G': // 24-hour format, no padding, ranging from 0-23
 				buffer.WriteString(strconv.Itoa(c.Hour()))
 			case 'U': // timestamp with second, such as 1611818268
 				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
@@ -764,7 +764,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek() - 1))
 			case 't': // number of days in the month, ranging from 28-31
 				buffer.WriteString(strconv.Itoa(c.DaysInMonth()))
-			case 'z': // day of the year, value range 0-365
+			case 'z': // day of the year, ranging from 0-365
 				buffer.WriteString(strconv.Itoa(c.DayOfYear() - 1))
 			case 'e': // current location, such as UTC，GMT，Atlantic/Azores
 				buffer.WriteString(c.Location())
