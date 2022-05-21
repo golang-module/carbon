@@ -44,14 +44,14 @@ import (
 go get -u github.com/golang-module/carbon
 
 import (
-"github.com/golang-module/carbon"
+	"github.com/golang-module/carbon"
 )
 
 // 使用 gitee 库
 go get -u gitee.com/golang-module/carbon
 
 import (
-"gitee.com/golang-module/carbon"
+	"gitee.com/golang-module/carbon"
 )
 ```
 
@@ -922,7 +922,6 @@ carbon.Now().SetLocale("zh-CN").Season() // 夏季
 // 获取年龄
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
 carbon.Parse("2002-12-31 13:14:15").Age() // 18
-
 ```
 
 ##### 时间输出
@@ -1391,24 +1390,24 @@ c.Now().Season() // Summer
 ```go
 lang := carbon.NewLanguage()
 resources := map[string]string {
-"months": "january|february|march|april|may|june|july|august|september|october|november|december",
-"short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
-"weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
-"short_weeks": "sun|mon|tue|wed|thu|fri|sat",
-"seasons": "spring|summer|autumn|winter",
-"constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
-"year": "1 yr|%d yrs",
-"month": "1 mo|%d mos",
-"week": "%dw",
-"day": "%dd",
-"hour": "%dh",
-"minute": "%dm",
-"second": "%ds",
-"now": "just now",
-"ago": "%s ago",
-"from_now": "in %s",
-"before": "%s before",
-"after": "%s after",
+	"months": "january|february|march|april|may|june|july|august|september|october|november|december",
+	"short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
+	"weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
+	"short_weeks": "sun|mon|tue|wed|thu|fri|sat",
+	"seasons": "spring|summer|autumn|winter",
+	"constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
+	"year": "1 yr|%d yrs",
+	"month": "1 mo|%d mos",
+	"week": "%dw",
+	"day": "%dd",
+	"hour": "%dh",
+	"minute": "%dm",
+	"second": "%ds",
+	"now": "just now",
+	"ago": "%s ago",
+	"from_now": "in %s",
+	"before": "%s before",
+	"after": "%s after",
 }
 lang.SetResources(resources)
 
@@ -1430,8 +1429,8 @@ c.Now().Season() // summer
 ```go
 c := carbon.SetTimezone("xxx").Parse("2020-08-05")
 if c.Error != nil {
-// 错误处理...
-log.Fatal(c.Error)
+	// 错误处理...
+	log.Fatal(c.Error)
 }
 fmt.Println(c.ToDateTimeString())
 // 输出
