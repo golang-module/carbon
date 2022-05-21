@@ -37,7 +37,7 @@ go get -u gitee.com/golang-module/carbon/v2
 
 import (
     "gitee.com/golang-module/carbon/v2"
-)               
+)
 ```
 
 ##### Go version < 1.16
@@ -54,8 +54,8 @@ import (
 go get -u gitee.com/golang-module/carbon
 
 import (
-    "gitee.com/golang-module/carbon"
-)               
+	"gitee.com/golang-module/carbon"
+)
 ```
 > Please refer to <a href="#faq">FAQ</a> for the difference between v1 and v2
 
@@ -85,7 +85,7 @@ carbon.Now().TimestampMicro() // 1596604455000000
 // Return timestamp with nanosecond of today
 carbon.Now().TimestampNano() // 1596604455000000000
 
-// Return datetime of yesterday 
+// Return datetime of yesterday
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
 carbon.Yesterday().ToString() // 2020-08-04 13:14:15 +0800 CST
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
@@ -566,7 +566,7 @@ carbon.Parse("2020-08-05 13:14:15").IsLeapYear() // true
 // Whether is a long year
 carbon.Parse("2020-08-05 13:14:15").IsLongYear() // true
 
-// Whether is January 
+// Whether is January
 carbon.Parse("2020-08-05 13:14:15").IsJanuary() // false
 // Whether is February
 carbon.Parse("2020-08-05 13:14:15").IsFebruary() // false
