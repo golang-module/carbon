@@ -1252,8 +1252,8 @@ person := Person {
 ```go
 data, err := json.Marshal(&person)
 if err != nil {
-	// Error handle...
-	log.Fatal(err)
+    // Error handle...
+    log.Fatal(err)
 }
 fmt.Printf("%s", data)
 // Output
@@ -1297,8 +1297,8 @@ str := `{
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
 if err != nil {
-	// Error handle...
-	log.Fatal(err)
+    // Error handle...
+    log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // Output

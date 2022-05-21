@@ -1483,8 +1483,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### 常见问题
 
 1、v1 和 v2 版本有什么区别？
-> v1 和 v2 版本的 API 没有任何区别，只是 `language.go` 里翻译资源文件内嵌的实现方式不同，v1 版本是由第三方扩展库 [packr](https://github.com/gobuffalo/packr) 实现的，v2
-> 版本是由 `golang1.16` 后内置标准库 [embed](https://pkg.go.dev/embed) 实现的，推荐使用 v2 版本。
+> v1 和 v2 版本的 API 没有任何区别，只是 `language.go` 里翻译资源文件内嵌的实现方式不同，v1 版本是由第三方扩展库 [packr](https://github.com/gobuffalo/packr)
+> 实现的，
+> v2 版本是由 `golang1.16` 后内置标准库 [embed](https://pkg.go.dev/embed) 实现的，推荐使用 v2 版本。
 
 #### 参考项目
 
