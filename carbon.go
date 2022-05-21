@@ -14,9 +14,9 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.1.7"
+const Version = "2.1.8"
 
-// timezones constant
+// timezone constants
 // 时区常量
 const (
 	Local = "Local" // 本地时间
@@ -69,7 +69,7 @@ const (
 	Darwin     = "Australia/Darwin"    // 达尔文
 )
 
-// months constant
+// month constants
 // 月份常量
 const (
 	January   = "January"   // 一月
@@ -86,7 +86,7 @@ const (
 	December  = "December"  // 十二月
 )
 
-// weeks constant
+// week constants
 // 星期常量
 const (
 	Monday    = "Monday"    // 周一
@@ -98,7 +98,7 @@ const (
 	Sunday    = "Sunday"    // 周日
 )
 
-// numbers constant
+// number constants
 // 数字常量
 const (
 	YearsPerMillennium = 1000   // 每千年1000年
@@ -123,7 +123,7 @@ const (
 	SecondsPerMinute   = 60     // 每分钟60秒
 )
 
-// layouts constant
+// layout constants
 // 布局模板常量
 const (
 	ANSICLayout              = time.ANSIC
