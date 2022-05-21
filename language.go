@@ -11,13 +11,16 @@ import (
 )
 
 var (
-	// defaultDir default directory
+	// default directory
+	// 默认目录
 	defaultDir = "lang"
 
-	// defaultLocale default locale
+	// default locale
+	// 默认区域
 	defaultLocale = "en"
 
-	// invalidLocaleError returns an invalid locale error.
+	// invalid locale error
+	// 无效的区域错误
 	invalidLocaleError = func(locale string) error {
 		return fmt.Errorf("invalid locale file %q, please make sure the json file exists and is valid", locale)
 	}
@@ -76,7 +79,7 @@ func (lang *Language) SetResources(resources map[string]string) {
 	}
 }
 
-// translate returns a translated string.
+// returns a translated string.
 // 翻译转换
 func (lang *Language) translate(unit string, value int64) string {
 	if len(lang.resources) == 0 {

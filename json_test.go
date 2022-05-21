@@ -28,7 +28,7 @@ type Person struct {
 var person Person
 
 func TestCarbon_MarshalJSON(t *testing.T) {
-	person := Person{
+	person = Person{
 		Name:         "gouguoyin",
 		Age:          18,
 		Birthday1:    DateTime{Now().SubYears(18)},
