@@ -56,19 +56,15 @@ func TestCarbon_Tomorrow(t *testing.T) {
 }
 
 func TestCarbon_Time2Carbon(t *testing.T) {
-	assert := assert.New(t)
-
 	expected := time.Now().Format(DateTimeLayout)
 	actual := Time2Carbon(time.Now()).ToDateTimeString()
-	assert.Equal(expected, actual)
+	assert.Equal(t, expected, actual)
 }
 
 func TestCarbon_Carbon2Time(t *testing.T) {
-	assert := assert.New(t)
-
 	expected := time.Now().Format(DateTimeLayout)
 	actual := Now().Carbon2Time().Format(DateTimeLayout)
-	assert.Equal(expected, actual)
+	assert.Equal(t, expected, actual)
 }
 
 func TestError_Carbon(t *testing.T) {

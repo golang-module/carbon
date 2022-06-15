@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// formats common formatting symbols
+// common formatting symbols
 // 常规格式化符号
 var formats = map[byte]string{
 	'd': "02",                              // Day:    Day of the month, 2 digits with leading zeros. Eg: 01 to 31.
@@ -32,7 +32,7 @@ var formats = map[byte]string{
 	'r': "Thu, 21 Dec 2000 16:01:07 +0200", // Format: RFC 2822 formatted date. Eg: Thu, 21 Dec 2000 16:01:07 +0200.
 }
 
-// format2layout converts format to layout.
+// converts format to layout.
 // format 转 layout
 func format2layout(format string) string {
 	buffer := bytes.NewBuffer(nil)
@@ -41,7 +41,7 @@ func format2layout(format string) string {
 			buffer.WriteString(layout)
 		} else {
 			switch format[i] {
-			case '\\': // 原样输出，不解析
+			case '\\': // raw output, no parse
 				buffer.WriteByte(format[i+1])
 				i++
 				continue
@@ -53,7 +53,7 @@ func format2layout(format string) string {
 	return buffer.String()
 }
 
-// getLocationByTimezone gets a Location instance by a timezone string.
+// gets a Location instance by a timezone string.
 // 通过时区获取 Location 实例
 func getLocationByTimezone(timezone string) (*time.Location, error) {
 	loc, err := time.LoadLocation(timezone)
@@ -63,8 +63,8 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 	return loc, err
 }
 
-// parseByDuration parses as a Duration instance by a duration string.
-// 通过持续时长解析
+// parses as a Duration instance by a duration string.
+// 通过时长解析
 func parseByDuration(duration string) (time.Duration, error) {
 	td, err := time.ParseDuration(duration)
 	if err != nil {
@@ -73,7 +73,7 @@ func parseByDuration(duration string) (time.Duration, error) {
 	return td, err
 }
 
-// getAbsValue gets absolute value.
+// gets absolute value.
 // 获取绝对值
 func getAbsValue(value int64) int64 {
 	return (value ^ value>>31) - value>>31

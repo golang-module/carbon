@@ -5,19 +5,18 @@ import (
 )
 
 // AddDuration adds one duration.
-// 按照持续时长字符串增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照时长增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time = c.Carbon2Time().Add(td)
-	c.Error = err
+	c.time, c.Error = c.Carbon2Time().Add(td), err
 	return c
 }
 
 // SubDuration subtracts one duration.
-// 按照持续时长字符串减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
+// 按照时长减少时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) SubDuration(duration string) Carbon {
 	return c.AddDuration("-" + duration)
 }
@@ -430,4 +429,91 @@ func (c Carbon) SubSeconds(seconds int) Carbon {
 // 1秒钟前
 func (c Carbon) SubSecond() Carbon {
 	return c.SubSeconds(1)
+}
+
+// AddMilliseconds adds some milliseconds.
+// N毫秒后
+func (c Carbon) AddMilliseconds(milliseconds int) Carbon {
+	if c.IsInvalid() {
+		return c
+	}
+	td := time.Duration(milliseconds) * time.Millisecond
+	c.time = c.Carbon2Time().Add(td)
+	return c
+}
+
+// AddMillisecond adds one millisecond.
+// 1毫秒后
+func (c Carbon) AddMillisecond() Carbon {
+	return c.AddMilliseconds(1)
+}
+
+// SubMilliseconds subtracts some milliseconds.
+// N毫秒前
+func (c Carbon) SubMilliseconds(milliseconds int) Carbon {
+	return c.AddMilliseconds(-milliseconds)
+}
+
+// SubMillisecond subtracts one millisecond.
+// 1毫秒前
+func (c Carbon) SubMillisecond() Carbon {
+	return c.SubMilliseconds(1)
+}
+
+// AddMicroseconds adds some microseconds.
+// N微秒后
+func (c Carbon) AddMicroseconds(microseconds int) Carbon {
+	if c.IsInvalid() {
+		return c
+	}
+	td := time.Duration(microseconds) * time.Microsecond
+	c.time = c.Carbon2Time().Add(td)
+	return c
+}
+
+// AddMicrosecond adds one microsecond.
+// 1微秒后
+func (c Carbon) AddMicrosecond() Carbon {
+	return c.AddMicroseconds(1)
+}
+
+// SubMicroseconds subtracts some microseconds.
+// N微秒前
+func (c Carbon) SubMicroseconds(microseconds int) Carbon {
+	return c.AddMicroseconds(-microseconds)
+}
+
+// SubMicrosecond subtracts one microsecond.
+// 1微秒前
+func (c Carbon) SubMicrosecond() Carbon {
+	return c.SubMicroseconds(1)
+}
+
+// AddNanoseconds adds some nanoseconds.
+// N纳秒后
+func (c Carbon) AddNanoseconds(nanoseconds int) Carbon {
+	if c.IsInvalid() {
+		return c
+	}
+	td := time.Duration(nanoseconds) * time.Nanosecond
+	c.time = c.Carbon2Time().Add(td)
+	return c
+}
+
+// AddNanosecond adds one nanosecond.
+// 1纳秒后
+func (c Carbon) AddNanosecond() Carbon {
+	return c.AddNanoseconds(1)
+}
+
+// SubNanoseconds subtracts some nanoseconds.
+// N纳秒前
+func (c Carbon) SubNanoseconds(nanoseconds int) Carbon {
+	return c.AddNanoseconds(-nanoseconds)
+}
+
+// SubNanosecond subtracts one nanosecond.
+// 1纳秒前
+func (c Carbon) SubNanosecond() Carbon {
+	return c.SubNanoseconds(1)
 }

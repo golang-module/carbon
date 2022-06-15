@@ -11,8 +11,8 @@ func TestLanguage_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   string // 输入值
+		input    Carbon // 输入值
+		locale   string // 输入值
 		expected string // 期望值
 	}{
 		{Now(), "en", "1 day after"},
@@ -21,8 +21,8 @@ func TestLanguage_SetLocale(t *testing.T) {
 
 	for index, test := range tests {
 		lang := NewLanguage()
-		lang.SetLocale(test.input2)
-		assert.Equal(test.expected, (test.input1).AddDays(1).SetLanguage(lang).DiffForHumans(test.input1), "Current test index is "+strconv.Itoa(index))
+		lang.SetLocale(test.locale)
+		assert.Equal(test.expected, (test.input).AddDays(1).SetLanguage(lang).DiffForHumans(test.input), "Current test index is "+strconv.Itoa(index))
 	}
 }
 

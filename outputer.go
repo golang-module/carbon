@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// String outputs a string in date and time format, implement Stringer interface.
+// String implements the interface Stringer for Carbon struct.
 // 实现 Stringer 接口
 func (c Carbon) String() string {
 	return c.ToDateTimeString()
@@ -228,6 +228,42 @@ func (c Carbon) ToDateString(timezone ...string) string {
 	return c.Carbon2Time().Format(DateLayout)
 }
 
+// ToDateMilliString outputs a string in "2006-01-02.999" layout.
+// 输出 "2006-01-02.999" 格式字符串
+func (c Carbon) ToDateMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateMilliLayout)
+}
+
+// ToDateMicroString outputs a string in "2006-01-02.999999" layout.
+// 输出 "2006-01-02.999999" 格式字符串
+func (c Carbon) ToDateMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateMicroLayout)
+}
+
+// ToDateNanoString outputs a string in "2006-01-02.999999999" layout.
+// 输出 "2006-01-02.999999999" 格式字符串
+func (c Carbon) ToDateNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(DateNanoLayout)
+}
+
 // ToShortDateString outputs a string in "20060102" layout.
 // 输出 "20060102" 格式字符串
 func (c Carbon) ToShortDateString(timezone ...string) string {
@@ -238,6 +274,42 @@ func (c Carbon) ToShortDateString(timezone ...string) string {
 		return ""
 	}
 	return c.Carbon2Time().Format(ShortDateLayout)
+}
+
+// ToShortDateMilliString outputs a string in "20060102.999" layout.
+// 输出 "20060102.999" 格式字符串
+func (c Carbon) ToShortDateMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateMilliLayout)
+}
+
+// ToShortDateMicroString outputs a string in "20060102.999999" layout.
+// 输出 "20060102.999999" 格式字符串
+func (c Carbon) ToShortDateMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateMicroLayout)
+}
+
+// ToShortDateNanoString outputs a string in "20060102.999999999" layout.
+// 输出 "20060102.999999999" 格式字符串
+func (c Carbon) ToShortDateNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortDateNanoLayout)
 }
 
 // ToTimeString outputs a string in "15:04:05" layout.
@@ -252,6 +324,42 @@ func (c Carbon) ToTimeString(timezone ...string) string {
 	return c.Carbon2Time().Format(TimeLayout)
 }
 
+// ToTimeMilliString outputs a string in "15:04:05.999" layout.
+// 输出 "15:04:05.999" 格式字符串
+func (c Carbon) ToTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeMilliLayout)
+}
+
+// ToTimeMicroString outputs a string in "15:04:05.999999" layout.
+// 输出 "15:04:05.999999" 格式字符串
+func (c Carbon) ToTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeMicroLayout)
+}
+
+// ToTimeNanoString outputs a string in "15:04:05.999999999" layout.
+// 输出 "15:04:05.999999999" 格式字符串
+func (c Carbon) ToTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(TimeNanoLayout)
+}
+
 // ToShortTimeString outputs a string in "150405" layout.
 // 输出 "150405" 格式字符串
 func (c Carbon) ToShortTimeString(timezone ...string) string {
@@ -262,6 +370,42 @@ func (c Carbon) ToShortTimeString(timezone ...string) string {
 		return ""
 	}
 	return c.Carbon2Time().Format(ShortTimeLayout)
+}
+
+// ToShortTimeMilliString outputs a string in "150405.999" layout.
+// 输出 "150405.999" 格式字符串
+func (c Carbon) ToShortTimeMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeMilliLayout)
+}
+
+// ToShortTimeMicroString outputs a string in "150405.999999" layout.
+// 输出 "150405.999999" 格式字符串
+func (c Carbon) ToShortTimeMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeMicroLayout)
+}
+
+// ToShortTimeNanoString outputs a string in "150405.999999999" layout.
+// 输出 "150405.999999999" 格式字符串
+func (c Carbon) ToShortTimeNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.Carbon2Time().Format(ShortTimeNanoLayout)
 }
 
 // ToAtomString outputs a string in "2006-01-02T15:04:05Z07:00" layout.
@@ -570,18 +714,30 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	buffer := bytes.NewBuffer(nil)
 	for i := 0; i < len(format); i++ {
 		if layout, ok := formats[format[i]]; ok {
-			buffer.WriteString(c.Carbon2Time().Format(layout))
+			// support for i18n specific symbols
+			switch format[i] {
+			case 'l': // week, such as Monday
+				buffer.WriteString(c.ToWeekString())
+			case 'D': // short week, such as Mon
+				buffer.WriteString(c.ToShortWeekString())
+			case 'F': // month, such as January
+				buffer.WriteString(c.ToMonthString())
+			case 'M': // short month, such as Jan
+				buffer.WriteString(c.ToShortMonthString())
+			default: // common symbols
+				buffer.WriteString(c.Carbon2Time().Format(layout))
+			}
 		} else {
 			switch format[i] {
-			case '\\': // 原样输出，不解析
+			case '\\': // raw output, no parse
 				buffer.WriteByte(format[i+1])
 				i++
 				continue
-			case 'W': // ISO-8601 格式数字表示的年份中的第几周，取值范围 1-52
+			case 'W': // week number of the year in ISO-8601 format, ranging from 1-52
 				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
-			case 'N': // ISO-8601 格式数字表示的星期中的第几天，取值范围 1-7
+			case 'N': // day of the week as a number in ISO-8601 format, ranging from 1-7
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek()))
-			case 'S': // 月份中第几天的英文缩写后缀，如st, nd, rd, th
+			case 'S': // abbreviated suffix for the day of the month, such as st, nd, rd, th
 				suffix := "th"
 				switch c.Day() {
 				case 1, 21, 31:
@@ -592,29 +748,29 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 					suffix = "rd"
 				}
 				buffer.WriteString(suffix)
-			case 'L': // 是否为闰年，如果是闰年为 1，否则为 0
+			case 'L': // whether it is a leap year, if it is a leap year, it is 1, otherwise it is 0
 				if c.IsLeapYear() {
 					buffer.WriteString("1")
 				} else {
 					buffer.WriteString("0")
 				}
-			case 'G': // 数字表示的小时，24 小时格式，没有前导零，取值范围 0-23
+			case 'G': // 24-hour format, no padding, ranging from 0-23
 				buffer.WriteString(strconv.Itoa(c.Hour()))
-			case 'U': // 秒级时间戳，如 1611818268
+			case 'U': // timestamp with second, such as 1611818268
 				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
-			case 'u': // 数字表示的毫秒，如 999
+			case 'u': // current millisecond, such as 999
 				buffer.WriteString(strconv.Itoa(c.Millisecond()))
-			case 'w': // 数字表示的星期中的第几天，取值范围 0-6
+			case 'w': // day of the week represented by the number, ranging from 0-6
 				buffer.WriteString(strconv.Itoa(c.DayOfWeek() - 1))
-			case 't': // 指定的月份有几天，取值范围 28-31
+			case 't': // number of days in the month, ranging from 28-31
 				buffer.WriteString(strconv.Itoa(c.DaysInMonth()))
-			case 'z': // 年份中的第几天，取值范围 0-365
+			case 'z': // day of the year, ranging from 0-365
 				buffer.WriteString(strconv.Itoa(c.DayOfYear() - 1))
-			case 'e': // 当前位置，如 UTC，GMT，Atlantic/Azores
+			case 'e': // current location, such as UTC，GMT，Atlantic/Azores
 				buffer.WriteString(c.Location())
-			case 'Q': // 当前季度，取值范围 1-4
+			case 'Q': // current quarter, ranging from 1-4
 				buffer.WriteString(strconv.Itoa(c.Quarter()))
-			case 'C': // 当前世纪数，取值范围 0-99
+			case 'C': // current century, ranging from 0-99
 				buffer.WriteString(strconv.Itoa(c.Century()))
 			default:
 				buffer.WriteByte(format[i])

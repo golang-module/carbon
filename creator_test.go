@@ -247,6 +247,90 @@ func TestCarbon_CreateFromDate(t *testing.T) {
 	}
 }
 
+func TestCarbon_CreateFromDateMilli(t *testing.T) {
+	assert := assert.New(t)
+
+	clock := Now(PRC).ToTimeString()
+	tests := []struct {
+		year, month, day, millisecond int    // 输入参数
+		expected                      string // 期望值
+	}{
+		{2020, 1, 1, 999, "2020-01-01 " + clock + ".999"},
+		{2020, 1, 31, 999, "2020-01-31 " + clock + ".999"},
+		{2020, 2, 1, 999, "2020-02-01 " + clock + ".999"},
+		{2020, 2, 28, 999, "2020-02-28 " + clock + ".999"},
+		{2020, 2, 29, 999, "2020-02-29 " + clock + ".999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromDateMilli(test.year, test.month, test.day, test.millisecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromDateMilli(test.year, test.month, test.day, test.millisecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_CreateFromDateMicro(t *testing.T) {
+	assert := assert.New(t)
+
+	clock := Now(PRC).ToTimeString()
+	tests := []struct {
+		year, month, day, microsecond int    // 输入参数
+		expected                      string // 期望值
+	}{
+		{2020, 1, 1, 999999, "2020-01-01 " + clock + ".999999"},
+		{2020, 1, 31, 999999, "2020-01-31 " + clock + ".999999"},
+		{2020, 2, 1, 999999, "2020-02-01 " + clock + ".999999"},
+		{2020, 2, 28, 999999, "2020-02-28 " + clock + ".999999"},
+		{2020, 2, 29, 999999, "2020-02-29 " + clock + ".999999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromDateMicro(test.year, test.month, test.day, test.microsecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromDateMicro(test.year, test.month, test.day, test.microsecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_CreateFromDateNano(t *testing.T) {
+	assert := assert.New(t)
+
+	clock := Now(PRC).ToTimeString()
+	tests := []struct {
+		year, month, day, nanosecond int    // 输入参数
+		expected                     string // 期望值
+	}{
+		{2020, 1, 1, 999999999, "2020-01-01 " + clock + ".999999999"},
+		{2020, 1, 31, 999999999, "2020-01-31 " + clock + ".999999999"},
+		{2020, 2, 1, 999999999, "2020-02-01 " + clock + ".999999999"},
+		{2020, 2, 28, 999999999, "2020-02-28 " + clock + ".999999999"},
+		{2020, 2, 29, 999999999, "2020-02-29 " + clock + ".999999999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromDateNano(test.year, test.month, test.day, test.nanosecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromDateNano(test.year, test.month, test.day, test.nanosecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_CreateFromTime(t *testing.T) {
 	assert := assert.New(t)
 
@@ -271,6 +355,87 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 		c := CreateFromTime(test.hour, test.minute, test.second, PRC)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_CreateFromTimeMilli(t *testing.T) {
+	assert := assert.New(t)
+
+	date := Now(PRC).ToDateString()
+	tests := []struct {
+		hour, minute, second, millisecond int    // 输入参数
+		expected                          string // 期望值
+	}{
+		{0, 0, 0, 999, date + " 00:00:00.999"},
+		{00, 00, 15, 999, date + " 00:00:15.999"},
+		{00, 14, 15, 999, date + " 00:14:15.999"},
+		{13, 14, 15, 999, date + " 13:14:15.999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromTimeMilli(test.hour, test.minute, test.second, test.millisecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromTimeMilli(test.hour, test.minute, test.second, test.millisecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_CreateFromTimeMicro(t *testing.T) {
+	assert := assert.New(t)
+
+	date := Now(PRC).ToDateString()
+	tests := []struct {
+		hour, minute, second, microsecond int    // 输入参数
+		expected                          string // 期望值
+	}{
+		{0, 0, 0, 999999, date + " 00:00:00.999999"},
+		{00, 00, 15, 999999, date + " 00:00:15.999999"},
+		{00, 14, 15, 999999, date + " 00:14:15.999999"},
+		{13, 14, 15, 999999, date + " 13:14:15.999999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromTimeMicro(test.hour, test.minute, test.second, test.microsecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromTimeMicro(test.hour, test.minute, test.second, test.microsecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_CreateFromTimeNano(t *testing.T) {
+	assert := assert.New(t)
+
+	date := Now(PRC).ToDateString()
+	tests := []struct {
+		hour, minute, second, nanosecond int    // 输入参数
+		expected                         string // 期望值
+	}{
+		{0, 0, 0, 999999999, date + " 00:00:00.999999999"},
+		{00, 00, 15, 999999999, date + " 00:00:15.999999999"},
+		{00, 14, 15, 999999999, date + " 00:14:15.999999999"},
+		{13, 14, 15, 999999999, date + " 13:14:15.999999999"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).CreateFromTimeNano(test.hour, test.minute, test.second, test.nanosecond)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := CreateFromTimeNano(test.hour, test.minute, test.second, test.nanosecond, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
