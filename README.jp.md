@@ -15,46 +15,48 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 [github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
-[gitee.com/go-package/carbon](https://gitee.com/go-package/carbon "gitee.com/go-package/carbon")
+[gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
 #### インストール使用
 
-##### Golangバージョンは1.16より小さいです
-
-```go
-// github倉庫を使う
-go get -u github.com/golang-module/carbon
-
-import (
-    "github.com/golang-module/carbon"
-)
-
-// gitee倉庫を使う
-go get -u gitee.com/go-package/carbon
-
-import (
-    "gitee.com/go-package/carbon"
-)
-```
-
-##### Golangバージョンは1.16以上です
+##### Golangバージョンは1.16以上です (推奨)
 
 ```go
 // github倉庫を使う
 go get -u github.com/golang-module/carbon/v2
 
 import (
-    "github.com/golang-module/carbon/v2"
+	"github.com/golang-module/carbon/v2"
 )
 
 // gitee倉庫を使う
-go get -u gitee.com/go-package/carbon/v2
+go get -u gitee.com/golang-module/carbon/v2
 
 import (
-    "gitee.com/go-package/carbon/v2"
+	"gitee.com/golang-module/carbon/v2"
 )
 ```
 
+##### Golangバージョンは1.16より小さいです (必要)
+
+```go
+// github倉庫を使う
+go get -u github.com/golang-module/carbon
+
+import (
+	"github.com/golang-module/carbon"
+)
+
+// gitee倉庫を使う
+go get -u gitee.com/golang-module/carbon
+
+import (
+	"gitee.com/golang-module/carbon"
+)
+```
+> v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください。
+
+人気のある問題
 #### 使い方の例
 
 > デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は2020-08-05 13:14:15と仮定します
@@ -64,6 +66,7 @@ import (
 ```go
 // 今日の瞬間
 fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
+carbon.Now().ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
 // 今日の日付
 carbon.Now().ToDateString() // 2020-08-05
@@ -82,6 +85,7 @@ carbon.Now().TimestampNano() // 1596604455000000000
 
 // 昨日の今は
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
+carbon.Yesterday().ToString() // 2020-08-04 13:14:15 +0800 CST
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
 // 昨日の日付
 carbon.Yesterday().ToDateString() // 2020-08-04
@@ -102,6 +106,7 @@ carbon.Yesterday().TimestampNano() // 1596518055000000000
 
 // 明日の今は
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
+carbon.Tomorrow().ToString() // 2020-08-06 13:14:15 +0800 CST
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
 // 明日の日付
 carbon.Tomorrow().ToDateString() // 2020-08-06
@@ -138,7 +143,7 @@ carbon.CreateFromTimestampNano(1649735755981566000).ToString() // 2022-04-12 11:
 
 // 年月日から分秒で Carbon オブジェクトを作成します
 carbon.CreateFromDateTime(2020, 8, 5, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
-// 年月日から分秒で Carbon オブジェクトを作成します，，ミリ秒を含む
+// 年月日から分秒で Carbon オブジェクトを作成します，ミリ秒を含む
 carbon.CreateFromDateTimeMilli(2020, 1, 1, 13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
 // 年月日から分秒で Carbon オブジェクトを作成します，マイクロ秒を含む
 carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
@@ -146,9 +151,22 @@ carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 202
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
 
 // 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)
-carbon.CreateFromDate(2020, 8, 5).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ミリ秒を含む
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，マイクロ秒を含む
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ナノ秒を含む
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 // 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)
-carbon.CreateFromTime(13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，ミリ秒を含む
+carbon.CreateFromTimeMilli(13, 14, 15, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，マイクロ秒を含む
+carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+// 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)，ナノ秒を含む
+carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### 標準形式の時間文字列を Carbon オブジェクトに解析します
@@ -414,6 +432,33 @@ carbon.Parse("2020-08-05 13:14:15").SubSeconds(3).ToDateTimeString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15").SubDuration("2.5s").ToDateTimeString() // 2020-08-05 13:14:12
 // 一か秒钟を減らす
 carbon.Parse("2020-08-05 13:14:15").SubSecond().ToDateTimeString() // 2020-08-05 13:14:14
+
+// 三かミリ秒を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMilliseconds(3).ToString() // 2020-08-05 13:14:15.225222222 +0800 CST
+// 一かミリ秒を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMillisecond().ToString() // 2020-08-05 13:14:15.223222222 +0800 CST
+// 三かミリ秒を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMilliseconds(3).ToString() // 2020-08-05 13:14:15.219222222 +0800 CST
+// 一かミリ秒を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMillisecond().ToString() // 2020-08-05 13:14:15.221222222 +0800 CST
+
+// 三か微妙を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicroseconds(3).ToString() // 2020-08-05 13:14:15.222225222 +0800 CST
+// 一か微妙を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddMicrosecond().ToString() // 2020-08-05 13:14:15.222223222 +0800 CST
+// 三か微妙を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicroseconds(3).ToString() // 2020-08-05 13:14:15.222219222 +0800 CST
+// 一か微妙を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubMicrosecond().ToString() // 2020-08-05 13:14:15.222221222 +0800 CST
+
+// 三かナノ秒を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanoseconds(3).ToString() // 2020-08-05 13:14:15.222222225 +0800 CST
+// 一かナノ秒を追加
+carbon.Parse("2020-08-05 13:14:15.222222222").AddNanossecond().ToString() // 2020-08-05 13:14:15.222222223 +0800 CST
+// 三かナノ秒を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanosseconds(3).ToString() // 2020-08-05 13:14:15.222222219 +0800 CST
+// 一かナノ秒を減らす
+carbon.Parse("2020-08-05 13:14:15.222222222").SubNanossecond().ToString() // 2020-08-05 13:14:15.222222221 +0800 CST
 ```
 
 ##### 时间差異
@@ -579,6 +624,34 @@ carbon.Parse("2020-08-06 13:14:15").IsTomorrow() // true
 carbon.Parse("2020-08-06 00:00:00").IsTomorrow() // true
 carbon.Parse("2020-08-06").IsTomorrow() // true
 
+// 同じ世紀ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameCentury(carbon.Parse("3020-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameCentury(carbon.Parse("2099-08-05 13:14:15")) // true
+// 同じ時代ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameDecade(carbon.Parse("2030-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameDecade(carbon.Parse("2120-08-05 13:14:15")) // true
+// 同じ年ですか
+carbon.Parse("2020-08-05 00:00:00").IsSameYear(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameYear(carbon.Parse("2020-12-31 13:14:15")) // true
+// 同じ季節ですか
+carbon.Parse("2020-08-05 00:00:00").IsSameQuarter(carbon.Parse("2020-09-05 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameQuarter(carbon.Parse("2021-01-31 13:14:15")) // true
+// 同じ月ですか
+carbon.Parse("2020-01-01 00:00:00").IsSameMonth(carbon.Parse("2021-01-31 13:14:15")) // false
+carbon.Parse("2020-01-01 00:00:00").IsSameMonth(carbon.Parse("2020-01-31 13:14:15")) // true
+// 同じ日ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameDay(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 00:00:00").IsSameDay(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ時間ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameHour(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:00:00").IsSameHour(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ分ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameMinute(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:00").IsSameMinute(carbon.Parse("2020-08-05 13:14:15")) // true
+// 同じ秒ですか
+carbon.Parse("2020-08-05 13:14:15").IsSameSecond(carbon.Parse("2021-08-05 13:14:15")) // false
+carbon.Parse("2020-08-05 13:14:15").IsSameSecond(carbon.Parse("2020-08-05 13:14:15")) // true
+
 // 大きいかどうか
 carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-04 13:14:15")) // true
 carbon.Parse("2020-08-05 13:14:15").Gt(carbon.Parse("2020-08-05 13:14:15")) // false
@@ -644,7 +717,7 @@ carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString(
 
 // 設定ロケール
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago
-carbon.Parse("2020-07-05 13:14:15").SetLocale("zh-CN").DiffForHumans() // 1 月前
+carbon.Parse("2020-07-05 13:14:15").SetLocale("jp").DiffForHumans() // 1 ヶ月前
 
 // 年月日時分秒を設定する
 carbon.Parse("2020-01-01").SetDateTime(2019, 2, 2, 13, 14, 15).ToString() // 2019-02-02 13:14:15 +0800 CST
@@ -660,12 +733,30 @@ carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 2, 13, 14, 15, 999999999).To
 carbon.Parse("2020-01-01").SetDateTimeNano(2019, 2, 31, 13, 14, 15, 999999999).ToString() // 2019-03-03 13:14:15.999999999 +0800 CST
 
 // 年月日を設定する
-carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToDateTimeString() // 2019-02-02 00:00:00
-carbon.Parse("2020-01-01").SetDate(2019, 2, 31).ToDateTimeString() // 2019-03-03 00:00:00
+carbon.Parse("2020-01-01").SetDate(2019, 2, 2).ToString() // 2019-02-02 00:00:00 +0800 CST
+carbon.Parse("2020-01-01").SetDate(2019, 2, 31).ToString() // 2019-03-03 00:00:00 +0800 CST
+// 年月日ミリ秒を設定する
+carbon.Parse("2020-01-01").SetDateMilli(2019, 2, 2, 999).ToString() // 2019-02-02 00:00:00.999 +0800 CST
+carbon.Parse("2020-01-01").SetDateMilli(2019, 2, 31, 999).ToString() // 2019-03-03 00:00:00.999 +0800 CST
+// 年月日微秒を設定する
+carbon.Parse("2020-01-01").SetDateMicro(2019, 2, 2, 999999).ToString() // 2019-02-02 00:00:00.999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateMicro(2019, 2, 31, 999999).ToString() // 2019-03-03 00:00:00.999999 +0800 CST
+// 年月日ナノ秒を設定する
+carbon.Parse("2020-01-01").SetDateNano(2019, 2, 2, 999999999).ToString() // 2019-02-02 00:00:00.999999999 +0800 CST
+carbon.Parse("2020-01-01").SetDateNano(2019, 2, 31, 999999999).ToString() // 2019-03-03 00:00:00.999999999 +0800 CST
 
 // 時分秒を設定する
-carbon.Parse("2020-01-01").SetTime(13, 14, 15).ToDateTimeString() // 2020-01-01 13:14:15
-carbon.Parse("2020-01-01").SetTime(13, 14, 90).ToDateTimeString() // 2020-01-01 13:15:30
+carbon.Parse("2020-01-01").SetTime(13, 14, 15).ToString() // 2020-01-01 13:14:15 +0800 CST
+carbon.Parse("2020-01-01").SetTime(13, 14, 90).ToString() // 2020-01-01 13:15:30 +0800 CST
+// 時分秒ミリ秒を設定する
+carbon.Parse("2020-01-01").SetTimeMilli(13, 14, 15, 999).ToString() // 2020-01-01 13:14:15.999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeMilli(13, 14, 90, 999).ToString() // 2020-01-01 13:15:30.999 +0800 CST
+// 時分秒微秒を設定する
+carbon.Parse("2020-01-01").SetTimeMicro(13, 14, 15, 999999).ToString() // 2020-01-01 13:14:15.999999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeMicro(13, 14, 90, 999999).ToString() // 2020-01-01 13:15:30.999999 +0800 CST
+// 時分秒ナノ秒を設定する
+carbon.Parse("2020-01-01").SetTimeNano(13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
+carbon.Parse("2020-01-01").SetTimeNano(13, 14, 90, 999999999).ToString() // 2020-01-01 13:15:30.999999999 +0800 CST
 
 // 年を設定する
 carbon.Parse("2020-02-29").SetYear(2021).ToDateString() // 2021-03-01
@@ -744,8 +835,21 @@ carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,99999999
 
 // 現在の年月日を取得
 carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
+// 現在の年月日ミリ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMilli() // 2020,8,5,999
+// 現在の年月日マイクロ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMicro() // 2020,8,5,999999
+// 現在の年月日ナノ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").DateNano() // 2020,8,5,999999999
+
 // 現在の時分秒を取得
 carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
+// 現在の時分秒ミリ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMilli() // 13,14,15,999
+// 現在の時分秒マイクロ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMicro() // 13,14,15,999999
+// 現在の時分秒ナノ秒を取得
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeNano() // 13,14,15,999999999
 
 // 現在の世紀を取得
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -805,12 +909,12 @@ carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 // 星座を取得
 carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
-carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
+carbon.Now().SetLocale("jp").Constellation() // 獅子座
 
 // 季節を取得
 carbon.Now().Season() // Summer
 carbon.Now().SetLocale("en").Season() // Summer
-carbon.Now().SetLocale("zh-CN").Season() // 夏季
+carbon.Now().SetLocale("jp").Season() // 夏か
 
 // 年齢を取得
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
@@ -839,16 +943,42 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString()
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
 
 // 日期文字列を出力
-carbon.Parse("2020-08-05 13:14:15").ToDateString() // 2020-08-05
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateString() // 2020-08-05
+// 日期文字列を出力，ミリ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMilliString() // 2020-08-05.999
+// 日期文字列を出力，マイクロ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMicroString() // 2020-08-05.999999
+// 日期文字列を出力，ナノ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToDateNanoString() // 2020-08-05.999999999
+
 // 略語日期文字列を出力
-carbon.Parse("2020-08-05 13:14:15").ToShortDateString() // 20200805
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateString() // 20200805
+// 输出简写日期字符串，ミリ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMilliString() // 20200805.999
+// 输出简写日期字符串，マイクロ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMicroString() // 20200805.999999
+// 输出简写日期字符串，ナノ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateNanoString() // 20200805.999999999
 
 // 時間文字列を出力
-carbon.Parse("2020-08-05 13:14:15").ToTimeString() // 13:14:15
-// 略語時間文字列を出力
-carbon.Parse("2020-08-05 13:14:15").ToShortTimeString() // 131415
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeString() // 13:14:15
+// 時間文字列を出力，ミリ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMilliString() // 13:14:15.999
+// 時間文字列を出力，マイクロ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMicroString() // 13:14:15.999999
+// 時間文字列を出力，ナノ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeNanoString() // 13:14:15.999999999
 
-// Ansic フォーマット文字列を出力
+// 略語時間文字列を出力
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeString() // 131415
+// 略語時間文字列を出力，ミリ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMilliString() // 131415.999
+// 略語時間文字列を出力，マイクロ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415.999999
+// 略語時間文字列を出力，ナノ秒を含む
+carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
+
+// ANSIC フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
 // Atom フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
@@ -1083,12 +1213,18 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 type Person struct {
 	Name string `json:"name"`
 	Age int `json:"age"`
-	Birthday carbon.DateTime `json:"birthday"`
-	GraduatedAt carbon.Date `json:"graduated_at"`
-	DateTime1 carbon.Timestamp `json:"date_time1"`
-	DateTime2 carbon.TimestampMilli `json:"date_time2"`
-	DateTime3 carbon.TimestampMicro `json:"date_time3"`
-	DateTime4 carbon.TimestampNano `json:"date_time4"`
+	Birthday1 carbon.DateTime `json:"birthday"`
+	Birthday2 carbon.DateTimeMilli `json:"birthday"`
+	Birthday3 carbon.DateTimeMicro `json:"birthday"`
+	Birthday4 carbon.DateTimeNano `json:"birthday"`
+	GraduatedAt1 carbon.Date `json:"graduated_at"`
+	GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
+	GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
+	GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+	CreatedAt1 carbon.Timestamp `json:"created_at1"`
+	CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
+	CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
+	CreatedAt4 carbon.TimestampNano `json:"created_at4"`
 }
 ```
 
@@ -1097,13 +1233,19 @@ type Person struct {
 ```go
 person := Person {
 	Name:        "gouguoyin",
-	Age:         18,
-	Birthday:    carbon.DateTime{carbon.Now().SubYears(18)},
-	GraduatedAt: carbon.Date{carbon.Parse("2020-08-05 13:14:15")},
-	DateTime1:   carbon.Timestamp{carbon.Parse("2023-08-05 13:14:15")},
-	DateTime2:   carbon.TimestampMilli{carbon.Parse("2024-08-05 13:14:15")},
-	DateTime3:   carbon.TimestampMicro{carbon.Parse("2025-08-05 13:14:15")},
-	DateTime4:   carbon.TimestampNano{carbon.Parse("2025-08-05 13:14:15")},
+	Age:          18,
+	Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday2:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday3:    carbon.DateTime{carbon.Now().SubYears(18)},
+	Birthday4:    carbon.DateTime{carbon.Now().SubYears(18)},
+	GraduatedAt1: carbon.Date{carbon.Now()},
+	GraduatedAt2: carbon.Date{carbon.Now()},
+	GraduatedAt3: carbon.Date{carbon.Now()},
+	GraduatedAt4: carbon.Date{carbon.Now()},
+	CreatedAt1:   carbon.Timestamp{carbon.Now()},
+	CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
+	CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
+	CreatedAt4:   carbon.TimestampNano{carbon.Now()},
 }
 ```
 
@@ -1118,14 +1260,20 @@ if err != nil {
 fmt.Printf("%s", data)
 // 出力
 {
-    "name": "gouguoyin",
-    "age": 18,
-    "birthday": "2003-07-16 16:22:02",
-    "graduated_at": "2020-08-05",
-    "date_time1": 1691212455,
-    "date_time2": 1722834855000,
-    "date_time3": 1754370855000000,
-    "date_time4": 1754370855000000000
+	"name": "gouguoyin",
+	"age": 18,
+	"birthday1": "2003-07-16 16:22:02",
+	"birthday2": "2003-07-16 16:22:02.999",
+	"birthday3": "2003-07-16 16:22:02.999999",
+	"birthday4": "2003-07-16 16:22:02.999999999",
+	"graduated_at1": "2020-08-05",
+	"graduated_at2": "2020-08-05.999",
+	"graduated_at3": "2020-08-05.999999",
+	"graduated_at4": "2020-08-05.999999999",
+	"created_at1": 1596604455,
+	"created_at2": 1596604455999,
+	"created_at3": 1596604455999999,
+	"created_at4": 1596604455999999999
 }
 ```
 
@@ -1135,12 +1283,18 @@ fmt.Printf("%s", data)
 str := `{
 	"name": "gouguoyin",
 	"age": 18,
-	"birthday": "2003-07-16 16:22:02",
-	"graduated_at": "2020-08-05",
-	"date_time1": 1691212455,
-	"date_time2": 1722834855000,
-	"date_time3": 1754370855000000,
-	"date_time4": 1754370855000000000
+	"birthday1": "2003-07-16 16:22:02",
+	"birthday2": "2003-07-16 16:22:02.999",
+	"birthday3": "2003-07-16 16:22:02.999999",
+	"birthday4": "2003-07-16 16:22:02.999999999",
+	"graduated_at1": "2020-08-05",
+	"graduated_at2": "2020-08-05.999",
+	"graduated_at3": "2020-08-05.999999",
+	"graduated_at4": "2020-08-05.999999999",
+	"created_at1": 1596604455,
+	"created_at2": 1596604455999,
+	"created_at3": 1596604455999999,
+	"created_at4": 1596604455999999999
 }`
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
@@ -1150,7 +1304,7 @@ if err != nil {
 }
 fmt.Printf("%+v", *person)
 // 出力
-{Name:gouguoyin Age:18 Birthday:2003-07-16 16:22:02 GraduatedAt:2020-08-05 00:00:00 DateTime1:2023-08-05 13:14:15 DateTime2:2024-08-05 13:14:15 DateTime3:2025-08-05 13:14:15 DateTime4:2025-08-05 13:14:15}
+{Name:gouguoyin Age:18 Birthday1:2003-07-16 16:22:02 Birthday2:2003-07-16 16:22:02.999 Birthday3:2003-07-16 16:22:02.999999 Birthday4:2003-07-16 16:22:02.999999999 GraduatedAt1:2020-08-05 GraduatedAt2:2020-08-05.999 GraduatedAt3:2020-08-05.999999 GraduatedAt4:2020-08-05.999999999 CreatedAt1:2020-08-05 13:14:15 CreatedAt2:2020-08-05 13:14:15.999 CreatedAt3:2020-08-05 13:14:15.999999 CreatedAt4:2020-08-05 13:14:15.999999999}
 ```
 
 ##### 国際化サポート
@@ -1168,6 +1322,8 @@ fmt.Printf("%+v", *person)
 * [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") から翻訳されます
 * [ロシア語(ru)](./lang/ru.json "ロシア語")：[zemlyak](https://github.com/zemlyak "zemlyak") から翻訳されます
 * [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") から翻訳されます
+* [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") から翻訳されます
+* [インドネシア語(id)](./lang/id.json "インドネシア語"): [justpoypoy](https://github.com/justpoypoy "justpoypoy") から翻訳されます
 
 現在サポートされている方法
 
@@ -1187,8 +1343,8 @@ lang.SetLocale("jp")
 
 c := carbon.SetLanguage(lang)
 if c.Error != nil {
-// エラー処理
-log.Fatal(err)
+	// エラー処理
+	log.Fatal(err)
 }
 
 c.Now().AddHours(1).DiffForHumans() // 1 時間後
@@ -1268,21 +1424,6 @@ c.Now().Season() // summer
 
 > 複数のエラーが発生した場合、最初のエラーだけを返します。前のエラーは削除された後、次のエラーに戻ります
 
-###### シーン一
-
-```go
-c := carbon.SetTimezone(PRC).Parse("xxx")
-if c.Error != nil {
-    // エラー処理...
-    log.Fatal(c.Error)
-}
-fmt.Println(c.ToDateTimeString())
-// 出力
-cannot parse "xxx" as carbon, please make sure the value is valid
-```
-
-###### シーン二
-
 ```go
 c := carbon.SetTimezone("xxx").Parse("2020-08-05")
 if c.Error != nil {
@@ -1292,19 +1433,6 @@ if c.Error != nil {
 fmt.Println(c.ToDateTimeString())
 // 出力
 invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
-```
-
-###### シーン三
-
-```go
-c := carbon.SetTimezone("xxx").Parse("12345678")
-if c.Error != nil {
-    // エラー処理...
-    log.Fatal(c.Error)
-}
-fmt.Println(c.ToDateTimeString())
-// 出力
-invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezone
 ```
 
 #### 付録
@@ -1349,6 +1477,13 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | Q | 季節 | 1 | 1-4 | 1 |
 | C | 世紀 | - | 0-99 | 21 |
 
+#### 人気のある問題
+
+1、v1とv2のバージョンの違いは何ですか？
+> APIのv1バージョンとv2バージョンに違いはありませんが `language.go`
+> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](https://github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.16`
+> の後に組み込みの標準ライブラリ [embed](https://pkg.go.dev/embed) によって実装されています。goバージョンが1.16より大きい場合は、v2バージョンを使用することをお勧めします。それ以外の場合は、v1バージョンを使用する必要があります。
+
 #### 参考文献
 
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
@@ -1361,7 +1496,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### 寄稿者
 `Carbon` に貢献してくれた以下のすべてに感謝します：
 
-<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=120&columns=16"/></a>
+<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=100&columns=16"/></a>
 
 #### スポンサー
 
