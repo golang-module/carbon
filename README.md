@@ -1323,7 +1323,6 @@ The following languages are supported
 * [Russian(ru)](./lang/ru.json "Russian"): translated by [zemlyak](https://github.com/zemlyak "zemlyak")
 * [Ukrainian(uk)](./lang/uk.json "Ukrainian"): translated by [open-git](https://github.com/open-git "open-git")
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
-* [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
 * [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
 
 The following methods are supported
