@@ -20,6 +20,25 @@ func SetTimezone(name string) Carbon {
 	return NewCarbon().SetTimezone(name)
 }
 
+// SetLocation sets location.
+// 设置地区
+func (c Carbon) SetLocation(loc *time.Location) Carbon {
+	if c.Error != nil {
+		return c
+	}
+	if loc == nil {
+		c.Error = invalidLocationError()
+	}
+	c.loc = loc
+	return c
+}
+
+// SetLocation sets location.
+// 设置地区
+func SetLocation(loc *time.Location) Carbon {
+	return NewCarbon().SetLocation(loc)
+}
+
 // SetLocale sets locale.
 // 设置语言区域
 func (c Carbon) SetLocale(locale string) Carbon {

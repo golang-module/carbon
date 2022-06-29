@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
+	"time"
 )
 
 func TestCarbon_SetTimezone(t *testing.T) {
@@ -24,6 +25,40 @@ func TestCarbon_SetTimezone(t *testing.T) {
 		c := SetTimezone(test.timezone).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_SetLocation(t *testing.T) {
+	assert := assert.New(t)
+
+	getLocation := func(name string) *time.Location {
+		loc, _ := time.LoadLocation(name)
+		return loc
+	}
+
+	tests := []struct {
+		loc      *time.Location // 输入参数
+		expected string         // 期望值
+	}{
+		{
+			loc:      getLocation(Local),
+			expected: Local,
+		},
+		{
+			loc:      getLocation(UTC),
+			expected: UTC,
+		},
+		{
+			loc:      getLocation(PRC),
+			expected: PRC,
+		},
+	}
+
+	for index, test := range tests {
+		loc := test.loc
+		c := SetLocation(loc)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.Location(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 

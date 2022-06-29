@@ -10,6 +10,12 @@ var invalidTimezoneError = func(timezone string) error {
 	return fmt.Errorf("invalid timezone %q, please see the file %q for all valid timezones", timezone, "$GOROOT/lib/time/zoneinfo.zip")
 }
 
+// returns an invalid location error.
+// 无效的地区错误
+var invalidLocationError = func() error {
+	return fmt.Errorf("invalid location, please make sure the location is valid")
+}
+
 // returns an invalid duration error.
 // 无效的时长错误
 var invalidDurationError = func(duration string) error {
