@@ -56,8 +56,10 @@ func TestCarbon_Tomorrow(t *testing.T) {
 }
 
 func TestCarbon_Time2Carbon(t *testing.T) {
-	expected := time.Now().Format(DateTimeLayout)
-	actual := Time2Carbon(time.Now()).ToDateTimeString()
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	tt := time.Now().In(loc)
+	expected := tt.Format(DateTimeLayout)
+	actual := Time2Carbon(tt).ToDateTimeString()
 	assert.Equal(t, expected, actual)
 }
 
