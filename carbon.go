@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.1.8"
+const Version = "2.1.9"
 
 // timezone constants
 // 时区常量
@@ -196,6 +196,7 @@ func NewCarbon() Carbon {
 func Time2Carbon(tt time.Time) Carbon {
 	c := NewCarbon()
 	c.time = tt
+	c.loc = tt.Location()
 	return c
 }
 
