@@ -251,7 +251,7 @@ carbon.Parse("2020-08-05 13:14:15").StartOfQuarter().ToDateTimeString() // 2020-
 carbon.Parse("2020-08-05 13:14:15").EndOfQuarter().ToDateTimeString() // 2020-09-30 23:59:59
 
 // Start of the month
-carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToStartTimeString() // 2020-08-01 00:00:00
+carbon.Parse("2020-08-05 13:14:15").StartOfMonth().ToDateTimeString() // 2020-08-01 00:00:00
 // End of the month
 carbon.Parse("2020-08-05 13:14:15").EndOfMonth().ToDateTimeString() // 2020-08-31 23:59:59
 
@@ -713,6 +713,12 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
 carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
 carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+
+// Set location
+utc, _ := time.LoadLocation(carbon.UTC)
+carbon.SetLocation(utc).Now().ToDateTimeString() // 2022-06-28 09:25:38
+tokyo, _ := time.LoadLocation(carbon.Tokyo)
+carbon.SetLocation(tokyo).Now().ToDateTimeString() // 2022-06-28 18:25:38
 
 // Set locale
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
@@ -1323,6 +1329,7 @@ The following languages are supported
 * [Russian(ru)](./lang/ru.json "Russian"): translated by [zemlyak](https://github.com/zemlyak "zemlyak")
 * [Ukrainian(uk)](./lang/uk.json "Ukrainian"): translated by [open-git](https://github.com/open-git "open-git")
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
+* [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
 
 The following methods are supported
 
@@ -1438,51 +1445,48 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 ##### <a id="format-sign-table">Format sign table</a>
 
-| sign |                                                  desc                                                  | length | range | example |
-| :------------: |:------------------------------------------------------------------------------------------------------:| :------------: | :------------: | :------------: |
-| d |                                     Day of the month, padded to 2                                      | 2 | 01-31 | 02 |
-| D |                           Day of the week, as an abbreviate localized string                           | 3 | Mon-Sun | Mon |
-| j |                                      Day of the month, no padding                                      | - |1-31 | 2 |
-| S | English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j | 2 | st/nd/rd/th | th |
-| l |                         Day of the week, as an unabbreviated localized string                          | - | Monday-Sunday | Monday |
-| F |                               Month as an unabbreviated localized string                               | - | January-December | January |
-| m |                                           Month, padded to 2                                           | 2 | 01-12 | 01 |
-| M |                                Month as an abbreviated localized string                                | 3 | Jan-Dec | Jan |
-| n |                                           Month, no padding                                            | - | 1-12 | 1 |
-| Y |                                            Four-digit year                                             | 4 | 0000-9999 | 2006 |
-| y |                                             Two-digit year                                             | 2 | 00-99 | 06 |
-| a |                                  Lowercase morning or afternoon sign                                   | 2 | am/pm | pm |
-| A |                                  Uppercase morning or afternoon sign                                   | 2 | AM/PM | PM |
-| g |                                     Hour in 12-hour format, no padding                                     | - | 1-12 | 3 |
-| G |                                    Hour in 24-hour format, no padding                                    | - | 0-23 | 15 |
-| h |                                   Hour in 12-hour format, padded to 2                                    | 2 | 00-11 | 03 |
-| H |                                   Hour in 24-hour format, padded to 2                                    | 2 | 00-23 | 15 |
-| i |                                          Minute, padded to 2                                           | 2 | 01-59 | 04 |
-| s |                                          Second, padded to 2                                           | 2 | 01-59 | 05 |
-| c |                                              ISO8601 date                                              | - | - | 2006-01-02T15:04:05-07:00 |
-| r |                                              RFC2822 date                                              | - | - | Mon, 02 Jan 2006 15:04:05 -0700 |
-| O |               Difference to Greenwich time (GMT) without colon between hours and minutes               | - | - | +0700 |
-| P |                Difference to Greenwich time (GMT) with colon between hours and minutes                 | - | - | +07:00 |
-| T |                                          Abbreviated timezone                                          | - | - | MST |
-| W |                                        ISO8601 week of the year                                        | - | 1-52 | 1 |
-| N |                                        ISO8601 day of the week                                         | 1 | 1-7 | 1 |
-| L |                                        Whether it's a leap year                                        | 1 | 0-1 | 0 |
-| U |                                      Unix timestamp with seconds                                       | 10 | - | 1611818268 |
-| u |                                        Millisecond, padded to 3                                        | 3 | - | 999 |
-| w |                                            Day of the week                                             | 1 | 0-6 | 1 |
-| t |                                        Total days of the month                                         | 2 | 28-31 | 31 |
-| z |                                            Day of the year                                             | - | 0-365 | 2 |
-| e |                                                Location                                                | - | - | America/New_York |
-| Q |                                                Quarter                                                 | 1 | 1-4 | 1 |
-| C |                                                Century                                                 | - | 0-99 | 21 |
+| sign |                                                   desc                                                   | length |      range       | example |
+| :------------: |:--------------------------------------------------------------------------------------------------------:|:------:|:----------------:| :------------: |
+| d |                                      Day of the month, padded to 2                                       |   2    |      01-31       | 02 |
+| D |                            Day of the week, as an abbreviate localized string                            |   3    |     Mon-Sun      | Mon |
+| j |                                       Day of the month, no padding                                       |   -    |       1-31       | 2 |
+| S |  English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j  |   2    |   st/nd/rd/th    | th |
+| l |                          Day of the week, as an unabbreviated localized string                           |   -    |  Monday-Sunday   | Monday |
+| F |                                Month as an unabbreviated localized string                                |   -    | January-December | January |
+| m |                                            Month, padded to 2                                            |   2    |      01-12       | 01 |
+| M |                                 Month as an abbreviated localized string                                 |   3    |     Jan-Dec      | Jan |
+| n |                                            Month, no padding                                             |   -    |       1-12       | 1 |
+| Y |                                             Four-digit year                                              |   4    |    0000-9999     | 2006 |
+| y |                                              Two-digit year                                              |   2    |      00-99       | 06 |
+| a |                                   Lowercase morning or afternoon sign                                    |   2    |      am/pm       | pm |
+| A |                                   Uppercase morning or afternoon sign                                    |   2    |      AM/PM       | PM |
+| g |                                    Hour in 12-hour format, no padding                                    |   -    |       1-12       | 3 |
+| G |                                    Hour in 24-hour format, no padding                                    |   -    |       0-23       | 15 |
+| h |                                   Hour in 12-hour format, padded to 2                                    |   2    |      00-11       | 03 |
+| H |                                   Hour in 24-hour format, padded to 2                                    |   2    |      00-23       | 15 |
+| i |                                           Minute, padded to 2                                            |   2    |      01-59       | 04 |
+| s |                                           Second, padded to 2                                            |   2    |      01-59       | 05 |
+| c |                                               ISO8601 date                                               |   -    |        -         | 2006-01-02T15:04:05-07:00 |
+| r |                                               RFC2822 date                                               |   -    |        -         | Mon, 02 Jan 2006 15:04:05 -0700 |
+| O |                Difference to Greenwich time (GMT) without colon between hours and minutes                |   -    |        -         | +0700 |
+| P |                 Difference to Greenwich time (GMT) with colon between hours and minutes                  |   -    |        -         | +07:00 |
+| T |                                           Abbreviated timezone                                           |   -    |        -         | MST |
+| W |                                         ISO8601 week of the year                                         |   -    |       1-52       | 1 |
+| N |                                         ISO8601 day of the week                                          |   1    |       1-7        | 1 |
+| L |                                         Whether it's a leap year                                         |   1    |       0-1        | 0 |
+| U |                                       Unix timestamp with seconds                                        |   10   |        -         | 1611818268 |
+| u |                                               Millisecond                                                |   -    |      1-999       | 999 |
+| w |                                             Day of the week                                              |   1    |       0-6        | 1 |
+| t |                                         Total days of the month                                          |   2    |      28-31       | 31 |
+| z |                                             Day of the year                                              |   -    |      1-365       | 2 |
+| e |                                                 Location                                                 |   -    |        -         | America/New_York |
+| Q |                                                 Quarter                                                  |   1    |       1-4        | 1 |
+| C |                                                 Century                                                  |   -    |       0-99       | 21 |
 
 #### FAQ
 
 1、What is the difference between v1 and v2?
-> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files
-> in `language.go` is different. The v1 is implemented by the third-party extension
-> library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard
-> library [embed](https://pkg.go.dev/embed) after `golang1.16`. The v2 is recommended.
+> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files in `language.go` is different. The v1 is implemented by the third-party extension library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard library [embed](https://pkg.go.dev/embed) after `golang1.16`. If your golang version is `1.16+`, the v2 is recommended, otherwise, the v1 is required.
 
 #### References
 
