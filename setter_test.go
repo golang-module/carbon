@@ -623,22 +623,18 @@ func TestError_Setter(t *testing.T) {
 	input, timezone, locale, year, month, day, hour, minute, second, millisecond, microsecond, nanosecond := "2020-08-50 13:14:15", "xxx", "xxx", 2020, 8, 50, 13, 14, 15, 999, 999999, 999999999
 	c := Parse(input)
 
-	tz1 := SetTimezone(timezone)
-	assert.NotNil(t, tz1.Error, "It should catch an exception in SetTimezone()")
-	tz2 := Now(timezone).SetTimezone(timezone)
-	assert.NotNil(t, tz2.Error, "It should catch an exception in SetTimezone()")
+	assert.NotNil(t, c.SetTimezone(timezone).Error, "It should catch an exception in SetTimezone()")
 
-	loc1 := SetLocale(locale)
-	assert.NotNil(t, loc1.Error, "It should catch an exception in SetLocale()")
-	loc2 := SetLocale(locale).SetLocale(PRC)
-	assert.NotNil(t, loc2.Error, "It should catch an exception in SetLocale()")
+	loc, _ := time.LoadLocation("xxx")
+	assert.NotNil(t, SetLocation(loc).Error, "It should catch an exception in SetLocation()")
+	assert.NotNil(t, c.SetLocation(loc).Error, "It should catch an exception in SetLocation()")
+
+	assert.NotNil(t, SetLocale(locale).Error, "It should catch an exception in SetLocale()")
+	assert.NotNil(t, c.SetLocale(locale).Error, "It should catch an exception in SetLocale()")
 
 	lang := NewLanguage()
 	lang.SetLocale(locale)
-	lang1 := SetLanguage(lang)
-	lang2 := SetLocale(locale).SetLanguage(lang)
-	assert.NotNil(t, lang1.Error, "It should catch an exception in SetLanguage()")
-	assert.NotNil(t, lang2.SetLanguage(lang).Error, "It should catch an exception in SetLanguage()")
+	assert.NotNil(t, c.SetLanguage(lang).Error, "It should catch an exception in SetLanguage()")
 
 	assert.NotNil(t, c.SetDateTime(year, month, day, hour, minute, second).Error, "It should catch an exception in SetDateTime()")
 	assert.NotNil(t, c.SetDateTimeMilli(year, month, day, hour, minute, second, millisecond).Error, "It should catch an exception in SetDateTimeMilli()")
