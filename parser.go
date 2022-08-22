@@ -84,7 +84,6 @@ func (c Carbon) ParseByLayout(value, layout string, timezone ...string) Carbon {
 		return c
 	}
 	c.time = tt
-	c.loc = tt.Location()
 	return c
 }
 
