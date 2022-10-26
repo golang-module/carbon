@@ -178,12 +178,23 @@ carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空字符串
 carbon.Parse("0000-00-00").ToDateTimeString() // 空字符串
 carbon.Parse("00:00:00").ToDateTimeString() // 空字符串
 
+carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
+carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+
+carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-08-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
+carbon.Parse("2020-8-5T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
@@ -196,7 +207,7 @@ carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### 通过格式模板将字符串解析成 Carbon 实例
+##### 通过格式模板将时间字符串解析成 Carbon 实例
 
 > 如果使用的字母与格式模板冲突时，请使用转义符转义该字母
 
@@ -207,7 +218,7 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 通过布局模板将字符串解析成 Carbon 实例
+##### 通过布局模板将时间字符串解析成 Carbon 实例
 
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -1333,7 +1344,6 @@ fmt.Printf("%+v", *person)
 * [乌克兰语(uk)](./lang/uk.json "乌克兰语"): 由 [open-git](https://github.com/open-git "open-git") 翻译
 * [罗马尼亚语(ro)](./lang/ro.json "罗马尼亚语"): 由 [DrOctavius](https://github.com/DrOctavius "DrOctavius") 翻译
 * [印度尼西亚语(id)](./lang/id.json "印度尼西亚语"): 由 [justpoypoy](https://github.com/justpoypoy "justpoypoy") 翻译
-* [意大利语(it)](./lang/it.json "意大利语"): 由 [nicoloHevelop](https://github.com/nicoloHevelop "nicoloHevelop") 翻译
 
 目前支持的方法有
 
