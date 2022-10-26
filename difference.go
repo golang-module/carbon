@@ -1,72 +1,50 @@
 package carbon
 
 import (
+	"math"
 	"strings"
 )
 
 // DiffInYears gets the difference in years.
 // 相差多少年
 func (c Carbon) DiffInYears(carbon ...Carbon) int64 {
-	end := c.Now()
+	start, end := c, c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return c.DiffInMonths(end) / MonthsPerYear
+	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (365 * 24 * 3600))))
 }
 
 // DiffAbsInYears gets the difference in years with absolute value.
 // 相差多少年(绝对值)
 func (c Carbon) DiffAbsInYears(carbon ...Carbon) int64 {
-	end := c.Now()
-	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
-	}
-	return getAbsValue(c.DiffInYears(end))
+	return getAbsValue(c.DiffInYears(carbon...))
 }
 
 // DiffInMonths gets the difference in months.
 // 相差多少月
 func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
-	end := c.Now()
+	start, end := c, c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	startYear, startMonth, startDay := c.Date()
-	endYear, endMonth, endDay := end.Date()
-	diffYear, diffMonth, diffDay := endYear-startYear, endMonth-startMonth, endDay-startDay
-	if diffDay < 0 {
-		diffMonth = diffMonth - 1
-	}
-	if diffYear == 0 && diffMonth == 0 {
-		return int64(0)
-	}
-	if diffYear == 0 && diffMonth != 0 && diffDay != 0 {
-		if int(end.DiffAbsInHours(c)) < c.DaysInMonth()*HoursPerDay {
-			return int64(0)
-		}
-		return int64(diffMonth)
-	}
-	return int64(diffYear*MonthsPerYear + diffMonth)
+	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (30 * 24 * 3600))))
 }
 
 // DiffAbsInMonths gets the difference in months with absolute value.
 // 相差多少月(绝对值)
 func (c Carbon) DiffAbsInMonths(carbon ...Carbon) int64 {
-	end := c.Now()
-	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
-	}
-	return getAbsValue(c.DiffInMonths(end))
+	return getAbsValue(c.DiffInMonths(carbon...))
 }
 
 // DiffInWeeks gets the difference in weeks.
 // 相差多少周
 func (c Carbon) DiffInWeeks(carbon ...Carbon) int64 {
-	end := c.Now()
+	start, end := c, c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return c.DiffInDays(end) / DaysPerWeek
+	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (7 * 24 * 3600))))
 }
 
 // DiffAbsInWeeks gets the difference in weeks with absolute value.
@@ -82,11 +60,11 @@ func (c Carbon) DiffAbsInWeeks(carbon ...Carbon) int64 {
 // DiffInDays gets the difference in days.
 // 相差多少天
 func (c Carbon) DiffInDays(carbon ...Carbon) int64 {
-	end := c.Now()
+	start, end := c, c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return c.DiffInSeconds(end) / SecondsPerDay
+	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (24 * 3600))))
 }
 
 // DiffAbsInDays gets the difference in days with absolute value.
