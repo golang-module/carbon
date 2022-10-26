@@ -171,7 +171,7 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a standard string as a Carbon instance
+##### Parse a standard time string as a Carbon instance
 
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
@@ -180,12 +180,23 @@ carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
 carbon.Parse("0000-00-00").ToDateTimeString() // empty string
 carbon.Parse("00:00:00").ToDateTimeString() // empty string
 
+carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
+carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+
+carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-08-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
+carbon.Parse("2020-8-5T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
@@ -198,7 +209,7 @@ carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a string as a Carbon instance by format
+##### Parse a time string as a Carbon instance by format
 
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
@@ -206,7 +217,7 @@ carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").T
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
-##### Parse a string as a Carbon instance by layout
+##### Parse a time string as a Carbon instance by layout
 
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -1330,7 +1341,6 @@ The following languages are supported
 * [Ukrainian(uk)](./lang/uk.json "Ukrainian"): translated by [open-git](https://github.com/open-git "open-git")
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
 * [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
-* [Italian(it)](./lang/it.json "Italian"): translated by [nicoloHevelop](https://github.com/nicoloHevelop "nicoloHevelop")
 
 The following methods are supported
 

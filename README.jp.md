@@ -178,12 +178,23 @@ carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空の文字列
 carbon.Parse("0000-00-00").ToDateTimeString() // 空の文字列
 carbon.Parse("00:00:00").ToDateTimeString() // 空の文字列
 
+carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
+carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
+carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+
+carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-08-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("2020-08-05 13:14:15.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
+carbon.Parse("2020-8-5T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("2020-8-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15+08:00").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("2020-08-05T13:14:15.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
@@ -1330,7 +1341,6 @@ fmt.Printf("%+v", *person)
 * [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") から翻訳されます
 * [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") から翻訳されます
 * [インドネシア語(id)](./lang/id.json "インドネシア語"): [justpoypoy](https://github.com/justpoypoy "justpoypoy") から翻訳されます
-* [イタリア語(it)](./lang/it.json "イタリア語"): [nicoloHevelop](https://github.com/nicoloHevelop "nicoloHevelop") から翻訳されます
 
 現在サポートされている方法
 
