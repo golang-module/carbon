@@ -10,28 +10,16 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	timeLayouts := []string{
 		DayDateTimeLayout,
 		DateTimeLayout,
-		DateTimeMilliLayout,
-		DateTimeMicroLayout,
 		DateTimeNanoLayout,
 		ShortDateTimeLayout,
-		ShortDateTimeMilliLayout,
-		ShortDateTimeMicroLayout,
 		ShortDateTimeNanoLayout,
 		DateLayout,
-		DateMilliLayout,
-		DateMicroLayout,
 		DateNanoLayout,
 		ShortDateLayout,
-		ShortDateMilliLayout,
-		ShortDateMicroLayout,
 		ShortDateNanoLayout,
 		TimeLayout,
-		TimeMilliLayout,
-		TimeMicroLayout,
 		TimeNanoLayout,
 		ShortTimeLayout,
-		ShortTimeMilliLayout,
-		ShortTimeMicroLayout,
 		ShortTimeNanoLayout,
 		ANSICLayout,
 		UnixDateLayout,
@@ -44,35 +32,29 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 		KitchenLayout,
 		CookieLayout,
 		RFC3339Layout,
-		RFC3339MilliLayout,
-		RFC3339MicroLayout,
 		RFC3339NanoLayout,
 		ISO8601Layout,
-		ISO8601MilliLayout,
-		ISO8601MicroLayout,
 		ISO8601NanoLayout,
 		RFC1036Layout,
 		RFC7231Layout,
-		"2006", "2006-1", "2006-1-2", "2006-1-2 15", "2006-1-2 15:4", "2006-1-2 15:4:5", "2006-1-2 15:4:5.999999999",
-		"2006.1", "2006.1.2", "2006.1.2 15", "2006.1.2 15:4", "2006.1.2 15:4:5", "2006.1.2 15:4:5.999999999",
+		"2006", "2006-1", "2006-1-2", "2006-1-2 15", "2006-1-2 15:4", "2006-1-2 15:4:5",
+		"2006.1.2", "2006.1.2 15", "2006.1.2 15:4", "2006.1.2 15:4:5", "2006.1.2", "2006.1.2 15", "2006.1.2 15:4", "2006.1.2 15:4:5", "2006.1.2 15:4:5.999999999",
 		"2006/1", "2006/1/2", "2006/1/2 15", "2006/1/2 15:4", "2006/1/2 15:4:5", "2006/1/2 15:4:5.999999999",
 		"1/2/2006", "1/2/2006 15", "1/2/2006 15:4", "1/2/2006 15:4:5", "1/2/2006 15:4:5.999999999",
-		"15:4:5 Jan 2, 2006 MST", "2006-1-2 15:4:5.999999999 -0700 MST", "Monday, 2-Jan-2006 15:4:5 MST",
-		"2006-1-2T15:4:5Z07", "2006-1-2T15:4:5Z0700", "2006-1-2T15:4:5Z07:00", "2006-1-2T15:4:5-07:00", "2006-1-2T15:4:5.999999999Z07", "2006-1-2T15:4:5.999999999Z0700", "2006-1-2T15:4:5.999999999-07:00", "2006-1-2T15:4:5.999999999Z07:00",
-	}
-	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
-	}
-	if c.Error != nil {
-		return c
+		"15:4:5 Jan 2, 2006 MST", "2006-1-2 15:4:5.999999999 -0700 MST",
+		"2006-1-2T15:4:5-07:00", "2006-1-2T15:4:5.999999999-07:00",
+		"2006-1-2T15:4:5Z07", "2006-01-02T15:04:05Z0700", "2006-1-2T15:4:5Z07:00", "2006-1-2T15:4:5.999999999Z07:00",
 	}
 	if value == "" || value == "0" || value == "0000-00-00 00:00:00" || value == "0000-00-00" || value == "00:00:00" {
 		return c
 	}
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
 	for _, layout := range timeLayouts {
-		tt, err := time.ParseInLocation(layout, value, c.loc)
+		t, err := time.ParseInLocation(layout, value, c.loc)
 		if err == nil {
-			c.time = tt
+			c.time = t
 			return c
 		}
 	}
@@ -120,6 +102,7 @@ func (c Carbon) ParseByLayout(value, layout string, timezone ...string) Carbon {
 		return c
 	}
 	c.time = tt
+	c.loc = tt.Location()
 	return c
 }
 
