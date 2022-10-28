@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15.999999999
 
 ##### Yesterday, today and tomorrow
 
