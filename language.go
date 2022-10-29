@@ -14,7 +14,7 @@ var fs embed.FS
 var (
 	// default directory
 	// 默认目录
-	defaultDir = "lang"
+	defaultDir = "lang/"
 
 	// default locale
 	// 默认区域
@@ -53,7 +53,7 @@ func (lang *Language) SetLocale(locale string) {
 		return
 	}
 	lang.locale = locale
-	fileName := lang.dir + "/" + locale + ".json"
+	fileName := lang.dir + locale + ".json"
 	bytes, err := fs.ReadFile(fileName)
 	if err != nil {
 		lang.Error = invalidLocaleError(fileName)
