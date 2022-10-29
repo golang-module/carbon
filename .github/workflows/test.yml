@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.vm-os }}
     env:
       GO111MODULE: on
-      GOPROXY: https://proxy.golang.org
+      GOPROXY: https://goproxy.cn
     steps:
       - name: Install go ${{ matrix.go-version }}
         uses: actions/setup-go@v3
