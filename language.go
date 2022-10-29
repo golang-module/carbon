@@ -3,7 +3,6 @@ package carbon
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
@@ -13,7 +12,7 @@ import (
 var (
 	// default directory
 	// 默认目录
-	defaultDir = "lang"
+	defaultDir = "lang/"
 
 	// default locale
 	// 默认区域
@@ -55,7 +54,7 @@ func (lang *Language) SetLocale(locale string) {
 	box := packr.NewBox(lang.dir)
 	localeName := locale + ".json"
 	bytes, err := box.Find(localeName)
-	localePath := lang.dir + string(os.PathSeparator) + localeName
+	localePath := lang.dir + localeName
 	if err != nil {
 		lang.Error = invalidLocaleError(localePath)
 		return
