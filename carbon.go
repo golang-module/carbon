@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.2.0"
+const Version = "2.2.1"
 
 // timezone constants
 // 时区常量
@@ -204,69 +204,4 @@ func Time2Carbon(tt time.Time) Carbon {
 // 将 Carbon 转换成 time.Time
 func (c Carbon) Carbon2Time() time.Time {
 	return c.time.In(c.loc)
-}
-
-// Now returns a Carbon instance for now.
-// 当前
-func (c Carbon) Now(timezone ...string) Carbon {
-	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
-	}
-	if c.Error != nil {
-		return c
-	}
-	c.time = time.Now().In(c.loc)
-	return c
-}
-
-// Now returns a Carbon instance for now.
-// 当前
-func Now(timezone ...string) Carbon {
-	return NewCarbon().Now(timezone...)
-}
-
-// Tomorrow returns a Carbon instance for tomorrow.
-// 明天
-func (c Carbon) Tomorrow(timezone ...string) Carbon {
-	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
-	}
-	if c.Error != nil {
-		return c
-	}
-	if c.IsZero() {
-		c.time = c.Now().Carbon2Time().AddDate(0, 0, 1)
-		return c
-	}
-	c.time = c.Carbon2Time().AddDate(0, 0, 1)
-	return c
-}
-
-// Tomorrow returns a Carbon instance for tomorrow.
-// 明天
-func Tomorrow(timezone ...string) Carbon {
-	return NewCarbon().Tomorrow(timezone...)
-}
-
-// Yesterday returns a Carbon instance for yesterday.
-// 昨天
-func (c Carbon) Yesterday(timezone ...string) Carbon {
-	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
-	}
-	if c.Error != nil {
-		return c
-	}
-	if c.IsZero() {
-		c.time = c.Now().Carbon2Time().AddDate(0, 0, -1)
-		return c
-	}
-	c.time = c.Carbon2Time().AddDate(0, 0, -1)
-	return c
-}
-
-// Yesterday returns a Carbon instance for yesterday.
-// 昨天
-func Yesterday(timezone ...string) Carbon {
-	return NewCarbon().Yesterday(timezone...)
 }
