@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15.999999999
 
 ##### Yesterday, today and tomorrow
 
@@ -207,6 +207,9 @@ carbon.Parse("20200805131415").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("20200805131415.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+carbon.Parse("20200805131415.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("20200805131415.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### Parse a time string as a Carbon instance by format

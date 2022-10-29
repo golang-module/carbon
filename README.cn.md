@@ -59,7 +59,7 @@ import (
 
 #### 用法示例
 
-> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15
+> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15.999999999
 
 ##### 昨天、今天、明天
 
@@ -205,6 +205,10 @@ carbon.Parse("20200805131415").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("20200805131415.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+carbon.Parse("20200805131415.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("20200805131415.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 ```
 
 ##### 通过格式模板将时间字符串解析成 Carbon 实例
@@ -1494,8 +1498,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | t | 月份中的总天数 |  2 |      28-31       | 31 |
 | z | 年份中的第几天 |  - |      1-365       | 2 |
 | e | 当前位置 |  - |        -         | America/New_York |
-| Q | 当前季节 |  1 |       1-4        | 1 |
-| C | 当前世纪数 |  - |       0-99       | 21 |
+| Q | 当前季节 | 1 | 1-4 | 1 |
+| C | 当前世纪数 | - | 0-99 | 21 |
 
 #### 常见问题
 
@@ -1503,6 +1507,24 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 > v1 和 v2 版本的 API 没有任何区别，只是 `language.go` 里翻译资源文件内嵌的实现方式不同，v1 版本是由第三方扩展库 [packr](https://github.com/gobuffalo/packr)
 > 实现的，
 > v2 版本是由 `golang1.16` 后内置标准库 [embed](https://pkg.go.dev/embed) 实现的。如果你的 go 版本大于 1.16推荐使用 v2 版本，否则必须使用 v1 版本。
+
+2、window 系统下部署二进制文件时区报错
+
+> window 系统如果没有安装 golang 环境，部署时会报 `GOROOT/lib/time/zoneinfo.zip: no such file or directory` 异常，原因是由于 window
+> 系统没有内置时区文件，只需要手动下载并指定 `zoneinfo.zip` 路径即可，如 `go/lib/time/zoneinfo.zip`
+
+```go
+os.Setenv("ZONEINFO", "./go/lib/time/zoneinfo.zip")
+```
+
+3、docker 容器部署二进制文件时区报错
+
+> docker 容器如果没有安装 golang 环境，部署时会报 `open /usr/local/go/lib/time/zoneinfo.zip: no such file or directory`
+> 异常，只需要把 `zoneinfo.zip` 复制到容器中即可，即在 Dockerfile 中加入
+
+```go
+COPY ./zoneinfo.zip /usr/local/go/lib/time/zoneinfo.zip
+```
 
 #### 参考项目
 
