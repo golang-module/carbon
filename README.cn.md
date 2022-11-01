@@ -59,7 +59,7 @@ import (
 
 #### 用法示例
 
-> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15.999999999
+> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15
 
 ##### 昨天、今天、明天
 
@@ -205,6 +205,10 @@ carbon.Parse("20200805131415").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("20200805131415.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+carbon.Parse("20200805131415.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("20200805131415.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+
 ```
 
 ##### 通过格式模板将时间字符串解析成 Carbon 实例
@@ -1344,6 +1348,9 @@ fmt.Printf("%+v", *person)
 * [乌克兰语(uk)](./lang/uk.json "乌克兰语"): 由 [open-git](https://github.com/open-git "open-git") 翻译
 * [罗马尼亚语(ro)](./lang/ro.json "罗马尼亚语"): 由 [DrOctavius](https://github.com/DrOctavius "DrOctavius") 翻译
 * [印度尼西亚语(id)](./lang/id.json "印度尼西亚语"): 由 [justpoypoy](https://github.com/justpoypoy "justpoypoy") 翻译
+* [马来西亚巴哈马语(ms-MY)](./lang/ms-MY.json "马来西亚巴哈马语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
+* [法语(fr)](./lang/fr.json "法语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
+* [泰语(th)](./lang/th.json "泰语"): 由 [izcream](https://github.com/izcream "izcream") 翻译
 
 目前支持的方法有
 
@@ -1494,8 +1501,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | t | 月份中的总天数 |  2 |      28-31       | 31 |
 | z | 年份中的第几天 |  - |      1-365       | 2 |
 | e | 当前位置 |  - |        -         | America/New_York |
-| Q | 当前季节 |  1 |       1-4        | 1 |
-| C | 当前世纪数 |  - |       0-99       | 21 |
+| Q | 当前季节 | 1 | 1-4 | 1 |
+| C | 当前世纪数 | - | 0-99 | 21 |
 
 #### 常见问题
 
@@ -1506,14 +1513,18 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 2、window 系统下部署二进制文件时区报错
 
-> window 系统如果没有安装 golang 环境，部署时会报 `GOROOT/lib/time/zoneinfo.zip: no such file or directory` 异常，原因是由于 window 系统没有内置时区文件，只需要手动下载并指定 `zoneinfo.zip` 路径即可，如 `go/lib/time/zoneinfo.zip`
+> window 系统如果没有安装 golang 环境，部署时会报 `GOROOT/lib/time/zoneinfo.zip: no such file or directory` 异常，原因是由于 window
+> 系统没有内置时区文件，只需要手动下载并指定 `zoneinfo.zip` 路径即可，如 `go/lib/time/zoneinfo.zip`
+
 ```go
 os.Setenv("ZONEINFO", "./go/lib/time/zoneinfo.zip")
 ```
 
 3、docker 容器部署二进制文件时区报错
 
-> docker 容器如果没有安装 golang 环境，部署时会报 `open /usr/local/go/lib/time/zoneinfo.zip: no such file or directory` 异常，只需要把 `zoneinfo.zip` 复制到容器中即可，即在 Dockerfile 中加入
+> docker 容器如果没有安装 golang 环境，部署时会报 `open /usr/local/go/lib/time/zoneinfo.zip: no such file or directory`
+> 异常，只需要把 `zoneinfo.zip` 复制到容器中即可，即在 Dockerfile 中加入
+
 ```go
 COPY ./zoneinfo.zip /usr/local/go/lib/time/zoneinfo.zip
 ```

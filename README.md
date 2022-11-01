@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15.999999999
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
 
 ##### Yesterday, today and tomorrow
 
@@ -207,6 +207,9 @@ carbon.Parse("20200805131415").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("20200805131415.999").ToString() // 2020-08-05 13:14:15.999 +0800 CST
 carbon.Parse("20200805131415.999999").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 carbon.Parse("20200805131415.999999999").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+carbon.Parse("20200805131415.999+08:00").ToString() // 2020-08-05 13:14:15.999 +0800 CST
+carbon.Parse("20200805131415.999999+08:00").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
+carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
 ##### Parse a time string as a Carbon instance by format
@@ -1341,6 +1344,9 @@ The following languages are supported
 * [Ukrainian(uk)](./lang/uk.json "Ukrainian"): translated by [open-git](https://github.com/open-git "open-git")
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
 * [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
+* [Bahasa Malaysia(ms-MY)](./lang/ms-MY.json "Bahasa Malaysia"): translated by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
+* [French(fr)](./lang/ms-MY.json "French"): translated by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
+* [Thailand(th)](./lang/th.json "Thailand"): translated by [izcream](https://github.com/izcream "izcream")
 
 The following methods are supported
 
