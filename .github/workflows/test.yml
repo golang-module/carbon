@@ -2,21 +2,21 @@ name: test
 
 on:
   push:
-    branches: [ master, v1, v2 ]
+    branches: [ v1 ]
   pull_request:
-    branches: [ master, v1, v2 ]
+    branches: [ v1 ]
 
 jobs:
 
   test:
     strategy:
         matrix:
-          vm-os: [ubuntu-latest]
+          vm-os: [ ubuntu-latest, macos-latest ]
           go-version: [1.14, 1.15, 1.16]
     runs-on: ${{ matrix.vm-os }}
     env:
       GO111MODULE: on
-      GOPROXY: https://proxy.golang.org
+      GOPROXY: https://goproxy.cn
     steps:
     - name: Install go ${{ matrix.go-version }}
       uses: actions/setup-go@v3

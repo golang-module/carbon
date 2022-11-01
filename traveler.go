@@ -4,6 +4,71 @@ import (
 	"time"
 )
 
+// Now returns a Carbon instance for now.
+// 当前
+func (c Carbon) Now(timezone ...string) Carbon {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.Error != nil {
+		return c
+	}
+	c.time = time.Now().In(c.loc)
+	return c
+}
+
+// Now returns a Carbon instance for now.
+// 当前
+func Now(timezone ...string) Carbon {
+	return NewCarbon().Now(timezone...)
+}
+
+// Tomorrow returns a Carbon instance for tomorrow.
+// 明天
+func (c Carbon) Tomorrow(timezone ...string) Carbon {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.Error != nil {
+		return c
+	}
+	if c.IsZero() {
+		c.time = c.Now().Carbon2Time().AddDate(0, 0, 1)
+		return c
+	}
+	c.time = c.Carbon2Time().AddDate(0, 0, 1)
+	return c
+}
+
+// Tomorrow returns a Carbon instance for tomorrow.
+// 明天
+func Tomorrow(timezone ...string) Carbon {
+	return NewCarbon().Tomorrow(timezone...)
+}
+
+// Yesterday returns a Carbon instance for yesterday.
+// 昨天
+func (c Carbon) Yesterday(timezone ...string) Carbon {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+	}
+	if c.Error != nil {
+		return c
+	}
+	if c.IsZero() {
+		c.time = c.Now().Carbon2Time().AddDate(0, 0, -1)
+		return c
+	}
+	c.time = c.Carbon2Time().AddDate(0, 0, -1)
+	return c
+}
+
+// Yesterday returns a Carbon instance for yesterday.
+// 昨天
+func Yesterday(timezone ...string) Carbon {
+	return NewCarbon().Yesterday(timezone...)
+}
+
 // AddDuration adds one duration.
 // 按照时长增加时间,支持整数/浮点数和符号ns(纳秒)、us(微妙)、ms(毫秒)、s(秒)、m(分钟)、h(小时)的组合
 func (c Carbon) AddDuration(duration string) Carbon {
