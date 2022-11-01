@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15.999999999
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
 
 ##### Yesterday, today and tomorrow
 
@@ -1345,6 +1345,8 @@ The following languages are supported
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
 * [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
 * [Bahasa Malaysia(ms-MY)](./lang/ms-MY.json "Bahasa Malaysia"): translated by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
+* [French(fr)](./lang/ms-MY.json "French"): translated by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
+* [Thailand(th)](./lang/th.json "Thailand"): translated by [izcream](https://github.com/izcream "izcream")
 
 The following methods are supported
 
