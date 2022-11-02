@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15 +0800 CST
 
 ##### Yesterday, today and tomorrow
 
@@ -171,14 +171,14 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a standard time string as a Carbon instance
+##### Parse a time string as a Carbon instance
 
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
 carbon.Parse("0").ToDateTimeString() // empty string
-carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
-carbon.Parse("0000-00-00").ToDateTimeString() // empty string
 carbon.Parse("00:00:00").ToDateTimeString() // empty string
+carbon.Parse("0000-00-00").ToDateTimeString() // empty string
+carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // empty string
 
 carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
 carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
@@ -186,6 +186,9 @@ carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
 carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-08-05.999").ToString() // 2020-08-05 00:00:00.999 +0800 CST
+carbon.Parse("2020-08-05.999999").ToString() // 2020-08-05 00:00:00.999999 +0800 CST
+carbon.Parse("2020-08-05.999999999").ToString() // 2020-08-05 00:00:00.999999999 +0800 CST
 
 carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
@@ -1329,9 +1332,11 @@ fmt.Printf("%+v", *person)
 
 The following languages are supported
 
-* [English(en)](./lang/en.json "English")
-* [Japanese(jp)](./lang/jp.json "Japanese")
-* [Korean(kr)](./lang/kr.json "Korean")
+* [English(en)](./lang/en.json "English")：translated
+  by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Japanese(jp)](./lang/jp.json "Japanese")：translated
+  by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Korean(kr)](./lang/kr.json "Korean")：translated by [nannul](https://github.com/nannul "nannul")
 * [German(de)](./lang/de.json "German")：translated by [benzammour](https://github.com/benzammour "benzammour")
 * [Simplified Chinese(zh-CN)](./lang/zh-CN.json "Simplified Chinese")：translated
   by [gouguoyin](https://github.com/gouguoyin "gouguoyin")

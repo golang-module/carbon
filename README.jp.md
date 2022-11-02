@@ -59,7 +59,7 @@ import (
 人気のある問題
 #### 使い方の例
 
-> デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は2020-08-05 13:14:15と仮定します
+> デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は 2020-08-05 13:14:15 +0800 CST と仮定します
 
 ##### 昨日、今日、明日
 
@@ -169,14 +169,14 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### 標準形式の時間文字列を Carbon オブジェクトに解析します
+##### 時間文字列を Carbon オブジェクトに解析します
 
 ```go
 carbon.Parse("").ToDateTimeString() // 空の文字列
 carbon.Parse("0").ToDateTimeString() // 空の文字列
-carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空の文字列
-carbon.Parse("0000-00-00").ToDateTimeString() // 空の文字列
 carbon.Parse("00:00:00").ToDateTimeString() // 空の文字列
+carbon.Parse("0000-00-00").ToDateTimeString() // 空の文字列
+carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空の文字列
 
 carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
 carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
@@ -184,6 +184,9 @@ carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
 carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-08-05.999").ToString() // 2020-08-05 00:00:00.999 +0800 CST
+carbon.Parse("2020-08-05.999999").ToString() // 2020-08-05 00:00:00.999999 +0800 CST
+carbon.Parse("2020-08-05.999999999").ToString() // 2020-08-05 00:00:00.999999999 +0800 CST
 
 carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
@@ -1331,12 +1334,12 @@ fmt.Printf("%+v", *person)
 
 現在サポートされている言語
 
-* [英語(en)](./lang/en.json "英語")
-* [日本語(jp)](./lang/jp.json "日本語")
-* [韓国語(kr)](./lang/kr.json "韓国語")
+* [英語(en)](./lang/en.json "英語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
+* [日本語(jp)](./lang/jp.json "日本語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
+* [韓国語(kr)](./lang/kr.json "韓国語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
 * [ドイツ語(de)](./lang/de.json "ドイツ語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
 * [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "begouguoyinnzammour") から翻訳されます
+* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [スペイン語(es)](./lang/es.json "スペイン語")：[hgisinger](https://github.com/hgisinger "hgisinger") から翻訳されます
 * [トルコ語(tr)](./lang/tr.json "トルコ語")：[emresenyuva](https://github.com/emresenyuva "emresenyuva") から翻訳されます
 * [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") から翻訳されます
