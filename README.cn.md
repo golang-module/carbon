@@ -59,7 +59,7 @@ import (
 
 #### 用法示例
 
-> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15
+> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15 +0800 CST
 
 ##### 昨天、今天、明天
 
@@ -169,14 +169,14 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### 将标准格式时间字符串解析成 Carbon 实例
+##### 将时间字符串解析成 Carbon 实例
 
 ```go
 carbon.Parse("").ToDateTimeString() // 空字符串
 carbon.Parse("0").ToDateTimeString() // 空字符串
-carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空字符串
-carbon.Parse("0000-00-00").ToDateTimeString() // 空字符串
 carbon.Parse("00:00:00").ToDateTimeString() // 空字符串
+carbon.Parse("0000-00-00").ToDateTimeString() // 空字符串
+carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空字符串
 
 carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
 carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
@@ -184,6 +184,9 @@ carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
 carbon.Parse("2020-8-5").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-8-05").ToString() // 2020-08-05 00:00:00 +0800 CST
 carbon.Parse("2020-08-05").ToString() // 2020-08-05 00:00:00 +0800 CST
+carbon.Parse("2020-08-05.999").ToString() // 2020-08-05 00:00:00.999 +0800 CST
+carbon.Parse("2020-08-05.999999").ToString() // 2020-08-05 00:00:00.999999 +0800 CST
+carbon.Parse("2020-08-05.999999999").ToString() // 2020-08-05 00:00:00.999999999 +0800 CST
 
 carbon.Parse("2020-8-5 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Parse("2020-8-05 13:14:15").ToString() // 2020-08-05 13:14:15 +0800 CST
@@ -1335,9 +1338,9 @@ fmt.Printf("%+v", *person)
 
 目前支持的语言有
 
-* [英语(en)](./lang/en.json "英语")
-* [日语(jp)](./lang/jp.json "日语")
-* [韩语(kr)](./lang/kr.json "韩语")
+* [英语(en)](./lang/en.json "英语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [日语(jp)](./lang/jp.json "日语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [韩语(kr)](./lang/kr.json "韩语"): 由 [nannul](https://github.com/nannul "nannul") 翻译
 * [德语(de)](./lang/de.json "德语"): 由 [benzammour](https://github.com/benzammour "benzammour") 翻译
 * [简体中文(zh-CN)](./lang/zh-CN.json "简体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
