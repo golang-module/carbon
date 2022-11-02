@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.2.1"
+const Version = "2.2.2"
 
 // timezone constants
 // 时区常量
@@ -147,7 +147,7 @@ const (
 	ISO8601MicroLayout       = "2006-01-02T15:04:05.999999-07:00"
 	ISO8601NanoLayout        = "2006-01-02T15:04:05.999999999-07:00"
 	RFC1036Layout            = "Mon, 02 Jan 06 15:04:05 -0700"
-	RFC7231Layout            = "Mon, 02 Jan 2006 15:04:05 GMT"
+	RFC7231Layout            = "Mon, 02 Jan 2006 15:04:05 MST"
 	DayDateTimeLayout        = "Mon, Jan 2, 2006 3:04 PM"
 	DateTimeLayout           = "2006-01-02 15:04:05"
 	DateTimeMilliLayout      = "2006-01-02 15:04:05.999"
