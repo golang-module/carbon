@@ -9,12 +9,8 @@ import (
 func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	timeLayouts := []string{
 		DayDateTimeLayout,
-		DateTimeLayout, DateTimeNanoLayout,
-		ShortDateTimeLayout, ShortDateTimeNanoLayout,
-		DateLayout, DateNanoLayout,
-		ShortDateLayout, ShortDateNanoLayout,
-		TimeLayout, TimeNanoLayout,
-		ShortTimeLayout, ShortTimeNanoLayout,
+		DateTimeLayout, DateTimeNanoLayout, ShortDateTimeLayout, ShortDateTimeNanoLayout,
+		DateLayout, DateNanoLayout, ShortDateLayout, ShortDateNanoLayout,
 		ISO8601Layout, ISO8601NanoLayout,
 		RFC822Layout, RFC822ZLayout, RFC850Layout, RFC1123Layout, RFC1123ZLayout, RFC3339Layout, RFC3339NanoLayout, RFC1036Layout, RFC7231Layout,
 		KitchenLayout,
