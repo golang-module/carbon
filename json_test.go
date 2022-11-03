@@ -45,9 +45,7 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 		CreatedAt4:   TimestampNano{Parse("2025-08-05 13:14:15.999999999")},
 	}
 	data, err := json.Marshal(&person)
-	if err != nil {
-		assert.NotNil(t, err)
-	}
+	assert.Nil(t, err)
 	fmt.Printf("Person output by json:\n%s\n", data)
 }
 
@@ -70,9 +68,7 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	}`
 
 	err := json.Unmarshal([]byte(str), &person)
-	if err != nil {
-		assert.NotNil(t, err)
-	}
+	assert.Nil(t, err)
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
 
@@ -94,8 +90,6 @@ func TestError_Json(t *testing.T) {
 		"created_at4": 0
 	}`
 	err := json.Unmarshal([]byte(str), &person)
-	if err != nil {
-		assert.NotNil(t, err)
-	}
+	assert.NotNil(t, err)
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
