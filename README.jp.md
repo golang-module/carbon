@@ -1334,12 +1334,12 @@ fmt.Printf("%+v", *person)
 
 現在サポートされている言語
 
+* [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
+* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [英語(en)](./lang/en.json "英語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [日本語(jp)](./lang/jp.json "日本語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [韓国語(kr)](./lang/kr.json "韓国語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
 * [ドイツ語(de)](./lang/de.json "ドイツ語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
-* [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [スペイン語(es)](./lang/es.json "スペイン語")：[hgisinger](https://github.com/hgisinger "hgisinger") から翻訳されます
 * [トルコ語(tr)](./lang/tr.json "トルコ語")：[emresenyuva](https://github.com/emresenyuva "emresenyuva") から翻訳されます
 * [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") から翻訳されます
