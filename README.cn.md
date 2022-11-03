@@ -1338,12 +1338,12 @@ fmt.Printf("%+v", *person)
 
 目前支持的语言有
 
+* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [英语(en)](./lang/en.json "英语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [日语(jp)](./lang/jp.json "日语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [韩语(kr)](./lang/kr.json "韩语"): 由 [nannul](https://github.com/nannul "nannul") 翻译
 * [德语(de)](./lang/de.json "德语"): 由 [benzammour](https://github.com/benzammour "benzammour") 翻译
-* [简体中文(zh-CN)](./lang/zh-CN.json "简体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
-* [繁体中文(zh-TW)](./lang/zh-TW.json "繁体中文"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [西班牙语(es)](./lang/es.json "西班牙语"): 由 [hgisinger](https://github.com/hgisinger "hgisinger") 翻译
 * [土耳其语(tr)](./lang/tr.json "土耳其语"): 由 [emresenyuva](https://github.com/emresenyuva "emresenyuva") 翻译
 * [葡萄牙语(pt)](./lang/pt.json "葡萄牙语"): 由 [felipear89](https://github.com/felipear89 "felipear89") 翻译
