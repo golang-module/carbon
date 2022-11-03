@@ -48,6 +48,7 @@ const (
 	Shanghai   = "Asia/Shanghai"       // 上海
 	Chongqing  = "Asia/Chongqing"      // 重庆
 	Harbin     = "Asia/Harbin"         // 哈尔滨
+	Urumqi     = "Asia/Urumqi"         // 乌鲁木齐
 	HongKong   = "Asia/Hong_Kong"      // 香港
 	Macao      = "Asia/Macao"          // 澳门
 	Taipei     = "Asia/Taipei"         // 台北
