@@ -1530,7 +1530,7 @@ Thanks to all of the following who contributed to `Carbon`:
 
 #### Sponsors
 
-`Carbon` is a non-commercial open source project. If you want to support `Carbon`, you can [buy a cup of coffee](https://www.gouguoyin.cn/zanzhu.html) for developer.
+`Carbon` is a non-commercial open source project. If you want to support `Carbon`, you can [buy a cup of coffee](https://opencollective.com/go-carbon) for developer.
 
 #### Thanks
 
