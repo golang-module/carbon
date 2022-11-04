@@ -1530,7 +1530,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 #### スポンサー
 
-`Carbon` は非営利のオープンソースプロジェクトです，`Carbon` をサポートしたい場合は、開発者のために [コーヒーを1杯購入](https://www.gouguoyin.cn/zanzhu.html) できます
+`Carbon` は非営利のオープンソースプロジェクトです，`Carbon` をサポートしたい場合は、開発者のために [コーヒーを1杯購入](https://opencollective.com/go-carbon) できます
 
 #### ありがとう
 
