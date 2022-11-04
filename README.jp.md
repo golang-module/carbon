@@ -178,6 +178,10 @@ carbon.Parse("00:00:00").ToDateTimeString() // 空の文字列
 carbon.Parse("0000-00-00").ToDateTimeString() // 空の文字列
 carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空の文字列
 
+carbon.Parse("now").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("yesterday").ToString() // 2020-08-04 13:14:15 +0800 CST
+carbon.Parse("tomorrow").ToString() // 2020-08-06 13:14:15 +0800 CST
+
 carbon.Parse("2020").ToString() // 2020-01-01 00:00:00 +0800 CST
 carbon.Parse("2020-8").ToString() // 2020-08-01 00:00:00 +0800 CST
 carbon.Parse("2020-08").ToString() // 2020-08-01 00:00:00 +0800 CST
