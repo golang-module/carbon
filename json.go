@@ -91,7 +91,7 @@ func (t *DateTime) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateTime{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateTime struct.
