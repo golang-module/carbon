@@ -20,6 +20,10 @@ func TestCarbon_Parse(t *testing.T) {
 		{"00:00:00", ""},
 		{"0000-00-00 00:00:00", ""},
 
+		{Parse("now").ToDateTimeString(), Now().ToDateTimeString() + " +0800 CST"},
+		{Parse("yesterday").ToDateTimeString(), Yesterday().ToDateTimeString() + " +0800 CST"},
+		{Parse("tomorrow").ToDateTimeString(), Tomorrow().ToDateTimeString() + " +0800 CST"},
+
 		{"2020-8-5", "2020-08-05 00:00:00 +0800 CST"},
 		{"2020-8-05", "2020-08-05 00:00:00 +0800 CST"},
 		{"2020-08-05", "2020-08-05 00:00:00 +0800 CST"},
