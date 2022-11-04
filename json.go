@@ -113,7 +113,7 @@ func (t *DateTimeMilli) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateTimeMilli{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateTimeMilli struct.
@@ -135,7 +135,7 @@ func (t *DateTimeMicro) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateTimeMicro{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateTimeMicro struct.
@@ -157,7 +157,7 @@ func (t *DateTimeNano) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateTimeNano{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateTimeNano struct.
@@ -179,7 +179,7 @@ func (t *Date) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = Date{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for Date struct.
@@ -201,7 +201,7 @@ func (t *DateMilli) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateMilli{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateMilli struct.
@@ -223,7 +223,7 @@ func (t *DateMicro) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateMicro{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateMicro struct.
@@ -245,7 +245,7 @@ func (t *DateNano) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = DateNano{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for DateNano struct.
@@ -268,7 +268,7 @@ func (t *Timestamp) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = Timestamp{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for Timestamp struct.
@@ -291,7 +291,7 @@ func (t *TimestampMilli) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = TimestampMilli{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for TimestampMilli struct.
@@ -314,7 +314,7 @@ func (t *TimestampMicro) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = TimestampMicro{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for TimestampMicro struct.
@@ -337,7 +337,7 @@ func (t *TimestampNano) UnmarshalJSON(b []byte) error {
 	if c.Error == nil {
 		*t = TimestampNano{c}
 	}
-	return nil
+	return c.Error
 }
 
 // String implements the interface Stringer for TimestampNano struct.
