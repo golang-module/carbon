@@ -40,6 +40,14 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
 	}
+	switch value {
+	case "now":
+		return c.Now(timezone...)
+	case "yesterday":
+		return c.Yesterday(timezone...)
+	case "tomorrow":
+		return c.Tomorrow(timezone...)
+	}
 	for _, layout := range timeLayouts {
 		t, err := time.ParseInLocation(layout, value, c.loc)
 		if err == nil {
