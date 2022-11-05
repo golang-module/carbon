@@ -7,7 +7,7 @@ import (
 // Parse parses a standard time string as a Carbon instance.
 // 将标准格式时间字符串解析成 Carbon 实例
 func (c Carbon) Parse(value string, timezone ...string) Carbon {
-	timeLayouts := []string{
+	layouts := []string{
 		DayDateTimeLayout,
 		DateTimeLayout, DateTimeNanoLayout, ShortDateTimeLayout, ShortDateTimeNanoLayout,
 		DateLayout, DateNanoLayout, ShortDateLayout, ShortDateNanoLayout,
@@ -48,7 +48,7 @@ func (c Carbon) Parse(value string, timezone ...string) Carbon {
 	case "tomorrow":
 		return c.Tomorrow(timezone...)
 	}
-	for _, layout := range timeLayouts {
+	for _, layout := range layouts {
 		t, err := time.ParseInLocation(layout, value, c.loc)
 		if err == nil {
 			c.time = t
@@ -66,7 +66,7 @@ func Parse(value string, timezone ...string) Carbon {
 }
 
 // ParseByFormat parses a time string as a Carbon instance by format.
-// 通过格式模板将时间字符串解析成 carbon 实例
+// 通过格式模板将时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByFormat(value, format string, timezone ...string) Carbon {
 	carbon := c.ParseByLayout(value, format2layout(format), timezone...)
 	if carbon.Error != nil {
@@ -76,13 +76,13 @@ func (c Carbon) ParseByFormat(value, format string, timezone ...string) Carbon {
 }
 
 // ParseByFormat parses a time string as a Carbon instance by format.
-// 通过格式模板将时间字符串解析成 carbon 实例
+// 通过格式模板将时间字符串解析成 Carbon 实例
 func ParseByFormat(value, format string, timezone ...string) Carbon {
 	return NewCarbon().ParseByFormat(value, format, timezone...)
 }
 
 // ParseByLayout parses a time string as a Carbon instance by layout.
-// 通过布局模板将时间字符串解析成 carbon 实例
+// 通过布局模板将时间字符串解析成 Carbon 实例
 func (c Carbon) ParseByLayout(value, layout string, timezone ...string) Carbon {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
