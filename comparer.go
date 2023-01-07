@@ -189,7 +189,7 @@ func (c Carbon) IsMonday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Monday
+	return c.time.In(c.loc).Weekday() == time.Monday
 }
 
 // IsTuesday reports whether is Tuesday.
@@ -198,7 +198,7 @@ func (c Carbon) IsTuesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Tuesday
+	return c.time.In(c.loc).Weekday() == time.Tuesday
 }
 
 // IsWednesday reports whether is Wednesday.
@@ -207,7 +207,7 @@ func (c Carbon) IsWednesday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Wednesday
+	return c.time.In(c.loc).Weekday() == time.Wednesday
 }
 
 // IsThursday reports whether is Thursday.
@@ -216,7 +216,7 @@ func (c Carbon) IsThursday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Thursday
+	return c.time.In(c.loc).Weekday() == time.Thursday
 }
 
 // IsFriday reports whether is Friday.
@@ -225,7 +225,7 @@ func (c Carbon) IsFriday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Friday
+	return c.time.In(c.loc).Weekday() == time.Friday
 }
 
 // IsSaturday reports whether is Saturday.
@@ -234,7 +234,7 @@ func (c Carbon) IsSaturday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Saturday
+	return c.time.In(c.loc).Weekday() == time.Saturday
 }
 
 // IsSunday reports whether is Sunday.
@@ -243,7 +243,7 @@ func (c Carbon) IsSunday() bool {
 	if c.IsInvalid() {
 		return false
 	}
-	return c.Carbon2Time().Weekday() == time.Sunday
+	return c.time.In(c.loc).Weekday() == time.Sunday
 }
 
 // IsWeekday reports whether is weekday.

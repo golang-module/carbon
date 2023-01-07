@@ -33,10 +33,10 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 		return c
 	}
 	if c.IsZero() {
-		c.time = c.Now().Carbon2Time().AddDate(0, 0, 1)
+		c.time = c.Now().time.In(c.loc).AddDate(0, 0, 1)
 		return c
 	}
-	c.time = c.Carbon2Time().AddDate(0, 0, 1)
+	c.time = c.time.In(c.loc).AddDate(0, 0, 1)
 	return c
 }
 
@@ -56,10 +56,10 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 		return c
 	}
 	if c.IsZero() {
-		c.time = c.Now().Carbon2Time().AddDate(0, 0, -1)
+		c.time = c.Now().time.In(c.loc).AddDate(0, 0, -1)
 		return c
 	}
-	c.time = c.Carbon2Time().AddDate(0, 0, -1)
+	c.time = c.time.In(c.loc).AddDate(0, 0, -1)
 	return c
 }
 
@@ -76,7 +76,7 @@ func (c Carbon) AddDuration(duration string) Carbon {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time, c.Error = c.Carbon2Time().Add(td), err
+	c.time, c.Error = c.time.In(c.loc).Add(td), err
 	return c
 }
 
@@ -188,7 +188,7 @@ func (c Carbon) AddYears(years int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.Carbon2Time().AddDate(years, 0, 0)
+	c.time = c.time.In(c.loc).AddDate(years, 0, 0)
 	return c
 }
 
@@ -301,7 +301,7 @@ func (c Carbon) AddMonths(months int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.Carbon2Time().AddDate(0, months, 0)
+	c.time = c.time.In(c.loc).AddDate(0, months, 0)
 	return c
 }
 
@@ -387,7 +387,7 @@ func (c Carbon) AddDays(days int) Carbon {
 	if c.IsInvalid() {
 		return c
 	}
-	c.time = c.Carbon2Time().AddDate(0, 0, days)
+	c.time = c.time.In(c.loc).AddDate(0, 0, days)
 	return c
 }
 
@@ -416,7 +416,7 @@ func (c Carbon) AddHours(hours int) Carbon {
 		return c
 	}
 	td := time.Duration(hours) * time.Hour
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -445,7 +445,7 @@ func (c Carbon) AddMinutes(minutes int) Carbon {
 		return c
 	}
 	td := time.Duration(minutes) * time.Minute
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -474,7 +474,7 @@ func (c Carbon) AddSeconds(seconds int) Carbon {
 		return c
 	}
 	td := time.Duration(seconds) * time.Second
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -503,7 +503,7 @@ func (c Carbon) AddMilliseconds(milliseconds int) Carbon {
 		return c
 	}
 	td := time.Duration(milliseconds) * time.Millisecond
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -532,7 +532,7 @@ func (c Carbon) AddMicroseconds(microseconds int) Carbon {
 		return c
 	}
 	td := time.Duration(microseconds) * time.Microsecond
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 
@@ -561,7 +561,7 @@ func (c Carbon) AddNanoseconds(nanoseconds int) Carbon {
 		return c
 	}
 	td := time.Duration(nanoseconds) * time.Nanosecond
-	c.time = c.Carbon2Time().Add(td)
+	c.time = c.time.In(c.loc).Add(td)
 	return c
 }
 

@@ -22,7 +22,7 @@ func (c Carbon) DaysInMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.EndOfMonth().Carbon2Time().Day()
+	return c.EndOfMonth().time.In(c.loc).Day()
 }
 
 // MonthOfYear gets month of year like 12.
@@ -31,7 +31,7 @@ func (c Carbon) MonthOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return int(c.Carbon2Time().Month())
+	return int(c.time.In(c.loc).Month())
 }
 
 // DayOfYear gets day of year like 365.
@@ -40,7 +40,7 @@ func (c Carbon) DayOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().YearDay()
+	return c.time.In(c.loc).YearDay()
 }
 
 // DayOfMonth gets day of month like 30.
@@ -49,7 +49,7 @@ func (c Carbon) DayOfMonth() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Day()
+	return c.time.In(c.loc).Day()
 }
 
 // DayOfWeek gets day of week like 6.
@@ -58,7 +58,7 @@ func (c Carbon) DayOfWeek() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	day := int(c.Carbon2Time().Weekday())
+	day := int(c.time.In(c.loc).Weekday())
 	if day == 0 {
 		return DaysPerWeek
 	}
@@ -71,7 +71,7 @@ func (c Carbon) WeekOfYear() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	_, week := c.Carbon2Time().ISOWeek()
+	_, week := c.time.In(c.loc).ISOWeek()
 	return week
 }
 
@@ -94,11 +94,9 @@ func (c Carbon) DateTime() (year, month, day, hour, minute, second int) {
 	if c.IsInvalid() {
 		return
 	}
-	t := c.Carbon2Time()
-	var tm time.Month
-	year, tm, day = t.Date()
-	hour, minute, second = t.Clock()
-	return year, int(tm), day, hour, minute, second
+	year, month, day = c.Date()
+	hour, minute, second = c.Time()
+	return year, month, day, hour, minute, second
 }
 
 // DateTimeMilli gets current year, month, day, hour, minute, second and millisecond like 2020, 8, 5, 13, 14, 15, 999.
@@ -138,7 +136,7 @@ func (c Carbon) Date() (year, month, day int) {
 		return
 	}
 	var tm time.Month
-	year, tm, day = c.Carbon2Time().Date()
+	year, tm, day = c.time.In(c.loc).Date()
 	return year, int(tm), day
 }
 
@@ -148,9 +146,8 @@ func (c Carbon) DateMilli() (year, month, day, millisecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	var tm time.Month
-	year, tm, day = c.Carbon2Time().Date()
-	return year, int(tm), day, c.Millisecond()
+	year, month, day = c.Date()
+	return year, month, day, c.Millisecond()
 }
 
 // DateMicro gets current year, month, day and microsecond like 2020, 8, 5, 999999.
@@ -159,9 +156,8 @@ func (c Carbon) DateMicro() (year, month, day, microsecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	var tm time.Month
-	year, tm, day = c.Carbon2Time().Date()
-	return year, int(tm), day, c.Microsecond()
+	year, month, day = c.Date()
+	return year, month, day, c.Microsecond()
 }
 
 // DateNano gets current year, month, day and nanosecond like 2020, 8, 5, 999999999.
@@ -170,9 +166,8 @@ func (c Carbon) DateNano() (year, month, day, nanosecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	var tm time.Month
-	year, tm, day = c.Carbon2Time().Date()
-	return year, int(tm), day, c.Nanosecond()
+	year, month, day = c.Date()
+	return year, month, day, c.Nanosecond()
 }
 
 // Time gets current hour, minute, and second like 13, 14, 15.
@@ -181,7 +176,7 @@ func (c Carbon) Time() (hour, minute, second int) {
 	if c.IsInvalid() {
 		return
 	}
-	return c.Carbon2Time().Clock()
+	return c.time.In(c.loc).Clock()
 }
 
 // TimeMilli gets current hour, minute, second and millisecond like 13, 14, 15, 999.
@@ -190,7 +185,7 @@ func (c Carbon) TimeMilli() (hour, minute, second, millisecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	hour, minute, second = c.Carbon2Time().Clock()
+	hour, minute, second = c.Time()
 	return hour, minute, second, c.Millisecond()
 }
 
@@ -200,7 +195,7 @@ func (c Carbon) TimeMicro() (hour, minute, second, microsecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	hour, minute, second = c.Carbon2Time().Clock()
+	hour, minute, second = c.Time()
 	return hour, minute, second, c.Microsecond()
 }
 
@@ -210,7 +205,7 @@ func (c Carbon) TimeNano() (hour, minute, second, nanosecond int) {
 	if c.IsInvalid() {
 		return
 	}
-	hour, minute, second = c.Carbon2Time().Clock()
+	hour, minute, second = c.Time()
 	return hour, minute, second, c.Nanosecond()
 }
 
@@ -238,7 +233,7 @@ func (c Carbon) Year() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Year()
+	return c.time.In(c.loc).Year()
 }
 
 // Quarter gets current quarter like 3.
@@ -288,7 +283,7 @@ func (c Carbon) Hour() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Hour()
+	return c.time.In(c.loc).Hour()
 }
 
 // Minute gets current minute like 14.
@@ -297,7 +292,7 @@ func (c Carbon) Minute() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Minute()
+	return c.time.In(c.loc).Minute()
 }
 
 // Second gets current second like 15.
@@ -306,7 +301,7 @@ func (c Carbon) Second() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Second()
+	return c.time.In(c.loc).Second()
 }
 
 // Millisecond gets current millisecond like 999.
@@ -315,7 +310,7 @@ func (c Carbon) Millisecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Nanosecond() / 1e6
+	return c.time.In(c.loc).Nanosecond() / 1e6
 }
 
 // Microsecond gets current microsecond like 999999.
@@ -324,7 +319,7 @@ func (c Carbon) Microsecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Nanosecond() / 1e3
+	return c.time.In(c.loc).Nanosecond() / 1e3
 }
 
 // Nanosecond gets current nanosecond like 999999999.
@@ -333,7 +328,7 @@ func (c Carbon) Nanosecond() int {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Nanosecond()
+	return c.time.In(c.loc).Nanosecond()
 }
 
 // Timestamp gets timestamp with second like 1596604455.
@@ -342,7 +337,7 @@ func (c Carbon) Timestamp() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().Unix()
+	return c.time.In(c.loc).Unix()
 }
 
 // TimestampMilli gets timestamp with millisecond like 1596604455000.
@@ -351,7 +346,7 @@ func (c Carbon) TimestampMilli() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	t := c.Carbon2Time()
+	t := c.time.In(c.loc)
 	return t.Unix()*1e3 + int64(t.Nanosecond())/1e6
 }
 
@@ -361,7 +356,7 @@ func (c Carbon) TimestampMicro() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	t := c.Carbon2Time()
+	t := c.time.In(c.loc)
 	return t.Unix()*1e6 + int64(t.Nanosecond())/1e3
 }
 
@@ -371,7 +366,7 @@ func (c Carbon) TimestampNano() int64 {
 	if c.IsInvalid() {
 		return 0
 	}
-	return c.Carbon2Time().UnixNano()
+	return c.time.In(c.loc).UnixNano()
 }
 
 // Location gets location name like "PRC".
@@ -383,14 +378,14 @@ func (c Carbon) Location() string {
 // Timezone gets timezone name like "CST".
 // 获取时区
 func (c Carbon) Timezone() string {
-	name, _ := c.Carbon2Time().Zone()
+	name, _ := c.time.In(c.loc).Zone()
 	return name
 }
 
 // Offset gets offset seconds from the UTC timezone like 28800.
 // 获取距离UTC时区的偏移量，单位秒
 func (c Carbon) Offset() int {
-	_, offset := c.Carbon2Time().Zone()
+	_, offset := c.time.In(c.loc).Zone()
 	return offset
 }
 
