@@ -59,7 +59,7 @@ import (
 人気のある問題
 #### 使い方の例
 
-> デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は 2020-08-05 13:14:15 +0800 CST と仮定します
+> デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は 2020-08-05 13:14:15.999999999 +0800 CST CST と仮定します
 
 ##### 昨日、今日、明日
 
@@ -77,11 +77,11 @@ carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
 // 今日は秒タイムスタンプ
 carbon.Now().Timestamp() // 1596604455
 // 今日のミリ秒タイムスタンプ
-carbon.Now().TimestampMilli() // 1596604455000
+carbon.Now().TimestampMilli() // 1596604455999
 // 今日のマイクロ秒タイムスタンプ
-carbon.Now().TimestampMicro() // 1596604455000000
+carbon.Now().TimestampMicro() // 1596604455999999
 // 今日のナノ秒タイムスタンプ
-carbon.Now().TimestampNano() // 1596604455000000000
+carbon.Now().TimestampNano() // 1596604455999999999
 
 // 昨日の今は
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -98,11 +98,11 @@ carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
 // 昨日の秒タイムスタンプ
 carbon.Yesterday().Timestamp() // 1596518055
 // 昨日のミリ秒タイムスタンプ
-carbon.Yesterday().TimestampMilli() // 1596518055000
+carbon.Yesterday().TimestampMilli() // 1596518055999
 // 昨日のマイクロ秒タイムスタンプ
-carbon.Yesterday().TimestampMicro() // 1596518055000000
+carbon.Yesterday().TimestampMicro() // 1596518055999999
 // 昨日のナノ秒タイムスタンプ
-carbon.Yesterday().TimestampNano() // 1596518055000000000
+carbon.Yesterday().TimestampNano() // 1596518055999999999
 
 // 明日の今は
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -119,11 +119,11 @@ carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 // 明日の秒タイムスタンプ
 carbon.Tomorrow().Timestamp() // 1596690855
 // 明日のミリ秒タイムスタンプ
-carbon.Tomorrow().TimestampMilli() // 1596690855000
+carbon.Tomorrow().TimestampMilli() // 1596690855999
 // 明日のマイクロ秒タイムスタンプ
-carbon.Tomorrow().TimestampMicro() // 1596690855000000
+carbon.Tomorrow().TimestampMicro() // 1596690855999999
 // 明日のナノ秒タイムスタンプ
-carbon.Tomorrow().TimestampNano() // 1596690855000000000
+carbon.Tomorrow().TimestampNano() // 1596690855999999999
 ```
 
 ##### Carbon オブジェクトを作成する
