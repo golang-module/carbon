@@ -61,7 +61,7 @@ import (
 
 #### Usage and example
 
-> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15 +0800 CST
+> The default timezone is Local, assuming the current time is 2020-08-05 13:14:15.999999999 +0800 CST
 
 ##### Yesterday, today and tomorrow
 
@@ -79,11 +79,11 @@ carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
 // Return timestamp with second of today
 carbon.Now().Timestamp() // 1596604455
 // Return timestamp with millisecond of today
-carbon.Now().TimestampMilli() // 1596604455000
+carbon.Now().TimestampMilli() // 1596604455999
 // Return timestamp with microsecond of today
-carbon.Now().TimestampMicro() // 1596604455000000
+carbon.Now().TimestampMicro() // 1596604455999999
 // Return timestamp with nanosecond of today
-carbon.Now().TimestampNano() // 1596604455000000000
+carbon.Now().TimestampNano() // 1596604455999999999
 
 // Return datetime of yesterday
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -100,11 +100,11 @@ carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
 // Return timestamp with second of yesterday
 carbon.Yesterday().Timestamp() // 1596518055
 // Return timestamp with millisecond of yesterday
-carbon.Yesterday().TimestampMilli() // 1596518055000
+carbon.Yesterday().TimestampMilli() // 1596518055999
 // Return timestamp with microsecond of yesterday
-carbon.Yesterday().TimestampMicro() // 1596518055000000
+carbon.Yesterday().TimestampMicro() // 1596518055999999
 // Return timestamp with nanosecond of yesterday
-carbon.Yesterday().TimestampNano() // 1596518055000000000
+carbon.Yesterday().TimestampNano() // 1596518055999999999
 
 // Return datetime of tomorrow
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -121,11 +121,11 @@ carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 // Return timestamp with second of tomorrow
 carbon.Tomorrow().Timestamp() // 1596690855
 // Return timestamp with millisecond of tomorrow
-carbon.Tomorrow().TimestampMilli() // 1596690855000
+carbon.Tomorrow().TimestampMilli() // 1596690855999
 // Return timestamp with microsecond of tomorrow
-carbon.Tomorrow().TimestampMicro() // 1596690855000000
+carbon.Tomorrow().TimestampMicro() // 1596690855999999
 // Return timestamp with nanosecond of tomorrow
-carbon.Tomorrow().TimestampNano() // 1596690855000000000
+carbon.Tomorrow().TimestampNano() // 1596690855999999999
 ```
 
 ##### Create a Carbon instance

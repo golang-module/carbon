@@ -59,7 +59,7 @@ import (
 
 #### 用法示例
 
-> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15 +0800 CST
+> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15.999999999 +0800 CST
 
 ##### 昨天、今天、明天
 
@@ -77,11 +77,11 @@ carbon.Now(Carbon.NewYork).ToDateTimeString() // 2020-08-05 14:14:15
 // 今天秒级时间戳
 carbon.Now().Timestamp() // 1596604455
 // 今天毫秒级时间戳
-carbon.Now().TimestampMilli() // 1596604455000
+carbon.Now().TimestampMilli() // 1596604455999
 // 今天微秒级时间戳
-carbon.Now().TimestampMicro() // 1596604455000000
+carbon.Now().TimestampMicro() // 1596604455999999
 // 今天纳秒级时间戳
-carbon.Now().TimestampNano() // 1596604455000000000
+carbon.Now().TimestampNano() // 1596604455999999999
 
 // 昨天此刻
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
@@ -98,11 +98,11 @@ carbon.Yesterday(Carbon.NewYork).ToDateTimeString() // 2020-08-04 14:14:15
 // 昨天秒级时间戳
 carbon.Yesterday().Timestamp() // 1596518055
 // 昨天毫秒级时间戳
-carbon.Yesterday().TimestampMilli() // 1596518055000
+carbon.Yesterday().TimestampMilli() // 1596518055999
 // 昨天微秒级时间戳
-carbon.Yesterday().TimestampMicro() // 1596518055000000
+carbon.Yesterday().TimestampMicro() // 1596518055999999
 // 昨天纳秒级时间戳
-carbon.Yesterday().TimestampNano() // 1596518055000000000
+carbon.Yesterday().TimestampNano() // 1596518055999999999
 
 // 明天此刻
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
@@ -119,11 +119,11 @@ carbon.Tomorrow(Carbon.NewYork).ToDateTimeString() // 2020-08-06 14:14:15
 // 明天秒级时间戳
 carbon.Tomorrow().Timestamp() // 1596690855
 // 明天毫秒级时间戳
-carbon.Tomorrow().TimestampMilli() // 1596690855000
+carbon.Tomorrow().TimestampMilli() // 1596690855999
 // 明天微秒级时间戳
-carbon.Tomorrow().TimestampMicro() // 1596690855000000
+carbon.Tomorrow().TimestampMicro() // 1596690855999999
 // 明天纳秒级时间戳
-carbon.Tomorrow().TimestampNano() // 1596690855000000000
+carbon.Tomorrow().TimestampNano() // 1596690855999999999
 ```
 
 ##### 创建 Carbon 实例
