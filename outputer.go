@@ -2,6 +2,7 @@ package carbon
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -21,7 +22,7 @@ func (c Carbon) ToString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().String()
+	return c.time.In(c.loc).String()
 }
 
 // ToMonthString outputs a string in month layout like "January", i18n is supported.
@@ -117,7 +118,7 @@ func (c Carbon) ToDayDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DayDateTimeLayout)
+	return c.time.In(c.loc).Format(DayDateTimeLayout)
 }
 
 // ToDateTimeString outputs a string in "2006-01-02 15:04:05" layout.
@@ -129,7 +130,7 @@ func (c Carbon) ToDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateTimeLayout)
+	return c.time.In(c.loc).Format(DateTimeLayout)
 }
 
 // ToDateTimeMilliString outputs a string in "2006-01-02 15:04:05.999" layout.
@@ -141,7 +142,7 @@ func (c Carbon) ToDateTimeMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateTimeMilliLayout)
+	return c.time.In(c.loc).Format(DateTimeMilliLayout)
 }
 
 // ToDateTimeMicroString outputs a string in "2006-01-02 15:04:05.999999" layout.
@@ -153,7 +154,7 @@ func (c Carbon) ToDateTimeMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateTimeMicroLayout)
+	return c.time.In(c.loc).Format(DateTimeMicroLayout)
 }
 
 // ToDateTimeNanoString outputs a string in "2006-01-02 15:04:05.999999999" layout.
@@ -165,7 +166,7 @@ func (c Carbon) ToDateTimeNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateTimeNanoLayout)
+	return c.time.In(c.loc).Format(DateTimeNanoLayout)
 }
 
 // ToShortDateTimeString outputs a string in "20060102150405" layout.
@@ -177,7 +178,7 @@ func (c Carbon) ToShortDateTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateTimeLayout)
+	return c.time.In(c.loc).Format(ShortDateTimeLayout)
 }
 
 // ToShortDateTimeMilliString outputs a string in "20060102150405.999" layout.
@@ -189,7 +190,7 @@ func (c Carbon) ToShortDateTimeMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateTimeMilliLayout)
+	return c.time.In(c.loc).Format(ShortDateTimeMilliLayout)
 }
 
 // ToShortDateTimeMicroString outputs a string in "20060102150405.999999" layout.
@@ -201,7 +202,7 @@ func (c Carbon) ToShortDateTimeMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateTimeMicroLayout)
+	return c.time.In(c.loc).Format(ShortDateTimeMicroLayout)
 }
 
 // ToShortDateTimeNanoString outputs a string in "20060102150405.999999999" layout.
@@ -213,7 +214,7 @@ func (c Carbon) ToShortDateTimeNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateTimeNanoLayout)
+	return c.time.In(c.loc).Format(ShortDateTimeNanoLayout)
 }
 
 // ToDateString outputs a string in "2006-01-02" layout.
@@ -225,7 +226,7 @@ func (c Carbon) ToDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateLayout)
+	return c.time.In(c.loc).Format(DateLayout)
 }
 
 // ToDateMilliString outputs a string in "2006-01-02.999" layout.
@@ -237,7 +238,7 @@ func (c Carbon) ToDateMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateMilliLayout)
+	return c.time.In(c.loc).Format(DateMilliLayout)
 }
 
 // ToDateMicroString outputs a string in "2006-01-02.999999" layout.
@@ -249,7 +250,7 @@ func (c Carbon) ToDateMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateMicroLayout)
+	return c.time.In(c.loc).Format(DateMicroLayout)
 }
 
 // ToDateNanoString outputs a string in "2006-01-02.999999999" layout.
@@ -261,7 +262,7 @@ func (c Carbon) ToDateNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(DateNanoLayout)
+	return c.time.In(c.loc).Format(DateNanoLayout)
 }
 
 // ToShortDateString outputs a string in "20060102" layout.
@@ -273,7 +274,7 @@ func (c Carbon) ToShortDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateLayout)
+	return c.time.In(c.loc).Format(ShortDateLayout)
 }
 
 // ToShortDateMilliString outputs a string in "20060102.999" layout.
@@ -285,7 +286,7 @@ func (c Carbon) ToShortDateMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateMilliLayout)
+	return c.time.In(c.loc).Format(ShortDateMilliLayout)
 }
 
 // ToShortDateMicroString outputs a string in "20060102.999999" layout.
@@ -297,7 +298,7 @@ func (c Carbon) ToShortDateMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateMicroLayout)
+	return c.time.In(c.loc).Format(ShortDateMicroLayout)
 }
 
 // ToShortDateNanoString outputs a string in "20060102.999999999" layout.
@@ -309,7 +310,7 @@ func (c Carbon) ToShortDateNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortDateNanoLayout)
+	return c.time.In(c.loc).Format(ShortDateNanoLayout)
 }
 
 // ToTimeString outputs a string in "15:04:05" layout.
@@ -321,7 +322,7 @@ func (c Carbon) ToTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(TimeLayout)
+	return c.time.In(c.loc).Format(TimeLayout)
 }
 
 // ToTimeMilliString outputs a string in "15:04:05.999" layout.
@@ -333,7 +334,7 @@ func (c Carbon) ToTimeMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(TimeMilliLayout)
+	return c.time.In(c.loc).Format(TimeMilliLayout)
 }
 
 // ToTimeMicroString outputs a string in "15:04:05.999999" layout.
@@ -345,7 +346,7 @@ func (c Carbon) ToTimeMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(TimeMicroLayout)
+	return c.time.In(c.loc).Format(TimeMicroLayout)
 }
 
 // ToTimeNanoString outputs a string in "15:04:05.999999999" layout.
@@ -357,7 +358,7 @@ func (c Carbon) ToTimeNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(TimeNanoLayout)
+	return c.time.In(c.loc).Format(TimeNanoLayout)
 }
 
 // ToShortTimeString outputs a string in "150405" layout.
@@ -369,7 +370,7 @@ func (c Carbon) ToShortTimeString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortTimeLayout)
+	return c.time.In(c.loc).Format(ShortTimeLayout)
 }
 
 // ToShortTimeMilliString outputs a string in "150405.999" layout.
@@ -381,7 +382,7 @@ func (c Carbon) ToShortTimeMilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortTimeMilliLayout)
+	return c.time.In(c.loc).Format(ShortTimeMilliLayout)
 }
 
 // ToShortTimeMicroString outputs a string in "150405.999999" layout.
@@ -393,7 +394,7 @@ func (c Carbon) ToShortTimeMicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortTimeMicroLayout)
+	return c.time.In(c.loc).Format(ShortTimeMicroLayout)
 }
 
 // ToShortTimeNanoString outputs a string in "150405.999999999" layout.
@@ -405,7 +406,7 @@ func (c Carbon) ToShortTimeNanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ShortTimeNanoLayout)
+	return c.time.In(c.loc).Format(ShortTimeNanoLayout)
 }
 
 // ToAtomString outputs a string in "2006-01-02T15:04:05Z07:00" layout.
@@ -423,7 +424,7 @@ func (c Carbon) ToANSICString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ANSICLayout)
+	return c.time.In(c.loc).Format(ANSICLayout)
 }
 
 // ToCookieString outputs a string in "Monday, 02-Jan-2006 15:04:05 MST" layout.
@@ -435,7 +436,7 @@ func (c Carbon) ToCookieString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(CookieLayout)
+	return c.time.In(c.loc).Format(CookieLayout)
 }
 
 // ToRssString outputs a string in "Mon, 02 Jan 2006 15:04:05 -0700" format.
@@ -447,7 +448,7 @@ func (c Carbon) ToRssString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RssLayout)
+	return c.time.In(c.loc).Format(RssLayout)
 }
 
 // ToW3cString outputs a string in "2006-01-02T15:04:05Z07:00" layout.
@@ -465,7 +466,7 @@ func (c Carbon) ToUnixDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(UnixDateLayout)
+	return c.time.In(c.loc).Format(UnixDateLayout)
 }
 
 // ToRubyDateString outputs a string in "Mon Jan 02 15:04:05 -0700 2006" layout.
@@ -477,7 +478,7 @@ func (c Carbon) ToRubyDateString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RubyDateLayout)
+	return c.time.In(c.loc).Format(RubyDateLayout)
 }
 
 // ToKitchenString outputs a string in "3:04PM" layout.
@@ -489,7 +490,7 @@ func (c Carbon) ToKitchenString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(KitchenLayout)
+	return c.time.In(c.loc).Format(KitchenLayout)
 }
 
 // ToIso8601String outputs a string in "2006-01-02T15:04:05-07:00" layout.
@@ -501,7 +502,7 @@ func (c Carbon) ToIso8601String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ISO8601Layout)
+	return c.time.In(c.loc).Format(ISO8601Layout)
 }
 
 // ToIso8601MilliString outputs a string in "2006-01-02T15:04:05.999-07:00" layout.
@@ -513,7 +514,7 @@ func (c Carbon) ToIso8601MilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ISO8601MilliLayout)
+	return c.time.In(c.loc).Format(ISO8601MilliLayout)
 }
 
 // ToIso8601MicroString outputs a string in "2006-01-02T15:04:05.999999-07:00" layout.
@@ -525,7 +526,7 @@ func (c Carbon) ToIso8601MicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ISO8601MicroLayout)
+	return c.time.In(c.loc).Format(ISO8601MicroLayout)
 }
 
 // ToIso8601NanoString outputs a string in "2006-01-02T15:04:05.999999999-07:00" layout.
@@ -537,7 +538,7 @@ func (c Carbon) ToIso8601NanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(ISO8601NanoLayout)
+	return c.time.In(c.loc).Format(ISO8601NanoLayout)
 }
 
 // ToRfc822String outputs a string in "02 Jan 06 15:04 MST" layout.
@@ -549,7 +550,7 @@ func (c Carbon) ToRfc822String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC822Layout)
+	return c.time.In(c.loc).Format(RFC822Layout)
 }
 
 // ToRfc822zString outputs a string in "02 Jan 06 15:04 -0700" layout.
@@ -561,7 +562,7 @@ func (c Carbon) ToRfc822zString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC822ZLayout)
+	return c.time.In(c.loc).Format(RFC822ZLayout)
 }
 
 // ToRfc850String outputs a string in "Monday, 02-Jan-06 15:04:05 MST" layout.
@@ -573,7 +574,7 @@ func (c Carbon) ToRfc850String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC850Layout)
+	return c.time.In(c.loc).Format(RFC850Layout)
 }
 
 // ToRfc1036String outputs a string in "Mon, 02 Jan 06 15:04:05 -0700" layout.
@@ -585,7 +586,7 @@ func (c Carbon) ToRfc1036String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC1036Layout)
+	return c.time.In(c.loc).Format(RFC1036Layout)
 }
 
 // ToRfc1123String outputs a string in "Mon, 02 Jan 2006 15:04:05 MST" layout.
@@ -597,7 +598,7 @@ func (c Carbon) ToRfc1123String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC1123Layout)
+	return c.time.In(c.loc).Format(RFC1123Layout)
 }
 
 // ToRfc1123zString outputs a string in "Mon, 02 Jan 2006 15:04:05 -0700" layout.
@@ -609,7 +610,7 @@ func (c Carbon) ToRfc1123zString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC1123ZLayout)
+	return c.time.In(c.loc).Format(RFC1123ZLayout)
 }
 
 // ToRfc2822String outputs a string in "Mon, 02 Jan 2006 15:04:05 -0700" layout.
@@ -621,7 +622,7 @@ func (c Carbon) ToRfc2822String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC2822Layout)
+	return c.time.In(c.loc).Format(RFC2822Layout)
 }
 
 // ToRfc3339String outputs a string in "2006-01-02T15:04:05Z07:00" layout.
@@ -633,7 +634,7 @@ func (c Carbon) ToRfc3339String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC3339Layout)
+	return c.time.In(c.loc).Format(RFC3339Layout)
 }
 
 // ToRfc3339MilliString outputs a string in "2006-01-02T15:04:05.999Z07:00" layout.
@@ -645,7 +646,7 @@ func (c Carbon) ToRfc3339MilliString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC3339MilliLayout)
+	return c.time.In(c.loc).Format(RFC3339MilliLayout)
 }
 
 // ToRfc3339MicroString outputs a string in "2006-01-02T15:04:05.999999Z07:00" layout.
@@ -657,7 +658,7 @@ func (c Carbon) ToRfc3339MicroString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC3339MicroLayout)
+	return c.time.In(c.loc).Format(RFC3339MicroLayout)
 }
 
 // ToRfc3339NanoString outputs a string in "2006-01-02T15:04:05.999999999Z07:00" layout.
@@ -669,7 +670,7 @@ func (c Carbon) ToRfc3339NanoString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC3339NanoLayout)
+	return c.time.In(c.loc).Format(RFC3339NanoLayout)
 }
 
 // ToRfc7231String outputs a string in "Mon, 02 Jan 2006 15:04:05 GMT" layout.
@@ -681,7 +682,7 @@ func (c Carbon) ToRfc7231String(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(RFC7231Layout)
+	return c.time.In(c.loc).Format(RFC7231Layout)
 }
 
 // ToLayoutString outputs a string by layout.
@@ -693,7 +694,7 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
 	}
-	return c.Carbon2Time().Format(layout)
+	return c.time.In(c.loc).Format(layout)
 }
 
 // Layout outputs a string by layout, it is shorthand for ToLayoutString.
@@ -725,7 +726,7 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 			case 'M': // short month, such as Jan
 				buffer.WriteString(c.ToShortMonthString())
 			default: // common symbols
-				buffer.WriteString(c.Carbon2Time().Format(layout))
+				buffer.WriteString(c.time.In(c.loc).Format(layout))
 			}
 		} else {
 			switch format[i] {
@@ -733,10 +734,12 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				buffer.WriteByte(format[i+1])
 				i++
 				continue
-			case 'W': // week number of the year in ISO-8601 format, ranging from 1-52
-				buffer.WriteString(strconv.Itoa(c.WeekOfYear()))
-			case 'N': // day of the week as a number in ISO-8601 format, ranging from 1-7
-				buffer.WriteString(strconv.Itoa(c.DayOfWeek()))
+			case 'W': // week number of the year in ISO-8601 format, ranging from 01-52
+				week := fmt.Sprintf("%02d", c.WeekOfYear())
+				buffer.WriteString(week)
+			case 'N': // day of the week as a number in ISO-8601 format, ranging from 01-7
+				week := fmt.Sprintf("%02d", c.DayOfWeek())
+				buffer.WriteString(week)
 			case 'S': // abbreviated suffix for the day of the month, such as st, nd, rd, th
 				suffix := "th"
 				switch c.Day() {
