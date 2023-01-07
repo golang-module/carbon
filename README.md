@@ -949,22 +949,22 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ##### Output
 
 ```go
-// Output date and time format string
+// Output datetime format string
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-// Output date and time with millisecond format string
+// Output datetime with millisecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString() // 2020-08-05 13:14:15.999
-// Output date and time with microsecond format string
+// Output datetime with microsecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString() // 2020-08-05 13:14:15.999999
-// Output date and time with nanosecond format string
+// Output datetime with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString() // 2020-08-05 13:14:15.999999999
 
-// Output short date and time format string
+// Output short datetime format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString() // 20200805131415
-// Output short date and time with millisecond format string
+// Output short datetime with millisecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString() // 20200805131415.999
-// Output short date and time with microsecond format string
+// Output short datetime with microsecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString() // 20200805131415.999999
-// Output short date and time with nanosecond format string
+// Output short datetime with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
 
 // Output date format string
@@ -1057,7 +1057,7 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 20
 // Output RFC3339 with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
-// Output date and time format string
+// Output datetime format string
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
 
 // Output "2006-01-02 15:04:05.999999999 -0700 MST" format string
