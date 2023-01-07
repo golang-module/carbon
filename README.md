@@ -850,31 +850,31 @@ carbon.Parse("2020-08-05 13:14:15").WeekOfMonth() // 1
 carbon.Parse("2020-08-05 13:14:15").DayOfWeek() // 3
 
 // Get current year, month, day, hour, minute and second
-carbon.Parse("2020-08-05 13:14:15").DateTime() // 2020,8,5,13,14,15
+carbon.Parse("2020-08-05 13:14:15").DateTime() // 2020, 8, 5, 13, 14, 15
 // Get current year, month, day, hour, minute, second and millisecond
-carbon.Parse("2020-08-05 13:14:15").DateTimeMilli() // 2020,8,5,13,14,15,999
+carbon.Parse("2020-08-05 13:14:15").DateTimeMilli() // 2020, 8, 5, 13, 14, 15, 999
 // Get current year, month, day, hour, minute, second and microsecond
-carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020,8,5,13,14,15,999999
+carbon.Parse("2020-08-05 13:14:15").DateTimeMicro() // 2020, 8, 5, 13, 14, 15, 999999
 // Get current year, month, day, hour, minute, second and nanosecond
-carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020,8,5,13,14,15,999999999
+carbon.Parse("2020-08-05 13:14:15").DateTimeNano() // 2020, 8, 5, 13, 14, 15, 999999999
 
 // Get current year, month and day
-carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020,8,5
+carbon.Parse("2020-08-05 13:14:15.999999999").Date() // 2020, 8, 5
 // Get current year, month, day and millisecond
-carbon.Parse("2020-08-05 13:14:15.999999999").DateMilli() // 2020,8,5,999
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMilli() // 2020, 8, 5, 999
 // Get current year, month, day and microsecond
-carbon.Parse("2020-08-05 13:14:15.999999999").DateMicro() // 2020,8,5,999999
+carbon.Parse("2020-08-05 13:14:15.999999999").DateMicro() // 2020, 8, 5, 999999
 // Get current year, month, day and nanosecond
-carbon.Parse("2020-08-05 13:14:15.999999999").DateNano() // 2020,8,5,999999999
+carbon.Parse("2020-08-05 13:14:15.999999999").DateNano() // 2020, 8, 5, 999999999
 
 // Get current hour, minute and second
-carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13,14,15
-// Get current hour, minute ,second and millisecond
-carbon.Parse("2020-08-05 13:14:15.999999999").TimeMilli() // 13,14,15,999
-// Get current hour, minute ,second and microsecond
-carbon.Parse("2020-08-05 13:14:15.999999999").TimeMicro() // 13,14,15,999999
-// Get current hour, minute ,second and nanosecond
-carbon.Parse("2020-08-05 13:14:15.999999999").TimeNano() // 13,14,15,999999999
+carbon.Parse("2020-08-05 13:14:15.999999999").Time() // 13, 14, 15
+// Get current hour, minute, second and millisecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMilli() // 13, 14, 15, 999
+// Get current hour, minute, second and microsecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeMicro() // 13, 14, 15, 999999
+// Get current hour, minute, second and nanosecond
+carbon.Parse("2020-08-05 13:14:15.999999999").TimeNano() // 13, 14, 15, 999999999
 
 // Get current century
 carbon.Parse("2020-08-05 13:14:15").Century() // 21
@@ -949,118 +949,118 @@ carbon.Parse("2002-12-31 13:14:15").Age() // 18
 ##### Output
 
 ```go
-// Output string with date and time format
+// Output datetime format string
 carbon.Parse("2020-08-05 13:14:15").ToDateTimeString() // 2020-08-05 13:14:15
-// Output string with date and time with millisecond format
+// Output datetime with millisecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString() // 2020-08-05 13:14:15.999
-// Output string with date and time with microsecond format
+// Output datetime with microsecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString() // 2020-08-05 13:14:15.999999
-// Output string with date and time with nanosecond format
+// Output datetime with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString() // 2020-08-05 13:14:15.999999999
 
-// Output string with short date and time format
+// Output short datetime format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString() // 20200805131415
-// Output string with short date and time with millisecond format
+// Output short datetime with millisecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString() // 20200805131415.999
-// Output string with short date and time with microsecond format
+// Output short datetime with microsecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString() // 20200805131415.999999
-// Output string with short date and time with nanosecond format
+// Output short datetime with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString() // 20200805131415.999999999
 
-// Output string with date format
+// Output date format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToDateString() // 2020-08-05
-// Output string with date with millisecond format
+// Output date with millisecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMilliString() // 2020-08-05.999
-// Output string with date with microsecond format
+// Output date with microsecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToDateMicroString() // 2020-08-05.999999
-// Output string with date with nanosecond format
+// Output date with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToDateNanoString() // 2020-08-05.999999999
 
-// Output string with short date format
+// Output short date format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateString() // 20200805
-// Output string with short date with millisecond format
+// Output short date with millisecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMilliString() // 20200805.999
-// Output string with short date with microsecond format
+// Output short date with microsecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateMicroString() // 20200805.999999
-// Output string with short date with nanosecond format
+// Output short date with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortDateNanoString() // 20200805.999999999
 
-// Output string with time format
+// Output time format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeString() // 13:14:15
-// Output string with time with millisecond format
+// Output time with millisecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMilliString() // 13:14:15.999
-// Output string with time with microsecond format
+// Output time with microsecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeMicroString() // 13:14:15.999999
-// Output string with time with nanosecond format
+// Output time with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToTimeNanoString() // 13:14:15.999999999
 
-// Output string with short time format
+// Output short time format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeString() // 131415
-// Output string with short time with millisecond format
+// Output short time with millisecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMilliString() // 131415.999
-// Output a string with short time with microsecond format
+// Output short time with microsecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415.999999
-// Output a string with short time with nanosecond format
+// Output short time with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
 
-// Output string with ANSIC format
+// Output ANSIC format string
 carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
-// Output string with Atom format
+// Output Atom format string
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
-// Output string with unix date format
+// Output Unix date format string
 carbon.Parse("2020-08-05 13:14:15").ToUnixDateString() // Wed Aug  5 13:14:15 CST 2020
-// Output string with ruby date format
+// Output Ruby date format string
 carbon.Parse("2020-08-05 13:14:15").ToRubyDateString() // Wed Aug 05 13:14:15 +0800 2020
-// Output string with Kitchen format
+// Output Kitchen format string
 carbon.Parse("2020-08-05 13:14:15").ToKitchenString() // 1:14PM
-// Output string with Cookie format
+// Output Cookie format string
 carbon.Parse("2020-08-05 13:14:15").ToCookieString() // Wednesday, 05-Aug-2020 13:14:15 CST
-// Output string with day, date and time format
+// Output day, date and time format string
 carbon.Parse("2020-08-05 13:14:15").ToDayDateTimeString() // Wed, Aug 5, 2020 1:14 PM
-// Output string with RSS format
+// Output RSS format string
 carbon.Parse("2020-08-05 13:14:15").ToRssString() // Wed, 05 Aug 2020 13:14:15 +0800
-// Output string with W3C format
+// Output W3C format string
 carbon.Parse("2020-08-05 13:14:15").ToW3cString() // 2020-08-05T13:14:15+08:00
 
-// Output string with ISO8601 format
+// Output ISO8601 format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601String() // 2020-08-05T13:14:15+08:00
-// Output string with ISO8601 with millisecond format
+// Output ISO8601 with millisecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString() // 2020-08-05T13:14:15.999+08:00
-// Output string with ISO8601 with microsecond format
+// Output ISO8601 with microsecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString() // 2020-08-05T13:14:15.999999+08:00
-// Output string with ISO8601 with nanosecond format
+// Output ISO8601 with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
-// Output string with RFC822 format
+// Output RFC822 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
-// Output string with RFC822Z format
+// Output RFC822Z format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc822zString() // 05 Aug 20 13:14 +0800
-// Output string with RFC850 format
+// Output RFC850 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc850String() // Wednesday, 05-Aug-20 13:14:15 CST
-// Output string with RFC1036 format
+// Output RFC1036 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1036String() // Wed, 05 Aug 20 13:14:15 +0800
-// Output string with RFC1123 format
+// Output RFC1123 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123String() // Wed, 05 Aug 2020 13:14:15 CST
-// Output string with RFC1123Z format
+// Output RFC1123Z format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString() // Wed, 05 Aug 2020 13:14:15 +0800
-// Output string with RFC2822 format
+// Output RFC2822 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
-// Output string with RFC7231 format
+// Output RFC7231 format string
 carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
 
-// Output string with RFC3339 format
+// Output RFC3339 format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String() // 2020-08-05T13:14:15+08:00
-// Output string with RFC3339 with millisecond format
+// Output RFC3339 with millisecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MilliString() // 2020-08-05T13:14:15.999+08:00
-// Output string with RFC3339 with microsecond format
+// Output RFC3339  with microsecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 2020-08-05T13:14:15.999999+08:00
-// Output string with RFC3339 with nanosecond format
+// Output RFC3339 with nanosecond format string
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
-// Output string with date and time format
+// Output datetime format string
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
 
-// Output string with "2006-01-02 15:04:05.999999999 -0700 MST" format
+// Output "2006-01-02 15:04:05.999999999 -0700 MST" format string
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 
 // Output string by layout, Layout() is shorthand for ToLayoutString()
@@ -1159,7 +1159,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // Get Chinese lunar day
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// Get Chinese lunar date as string with YYYY-MM-DD HH::ii::ss format
+// Get Chinese lunar date as YYYY-MM-DD HH::ii::ss format string
 fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 
 // Get Chinese lunar year as string
@@ -1364,10 +1364,10 @@ The following methods are supported
 * `Constellation()`：get constellation name
 * `Season()`：get season name
 * `DiffForHumans()`：get the difference with human-readable format
-* `ToMonthString()`：output string with month format
-* `ToShortMonthString()`：output string with short month format
-* `ToWeekString()`：output string with week format
-* `ToShortWeekString()`：output string with short week format
+* `ToMonthString()`：output month format string
+* `ToShortMonthString()`：output short month format string
+* `ToWeekString()`：output week format string
+* `ToShortWeekString()`：output short week format string
 
 ###### Set locale
 
