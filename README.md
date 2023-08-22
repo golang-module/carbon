@@ -237,7 +237,7 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 
 ```go
 // Convert Time.time into Carbon
-carbon.FromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now())
 // Convert Carbon into Time.time
 carbon.Now().ToStdTime()
 ```
@@ -1356,6 +1356,7 @@ The following languages are supported
 * [French(fr)](./lang/fr.json "French"): translated
   by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
 * [Thailand(th)](./lang/th.json "Thailand"): translated by [izcream](https://github.com/izcream "izcream")
+* [Iranian(fa)](./lang/fa.json "Iranian"): translated by [izcream](https://github.com/izcream "izcream")
 
 The following methods are supported
 

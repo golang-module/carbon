@@ -241,7 +241,7 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 
 ```go
 // 将 time.Time 转换成 Carbon
-carbon.FromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now())
 // 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
 ```
@@ -1357,6 +1357,7 @@ fmt.Printf("%+v", *person)
 * [马来西亚巴哈马语(ms-MY)](./lang/ms-MY.json "马来西亚巴哈马语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
 * [法语(fr)](./lang/fr.json "法语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
 * [泰语(th)](./lang/th.json "泰语"): 由 [izcream](https://github.com/izcream "izcream") 翻译
+* [伊朗语(fa)](./lang/fa.json "伊朗语"): 由 [erfanMomeniii](https://github.com/ErfanMomeniii "ErfanMomeniii") 翻译
 
 目前支持的方法有
 
@@ -1478,16 +1479,16 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | D | 缩写单词表示的周几 |  3 |     Mon-Sun      | Mon |
 | j | 月份中的第几天，没有前导零 |  - |       1-31       | 2 |
 | S | 第几天的英文缩写后缀，一般和j配合使用 |  2 |   st/nd/rd/th    | th |
-| l | 完整单词表示的周几 | - | Monday-Sunday | Monday |
-| F | 完整单词表示的月份 | - | January-December | January |
-| m | 数字表示的月份，有前导零 | 2 | 01-12 | 01 |
-| M | 缩写单词表示的月份 | 3 | Jan-Dec | Jan |
-| n | 数字表示的月份，没有前导零 | - | 1-12 | 1 |
-| Y | 4 位数字完整表示的年份 | 4 | 0000-9999 | 2006 |
-| y | 2 位数字表示的年份 | 2 | 00-99 | 06 |
-| a | 小写的上午和下午标识 | 2 | am/pm | pm |
-| A | 大写的上午和下午标识 | 2 | AM/PM | PM |
-| g | 小时，12 小时格式 | - | 1-12 | 3 |
+| l | 完整单词表示的周几 |  - |  Monday-Sunday   | Monday |
+| F | 完整单词表示的月份 |  - | January-December | January |
+| m | 数字表示的月份，有前导零 |  2 |      01-12       | 01 |
+| M | 缩写单词表示的月份 |  3 |     Jan-Dec      | Jan |
+| n | 数字表示的月份，没有前导零 |  - |       1-12       | 1 |
+| Y | 4 位数字完整表示的年份 |  4 |    0000-9999     | 2006 |
+| y | 2 位数字表示的年份 |  2 |      00-99       | 06 |
+| a | 小写的上午和下午标识 |  2 |      am/pm       | pm |
+| A | 大写的上午和下午标识 |  2 |      AM/PM       | PM |
+| g | 小时，12 小时格式 |  - |       1-12       | 3 |
 | G | 小时，24 小时格式 | - | 0-23 | 15 |
 | h | 小时，12 小时格式 | 2 | 00-11 | 03 |
 | H | 小时，24 小时格式 | 2 | 00-23 | 15 |

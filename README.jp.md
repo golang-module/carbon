@@ -238,7 +238,7 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 
 ```go
 // time.Time を Carbon に変換します
-carbon.FromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now())
 // Carbon を time.Time に変換します
 carbon.Now().ToStdTime()
 ```
@@ -1354,6 +1354,7 @@ fmt.Printf("%+v", *person)
 * [マレーシアバハマ語(ms-MY)](./lang/ms-MY.json "マレーシアバハマ語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
 * [フランス語(fr)](./lang/fr.json "フランス語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
 * [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") から翻訳されます
+* [イラン語(fa)](./lang/fa.json "イラン語"):  [erfanMomeniii](https://github.com/ErfanMomeniii "ErfanMomeniii") から翻訳されます
 
 現在サポートされている方法
 
