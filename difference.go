@@ -24,11 +24,27 @@ func (c Carbon) DiffAbsInYears(carbon ...Carbon) int64 {
 // DiffInMonths gets the difference in months.
 // 相差多少月
 func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
-	start, end := c, c.Now()
+	end := c.Now()
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (30 * 24 * 3600))))
+	startYear, startMonth, startDay := c.Date()
+	endYear, endMonth, endDay := end.Date()
+
+	diffYear, diffMonth, diffDay := endYear-startYear, endMonth-startMonth, endDay-startDay
+	if diffDay < 0 {
+		diffMonth = diffMonth - 1
+	}
+	if diffYear == 0 && diffMonth == 0 {
+		return int64(0)
+	}
+	if diffYear == 0 && diffMonth != 0 && diffDay != 0 {
+		if int(end.DiffAbsInHours(c)) < c.DaysInMonth()*HoursPerDay {
+			return int64(0)
+		}
+		return int64(diffMonth)
+	}
+	return int64(diffYear*MonthsPerYear + diffMonth)
 }
 
 // DiffAbsInMonths gets the difference in months with absolute value.
