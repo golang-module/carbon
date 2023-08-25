@@ -1235,6 +1235,20 @@ carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
 carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
+##### 测试
+
+```go
+testNow := carbon.Parse("2020-08-05")
+
+carbon.SetTestNow(testNow).Yesterday().ToDateString() // 2020-08-04
+carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
+carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
+
+carbon.Now().IsTestNow() // false
+carbon.SetTestNow(testNow).IsTestNow() // true
+
+```
+
 ##### JSON 支持
 
 ###### 定义模型
