@@ -13,6 +13,9 @@ func (c Carbon) Now(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
+	if c.isTestNow && !c.IsZero() {
+		return c
+	}
 	c.time = time.Now().In(c.loc)
 	return c
 }
@@ -32,12 +35,13 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	if c.IsZero() {
-		c.time = c.Now().time.In(c.loc).AddDate(0, 0, 1)
-		return c
+	if c.isTestNow {
+		return c.AddDay()
 	}
-	c.time = c.time.In(c.loc).AddDate(0, 0, 1)
-	return c
+	if !c.IsZero() {
+		return c.AddDay()
+	}
+	return c.Now().AddDay()
 }
 
 // Tomorrow returns a Carbon instance for tomorrow.
@@ -55,12 +59,13 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	if c.IsZero() {
-		c.time = c.Now().time.In(c.loc).AddDate(0, 0, -1)
-		return c
+	if c.isTestNow {
+		return c.SubDay()
 	}
-	c.time = c.time.In(c.loc).AddDate(0, 0, -1)
-	return c
+	if !c.IsZero() {
+		return c.SubDay()
+	}
+	return c.Now().SubDay()
 }
 
 // Yesterday returns a Carbon instance for yesterday.
