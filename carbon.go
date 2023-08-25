@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.2.4"
+const Version = "2.2.5"
 
 // timezone constants
 // 时区常量
@@ -179,6 +179,7 @@ const (
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
+	isTestNow    bool
 	time         time.Time
 	weekStartsAt time.Weekday
 	loc          *time.Location
@@ -189,7 +190,10 @@ type Carbon struct {
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	return Carbon{weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
+	c := Carbon{isTestNow: false, weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
+	c.lang.rw.Lock()
+	defer c.lang.rw.Unlock()
+	return c
 }
 
 // CreateFromStdTime creates a Carbon instance from standard time.Time.
@@ -218,8 +222,8 @@ func (c Carbon) ToStdTime() time.Time {
 }
 
 // Time2Carbon converts standard time.Time to Carbon.
-// Deprecated: It will be removed in the future, FromStdTime is recommended.
-// 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 FromStdTime
+// Deprecated: It will be removed in the future, CreateFromStdTime is recommended.
+// 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 CreateFromStdTime
 func Time2Carbon(tt time.Time) Carbon {
 	return FromStdTime(tt)
 }
