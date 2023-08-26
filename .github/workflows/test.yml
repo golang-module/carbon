@@ -12,21 +12,19 @@ jobs:
     strategy:
       matrix:
         vm-os: [ubuntu-latest, macos-latest, windows-latest]
-        go-version: [ 1.17, 1.18, 1.19 ]
     runs-on: ${{ matrix.vm-os }}
     env:
       GO111MODULE: on
       GOPROXY: https://goproxy.cn
     steps:
-      - name: Install go ${{ matrix.go-version }}
-        uses: actions/setup-go@v3
+      - name: Setup go
+        uses: actions/setup-go@v4
         with:
-          go-version: ${{ matrix.go-version }}
-
+          go-version: '>=1.16.0'
       - name: Install dependencies
         uses: actions/checkout@v3
 
-      - name: Test and create coverage file
+      - name: Create test coverage file
         run: go test -coverprofile='coverage.txt' -covermode=atomic
 
       - name: Upload coverage file to codecov
