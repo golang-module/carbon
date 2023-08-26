@@ -66,6 +66,7 @@ import (
 ```go
 // Return datetime of today
 fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
+carbon.Now().String() // 2020-08-05 13:14:15
 carbon.Now().ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
 // Return date of today
@@ -85,6 +86,7 @@ carbon.Now().TimestampNano() // 1596604455999999999
 
 // Return datetime of yesterday
 fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
+carbon.Yesterday().String() // 2020-08-04 13:14:15
 carbon.Yesterday().ToString() // 2020-08-04 13:14:15 +0800 CST
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
 // Return date of yesterday
@@ -106,6 +108,7 @@ carbon.Yesterday().TimestampNano() // 1596518055999999999
 
 // Return datetime of tomorrow
 fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
+carbon.Tomorrow().String() // 2020-08-06 13:14:15
 carbon.Tomorrow().ToString() // 2020-08-06 13:14:15 +0800 CST
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
 // Return date of tomorrow
