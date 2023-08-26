@@ -17,14 +17,14 @@ jobs:
       GO111MODULE: on
       GOPROXY: https://goproxy.cn
     steps:
-      - name: Install go ${{ matrix.go-version }}
+      - name: Setup go
         uses: actions/setup-go@v4
         with:
           go-version: '>=1.16.0'
       - name: Install dependencies
         uses: actions/checkout@v3
 
-      - name: Test and create coverage file
+      - name: Create test coverage file
         run: go test -coverprofile='coverage.txt' -covermode=atomic
 
       - name: Upload coverage file to codecov
