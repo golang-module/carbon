@@ -65,7 +65,7 @@ import (
 ```go
 // 今天此刻
 fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
-carbon.Now() // 2020-08-05 13:14:15
+carbon.Now().String() // 2020-08-05 13:14:15
 carbon.Now().ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
 // 今天日期
