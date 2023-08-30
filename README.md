@@ -40,17 +40,14 @@ import "gitee.com/golang-module/carbon/v2"
 // By github
 go get -u github.com/golang-module/carbon
 
-import (
-	"github.com/golang-module/carbon"
-)
+import "github.com/golang-module/carbon"
 
 // By gitee
 go get -u gitee.com/golang-module/carbon
 
-import (
-	"gitee.com/golang-module/carbon"
-)
+import "gitee.com/golang-module/carbon"
 ```
+
 > Please refer to <a href="#faq">FAQ</a> for the difference between v1 and v2
 
 #### Usage and example

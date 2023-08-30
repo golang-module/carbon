@@ -40,17 +40,14 @@ import "gitee.com/golang-module/carbon/v2"
 // github倉庫を使う
 go get -u github.com/golang-module/carbon
 
-import (
-	"github.com/golang-module/carbon"
-)
+import "github.com/golang-module/carbon"
 
 // gitee倉庫を使う
 go get -u gitee.com/golang-module/carbon
 
-import (
-	"gitee.com/golang-module/carbon"
-)
+import "gitee.com/golang-module/carbon"
 ```
+
 > v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください。
 
 人気のある問題

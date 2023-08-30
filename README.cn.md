@@ -24,16 +24,12 @@
 // 使用 github 库
 go get -u github.com/golang-module/carbon/v2
 
-import (
-	"github.com/golang-module/carbon/v2"
-)
+import "github.com/golang-module/carbon/v2"
 
 // 使用 gitee 库
 go get -u gitee.com/golang-module/carbon/v2
 
-import (
-	"gitee.com/golang-module/carbon/v2"
-)
+import "gitee.com/golang-module/carbon/v2"
 ```
 
 ##### Golang 版本小于 1.16 (必须)
