@@ -26,16 +26,12 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 // By github
 go get -u github.com/golang-module/carbon/v2
 
-import (
-	"github.com/golang-module/carbon/v2"
-)
+import "github.com/golang-module/carbon/v2"
 
 // By gitee
 go get -u gitee.com/golang-module/carbon/v2
 
-import (
-	"gitee.com/golang-module/carbon/v2"
-)
+import "gitee.com/golang-module/carbon/v2"
 ```
 
 ##### Go version < 1.16 (must)

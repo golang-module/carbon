@@ -25,16 +25,13 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 // github倉庫を使う
 go get -u github.com/golang-module/carbon/v2
 
-import (
-	"github.com/golang-module/carbon/v2"
-)
+import "github.com/golang-module/carbon/v2"
+
 
 // gitee倉庫を使う
 go get -u gitee.com/golang-module/carbon/v2
 
-import (
-	"gitee.com/golang-module/carbon/v2"
-)
+import "gitee.com/golang-module/carbon/v2"
 ```
 
 ##### Golangバージョンは1.16より小さいです (必要)
