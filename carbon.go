@@ -196,23 +196,11 @@ func NewCarbon() Carbon {
 	return c
 }
 
-// CreateFromStdTime creates a Carbon instance from standard time.Time.
-// 从标准的 time.Time 创建 Carbon 实例
-func CreateFromStdTime(tt time.Time) Carbon {
-	c := NewCarbon()
-	c.time = tt
-	c.loc = tt.Location()
-	return c
-}
-
 // FromStdTime converts standard time.Time to Carbon.
 // Deprecated: It will be removed in the future, CreateFromStdTime is recommended.
 // 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 CreateFromStdTime
 func FromStdTime(tt time.Time) Carbon {
-	c := NewCarbon()
-	c.time = tt
-	c.loc = tt.Location()
-	return c
+	return CreateFromStdTime(tt)
 }
 
 // ToStdTime converts Carbon to standard time.Time.
@@ -225,7 +213,7 @@ func (c Carbon) ToStdTime() time.Time {
 // Deprecated: It will be removed in the future, CreateFromStdTime is recommended.
 // 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 CreateFromStdTime
 func Time2Carbon(tt time.Time) Carbon {
-	return FromStdTime(tt)
+	return CreateFromStdTime(tt)
 }
 
 // Carbon2Time converts Carbon to standard time.Time.
