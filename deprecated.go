@@ -1,4 +1,4 @@
-// The methods in this file will be removed in the future
+// The functions and methods in this file will be removed in the future
 
 package carbon
 
