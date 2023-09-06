@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"fmt"
 	"math"
 	"strings"
 )
@@ -12,7 +13,15 @@ func (c Carbon) DiffInYears(carbon ...Carbon) int64 {
 	if len(carbon) > 0 {
 		end = carbon[len(carbon)-1]
 	}
-	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (365 * 24 * 3600))))
+
+	dy, dm, dd := end.Year()-start.Year(), end.Month()-start.Month(), end.Day()-start.Day()
+	if dd < 0 || dm < 0 {
+		dy--
+	}
+	if dy < 0 && (dd != 0 || dm != 0) {
+		dy++
+	}
+	return int64(dy)
 }
 
 // DiffAbsInYears gets the difference in years with absolute value.
@@ -211,6 +220,8 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 // gets the difference for unit and value.
 // 获取相差单位和差值
 func (c Carbon) diff(end Carbon) (unit string, value int64) {
+	fmt.Println("ss:", c.DiffAbsInYears(end))
+
 	switch true {
 	case c.DiffAbsInYears(end) > 0:
 		unit = "year"
