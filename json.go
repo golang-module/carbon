@@ -175,7 +175,7 @@ func (t Date) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for Date struct.
 // 实现 UnmarshalJSON 接口
 func (t *Date) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateLayout, t.Location())
 	if c.Error == nil {
 		*t = Date{c}
 	}
