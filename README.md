@@ -1366,7 +1366,8 @@ The following languages are supported
 * [French(fr)](./lang/fr.json "French"): translated
   by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
 * [Thailand(th)](./lang/th.json "Thailand"): translated by [izcream](https://github.com/izcream "izcream")
-* [Iranian(fa)](./lang/fa.json "Iranian"): translated by [izcream](https://github.com/izcream "izcream")
+* [Swedish(se)](./lang/se.json "Swedish"): translated by [jwanglof](https://github.com/jwanglof "jwanglof")
+* [Iranian(fa)](./lang/fa.json "Iranian"): translated by [erfanMomeniii](https://github.com/erfanMomeniii "erfanMomeniii")
 
 The following methods are supported
 
