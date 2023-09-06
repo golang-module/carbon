@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // String implements the interface Stringer for Carbon struct.
@@ -787,4 +788,10 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 // 输出指定格式模板的时间字符串, 是 ToFormatString 的简写
 func (c Carbon) Format(format string, timezone ...string) string {
 	return c.ToFormatString(format, timezone...)
+}
+
+// ToStdTime converts Carbon to standard time.Time.
+// 将 Carbon 转换成标准 time.Time
+func (c Carbon) ToStdTime() time.Time {
+	return c.time.In(c.loc)
 }
