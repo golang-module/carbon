@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.2.5"
+const Version = "2.2.6"
 
 // timezone constants
 // 时区常量
@@ -194,31 +194,4 @@ func NewCarbon() Carbon {
 	c.lang.rw.Lock()
 	defer c.lang.rw.Unlock()
 	return c
-}
-
-// FromStdTime converts standard time.Time to Carbon.
-// Deprecated: It will be removed in the future, CreateFromStdTime is recommended.
-// 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 CreateFromStdTime
-func FromStdTime(tt time.Time) Carbon {
-	return CreateFromStdTime(tt)
-}
-
-// ToStdTime converts Carbon to standard time.Time.
-// 将 Carbon 转换成标准 time.Time
-func (c Carbon) ToStdTime() time.Time {
-	return c.time.In(c.loc)
-}
-
-// Time2Carbon converts standard time.Time to Carbon.
-// Deprecated: It will be removed in the future, CreateFromStdTime is recommended.
-// 将标准 time.Time 转换成 Carbon，未来将移除，推荐使用 CreateFromStdTime
-func Time2Carbon(tt time.Time) Carbon {
-	return CreateFromStdTime(tt)
-}
-
-// Carbon2Time converts Carbon to standard time.Time.
-// Deprecated: It will be removed in the future, ToStdTime is recommended.
-// 将 Carbon 转换成标准 time.Time，未来将移除，推荐使用 ToStdTime
-func (c Carbon) Carbon2Time() time.Time {
-	return c.ToStdTime()
 }

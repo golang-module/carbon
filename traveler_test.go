@@ -85,6 +85,11 @@ func TestCarbon_AddDuration(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
+
+	duration := time.Duration(3)*time.Hour + time.Duration(30)*time.Minute
+	c := Parse("2020-08-05 13:14:15").AddDuration(duration.String())
+	assert.Nil(c.Error)
+	assert.Equal("2020-08-05 16:44:15", c.ToDateTimeString())
 }
 
 func TestCarbon_SubDuration(t *testing.T) {
@@ -116,6 +121,11 @@ func TestCarbon_SubDuration(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
+
+	duration := time.Duration(3)*time.Hour + time.Duration(30)*time.Minute
+	c := Parse("2020-08-05 13:14:15").SubDuration(duration.String())
+	assert.Nil(c.Error)
+	assert.Equal("2020-08-05 09:44:15", c.ToDateTimeString())
 }
 
 func TestCarbon_AddCenturies(t *testing.T) {
@@ -2022,4 +2032,9 @@ func TestError_Traveler(t *testing.T) {
 	duration := "10x"
 	c := Parse("2020-08-05").AddDuration(duration)
 	assert.NotNil(t, c.Error, "It should catch an exception in AddDuration()")
+
+	timezone := "xxx"
+	assert.NotNil(t, Now(timezone).Error, "It should catch an exception in Now()")
+	assert.NotNil(t, Tomorrow(timezone).Error, "It should catch an exception in Tomorrow()")
+	assert.NotNil(t, Yesterday(timezone).Error, "It should catch an exception in Yesterday()")
 }

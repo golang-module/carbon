@@ -3,9 +3,18 @@ package carbon
 import (
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func TestCarbon_CreateFromStdTime(t *testing.T) {
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	tt := time.Now().In(loc)
+	expected := tt.Format(DateTimeLayout)
+	actual := CreateFromStdTime(tt).ToDateTimeString()
+	assert.Equal(t, expected, actual)
+}
 
 func TestCarbon_CreateFromTimestamp(t *testing.T) {
 	assert := assert.New(t)
