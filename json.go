@@ -87,7 +87,7 @@ func (t DateTime) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateTime struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateTime) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateTime{c}
 	}
@@ -109,7 +109,7 @@ func (t DateTimeMilli) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateTimeMilli struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateTimeMilli) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMilliLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMilliLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateTimeMilli{c}
 	}
@@ -131,7 +131,7 @@ func (t DateTimeMicro) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateTimeMicro struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateTimeMicro) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMicroLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMicroLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateTimeMicro{c}
 	}
@@ -153,7 +153,7 @@ func (t DateTimeNano) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateTimeNano struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateTimeNano) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeNanoLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeNanoLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateTimeNano{c}
 	}
@@ -175,7 +175,7 @@ func (t Date) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for Date struct.
 // 实现 UnmarshalJSON 接口
 func (t *Date) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateLayout, t.loc.String())
 	if c.Error == nil {
 		*t = Date{c}
 	}
@@ -197,7 +197,7 @@ func (t DateMilli) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateMilli struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateMilli) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateMilliLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateMilliLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateMilli{c}
 	}
@@ -219,7 +219,7 @@ func (t DateMicro) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateMicro struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateMicro) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateMicroLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateMicroLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateMicro{c}
 	}
@@ -241,7 +241,7 @@ func (t DateNano) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the interface json.Unmarshal for DateNano struct.
 // 实现 UnmarshalJSON 接口
 func (t *DateNano) UnmarshalJSON(b []byte) error {
-	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateNanoLayout)
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateNanoLayout, t.loc.String())
 	if c.Error == nil {
 		*t = DateNano{c}
 	}
