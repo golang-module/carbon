@@ -2,10 +2,10 @@ package carbon
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
+	"time"
 )
 
 func TestCarbon_String(t *testing.T) {
@@ -1782,4 +1782,10 @@ func TestCarbon_Format(t *testing.T) {
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.SetLocale(test.locale).ToFormatString(test.format, PRC), "Current test index is "+strconv.Itoa(index))
 	}
+}
+
+func TestCarbon_ToStdTime(t *testing.T) {
+	expected := time.Now().Format(DateTimeLayout)
+	actual := Now().ToStdTime().Format(DateTimeLayout)
+	assert.Equal(t, expected, actual)
 }
