@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"fmt"
 	"math"
 	"strings"
 )
@@ -220,8 +219,6 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 // gets the difference for unit and value.
 // 获取相差单位和差值
 func (c Carbon) diff(end Carbon) (unit string, value int64) {
-	fmt.Println("ss:", c.DiffAbsInYears(end))
-
 	switch true {
 	case c.DiffAbsInYears(end) > 0:
 		unit = "year"
