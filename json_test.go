@@ -28,24 +28,43 @@ type Person struct {
 var person Person
 
 func TestCarbon_MarshalJSON(t *testing.T) {
+	testNow := SetTestNow(Parse("2020-08-05 13:14:15.999999999"))
 	person = Person{
 		Name:         "gouguoyin",
 		Age:          18,
-		Birthday1:    DateTime{Now().SubYears(18)},
-		Birthday2:    DateTimeMilli{Now().SubYears(18)},
-		Birthday3:    DateTimeMicro{Now().SubYears(18)},
-		Birthday4:    DateTimeNano{Now().SubYears(18)},
-		GraduatedAt1: Date{Parse("2020-08-05 13:14:15")},
-		GraduatedAt2: DateMilli{Parse("2020-08-05 13:14:15.999")},
-		GraduatedAt3: DateMicro{Parse("2020-08-05 13:14:15.999999")},
-		GraduatedAt4: DateNano{Parse("2020-08-05 13:14:15.999999999")},
-		CreatedAt1:   Timestamp{Parse("2023-08-05 13:14:15")},
-		CreatedAt2:   TimestampMilli{Parse("2024-08-05 13:14:15.999")},
-		CreatedAt3:   TimestampMicro{Parse("2025-08-05 13:14:15.999999")},
-		CreatedAt4:   TimestampNano{Parse("2025-08-05 13:14:15.999999999")},
+		Birthday1:    testNow.Now().SubYears(18).ToDateTimeStruct(),
+		Birthday2:    testNow.Now().SubYears(18).ToDateTimeMilliStruct(),
+		Birthday3:    testNow.Now().SubYears(18).ToDateTimeMicroStruct(),
+		Birthday4:    testNow.Now().SubYears(18).ToDateTimeNanoStruct(),
+		GraduatedAt1: Parse("2020-08-05 13:14:15").ToDateStruct(),
+		GraduatedAt2: Parse("2020-08-05 13:14:15.999").ToDateMilliStruct(),
+		GraduatedAt3: Parse("2020-08-05 13:14:15.999999").ToDateMicroStruct(),
+		GraduatedAt4: Parse("2020-08-05 13:14:15.999999999").ToDateNanoStruct(),
+		CreatedAt1:   Parse("2023-08-05 13:14:15").ToTimestampStruct(),
+		CreatedAt2:   Parse("2024-08-05 13:14:15.999").ToTimestampMilliStruct(),
+		CreatedAt3:   Parse("2025-08-05 13:14:15.999999").ToTimestampMicroStruct(),
+		CreatedAt4:   Parse("2025-08-05 13:14:15.999999999").ToTimestampNanoStruct(),
 	}
 	data, err := json.Marshal(&person)
 	assert.Nil(t, err)
+	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2005-09-11 09:57:38\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
+	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
+	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
+	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+
+	assert.Equal(t, "1691212455", person.CreatedAt1.String(), "created_at1 should be \"1691212455\"")
+	assert.Equal(t, "1722834855999", person.CreatedAt2.String(), "created_at2 should be \"1722834855999\"")
+	assert.Equal(t, "1754370855999999", person.CreatedAt3.String(), "created_at2 should be `\"1754370855999999\"")
+	assert.Equal(t, "1754370855999999999", person.CreatedAt4.String(), "created_at2 should be \"1754370855999999999\"")
+	assert.Equal(t, int64(1691212455), person.CreatedAt1.Int64(), "created_at1 should be 1691212455")
+	assert.Equal(t, int64(1722834855999), person.CreatedAt2.Int64(), "created_at2 should be 1722834855999")
+	assert.Equal(t, int64(1754370855999999), person.CreatedAt3.Int64(), "created_at2 should be 1754370855999999")
+	assert.Equal(t, int64(1754370855999999999), person.CreatedAt4.Int64(), "created_at2 should be 1754370855999999999")
+
 	fmt.Printf("Person output by json:\n%s\n", data)
 }
 
@@ -53,10 +72,10 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	str := `{
 		"name": "gouguoyin",
 		"age": 18,
-		"birthday1": "2003-07-16 16:22:02",
-		"birthday2": "2003-07-16 16:22:02.999",
-		"birthday3": "2003-07-16 16:22:02.999999",
-		"birthday4": "2003-07-16 16:22:02.999999999",
+		"birthday1": "2002-08-05 13:14:15",
+		"birthday2": "2002-08-05 13:14:15.999",
+		"birthday3": "2002-08-05 13:14:15.999999",
+		"birthday4": "2002-08-05 13:14:15.999999999",
 		"graduated_at1": "2020-08-05",
 		"graduated_at2": "2020-08-05.999",
 		"graduated_at3": "2020-08-05.999999",
@@ -69,6 +88,24 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 
 	err := json.Unmarshal([]byte(str), &person)
 	assert.Nil(t, err)
+	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2002-08-05 13:14:15\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
+	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
+	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
+	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
+	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+
+	assert.Equal(t, "1596604455", person.CreatedAt1.String(), "created_at1 should be \"1596604455\"")
+	assert.Equal(t, "1596604455999", person.CreatedAt2.String(), "created_at2 should be \"1596604455999\"")
+	assert.Equal(t, "1596604455999999", person.CreatedAt3.String(), "created_at2 should be `\"1596604455999999\"")
+	assert.Equal(t, "1596604455999999999", person.CreatedAt4.String(), "created_at2 should be \"1596604455999999999\"")
+	assert.Equal(t, int64(1596604455), person.CreatedAt1.Int64(), "created_at1 should be 1596604455")
+	assert.Equal(t, int64(1596604455999), person.CreatedAt2.Int64(), "created_at2 should be 1596604455999")
+	assert.Equal(t, int64(1596604455999999), person.CreatedAt3.Int64(), "created_at2 should be 1596604455999999")
+	assert.Equal(t, int64(1596604455999999999), person.CreatedAt4.Int64(), "created_at2 should be 1596604455999999999")
+
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
 
