@@ -47,6 +47,7 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	}
 	data, err := json.Marshal(&person)
 	assert.Nil(t, err)
+
 	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2005-09-11 09:57:38\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
@@ -58,12 +59,12 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 
 	assert.Equal(t, "1691212455", person.CreatedAt1.String(), "created_at1 should be \"1691212455\"")
 	assert.Equal(t, "1722834855999", person.CreatedAt2.String(), "created_at2 should be \"1722834855999\"")
-	assert.Equal(t, "1754370855999999", person.CreatedAt3.String(), "created_at2 should be `\"1754370855999999\"")
-	assert.Equal(t, "1754370855999999999", person.CreatedAt4.String(), "created_at2 should be \"1754370855999999999\"")
+	assert.Equal(t, "1754370855999999", person.CreatedAt3.String(), "created_at3 should be `\"1754370855999999\"")
+	assert.Equal(t, "1754370855999999999", person.CreatedAt4.String(), "created_at4 should be \"1754370855999999999\"")
 	assert.Equal(t, int64(1691212455), person.CreatedAt1.Int64(), "created_at1 should be 1691212455")
 	assert.Equal(t, int64(1722834855999), person.CreatedAt2.Int64(), "created_at2 should be 1722834855999")
-	assert.Equal(t, int64(1754370855999999), person.CreatedAt3.Int64(), "created_at2 should be 1754370855999999")
-	assert.Equal(t, int64(1754370855999999999), person.CreatedAt4.Int64(), "created_at2 should be 1754370855999999999")
+	assert.Equal(t, int64(1754370855999999), person.CreatedAt3.Int64(), "created_at3 should be 1754370855999999")
+	assert.Equal(t, int64(1754370855999999999), person.CreatedAt4.Int64(), "created_at4 should be 1754370855999999999")
 
 	fmt.Printf("Person output by json:\n%s\n", data)
 }
@@ -88,6 +89,7 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 
 	err := json.Unmarshal([]byte(str), &person)
 	assert.Nil(t, err)
+
 	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2002-08-05 13:14:15\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")

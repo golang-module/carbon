@@ -117,7 +117,7 @@ func (t DateTimeMilli) MarshalJSON() ([]byte, error) {
 func (t *DateTimeMilli) UnmarshalJSON(b []byte) error {
 	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMilliLayout, t.Location())
 	if c.Error == nil {
-		*t = DateTimeMilli{c}
+		*t = DateTimeMilli{Carbon: c}
 	}
 	return c.Error
 }
@@ -145,7 +145,7 @@ func (t DateTimeMicro) MarshalJSON() ([]byte, error) {
 func (t *DateTimeMicro) UnmarshalJSON(b []byte) error {
 	c := ParseByLayout(string(bytes.Trim(b, `"`)), DateTimeMicroLayout, t.Location())
 	if c.Error == nil {
-		*t = DateTimeMicro{c}
+		*t = DateTimeMicro{Carbon: c}
 	}
 	return c.Error
 }
