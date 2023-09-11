@@ -1287,6 +1287,26 @@ person := Person {
     CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
 }
 
+person.Birthday1.String() // 2002-08-05 13:14:15
+person.Birthday2.String() // 2002-08-05 13:14:15.999
+person.Birthday3.String() // 2002-08-05 13:14:15.999999
+person.Birthday4.String() // 2002-08-05 13:14:15.999999999
+
+person.GraduatedAt1.String() // 2020-08-05
+person.GraduatedAt2.String() // 2020-08-05.999
+person.GraduatedAt3.String() // 2020-08-05.999999
+person.GraduatedAt4.String() // 2020-08-05.999999999
+
+person.CreatedAt1.String() // "1691212455"
+person.CreatedAt2.String() // "1722834855999"
+person.CreatedAt3.String() // "1754370855999999"
+person.CreatedAt4.String() // "1754370855999999999"
+
+person.CreatedAt1.Int64() // 1691212455
+person.CreatedAt2.Int64() // 1722834855999
+person.CreatedAt3.Int64() // 1754370855999999
+person.CreatedAt4.Int64() // 1754370855999999999
+
 ```
 
 ###### JSON 编码
@@ -1294,8 +1314,8 @@ person := Person {
 ```go
 data, err := json.Marshal(&person)
 if err != nil {
-	// 错误处理
-	log.Fatal(err)
+    // 错误处理
+    log.Fatal(err)
 }
 fmt.Printf("%s", data)
 // 输出
@@ -1339,8 +1359,8 @@ str := `{
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
 if err != nil {
-	// 错误处理
-	log.Fatal(err)
+    // 错误处理
+    log.Fatal(err)
 }
 fmt.Printf("%+v", *person)
 // 输出
