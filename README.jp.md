@@ -1249,20 +1249,20 @@ carbon.SetTestNow(testNow).IsTestNow() // true
 
 ```go
 type Person struct {
-	Name string `json:"name"`
-	Age int `json:"age"`
-	Birthday1 carbon.DateTime `json:"birthday"`
-	Birthday2 carbon.DateTimeMilli `json:"birthday"`
-	Birthday3 carbon.DateTimeMicro `json:"birthday"`
-	Birthday4 carbon.DateTimeNano `json:"birthday"`
-	GraduatedAt1 carbon.Date `json:"graduated_at"`
-	GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
-	GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
-	GraduatedAt4 carbon.DateNano `json:"graduated_at"`
-	CreatedAt1 carbon.Timestamp `json:"created_at1"`
-	CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
-	CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
-	CreatedAt4 carbon.TimestampNano `json:"created_at4"`
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Birthday1 carbon.DateTime `json:"birthday"`
+    Birthday2 carbon.DateTimeMilli `json:"birthday"`
+    Birthday3 carbon.DateTimeMicro `json:"birthday"`
+    Birthday4 carbon.DateTimeNano `json:"birthday"`
+    GraduatedAt1 carbon.Date `json:"graduated_at"`
+    GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
+    GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
+    GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+    CreatedAt1 carbon.Timestamp `json:"created_at1"`
+    CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
+    CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
+    CreatedAt4 carbon.TimestampNano `json:"created_at4"`
 }
 ```
 
@@ -1298,20 +1298,20 @@ if err != nil {
 fmt.Printf("%s", data)
 // 出力
 {
-	"name": "gouguoyin",
-	"age": 18,
-	"birthday1": "2003-07-16 16:22:02",
-	"birthday2": "2003-07-16 16:22:02.999",
-	"birthday3": "2003-07-16 16:22:02.999999",
-	"birthday4": "2003-07-16 16:22:02.999999999",
-	"graduated_at1": "2020-08-05",
-	"graduated_at2": "2020-08-05.999",
-	"graduated_at3": "2020-08-05.999999",
-	"graduated_at4": "2020-08-05.999999999",
-	"created_at1": 1596604455,
-	"created_at2": 1596604455999,
-	"created_at3": 1596604455999999,
-	"created_at4": 1596604455999999999
+    "name": "gouguoyin",
+    "age": 18,
+    "birthday1": "2003-07-16 16:22:02",
+    "birthday2": "2003-07-16 16:22:02.999",
+    "birthday3": "2003-07-16 16:22:02.999999",
+    "birthday4": "2003-07-16 16:22:02.999999999",
+    "graduated_at1": "2020-08-05",
+    "graduated_at2": "2020-08-05.999",
+    "graduated_at3": "2020-08-05.999999",
+    "graduated_at4": "2020-08-05.999999999",
+    "created_at1": 1596604455,
+    "created_at2": 1596604455999,
+    "created_at3": 1596604455999999,
+    "created_at4": 1596604455999999999
 }
 ```
 
@@ -1319,20 +1319,20 @@ fmt.Printf("%s", data)
 
 ```go
 str := `{
-	"name": "gouguoyin",
-	"age": 18,
-	"birthday1": "2003-07-16 16:22:02",
-	"birthday2": "2003-07-16 16:22:02.999",
-	"birthday3": "2003-07-16 16:22:02.999999",
-	"birthday4": "2003-07-16 16:22:02.999999999",
-	"graduated_at1": "2020-08-05",
-	"graduated_at2": "2020-08-05.999",
-	"graduated_at3": "2020-08-05.999999",
-	"graduated_at4": "2020-08-05.999999999",
-	"created_at1": 1596604455,
-	"created_at2": 1596604455999,
-	"created_at3": 1596604455999999,
-	"created_at4": 1596604455999999999
+    "name": "gouguoyin",
+    "age": 18,
+    "birthday1": "2003-07-16 16:22:02",
+    "birthday2": "2003-07-16 16:22:02.999",
+    "birthday3": "2003-07-16 16:22:02.999999",
+    "birthday4": "2003-07-16 16:22:02.999999999",
+    "graduated_at1": "2020-08-05",
+    "graduated_at2": "2020-08-05.999",
+    "graduated_at3": "2020-08-05.999999",
+    "graduated_at4": "2020-08-05.999999999",
+    "created_at1": 1596604455,
+    "created_at2": 1596604455999,
+    "created_at3": 1596604455999999,
+    "created_at4": 1596604455999999999
 }`
 person := new(Person)
 err := json.Unmarshal([]byte(str), &person)
@@ -1431,24 +1431,24 @@ c.Now().Season() // Summer
 ```go
 lang := carbon.NewLanguage()
 resources := map[string]string {
-	"months": "january|february|march|april|may|june|july|august|september|october|november|december",
-	"short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
-	"weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
-	"short_weeks": "sun|mon|tue|wed|thu|fri|sat",
-	"seasons": "spring|summer|autumn|winter",
-	"constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
-	"year": "1 yr|%d yrs",
-	"month": "1 mo|%d mos",
-	"week": "%dw",
-	"day": "%dd",
-	"hour": "%dh",
-	"minute": "%dm",
-	"second": "%ds",
-	"now": "just now",
-	"ago": "%s ago",
-	"from_now": "in %s",
-	"before": "%s before",
-	"after": "%s after",
+    "months": "january|february|march|april|may|june|july|august|september|october|november|december",
+    "short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
+    "weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
+    "short_weeks": "sun|mon|tue|wed|thu|fri|sat",
+    "seasons": "spring|summer|autumn|winter",
+    "constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
+    "year": "1 yr|%d yrs",
+    "month": "1 mo|%d mos",
+    "week": "%dw",
+    "day": "%dd",
+    "hour": "%dh",
+    "minute": "%dm",
+    "second": "%ds",
+    "now": "just now",
+    "ago": "%s ago",
+    "from_now": "in %s",
+    "before": "%s before",
+    "after": "%s after",
 }
 lang.SetResources(resources)
 
