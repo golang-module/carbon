@@ -28,7 +28,7 @@ type Person struct {
 var person Person
 
 func TestCarbon_MarshalJSON(t *testing.T) {
-	testNow := SetTestNow(Parse("2020-08-05 13:14:15.999999999"))
+	testNow := SetTestNow(Parse("2020-08-05 13:14:15.999999999", PRC))
 	person = Person{
 		Name:         "gouguoyin",
 		Age:          18,
@@ -36,14 +36,14 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 		Birthday2:    testNow.Now().SubYears(18).ToDateTimeMilliStruct(),
 		Birthday3:    testNow.Now().SubYears(18).ToDateTimeMicroStruct(),
 		Birthday4:    testNow.Now().SubYears(18).ToDateTimeNanoStruct(),
-		GraduatedAt1: Parse("2020-08-05 13:14:15", UTC).ToDateStruct(),
-		GraduatedAt2: Parse("2020-08-05 13:14:15.999", UTC).ToDateMilliStruct(),
-		GraduatedAt3: Parse("2020-08-05 13:14:15.999999", UTC).ToDateMicroStruct(),
-		GraduatedAt4: Parse("2020-08-05 13:14:15.999999999", UTC).ToDateNanoStruct(),
-		CreatedAt1:   Parse("2023-08-05 13:14:15", UTC).ToTimestampStruct(),
-		CreatedAt2:   Parse("2024-08-05 13:14:15.999", UTC).ToTimestampMilliStruct(),
-		CreatedAt3:   Parse("2025-08-05 13:14:15.999999", UTC).ToTimestampMicroStruct(),
-		CreatedAt4:   Parse("2025-08-05 13:14:15.999999999", UTC).ToTimestampNanoStruct(),
+		GraduatedAt1: Parse("2020-08-05 13:14:15", PRC).ToDateStruct(),
+		GraduatedAt2: Parse("2020-08-05 13:14:15.999", PRC).ToDateMilliStruct(),
+		GraduatedAt3: Parse("2020-08-05 13:14:15.999999", PRC).ToDateMicroStruct(),
+		GraduatedAt4: Parse("2020-08-05 13:14:15.999999999", PRC).ToDateNanoStruct(),
+		CreatedAt1:   Parse("2023-08-05 13:14:15", PRC).ToTimestampStruct(),
+		CreatedAt2:   Parse("2024-08-05 13:14:15.999", PRC).ToTimestampMilliStruct(),
+		CreatedAt3:   Parse("2025-08-05 13:14:15.999999", PRC).ToTimestampMicroStruct(),
+		CreatedAt4:   Parse("2025-08-05 13:14:15.999999999", PRC).ToTimestampNanoStruct(),
 	}
 	data, err := json.Marshal(&person)
 	assert.Nil(t, err)
