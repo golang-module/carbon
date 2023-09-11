@@ -1265,20 +1265,20 @@ type Person struct {
 
 ```go
 person := Person {
-  Name:        "gouguoyin",
-  Age:          18,
-  Birthday1:    carbon.Now().SubYears(18).ToDateTimeStruct(),
-  Birthday2:    carbon.Now().SubYears(18).ToDateTimeMilliStruct(),
-  Birthday3:    carbon.Now().SubYears(18).ToDateTimeMicroStruct(),
-  Birthday4:    carbon.Now().SubYears(18).ToDateTimeNanoStruct(),
-  GraduatedAt1: carbon.Now().ToDateStruct(),
-  GraduatedAt2: carbon.Now().ToDateMilliStruct(),
-  GraduatedAt3: carbon.Now().ToDateMicroStruct(),
-  GraduatedAt4: carbon.Now().ToDateNanoStruct(),
-  CreatedAt1:   carbon.Now().ToTimestampStruct(),
-  CreatedAt2:   carbon.Now().ToTimestampMilliStruct(),
-  CreatedAt3:   carbon.Now().ToTimestampMicroStruct(),
-  CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
+    Name:        "gouguoyin",
+    Age:          18,
+    Birthday1:    carbon.Now().SubYears(18).ToDateTimeStruct(),
+    Birthday2:    carbon.Now().SubYears(18).ToDateTimeMilliStruct(),
+    Birthday3:    carbon.Now().SubYears(18).ToDateTimeMicroStruct(),
+    Birthday4:    carbon.Now().SubYears(18).ToDateTimeNanoStruct(),
+    GraduatedAt1: carbon.Now().ToDateStruct(),
+    GraduatedAt2: carbon.Now().ToDateMilliStruct(),
+    GraduatedAt3: carbon.Now().ToDateMicroStruct(),
+    GraduatedAt4: carbon.Now().ToDateNanoStruct(),
+    CreatedAt1:   carbon.Now().ToTimestampStruct(),
+    CreatedAt2:   carbon.Now().ToTimestampMilliStruct(),
+    CreatedAt3:   carbon.Now().ToTimestampMicroStruct(),
+    CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
 }
 ```
 
