@@ -1281,25 +1281,6 @@ person := Person {
     CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
 }
 
-person.Birthday1.String() // 2002-08-05 13:14:15
-person.Birthday2.String() // 2002-08-05 13:14:15.999
-person.Birthday3.String() // 2002-08-05 13:14:15.999999
-person.Birthday4.String() // 2002-08-05 13:14:15.999999999
-
-person.GraduatedAt1.String() // 2020-08-05
-person.GraduatedAt2.String() // 2020-08-05.999
-person.GraduatedAt3.String() // 2020-08-05.999999
-person.GraduatedAt4.String() // 2020-08-05.999999999
-
-person.CreatedAt1.String() // "1691212455"
-person.CreatedAt2.String() // "1722834855999"
-person.CreatedAt3.String() // "1754370855999999"
-person.CreatedAt4.String() // "1754370855999999999"
-
-person.CreatedAt1.Int64() // 1691212455
-person.CreatedAt2.Int64() // 1722834855999
-person.CreatedAt3.Int64() // 1754370855999999
-person.CreatedAt4.Int64() // 1754370855999999999
 ```
 
 ###### JSON encode
@@ -1355,9 +1336,26 @@ if err != nil {
     // Error handle...
     log.Fatal(err)
 }
-fmt.Printf("%+v", *person)
-// Output
-{Name:gouguoyin Age:18 Birthday1:2003-07-16 16:22:02 Birthday2:2003-07-16 16:22:02.999 Birthday3:2003-07-16 16:22:02.999999 Birthday4:2003-07-16 16:22:02.999999999 GraduatedAt1:2020-08-05 GraduatedAt2:2020-08-05.999 GraduatedAt3:2020-08-05.999999 GraduatedAt4:2020-08-05.999999999 CreatedAt1:2020-08-05 13:14:15 CreatedAt2:2020-08-05 13:14:15.999 CreatedAt3:2020-08-05 13:14:15.999999 CreatedAt4:2020-08-05 13:14:15.999999999}
+
+person.Birthday1.String() // 2002-08-05 13:14:15
+person.Birthday2.String() // 2002-08-05 13:14:15.999
+person.Birthday3.String() // 2002-08-05 13:14:15.999999
+person.Birthday4.String() // 2002-08-05 13:14:15.999999999
+
+person.GraduatedAt1.String() // 2020-08-05
+person.GraduatedAt2.String() // 2020-08-05.999
+person.GraduatedAt3.String() // 2020-08-05.999999
+person.GraduatedAt4.String() // 2020-08-05.999999999
+
+person.CreatedAt1.String() // "1691212455"
+person.CreatedAt2.String() // "1722834855999"
+person.CreatedAt3.String() // "1754370855999999"
+person.CreatedAt4.String() // "1754370855999999999"
+
+person.CreatedAt1.Int64() // 1691212455
+person.CreatedAt2.Int64() // 1722834855999
+person.CreatedAt3.Int64() // 1754370855999999
+person.CreatedAt4.Int64() // 1754370855999999999
 ```
 
 ##### I18n
