@@ -1246,6 +1246,10 @@ type Person struct {
     GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
     GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
     GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+	OperatedAt1 carbon.Time `json:"operated_at1"`
+    OperatedAt2 carbon.TimeMilli `json:"operated_at2"`
+    OperatedAt3 carbon.TimeMicro `json:"operated_at3"`
+    OperatedAt4 carbon.TimeNano `json:"operated_at4"`
     CreatedAt1 carbon.Timestamp `json:"created_at1"`
     CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
     CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
@@ -1267,6 +1271,10 @@ person := Person {
     GraduatedAt2: carbon.Now().ToDateMilliStruct(),
     GraduatedAt3: carbon.Now().ToDateMicroStruct(),
     GraduatedAt4: carbon.Now().ToDateNanoStruct(),
+    OperatedAt1:  carbon.Now().ToTimeStruct(),
+    OperatedAt2:  carbon.Now().ToTimeMilliStruct(),
+    OperatedAt3:  carbon.Now().ToTimeMicroStruct(),
+    OperatedAt4:  carbon.Now().ToTimeNanoStruct(),
     CreatedAt1:   carbon.Now().ToTimestampStruct(),
     CreatedAt2:   carbon.Now().ToTimestampMilliStruct(),
     CreatedAt3:   carbon.Now().ToTimestampMicroStruct(),
@@ -1296,6 +1304,10 @@ fmt.Printf("%s", data)
     "graduated_at2": "2020-08-05.999",
     "graduated_at3": "2020-08-05.999999",
     "graduated_at4": "2020-08-05.999999999",
+    "operated_at1": "13:14:15",
+    "operated_at2": "13:14:15.999",
+    "operated_at3": "13:14:15.999999",
+    "operated_at4": "13:14:15.999999999",
     "created_at1": 1596604455,
     "created_at2": 1596604455999,
     "created_at3": 1596604455999999,
@@ -1317,6 +1329,10 @@ str := `{
     "graduated_at2": "2020-08-05.999",
     "graduated_at3": "2020-08-05.999999",
     "graduated_at4": "2020-08-05.999999999",
+    "operated_at1": "13:14:15",
+    "operated_at2": "13:14:15.999",
+    "operated_at3": "13:14:15.999999",
+    "operated_at4": "13:14:15.999999999",
     "created_at1": 1596604455,
     "created_at2": 1596604455999,
     "created_at3": 1596604455999999,
@@ -1338,6 +1354,11 @@ person.GraduatedAt1.String() // 2020-08-05
 person.GraduatedAt2.String() // 2020-08-05.999
 person.GraduatedAt3.String() // 2020-08-05.999999
 person.GraduatedAt4.String() // 2020-08-05.999999999
+
+person.OperatedAt1.String() // 13:14:15
+person.OperatedAt2.String() // 13:14:15.999
+person.OperatedAt3.String() // 13:14:15.999999
+person.OperatedAt4.String() // 13:14:15.999999999
 
 person.CreatedAt1.String() // "1691212455"
 person.CreatedAt2.String() // "1722834855999"
