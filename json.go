@@ -54,6 +54,30 @@ type DateNano struct {
 	Carbon
 }
 
+// Time defines a Time struct.
+// 定义 Time 结构体
+type Time struct {
+	Carbon
+}
+
+// TimeMilli defines a TimeMilli struct.
+// 定义 TimeMilli 结构体
+type TimeMilli struct {
+	Carbon
+}
+
+// TimeMicro defines a TimeMicro struct.
+// 定义 TimeMicro 结构体
+type TimeMicro struct {
+	Carbon
+}
+
+// TimeNano defines a TimeNano struct.
+// 定义 TimeNano 结构体
+type TimeNano struct {
+	Carbon
+}
+
 // Timestamp defines a Timestamp struct.
 // 定义 Timestamp 结构体
 type Timestamp struct {
@@ -206,6 +230,70 @@ func (t *DateNano) UnmarshalJSON(b []byte) error {
 	return c.Error
 }
 
+// MarshalJSON implements the interface json.Marshal for Time struct.
+// 实现 MarshalJSON 接口
+func (t Time) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeString())), nil
+}
+
+// UnmarshalJSON implements the interface json.Unmarshal for Time struct.
+// 实现 UnmarshalJSON 接口
+func (t *Time) UnmarshalJSON(b []byte) error {
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), TimeLayout, t.Location())
+	if c.Error == nil {
+		*t = Time{Carbon: c}
+	}
+	return c.Error
+}
+
+// MarshalJSON implements the interface json.Marshal for TimeMilli struct.
+// 实现 MarshalJSON 接口
+func (t TimeMilli) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeMilliString())), nil
+}
+
+// UnmarshalJSON implements the interface json.Unmarshal for TimeMilli struct.
+// 实现 UnmarshalJSON 接口
+func (t *TimeMilli) UnmarshalJSON(b []byte) error {
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), TimeMilliLayout, t.Location())
+	if c.Error == nil {
+		*t = TimeMilli{Carbon: c}
+	}
+	return c.Error
+}
+
+// MarshalJSON implements the interface json.Marshal for TimeMicro struct.
+// 实现 MarshalJSON 接口
+func (t TimeMicro) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeMicroString())), nil
+}
+
+// UnmarshalJSON implements the interface json.Unmarshal for TimeMicro struct.
+// 实现 UnmarshalJSON 接口
+func (t *TimeMicro) UnmarshalJSON(b []byte) error {
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), TimeMicroLayout, t.Location())
+	if c.Error == nil {
+		*t = TimeMicro{Carbon: c}
+	}
+	return c.Error
+}
+
+// MarshalJSON implements the interface json.Marshal for TimeNano struct.
+// 实现 MarshalJSON 接口
+func (t TimeNano) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"%s"`, t.ToTimeNanoString())), nil
+}
+
+// UnmarshalJSON implements the interface json.Unmarshal for TimeNano struct.
+// 实现 UnmarshalJSON 接口
+func (t *TimeNano) UnmarshalJSON(b []byte) error {
+	c := ParseByLayout(string(bytes.Trim(b, `"`)), TimeNanoLayout, t.Location())
+	if c.Error == nil {
+		*t = TimeNano{Carbon: c}
+	}
+	return c.Error
+}
+
 // MarshalJSON implements the interface json.Marshal for Timestamp struct.
 // 实现 MarshalJSON 接口
 func (t Timestamp) MarshalJSON() ([]byte, error) {
@@ -322,6 +410,30 @@ func (c Carbon) ToDateNanoStruct() DateNano {
 	return DateNano{Carbon: c}
 }
 
+// ToTimeStruct converts Carbon to Time.
+// 将 Carbon 结构体转换成 Time 结构体
+func (c Carbon) ToTimeStruct() Time {
+	return Time{Carbon: c}
+}
+
+// ToTimeMilliStruct converts Carbon to TimeMilli.
+// 将 Carbon 结构体转换成 TimeMilli 结构体
+func (c Carbon) ToTimeMilliStruct() TimeMilli {
+	return TimeMilli{Carbon: c}
+}
+
+// ToTimeMicroStruct converts Carbon to TimeMicro.
+// 将 Carbon 结构体转换成 TimeMicro 结构体
+func (c Carbon) ToTimeMicroStruct() TimeMicro {
+	return TimeMicro{Carbon: c}
+}
+
+// ToTimeNanoStruct converts Carbon to TimeNano.
+// 将 Carbon 结构体转换成 TimeNano 结构体
+func (c Carbon) ToTimeNanoStruct() TimeNano {
+	return TimeNano{Carbon: c}
+}
+
 // ToTimestampStruct converts Carbon to Timestamp.
 // 将 Carbon 结构体转换成 Timestamp 结构体
 func (c Carbon) ToTimestampStruct() Timestamp {
@@ -418,6 +530,30 @@ func (t DateNano) String() string {
 	return t.ToDateNanoString()
 }
 
+// String implements the interface Stringer for Time struct.
+// 实现 Stringer 接口
+func (t Time) String() string {
+	return t.ToTimeString()
+}
+
+// String implements the interface Stringer for TimeMilli struct.
+// 实现 Stringer 接口
+func (t TimeMilli) String() string {
+	return t.ToTimeMilliString()
+}
+
+// String implements the interface Stringer for TimeMicro struct.
+// 实现 Stringer 接口
+func (t TimeMicro) String() string {
+	return t.ToTimeMicroString()
+}
+
+// String implements the interface Stringer for TimeNano struct.
+// 实现 Stringer 接口
+func (t TimeNano) String() string {
+	return t.ToTimeNanoString()
+}
+
 // String implements the interface Stringer for Timestamp struct.
 // 实现 Stringer 接口
 func (t Timestamp) String() string {
@@ -442,67 +578,91 @@ func (t TimestampNano) String() string {
 	return strconv.FormatInt(t.TimestampNano(), 10)
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateTime struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateTime) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateTimeMilli struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateTimeMilli) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateTimeMicro struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateTimeMicro) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateTimeNano struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateTimeNano) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for Date struct.
 // 实现 GormDataTypeInterface 接口
 func (t Date) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateMilli struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateMilli) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateMicro struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateMicro) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for DateNano struct.
 // 实现 GormDataTypeInterface 接口
 func (t DateNano) GormDataType() string {
 	return "time"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for Time struct.
+// 实现 GormDataTypeInterface 接口
+func (t Time) GormDataType() string {
+	return "time"
+}
+
+// GormDataType implements the interface GormDataTypeInterface for TimeMilli struct.
+// 实现 GormDataTypeInterface 接口
+func (t TimeMilli) GormDataType() string {
+	return "time"
+}
+
+// GormDataType implements the interface GormDataTypeInterface for TimeMicro struct.
+// 实现 GormDataTypeInterface 接口
+func (t TimeMicro) GormDataType() string {
+	return "time"
+}
+
+// GormDataType implements the interface GormDataTypeInterface for TimeNano struct.
+// 实现 GormDataTypeInterface 接口
+func (t TimeNano) GormDataType() string {
+	return "time"
+}
+
+// GormDataType implements the interface GormDataTypeInterface for Timestamp struct.
 // 实现 GormDataTypeInterface 接口
 func (t Timestamp) GormDataType() string {
 	return "int"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for TimestampMilli struct.
 // 实现 GormDataTypeInterface 接口
 func (t TimestampMilli) GormDataType() string {
 	return "int"
 }
 
-// GormDataType implements the interface GormDataTypeInterface for TimestampNano struct.
+// GormDataType implements the interface GormDataTypeInterface for TimestampMicro struct.
 // 实现 GormDataTypeInterface 接口
 func (t TimestampMicro) GormDataType() string {
 	return "int"

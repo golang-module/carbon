@@ -19,6 +19,10 @@ type Person struct {
 	GraduatedAt2 DateMilli      `json:"graduated_at2"`
 	GraduatedAt3 DateMicro      `json:"graduated_at3"`
 	GraduatedAt4 DateNano       `json:"graduated_at4"`
+	OperatedAt1  Time           `json:"operated_at1"`
+	OperatedAt2  TimeMilli      `json:"operated_at2"`
+	OperatedAt3  TimeMicro      `json:"operated_at3"`
+	OperatedAt4  TimeNano       `json:"operated_at4"`
 	CreatedAt1   Timestamp      `json:"created_at1"`
 	CreatedAt2   TimestampMilli `json:"created_at2"`
 	CreatedAt3   TimestampMicro `json:"created_at3"`
@@ -40,6 +44,10 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 		GraduatedAt2: Parse("2020-08-05 13:14:15.999", PRC).ToDateMilliStruct(),
 		GraduatedAt3: Parse("2020-08-05 13:14:15.999999", PRC).ToDateMicroStruct(),
 		GraduatedAt4: Parse("2020-08-05 13:14:15.999999999", PRC).ToDateNanoStruct(),
+		OperatedAt1:  Parse("2020-08-05 13:14:15", PRC).ToTimeStruct(),
+		OperatedAt2:  Parse("2020-08-05 13:14:15.999", PRC).ToTimeMilliStruct(),
+		OperatedAt3:  Parse("2020-08-05 13:14:15.999999", PRC).ToTimeMicroStruct(),
+		OperatedAt4:  Parse("2020-08-05 13:14:15.999999999", PRC).ToTimeNanoStruct(),
 		CreatedAt1:   Parse("2023-08-05 13:14:15", PRC).ToTimestampStruct(),
 		CreatedAt2:   Parse("2024-08-05 13:14:15.999", PRC).ToTimestampMilliStruct(),
 		CreatedAt3:   Parse("2025-08-05 13:14:15.999999", PRC).ToTimestampMicroStruct(),
@@ -52,10 +60,16 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+
 	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
 	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
 	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
 	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+
+	assert.Equal(t, "13:14:15", person.OperatedAt1.String(), "graduated_at1 should be \"13:14:15\"")
+	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String(), "graduated_at2 should be \"13:14:15.999\"")
+	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String(), "graduated_at3 should be \"13:14:15.999999\"")
+	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String(), "graduated_at4 should be \"13:14:15.999999999\"")
 
 	assert.Equal(t, "1691212455", person.CreatedAt1.String(), "created_at1 should be \"1691212455\"")
 	assert.Equal(t, "1722834855999", person.CreatedAt2.String(), "created_at2 should be \"1722834855999\"")
@@ -81,6 +95,10 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 		"graduated_at2": "2020-08-05.999",
 		"graduated_at3": "2020-08-05.999999",
 		"graduated_at4": "2020-08-05.999999999",
+		"operated_at1": "13:14:15",
+		"operated_at2": "13:14:15.999",
+		"operated_at3": "13:14:15.999999",
+		"operated_at4": "13:14:15.999999999",
 		"created_at1": 1596604455,
 		"created_at2": 1596604455999,
 		"created_at3": 1596604455999999,
@@ -94,10 +112,16 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
 	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+
 	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
 	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
 	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
 	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+
+	assert.Equal(t, "13:14:15", person.OperatedAt1.String(), "graduated_at1 should be \"13:14:15\"")
+	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String(), "graduated_at2 should be \"13:14:15.999\"")
+	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String(), "graduated_at3 should be \"13:14:15.999999\"")
+	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String(), "graduated_at4 should be \"13:14:15.999999999\"")
 
 	assert.Equal(t, "1596604455", person.CreatedAt1.String(), "created_at1 should be \"1596604455\"")
 	assert.Equal(t, "1596604455999", person.CreatedAt2.String(), "created_at2 should be \"1596604455999\"")
@@ -129,6 +153,15 @@ func TestCarbon_GormDataType(t *testing.T) {
 	assert.Equal(t, "time", dateMicro.GormDataType())
 	var dateNano DateNano
 	assert.Equal(t, "time", dateNano.GormDataType())
+
+	var time Time
+	assert.Equal(t, "time", time.GormDataType())
+	var timeMilli TimeMilli
+	assert.Equal(t, "time", timeMilli.GormDataType())
+	var timeMicro TimeMicro
+	assert.Equal(t, "time", timeMicro.GormDataType())
+	var timeNano TimeNano
+	assert.Equal(t, "time", timeNano.GormDataType())
 
 	var timestamp Timestamp
 	assert.Equal(t, "int", timestamp.GormDataType())
