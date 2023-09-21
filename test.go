@@ -26,12 +26,12 @@ func (c Carbon) ClearTestNow() Carbon {
 	return c
 }
 
-// IsTestNow reports whether the test now time is set.
-func IsTestNow() bool {
-	return NewCarbon().IsTestNow()
+// HasTestNow reports whether is the test now time.
+func HasTestNow() bool {
+	return NewCarbon().HasTestNow()
 }
 
-// IsTestNow reports whether the test now time is set.
-func (c Carbon) IsTestNow() bool {
+// HasTestNow reports whether is the test now time.
+func (c Carbon) HasTestNow() bool {
 	return c.isTestNow
 }

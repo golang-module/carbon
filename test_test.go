@@ -25,13 +25,13 @@ func TestCarbon_ClearTestNow(t *testing.T) {
 	assert.Equal(Now().ToDateString(), SetTestNow(testNow).ClearTestNow().Now().ToDateString())
 }
 
-func TestCarbon_IsTestNow(t *testing.T) {
+func TestCarbon_HasTestNow(t *testing.T) {
 	assert := assert.New(t)
 
 	datetime := "2020-08-05"
 	testNow := Parse(datetime)
 
-	assert.Equal(false, IsTestNow(), "It should be equal to false")
-	assert.Equal(false, Now().IsTestNow(), "It should be equal to false")
-	assert.Equal(true, SetTestNow(testNow).IsTestNow(), "It should be equal to true")
+	assert.Equal(false, HasTestNow(), "It should be equal to false")
+	assert.Equal(false, Now().HasTestNow(), "It should be equal to false")
+	assert.Equal(true, SetTestNow(testNow).HasTestNow(), "It should be equal to true")
 }
