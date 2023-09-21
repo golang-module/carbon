@@ -1224,20 +1224,6 @@ carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
 carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
-##### Testing
-
-```go
-testNow := carbon.Parse("2020-08-05")
-
-carbon.SetTestNow(testNow).Yesterday().ToDateString() // 2020-08-04
-carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
-carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
-
-carbon.Now().IsTestNow() // false
-carbon.SetTestNow(testNow).IsTestNow() // true
-
-```
-
 ##### JSON handling
 
 ###### Define model
@@ -1480,6 +1466,21 @@ c.Now().ToWeekString() // tuesday
 c.Now().ToShortWeekString() // tue
 c.Now().Constellation() // leo
 c.Now().Season() // summer
+```
+
+##### Testing
+
+```go
+testNow := carbon.Parse("2020-08-05")
+
+carbon.SetTestNow(testNow).Yesterday().ToDateString() // 2020-08-04
+carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
+carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
+
+carbon.Now().HasTestNow() // false
+carbon.SetTestNow(testNow).HasTestNow() // true
+carbon.SetTestNow(testNow).ClearTestNow().HasTestNow() // false
+
 ```
 
 ##### Error handling
