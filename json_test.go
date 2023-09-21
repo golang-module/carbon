@@ -111,6 +111,35 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
 
+func TestCarbon_GormDataType(t *testing.T) {
+	var dateTime DateTime
+	assert.Equal(t, "time", dateTime.GormDataType())
+	var dateTimeMilli DateTimeMilli
+	assert.Equal(t, "time", dateTimeMilli.GormDataType())
+	var dateTimeMicro DateTimeMicro
+	assert.Equal(t, "time", dateTimeMicro.GormDataType())
+	var dateTimeNano DateTimeNano
+	assert.Equal(t, "time", dateTimeNano.GormDataType())
+
+	var date Date
+	assert.Equal(t, "time", date.GormDataType())
+	var dateMilli DateMilli
+	assert.Equal(t, "time", dateMilli.GormDataType())
+	var dateMicro DateMicro
+	assert.Equal(t, "time", dateMicro.GormDataType())
+	var dateNano DateNano
+	assert.Equal(t, "time", dateNano.GormDataType())
+
+	var timestamp Timestamp
+	assert.Equal(t, "int", timestamp.GormDataType())
+	var timestampMilli TimestampMilli
+	assert.Equal(t, "int", timestampMilli.GormDataType())
+	var timestampMicro TimestampMicro
+	assert.Equal(t, "int", timestampMicro.GormDataType())
+	var timestampNano TimestampNano
+	assert.Equal(t, "int", timestampNano.GormDataType())
+}
+
 func TestError_Json(t *testing.T) {
 	str := `{
 		"name": "",
