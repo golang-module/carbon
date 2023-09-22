@@ -1242,11 +1242,11 @@ type Person struct {
     Birthday2 carbon.DateTimeMilli `json:"birthday"`
     Birthday3 carbon.DateTimeMicro `json:"birthday"`
     Birthday4 carbon.DateTimeNano `json:"birthday"`
-	GraduatedAt1 carbon.Date `json:"graduated_at"`
+    GraduatedAt1 carbon.Date `json:"graduated_at"`
     GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
     GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
     GraduatedAt4 carbon.DateNano `json:"graduated_at"`
-	OperatedAt1 carbon.Time `json:"operated_at1"`
+    OperatedAt1 carbon.Time `json:"operated_at1"`
     OperatedAt2 carbon.TimeMilli `json:"operated_at2"`
     OperatedAt3 carbon.TimeMicro `json:"operated_at3"`
     OperatedAt4 carbon.TimeNano `json:"operated_at4"`
