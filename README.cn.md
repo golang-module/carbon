@@ -1246,7 +1246,7 @@ type Person struct {
     GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
     GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
     GraduatedAt4 carbon.DateNano `json:"graduated_at"`
-    OperatedAt1 carbon.Time `json:"operated_at1"`
+	OperatedAt1 carbon.Time `json:"operated_at1"`
     OperatedAt2 carbon.TimeMilli `json:"operated_at2"`
     OperatedAt3 carbon.TimeMicro `json:"operated_at3"`
     OperatedAt4 carbon.TimeNano `json:"operated_at4"`
@@ -1258,6 +1258,31 @@ type Person struct {
 ```
 
 ###### 实例化模型
+
+```go
+person := Person {
+    Name:        "gouguoyin",
+    Age:          18,
+    Birthday1:    carbon.DateTime(carbon.Now().SubYears(18)),
+    Birthday2:    carbon.DateTimeMilli(carbon.Now().SubYears(18)),
+    Birthday3:    carbon.DateTimeMicro(carbon.Now().SubYears(18)),
+    Birthday4:    carbon.DateTimeNano(carbon.Now().SubYears(18)),
+    GraduatedAt1: carbon.Date(carbon.Now()),
+    GraduatedAt2: carbon.DateMilli(carbon.Now()),
+    GraduatedAt3: carbon.DateMicro(carbon.Now()),
+    GraduatedAt4: carbon.DateNano(carbon.Now()),
+    OperatedAt1:  carbon.Time(carbon.Now()),
+    OperatedAt2:  carbon.TimeMilli(carbon.Now()),
+    OperatedAt3:  carbon.TimeMicro(carbon.Now()),
+    OperatedAt4:  carbon.TimeNano(carbon.Now()),
+    CreatedAt1:   carbon.Timestamp(carbon.Now()),
+    CreatedAt2:   carbon.TimestampMilli(carbon.Now()),
+    CreatedAt3:   carbon.TimestampMicro(carbon.Now()),
+    CreatedAt4:   carbon.TimestampNano(carbon.Now()),
+}
+```
+
+或
 
 ```go
 person := Person {
@@ -1280,7 +1305,6 @@ person := Person {
     CreatedAt3:   carbon.Now().ToTimestampMicroStruct(),
     CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
 }
-
 ```
 
 ###### JSON 编码
