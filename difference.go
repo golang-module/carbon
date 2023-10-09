@@ -14,7 +14,7 @@ func (c Carbon) DiffInYears(carbon ...Carbon) int64 {
 	}
 
 	dy, dm, dd := end.Year()-start.Year(), end.Month()-start.Month(), end.Day()-start.Day()
-	if dd < 0 || dm < 0 {
+	if dm < 0 || (dm == 0 && dd < 0) {
 		dy--
 	}
 	if dy < 0 && (dd != 0 || dm != 0) {
