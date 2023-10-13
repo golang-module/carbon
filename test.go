@@ -21,7 +21,7 @@ func (c Carbon) ClearTestNow() Carbon {
 	return c
 }
 
-// HasTestNow reports whether is the test now time.
+// HasTestNow reports whether has the test now time.
 func (c Carbon) HasTestNow() bool {
 	return c.isTestNow
 }
