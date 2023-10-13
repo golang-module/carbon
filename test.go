@@ -16,19 +16,9 @@ func (c Carbon) SetTestNow(carbon Carbon) Carbon {
 }
 
 // ClearTestNow clears a test Carbon instance (real or mock) to be returned when a "now" instance is created.
-func ClearTestNow() Carbon {
-	return NewCarbon().ClearTestNow()
-}
-
-// ClearTestNow clears a test Carbon instance (real or mock) to be returned when a "now" instance is created.
 func (c Carbon) ClearTestNow() Carbon {
 	c.isTestNow = false
 	return c
-}
-
-// HasTestNow reports whether is the test now time.
-func HasTestNow() bool {
-	return NewCarbon().HasTestNow()
 }
 
 // HasTestNow reports whether is the test now time.

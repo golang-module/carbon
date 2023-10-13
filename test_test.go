@@ -21,7 +21,6 @@ func TestCarbon_ClearTestNow(t *testing.T) {
 	datetime := "2020-08-05"
 	testNow := Parse(datetime)
 
-	assert.Equal(Now().ToDateString(), ClearTestNow().Now().ToDateString())
 	assert.Equal(Now().ToDateString(), SetTestNow(testNow).ClearTestNow().Now().ToDateString())
 }
 
@@ -31,7 +30,6 @@ func TestCarbon_HasTestNow(t *testing.T) {
 	datetime := "2020-08-05"
 	testNow := Parse(datetime)
 
-	assert.Equal(false, HasTestNow(), "It should be equal to false")
 	assert.Equal(false, Now().HasTestNow(), "It should be equal to false")
 	assert.Equal(true, SetTestNow(testNow).HasTestNow(), "It should be equal to true")
 }
