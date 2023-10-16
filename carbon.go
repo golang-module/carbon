@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.2.10"
+const Version = "2.2.11"
 
 // timezone constants
 // 时区常量
@@ -179,8 +179,8 @@ const (
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
-	isTestNow    bool
 	time         time.Time
+	testNow      int64 // timestamp of test now
 	weekStartsAt time.Weekday
 	loc          *time.Location
 	lang         *Language
@@ -190,7 +190,7 @@ type Carbon struct {
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	c := Carbon{isTestNow: false, weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
+	c := Carbon{testNow: 0, weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
 	c.lang.rw.Lock()
 	defer c.lang.rw.Unlock()
 	return c
