@@ -1,6 +1,7 @@
 package carbon
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -29,6 +30,8 @@ func (c Carbon) IsInvalid() bool {
 // 是否是当前时间
 func (c Carbon) IsNow() bool {
 	if c.IsInvalid() {
+		fmt.Println("bbb")
+
 		return false
 	}
 	return c.Timestamp() == c.Now().Timestamp()
