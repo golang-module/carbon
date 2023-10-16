@@ -1521,6 +1521,7 @@ testNow := carbon.Parse("2020-08-05")
 carbon.SetTestNow(testNow).Yesterday().ToDateString() // 2020-08-04
 carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
 carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
+carbon.SetTestNow(testNow).Parse("2000-08-05").Age() // 30
 
 carbon.Now().HasTestNow() // false
 carbon.SetTestNow(testNow).HasTestNow() // true
