@@ -180,7 +180,7 @@ const (
 // 定义 Carbon 结构体
 type Carbon struct {
 	time         time.Time
-	testNow      int64 // timestamp of test now
+	testNow      int64 // timestamp with nanosecond of test now time
 	weekStartsAt time.Weekday
 	loc          *time.Location
 	lang         *Language
