@@ -1411,6 +1411,7 @@ person.CreatedAt4.Int64() // 1754370855999999999
 * [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") から翻訳されます
 * [スウェーデン語(se)](./lang/se.json "スウェーデン語"):  [jwanglof](https://github.com/jwanglof "jwanglof") から翻訳されます
 * [イラン語(fa)](./lang/fa.json "イラン語"):  [Iranian](https://github.com/Iranian "Iranian") から翻訳されます
+* [ポーランド語(nl)](./lang/nl.json "ポーランド語"):  [RemcoE33](https://github.com/RemcoE33 "RemcoE33") から翻訳されます
 
 現在サポートされている方法
 
