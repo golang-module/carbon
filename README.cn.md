@@ -46,7 +46,7 @@ go get -u gitee.com/golang-module/carbon
 import "gitee.com/golang-module/carbon"
 ```
 
-> v1 和 v2 版本区别请查阅 <a href="#常见问题">常见问题</a>，v1 版本不再更新和维护
+> v1 和 v2 版本区别请查阅 <a href="#常见问题">常见问题</a>，v1 版本不再更新，仅维护。
 
 #### 用法示例
 

@@ -48,7 +48,7 @@ go get -u gitee.com/golang-module/carbon
 import "gitee.com/golang-module/carbon"
 ```
 
-> Please refer to <a href="#faq">FAQ</a> for the difference between v1 and v2, v1 is no longer updated and maintained.
+> Please refer to <a href="#faq">FAQ</a> for the difference between v1 and v2, v1 is no longer updated, only maintained.
 
 #### Usage and example
 

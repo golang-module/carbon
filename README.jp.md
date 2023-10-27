@@ -48,7 +48,7 @@ go get -u gitee.com/golang-module/carbon
 import "gitee.com/golang-module/carbon"
 ```
 
-> v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください，v1 は保守および更新されなくなりました。
+> v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください，v1 は更新されなくなり、維持されるだけです。
 
 人気のある問題
 #### 使い方の例
