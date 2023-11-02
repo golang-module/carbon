@@ -14,13 +14,13 @@ func TestCarbon_IsZero(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", true},
-		{"0", true},
-		{"0000-00-00", true},
-		{"00:00:00", true},
-		{"0000-00-00 00:00:00", true},
+		0: {"", true},
+		1: {"0", true},
+		2: {"0000-00-00", true},
+		3: {"00:00:00", true},
+		4: {"0000-00-00 00:00:00", true},
 
-		{"2020-08-05", false},
+		5: {"2020-08-05", false},
 	}
 
 	for index, test := range tests {
@@ -37,13 +37,13 @@ func TestCarbon_IsValid(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-08-05", true},
+		5: {"2020-08-05", true},
 	}
 
 	for index, test := range tests {
@@ -60,13 +60,13 @@ func TestCarbon_IsInvalid(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", true},
-		{"0", true},
-		{"0000-00-00", true},
-		{"00:00:00", true},
-		{"0000-00-00 00:00:00", true},
+		0: {"", true},
+		1: {"0", true},
+		2: {"0000-00-00", true},
+		3: {"00:00:00", true},
+		4: {"0000-00-00 00:00:00", true},
 
-		{"2020-08-05", false},
+		5: {"2020-08-05", false},
 	}
 
 	for index, test := range tests {
@@ -83,15 +83,15 @@ func TestCarbon_IsNow(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), false},
-		{Parse("0"), false},
-		{Parse("0000-00-00"), false},
-		{Parse("00:00:00"), false},
-		{Parse("0000-00-00 00:00:00"), false},
+		0: {Parse(""), false},
+		1: {Parse("0"), false},
+		2: {Parse("0000-00-00"), false},
+		3: {Parse("00:00:00"), false},
+		4: {Parse("0000-00-00 00:00:00"), false},
 
-		{Tomorrow(), false},
-		{Now(), true},
-		{Yesterday(), false},
+		5: {Tomorrow(), false},
+		6: {Now(), true},
+		7: {Yesterday(), false},
 	}
 
 	for index, test := range tests {
@@ -108,15 +108,15 @@ func TestCarbon_IsFuture(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), false},
-		{Parse("0"), false},
-		{Parse("0000-00-00"), false},
-		{Parse("00:00:00"), false},
-		{Parse("0000-00-00 00:00:00"), false},
+		0: {Parse(""), false},
+		1: {Parse("0"), false},
+		2: {Parse("0000-00-00"), false},
+		3: {Parse("00:00:00"), false},
+		4: {Parse("0000-00-00 00:00:00"), false},
 
-		{Tomorrow(), true},
-		{Now(), false},
-		{Yesterday(), false},
+		5: {Tomorrow(), true},
+		6: {Now(), false},
+		7: {Yesterday(), false},
 	}
 
 	for index, test := range tests {
@@ -133,15 +133,15 @@ func TestCarbon_IsPast(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), false},
-		{Parse("0"), false},
-		{Parse("0000-00-00"), false},
-		{Parse("00:00:00"), false},
-		{Parse("0000-00-00 00:00:00"), false},
+		0: {Parse(""), false},
+		1: {Parse("0"), false},
+		2: {Parse("0000-00-00"), false},
+		3: {Parse("00:00:00"), false},
+		4: {Parse("0000-00-00 00:00:00"), false},
 
-		{Tomorrow(), false},
-		{Now(), false},
-		{Yesterday(), true},
+		5: {Tomorrow(), false},
+		6: {Now(), false},
+		7: {Yesterday(), true},
 	}
 
 	for index, test := range tests {
@@ -158,19 +158,19 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2015-01-01", false},
-		{"2016-01-01", true},
-		{"2017-01-01", false},
-		{"2018-01-01", false},
-		{"2019-01-01", false},
-		{"2020-01-01", true},
-		{"2021-01-01", false},
+		5:  {"2015-01-01", false},
+		6:  {"2016-01-01", true},
+		7:  {"2017-01-01", false},
+		8:  {"2018-01-01", false},
+		9:  {"2019-01-01", false},
+		10: {"2020-01-01", true},
+		11: {"2021-01-01", false},
 	}
 
 	for index, test := range tests {
@@ -187,19 +187,19 @@ func TestCarbon_IsLongYear(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2015-01-01", true},
-		{"2016-01-01", false},
-		{"2017-01-01", false},
-		{"2018-01-01", false},
-		{"2019-01-01", false},
-		{"2020-01-01", true},
-		{"2021-01-01", false},
+		5:  {"2015-01-01", true},
+		6:  {"2016-01-01", false},
+		7:  {"2017-01-01", false},
+		8:  {"2018-01-01", false},
+		9:  {"2019-01-01", false},
+		10: {"2020-01-01", true},
+		11: {"2021-01-01", false},
 	}
 
 	for index, test := range tests {
@@ -216,24 +216,24 @@ func TestCarbon_IsJanuary(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", true},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", true},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -250,24 +250,24 @@ func TestCarbon_IsFebruary(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", true},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", true},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -284,24 +284,24 @@ func TestCarbon_IsMarch(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", true},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", true},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -318,24 +318,24 @@ func TestCarbon_IsApril(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", true},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", true},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -352,24 +352,24 @@ func TestCarbon_IsMay(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", true},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", true},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -386,24 +386,24 @@ func TestCarbon_IsJune(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", true},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", true},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -420,24 +420,24 @@ func TestCarbon_IsJuly(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", true},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", true},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -454,24 +454,24 @@ func TestCarbon_IsAugust(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", true},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", true},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -488,24 +488,24 @@ func TestCarbon_IsSeptember(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", true},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", true},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -522,24 +522,24 @@ func TestCarbon_IsOctober(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", true},
-		{"2020-11-01", false},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", true},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -556,24 +556,24 @@ func TestCarbon_IsNovember(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", true},
-		{"2020-12-01", false},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", true},
+		16: {"2020-12-01", false},
 	}
 
 	for index, test := range tests {
@@ -590,24 +590,24 @@ func TestCarbon_IsDecember(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-01-01", false},
-		{"2020-02-01", false},
-		{"2020-03-01", false},
-		{"2020-04-01", false},
-		{"2020-05-01", false},
-		{"2020-06-01", false},
-		{"2020-07-01", false},
-		{"2020-08-01", false},
-		{"2020-09-01", false},
-		{"2020-10-01", false},
-		{"2020-11-01", false},
-		{"2020-12-01", true},
+		5:  {"2020-01-01", false},
+		6:  {"2020-02-01", false},
+		7:  {"2020-03-01", false},
+		8:  {"2020-04-01", false},
+		9:  {"2020-05-01", false},
+		10: {"2020-06-01", false},
+		11: {"2020-07-01", false},
+		12: {"2020-08-01", false},
+		13: {"2020-09-01", false},
+		14: {"2020-10-01", false},
+		15: {"2020-11-01", false},
+		16: {"2020-12-01", true},
 	}
 
 	for index, test := range tests {
@@ -624,19 +624,19 @@ func TestCarbon_IsMonday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", true},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", true},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -653,19 +653,19 @@ func TestCarbon_IsTuesday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", true},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", true},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -682,19 +682,19 @@ func TestCarbon_IsWednesday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", true},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", true},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -711,19 +711,19 @@ func TestCarbon_IsThursday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", true},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", true},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -740,19 +740,19 @@ func TestCarbon_IsFriday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", true},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", true},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -769,19 +769,19 @@ func TestCarbon_IsSaturday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", true},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", true},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -798,19 +798,19 @@ func TestCarbon_IsSunday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", false},
-		{"2020-10-11", true},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", true},
 	}
 
 	for index, test := range tests {
@@ -827,19 +827,19 @@ func TestCarbon_IsWeekday(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", true},
-		{"2020-10-06", true},
-		{"2020-10-07", true},
-		{"2020-10-08", true},
-		{"2020-10-09", true},
-		{"2020-10-10", false},
-		{"2020-10-11", false},
+		5:  {"2020-10-05", true},
+		6:  {"2020-10-06", true},
+		7:  {"2020-10-07", true},
+		8:  {"2020-10-08", true},
+		9:  {"2020-10-09", true},
+		10: {"2020-10-10", false},
+		11: {"2020-10-11", false},
 	}
 
 	for index, test := range tests {
@@ -856,19 +856,19 @@ func TestCarbon_IsWeekend(t *testing.T) {
 		input    string // 输入值
 		expected bool   // 期望值
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
 
-		{"2020-10-05", false},
-		{"2020-10-06", false},
-		{"2020-10-07", false},
-		{"2020-10-08", false},
-		{"2020-10-09", false},
-		{"2020-10-10", true},
-		{"2020-10-11", true},
+		5:  {"2020-10-05", false},
+		6:  {"2020-10-06", false},
+		7:  {"2020-10-07", false},
+		8:  {"2020-10-08", false},
+		9:  {"2020-10-09", false},
+		10: {"2020-10-10", true},
+		11: {"2020-10-11", true},
 	}
 
 	for index, test := range tests {
@@ -885,10 +885,10 @@ func TestCarbon_IsYesterday(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{NewCarbon(), false},
-		{Now(), false},
-		{Yesterday(), true},
-		{Tomorrow(), false},
+		0: {NewCarbon(), false},
+		1: {Now(), false},
+		2: {Yesterday(), true},
+		3: {Tomorrow(), false},
 	}
 
 	for index, test := range tests {
@@ -905,10 +905,10 @@ func TestCarbon_IsToday(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{NewCarbon(), false},
-		{Now(), true},
-		{Yesterday(), false},
-		{Tomorrow(), false},
+		0: {NewCarbon(), false},
+		1: {Now(), true},
+		2: {Yesterday(), false},
+		3: {Tomorrow(), false},
 	}
 
 	for index, test := range tests {
@@ -925,10 +925,10 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 		input    Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{NewCarbon(), false},
-		{Now(), false},
-		{Yesterday(), false},
-		{Tomorrow(), true},
+		0: {NewCarbon(), false},
+		1: {Now(), false},
+		2: {Yesterday(), false},
+		3: {Tomorrow(), true},
 	}
 
 	for index, test := range tests {
@@ -946,9 +946,9 @@ func TestCarbon_IsSameCentury(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("3020-08-05"), false},
-		{Parse("2020-08-05"), Parse("2099-08-05"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05"), Parse("3020-08-05"), false},
+		2: {Parse("2020-08-05"), Parse("2099-08-05"), true},
 	}
 
 	for index, test := range tests {
@@ -966,10 +966,10 @@ func TestCarbon_IsSameDecade(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("2030-08-05"), false},
-		{Parse("2020-08-05"), Parse("2021-08-05"), true},
-		{Parse("2020-01-01"), Parse("2120-01-31"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05"), Parse("2030-08-05"), false},
+		2: {Parse("2020-08-05"), Parse("2021-08-05"), true},
+		3: {Parse("2020-01-01"), Parse("2120-01-31"), true},
 	}
 
 	for index, test := range tests {
@@ -987,9 +987,9 @@ func TestCarbon_IsSameYear(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("2021-08-05"), false},
-		{Parse("2020-01-01"), Parse("2020-12-31"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05"), Parse("2021-08-05"), false},
+		2: {Parse("2020-01-01"), Parse("2020-12-31"), true},
 	}
 
 	for index, test := range tests {
@@ -1007,9 +1007,9 @@ func TestCarbon_IsSameQuarter(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("2020-01-05"), false},
-		{Parse("2020-01-01"), Parse("2020-01-31"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05"), Parse("2020-01-05"), false},
+		2: {Parse("2020-01-01"), Parse("2020-01-31"), true},
 	}
 
 	for index, test := range tests {
@@ -1027,9 +1027,9 @@ func TestCarbon_IsSameMonth(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05"), Parse("2021-08-05"), false},
-		{Parse("2020-01-01"), Parse("2020-01-31"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05"), Parse("2021-08-05"), false},
+		2: {Parse("2020-01-01"), Parse("2020-01-31"), true},
 	}
 
 	for index, test := range tests {
@@ -1047,9 +1047,9 @@ func TestCarbon_IsSameDay(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
-		{Parse("2020-08-05 00:00:00"), Parse("2020-08-05 13:14:15"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		2: {Parse("2020-08-05 00:00:00"), Parse("2020-08-05 13:14:15"), true},
 	}
 
 	for index, test := range tests {
@@ -1067,9 +1067,9 @@ func TestCarbon_IsSameHour(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
-		{Parse("2020-08-05 13:00:00"), Parse("2020-08-05 13:14:15"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		2: {Parse("2020-08-05 13:00:00"), Parse("2020-08-05 13:14:15"), true},
 	}
 
 	for index, test := range tests {
@@ -1087,9 +1087,9 @@ func TestCarbon_IsSameMinute(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
-		{Parse("2020-08-05 13:14:00"), Parse("2020-08-05 13:14:15"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		2: {Parse("2020-08-05 13:14:00"), Parse("2020-08-05 13:14:15"), true},
 	}
 
 	for index, test := range tests {
@@ -1107,9 +1107,9 @@ func TestCarbon_IsSameSecond(t *testing.T) {
 		input2   Carbon // 输入值
 		expected bool   // 期望值
 	}{
-		{Parse(""), Parse(""), false},
-		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
-		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
+		0: {Parse(""), Parse(""), false},
+		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
+		2: {Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
 	}
 
 	for index, test := range tests {
@@ -1128,18 +1128,18 @@ func TestCarbon_Compare(t *testing.T) {
 		param2   string // 输入参数2
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", ">", "2020-08-04", true},
-		{"2020-08-05", "<", "2020-08-04", false},
-		{"2020-08-05", "<", "2020-08-06", true},
-		{"2020-08-05", ">", "2020-08-06", false},
-		{"2020-08-05", "=", "2020-08-05", true},
-		{"2020-08-05", ">=", "2020-08-05", true},
-		{"2020-08-05", "<=", "2020-08-05", true},
-		{"2020-08-05", "!=", "2020-08-05", false},
-		{"2020-08-05", "<>", "2020-08-05", false},
-		{"2020-08-05", "!=", "2020-08-04", true},
-		{"2020-08-05", "<>", "2020-08-04", true},
-		{"2020-08-05", "+", "2020-08-04", false},
+		0:  {"2020-08-05", ">", "2020-08-04", true},
+		1:  {"2020-08-05", "<", "2020-08-04", false},
+		2:  {"2020-08-05", "<", "2020-08-06", true},
+		3:  {"2020-08-05", ">", "2020-08-06", false},
+		4:  {"2020-08-05", "=", "2020-08-05", true},
+		5:  {"2020-08-05", ">=", "2020-08-05", true},
+		6:  {"2020-08-05", "<=", "2020-08-05", true},
+		7:  {"2020-08-05", "!=", "2020-08-05", false},
+		8:  {"2020-08-05", "<>", "2020-08-05", false},
+		9:  {"2020-08-05", "!=", "2020-08-04", true},
+		10: {"2020-08-05", "<>", "2020-08-04", true},
+		11: {"2020-08-05", "+", "2020-08-04", false},
 	}
 
 	for index, test := range tests {
@@ -1158,9 +1158,9 @@ func TestCarbon_Gt(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", false},
-		{"2020-08-05", "2020-08-04", true},
-		{"2020-08-05", "2020-08-06", false},
+		0: {"2020-08-05", "2020-08-05", false},
+		1: {"2020-08-05", "2020-08-04", true},
+		2: {"2020-08-05", "2020-08-06", false},
 	}
 
 	for index, test := range tests {
@@ -1179,9 +1179,9 @@ func TestCarbon_Lt(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", false},
-		{"2020-08-05", "2020-08-04", false},
-		{"2020-08-05", "2020-08-06", true},
+		0: {"2020-08-05", "2020-08-05", false},
+		1: {"2020-08-05", "2020-08-04", false},
+		2: {"2020-08-05", "2020-08-06", true},
 	}
 
 	for index, test := range tests {
@@ -1200,9 +1200,9 @@ func TestCarbon_Eq(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", true},
-		{"2020-08-05", "2020-08-04", false},
-		{"2020-08-05", "2020-08-06", false},
+		0: {"2020-08-05", "2020-08-05", true},
+		1: {"2020-08-05", "2020-08-04", false},
+		2: {"2020-08-05", "2020-08-06", false},
 	}
 
 	for index, test := range tests {
@@ -1221,9 +1221,9 @@ func TestCarbon_Ne(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", false},
-		{"2020-08-05", "2020-08-04", true},
-		{"2020-08-05", "2020-08-06", true},
+		0: {"2020-08-05", "2020-08-05", false},
+		1: {"2020-08-05", "2020-08-04", true},
+		2: {"2020-08-05", "2020-08-06", true},
 	}
 
 	for index, test := range tests {
@@ -1242,9 +1242,9 @@ func TestCarbon_Gte(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", true},
-		{"2020-08-05", "2020-08-04", true},
-		{"2020-08-05", "2020-08-06", false},
+		0: {"2020-08-05", "2020-08-05", true},
+		1: {"2020-08-05", "2020-08-04", true},
+		2: {"2020-08-05", "2020-08-06", false},
 	}
 
 	for index, test := range tests {
@@ -1263,9 +1263,9 @@ func TestCarbon_Lte(t *testing.T) {
 		param    string // 参数值
 		expected bool   // 期望值
 	}{
-		{"2020-08-05", "2020-08-05", true},
-		{"2020-08-05", "2020-08-04", false},
-		{"2020-08-05", "2020-08-06", true},
+		0: {"2020-08-05", "2020-08-05", true},
+		1: {"2020-08-05", "2020-08-04", false},
+		2: {"2020-08-05", "2020-08-06", true},
 	}
 
 	for index, test := range tests {
@@ -1333,10 +1333,10 @@ func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 		param2   string // 输入参数2
 		expected bool   // 期望值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", false},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", false},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", true},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
+		0: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", false},
+		1: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", false},
+		2: {"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", true},
+		3: {"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
 	}
 
 	for index, test := range tests {
@@ -1357,11 +1357,11 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 		param2   string // 输入参数2
 		expected bool   // 期望值
 	}{
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", true},
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", true},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", true},
-		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
-		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", "2020-08-06 13:14:15", false},
+		0: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", true},
+		1: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", true},
+		2: {"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", true},
+		3: {"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
+		4: {"2020-08-05 13:14:15", "2020-08-06 13:14:15", "2020-08-06 13:14:15", false},
 	}
 
 	for index, test := range tests {
