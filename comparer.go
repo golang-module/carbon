@@ -1,14 +1,13 @@
 package carbon
 
 import (
-	"fmt"
 	"time"
 )
 
 // IsZero reports whether is zero time.
 // 是否是零值时间
 func (c Carbon) IsZero() bool {
-	return c.time.IsZero()
+	return c.ToStdTime().IsZero()
 }
 
 // IsValid reports whether is valid time.
@@ -30,8 +29,6 @@ func (c Carbon) IsInvalid() bool {
 // 是否是当前时间
 func (c Carbon) IsNow() bool {
 	if c.IsInvalid() {
-		fmt.Println("bbb")
-
 		return false
 	}
 	return c.Timestamp() == c.Now().Timestamp()
