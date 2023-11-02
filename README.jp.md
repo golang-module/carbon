@@ -9,7 +9,7 @@
 
 日本語 | [English](README.md) | [简体中文](README.cn.md)
 
-軽量でセマンティックで開発者に優しい golang 時間処理ライブラリ
+軽量、セマンティック、依存性ゼロ、開発者に優しい golang 時間処理ライブラリ
 
 Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go") に収録されています, よかったら, スターをください
 
