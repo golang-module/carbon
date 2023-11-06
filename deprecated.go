@@ -1,4 +1,5 @@
 // The functions and methods in this file will be removed in the future
+// 该文件中的函数和方法将来会被移除
 
 package carbon
 
