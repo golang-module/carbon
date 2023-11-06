@@ -7,6 +7,38 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestCarbon_IsDST(t *testing.T) {
+	assert := assert.New(t)
+
+	tzWithDST, tzWithoutDST := "Australia/Sydney", "Australia/Brisbane"
+
+	tests := []struct {
+		input    string // 输入值
+		timezone string // 输入值
+		expected bool   // 期望值
+	}{
+		0: {"", tzWithDST, false},
+		1: {"", tzWithoutDST, false},
+		2: {"0", tzWithDST, false},
+		3: {"0", tzWithoutDST, false},
+		4: {"0000-00-00", tzWithDST, false},
+		5: {"0000-00-00", tzWithoutDST, false},
+		6: {"00:00:00", tzWithDST, false},
+		7: {"00:00:00", tzWithoutDST, false},
+		8: {"0000-00-00 00:00:00", tzWithDST, false},
+		9: {"0000-00-00 00:00:00", tzWithoutDST, false},
+
+		10: {"2009-01-01", tzWithDST, true},
+		11: {"2009-01-01", tzWithoutDST, false},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, test.timezone)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.IsDST(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_IsZero(t *testing.T) {
 	assert := assert.New(t)
 
