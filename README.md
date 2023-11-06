@@ -11,7 +11,7 @@ English | [简体中文](README.cn.md) | [日本語](README.jp.md)
 
 #### Introduction
 
-A simple, semantic, zero dependency and developer-friendly golang package for datetime, has been included
+A simple, semantic and developer-friendly golang package for datetime, has been included
 by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")
 
 [github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
@@ -539,6 +539,15 @@ carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ##### Comparison
 
 ```go
+// whether is daylight saving time
+carbon.Parse("").IsDST() // false
+carbon.Parse("0").IsDST() // false
+carbon.Parse("0000-00-00 00:00:00").IsDST() // false
+carbon.Parse("0000-00-00").IsDST() // false
+carbon.Parse("00:00:00").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Brisbane").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Sydney").IsDST() // true
+
 // Whether is zero time
 carbon.Parse("").IsZero() // true
 carbon.Parse("0").IsZero() // true

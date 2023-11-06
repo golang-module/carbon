@@ -9,7 +9,7 @@
 
 日本語 | [English](README.md) | [简体中文](README.cn.md)
 
-軽量、セマンティック、依存性ゼロ、開発者に優しい golang 時間処理ライブラリ
+軽量でセマンティックで開発者に優しい golang 時間処理ライブラリ
 
 Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go") に収録されています, よかったら, スターをください
 
@@ -542,7 +542,16 @@ carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ##### 时间比較
 
 ```go
-// ゼロ時間ですか
+// 夏時間ですか
+carbon.Parse("").IsDST() // false
+carbon.Parse("0").IsDST() // false
+carbon.Parse("0000-00-00 00:00:00").IsDST() // false
+carbon.Parse("0000-00-00").IsDST() // false
+carbon.Parse("00:00:00").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Brisbane").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Sydney").IsDST() // true
+
+// ゼロ値の時間ですか
 carbon.Parse("").IsZero() // true
 carbon.Parse("0").IsZero() // true
 carbon.Parse("0000-00-00 00:00:00").IsZero() // true

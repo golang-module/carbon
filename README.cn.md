@@ -9,8 +9,7 @@
 
 简体中文 | [English](README.md) | [日本語](README.jp.md)
 
-一个轻量级、语义化、零依赖、对开发者友好的 golang
-时间处理库，支持链式调用，已被 [awesome-go-cn](https://github.com/yinggaozhen/awesome-go-cn#日期和时间 "awesome-go-cn") 收录
+一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用，已被 [awesome-go-cn](https://github.com/yinggaozhen/awesome-go-cn#日期和时间 "awesome-go-cn") 收录
 
 [github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
 
@@ -543,6 +542,15 @@ carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ##### 时间判断
 
 ```go
+// 是否是夏令时
+carbon.Parse("").IsDST() // false
+carbon.Parse("0").IsDST() // false
+carbon.Parse("0000-00-00 00:00:00").IsDST() // false
+carbon.Parse("0000-00-00").IsDST() // false
+carbon.Parse("00:00:00").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Brisbane").IsDST() // false
+carbon.Parse("2023-01-01", "Australia/Sydney").IsDST() // true
+
 // 是否是零值时间
 carbon.Parse("").IsZero() // true
 carbon.Parse("0").IsZero() // true
