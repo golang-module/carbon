@@ -240,6 +240,19 @@ carbon.CreateFromStdTime(time.Now())
 carbon.Now().ToStdTime()
 ```
 
+##### 最近と最も遠い
+
+```go
+c := carbon.Parse("2023-04-01")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// 最近のCarbonインスタンスを返す
+c.Closest(c1, c2).ToDateString() // 2023-03-28
+// 最も遠いCarbonインスタンスを返す
+c.Farthest(c1, c2).ToDateString() // 2023-04-16
+```
+
 ##### 始まりと終わり
 
 ```go

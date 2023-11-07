@@ -238,6 +238,19 @@ carbon.CreateFromStdTime(time.Now())
 carbon.Now().ToStdTime()
 ```
 
+##### Closest and farthest
+
+```go
+c := carbon.Parse("2023-04-01")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// Return the closest Carbon instance
+c.Closest(c1, c2).ToDateString() // 2023-03-28
+// Return the farthest Carbon instance
+c.Farthest(c1, c2).ToDateString() // 2023-04-16
+```
+
 ##### Start and end
 
 ```go

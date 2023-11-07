@@ -240,6 +240,19 @@ carbon.CreateFromStdTime(time.Now())
 carbon.Now().ToStdTime()
 ```
 
+##### 最近和最远
+
+```go
+c := carbon.Parse("2023-04-01")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// 返回最近的 Carbon 实例
+c.Closest(c1, c2).ToDateString() // 2023-03-28
+// 返回最远的 Carbon 实例
+c.Farthest(c1, c2).ToDateString() // 2023-04-16
+```
+
 ##### 开始时间、结束时间
 
 ```go
