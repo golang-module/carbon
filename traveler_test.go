@@ -56,6 +56,56 @@ func TestCarbon_Tomorrow(t *testing.T) {
 	assert.Equal("2020-08-06", c3.ToDateString(), "It should be equal to 2020-08-06")
 }
 
+func TestCarbon_Closest(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   string // 输入值1
+		input2   string // 输入参数2
+		input3   string // 输入参数3
+		expected string // 期望值
+	}{
+		{"", "2023-03-28", "2023-04-16", "2023-03-28"},
+		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
+		{"2023-04-01", "2023-03-28", "", "2023-03-28"},
+		{"2023-04-01", "", "", ""},
+
+		{"2023-04-01", "2023-03-28", "2023-03-28", "2023-03-28"},
+		{"2023-04-01", "2023-03-28", "2023-04-16", "2023-03-28"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input1).Closest(Parse(test.input2), Parse(test.input3))
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_Farthest(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input1   string // 输入值1
+		input2   string // 输入参数2
+		input3   string // 输入参数3
+		expected string // 期望值
+	}{
+		{"", "2023-03-28", "2023-04-16", "2023-04-16"},
+		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
+		{"2023-04-01", "2023-03-28", "", "2023-03-28"},
+		{"2023-04-01", "", "", ""},
+
+		{"2023-04-01", "2023-03-28", "2023-03-28", "2023-03-28"},
+		{"2023-04-01", "2023-03-28", "2023-04-16", "2023-04-16"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input1).Farthest(Parse(test.input2), Parse(test.input3))
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_AddDuration(t *testing.T) {
 	assert := assert.New(t)
 
