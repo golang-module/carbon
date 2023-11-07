@@ -248,9 +248,9 @@ c1 := carbon.Parse("2023-03-28")
 c2 := carbon.Parse("2023-04-16")
 
 // 返回最近的 Carbon 实例
-c.Closest(c1, c2).ToDateString() // 2023-03-28
+c.Closest(c1, c2) // c1
 // 返回最远的 Carbon 实例
-c.Farthest(c1, c2).ToDateString() // 2023-04-16
+c.Farthest(c1, c2) // c2
 ```
 
 ##### 开始时间、结束时间

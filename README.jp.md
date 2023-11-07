@@ -248,9 +248,9 @@ c1 := carbon.Parse("2023-03-28")
 c2 := carbon.Parse("2023-04-16")
 
 // 最近のCarbonインスタンスを返す
-c.Closest(c1, c2).ToDateString() // 2023-03-28
+c.Closest(c1, c2) // c1
 // 最も遠いCarbonインスタンスを返す
-c.Farthest(c1, c2).ToDateString() // 2023-04-16
+c.Farthest(c1, c2) // c2
 ```
 
 ##### 始まりと終わり

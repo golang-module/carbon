@@ -246,9 +246,9 @@ c1 := carbon.Parse("2023-03-28")
 c2 := carbon.Parse("2023-04-16")
 
 // Return the closest Carbon instance
-c.Closest(c1, c2).ToDateString() // 2023-03-28
+c.Closest(c1, c2) // c1
 // Return the farthest Carbon instance
-c.Farthest(c1, c2).ToDateString() // 2023-04-16
+c.Farthest(c1, c2) // c2
 ```
 
 ##### Start and end
