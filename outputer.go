@@ -92,6 +92,10 @@ func (c Carbon) ToWeekString(timezone ...string) string {
 // ToShortWeekString outputs a string in short week layout like "Sun", i18n is supported.
 // 输出缩写星期字符串，支持i18n
 func (c Carbon) ToShortWeekString(timezone ...string) string {
+	return c.toWeekString("short_weeks", timezone)
+}
+
+func (c Carbon) toWeekString(resourceKey string, timezone []string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
@@ -101,10 +105,10 @@ func (c Carbon) ToShortWeekString(timezone ...string) string {
 	if len(c.lang.resources) == 0 {
 		c.lang.SetLocale(defaultLocale)
 	}
-	if months, ok := c.lang.resources["short_weeks"]; ok {
+	if months, ok := c.lang.resources[resourceKey]; ok {
 		slice := strings.Split(months, "|")
-		if len(slice) == 7 {
-			return slice[c.Week()]
+		if len(slice) == DaysPerWeek {
+			return slice[c.DayOfWeek()%DaysPerWeek]
 		}
 	}
 	return ""

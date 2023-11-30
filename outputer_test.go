@@ -2,10 +2,11 @@ package carbon
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_String(t *testing.T) {
@@ -1788,4 +1789,22 @@ func TestCarbon_ToStdTime(t *testing.T) {
 	expected := time.Now().Format(DateTimeLayout)
 	actual := Now().ToStdTime().Format(DateTimeLayout)
 	assert.Equal(t, expected, actual)
+}
+
+func TestCarbon_Issue200(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input                   Carbon
+		expectedWeekString      string
+		expectedShortWeekString string
+	}{
+		{Now().StartOfWeek(), "Sunday", "Sun"},
+		{Now().SetWeekStartsAt(Monday).StartOfWeek(), "Monday", "Mon"},
+		{Now().SetWeekStartsAt(Wednesday).StartOfWeek(), "Wednesday", "Wed"},
+	}
+	for index, test := range tests {
+		assert.Equal(test.expectedWeekString, test.input.ToWeekString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expectedShortWeekString, test.input.ToShortWeekString(), "Current test index is "+strconv.Itoa(index))
+	}
 }
