@@ -170,6 +170,31 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 	}
 }
 
+// https://github.com/golang-module/carbon/issues/202
+func TestCarbon_Issue202(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input  string // 输入值
+		output string // 期望值
+	}{
+		{"2023-01-08T09:02:48", "2023-01-08 09:02:48 +0800 CST"},
+		{"2023-1-8T09:02:48", "2023-01-08 09:02:48 +0800 CST"},
+		{"2023-01-08T9:2:48", "2023-01-08 09:02:48 +0800 CST"},
+		{"2023-01-8T9:2:48", "2023-01-08 09:02:48 +0800 CST"},
+		{"2023-1-8T9:2:48", "2023-01-08 09:02:48 +0800 CST"},
+		{"2023-01-08T09:02:48.000+0000", "2023-01-08 17:02:48 +0800 CST"},
+		{"2023-1-8T09:02:48.000+0000", "2023-01-08 17:02:48 +0800 CST"},
+		{"2023-1-8T9:2:48.000+0000", "2023-01-08 17:02:48 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := SetTimezone(PRC).Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.output, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestError_Parse(t *testing.T) {
 	date, layout, format, timezone := "2020-08-50", "2006-01-02", DateLayout, "xxx"
 	assert.NotNil(t, Parse(date).Error, "It should catch an exception in Parse()")
