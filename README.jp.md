@@ -1260,14 +1260,14 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 type Person struct {
     Name string `json:"name"`
     Age int `json:"age"`
-    Birthday1 carbon.DateTime `json:"birthday"`
-    Birthday2 carbon.DateTimeMilli `json:"birthday"`
-    Birthday3 carbon.DateTimeMicro `json:"birthday"`
-    Birthday4 carbon.DateTimeNano `json:"birthday"`
-    GraduatedAt1 carbon.Date `json:"graduated_at"`
-    GraduatedAt2 carbon.DateMilli `json:"graduated_at"`
-    GraduatedAt3 carbon.DateMicro `json:"graduated_at"`
-    GraduatedAt4 carbon.DateNano `json:"graduated_at"`
+    Birthday1 carbon.DateTime `json:"birthday1"`
+    Birthday2 carbon.DateTimeMilli `json:"birthday2"`
+    Birthday3 carbon.DateTimeMicro `json:"birthday3"`
+    Birthday4 carbon.DateTimeNano `json:"birthday4"`
+    GraduatedAt1 carbon.Date `json:"graduated_at1"`
+    GraduatedAt2 carbon.DateMilli `json:"graduated_at2"`
+    GraduatedAt3 carbon.DateMicro `json:"graduated_at3"`
+    GraduatedAt4 carbon.DateNano `json:"graduated_at4"`
     OperatedAt1 carbon.Time `json:"operated_at1"`
     OperatedAt2 carbon.TimeMilli `json:"operated_at2"`
     OperatedAt3 carbon.TimeMicro `json:"operated_at3"`
