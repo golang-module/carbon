@@ -17,7 +17,7 @@ func CreateFromStdTime(tt time.Time) Carbon {
 // 从给定的秒级时间戳创建 Carbon 实例
 func (c Carbon) CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	if c.Error != nil {
 		return c
@@ -36,7 +36,7 @@ func CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 // 从给定的毫秒级时间戳创建 Carbon 实例
 func (c Carbon) CreateFromTimestampMilli(timestamp int64, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	if c.Error != nil {
 		return c
@@ -55,7 +55,7 @@ func CreateFromTimestampMilli(timestamp int64, timezone ...string) Carbon {
 // 从给定的微秒级时间戳创建 Carbon 实例
 func (c Carbon) CreateFromTimestampMicro(timestamp int64, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	if c.Error != nil {
 		return c
@@ -74,7 +74,7 @@ func CreateFromTimestampMicro(timestamp int64, timezone ...string) Carbon {
 // 从给定的纳秒级时间戳创建 Carbon 实例
 func (c Carbon) CreateFromTimestampNano(timestamp int64, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	if c.Error != nil {
 		return c
@@ -254,7 +254,7 @@ func CreateFromTimeNano(hour, minute, second, nanosecond int, timezone ...string
 // 从给定的年、月、日、时、分、秒、纳秒创建 Carbon 实例
 func (c Carbon) create(year, month, day, hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	if len(timezone) > 0 {
-		c.loc, c.Error = getLocationByTimezone(timezone[len(timezone)-1])
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	if c.Error != nil {
 		return c
