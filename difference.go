@@ -13,7 +13,7 @@ func (c Carbon) DiffInYears(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 
 	dy, dm, dd := end.Year()-start.Year(), end.Month()-start.Month(), end.Day()-start.Day()
@@ -40,7 +40,7 @@ func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	startYear, startMonth, startDay := c.Date()
 	endYear, endMonth, endDay := end.Date()
@@ -75,7 +75,7 @@ func (c Carbon) DiffInWeeks(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (7 * 24 * 3600))))
 }
@@ -94,7 +94,7 @@ func (c Carbon) DiffInDays(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	return int64(math.Floor(float64((end.Timestamp() - start.Timestamp()) / (24 * 3600))))
 }
@@ -113,7 +113,7 @@ func (c Carbon) DiffInHours(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	return c.DiffInSeconds(end) / SecondsPerHour
 }
@@ -132,7 +132,7 @@ func (c Carbon) DiffInMinutes(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	return c.DiffInSeconds(end) / SecondsPerMinute
 }
@@ -151,7 +151,7 @@ func (c Carbon) DiffInSeconds(carbon ...Carbon) int64 {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	return end.Timestamp() - c.Timestamp()
 }
@@ -170,7 +170,7 @@ func (c Carbon) DiffInString(carbon ...Carbon) string {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	if c.Error != nil || end.Error != nil {
 		return ""
@@ -187,7 +187,7 @@ func (c Carbon) DiffAbsInString(carbon ...Carbon) string {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	if c.Error != nil || end.Error != nil {
 		return ""
@@ -204,7 +204,7 @@ func (c Carbon) DiffForHumans(carbon ...Carbon) string {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
-		end = carbon[len(carbon)-1]
+		end = carbon[0]
 	}
 	if c.Error != nil || end.Error != nil {
 		return ""
