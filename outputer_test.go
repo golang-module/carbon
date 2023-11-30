@@ -2,11 +2,10 @@ package carbon
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_String(t *testing.T) {
@@ -1791,6 +1790,7 @@ func TestCarbon_ToStdTime(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
+// https://github.com/golang-module/carbon/issues/200
 func TestCarbon_Issue200(t *testing.T) {
 	assert := assert.New(t)
 
