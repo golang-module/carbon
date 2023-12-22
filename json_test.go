@@ -184,7 +184,8 @@ func TestError_JSON(t *testing.T) {
 		Birthday: Parse("XXX"),
 	}
 
-	_, marshalErr := json.Marshal(&student)
+	_, marshalErr := json.Marshal(student)
+	fmt.Println("marshal error", marshalErr.Error())
 	assert.NotNil(t, marshalErr)
 
 	str := `{
@@ -193,5 +194,6 @@ func TestError_JSON(t *testing.T) {
 		"birthday": "2020-08-05 13:14:15.999"
 	}`
 	unmarshalErr := json.Unmarshal([]byte(str), &student)
+	fmt.Println("unmarshal error", unmarshalErr.Error())
 	assert.NotNil(t, unmarshalErr)
 }
