@@ -11,6 +11,13 @@ import (
 // String implements the interface Stringer for Carbon struct.
 // 实现 Stringer 接口
 func (c Carbon) String() string {
+	key, value := c.parseTag()
+	if key == "layout" {
+		return c.Layout(value)
+	}
+	if key == "format" {
+		return c.Format(value)
+	}
 	return c.ToDateTimeString()
 }
 
