@@ -11,9 +11,9 @@ func TestCarbon_SetTimezone(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		timezone string // 输入参数
-		expected string // 期望值
+		input    string
+		timezone string
+		expected string
 	}{
 		{"0000-00-00 00:00:00", PRC, ""},
 		{"2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
@@ -37,8 +37,8 @@ func TestCarbon_SetLocation(t *testing.T) {
 	}
 
 	tests := []struct {
-		loc      *time.Location // 输入参数
-		expected string         // 期望值
+		loc      *time.Location
+		expected string
 	}{
 		{
 			loc:      getLocation(Local),
@@ -66,9 +66,9 @@ func TestCarbon_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		locale   string // 输入参数
-		expected string // 期望值
+		input    string
+		locale   string
+		expected string
 	}{
 		{"0000-00-00", "en", ""},
 		{"2020-08-05", "en", "August"},
@@ -102,8 +102,8 @@ func TestCarbon_SetLanguage(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"2020-08-05", "summer"},
@@ -126,9 +126,9 @@ func TestCarbon_SetDateTime(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                  string // 输入值
-		year, month, day, hour, minute, second int    // 输入参数
-		expected                               string // 期望值
+		input                                  string
+		year, month, day, hour, minute, second int
+		expected                               string
 	}{
 		{"2020-01-01", 2019, 02, 02, 13, 14, 15, "2019-02-02 13:14:15"},
 		{"2020-01-01", 2019, 02, 31, 13, 14, 15, "2019-03-03 13:14:15"},
@@ -145,9 +145,9 @@ func TestCarbon_SetDateTimeMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                               string // 输入值
-		year, month, day, hour, minute, second, millisecond int    // 输入参数
-		expected                                            string // 期望值
+		input                                               string
+		year, month, day, hour, minute, second, millisecond int
+		expected                                            string
 	}{
 		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999, "2019-02-02 13:14:15.999 +0800 CST"},
 		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999, "2019-03-03 13:14:15.999 +0800 CST"},
@@ -164,9 +164,9 @@ func TestCarbon_SetDateTimeMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                               string // 输入值
-		year, month, day, hour, minute, second, microsecond int    // 输入参数
-		expected                                            string // 期望值
+		input                                               string
+		year, month, day, hour, minute, second, microsecond int
+		expected                                            string
 	}{
 		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999999, "2019-02-02 13:14:15.999999 +0800 CST"},
 		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999999, "2019-03-03 13:14:15.999999 +0800 CST"},
@@ -183,9 +183,9 @@ func TestCarbon_SetDateTimeNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                              string // 输入值
-		year, month, day, hour, minute, second, nanosecond int    // 输入参数
-		expected                                           string // 期望值
+		input                                              string
+		year, month, day, hour, minute, second, nanosecond int
+		expected                                           string
 	}{
 		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999999999, "2019-02-02 13:14:15.999999999 +0800 CST"},
 		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999999999, "2019-03-03 13:14:15.999999999 +0800 CST"},
@@ -202,9 +202,9 @@ func TestCarbon_SetDate(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input            string // 输入值
-		year, month, day int    // 输入参数
-		expected         string // 期望值
+		input            string
+		year, month, day int
+		expected         string
 	}{
 		{"2020-01-01", 2019, 02, 02, "2019-02-02 00:00:00"},
 		{"2020-01-01", 2019, 02, 31, "2019-03-03 00:00:00"},
@@ -221,9 +221,9 @@ func TestCarbon_SetDateMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                         string // 输入值
-		year, month, day, millisecond int    // 输入参数
-		expected                      string // 期望值
+		input                         string
+		year, month, day, millisecond int
+		expected                      string
 	}{
 		{"2020-01-01", 2019, 02, 02, 999, "2019-02-02 00:00:00.999"},
 		{"2020-01-01", 2019, 02, 31, 999, "2019-03-03 00:00:00.999"},
@@ -240,9 +240,9 @@ func TestCarbon_SetDateMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                         string // 输入值
-		year, month, day, microsecond int    // 输入参数
-		expected                      string // 期望值
+		input                         string
+		year, month, day, microsecond int
+		expected                      string
 	}{
 		{"2020-01-01", 2019, 02, 02, 999999, "2019-02-02 00:00:00.999999"},
 		{"2020-01-01", 2019, 02, 31, 999999, "2019-03-03 00:00:00.999999"},
@@ -259,9 +259,9 @@ func TestCarbon_SetDateNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                        string // 输入值
-		year, month, day, nanosecond int    // 输入参数
-		expected                     string // 期望值
+		input                        string
+		year, month, day, nanosecond int
+		expected                     string
 	}{
 		{"2020-01-01", 2019, 02, 02, 999999999, "2019-02-02 00:00:00.999999999"},
 		{"2020-01-01", 2019, 02, 31, 999999999, "2019-03-03 00:00:00.999999999"},
@@ -278,9 +278,9 @@ func TestCarbon_SetTime(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                string // 输入值
-		hour, minute, second int    // 输入参数
-		expected             string // 期望值
+		input                string
+		hour, minute, second int
+		expected             string
 	}{
 		{"2020-08-05", 13, 14, 15, "2020-08-05 13:14:15"},
 		{"2020-08-05", 13, 14, 90, "2020-08-05 13:15:30"},
@@ -297,9 +297,9 @@ func TestCarbon_SetTimeMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                             string // 输入值
-		hour, minute, second, millisecond int    // 输入参数
-		expected                          string // 期望值
+		input                             string
+		hour, minute, second, millisecond int
+		expected                          string
 	}{
 		{"2020-08-05", 13, 14, 15, 999, "2020-08-05 13:14:15.999"},
 		{"2020-08-05", 13, 14, 90, 999, "2020-08-05 13:15:30.999"},
@@ -316,9 +316,9 @@ func TestCarbon_SetTimeMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                             string // 输入值
-		hour, minute, second, microsecond int    // 输入参数
-		expected                          string // 期望值
+		input                             string
+		hour, minute, second, microsecond int
+		expected                          string
 	}{
 		{"2020-08-05", 13, 14, 15, 999999, "2020-08-05 13:14:15.999999"},
 		{"2020-08-05", 13, 14, 90, 999999, "2020-08-05 13:15:30.999999"},
@@ -335,9 +335,9 @@ func TestCarbon_SetTimeNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                            string // 输入值
-		hour, minute, second, nanosecond int    // 输入参数
-		expected                         string // 期望值
+		input                            string
+		hour, minute, second, nanosecond int
+		expected                         string
 	}{
 		{"2020-08-05", 13, 14, 15, 999999999, "2020-08-05 13:14:15.999999999"},
 		{"2020-08-05", 13, 14, 90, 999999999, "2020-08-05 13:15:30.999999999"},
@@ -354,9 +354,9 @@ func TestCarbon_SetYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		year     int    // 输入参数
-		expected string // 期望值
+		input    string
+		year     int
+		expected string
 	}{
 		{"2020-01-01", 2019, "2019-01-01"},
 		{"2020-01-31", 2019, "2019-01-31"},
@@ -376,9 +376,9 @@ func TestCarbon_SetYearNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		year     int    // 输入参数
-		expected string // 期望值
+		input    string
+		year     int
+		expected string
 	}{
 		{"2020-01-01", 2019, "2019-01-01"},
 		{"2020-01-31", 2019, "2019-01-31"},
@@ -398,9 +398,9 @@ func TestCarbon_SetMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		month    int    // 输入参数
-		expected string // 期望值
+		input    string
+		month    int
+		expected string
 	}{
 		{"2020-01-01", 2, "2020-02-01"},
 		{"2020-01-30", 2, "2020-03-01"},
@@ -419,9 +419,9 @@ func TestCarbon_SetMonthNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		month    int    // 输入参数
-		expected string // 期望值
+		input    string
+		month    int
+		expected string
 	}{
 		{"2020-01-01", 2, "2020-02-01"},
 		{"2020-01-30", 2, "2020-02-29"},
@@ -440,9 +440,9 @@ func TestCarbon_SetWeekStartsAt(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		week     string // 输入参数
-		expected string // 期望值
+		input    string
+		week     string
+		expected string
 	}{
 		{"", Sunday, ""},
 		{"0000-00-00 00:00:00", Sunday, ""},
@@ -489,9 +489,9 @@ func TestCarbon_SetDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		day      int    // 输入参数
-		expected string // 期望值
+		input    string
+		day      int
+		expected string
 	}{
 		{"2020-01-01", 31, "2020-01-31"},
 		{"2020-02-01", 31, "2020-03-02"},
@@ -510,9 +510,9 @@ func TestCarbon_SetHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		hour     int    // 输入参数
-		expected string // 期望值
+		input    string
+		hour     int
+		expected string
 	}{
 		{"2020-08-05 13:14:15", 10, "2020-08-05 10:14:15"},
 		{"2020-08-05 13:14:15", 24, "2020-08-06 00:14:15"},
@@ -529,9 +529,9 @@ func TestCarbon_SetMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		minute   int    // 输入参数
-		expected string // 期望值
+		input    string
+		minute   int
+		expected string
 	}{
 		{"2020-08-05 13:14:15", 10, "2020-08-05 13:10:15"},
 		{"2020-08-05 13:14:15", 60, "2020-08-05 14:00:15"},
@@ -548,9 +548,9 @@ func TestCarbon_SetSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		second   int    // 输入参数
-		expected int    // 期望值
+		input    string
+		second   int
+		expected int
 	}{
 		{"2020-08-05 13:14:15", 10, 10},
 		{"2020-08-05 13:14:15", 59, 59},
@@ -566,9 +566,9 @@ func TestCarbon_SetSecond(t *testing.T) {
 func TestCarbon_SetMillisecond(t *testing.T) {
 	assert := assert.New(t)
 	tests := []struct {
-		input       string // 输入值
-		millisecond int    // 输入参数
-		expected    int    // 期望值
+		input       string
+		millisecond int
+		expected    int
 	}{
 		{"2020-08-05 13:14:15", 100, 100},
 		{"2020-08-05 13:14:15", 999, 999},
@@ -585,9 +585,9 @@ func TestCarbon_SetMicrosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input       string // 输入值
-		microsecond int    // 输入参数
-		expected    int    // 期望值
+		input       string
+		microsecond int
+		expected    int
 	}{
 		{"2020-08-05 13:14:15", 100000, 100000},
 		{"2020-08-05 13:14:15", 999999, 999999},
@@ -604,9 +604,9 @@ func TestCarbon_SetNanosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input      string // 输入值
-		nanosecond int    // 输入参数
-		expected   int    // 期望值
+		input      string
+		nanosecond int
+		expected   int
 	}{
 		{"2020-08-05 13:14:15", 100000000, 100000000},
 		{"2020-08-05 13:14:15", 999999999, 999999999},
