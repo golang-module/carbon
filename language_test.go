@@ -11,9 +11,9 @@ func TestLanguage_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		locale   string // 输入值
-		expected string // 期望值
+		input    Carbon
+		locale   string
+		expected string
 	}{
 		0: {Now(), "en", "1 day after"},
 		1: {Tomorrow(), "zh-CN", "1 天后"},
@@ -48,9 +48,9 @@ func TestLanguage_SetResources1(t *testing.T) {
 	lang.SetResources(resources)
 
 	tests := []struct {
-		input1   string // 输入值
-		input2   string // 输入值
-		expected string // 期望值
+		input1   string
+		input2   string
+		expected string
 	}{
 		0: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "just now"},
 		1: {"2020-08-05 13:14:15", "2021-08-05 13:14:15", "1 yr before"},
@@ -104,8 +104,8 @@ func TestLanguage_SetResources2(t *testing.T) {
 	lang.SetLocale("en")
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},

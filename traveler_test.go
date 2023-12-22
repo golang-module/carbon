@@ -60,10 +60,10 @@ func TestCarbon_Closest(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   string // 输入值1
-		input2   string // 输入参数2
-		input3   string // 输入参数3
-		expected string // 期望值
+		input1   string
+		input2   string
+		input3   string
+		expected string
 	}{
 		{"", "2023-03-28", "2023-04-16", "2023-03-28"},
 		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
@@ -85,10 +85,10 @@ func TestCarbon_Farthest(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   string // 输入值1
-		input2   string // 输入参数2
-		input3   string // 输入参数3
-		expected string // 期望值
+		input1   string
+		input2   string
+		input3   string
+		expected string
 	}{
 		{"", "2023-03-28", "2023-04-16", "2023-04-16"},
 		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
@@ -111,9 +111,9 @@ func TestCarbon_AddDuration(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		duration string // 输入参数
-		expected string // 期望值
+		input    string
+		duration string
+		expected string
 	}{
 		{"", "10h", ""},
 		{"0", "10h", ""},
@@ -147,9 +147,9 @@ func TestCarbon_SubDuration(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		duration string // 输入参数
-		expected string // 期望值
+		input    string
+		duration string
+		expected string
 	}{
 		{"", "10h", ""},
 		{"0", "10h", ""},
@@ -183,9 +183,9 @@ func TestCarbon_AddCenturies(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
-		centuries int    // 输入参数
-		expected  string // 期望值
+		input     string
+		centuries int
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -211,9 +211,9 @@ func TestCarbon_AddCenturiesNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
-		centuries int    // 输入参数
-		expected  string // 期望值
+		input     string
+		centuries int
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -239,9 +239,9 @@ func TestCarbon_SubCenturies(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
+		input     string
 		centuries int
-		expected  string // 期望值
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -267,9 +267,9 @@ func TestCarbon_SubCenturiesNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
+		input     string
 		centuries int
-		expected  string // 期望值
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -295,8 +295,8 @@ func TestCarbon_AddCentury(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -322,8 +322,8 @@ func TestCarbon_AddCenturyNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -349,8 +349,8 @@ func TestCarbon_SubCentury(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -376,8 +376,8 @@ func TestCarbon_SubCenturyNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -403,9 +403,9 @@ func TestCarbon_AddDecades(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		decades  int    // 输入参数
-		expected string // 期望值
+		input    string
+		decades  int
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -431,9 +431,9 @@ func TestCarbon_AddDecadesNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
-		centuries int    // 输入参数
-		expected  string // 期望值
+		input     string
+		centuries int
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -459,8 +459,8 @@ func TestCarbon_AddDecade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -486,8 +486,8 @@ func TestCarbon_AddDecadeNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -513,9 +513,9 @@ func TestCarbon_SubDecades(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		decades  int    // 输入参数
-		expected string // 期望值
+		input    string
+		decades  int
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -541,9 +541,9 @@ func TestCarbon_SubDecadesNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input     string // 输入值
-		centuries int    // 输入参数
-		expected  string // 期望值
+		input     string
+		centuries int
+		expected  string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -569,8 +569,8 @@ func TestCarbon_SubDecade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -596,8 +596,8 @@ func TestCarbon_SubDecadeNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -623,9 +623,9 @@ func TestCarbon_AddYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		years    int    // 输入参数
-		expected string // 期望值
+		input    string
+		years    int
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -651,9 +651,9 @@ func TestCarbon_AddYearsNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		years    int    // 输入参数
-		expected string // 期望值
+		input    string
+		years    int
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -679,9 +679,9 @@ func TestCarbon_SubYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		years    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -707,9 +707,9 @@ func TestCarbon_SubYearsNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		years    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -735,8 +735,8 @@ func TestCarbon_AddYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -762,8 +762,8 @@ func TestCarbon_AddYearNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -789,8 +789,8 @@ func TestCarbon_SubYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -816,8 +816,8 @@ func TestCarbon_SubYearNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -843,9 +843,9 @@ func TestCarbon_AddQuarters(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		quarters int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 2, ""},
 		{"0", 2, ""},
@@ -873,9 +873,9 @@ func TestCarbon_AddQuartersNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		quarters int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 2, ""},
 		{"0", 2, ""},
@@ -903,9 +903,9 @@ func TestCarbon_SubQuarters(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		quarters int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 2, ""},
 		{"0", 2, ""},
@@ -933,9 +933,9 @@ func TestCarbon_SubQuartersNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		quarters int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 2, ""},
 		{"0", 2, ""},
@@ -963,8 +963,8 @@ func TestCarbon_AddQuarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -992,8 +992,8 @@ func TestCarbon_AddQuarterNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1021,8 +1021,8 @@ func TestCarbon_SubQuarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1050,8 +1050,8 @@ func TestCarbon_SubQuarterNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1079,9 +1079,9 @@ func TestCarbon_AddMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		months   int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1107,9 +1107,9 @@ func TestCarbon_AddMonthsNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		months   int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1135,9 +1135,9 @@ func TestCarbon_SubMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		months   int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1163,9 +1163,9 @@ func TestCarbon_SubMonthsNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		months   int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1191,8 +1191,8 @@ func TestCarbon_AddMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1218,8 +1218,8 @@ func TestCarbon_AddMonthNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1245,8 +1245,8 @@ func TestCarbon_SubMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1272,8 +1272,8 @@ func TestCarbon_SubMonthNoOverflow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1299,9 +1299,9 @@ func TestCarbon_AddWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		weeks    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1327,9 +1327,9 @@ func TestCarbon_SubWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		weeks    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1355,8 +1355,8 @@ func TestCarbon_AddWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1382,8 +1382,8 @@ func TestCarbon_SubWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1409,9 +1409,9 @@ func TestCarbon_AddDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		days     int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1437,9 +1437,9 @@ func TestCarbon_SubDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		days     int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1465,8 +1465,8 @@ func TestCarbon_AddDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1492,8 +1492,8 @@ func TestCarbon_SubDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1519,9 +1519,9 @@ func TestCarbon_AddHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		hours    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1543,9 +1543,9 @@ func TestCarbon_SubHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		hours    int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1567,8 +1567,8 @@ func TestCarbon_AddHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1590,8 +1590,8 @@ func TestCarbon_SubHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1613,9 +1613,9 @@ func TestCarbon_AddMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		minutes  int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1637,9 +1637,9 @@ func TestCarbon_SubMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		minutes  int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1661,8 +1661,8 @@ func TestCarbon_AddMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1684,8 +1684,8 @@ func TestCarbon_SubMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1707,9 +1707,9 @@ func TestCarbon_AddSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		seconds  int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1731,9 +1731,9 @@ func TestCarbon_SubSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
+		input    string
 		seconds  int
-		expected string // 期望值
+		expected string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1755,8 +1755,8 @@ func TestCarbon_AddSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1778,8 +1778,8 @@ func TestCarbon_SubSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1801,9 +1801,9 @@ func TestCarbon_AddMilliseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input        string // 输入值
+		input        string
 		milliseconds int
-		expected     string // 期望值
+		expected     string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1825,9 +1825,9 @@ func TestCarbon_SubMilliseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input        string // 输入值
+		input        string
 		milliseconds int
-		expected     string // 期望值
+		expected     string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1849,8 +1849,8 @@ func TestCarbon_AddMillisecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1872,8 +1872,8 @@ func TestCarbon_SubMillisecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1895,9 +1895,9 @@ func TestCarbon_AddMicroseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input        string // 输入值
+		input        string
 		microseconds int
-		expected     string // 期望值
+		expected     string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1919,9 +1919,9 @@ func TestCarbon_SubMicroseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input        string // 输入值
+		input        string
 		microseconds int
-		expected     string // 期望值
+		expected     string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -1943,8 +1943,8 @@ func TestCarbon_AddMicrosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1966,8 +1966,8 @@ func TestCarbon_SubMicrosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1989,9 +1989,9 @@ func TestCarbon_AddNanoseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input       string // 输入值
+		input       string
 		nanoseconds int
-		expected    string // 期望值
+		expected    string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -2013,9 +2013,9 @@ func TestCarbon_SubNanoseconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input       string // 输入值
+		input       string
 		nanoseconds int
-		expected    string // 期望值
+		expected    string
 	}{
 		{"", 3, ""},
 		{"0", 3, ""},
@@ -2037,8 +2037,8 @@ func TestCarbon_AddNanosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -2060,8 +2060,8 @@ func TestCarbon_SubNanosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},

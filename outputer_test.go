@@ -12,8 +12,8 @@ func TestCarbon_String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -35,8 +35,8 @@ func TestCarbon_ToString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -64,8 +64,8 @@ func TestCarbon_ToMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -104,8 +104,8 @@ func TestCarbon_ToShortMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -144,8 +144,8 @@ func TestCarbon_ToWeekString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -179,8 +179,8 @@ func TestCarbon_ToShortWeekString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -214,8 +214,8 @@ func TestCarbon_ToDayDateTimeString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -243,8 +243,8 @@ func TestCarbon_ToDateTimeString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -273,8 +273,8 @@ func TestCarbon_ToDateTimeMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -303,8 +303,8 @@ func TestCarbon_ToDateTimeMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -333,8 +333,8 @@ func TestCarbon_ToDateTimeNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -363,8 +363,8 @@ func TestCarbon_ToShortDateTimeString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -393,8 +393,8 @@ func TestCarbon_ToShortDateTimeMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -423,8 +423,8 @@ func TestCarbon_ToShortDateTimeMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -453,8 +453,8 @@ func TestCarbon_ToShortDateTimeNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -483,8 +483,8 @@ func TestCarbon_ToDateString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -513,8 +513,8 @@ func TestCarbon_ToDateMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -543,8 +543,8 @@ func TestCarbon_ToDateMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -573,8 +573,8 @@ func TestCarbon_ToDateNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -603,8 +603,8 @@ func TestCarbon_ToShortDateString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -633,8 +633,8 @@ func TestCarbon_ToShortDateMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -663,8 +663,8 @@ func TestCarbon_ToShortDateNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -693,8 +693,8 @@ func TestCarbon_ToShortDateMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -723,8 +723,8 @@ func TestCarbon_ToTimeString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -753,8 +753,8 @@ func TestCarbon_ToTimeMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -783,8 +783,8 @@ func TestCarbon_ToTimeMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -813,8 +813,8 @@ func TestCarbon_ToTimeNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -843,8 +843,8 @@ func TestCarbon_ToShortTimeString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -873,8 +873,8 @@ func TestCarbon_ToShortTimeMilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -903,8 +903,8 @@ func TestCarbon_ToShortTimeMicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -933,8 +933,8 @@ func TestCarbon_ToShortTimeNanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -963,8 +963,8 @@ func TestCarbon_ToAtomString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -993,8 +993,8 @@ func TestCarbon_ToANSICString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1023,8 +1023,8 @@ func TestCarbon_ToCookieString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1053,8 +1053,8 @@ func TestCarbon_ToRssString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1083,8 +1083,8 @@ func TestCarbon_ToW3cString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1113,8 +1113,8 @@ func TestCarbon_ToUnixDateString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1143,8 +1143,8 @@ func TestCarbon_ToRubyDateString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1173,8 +1173,8 @@ func TestCarbon_ToKitchenString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1203,8 +1203,8 @@ func TestCarbon_ToIso8601String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1233,8 +1233,8 @@ func TestCarbon_ToIso8601MilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1263,8 +1263,8 @@ func TestCarbon_ToIso8601MicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1293,8 +1293,8 @@ func TestCarbon_ToIso8601NanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1323,8 +1323,8 @@ func TestCarbon_ToRfc822String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1353,8 +1353,8 @@ func TestCarbon_ToRfc822zString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1383,8 +1383,8 @@ func TestCarbon_ToRfc850String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1413,8 +1413,8 @@ func TestCarbon_ToRfc1036String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1443,8 +1443,8 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1473,8 +1473,8 @@ func TestCarbon_ToRfc1123zString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1503,8 +1503,8 @@ func TestCarbon_ToRfc2822String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1533,8 +1533,8 @@ func TestCarbon_ToRfc3339String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1562,8 +1562,8 @@ func TestCarbon_ToRfc3339MilliString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1591,8 +1591,8 @@ func TestCarbon_ToRfc3339MicroString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1620,8 +1620,8 @@ func TestCarbon_ToRfc3339NanoString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1649,8 +1649,8 @@ func TestCarbon_ToRfc7231String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -1679,9 +1679,9 @@ func TestCarbon_Layout(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected string // 期望值
+		input    string
+		param    string
+		expected string
 	}{
 		{"", "2006年01月02日", ""},
 		{"0", "2006年01月02日", ""},
@@ -1722,10 +1722,10 @@ func TestCarbon_Format(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		format   string // 参数值
-		locale   string // 参数值
-		expected string // 期望值
+		input    string
+		format   string
+		locale   string
+		expected string
 	}{
 		{"", "Y年m月d日", "en", ""},
 		{"0", "Y年m月d日", "en", ""},

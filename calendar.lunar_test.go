@@ -12,8 +12,8 @@ func TestLunar_Animal(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -54,8 +54,8 @@ func TestLunar_Festival(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -90,8 +90,8 @@ func TestLunar_DateTime(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                  string // 输入值
-		year, month, day, hour, minute, second int    // 期望值
+		input                                  string
+		year, month, day, hour, minute, second int
 	}{
 		0: {"", 0, 0, 0, 0, 0, 0},
 		1: {"0", 0, 0, 0, 0, 0, 0},
@@ -119,8 +119,8 @@ func TestLunar_Date(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input            string // 输入值
-		year, month, day int    // 期望值
+		input            string
+		year, month, day int
 	}{
 		0: {"", 0, 0, 0},
 		1: {"0", 0, 0, 0},
@@ -145,8 +145,8 @@ func TestLunar_Time(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                string // 输入值
-		hour, minute, second int    // 期望值
+		input                string
+		hour, minute, second int
 	}{
 		0: {"", 0, 0, 0},
 		1: {"0", 0, 0, 0},
@@ -171,8 +171,8 @@ func TestLunar_Year(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		0: {"", 0},
 		1: {"0", 0},
@@ -199,8 +199,8 @@ func TestLunar_Month(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		0: {"", 0},
 		1: {"0", 0},
@@ -233,8 +233,8 @@ func TestLunar_Day(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		0: {"", 0},
 		1: {"0", 0},
@@ -286,8 +286,8 @@ func TestLunar_LeapMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		0: {"", 0},
 		1: {"0", 0},
@@ -312,8 +312,8 @@ func TestLunar_ToYearString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -340,8 +340,8 @@ func TestLunar_ToMonthString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -379,8 +379,8 @@ func TestLunar_ToDayString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -417,8 +417,8 @@ func TestLunar_String(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -452,8 +452,8 @@ func TestLunar_ToDateString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -487,8 +487,8 @@ func TestLunar_IsLeapYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -514,8 +514,8 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -541,8 +541,8 @@ func TestLunar_IsRatYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -567,8 +567,8 @@ func TestLunar_IsOxYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -593,8 +593,8 @@ func TestLunar_IsTigerYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -620,8 +620,8 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -647,8 +647,8 @@ func TestLunar_IsDragonYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -674,8 +674,8 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -701,8 +701,8 @@ func TestLunar_IsHorseYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -728,8 +728,8 @@ func TestLunar_IsGoatYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -755,8 +755,8 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -782,8 +782,8 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -809,8 +809,8 @@ func TestLunar_IsDogYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -836,8 +836,8 @@ func TestLunar_IsPigYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -863,8 +863,8 @@ func TestLunar_DoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值1
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		0: {"", ""},
 		1: {"0", ""},
@@ -899,8 +899,8 @@ func TestLunar_IsFirstDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -925,8 +925,8 @@ func TestLunar_IsSecondDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -950,8 +950,8 @@ func TestLunar_IsThirdDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -974,8 +974,8 @@ func TestLunar_IsFourthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -999,8 +999,8 @@ func TestLunar_IsFifthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1024,8 +1024,8 @@ func TestLunar_IsSixthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1049,8 +1049,8 @@ func TestLunar_IsSeventhDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1074,8 +1074,8 @@ func TestLunar_IsEighthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1099,8 +1099,8 @@ func TestLunar_IsNinthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1124,8 +1124,8 @@ func TestLunar_IsTenthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1149,8 +1149,8 @@ func TestLunar_IsEleventhDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -1174,8 +1174,8 @@ func TestLunar_IsTwelfthDoubleHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},

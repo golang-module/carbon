@@ -11,9 +11,9 @@ func TestCarbon_DiffInYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -34,9 +34,9 @@ func TestCarbon_DiffAbsInYears(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -56,9 +56,9 @@ func TestCarbon_DiffInMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{"2020-08-05 13:14:15", "2020-09-06 13:14:59", 1},
@@ -79,9 +79,9 @@ func TestCarbon_DiffAbsInMonths(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 0},
 		{"2020-12-31 13:14:15", "2021-01-01 13:14:15", 0},
@@ -101,9 +101,9 @@ func TestCarbon_DiffInWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", -1},
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", -1},
@@ -128,9 +128,9 @@ func TestCarbon_DiffAbsInWeeks(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:00", 1},
 		{"2020-08-05 13:14:15", "2020-07-28 13:14:15", 1},
@@ -155,9 +155,9 @@ func TestCarbon_DiffInDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", -1},
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", -1},
@@ -182,9 +182,9 @@ func TestCarbon_DiffAbsInDays(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-04 13:00:00", 1},
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", 1},
@@ -209,9 +209,9 @@ func TestCarbon_DiffInHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", -1},
 		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", -1},
@@ -236,9 +236,9 @@ func TestCarbon_DiffAbsInHours(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 12:14:00", 1},
 		{"2020-08-05 13:14:15", "2020-08-05 12:14:15", 1},
@@ -263,9 +263,9 @@ func TestCarbon_DiffInMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", -1},
 		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", -1},
@@ -290,9 +290,9 @@ func TestCarbon_DiffAbsInMinutes(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:13:00", 1},
 		{"2020-08-05 13:14:15", "2020-08-05 13:13:15", 1},
@@ -317,9 +317,9 @@ func TestCarbon_DiffInSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
@@ -338,9 +338,9 @@ func TestCarbon_DiffAbsInSeconds(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected int64  // 期望值
+		input    string
+		param    string
+		expected int64
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", 0},
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:20", 5},
@@ -359,40 +359,40 @@ func TestCarbon_DiffInString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected string // 期望值
+		input    Carbon
+		expected string
 	}{
-		{Now(), "just now"},
+		0: {Now(), "just now"},
 
-		{Now().AddYearsNoOverflow(1), "-1 year"},
-		{Now().SubYearsNoOverflow(1), "1 year"},
-		{Now().AddYearsNoOverflow(10), "-10 years"},
-		{Now().SubYearsNoOverflow(10), "10 years"},
+		1: {Now().AddYearsNoOverflow(1), "-1 year"},
+		2: {Now().SubYearsNoOverflow(1), "1 year"},
+		3: {Now().AddYearsNoOverflow(10), "-10 years"},
+		4: {Now().SubYearsNoOverflow(10), "10 years"},
 
-		{Now().AddMonthsNoOverflow(1), "-1 month"},
-		{Now().SubMonthsNoOverflow(1), "1 month"},
-		{Now().AddMonthsNoOverflow(10), "-10 months"},
-		{Now().SubMonthsNoOverflow(10), "10 months"},
+		5: {Now().AddMonthsNoOverflow(1), "-1 month"},
+		6: {Now().SubMonthsNoOverflow(1), "1 month"},
+		7: {Now().AddMonthsNoOverflow(10), "-10 months"},
+		8: {Now().SubMonthsNoOverflow(10), "10 months"},
 
-		{Now().AddDays(1), "-1 day"},
-		{Now().SubDays(1), "1 day"},
-		{Now().AddDays(10), "-1 week"},
-		{Now().SubDays(10), "1 week"},
+		9:  {Now().AddDays(1), "-1 day"},
+		10: {Now().SubDays(1), "1 day"},
+		11: {Now().AddDays(10), "-1 week"},
+		12: {Now().SubDays(10), "1 week"},
 
-		{Now().AddHours(1), "-1 hour"},
-		{Now().SubHours(1), "1 hour"},
-		{Now().AddHours(10), "-10 hours"},
-		{Now().SubHours(10), "10 hours"},
+		13: {Now().AddHours(1), "-1 hour"},
+		14: {Now().SubHours(1), "1 hour"},
+		15: {Now().AddHours(10), "-10 hours"},
+		16: {Now().SubHours(10), "10 hours"},
 
-		{Now().AddMinutes(1), "-1 minute"},
-		{Now().SubMinutes(1), "1 minute"},
-		{Now().AddMinutes(10), "-10 minutes"},
-		{Now().SubMinutes(10), "10 minutes"},
+		17: {Now().AddMinutes(1), "-1 minute"},
+		18: {Now().SubMinutes(1), "1 minute"},
+		19: {Now().AddMinutes(10), "-10 minutes"},
+		20: {Now().SubMinutes(10), "10 minutes"},
 
-		{Now().AddSeconds(1), "-1 second"},
-		{Now().SubSeconds(1), "1 second"},
-		{Now().AddSeconds(10), "-10 seconds"},
-		{Now().SubSeconds(10), "10 seconds"},
+		21: {Now().AddSeconds(1), "-1 second"},
+		22: {Now().SubSeconds(1), "1 second"},
+		23: {Now().AddSeconds(10), "-10 seconds"},
+		24: {Now().SubSeconds(10), "10 seconds"},
 	}
 
 	for index, test := range tests {
@@ -419,40 +419,40 @@ func TestCarbon_DiffAbsInString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected string // 期望值
+		input    Carbon
+		expected string
 	}{
-		{Now(), "just now"},
+		0: {Now(), "just now"},
 
-		{Now().AddYearsNoOverflow(1), "1 year"},
-		{Now().SubYearsNoOverflow(1), "1 year"},
-		{Now().AddYearsNoOverflow(10), "10 years"},
-		{Now().SubYearsNoOverflow(10), "10 years"},
+		1: {Now().AddYearsNoOverflow(1), "1 year"},
+		2: {Now().SubYearsNoOverflow(1), "1 year"},
+		3: {Now().AddYearsNoOverflow(10), "10 years"},
+		4: {Now().SubYearsNoOverflow(10), "10 years"},
 
-		{Now().AddMonthsNoOverflow(1), "1 month"},
-		{Now().SubMonthsNoOverflow(1), "1 month"},
-		{Now().AddMonthsNoOverflow(10), "10 months"},
-		{Now().SubMonthsNoOverflow(10), "10 months"},
+		5: {Now().AddMonthsNoOverflow(1), "1 month"},
+		6: {Now().SubMonthsNoOverflow(1), "1 month"},
+		7: {Now().AddMonthsNoOverflow(10), "10 months"},
+		8: {Now().SubMonthsNoOverflow(10), "10 months"},
 
-		{Now().AddDays(1), "1 day"},
-		{Now().SubDays(1), "1 day"},
-		{Now().AddDays(10), "1 week"},
-		{Now().SubDays(10), "1 week"},
+		9:  {Now().AddDays(1), "1 day"},
+		10: {Now().SubDays(1), "1 day"},
+		11: {Now().AddDays(10), "1 week"},
+		12: {Now().SubDays(10), "1 week"},
 
-		{Now().AddHours(1), "1 hour"},
-		{Now().SubHours(1), "1 hour"},
-		{Now().AddHours(10), "10 hours"},
-		{Now().SubHours(10), "10 hours"},
+		13: {Now().AddHours(1), "1 hour"},
+		14: {Now().SubHours(1), "1 hour"},
+		15: {Now().AddHours(10), "10 hours"},
+		16: {Now().SubHours(10), "10 hours"},
 
-		{Now().AddMinutes(1), "1 minute"},
-		{Now().SubMinutes(1), "1 minute"},
-		{Now().AddMinutes(10), "10 minutes"},
-		{Now().SubMinutes(10), "10 minutes"},
+		17: {Now().AddMinutes(1), "1 minute"},
+		18: {Now().SubMinutes(1), "1 minute"},
+		19: {Now().AddMinutes(10), "10 minutes"},
+		20: {Now().SubMinutes(10), "10 minutes"},
 
-		{Now().AddSeconds(1), "1 second"},
-		{Now().SubSeconds(1), "1 second"},
-		{Now().AddSeconds(10), "10 seconds"},
-		{Now().SubSeconds(10), "10 seconds"},
+		21: {Now().AddSeconds(1), "1 second"},
+		22: {Now().SubSeconds(1), "1 second"},
+		23: {Now().AddSeconds(10), "10 seconds"},
+		24: {Now().SubSeconds(10), "10 seconds"},
 	}
 
 	for index, test := range tests {
@@ -480,40 +480,40 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected string // 期望值
+		input    Carbon
+		expected string
 	}{
-		{Now(), "just now"},
+		0: {Now(), "just now"},
 
-		{Now().AddYearsNoOverflow(1), "1 year from now"},
-		{Now().SubYearsNoOverflow(1), "1 year ago"},
-		{Now().AddYearsNoOverflow(10), "10 years from now"},
-		{Now().SubYearsNoOverflow(10), "10 years ago"},
+		1: {Now().AddYearsNoOverflow(1), "1 year from now"},
+		2: {Now().SubYearsNoOverflow(1), "1 year ago"},
+		3: {Now().AddYearsNoOverflow(10), "10 years from now"},
+		4: {Now().SubYearsNoOverflow(10), "10 years ago"},
 
-		{Now().AddMonthsNoOverflow(1), "1 month from now"},
-		{Now().SubMonthsNoOverflow(1), "1 month ago"},
-		{Now().AddMonthsNoOverflow(10), "10 months from now"},
-		{Now().SubMonthsNoOverflow(10), "10 months ago"},
+		5: {Now().AddMonthsNoOverflow(1), "1 month from now"},
+		6: {Now().SubMonthsNoOverflow(1), "1 month ago"},
+		7: {Now().AddMonthsNoOverflow(10), "10 months from now"},
+		8: {Now().SubMonthsNoOverflow(10), "10 months ago"},
 
-		{Now().AddDays(1), "1 day from now"},
-		{Now().SubDays(1), "1 day ago"},
-		{Now().AddDays(10), "1 week from now"},
-		{Now().SubDays(10), "1 week ago"},
+		9:  {Now().AddDays(1), "1 day from now"},
+		10: {Now().SubDays(1), "1 day ago"},
+		11: {Now().AddDays(10), "1 week from now"},
+		12: {Now().SubDays(10), "1 week ago"},
 
-		{Now().AddHours(1), "1 hour from now"},
-		{Now().SubHours(1), "1 hour ago"},
-		{Now().AddHours(10), "10 hours from now"},
-		{Now().SubHours(10), "10 hours ago"},
+		13: {Now().AddHours(1), "1 hour from now"},
+		14: {Now().SubHours(1), "1 hour ago"},
+		15: {Now().AddHours(10), "10 hours from now"},
+		16: {Now().SubHours(10), "10 hours ago"},
 
-		{Now().AddMinutes(1), "1 minute from now"},
-		{Now().SubMinutes(1), "1 minute ago"},
-		{Now().AddMinutes(10), "10 minutes from now"},
-		{Now().SubMinutes(10), "10 minutes ago"},
+		17: {Now().AddMinutes(1), "1 minute from now"},
+		18: {Now().SubMinutes(1), "1 minute ago"},
+		19: {Now().AddMinutes(10), "10 minutes from now"},
+		20: {Now().SubMinutes(10), "10 minutes ago"},
 
-		{Now().AddSeconds(1), "1 second from now"},
-		{Now().SubSeconds(1), "1 second ago"},
-		{Now().AddSeconds(10), "10 seconds from now"},
-		{Now().SubSeconds(10), "10 seconds ago"},
+		21: {Now().AddSeconds(1), "1 second from now"},
+		22: {Now().SubSeconds(1), "1 second ago"},
+		23: {Now().AddSeconds(10), "10 seconds from now"},
+		24: {Now().SubSeconds(10), "10 seconds ago"},
 	}
 
 	for index, test := range tests {

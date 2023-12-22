@@ -11,8 +11,8 @@ func TestCarbon_Constellation(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -45,8 +45,8 @@ func TestCarbon_IsAries(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -70,8 +70,8 @@ func TestCarbon_IsTaurus(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -95,8 +95,8 @@ func TestCarbon_IsGemini(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -120,8 +120,8 @@ func TestCarbon_IsCancer(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -145,8 +145,8 @@ func TestCarbon_IsLeo(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -171,8 +171,8 @@ func TestCarbon_IsVirgo(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -196,8 +196,8 @@ func TestCarbon_IsLibra(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -221,8 +221,8 @@ func TestCarbon_IsScorpio(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -246,8 +246,8 @@ func TestCarbon_IsSagittarius(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -271,8 +271,8 @@ func TestCarbon_IsCapricorn(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -296,8 +296,8 @@ func TestCarbon_IsAquarius(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -321,8 +321,8 @@ func TestCarbon_IsPisces(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
