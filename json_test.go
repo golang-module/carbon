@@ -9,88 +9,115 @@ import (
 )
 
 type Person struct {
-	Name         string         `json:"name"`
-	Age          int            `json:"age"`
-	Birthday1    DateTime       `json:"birthday1"`
-	Birthday2    DateTimeMilli  `json:"birthday2"`
-	Birthday3    DateTimeMicro  `json:"birthday3"`
-	Birthday4    DateTimeNano   `json:"birthday4"`
-	GraduatedAt1 Date           `json:"graduated_at1"`
-	GraduatedAt2 DateMilli      `json:"graduated_at2"`
-	GraduatedAt3 DateMicro      `json:"graduated_at3"`
-	GraduatedAt4 DateNano       `json:"graduated_at4"`
-	OperatedAt1  Time           `json:"operated_at1"`
-	OperatedAt2  TimeMilli      `json:"operated_at2"`
-	OperatedAt3  TimeMicro      `json:"operated_at3"`
-	OperatedAt4  TimeNano       `json:"operated_at4"`
-	CreatedAt1   Timestamp      `json:"created_at1"`
-	CreatedAt2   TimestampMilli `json:"created_at2"`
-	CreatedAt3   TimestampMicro `json:"created_at3"`
-	CreatedAt4   TimestampNano  `json:"created_at4"`
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+
+	Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02 15:04:05"`
+	Birthday2 Carbon `json:"birthday2" carbon:"layout:2006-01-02 15:04:05.999"`
+	Birthday3 Carbon `json:"birthday3" carbon:"layout:2006-01-02 15:04:05.999999"`
+	Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02 15:04:05.999999999"`
+
+	GraduatedAt1 Carbon `json:"graduated_at1" carbon:"layout:2006-01-02"`
+	GraduatedAt2 Carbon `json:"graduated_at2" carbon:"layout:2006-01-02.999"`
+	GraduatedAt3 Carbon `json:"graduated_at3" carbon:"layout:2006-01-02.999999"`
+	GraduatedAt4 Carbon `json:"graduated_at4" carbon:"layout:2006-01-02.999999999"`
+
+	OperatedAt1 Carbon `json:"operated_at1" carbon:"layout:15:04:05"`
+	OperatedAt2 Carbon `json:"operated_at2" carbon:"layout:15:04:05.999"`
+	OperatedAt3 Carbon `json:"operated_at3" carbon:"layout:15:04:05.999999"`
+	OperatedAt4 Carbon `json:"operated_at4" carbon:"layout:15:04:05.999999999"`
+
+	CreatedAt1 Carbon `json:"created_at1" carbon:"format:Y-m-d"`
+	CreatedAt2 Carbon `json:"created_at2" carbon:"format:H:i:s"`
+	CreatedAt3 Carbon `json:"created_at3" carbon:"format:Y-m-d H:i:s"`
+	CreatedAt4 Carbon `json:"created_at4"`
 }
 
-var person Person
+type Student struct {
+	Name     string `json:"name"`
+	Age      int    `json:"age"`
+	Birthday Carbon `json:"birthday"`
+}
 
-func TestCarbon_MarshalJSON(t *testing.T) {
-	testNow := SetTestNow(Parse("2020-08-05 13:14:15.999999999", PRC))
-	person = Person{
-		Name:         "gouguoyin",
-		Age:          18,
-		Birthday1:    testNow.Now().SubYears(18).ToDateTimeStruct(),
-		Birthday2:    testNow.Now().SubYears(18).ToDateTimeMilliStruct(),
-		Birthday3:    testNow.Now().SubYears(18).ToDateTimeMicroStruct(),
-		Birthday4:    testNow.Now().SubYears(18).ToDateTimeNanoStruct(),
-		GraduatedAt1: Parse("2020-08-05 13:14:15", PRC).ToDateStruct(),
-		GraduatedAt2: Parse("2020-08-05 13:14:15.999", PRC).ToDateMilliStruct(),
-		GraduatedAt3: Parse("2020-08-05 13:14:15.999999", PRC).ToDateMicroStruct(),
-		GraduatedAt4: Parse("2020-08-05 13:14:15.999999999", PRC).ToDateNanoStruct(),
-		OperatedAt1:  Parse("2020-08-05 13:14:15", PRC).ToTimeStruct(),
-		OperatedAt2:  Parse("2020-08-05 13:14:15.999", PRC).ToTimeMilliStruct(),
-		OperatedAt3:  Parse("2020-08-05 13:14:15.999999", PRC).ToTimeMicroStruct(),
-		OperatedAt4:  Parse("2020-08-05 13:14:15.999999999", PRC).ToTimeNanoStruct(),
-		CreatedAt1:   Parse("2023-08-05 13:14:15", PRC).ToTimestampStruct(),
-		CreatedAt2:   Parse("2024-08-05 13:14:15.999", PRC).ToTimestampMilliStruct(),
-		CreatedAt3:   Parse("2025-08-05 13:14:15.999999", PRC).ToTimestampMicroStruct(),
-		CreatedAt4:   Parse("2025-08-05 13:14:15.999999999", PRC).ToTimestampNanoStruct(),
+func TestCarbon_MarshalJSON_LoadTag(t *testing.T) {
+	c := Parse("2020-08-05 13:14:15.999999999", PRC)
+	person := Person{
+		Name: "gouguoyin",
+		Age:  18,
+
+		Birthday1: c,
+		Birthday2: c,
+		Birthday3: c,
+		Birthday4: c,
+
+		GraduatedAt1: c,
+		GraduatedAt2: c,
+		GraduatedAt3: c,
+		GraduatedAt4: c,
+
+		OperatedAt1: c,
+		OperatedAt2: c,
+		OperatedAt3: c,
+		OperatedAt4: c,
+
+		CreatedAt1: c,
+		CreatedAt2: c,
+		CreatedAt3: c,
+		CreatedAt4: c,
 	}
-	data, err := json.Marshal(&person)
-	assert.Nil(t, err)
 
-	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2005-09-11 09:57:38\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+	loadErr := LoadTag(&person)
+	assert.Nil(t, loadErr)
 
-	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
-	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
-	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
-	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+	data, marshalErr := json.Marshal(&person)
+	assert.Nil(t, marshalErr)
 
-	assert.Equal(t, "13:14:15", person.OperatedAt1.String(), "graduated_at1 should be \"13:14:15\"")
-	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String(), "graduated_at2 should be \"13:14:15.999\"")
-	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String(), "graduated_at3 should be \"13:14:15.999999\"")
-	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String(), "graduated_at4 should be \"13:14:15.999999999\"")
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday1.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999", person.Birthday2.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999999", person.Birthday3.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999999999", person.Birthday4.String())
 
-	assert.Equal(t, "1691212455", person.CreatedAt1.String(), "created_at1 should be \"1691212455\"")
-	assert.Equal(t, "1722834855999", person.CreatedAt2.String(), "created_at2 should be \"1722834855999\"")
-	assert.Equal(t, "1754370855999999", person.CreatedAt3.String(), "created_at3 should be `\"1754370855999999\"")
-	assert.Equal(t, "1754370855999999999", person.CreatedAt4.String(), "created_at4 should be \"1754370855999999999\"")
-	assert.Equal(t, int64(1691212455), person.CreatedAt1.Int64(), "created_at1 should be 1691212455")
-	assert.Equal(t, int64(1722834855999), person.CreatedAt2.Int64(), "created_at2 should be 1722834855999")
-	assert.Equal(t, int64(1754370855999999), person.CreatedAt3.Int64(), "created_at3 should be 1754370855999999")
-	assert.Equal(t, int64(1754370855999999999), person.CreatedAt4.Int64(), "created_at4 should be 1754370855999999999")
+	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String())
+	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String())
+	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String())
+	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String())
 
-	fmt.Printf("Person output by json:\n%s\n", data)
+	assert.Equal(t, "13:14:15", person.OperatedAt1.String())
+	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String())
+	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String())
+	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String())
+
+	assert.Equal(t, "2020-08-05", person.CreatedAt1.String())
+	assert.Equal(t, "13:14:15", person.CreatedAt2.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.CreatedAt3.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.CreatedAt4.String())
+
+	fmt.Printf("person output by json:\n%s\n", data)
 }
 
-func TestCarbon_UnmarshalJSON(t *testing.T) {
+func TestCarbon_MarshalJSON_UnLoadTag(t *testing.T) {
+	c := Parse("2020-08-05 13:14:15.999999999", PRC)
+	student := Student{
+		Name:     "gouguoyin",
+		Age:      18,
+		Birthday: c,
+	}
+
+	data, marshalErr := json.Marshal(&student)
+	assert.Nil(t, marshalErr)
+
+	assert.Equal(t, "2020-08-05 13:14:15", student.Birthday.String())
+	fmt.Printf("student output by json:\n%s\n", data)
+}
+
+func TestCarbon_UnmarshalJSON_LoadTag(t *testing.T) {
 	str := `{
 		"name": "gouguoyin",
 		"age": 18,
-		"birthday1": "2002-08-05 13:14:15",
-		"birthday2": "2002-08-05 13:14:15.999",
-		"birthday3": "2002-08-05 13:14:15.999999",
-		"birthday4": "2002-08-05 13:14:15.999999999",
+		"birthday1": "2020-08-05 13:14:15",
+		"birthday2": "2020-08-05 13:14:15.999",
+		"birthday3": "2020-08-05 13:14:15.999999",
+		"birthday4": "2020-08-05 13:14:15.999999999",
 		"graduated_at1": "2020-08-05",
 		"graduated_at2": "2020-08-05.999",
 		"graduated_at3": "2020-08-05.999999",
@@ -99,98 +126,72 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 		"operated_at2": "13:14:15.999",
 		"operated_at3": "13:14:15.999999",
 		"operated_at4": "13:14:15.999999999",
-		"created_at1": 1596604455,
-		"created_at2": 1596604455999,
-		"created_at3": 1596604455999999,
-		"created_at4": 1596604455999999999
+		"created_at1": "2020-08-05",
+		"created_at2": "13:14:15",
+		"created_at3": "2020-08-05 13:14:15",
+		"created_at4": "2020-08-05 13:14:15"
 	}`
 
-	err := json.Unmarshal([]byte(str), &person)
-	assert.Nil(t, err)
+	var person Person
 
-	assert.Equal(t, "2002-08-05 13:14:15", person.Birthday1.String(), "birthday1 should be \"2002-08-05 13:14:15\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999", person.Birthday2.String(), "birthday2 should be \"2002-08-05 13:14:15.999\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999999", person.Birthday3.String(), "birthday3 should be \"2002-08-05 13:14:15.999999\"")
-	assert.Equal(t, "2002-08-05 13:14:15.999999999", person.Birthday4.String(), "birthday4 should be \"2002-08-05 13:14:15.999999999\"")
+	loadErr := LoadTag(&person)
+	assert.Nil(t, loadErr)
 
-	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String(), "graduated_at1 should be \"2020-08-05\"")
-	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String(), "graduated_at2 should be \"2020-08-05.999\"")
-	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String(), "graduated_at3 should be \"2020-08-05.999999\"")
-	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String(), "graduated_at4 should be \"2020-08-05.999999999\"")
+	unmarshalErr := json.Unmarshal([]byte(str), &person)
+	assert.Nil(t, unmarshalErr)
 
-	assert.Equal(t, "13:14:15", person.OperatedAt1.String(), "graduated_at1 should be \"13:14:15\"")
-	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String(), "graduated_at2 should be \"13:14:15.999\"")
-	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String(), "graduated_at3 should be \"13:14:15.999999\"")
-	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String(), "graduated_at4 should be \"13:14:15.999999999\"")
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday1.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999", person.Birthday2.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999999", person.Birthday3.String())
+	assert.Equal(t, "2020-08-05 13:14:15.999999999", person.Birthday4.String())
 
-	assert.Equal(t, "1596604455", person.CreatedAt1.String(), "created_at1 should be \"1596604455\"")
-	assert.Equal(t, "1596604455999", person.CreatedAt2.String(), "created_at2 should be \"1596604455999\"")
-	assert.Equal(t, "1596604455999999", person.CreatedAt3.String(), "created_at2 should be `\"1596604455999999\"")
-	assert.Equal(t, "1596604455999999999", person.CreatedAt4.String(), "created_at2 should be \"1596604455999999999\"")
-	assert.Equal(t, int64(1596604455), person.CreatedAt1.Int64(), "created_at1 should be 1596604455")
-	assert.Equal(t, int64(1596604455999), person.CreatedAt2.Int64(), "created_at2 should be 1596604455999")
-	assert.Equal(t, int64(1596604455999999), person.CreatedAt3.Int64(), "created_at2 should be 1596604455999999")
-	assert.Equal(t, int64(1596604455999999999), person.CreatedAt4.Int64(), "created_at2 should be 1596604455999999999")
+	assert.Equal(t, "2020-08-05", person.GraduatedAt1.String())
+	assert.Equal(t, "2020-08-05.999", person.GraduatedAt2.String())
+	assert.Equal(t, "2020-08-05.999999", person.GraduatedAt3.String())
+	assert.Equal(t, "2020-08-05.999999999", person.GraduatedAt4.String())
+
+	assert.Equal(t, "13:14:15", person.OperatedAt1.String())
+	assert.Equal(t, "13:14:15.999", person.OperatedAt2.String())
+	assert.Equal(t, "13:14:15.999999", person.OperatedAt3.String())
+	assert.Equal(t, "13:14:15.999999999", person.OperatedAt4.String())
+
+	assert.Equal(t, "2020-08-05", person.CreatedAt1.String())
+	assert.Equal(t, "13:14:15", person.CreatedAt2.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.CreatedAt3.String())
 
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
 
-func TestCarbon_GormDataType(t *testing.T) {
-	var dateTime DateTime
-	assert.Equal(t, "time", dateTime.GormDataType())
-	var dateTimeMilli DateTimeMilli
-	assert.Equal(t, "time", dateTimeMilli.GormDataType())
-	var dateTimeMicro DateTimeMicro
-	assert.Equal(t, "time", dateTimeMicro.GormDataType())
-	var dateTimeNano DateTimeNano
-	assert.Equal(t, "time", dateTimeNano.GormDataType())
-
-	var date Date
-	assert.Equal(t, "time", date.GormDataType())
-	var dateMilli DateMilli
-	assert.Equal(t, "time", dateMilli.GormDataType())
-	var dateMicro DateMicro
-	assert.Equal(t, "time", dateMicro.GormDataType())
-	var dateNano DateNano
-	assert.Equal(t, "time", dateNano.GormDataType())
-
-	var time Time
-	assert.Equal(t, "time", time.GormDataType())
-	var timeMilli TimeMilli
-	assert.Equal(t, "time", timeMilli.GormDataType())
-	var timeMicro TimeMicro
-	assert.Equal(t, "time", timeMicro.GormDataType())
-	var timeNano TimeNano
-	assert.Equal(t, "time", timeNano.GormDataType())
-
-	var timestamp Timestamp
-	assert.Equal(t, "int", timestamp.GormDataType())
-	var timestampMilli TimestampMilli
-	assert.Equal(t, "int", timestampMilli.GormDataType())
-	var timestampMicro TimestampMicro
-	assert.Equal(t, "int", timestampMicro.GormDataType())
-	var timestampNano TimestampNano
-	assert.Equal(t, "int", timestampNano.GormDataType())
-}
-
-func TestError_Json(t *testing.T) {
+func TestCarbon_UnmarshalJSON_UnLoadTag(t *testing.T) {
 	str := `{
-		"name": "",
-		"age": 0,
-		"birthday1": "",
-		"birthday2": "",
-		"birthday3": "",
-		"birthday4": "",
-		"graduated_at1": "xxx",
-		"graduated_at2": "xxx",
-		"graduated_at3": "xxx",
-		"graduated_at4": "xxx",
-		"created_at1": 0,
-		"created_at2": 0,
-		"created_at3": 0,
-		"created_at4": 0
+		"name": "gouguoyin",
+		"age": 18,
+		"birthday": "2020-08-05 13:14:15.999"
 	}`
-	err := json.Unmarshal([]byte(str), &person)
-	assert.NotNil(t, err)
-	fmt.Printf("Json string parse to person:\n%+v\n", person)
+
+	var student Student
+	unmarshalErr := json.Unmarshal([]byte(str), &student)
+	assert.Nil(t, unmarshalErr)
+
+	assert.Equal(t, "2020-08-05 13:14:15", student.Birthday.String())
+	fmt.Printf("Json string parse to student:\n%+v\n", student)
+}
+
+func TestError_JSON(t *testing.T) {
+	student := Student{
+		Name:     "gouguoyin",
+		Age:      18,
+		Birthday: Parse("XXX"),
+	}
+
+	_, marshalErr := json.Marshal(&student)
+	assert.NotNil(t, marshalErr)
+
+	str := `{
+		"name": "gouguoyin",
+		"age": 18,
+		"birthday": "2020-08-05 13:14:15.999"
+	}`
+	unmarshalErr := json.Unmarshal([]byte(str), &student)
+	assert.NotNil(t, unmarshalErr)
 }
