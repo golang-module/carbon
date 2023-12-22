@@ -3,9 +3,9 @@
 [![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
 [![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/golang-module/carbon/v2)
-[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon/v2)
+[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Goproxy.cn](https://goproxy.cn/stats/github.com/golang-module/carbon/badges/download-count.svg)](https://goproxy.cn)
-[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon/v2)
+[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
 简体中文 | [English](README.md) | [日本語](README.jp.md)
@@ -144,14 +144,14 @@ carbon.CreateFromDateTimeMicro(2020, 8, 5, 13, 14, 15, 999999).ToString() // 202
 // 从年月日时分秒创建 Carbon 实例，包含纳秒
 carbon.CreateFromDateTimeNano(2020, 8, 5, 13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
-// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)
-carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
-// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含毫秒
-carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
-// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含微秒
-carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
-// 从年月日创建 Carbon 实例(时分秒默认为当前时分秒)，包含纳秒
-carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+// 从年月日创建 Carbon 实例
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 00:00:00 +0800 CST
+// 从年月日创建 Carbon 实例，包含毫秒
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 00:00:00.999 +0800 CST
+// 从年月日创建 Carbon 实例，包含微秒
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 00:00:00.999999 +0800 CST
+// 从年月日创建 Carbon 实例，包含纳秒
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 00:00:00.999999999 +0800 CST
 
 // 从时分秒创建 Carbon 实例(年月日默认为当前年月日)
 carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
@@ -1260,104 +1260,57 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 type Person struct {
     Name string `json:"name"`
     Age int `json:"age"`
-    Birthday1 carbon.DateTime `json:"birthday1"`
-    Birthday2 carbon.DateTimeMilli `json:"birthday2"`
-    Birthday3 carbon.DateTimeMicro `json:"birthday3"`
-    Birthday4 carbon.DateTimeNano `json:"birthday4"`
-    GraduatedAt1 carbon.Date `json:"graduated_at1"`
-    GraduatedAt2 carbon.DateMilli `json:"graduated_at2"`
-    GraduatedAt3 carbon.DateMicro `json:"graduated_at3"`
-    GraduatedAt4 carbon.DateNano `json:"graduated_at4"`
-    OperatedAt1 carbon.Time `json:"operated_at1"`
-    OperatedAt2 carbon.TimeMilli `json:"operated_at2"`
-    OperatedAt3 carbon.TimeMicro `json:"operated_at3"`
-    OperatedAt4 carbon.TimeNano `json:"operated_at4"`
-    CreatedAt1 carbon.Timestamp `json:"created_at1"`
-    CreatedAt2 carbon.TimestampMilli `json:"created_at2"`
-    CreatedAt3 carbon.TimestampMicro `json:"created_at3"`
-    CreatedAt4 carbon.TimestampNano `json:"created_at4"`
-}
-```
-
-###### 实例化模型
-
-```go
-person := Person {
-    Name:        "gouguoyin",
-    Age:          18,
-    Birthday1:    carbon.DateTime{carbon.Now().SubYears(18)},
-    Birthday2:    carbon.DateTimeMilli{carbon.Now().SubYears(18)},
-    Birthday3:    carbon.DateTimeMicro{carbon.Now().SubYears(18)},
-    Birthday4:    carbon.DateTimeNano{carbon.Now().SubYears(18)},
-    GraduatedAt1: carbon.Date{carbon.Now()},
-    GraduatedAt2: carbon.DateMilli{carbon.Now()},
-    GraduatedAt3: carbon.DateMicro{carbon.Now()},
-    GraduatedAt4: carbon.DateNano{carbon.Now()},
-    OperatedAt1:  carbon.Time{carbon.Now()},
-    OperatedAt2:  carbon.TimeMilli{carbon.Now()},
-    OperatedAt3:  carbon.TimeMicro{carbon.Now()},
-    OperatedAt4:  carbon.TimeNano{carbon.Now()},
-    CreatedAt1:   carbon.Timestamp{carbon.Now()},
-    CreatedAt2:   carbon.TimestampMilli{carbon.Now()},
-    CreatedAt3:   carbon.TimestampMicro{carbon.Now()},
-    CreatedAt4:   carbon.TimestampNano{carbon.Now()},
+	Birthday carbon.Carbon `json:"birthday" carbon:"layout:2006-01-02"`
+    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"layout:15:04:05"`
+    CreatedAt carbon.Carbon `json:"created_at" carbon:"layout:2006-01-02 15:04:05"`
 }
 ```
 
 或
 
 ```go
+type Person struct {
+    Name string `json:"name"`
+    Age int `json:"age"`
+	Birthday carbon.Carbon `json:"birthday" carbon:"format:Y-m-d"`
+    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"format:H:i:s"`
+    CreatedAt carbon.Carbon `json:"created_at" carbon:"format:Y-m-d H:i:s"`
+}
+```
+###### 实例化模型
+
+```go
+now := Parse("2020-08-05 13:14:15", PRC)
 person := Person {
     Name:        "gouguoyin",
-    Age:          18,
-    Birthday1:    carbon.Now().SubYears(18).ToDateTimeStruct(),
-    Birthday2:    carbon.Now().SubYears(18).ToDateTimeMilliStruct(),
-    Birthday3:    carbon.Now().SubYears(18).ToDateTimeMicroStruct(),
-    Birthday4:    carbon.Now().SubYears(18).ToDateTimeNanoStruct(),
-    GraduatedAt1: carbon.Now().ToDateStruct(),
-    GraduatedAt2: carbon.Now().ToDateMilliStruct(),
-    GraduatedAt3: carbon.Now().ToDateMicroStruct(),
-    GraduatedAt4: carbon.Now().ToDateNanoStruct(),
-    OperatedAt1:  carbon.Now().ToTimeStruct(),
-    OperatedAt2:  carbon.Now().ToTimeMilliStruct(),
-    OperatedAt3:  carbon.Now().ToTimeMicroStruct(),
-    OperatedAt4:  carbon.Now().ToTimeNanoStruct(),
-    CreatedAt1:   carbon.Now().ToTimestampStruct(),
-    CreatedAt2:   carbon.Now().ToTimestampMilliStruct(),
-    CreatedAt3:   carbon.Now().ToTimestampMicroStruct(),
-    CreatedAt4:   carbon.Now().ToTimestampNanoStruct(),
+    Age:         18,
+    Birthday:    now,
+    GraduatedAt: now,
+    CreatedAt:   now,
 }
 ```
 
 ###### JSON 编码
 
 ```go
-data, err := json.Marshal(&person)
-if err != nil {
+err1 := carbon.LoadTag(&person)
+if err1 != nil {
     // 错误处理
-    log.Fatal(err)
+    log.Fatal(err1)
+}
+data, err2 := json.Marshal(&person)
+if err2 != nil {
+    // 错误处理
+    log.Fatal(err2)
 }
 fmt.Printf("%s", data)
 // 输出
 {
     "name": "gouguoyin",
     "age": 18,
-    "birthday1": "2003-07-16 16:22:02",
-    "birthday2": "2003-07-16 16:22:02.999",
-    "birthday3": "2003-07-16 16:22:02.999999",
-    "birthday4": "2003-07-16 16:22:02.999999999",
-    "graduated_at1": "2020-08-05",
-    "graduated_at2": "2020-08-05.999",
-    "graduated_at3": "2020-08-05.999999",
-    "graduated_at4": "2020-08-05.999999999",
-    "operated_at1": "13:14:15",
-    "operated_at2": "13:14:15.999",
-    "operated_at3": "13:14:15.999999",
-    "operated_at4": "13:14:15.999999999",
-    "created_at1": 1596604455,
-    "created_at2": 1596604455999,
-    "created_at3": 1596604455999999,
-    "created_at4": 1596604455999999999
+    "birthday": "2020-08-05",
+    "graduated_at": "13:14:15",
+    "created_at": "2020-08-05 13:14:15"
 }
 ```
 
@@ -1367,54 +1320,27 @@ fmt.Printf("%s", data)
 str := `{
     "name": "gouguoyin",
     "age": 18,
-    "birthday1": "2003-07-16 16:22:02",
-    "birthday2": "2003-07-16 16:22:02.999",
-    "birthday3": "2003-07-16 16:22:02.999999",
-    "birthday4": "2003-07-16 16:22:02.999999999",
-    "graduated_at1": "2020-08-05",
-    "graduated_at2": "2020-08-05.999",
-    "graduated_at3": "2020-08-05.999999",
-    "graduated_at4": "2020-08-05.999999999",
-    "operated_at1": "13:14:15",
-    "operated_at2": "13:14:15.999",
-    "operated_at3": "13:14:15.999999",
-    "operated_at4": "13:14:15.999999999",
-    "created_at1": 1596604455,
-    "created_at2": 1596604455999,
-    "created_at3": 1596604455999999,
-    "created_at4": 1596604455999999999
+    "birthday": "2020-08-05",
+    "graduated_at": "13:14:15",
+    "created_at": "2020-08-05 13:14:15"
 }`
-person := new(Person)
-err := json.Unmarshal([]byte(str), &person)
-if err != nil {
+var person Person
+
+err1 := carbon.LoadTag(&person)
+if err1 != nil {
     // 错误处理
-    log.Fatal(err)
+    log.Fatal(err1)
 }
 
-person.Birthday1.String() // 2002-08-05 13:14:15
-person.Birthday2.String() // 2002-08-05 13:14:15.999
-person.Birthday3.String() // 2002-08-05 13:14:15.999999
-person.Birthday4.String() // 2002-08-05 13:14:15.999999999
+err2 := json.Unmarshal([]byte(str), &person)
+if err2 != nil {
+    // 错误处理
+    log.Fatal(err2)
+}
 
-person.GraduatedAt1.String() // 2020-08-05
-person.GraduatedAt2.String() // 2020-08-05.999
-person.GraduatedAt3.String() // 2020-08-05.999999
-person.GraduatedAt4.String() // 2020-08-05.999999999
-
-person.OperatedAt1.String() // 13:14:15
-person.OperatedAt2.String() // 13:14:15.999
-person.OperatedAt3.String() // 13:14:15.999999
-person.OperatedAt4.String() // 13:14:15.999999999
-
-person.CreatedAt1.String() // "1691212455"
-person.CreatedAt2.String() // "1722834855999"
-person.CreatedAt3.String() // "1754370855999999"
-person.CreatedAt4.String() // "1754370855999999999"
-
-person.CreatedAt1.Int64() // 1691212455
-person.CreatedAt2.Int64() // 1722834855999
-person.CreatedAt3.Int64() // 1754370855999999
-person.CreatedAt4.Int64() // 1754370855999999999
+fmt.Sprintf("%s", person.Birthday1) // 2002-08-05
+fmt.Sprintf("%s", person.Birthday2) // 13:14:15
+fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
 ```
 
 ##### 国际化支持

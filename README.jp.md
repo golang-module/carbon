@@ -3,9 +3,9 @@
 [![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
 [![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/golang-module/carbon/v2)
-[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon/v2)
+[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Goproxy.cn](https://goproxy.cn/stats/github.com/golang-module/carbon/badges/download-count.svg)](https://goproxy.cn)
-[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon/v2)
+[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
 ![License](https://img.shields.io/github/license/golang-module/carbon)
 
 日本語 | [English](README.md) | [简体中文](README.cn.md)
@@ -148,14 +148,14 @@ carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 202
 // 年月日から分秒で Carbon オブジェクトを作成します，ナノ秒を含む
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
 
-// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)
-carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 13:14:15 +0800 CST
-// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ミリ秒を含む
-carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 13:14:15.999 +0800 CST
-// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，マイクロ秒を含む
-carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 13:14:15.999999 +0800 CST
-// 年月日から Carbon オブジェクトを作成します(時分秒はデフォルトで現在の時分秒です)，ナノ秒を含む
-carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します
+carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 00:00:00 +0800 CST
+// 年月日から Carbon オブジェクトを作成します，ミリ秒を含む
+carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 00:00:00.999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します，マイクロ秒を含む
+carbon.CreateFromDateMicro(2020, 8, 5, 999999).ToString() // 2020-08-05 00:00:00.999999 +0800 CST
+// 年月日から Carbon オブジェクトを作成します，ナノ秒を含む
+carbon.CreateFromDateNano(2020, 8, 5, 999999999).ToString() // 2020-08-05 00:00:00.999999999 +0800 CST
 
 // 時分秒から Carbon オブジェクトを作成します(年月日のデフォルトは現在の年月日です)
 carbon.CreateFromTime(13, 14, 15).ToString() // 2020-08-05 13:14:15 +0800 CST
