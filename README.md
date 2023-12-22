@@ -1333,9 +1333,9 @@ if err2 != nil {
   log.Fatal(err2)
 }
 
-fmt.Sprintf("%s", person.Birthday1) // 2002-08-05
-fmt.Sprintf("%s", person.Birthday2) // 13:14:15
-fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday) // 2002-08-05
+fmt.Sprintf("%s", person.GraduatedAt) // 13:14:15
+fmt.Sprintf("%s", person.CreatedAt) // 2002-08-05 13:14:15
 ```
 
 ##### I18n
