@@ -11,8 +11,8 @@ func TestCarbon_Season(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -45,8 +45,8 @@ func TestCarbon_StartOfSeason(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -81,8 +81,8 @@ func TestCarbon_EndOfSeason(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"", ""},
 		{"0", ""},
@@ -117,8 +117,8 @@ func TestCarbon_IsSpring(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -151,8 +151,8 @@ func TestCarbon_IsSummer(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -185,8 +185,8 @@ func TestCarbon_IsAutumn(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},
@@ -219,8 +219,8 @@ func TestCarbon_IsWinter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		{"", false},
 		{"0", false},

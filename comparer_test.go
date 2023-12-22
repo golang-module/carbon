@@ -13,9 +13,9 @@ func TestCarbon_IsDST(t *testing.T) {
 	tzWithDST, tzWithoutDST := "Australia/Sydney", "Australia/Brisbane"
 
 	tests := []struct {
-		input    string // 输入值
-		timezone string // 输入值
-		expected bool   // 期望值
+		input    string
+		timezone string
+		expected bool
 	}{
 		0: {"", tzWithDST, false},
 		1: {"", tzWithoutDST, false},
@@ -43,8 +43,8 @@ func TestCarbon_IsZero(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", true},
 		1: {"0", true},
@@ -66,8 +66,8 @@ func TestCarbon_IsValid(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -89,8 +89,8 @@ func TestCarbon_IsInvalid(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", true},
 		1: {"0", true},
@@ -112,8 +112,8 @@ func TestCarbon_IsNow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {Parse(""), false},
 		1: {Parse("0"), false},
@@ -137,8 +137,8 @@ func TestCarbon_IsFuture(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {Parse(""), false},
 		1: {Parse("0"), false},
@@ -162,8 +162,8 @@ func TestCarbon_IsPast(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {Parse(""), false},
 		1: {Parse("0"), false},
@@ -187,8 +187,8 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -216,8 +216,8 @@ func TestCarbon_IsLongYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -245,8 +245,8 @@ func TestCarbon_IsJanuary(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -279,8 +279,8 @@ func TestCarbon_IsFebruary(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -313,8 +313,8 @@ func TestCarbon_IsMarch(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -347,8 +347,8 @@ func TestCarbon_IsApril(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -381,8 +381,8 @@ func TestCarbon_IsMay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -415,8 +415,8 @@ func TestCarbon_IsJune(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -449,8 +449,8 @@ func TestCarbon_IsJuly(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -483,8 +483,8 @@ func TestCarbon_IsAugust(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -517,8 +517,8 @@ func TestCarbon_IsSeptember(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -551,8 +551,8 @@ func TestCarbon_IsOctober(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -585,8 +585,8 @@ func TestCarbon_IsNovember(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -619,8 +619,8 @@ func TestCarbon_IsDecember(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -653,8 +653,8 @@ func TestCarbon_IsMonday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -682,8 +682,8 @@ func TestCarbon_IsTuesday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -711,8 +711,8 @@ func TestCarbon_IsWednesday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -740,8 +740,8 @@ func TestCarbon_IsThursday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -769,8 +769,8 @@ func TestCarbon_IsFriday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -798,8 +798,8 @@ func TestCarbon_IsSaturday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -827,8 +827,8 @@ func TestCarbon_IsSunday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -856,8 +856,8 @@ func TestCarbon_IsWeekday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -885,8 +885,8 @@ func TestCarbon_IsWeekend(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected bool   // 期望值
+		input    string
+		expected bool
 	}{
 		0: {"", false},
 		1: {"0", false},
@@ -914,8 +914,8 @@ func TestCarbon_IsYesterday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {NewCarbon(), false},
 		1: {Now(), false},
@@ -934,8 +934,8 @@ func TestCarbon_IsToday(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {NewCarbon(), false},
 		1: {Now(), true},
@@ -954,8 +954,8 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon // 输入值
-		expected bool   // 期望值
+		input    Carbon
+		expected bool
 	}{
 		0: {NewCarbon(), false},
 		1: {Now(), false},
@@ -974,9 +974,9 @@ func TestCarbon_IsSameCentury(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05"), Parse("3020-08-05"), false},
@@ -994,9 +994,9 @@ func TestCarbon_IsSameDecade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05"), Parse("2030-08-05"), false},
@@ -1015,9 +1015,9 @@ func TestCarbon_IsSameYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05"), Parse("2021-08-05"), false},
@@ -1035,9 +1035,9 @@ func TestCarbon_IsSameQuarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05"), Parse("2020-01-05"), false},
@@ -1055,9 +1055,9 @@ func TestCarbon_IsSameMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05"), Parse("2021-08-05"), false},
@@ -1075,9 +1075,9 @@ func TestCarbon_IsSameDay(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
@@ -1095,9 +1095,9 @@ func TestCarbon_IsSameHour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
@@ -1115,9 +1115,9 @@ func TestCarbon_IsSameMinute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
@@ -1135,9 +1135,9 @@ func TestCarbon_IsSameSecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input1   Carbon // 输入值
-		input2   Carbon // 输入值
-		expected bool   // 期望值
+		input1   Carbon
+		input2   Carbon
+		expected bool
 	}{
 		0: {Parse(""), Parse(""), false},
 		1: {Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
@@ -1155,10 +1155,10 @@ func TestCarbon_Compare(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param1   string // 输入参数1
-		param2   string // 输入参数2
-		expected bool   // 期望值
+		input    string
+		param1   string
+		param2   string
+		expected bool
 	}{
 		0:  {"2020-08-05", ">", "2020-08-04", true},
 		1:  {"2020-08-05", "<", "2020-08-04", false},
@@ -1186,9 +1186,9 @@ func TestCarbon_Gt(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", false},
 		1: {"2020-08-05", "2020-08-04", true},
@@ -1207,9 +1207,9 @@ func TestCarbon_Lt(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", false},
 		1: {"2020-08-05", "2020-08-04", false},
@@ -1228,9 +1228,9 @@ func TestCarbon_Eq(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", true},
 		1: {"2020-08-05", "2020-08-04", false},
@@ -1249,9 +1249,9 @@ func TestCarbon_Ne(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", false},
 		1: {"2020-08-05", "2020-08-04", true},
@@ -1270,9 +1270,9 @@ func TestCarbon_Gte(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", true},
 		1: {"2020-08-05", "2020-08-04", true},
@@ -1291,9 +1291,9 @@ func TestCarbon_Lte(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param    string // 参数值
-		expected bool   // 期望值
+		input    string
+		param    string
+		expected bool
 	}{
 		0: {"2020-08-05", "2020-08-05", true},
 		1: {"2020-08-05", "2020-08-04", false},
@@ -1312,10 +1312,10 @@ func TestCarbon_Between(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param1   string // 输入参数1
-		param2   string // 输入参数2
-		expected bool   // 期望值
+		input    string
+		param1   string
+		param2   string
+		expected bool
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", false},
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", false},
@@ -1336,10 +1336,10 @@ func TestCarbon_BetweenIncludedStart(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param1   string // 输入参数1
-		param2   string // 输入参数2
-		expected bool   // 期望值
+		input    string
+		param1   string
+		param2   string
+		expected bool
 	}{
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", false},
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", true},
@@ -1360,10 +1360,10 @@ func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param1   string // 输入参数1
-		param2   string // 输入参数2
-		expected bool   // 期望值
+		input    string
+		param1   string
+		param2   string
+		expected bool
 	}{
 		0: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", false},
 		1: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", false},
@@ -1384,10 +1384,10 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		param1   string // 输入参数1
-		param2   string // 输入参数2
-		expected bool   // 期望值
+		input    string
+		param1   string
+		param2   string
+		expected bool
 	}{
 		0: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-05 13:14:15", true},
 		1: {"2020-08-05 13:14:15", "2020-08-05 13:14:15", "2020-08-06 13:14:15", true},
