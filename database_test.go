@@ -34,3 +34,7 @@ func TestError_Value(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, v, nil)
 }
+
+func TestCarbon_GormDataType(t *testing.T) {
+	assert.Equal(t, "time", NewCarbon().GormDataType())
+}
