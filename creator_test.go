@@ -20,8 +20,8 @@ func TestCarbon_CreateFromTimestamp(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		timestamp int64  // 输入参数
-		expected  string // 期望值
+		timestamp int64
+		expected  string
 	}{
 		{-1, "1970-01-01 07:59:59 +0800 CST"},
 		{0, "1970-01-01 08:00:00 +0800 CST"},
@@ -46,8 +46,8 @@ func TestCarbon_CreateFromTimestampMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		timestamp int64  // 输入参数
-		expected  string // 期望值
+		timestamp int64
+		expected  string
 	}{
 		{-1, "1970-01-01 07:59:59.999 +0800 CST"},
 		{0, "1970-01-01 08:00:00 +0800 CST"},
@@ -72,8 +72,8 @@ func TestCarbon_CreateFromTimestampMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		timestamp int64  // 输入参数
-		expected  string // 期望值
+		timestamp int64
+		expected  string
 	}{
 		{-1, "1970-01-01 07:59:59.999999 +0800 CST"},
 		{0, "1970-01-01 08:00:00 +0800 CST"},
@@ -98,8 +98,8 @@ func TestCarbon_CreateFromTimestampNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		timestamp int64  // 输入参数
-		expected  string // 期望值
+		timestamp int64
+		expected  string
 	}{
 		{-1, "1970-01-01 07:59:59.999999999 +0800 CST"},
 		{0, "1970-01-01 08:00:00 +0800 CST"},
@@ -124,8 +124,8 @@ func TestCarbon_CreateFromDateTime(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		year, month, day, hour, minute, second int    // 输入参数
-		expected                               string // 期望值
+		year, month, day, hour, minute, second int
+		expected                               string
 	}{
 		{2020, 1, 1, 13, 14, 15, "2020-01-01 13:14:15"},
 		{2020, 1, 31, 13, 14, 15, "2020-01-31 13:14:15"},
@@ -151,8 +151,8 @@ func TestCarbon_CreateFromDateTimeMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		year, month, day, hour, minute, second, millisecond int    // 输入参数
-		expected                                            string // 期望值
+		year, month, day, hour, minute, second, millisecond int
+		expected                                            string
 	}{
 		{2020, 1, 1, 13, 14, 15, 999, "2020-01-01 13:14:15.999 +0800 CST"},
 		{2020, 1, 31, 13, 14, 15, 999, "2020-01-31 13:14:15.999 +0800 CST"},
@@ -178,8 +178,8 @@ func TestCarbon_CreateFromDateTimeMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		year, month, day, hour, minute, second, microsecond int    // 输入参数
-		expected                                            string // 期望值
+		year, month, day, hour, minute, second, microsecond int
+		expected                                            string
 	}{
 		{2020, 1, 1, 13, 14, 15, 999999, "2020-01-01 13:14:15.999999 +0800 CST"},
 		{2020, 1, 31, 13, 14, 15, 999999, "2020-01-31 13:14:15.999999 +0800 CST"},
@@ -205,8 +205,8 @@ func TestCarbon_CreateFromDateTimeNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		year, month, day, hour, minute, second, nanosecond int    // 输入参数
-		expected                                           string // 期望值
+		year, month, day, hour, minute, second, nanosecond int
+		expected                                           string
 	}{
 		{2020, 1, 1, 13, 14, 15, 999999999, "2020-01-01 13:14:15.999999999 +0800 CST"},
 		{2020, 1, 31, 13, 14, 15, 999999999, "2020-01-31 13:14:15.999999999 +0800 CST"},
@@ -231,16 +231,15 @@ func TestCarbon_CreateFromDateTimeNano(t *testing.T) {
 func TestCarbon_CreateFromDate(t *testing.T) {
 	assert := assert.New(t)
 
-	clock := Now(PRC).ToTimeString()
 	tests := []struct {
-		year, month, day int    // 输入参数
-		expected         string // 期望值
+		year, month, day int
+		expected         string
 	}{
-		{2020, 1, 1, "2020-01-01 " + clock},
-		{2020, 1, 31, "2020-01-31 " + clock},
-		{2020, 2, 1, "2020-02-01 " + clock},
-		{2020, 2, 28, "2020-02-28 " + clock},
-		{2020, 2, 29, "2020-02-29 " + clock},
+		{2020, 1, 1, "2020-01-01 00:00:00"},
+		{2020, 1, 31, "2020-01-31 00:00:00"},
+		{2020, 2, 1, "2020-02-01 00:00:00"},
+		{2020, 2, 28, "2020-02-28 00:00:00"},
+		{2020, 2, 29, "2020-02-29 00:00:00"},
 	}
 
 	for index, test := range tests {
@@ -259,16 +258,15 @@ func TestCarbon_CreateFromDate(t *testing.T) {
 func TestCarbon_CreateFromDateMilli(t *testing.T) {
 	assert := assert.New(t)
 
-	clock := Now(PRC).ToTimeString()
 	tests := []struct {
-		year, month, day, millisecond int    // 输入参数
-		expected                      string // 期望值
+		year, month, day, millisecond int
+		expected                      string
 	}{
-		{2020, 1, 1, 999, "2020-01-01 " + clock + ".999"},
-		{2020, 1, 31, 999, "2020-01-31 " + clock + ".999"},
-		{2020, 2, 1, 999, "2020-02-01 " + clock + ".999"},
-		{2020, 2, 28, 999, "2020-02-28 " + clock + ".999"},
-		{2020, 2, 29, 999, "2020-02-29 " + clock + ".999"},
+		{2020, 1, 1, 999, "2020-01-01 00:00:00" + ".999"},
+		{2020, 1, 31, 999, "2020-01-31 00:00:00" + ".999"},
+		{2020, 2, 1, 999, "2020-02-01 00:00:00" + ".999"},
+		{2020, 2, 28, 999, "2020-02-28 00:00:00" + ".999"},
+		{2020, 2, 29, 999, "2020-02-29 00:00:00" + ".999"},
 	}
 
 	for index, test := range tests {
@@ -287,16 +285,15 @@ func TestCarbon_CreateFromDateMilli(t *testing.T) {
 func TestCarbon_CreateFromDateMicro(t *testing.T) {
 	assert := assert.New(t)
 
-	clock := Now(PRC).ToTimeString()
 	tests := []struct {
-		year, month, day, microsecond int    // 输入参数
-		expected                      string // 期望值
+		year, month, day, microsecond int
+		expected                      string
 	}{
-		{2020, 1, 1, 999999, "2020-01-01 " + clock + ".999999"},
-		{2020, 1, 31, 999999, "2020-01-31 " + clock + ".999999"},
-		{2020, 2, 1, 999999, "2020-02-01 " + clock + ".999999"},
-		{2020, 2, 28, 999999, "2020-02-28 " + clock + ".999999"},
-		{2020, 2, 29, 999999, "2020-02-29 " + clock + ".999999"},
+		{2020, 1, 1, 999999, "2020-01-01 00:00:00" + ".999999"},
+		{2020, 1, 31, 999999, "2020-01-31 00:00:00" + ".999999"},
+		{2020, 2, 1, 999999, "2020-02-01 00:00:00" + ".999999"},
+		{2020, 2, 28, 999999, "2020-02-28 00:00:00" + ".999999"},
+		{2020, 2, 29, 999999, "2020-02-29 00:00:00" + ".999999"},
 	}
 
 	for index, test := range tests {
@@ -315,16 +312,15 @@ func TestCarbon_CreateFromDateMicro(t *testing.T) {
 func TestCarbon_CreateFromDateNano(t *testing.T) {
 	assert := assert.New(t)
 
-	clock := Now(PRC).ToTimeString()
 	tests := []struct {
-		year, month, day, nanosecond int    // 输入参数
-		expected                     string // 期望值
+		year, month, day, nanosecond int
+		expected                     string
 	}{
-		{2020, 1, 1, 999999999, "2020-01-01 " + clock + ".999999999"},
-		{2020, 1, 31, 999999999, "2020-01-31 " + clock + ".999999999"},
-		{2020, 2, 1, 999999999, "2020-02-01 " + clock + ".999999999"},
-		{2020, 2, 28, 999999999, "2020-02-28 " + clock + ".999999999"},
-		{2020, 2, 29, 999999999, "2020-02-29 " + clock + ".999999999"},
+		{2020, 1, 1, 999999999, "2020-01-01 00:00:00" + ".999999999"},
+		{2020, 1, 31, 999999999, "2020-01-31 00:00:00" + ".999999999"},
+		{2020, 2, 1, 999999999, "2020-02-01 00:00:00" + ".999999999"},
+		{2020, 2, 28, 999999999, "2020-02-28 00:00:00" + ".999999999"},
+		{2020, 2, 29, 999999999, "2020-02-29 00:00:00" + ".999999999"},
 	}
 
 	for index, test := range tests {
@@ -345,8 +341,8 @@ func TestCarbon_CreateFromTime(t *testing.T) {
 
 	date := Now(PRC).ToDateString()
 	tests := []struct {
-		hour, minute, second int    // 输入参数
-		expected             string // 期望值
+		hour, minute, second int
+		expected             string
 	}{
 		{0, 0, 0, date + " 00:00:00"},
 		{00, 00, 15, date + " 00:00:15"},
@@ -372,8 +368,8 @@ func TestCarbon_CreateFromTimeMilli(t *testing.T) {
 
 	date := Now(PRC).ToDateString()
 	tests := []struct {
-		hour, minute, second, millisecond int    // 输入参数
-		expected                          string // 期望值
+		hour, minute, second, millisecond int
+		expected                          string
 	}{
 		{0, 0, 0, 999, date + " 00:00:00.999"},
 		{00, 00, 15, 999, date + " 00:00:15.999"},
@@ -399,8 +395,8 @@ func TestCarbon_CreateFromTimeMicro(t *testing.T) {
 
 	date := Now(PRC).ToDateString()
 	tests := []struct {
-		hour, minute, second, microsecond int    // 输入参数
-		expected                          string // 期望值
+		hour, minute, second, microsecond int
+		expected                          string
 	}{
 		{0, 0, 0, 999999, date + " 00:00:00.999999"},
 		{00, 00, 15, 999999, date + " 00:00:15.999999"},
@@ -426,8 +422,8 @@ func TestCarbon_CreateFromTimeNano(t *testing.T) {
 
 	date := Now(PRC).ToDateString()
 	tests := []struct {
-		hour, minute, second, nanosecond int    // 输入参数
-		expected                         string // 期望值
+		hour, minute, second, nanosecond int
+		expected                         string
 	}{
 		{0, 0, 0, 999999999, date + " 00:00:00.999999999"},
 		{00, 00, 15, 999999999, date + " 00:00:15.999999999"},

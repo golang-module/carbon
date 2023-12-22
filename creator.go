@@ -141,9 +141,7 @@ func CreateFromDateTimeNano(year, month, day, hour, minute, second, nanosecond i
 // CreateFromDate creates a Carbon instance from a given date.
 // 从给定的年、月、日创建 Carbon 实例
 func (c Carbon) CreateFromDate(year, month, day int, timezone ...string) Carbon {
-	now := c.Now(timezone...)
-	hour, minute, second := now.Time()
-	return c.create(year, month, day, hour, minute, second, now.Nanosecond(), timezone...)
+	return c.create(year, month, day, 0, 0, 0, 0, timezone...)
 }
 
 // CreateFromDate creates a Carbon instance from a given date.
@@ -155,9 +153,7 @@ func CreateFromDate(year, month, day int, timezone ...string) Carbon {
 // CreateFromDateMilli creates a Carbon instance from a given date and millisecond.
 // 从给定的年、月、日、毫秒创建 Carbon 实例
 func (c Carbon) CreateFromDateMilli(year, month, day, millisecond int, timezone ...string) Carbon {
-	now := c.Now(timezone...)
-	hour, minute, second := now.Time()
-	return c.create(year, month, day, hour, minute, second, millisecond*1e6, timezone...)
+	return c.create(year, month, day, 0, 0, 0, millisecond*1e6, timezone...)
 }
 
 // CreateFromDateMilli creates a Carbon instance from a given date and millisecond.
@@ -169,9 +165,7 @@ func CreateFromDateMilli(year, month, day, millisecond int, timezone ...string) 
 // CreateFromDateMicro creates a Carbon instance from a given date and microsecond.
 // 从给定的年、月、日、微秒创建 Carbon 实例
 func (c Carbon) CreateFromDateMicro(year, month, day, microsecond int, timezone ...string) Carbon {
-	now := c.Now(timezone...)
-	hour, minute, second := now.Time()
-	return c.create(year, month, day, hour, minute, second, microsecond*1e3, timezone...)
+	return c.create(year, month, day, 0, 0, 0, microsecond*1e3, timezone...)
 }
 
 // CreateFromDateMicro creates a Carbon instance from a given date and microsecond.
@@ -183,9 +177,7 @@ func CreateFromDateMicro(year, month, day, microsecond int, timezone ...string) 
 // CreateFromDateNano creates a Carbon instance from a given date and nanosecond.
 // 从给定的年、月、日、纳秒创建 Carbon 实例
 func (c Carbon) CreateFromDateNano(year, month, day, nanosecond int, timezone ...string) Carbon {
-	now := c.Now(timezone...)
-	hour, minute, second := now.Time()
-	return c.create(year, month, day, hour, minute, second, nanosecond, timezone...)
+	return c.create(year, month, day, 0, 0, 0, nanosecond, timezone...)
 }
 
 // CreateFromDateNano creates a Carbon instance from a given date and nanosecond.
@@ -194,58 +186,58 @@ func CreateFromDateNano(year, month, day, nanosecond int, timezone ...string) Ca
 	return NewCarbon().CreateFromDateNano(year, month, day, nanosecond, timezone...)
 }
 
-// CreateFromTime creates a Carbon instance from a given time.
-// 从给定的时、分、秒创建 Carbon 实例
+// CreateFromTime creates a Carbon instance from a given time(year, month and day are taken from the current time).
+// 从给定的时、分、秒创建 Carbon 实例(年、月、日取自当前时间)
 func (c Carbon) CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	now := c.Now(timezone...)
 	year, month, day := now.Date()
 	return c.create(year, month, day, hour, minute, second, now.Nanosecond(), timezone...)
 }
 
-// CreateFromTime creates a Carbon instance from a given time.
-// 从给定的时、分、秒创建 Carbon 实例
+// CreateFromTime creates a Carbon instance from a given time(year, month and day are taken from the current time).
+// 从给定的时、分、秒创建 Carbon 实例(年、月、日取自当前时间)
 func CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTime(hour, minute, second, timezone...)
 }
 
-// CreateFromTimeMilli creates a Carbon instance from a given time and millisecond.
-// 从给定的时、分、秒、毫秒创建 Carbon 实例
+// CreateFromTimeMilli creates a Carbon instance from a given time and millisecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、毫秒创建 Carbon 实例(年、月、日取自当前时间)
 func (c Carbon) CreateFromTimeMilli(hour, minute, second, millisecond int, timezone ...string) Carbon {
 	now := c.Now(timezone...)
 	year, month, day := now.Date()
 	return c.create(year, month, day, hour, minute, second, millisecond*1e6, timezone...)
 }
 
-// CreateFromTimeMilli creates a Carbon instance from a given time and millisecond.
-// 从给定的时、分、秒、毫秒创建 Carbon 实例
+// CreateFromTimeMilli creates a Carbon instance from a given time and millisecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、毫秒创建 Carbon 实例(年、月、日取自当前时间)
 func CreateFromTimeMilli(hour, minute, second, millisecond int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTimeMilli(hour, minute, second, millisecond, timezone...)
 }
 
-// CreateFromTimeMicro creates a Carbon instance from a given time and microsecond.
-// 从给定的时、分、秒、微秒创建 Carbon 实例
+// CreateFromTimeMicro creates a Carbon instance from a given time and microsecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、微秒创建 Carbon 实例(年、月、日取自当前时间)
 func (c Carbon) CreateFromTimeMicro(hour, minute, second, microsecond int, timezone ...string) Carbon {
 	now := c.Now(timezone...)
 	year, month, day := now.Date()
 	return c.create(year, month, day, hour, minute, second, microsecond*1e3, timezone...)
 }
 
-// CreateFromTimeMicro creates a Carbon instance from a given time and microsecond.
-// 从给定的时、分、秒、微秒创建 Carbon 实例
+// CreateFromTimeMicro creates a Carbon instance from a given time and microsecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、微秒创建 Carbon 实例(年、月、日取自当前时间)
 func CreateFromTimeMicro(hour, minute, second, microsecond int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTimeMicro(hour, minute, second, microsecond, timezone...)
 }
 
-// CreateFromTimeNano creates a Carbon instance from a given time and nanosecond.
-// 从给定的时、分、秒、纳秒创建 Carbon 实例
+// CreateFromTimeNano creates a Carbon instance from a given time and nanosecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、纳秒创建 Carbon 实例(年、月、日取自当前时间)
 func (c Carbon) CreateFromTimeNano(hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	now := c.Now(timezone...)
 	year, month, day := now.Date()
 	return c.create(year, month, day, hour, minute, second, nanosecond, timezone...)
 }
 
-// CreateFromTimeNano creates a Carbon instance from a given time and nanosecond.
-// 从给定的时、分、秒、纳秒创建 Carbon 实例
+// CreateFromTimeNano creates a Carbon instance from a given time and nanosecond(year, month and day are taken from the current time).
+// 从给定的时、分、秒、纳秒创建 Carbon 实例(年、月、日取自当前时间)
 func CreateFromTimeNano(hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	return NewCarbon().CreateFromTimeNano(hour, minute, second, nanosecond, timezone...)
 }
