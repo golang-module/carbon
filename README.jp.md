@@ -1025,8 +1025,8 @@ carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415
 // 略語時間文字列を出力，ナノ秒を含む
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
 
-// ANSIC フォーマット文字列を出力
-carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
+// Ansic フォーマット文字列を出力
+carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
 // Atom フォーマット文字列を出力
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
 // UnixDate フォーマット文字列を出力

@@ -1020,8 +1020,8 @@ carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString() // 131415
 // Output short time with nanosecond format string
 carbon.Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString() // 131415.999999999
 
-// Output ANSIC format string
-carbon.Parse("2020-08-05 13:14:15").ToANSICString() // Wed Aug  5 13:14:15 2020
+// Output Ansic format string
+carbon.Parse("2020-08-05 13:14:15").ToAnsicString() // Wed Aug  5 13:14:15 2020
 // Output Atom format string
 carbon.Parse("2020-08-05 13:14:15").ToAtomString() // 2020-08-05T13:14:15+08:00
 // Output Unix date format string

@@ -989,7 +989,7 @@ func TestCarbon_ToAtomString(t *testing.T) {
 	}
 }
 
-func TestCarbon_ToANSICString(t *testing.T) {
+func TestCarbon_ToAnsicString(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
@@ -1009,13 +1009,13 @@ func TestCarbon_ToANSICString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToANSICString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToAnsicString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToANSICString(PRC), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToAnsicString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 

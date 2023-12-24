@@ -423,9 +423,9 @@ func (c Carbon) ToAtomString(timezone ...string) string {
 	return c.ToRfc3339String(timezone...)
 }
 
-// ToANSICString outputs a string in "Mon Jan _2 15:04:05 2006" layout.
+// ToAnsicString outputs a string in "Mon Jan _2 15:04:05 2006" layout.
 // 输出 "Mon Jan _2 15:04:05 2006" 格式字符串
-func (c Carbon) ToANSICString(timezone ...string) string {
+func (c Carbon) ToAnsicString(timezone ...string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
