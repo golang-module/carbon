@@ -7,16 +7,16 @@ import (
 )
 
 var (
-	// invalid tag error
-	// 无效的标签错误
-	invalidTagError = func() error {
-		return fmt.Errorf("invalid tag, please make sure the tag is valid")
-	}
-
 	// invalid pointer error
 	// 无效的指针错误
 	invalidPtrError = func() error {
 		return fmt.Errorf("invalid pointer, please make sure the pointer is valid")
+	}
+
+	// invalid tag error
+	// 无效的标签错误
+	invalidTagError = func() error {
+		return fmt.Errorf("invalid tag, please make sure the tag is valid")
 	}
 )
 
@@ -57,6 +57,9 @@ func LoadTag(v interface{}) error {
 	for i := 0; i < val.Elem().NumField(); i++ {
 		field := typ.Elem().Field(i)
 		value := val.Elem().Field(i)
+		if reflect.TypeOf(Carbon{}) != value.Type() {
+			continue
+		}
 		tag := field.Tag.Get("carbon")
 		if tag == "" {
 			tag = "layout:" + DateTimeLayout
@@ -64,10 +67,8 @@ func LoadTag(v interface{}) error {
 		if !strings.Contains(tag, "layout:") && !strings.Contains(tag, "format:") {
 			return invalidTagError()
 		}
-		if reflect.TypeOf(Carbon{}) == value.Type() {
-			params[0] = reflect.ValueOf(tag)
-			value.Set(value.MethodByName("SetTag").Call(params)[0])
-		}
+		params[0] = reflect.ValueOf(tag)
+		value.Set(value.MethodByName("SetTag").Call(params)[0])
 	}
 	return nil
 }
