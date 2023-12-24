@@ -47,7 +47,7 @@ func (c Carbon) ToMonthString(timezone ...string) string {
 	}
 	if months, ok := c.lang.resources["months"]; ok {
 		slice := strings.Split(months, "|")
-		if len(slice) == 12 {
+		if len(slice) == MonthsPerYear {
 			return slice[c.Month()-1]
 		}
 	}
@@ -68,7 +68,7 @@ func (c Carbon) ToShortMonthString(timezone ...string) string {
 	}
 	if months, ok := c.lang.resources["short_months"]; ok {
 		slice := strings.Split(months, "|")
-		if len(slice) == 12 {
+		if len(slice) == MonthsPerYear {
 			return slice[c.Month()-1]
 		}
 	}
