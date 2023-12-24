@@ -1293,7 +1293,7 @@ if err1 != nil {
   // Error handle...
   log.Fatal(err1)
 }
-data, err2 := json.Marshal(&person)
+data, err2 := json.Marshal(person)
 if err2 != nil {
   // Error handle...
   log.Fatal(err2)

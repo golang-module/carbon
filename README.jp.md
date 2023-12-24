@@ -1252,7 +1252,7 @@ carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
 carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
-##### JSON 処理
+##### JSON
 
 ###### 定義モデル
 
@@ -1298,7 +1298,7 @@ if err1 != nil {
     // エラー処理...
     log.Fatal(err1)
 }
-data, err2 := json.Marshal(&person)
+data, err2 := json.Marshal(person)
 if err2 != nil {
     // エラー処理...
     log.Fatal(err2)
@@ -1343,7 +1343,7 @@ fmt.Sprintf("%s", person.GraduatedAt) // 13:14:15
 fmt.Sprintf("%s", person.CreatedAt) // 2002-08-05 13:14:15
 ```
 
-##### 国際化サポート
+##### 国際化
 
 現在サポートされている言語
 
