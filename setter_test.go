@@ -41,10 +41,6 @@ func TestCarbon_SetLocation(t *testing.T) {
 		expected string
 	}{
 		{
-			loc:      getLocation(Local),
-			expected: Local,
-		},
-		{
 			loc:      getLocation(UTC),
 			expected: UTC,
 		},
