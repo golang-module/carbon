@@ -11,14 +11,15 @@ func (c Carbon) MarshalJSON() ([]byte, error) {
 	if c.Error != nil {
 		return nil, c.Error
 	}
-	key, value := c.parseTag()
+	key, value, tz := c.parseTag()
+	data := fmt.Sprintf(`"%s"`, c.ToDateTimeString(tz))
 	if key == "layout" {
-		return []byte(fmt.Sprintf(`"%s"`, c.Layout(value))), nil
+		data = fmt.Sprintf(`"%s"`, c.Layout(value, tz))
 	}
 	if key == "format" {
-		return []byte(fmt.Sprintf(`"%s"`, c.Format(value))), nil
+		data = fmt.Sprintf(`"%s"`, c.Format(value, tz))
 	}
-	return []byte(fmt.Sprintf(`"%s"`, c.ToDateTimeString())), nil
+	return []byte(data), nil
 }
 
 // UnmarshalJSON implements the interface Unmarshaler for Carbon struct.
@@ -27,17 +28,15 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	if c.Error != nil {
 		return c.Error
 	}
-	key, value := c.parseTag()
+	key, value, tz := c.parseTag()
+	data := fmt.Sprintf("%s", bytes.Trim(b, `"`))
 	if key == "layout" {
-		*c = ParseByLayout(string(bytes.Trim(b, `"`)), value, c.Location())
-		c.tag = "layout:" + value
-		return c.Error
+		*c = ParseByLayout(data, value, tz)
+		c.tag = fmt.Sprintf("layout:%s;tz:%s", value, tz)
 	}
 	if key == "format" {
-		*c = ParseByFormat(string(bytes.Trim(b, `"`)), value, c.Location())
-		c.tag = "format:" + value
-		return c.Error
+		*c = ParseByFormat(data, value, tz)
+		c.tag = fmt.Sprintf("format:%s;tz:%s", value, tz)
 	}
-	*c = Parse(string(bytes.Trim(b, `"`)), c.Location())
 	return c.Error
 }
