@@ -739,6 +739,14 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				buffer.WriteString(c.ToMonthString())
 			case 'M': // short month, such as Jan
 				buffer.WriteString(c.ToShortMonthString())
+			case 'U': // timestamp with second, such as 1596604455
+				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
+			case 'V': // timestamp with millisecond, such as 1596604455000
+				buffer.WriteString(strconv.FormatInt(c.TimestampMilli(), 10))
+			case 'X': // timestamp with microsecond, such as 1596604455000000
+				buffer.WriteString(strconv.FormatInt(c.TimestampMicro(), 10))
+			case 'Z': // timestamp with nanoseconds, such as 1596604455000000000
+				buffer.WriteString(strconv.FormatInt(c.TimestampNano(), 10))
 			default: // common symbols
 				buffer.WriteString(c.ToStdTime().Format(layout))
 			}
@@ -773,14 +781,6 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 				}
 			case 'G': // 24-hour format, no padding, ranging from 0-23
 				buffer.WriteString(strconv.Itoa(c.Hour()))
-			case 'U': // timestamp with second, such as 1596604455
-				buffer.WriteString(strconv.FormatInt(c.Timestamp(), 10))
-			case 'V': // timestamp with millisecond, such as 1596604455000
-				buffer.WriteString(strconv.FormatInt(c.TimestampMilli(), 10))
-			case 'X': // timestamp with microsecond, such as 1596604455000000
-				buffer.WriteString(strconv.FormatInt(c.TimestampMicro(), 10))
-			case 'Z': // timestamp with nanoseconds, such as 1596604455000000000
-				buffer.WriteString(strconv.FormatInt(c.TimestampNano(), 10))
 			case 'v': // current millisecond, such as 999
 				s := c.Layout(".999")
 				buffer.WriteString(strings.Trim(s, "."))
