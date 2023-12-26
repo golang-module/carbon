@@ -30,6 +30,11 @@ var formats = map[byte]string{
 	'T': "MST",                             // Zone:   Timezone abbreviation. Eg: UTC, EST, MDT ...
 	'c': "2006-01-02T15:04:05-07:00",       // Format: ISO 8601 date. Eg: 2004-02-12T15:19:21+00:00.
 	'r': "Thu, 21 Dec 2000 16:01:07 +0200", // Format: RFC 2822 formatted date. Eg: Thu, 21 Dec 2000 16:01:07 +0200.
+
+	'U': "timestamp",      // Timestamp with second. Eg: 1699677240.
+	'V': "timestampMilli", // TimestampMilli with second. Eg: 1596604455666.
+	'X': "timestampMicro", // TimestampMicro with second. Eg: 1596604455666666.
+	'Z': "timestampNano",  // TimestampNano with second. Eg: 1596604455666666666.
 }
 
 // common layout symbols
