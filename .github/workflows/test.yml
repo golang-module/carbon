@@ -21,7 +21,7 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v4
         with:
-          go-version: '>=1.16.0'
+          go-version: '>=1.18.0'
       - name: Install dependencies
         uses: actions/checkout@v3
 
