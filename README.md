@@ -148,7 +148,7 @@ carbon.CreateFromDateTimeMicro(2020, 8, 5, 13, 14, 15, 999999).ToString() // 202
 carbon.CreateFromDateTimeNano(2020, 8, 5, 13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
 // Create a Carbon instance from a given year, month and day
-carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 00:00:00 +0800 CST
+carbon.CreateFromDate(2020, 8, 5).ToString() // 2020-08-05 00:00:00 +0800 CST
 // Create a Carbon instance from a given year, month and day with millisecond
 carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 00:00:00.999 +0800 CST
 // Create a Carbon instance from a given year, month and day with microsecond
@@ -239,20 +239,7 @@ carbon.CreateFromStdTime(time.Now())
 carbon.Now().ToStdTime()
 ```
 
-##### Closest and farthest
-
-```go
-c := carbon.Parse("2023-04-01")
-c1 := carbon.Parse("2023-03-28")
-c2 := carbon.Parse("2023-04-16")
-
-// Return the closest Carbon instance
-c.Closest(c1, c2) // c1
-// Return the farthest Carbon instance
-c.Farthest(c1, c2) // c2
-```
-
-##### Start and end
+##### Boundary
 
 ```go
 // Start of the century
@@ -314,7 +301,7 @@ carbon.Parse("2020-08-05 13:14:15").StartOfSecond().ToString() // 2020-08-05 13:
 carbon.Parse("2020-08-05 13:14:15").EndOfSecond().ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Addition and subtraction
+##### Traveler
 
 ```go
 // Add three centuries
@@ -550,10 +537,29 @@ carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ```
 
+##### Extremum
+
+```go
+c := carbon.Parse("2023-04-01")
+c0 := carbon.Parse("xxx")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// Return the closest Carbon instance
+c.Closest(c0, c1) // c1
+c.Closest(c0, c2) // c2
+c.Closest(c1, c2) // c1
+
+// Return the farthest Carbon instance
+c.Farthest(c0, c1) // c1
+c.Farthest(c0, c2) // c2
+c.Farthest(c1, c2) // c2
+```
+
 ##### Comparison
 
 ```go
-// whether is daylight saving time
+// Whether is daylight saving time
 carbon.Parse("").IsDST() // false
 carbon.Parse("0").IsDST() // false
 carbon.Parse("0000-00-00 00:00:00").IsDST() // false
@@ -1150,7 +1156,7 @@ carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
-##### Chinese Lunar
+##### Lunar
 
 > Currently only `200` years from `1900` to `2100` are supported
 
@@ -1247,17 +1253,22 @@ carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
 carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
-##### JSON handling
+##### JSON
 
 ###### Define model
 
 ```go
 type Person struct {
-  Name string `json:"name"`
-  Age int `json:"age"`
-  Birthday carbon.Carbon `json:"birthday" carbon:"layout:2006-01-02"`
-  GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"layout:15:04:05"`
-  CreatedAt carbon.Carbon `json:"created_at" carbon:"layout:2006-01-02 15:04:05"`
+    Name string `json:"name"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"date"`
+    Birthday2 Carbon `json:"birthday2" carbon:"time"`
+    Birthday3 Carbon `json:"birthday3" carbon:"dateTime"`
+    Birthday4 Carbon `json:"birthday4" carbon:"date" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"time" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"dateTime" tz:"PRC"`
 }
 ```
 
@@ -1266,46 +1277,79 @@ or
 ```go
 type Person struct {
   Name string `json:"name"`
-  Age int `json:"age"`
-  Birthday carbon.Carbon `json:"birthday" carbon:"format:Y-m-d"`
-  GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"format:H:i:s"`
-  CreatedAt carbon.Carbon `json:"created_at" carbon:"format:Y-m-d H:i:s"`
+  Age  int    `json:"age"`
+  
+  Birthday0 Carbon `json:"birthday0"`
+  Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02"`
+  Birthday2 Carbon `json:"birthday2" carbon:"layout:15:04:05"`
+  Birthday3 Carbon `json:"birthday3" carbon:"layout:2006-01-02 15:04:05"`
+  Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02" tz:"PRC"`
+  Birthday5 Carbon `json:"birthday5" carbon:"layout:15:04:05" tz:"PRC"`
+  Birthday6 Carbon `json:"birthday6" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
 }
 ```
+
+or
+
+```go
+type Person struct {
+  Name string `json:"name"`
+  Age  int    `json:"age"`
+  
+  Birthday0 Carbon `json:"birthday0"`
+  Birthday1 Carbon `json:"birthday1" carbon:"format:Y-m-d"`
+  Birthday2 Carbon `json:"birthday2" carbon:"format:H:i:s"`
+  Birthday3 Carbon `json:"birthday3" carbon:"format:Y-m-d H:i:s"`
+  Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d" tz:"PRC"`
+  Birthday5 Carbon `json:"birthday5" carbon:"format:H:i:s" tz:"PRC"`
+  Birthday6 Carbon `json:"birthday6" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
+}
+```
+
+> If the `carbon` tag is not set, the default is `layout:2006-01-02 15:04:05`, if the `tz` tag is not set, the default is `Local`
 
 ###### Instantiate model
 ```go
 now := Parse("2020-08-05 13:14:15", PRC)
 person := Person {
-  Name:        "gouguoyin",
-  Age:         18,
-  Birthday:    now,
-  GraduatedAt: now,
-  CreatedAt:   now,
+  Name:      "gouguoyin",
+  Age:       18,
+  
+  Birthday0: now,
+  Birthday1: now,
+  Birthday2: now,
+  Birthday3: now,
+  Birthday4: now,
+  Birthday5: now,
+  Birthday6: now,
 }
 ```
 
 ###### JSON encode
 
 ```go
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
   // Error handle...
-  log.Fatal(err1)
+  log.Fatal(loadErr)
 }
-data, err2 := json.Marshal(person)
-if err2 != nil {
+data, marshalErr := json.Marshal(person)
+if marshalErr != nil {
   // Error handle...
-  log.Fatal(err2)
+  log.Fatal(marshalErr)
 }
 fmt.Printf("%s", data)
 // Output
 {
   "name": "gouguoyin",
   "age": 18,
-  "birthday": "2020-08-05",
-  "graduated_at": "13:14:15",
-  "created_at": "2020-08-05 13:14:15"
+  "birthday0": "2020-08-05 13:14:15",
+  "birthday1": "2020-08-05",
+  "birthday2": "13:14:15",
+  "birthday3": "2020-08-05 13:14:15",
+  "birthday4": "2020-08-05",
+  "birthday5": "213:14:15",
+  "birthday6": "2020-08-05 13:14:15"
 }
 ```
 
@@ -1315,27 +1359,35 @@ fmt.Printf("%s", data)
 str := `{
   "name": "gouguoyin",
   "age": 18,
-  "birthday": "2020-08-05",
-  "graduated_at": "13:14:15",
-  "created_at": "2020-08-05 13:14:15"
+  "birthday0": "2020-08-05 13:14:15",
+  "birthday1": "2020-08-05",
+  "birthday2": "13:14:15",
+  "birthday3": "2020-08-05 13:14:15",
+  "birthday4": "2020-08-05",
+  "birthday5": "213:14:15",
+  "birthday6": "2020-08-05 13:14:15"
 }`
 var person Person
 
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
   // Error handle...
-  log.Fatal(err1)
+  log.Fatal(loadErr)
 }
 
-err2 := json.Unmarshal([]byte(str), &person)
-if err2 != nil {
+unmarshalErr := json.Unmarshal([]byte(str), &person)
+if unmarshalErr != nil {
   // Error handle...
-  log.Fatal(err2)
+  log.Fatal(unmarshalErr)
 }
 
-fmt.Sprintf("%s", person.Birthday) // 2002-08-05
-fmt.Sprintf("%s", person.GraduatedAt) // 13:14:15
-fmt.Sprintf("%s", person.CreatedAt) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday0) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday1) // 2020-08-05
+fmt.Sprintf("%s", person.Birthday2) // 13:14:15
+fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday4) // 2002-08-05
+fmt.Sprintf("%s", person.Birthday5) // 13:14:15
+fmt.Sprintf("%s", person.Birthday6) // 2002-08-05 13:14:15
 ```
 
 ##### I18n
@@ -1479,7 +1531,7 @@ carbon.SetTestNow(testNow).ClearTestNow().HasTestNow() // false
 
 ```
 
-##### Error handling
+##### Error
 
 > If more than one error occurs, only the first error is returned
 
@@ -1498,43 +1550,48 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 ##### <a id="format-sign-table">Format sign table</a>
 
-| sign |                                                        desc                                                        | length |      range       |             example             |
-| :------------: |:------------------------------------------------------------------------------------------------------------------:|:------:|:----------------:|:-------------------------------:|
-| d |                                           Day of the month, padded to 2                                            |   2    |      01-31       |               02                |
-| D |                                 Day of the week, as an abbreviate localized string                                 |   3    |     Mon-Sun      |               Mon               |
-| j |                                            Day of the month, no padding                                            |   -    |       1-31       |                2                |
-| S |       English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j       |   2    |   st/nd/rd/th    |               th                |
-| l |                               Day of the week, as an unabbreviated localized string                                |   -    |  Monday-Sunday   |             Monday              |
-| F |                                     Month as an unabbreviated localized string                                     |   -    | January-December |             January             |
-| m |                                                 Month, padded to 2                                                 |   2    |      01-12       |               01                |
-| M |                                      Month as an abbreviated localized string                                      |   3    |     Jan-Dec      |               Jan               |
-| n |                                                 Month, no padding                                                  |   -    |       1-12       |                1                |
-| Y |                                                  Four-digit year                                                   |   4    |    0000-9999     |              2006               |
-| y |                                                   Two-digit year                                                   |   2    |      00-99       |               06                |
-| a |                                        Lowercase morning or afternoon sign                                         |   2    |      am/pm       |               pm                |
-| A |                                        Uppercase morning or afternoon sign                                         |   2    |      AM/PM       |               PM                |
-| g |                                         Hour in 12-hour format, no padding                                         |   -    |       1-12       |                3                |
-| G |                                         Hour in 24-hour format, no padding                                         |   -    |       0-23       |               15                |
-| h |                                        Hour in 12-hour format, padded to 2                                         |   2    |      00-11       |               03                |
-| H |                                        Hour in 24-hour format, padded to 2                                         |   2    |      00-23       |               15                |
-| i |                                                Minute, padded to 2                                                 |   2    |      01-59       |               04                |
-| s |                                                Second, padded to 2                                                 |   2    |      01-59       |               05                |
-| c |                                                    ISO8601 date                                                    |   -    |        -         |    2006-01-02T15:04:05-07:00    |
-| r |                                                    RFC2822 date                                                    |   -    |        -         | Mon, 02 Jan 2006 15:04:05 -0700 |
-| O |                     Difference to Greenwich time (GMT) without colon between hours and minutes                     |   -    |        -         |              +0700              |
-| P |                      Difference to Greenwich time (GMT) with colon between hours and minutes                       |   -    |        -         |             +07:00              |
-| T |                                                Abbreviated timezone                                                |   -    |        -         |               MST               |
-| W |                                       week of the year, padded to 2                                        |   2    |      01-52       |               01                |
-| N |                                        day of the week, padded to 2                                        |   2    |      01-07       |               02                |
-| L |                                              Whether it's a leap year                                              |   1    |       0-1        |                0                |
-| U |                                            Unix timestamp with seconds                                             |   10   |        -         |           1611818268            |
-| u |                                                    Millisecond                                                     |   -    |      1-999       |               999               |
-| w |                                                  Day of the week                                                   |   1    |       0-6        |                1                |
-| t |                                              Total days of the month                                               |   2    |      28-31       |               31                |
-| z |                                                  Day of the year                                                   |   -    |      1-365       |                2                |
-| e |                                                      Location                                                      |   -    |        -         |        America/New_York         |
-| Q |                                                      Quarter                                                       |   1    |       1-4        |                1                |
-| C |                                                      Century                                                       |   -    |       0-99       |               21                |
+| sign |                                                  desc                                                  | length |      range       |             example             |
+|:----:|:------------------------------------------------------------------------------------------------------:|:------:|:----------------:|:-------------------------------:|
+|  d   |                                     Day of the month, padded to 2                                      |   2    |      01-31       |               02                |
+|  D   |                           Day of the week, as an abbreviate localized string                           |   3    |     Mon-Sun      |               Mon               |
+|  j   |                                      Day of the month, no padding                                      |   -    |       1-31       |                2                |
+|  S   | English ordinal suffix for the day of the month, 2 characters. Eg: st, nd, rd or th. Works well with j |   2    |   st/nd/rd/th    |               th                |
+|  l   |                         Day of the week, as an unabbreviated localized string                          |   -    |  Monday-Sunday   |             Monday              |
+|  F   |                               Month as an unabbreviated localized string                               |   -    | January-December |             January             |
+|  m   |                                           Month, padded to 2                                           |   2    |      01-12       |               01                |
+|  M   |                                Month as an abbreviated localized string                                |   3    |     Jan-Dec      |               Jan               |
+|  n   |                                           Month, no padding                                            |   -    |       1-12       |                1                |
+|  Y   |                                            Four-digit year                                             |   4    |    0000-9999     |              2006               |
+|  y   |                                             Two-digit year                                             |   2    |      00-99       |               06                |
+|  a   |                                  Lowercase morning or afternoon sign                                   |   2    |      am/pm       |               pm                |
+|  A   |                                  Uppercase morning or afternoon sign                                   |   2    |      AM/PM       |               PM                |
+|  g   |                                   Hour in 12-hour format, no padding                                   |   -    |       1-12       |                3                |
+|  G   |                                   Hour in 24-hour format, no padding                                   |   -    |       0-23       |               15                |
+|  h   |                                  Hour in 12-hour format, padded to 2                                   |   2    |      00-11       |               03                |
+|  H   |                                  Hour in 24-hour format, padded to 2                                   |   2    |      00-23       |               15                |
+|  i   |                                          Minute, padded to 2                                           |   2    |      01-59       |               04                |
+|  s   |                                          Second, padded to 2                                           |   2    |      01-59       |               05                |
+|  c   |                                              ISO8601 date                                              |   -    |        -         |    2006-01-02T15:04:05-07:00    |
+|  r   |                                              RFC2822 date                                              |   -    |        -         | Mon, 02 Jan 2006 15:04:05 -0700 |
+|  O   |               Difference to Greenwich time (GMT) without colon between hours and minutes               |   -    |        -         |              +0700              |
+|  P   |                Difference to Greenwich time (GMT) with colon between hours and minutes                 |   -    |        -         |             -07:00              |
+|  T   |                                          Abbreviated timezone                                          |   -    |        -         |               MST               |
+|  W   |                                     week of the year, padded to 2                                      |   2    |      01-52       |               01                |
+|  N   |                                      day of the week, padded to 2                                      |   2    |      01-07       |               02                |
+|  L   |                                        Whether it's a leap year                                        |   1    |       0-1        |                0                |
+| U | Unix timestamp with seconds | - | - |           1596604455            |
+| V | Unix timestamp with millisecond | - | - |          1596604455000          |
+| X | Unix timestamp with microsecond | - | - |        1596604455000000         |
+| Z | Unix timestamp with nanoseconds | - | - |       1596604455000000000       |
+|  v   |                                              Millisecond                                               | - | 1-999 |               999               |
+|  u   |                                              Microsecond                                               | - | 1-999999 |             999999              |
+|  x   |                                               Nanosecond                                               | - | 1-999999999 |            999999999            |
+|  w   |                                            Day of the week                                             |   1    |       0-6        |                1                |
+|  t   |                                        Total days of the month                                         |   2    |      28-31       |               31                |
+|  z   |                                            Day of the year                                             |   -    |      1-365       |                2                |
+|  e   |                                                Location                                                |   -    |        -         |        America/New_York         |
+|  Q   |                                                Quarter                                                 |   1    |       1-4        |                1                |
+|  C   |                                                Century                                                 |   -    |       0-99       |               21                |
 
 #### FAQ
 

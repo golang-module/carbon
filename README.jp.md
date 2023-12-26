@@ -149,7 +149,7 @@ carbon.CreateFromDateTimeMicro(2020, 1, 1, 13, 14, 15, 999999).ToString() // 202
 carbon.CreateFromDateTimeNano(2020, 1, 1, 13, 14, 15, 999999999).ToString() // 2020-01-01 13:14:15.999999999 +0800 CST
 
 // 年月日から Carbon オブジェクトを作成します
-carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 00:00:00 +0800 CST
+carbon.CreateFromDate(2020, 8, 5).ToString() // 2020-08-05 00:00:00 +0800 CST
 // 年月日から Carbon オブジェクトを作成します，ミリ秒を含む
 carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 00:00:00.999 +0800 CST
 // 年月日から Carbon オブジェクトを作成します，マイクロ秒を含む
@@ -239,19 +239,6 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 carbon.CreateFromStdTime(time.Now())
 // Carbon を time.Time に変換します
 carbon.Now().ToStdTime()
-```
-
-##### 最近と最も遠い
-
-```go
-c := carbon.Parse("2023-04-01")
-c1 := carbon.Parse("2023-03-28")
-c2 := carbon.Parse("2023-04-16")
-
-// 最近のCarbonインスタンスを返す
-c.Closest(c1, c2) // c1
-// 最も遠いCarbonインスタンスを返す
-c.Farthest(c1, c2) // c2
 ```
 
 ##### 始まりと終わり
@@ -551,6 +538,25 @@ carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
+```
+
+##### 时间极值
+
+```go
+c := carbon.Parse("2023-04-01")
+c0 := carbon.Parse("xxx")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// 最近のCarbonインスタンスを返す
+c.Closest(c0, c1) // c1
+c.Closest(c0, c2) // c2
+c.Closest(c1, c2) // c1
+
+// 最も遠いCarbonインスタンスを返す
+c.Farthest(c0, c1) // c1
+c.Farthest(c0, c2) // c2
+c.Farthest(c1, c2) // c2
 ```
 
 ##### 时间比較
@@ -1259,10 +1265,15 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```go
 type Person struct {
     Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.Carbon `json:"birthday" carbon:"layout:2006-01-02"`
-    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"layout:15:04:05"`
-    CreatedAt carbon.Carbon `json:"created_at" carbon:"layout:2006-01-02 15:04:05"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"date"`
+    Birthday2 Carbon `json:"birthday2" carbon:"time"`
+    Birthday3 Carbon `json:"birthday3" carbon:"dateTime"`
+    Birthday4 Carbon `json:"birthday4" carbon:"date" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"time" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"dateTime" tz:"PRC"`
 }
 ```
 
@@ -1271,10 +1282,32 @@ type Person struct {
 ```go
 type Person struct {
     Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.Carbon `json:"birthday" carbon:"format:Y-m-d"`
-    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"format:H:i:s"`
-    CreatedAt carbon.Carbon `json:"created_at" carbon:"format:Y-m-d H:i:s"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02"`
+    Birthday2 Carbon `json:"birthday2" carbon:"layout:15:04:05"`
+    Birthday3 Carbon `json:"birthday3" carbon:"layout:2006-01-02 15:04:05"`
+    Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"layout:15:04:05" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+}
+```
+
+または
+
+```go
+type Person struct {
+    Name string `json:"name"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"format:Y-m-d"`
+    Birthday2 Carbon `json:"birthday2" carbon:"format:H:i:s"`
+    Birthday3 Carbon `json:"birthday3" carbon:"format:Y-m-d H:i:s"`
+    Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"format:H:i:s" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
 }
 ```
 
@@ -1282,35 +1315,44 @@ type Person struct {
 ```go
 now := Parse("2020-08-05 13:14:15", PRC)
 person := Person {
-    Name:        "gouguoyin",
-    Age:         18,
-    Birthday:    now,
-    GraduatedAt: now,
-    CreatedAt:   now,
+    Name:      "gouguoyin",
+    Age:       18,
+    
+    Birthday0: now,
+    Birthday1: now,
+    Birthday2: now,
+    Birthday3: now,
+    Birthday4: now,
+    Birthday5: now,
+    Birthday6: now,
 }
 ```
 
 ###### JSON コーディング
 
 ```go
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
     // エラー処理...
-    log.Fatal(err1)
+    log.Fatal(loadErr)
 }
-data, err2 := json.Marshal(person)
-if err2 != nil {
+data, marshalErr := json.Marshal(person)
+if marshalErr != nil {
     // エラー処理...
-    log.Fatal(err2)
+    log.Fatal(marshalErr)
 }
 fmt.Printf("%s", data)
 // 出力
 {
     "name": "gouguoyin",
     "age": 18,
-    "birthday": "2020-08-05",
-    "graduated_at": "13:14:15",
-    "created_at": "2020-08-05 13:14:15"
+    "birthday0": "2020-08-05 13:14:15",
+    "birthday1": "2020-08-05",
+    "birthday2": "13:14:15",
+    "birthday3": "2020-08-05 13:14:15",
+    "birthday4": "2020-08-05",
+    "birthday5": "213:14:15",
+    "birthday6": "2020-08-05 13:14:15"
 }
 ```
 
@@ -1320,27 +1362,35 @@ fmt.Printf("%s", data)
 str := `{
     "name": "gouguoyin",
     "age": 18,
-    "birthday": "2020-08-05",
-    "graduated_at": "13:14:15",
-    "created_at": "2020-08-05 13:14:15"
+    "birthday0": "2020-08-05 13:14:15",
+    "birthday1": "2020-08-05",
+    "birthday2": "13:14:15",
+    "birthday3": "2020-08-05 13:14:15",
+    "birthday4": "2020-08-05",
+    "birthday5": "213:14:15",
+    "birthday6": "2020-08-05 13:14:15"
 }`
 var person Person
 
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
     // エラー処理...
-    log.Fatal(err1)
+    log.Fatal(loadErr)
 }
 
-err2 := json.Unmarshal([]byte(str), &person)
-if err2 != nil {
+unmarshalErr := json.Unmarshal([]byte(str), &person)
+if unmarshalErr != nil {
     // エラー処理...
-    log.Fatal(err2)
+    log.Fatal(unmarshalErr)
 }
 
-fmt.Sprintf("%s", person.Birthday) // 2002-08-05
-fmt.Sprintf("%s", person.GraduatedAt) // 13:14:15
-fmt.Sprintf("%s", person.CreatedAt) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday0) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday1) // 2020-08-05
+fmt.Sprintf("%s", person.Birthday2) // 13:14:15
+fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday4) // 2002-08-05
+fmt.Sprintf("%s", person.Birthday5) // 13:14:15
+fmt.Sprintf("%s", person.Birthday6) // 2002-08-05 13:14:15
 ```
 
 ##### 国際化
@@ -1462,7 +1512,7 @@ c.Now().Constellation() // leo
 c.Now().Season() // summer
 ```
 
-##### テスト
+##### 模擬テスト
 
 ```go
 testNow := carbon.Parse("2020-08-05")
@@ -1521,13 +1571,18 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | c | ISO8601 フォーマットの日付 | - | - | 2006-01-02T15:04:05-07:00 |
 | r | RFC2822 フォーマットの日付 | - | - | Mon, 02 Jan 2006 15:04:05 -0700 |
 | O | グリニッジとの時間差の時間数 | - | - | +0700 |
-| P | グリニッジと時間の差の時間数, 時間と分の間にコロンがあります | - | - | +07:00 |
+| P | グリニッジと時間の差の時間数, 時間と分の間にコロンがあります | - | - | -07:00 |
 | T | タイムゾーンの略語 | - | - | MST |
 | W | ISO8601 フォーマットの数字は年の中の第数週を表します | 2 | 1-52 | 01 |
 | N | ISO8601 フォーマットの数字は曜日の中の何日目を表しますか | 2 | 01-07 | 02 |
 | L | うるう年かどうか, うるう年が1であれば, 0です | 1 | 0-1 | 0 |
-| U | 秒タイムスタンプ | 10 | - | 1611818268 |
-| u | ミリ秒 | - | 1-999 | 999 |
+| U | 秒タイムスタンプを | - | - | 1596604455 |
+| V | ミリ秒のタイムスタンプを | - | - | 1596604455000 |
+| X | マイクロ秒タイムスタンプを | - | - | 1596604455000000 |
+| Z | ナノ秒タイムスタンプを | - | - | 1596604455000000000 |
+| v | ミリ秒 | - | 1-999 | 999 |
+| u | マイクロ秒| - | 1-999999 | 999999 |
+| x | ナノ秒 | - | 1-999999999 | 999999999 |
 | w | 数字の表示の曜日 | 1 | 0-6 | 1 |
 | t | 月の総日数 | 2 | 28-31 | 31 |
 | z | 年の中の何日目 | - | 1-365 | 2 |

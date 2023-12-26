@@ -145,7 +145,7 @@ carbon.CreateFromDateTimeMicro(2020, 8, 5, 13, 14, 15, 999999).ToString() // 202
 carbon.CreateFromDateTimeNano(2020, 8, 5, 13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 
 // 从年月日创建 Carbon 实例
-carbon.CreateFromDate(2020, 8, 5).ToString() // // 2020-08-05 00:00:00 +0800 CST
+carbon.CreateFromDate(2020, 8, 5).ToString() // 2020-08-05 00:00:00 +0800 CST
 // 从年月日创建 Carbon 实例，包含毫秒
 carbon.CreateFromDateMilli(2020, 8, 5, 999).ToString() // 2020-08-05 00:00:00.999 +0800 CST
 // 从年月日创建 Carbon 实例，包含微秒
@@ -241,20 +241,7 @@ carbon.CreateFromStdTime(time.Now())
 carbon.Now().ToStdTime()
 ```
 
-##### 最近和最远
-
-```go
-c := carbon.Parse("2023-04-01")
-c1 := carbon.Parse("2023-03-28")
-c2 := carbon.Parse("2023-04-16")
-
-// 返回最近的 Carbon 实例
-c.Closest(c1, c2) // c1
-// 返回最远的 Carbon 实例
-c.Farthest(c1, c2) // c2
-```
-
-##### 开始时间、结束时间
+##### 时间边界
 
 ```go
 // 本世纪开始时间
@@ -493,7 +480,7 @@ carbon.Parse("2020-08-05 13:14:15.222222222").SubNanosseconds(3).ToString() // 2
 carbon.Parse("2020-08-05 13:14:15.222222222").SubNanossecond().ToString() // 2020-08-05 13:14:15.222222221 +0800 CST
 ```
 
-##### 时间差
+##### 时间差值
 
 ```go
 // 相差多少年
@@ -551,6 +538,25 @@ carbon.Parse("2020-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year before
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years before
 carbon.Parse("2018-08-05 13:14:15").DiffForHumans(carbon.Now()) // 1 year after
 carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
+```
+
+##### 时间极值
+
+```go
+c := carbon.Parse("2023-04-01")
+c0 := carbon.Parse("xxx")
+c1 := carbon.Parse("2023-03-28")
+c2 := carbon.Parse("2023-04-16")
+
+// 返回最近的 Carbon 实例
+c.Closest(c0, c1) // c1
+c.Closest(c0, c2) // c2
+c.Closest(c1, c2) // c1
+
+// 返回最远的 Carbon 实例
+c.Farthest(c0, c1) // c1
+c.Farthest(c0, c2) // c2
+c.Farthest(c1, c2) // c2
 ```
 
 ##### 时间判断
@@ -1259,10 +1265,15 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```go
 type Person struct {
     Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.Carbon `json:"birthday" carbon:"layout:2006-01-02"`
-    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"layout:15:04:05"`
-    CreatedAt carbon.Carbon `json:"created_at" carbon:"layout:2006-01-02 15:04:05"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"date"`
+    Birthday2 Carbon `json:"birthday2" carbon:"time"`
+    Birthday3 Carbon `json:"birthday3" carbon:"dateTime"`
+    Birthday4 Carbon `json:"birthday4" carbon:"date" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"time" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"dateTime" tz:"PRC"`
 }
 ```
 
@@ -1271,46 +1282,80 @@ type Person struct {
 ```go
 type Person struct {
     Name string `json:"name"`
-    Age int `json:"age"`
-    Birthday carbon.Carbon `json:"birthday" carbon:"format:Y-m-d"`
-    GraduatedAt carbon.Carbon `json:"graduated_at" carbon:"format:H:i:s"`
-    CreatedAt carbon.Carbon `json:"created_at" carbon:"format:Y-m-d H:i:s"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02"`
+    Birthday2 Carbon `json:"birthday2" carbon:"layout:15:04:05"`
+    Birthday3 Carbon `json:"birthday3" carbon:"layout:2006-01-02 15:04:05"`
+    Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"layout:15:04:05" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
 }
 ```
+
+或
+
+```go
+type Person struct {
+    Name string `json:"name"`
+    Age  int    `json:"age"`
+    
+    Birthday0 Carbon `json:"birthday0"`
+    Birthday1 Carbon `json:"birthday1" carbon:"format:Y-m-d"`
+    Birthday2 Carbon `json:"birthday2" carbon:"format:H:i:s"`
+    Birthday3 Carbon `json:"birthday3" carbon:"format:Y-m-d H:i:s"`
+    Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"format:H:i:s" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
+}
+```
+
+> 如果 `carbon` 标签没有设置，默认是 `layout:2006-01-02 15:04:05`；如果 `tz` 标签没有设置，默认是 `Local`
+
 ###### 实例化模型
 
 ```go
 now := Parse("2020-08-05 13:14:15", PRC)
 person := Person {
-    Name:        "gouguoyin",
-    Age:         18,
-    Birthday:    now,
-    GraduatedAt: now,
-    CreatedAt:   now,
+    Name:      "gouguoyin",
+    Age:       18,
+	
+    Birthday0: now,
+    Birthday1: now,
+    Birthday2: now,
+    Birthday3: now,
+    Birthday4: now,
+    Birthday5: now,
+    Birthday6: now,
 }
 ```
 
 ###### JSON 编码
 
 ```go
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
     // 错误处理
-    log.Fatal(err1)
+    log.Fatal(loadErr)
 }
-data, err2 := json.Marshal(person)
-if err2 != nil {
+data, marshalErr := json.Marshal(person)
+if marshalErr != nil {
     // 错误处理
-    log.Fatal(err2)
+    log.Fatal(marshalErr)
 }
 fmt.Printf("%s", data)
 // 输出
 {
     "name": "gouguoyin",
     "age": 18,
-    "birthday": "2020-08-05",
-    "graduated_at": "13:14:15",
-    "created_at": "2020-08-05 13:14:15"
+    "birthday0": "2020-08-05 13:14:15",
+    "birthday1": "2020-08-05",
+    "birthday2": "13:14:15",
+    "birthday3": "2020-08-05 13:14:15",
+    "birthday4": "2020-08-05",
+    "birthday5": "213:14:15",
+    "birthday6": "2020-08-05 13:14:15"
 }
 ```
 
@@ -1320,27 +1365,35 @@ fmt.Printf("%s", data)
 str := `{
     "name": "gouguoyin",
     "age": 18,
-    "birthday": "2020-08-05",
-    "graduated_at": "13:14:15",
-    "created_at": "2020-08-05 13:14:15"
+    "birthday0": "2020-08-05 13:14:15",
+    "birthday1": "2020-08-05",
+    "birthday2": "13:14:15",
+    "birthday3": "2020-08-05 13:14:15",
+    "birthday4": "2020-08-05",
+    "birthday5": "213:14:15",
+    "birthday6": "2020-08-05 13:14:15"
 }`
 var person Person
 
-err1 := carbon.LoadTag(&person)
-if err1 != nil {
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
     // 错误处理
-    log.Fatal(err1)
+    log.Fatal(loadErr)
 }
 
-err2 := json.Unmarshal([]byte(str), &person)
-if err2 != nil {
+unmarshalErr := json.Unmarshal([]byte(str), &person)
+if unmarshalErr != nil {
     // 错误处理
-    log.Fatal(err2)
+    log.Fatal(unmarshalErr)
 }
 
-fmt.Sprintf("%s", person.Birthday) // 2002-08-05
-fmt.Sprintf("%s", person.GraduatedAt) // 13:14:15
-fmt.Sprintf("%s", person.CreatedAt) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday0) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday1) // 2020-08-05
+fmt.Sprintf("%s", person.Birthday2) // 13:14:15
+fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday4) // 2002-08-05
+fmt.Sprintf("%s", person.Birthday5) // 13:14:15
+fmt.Sprintf("%s", person.Birthday6) // 2002-08-05 13:14:15
 ```
 
 ##### 国际化
@@ -1462,7 +1515,7 @@ c.Now().Constellation() // leo
 c.Now().Season() // summer
 ```
 
-##### 测试
+##### 模拟测试
 
 ```go
 testNow := carbon.Parse("2020-08-05")
@@ -1521,13 +1574,18 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 | c | ISO8601 格式日期 | - | - | 2006-01-02T15:04:05-07:00 |
 | r | RFC2822 格式日期 | - | - | Mon, 02 Jan 2006 15:04:05 -0700 |
 | O | 与格林威治时间相差的小时数 | - | - | -0700 |
-| P | 与格林威治时间相差的小时数，小时和分钟之间有冒号分隔 | - | - | +07:00 |
+| P | 与格林威治时间相差的小时数，小时和分钟之间有冒号分隔 | - | - | -07:00 |
 | T | 时区缩写 | - | - | MST |
 | W | ISO8601 格式数字表示的年份中的第几周 | 2 | 01-52 | 01 |
 | N | ISO8601 格式数字表示的星期中的第几天 | 2 | 01-07 | 02 |
 | L | 是否为闰年，如果是闰年为 1，否则为 0 | 1 | 0-1 | 0 |
-| U | 秒级时间戳 | 10 | - | 1611818268 |
-| u | 毫秒 | - | 1-999 | 999 |
+| U | 秒级时间戳 | - | - | 1596604455 |
+| V | 毫级时间戳 | - | - | 1596604455000 |
+| X | 微级时间戳 | - | - | 1596604455000000 |
+| Z | 纳级时间戳 | - | - | 1596604455000000000 |
+| v | 毫秒 | - | 1-999 | 999 |
+| u | 微秒 | - | 1-999999 | 999999 |
+| x | 纳秒 | - | 1-999999999 | 999999999 |
 | w | 数字表示的周几 | 1 | 0-6 | 1 |
 | t | 月份中的总天数 | 2 | 28-31 | 31 |
 | z | 年份中的第几天 | - | 1-365 | 2 |
