@@ -12,7 +12,7 @@ type Person struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 
-	Birthday0 Carbon `json:"birthday0"`
+	Birthday0 Carbon `json:"birthday0" tz:"PRC"`
 
 	Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02" tz:"PRC"`
 	Birthday5 Carbon `json:"birthday5" carbon:"layout:15:04:05" tz:"PRC"`
@@ -196,7 +196,7 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	assert.Equal(t, "2020-08-05T13:14:15.999999+08:00", person.Birthday59.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999999+08:00", person.Birthday60.String())
 
-	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:Local", person.Birthday0.Tag())
+	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:PRC", person.Birthday0.Tag())
 	assert.Equal(t, "layout:2006-01-02;tz:PRC", person.Birthday4.Tag())
 	assert.Equal(t, "layout:15:04:05;tz:PRC", person.Birthday5.Tag())
 	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:PRC", person.Birthday6.Tag())
@@ -384,7 +384,7 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	assert.Equal(t, "2020-08-05T13:14:15.999999+08:00", person.Birthday59.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999999+08:00", person.Birthday60.String())
 
-	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:Local", person.Birthday0.Tag())
+	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:PRC", person.Birthday0.Tag())
 	assert.Equal(t, "layout:2006-01-02;tz:PRC", person.Birthday4.Tag())
 	assert.Equal(t, "layout:15:04:05;tz:PRC", person.Birthday5.Tag())
 	assert.Equal(t, "layout:2006-01-02 15:04:05;tz:PRC", person.Birthday6.Tag())
