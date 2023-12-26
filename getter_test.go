@@ -11,8 +11,8 @@ func TestCarbon_DaysInYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -35,8 +35,8 @@ func TestCarbon_DaysInMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -69,8 +69,8 @@ func TestCarbon_MonthOfYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -103,8 +103,8 @@ func TestCarbon_DayOfYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -128,8 +128,8 @@ func TestCarbon_DayOfMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -153,8 +153,8 @@ func TestCarbon_DayOfWeek(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -182,8 +182,8 @@ func TestCarbon_WeekOfYear(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -216,8 +216,8 @@ func TestCarbon_WeekOfMonth(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -269,8 +269,8 @@ func TestCarbon_DateTime(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                  string // 输入值
-		year, month, day, hour, minute, second int    // 期望值
+		input                                  string
+		year, month, day, hour, minute, second int
 	}{
 		{"", 0, 0, 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0, 0, 0},
@@ -299,8 +299,8 @@ func TestCarbon_DateTimeMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                               string // 输入值
-		year, month, day, hour, minute, second, millisecond int    // 期望值
+		input                                               string
+		year, month, day, hour, minute, second, millisecond int
 	}{
 		{"", 0, 0, 0, 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0, 0, 0, 0},
@@ -330,8 +330,8 @@ func TestCarbon_DateTimeMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                               string // 输入值
-		year, month, day, hour, minute, second, microsecond int    // 期望值
+		input                                               string
+		year, month, day, hour, minute, second, microsecond int
 	}{
 		{"", 0, 0, 0, 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0, 0, 0, 0},
@@ -361,8 +361,8 @@ func TestCarbon_DateTimeNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                                              string // 输入值
-		year, month, day, hour, minute, second, nanosecond int    // 期望值
+		input                                              string
+		year, month, day, hour, minute, second, nanosecond int
 	}{
 		{"", 0, 0, 0, 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0, 0, 0, 0},
@@ -392,8 +392,8 @@ func TestCarbon_Date(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input            string // 输入值
-		year, month, day int    // 期望值
+		input            string
+		year, month, day int
 	}{
 		{"", 0, 0, 0},
 		{"0", 0, 0, 0},
@@ -419,8 +419,8 @@ func TestCarbon_DateMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                         string // 输入值
-		year, month, day, millisecond int    // 期望值
+		input                         string
+		year, month, day, millisecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -447,8 +447,8 @@ func TestCarbon_DateMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                         string // 输入值
-		year, month, day, microsecond int    // 期望值
+		input                         string
+		year, month, day, microsecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -475,8 +475,8 @@ func TestCarbon_DateNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                        string // 输入值
-		year, month, day, nanosecond int    // 期望值
+		input                        string
+		year, month, day, nanosecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -503,8 +503,8 @@ func TestCarbon_Time(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                string // 输入值
-		hour, minute, second int    // 期望值
+		input                string
+		hour, minute, second int
 	}{
 		{"", 0, 0, 0},
 		{"0", 0, 0, 0},
@@ -530,8 +530,8 @@ func TestCarbon_TimeMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                             string // 输入值
-		hour, minute, second, millisecond int    // 期望值
+		input                             string
+		hour, minute, second, millisecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -558,8 +558,8 @@ func TestCarbon_TimeMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                             string // 输入值
-		hour, minute, second, microsecond int    // 期望值
+		input                             string
+		hour, minute, second, microsecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -586,8 +586,8 @@ func TestCarbon_TimeNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input                            string // 输入值
-		hour, minute, second, nanosecond int    // 期望值
+		input                            string
+		hour, minute, second, nanosecond int
 	}{
 		{"", 0, 0, 0, 0},
 		{"0", 0, 0, 0, 0},
@@ -614,8 +614,8 @@ func TestCarbon_Century(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -638,8 +638,8 @@ func TestCarbon_Decade(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -662,8 +662,8 @@ func TestCarbon_Year(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -686,8 +686,8 @@ func TestCarbon_Quarter(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -712,8 +712,8 @@ func TestCarbon_Month(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -736,8 +736,8 @@ func TestCarbon_Week(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", -1},
 		{"0", -1},
@@ -765,8 +765,8 @@ func TestCarbon_Day(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -789,8 +789,8 @@ func TestCarbon_Hour(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -813,8 +813,8 @@ func TestCarbon_Minute(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -837,8 +837,8 @@ func TestCarbon_Second(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -861,8 +861,8 @@ func TestCarbon_Millisecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -885,8 +885,8 @@ func TestCarbon_Microsecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -909,8 +909,8 @@ func TestCarbon_Nanosecond(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
@@ -933,8 +933,8 @@ func TestCarbon_Timestamp(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int64  // 期望值
+		input    string
+		expected int64
 	}{
 		{"", 0},
 		{"0", 0},
@@ -960,8 +960,8 @@ func TestCarbon_TimestampMilli(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int64  // 期望值
+		input    string
+		expected int64
 	}{
 		{"", 0},
 		{"0", 0},
@@ -987,8 +987,8 @@ func TestCarbon_TimestampMicro(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int64  // 期望值
+		input    string
+		expected int64
 	}{
 		{"", 0},
 		{"0", 0},
@@ -1014,8 +1014,8 @@ func TestCarbon_TimestampNano(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int64  // 期望值
+		input    string
+		expected int64
 	}{
 		{"", 0},
 		{"0", 0},
@@ -1041,8 +1041,8 @@ func TestCarbon_Timezone(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{PRC, "CST"},
 		{Tokyo, "JST"},
@@ -1059,8 +1059,8 @@ func TestCarbon_Location(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{PRC, PRC},
 		{Tokyo, Tokyo},
@@ -1077,8 +1077,8 @@ func TestCarbon_Offset(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{PRC, 28800},
 		{Tokyo, 32400},
@@ -1095,8 +1095,8 @@ func TestCarbon_Locale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected string // 期望值
+		input    string
+		expected string
 	}{
 		{"en", "en"},
 		{"zh-CN", "zh-CN"},
@@ -1113,8 +1113,8 @@ func TestCarbon_Age(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    string // 输入值
-		expected int    // 期望值
+		input    string
+		expected int
 	}{
 		{"", 0},
 		{"0", 0},
