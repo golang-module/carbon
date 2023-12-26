@@ -204,3 +204,25 @@ func TestError_ParseByFormat(t *testing.T) {
 	assert.NotNil(t, ParseByFormat("2020-08-05", "Y-m-d", "xxx").Error, "It should catch an exception in ParseByFormat()")
 	assert.NotNil(t, ParseByFormat("xxx", "Y-m-d", PRC).Error, "It should catch an exception in ParseByFormat")
 }
+
+// https://github.com/golang-module/carbon/issues/206
+func TestCarbon_Issue206(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		format   string
+		expected string
+	}{
+		0: {"1699677240", "U", "2023-11-11 12:34:00 +0800 CST"},
+		1: {"1699677240666", "V", "2023-11-11 12:34:00.666 +0800 CST"},
+		2: {"1699677240666666", "X", "2023-11-11 12:34:00.666666 +0800 CST"},
+		3: {"1699677240666666666", "Z", "2023-11-11 12:34:00.666666666 +0800 CST"},
+	}
+
+	for index, test := range tests {
+		c := ParseByFormat(test.input, test.format, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
