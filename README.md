@@ -1580,9 +1580,9 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 |  N   |                                      day of the week, padded to 2                                      |   2    |      01-07       |               02                |
 |  L   |                                        Whether it's a leap year                                        |   1    |       0-1        |                0                |
 | U | Unix timestamp with seconds | - | - |           1596604455            |
-| V | Unix timestamp with millisecond | - | - |          1596604455000          |
-| X | Unix timestamp with microsecond | - | - |        1596604455000000         |
-| Z | Unix timestamp with nanoseconds | - | - |       1596604455000000000       |
+| V | Unix timestamp with millisecond | - | - |          1596604455666          |
+| X | Unix timestamp with microsecond | - | - |        1596604455666666         |
+| Z | Unix timestamp with nanoseconds | - | - |       1596604455666666666       |
 |  v   |                                              Millisecond                                               | - | 1-999 |               999               |
 |  u   |                                              Microsecond                                               | - | 1-999999 |             999999              |
 |  x   |                                               Nanosecond                                               | - | 1-999999999 |            999999999            |
