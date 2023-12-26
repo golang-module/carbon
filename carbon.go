@@ -127,6 +127,7 @@ const (
 // layout constants
 // 布局模板常量
 const (
+	AtomLayout     = RFC3339Layout
 	ANSICLayout    = time.ANSIC
 	CookieLayout   = "Monday, 02-Jan-2006 15:04:05 MST"
 	KitchenLayout  = time.Kitchen
@@ -181,6 +182,64 @@ const (
 	ShortTimeNanoLayout  = "150405.999999999"
 )
 
+// format constants
+// 格式模板常量
+const (
+	AtomFormat     = "Y-m-d\\TH:i:sP"
+	ANSICFormat    = "D M j H:i:s Y"
+	CookieFormat   = "l, d-M-Y H:i:s T"
+	KitchenFormat  = "g:iA"
+	RssFormat      = "D, d M Y H:i:s O"
+	RubyDateFormat = "D M d H:i:s O Y"
+	UnixDateFormat = "D M j H:i:s T Y"
+
+	RFC1036Format      = "D, d M y H:i:s O"
+	RFC1123Format      = "D, d M Y H:i:s T"
+	RFC1123ZFormat     = "D, d M Y H:i:s O"
+	RFC2822Format      = "D, d M Y H:i:s O"
+	RFC3339Format      = "Y-m-d\\TH:i:sP"
+	RFC3339MilliFormat = "Y-m-d\\TH:i:s.vP"
+	RFC3339MicroFormat = "Y-m-d\\TH:i:s.uP"
+	RFC3339NanoFormat  = "Y-m-d\\TH:i:s.xP"
+	RFC7231Format      = "D, d M Y H:i:s T"
+	RFC822Format       = "d M y H:i T"
+	RFC822ZFormat      = "d M y H:i O"
+	RFC850Format       = "l, d-M-y H:i:s T"
+
+	ISO8601Format      = "Y-m-d\\TH:i:sP"
+	ISO8601MilliFormat = "Y-m-d\\TH:i:s.vP"
+	ISO8601MicroFormat = "Y-m-d\\TH:i:s.uP"
+	ISO8601NanoFormat  = "Y-m-d\\TH:i:s.xP"
+
+	DayDateTimeFormat        = "D, M j, Y g:i A"
+	DateTimeFormat           = "Y-m-d H:i:s"
+	DateTimeMilliFormat      = "Y-m-d H:i:s.v"
+	DateTimeMicroFormat      = "Y-m-d H:i:s.u"
+	DateTimeNanoFormat       = "Y-m-d H:i:s.x"
+	ShortDateTimeFormat      = "YmdHis"
+	ShortDateTimeMilliFormat = "YmdHis.v"
+	ShortDateTimeMicroFormat = "YmdHis.u"
+	ShortDateTimeNanoFormat  = "YmdHis.x"
+
+	DateFormat           = "Y-m-d"
+	DateMilliFormat      = "Y-m-d.v"
+	DateMicroFormat      = "Y-m-d.u"
+	DateNanoFormat       = "Y-m-d.x"
+	ShortDateFormat      = "Ymd"
+	ShortDateMilliFormat = "Ymd.v"
+	ShortDateMicroFormat = "Ymd.u"
+	ShortDateNanoFormat  = "Ymd.x"
+
+	TimeFormat           = "H:i:s"
+	TimeMilliFormat      = "H:i:s.v"
+	TimeMicroFormat      = "H:i:s.u"
+	TimeNanoFormat       = "H:i:s.x"
+	ShortTimeFormat      = "His"
+	ShortTimeMilliFormat = "His.v"
+	ShortTimeMicroFormat = "His.u"
+	ShortTimeNanoFormat  = "His.x"
+)
+
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
@@ -196,7 +255,7 @@ type Carbon struct {
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	c := Carbon{testNow: 0, weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
+	c := Carbon{weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
 	c.lang.rw.Lock()
 	defer c.lang.rw.Unlock()
 	return c
