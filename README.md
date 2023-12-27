@@ -1571,8 +1571,6 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 |  H   |                                  Hour in 24-hour format, padded to 2                                   |   2    |      00-23       |               15                |
 |  i   |                                          Minute, padded to 2                                           |   2    |      01-59       |               04                |
 |  s   |                                          Second, padded to 2                                           |   2    |      01-59       |               05                |
-|  c   |                                              ISO8601 date                                              |   -    |        -         |    2006-01-02T15:04:05-07:00    |
-|  r   |                                              RFC2822 date                                              |   -    |        -         | Mon, 02 Jan 2006 15:04:05 -0700 |
 |  O   |               Difference to Greenwich time (GMT) without colon between hours and minutes               |   -    |        -         |              -0700              |
 |  P   |                Difference to Greenwich time (GMT) with colon between hours and minutes                 |   -    |        -         |             -07:00              |
 |  T   |                                          Abbreviated timezone                                          |   -    |        -         |               MST               |
