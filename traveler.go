@@ -13,7 +13,7 @@ func (c Carbon) Now(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	if c.HasTestNow() {
+	if c.IsSetTestNow() {
 		return CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	c.time = time.Now().In(c.loc)
@@ -35,7 +35,7 @@ func (c Carbon) Tomorrow(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	if c.HasTestNow() {
+	if c.IsSetTestNow() {
 		return CreateFromTimestampNano(c.testNow, c.Location()).AddDay()
 	}
 	if !c.IsZero() {
@@ -59,7 +59,7 @@ func (c Carbon) Yesterday(timezone ...string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	if c.HasTestNow() {
+	if c.IsSetTestNow() {
 		return CreateFromTimestampNano(c.testNow, c.Location()).SubDay()
 	}
 	if !c.IsZero() {

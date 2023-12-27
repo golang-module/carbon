@@ -1522,10 +1522,9 @@ carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
 carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
 carbon.SetTestNow(testNow).Parse("2000-08-05").Age() // 30
 
-carbon.Now().HasTestNow() // false
-carbon.SetTestNow(testNow).HasTestNow() // true
-carbon.SetTestNow(testNow).ClearTestNow().HasTestNow() // false
-
+carbon.Now().IsSetTestNow() // false
+carbon.SetTestNow(testNow).IsSetTestNow() // true
+carbon.SetTestNow(testNow).UnSetTestNow().IsSetTestNow() // false
 ```
 
 ##### エラー処理
