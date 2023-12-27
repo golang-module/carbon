@@ -1518,17 +1518,18 @@ c.Now().Season() // summer
 ##### Testing
 
 ```go
-testNow := carbon.Parse("2020-08-05")
+c := carbon.SetTimezone(carbon.UTC)
 
-carbon.SetTestNow(testNow).Yesterday().ToDateString() // 2020-08-04
-carbon.SetTestNow(testNow).Now().ToDateString() // 2020-08-05
-carbon.SetTestNow(testNow).Tomorrow().ToDateString() // 2020-08-06
-carbon.SetTestNow(testNow).Parse("2000-08-05").Age() // 30
+c.Now().ToDateString() // 2023-12-27
+c.IsSetTestNow() // false
 
-carbon.Now().IsSetTestNow() // false
-carbon.SetTestNow(testNow).IsSetTestNow() // true
-carbon.SetTestNow(testNow).UnSetTestNow().IsSetTestNow() // false
+c.SetTestNow(carbon.Parse("2020-08-05"))
+c.Now().ToDateString() // 2020-08-05
+c.Now().IsSetTestNow() // true
 
+c.UnSetTestNow()
+c.Now().ToDateString() // 2023-12-2
+c.Now().IsSetTestNow() // false
 ```
 
 ##### Error
