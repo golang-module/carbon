@@ -3,9 +3,7 @@ package carbon
 // SetTestNow sets a test Carbon instance (real or mock) to be returned when a "now" instance is created.
 // 设置当前测试时间
 func (c *Carbon) SetTestNow(carbon Carbon) {
-	c.testNow = carbon.TimestampNano()
-	c.loc = carbon.loc
-	c.loc = carbon.loc
+	c.testNow, c.loc = carbon.TimestampNano(), carbon.loc
 }
 
 // UnSetTestNow clears a test Carbon instance (real or mock) to be returned when a "now" instance is created.
