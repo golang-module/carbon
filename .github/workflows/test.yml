@@ -18,17 +18,18 @@ jobs:
       GO111MODULE: on
       GOPROXY: https://goproxy.cn
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
       - name: Setup go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '>=1.16.0'
-      - name: Install dependencies
-        uses: actions/checkout@v3
 
-      - name: Create test coverage file
+      - name: Create coverage file
         run: go test -coverprofile='coverage.txt' -covermode=atomic
 
-      - name: Upload coverage file to codecov
+      - name: Upload coverage file
         uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
