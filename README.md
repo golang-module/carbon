@@ -1521,7 +1521,7 @@ c.Now().Season() // summer
 c := carbon.SetTimezone(carbon.UTC)
 
 c.Now().ToDateString() // 2023-12-27
-c.IsSetTestNow() // false
+c.Now().IsSetTestNow() // false
 
 c.SetTestNow(carbon.Parse("2020-08-05"))
 c.Now().ToDateString() // 2020-08-05
