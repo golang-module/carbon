@@ -18,7 +18,7 @@ func (c Carbon) String() string {
 	if key == "format" {
 		return c.Format(value, tz)
 	}
-	return c.ToDateTimeString(tz)
+	return c.ToDateTimeString(c.Location())
 }
 
 // ToString outputs a string in "2006-01-02 15:04:05.999999999 -0700 MST" layout.
