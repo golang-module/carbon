@@ -244,11 +244,11 @@ const (
 // 定义 Carbon 结构体
 type Carbon struct {
 	time         time.Time
-	testNow      int64 // timestamp with nanosecond of test now time
+	testNow      int64 // nanosecond timestamp of test now time
 	weekStartsAt time.Weekday
+	tag          tag
 	loc          *time.Location
 	lang         *Language
-	tag          tag
 	Error        error
 }
 
