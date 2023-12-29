@@ -12,7 +12,10 @@ type Person struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 
-	Birthday0 Carbon `json:"birthday0"`
+	Birthday01 Carbon `json:"birthday01"`
+	Birthday02 Carbon `json:"birthday02" carbon:"dateTime"`
+	Birthday03 Carbon `json:"birthday03" tz:"PRC"`
+	Birthday04 Carbon `json:"birthday04" carbon:"" tz:""`
 
 	Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02"`
 	Birthday2 Carbon `json:"birthday2" carbon:"layout:15:04:05"`
@@ -76,13 +79,21 @@ type Person struct {
 	Birthday58 Carbon `json:"birthday58" carbon:"iso8601Milli"`
 	Birthday59 Carbon `json:"birthday59" carbon:"iso8601Micro"`
 	Birthday60 Carbon `json:"birthday60" carbon:"iso8601Nano"`
+
+	Birthday61 Carbon `json:"birthday61" carbon:"timestamp"`
+	Birthday62 Carbon `json:"birthday62" carbon:"timestampMilli"`
+	Birthday63 Carbon `json:"birthday63" carbon:"timestampMicro"`
+	Birthday64 Carbon `json:"birthday64" carbon:"timestampNano"`
 }
 
 var c = Parse("2020-08-05 13:14:15.999999999", PRC)
 var person = Person{
 	Name:       "gouguoyin",
 	Age:        18,
-	Birthday0:  c,
+	Birthday01: c,
+	Birthday02: c,
+	Birthday03: c,
+	Birthday04: c,
 	Birthday1:  c,
 	Birthday2:  c,
 	Birthday3:  c,
@@ -143,6 +154,10 @@ var person = Person{
 	Birthday58: c,
 	Birthday59: c,
 	Birthday60: c,
+	Birthday61: c,
+	Birthday62: c,
+	Birthday63: c,
+	Birthday64: c,
 }
 
 func TestCarbon_MarshalJSON(t *testing.T) {
@@ -152,7 +167,10 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	data, marshalErr := json.Marshal(&person)
 	assert.Nil(t, marshalErr)
 
-	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday0.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday01.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday02.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday03.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday04.String())
 	assert.Equal(t, "2020-08-05", person.Birthday1.String())
 	assert.Equal(t, "13:14:15", person.Birthday2.String())
 	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday3.String())
@@ -213,6 +231,10 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	assert.Equal(t, "2020-08-05T13:14:15.999+08:00", person.Birthday58.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999+08:00", person.Birthday59.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999999+08:00", person.Birthday60.String())
+	assert.Equal(t, "1596604455", person.Birthday61.String())
+	assert.Equal(t, "1596604455999", person.Birthday62.String())
+	assert.Equal(t, "1596604455999999", person.Birthday63.String())
+	assert.Equal(t, "1596604455999999999", person.Birthday64.String())
 
 	fmt.Printf("person output by json:\n%s\n", data)
 }
@@ -221,7 +243,10 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	str := `{
 		"name": "gouguoyin",
 		"age": 18,
-		"birthday0": "2020-08-05 13:14:15",
+		"birthday01": "2020-08-05 13:14:15",
+		"birthday02": "2020-08-05 13:14:15",
+		"birthday03": "2020-08-05 13:14:15",
+		"birthday04": "2020-08-05 13:14:15",
 		"birthday1": "2020-08-05",
 		"birthday2": "13:14:15",
 		"birthday3": "2020-08-05 13:14:15",
@@ -281,7 +306,11 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 		"birthday57": "2020-08-05T13:14:15+08:00",
 		"birthday58": "2020-08-05T13:14:15.999+08:00",
 		"birthday59": "2020-08-05T13:14:15.999999+08:00",
-		"birthday60": "2020-08-05T13:14:15.999999999+08:00"
+		"birthday60": "2020-08-05T13:14:15.999999999+08:00",
+		"birthday61": 1596604455,
+		"birthday62": 1596604455999,
+		"birthday63": 1596604455999999,
+		"birthday64": 1596604455999999999
 	}`
 
 	loadErr := LoadTag(&person)
@@ -290,7 +319,10 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	unmarshalErr := json.Unmarshal([]byte(str), &person)
 	assert.Nil(t, unmarshalErr)
 
-	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday0.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday01.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday02.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday03.String())
+	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday04.String())
 	assert.Equal(t, "2020-08-05", person.Birthday1.String())
 	assert.Equal(t, "13:14:15", person.Birthday2.String())
 	assert.Equal(t, "2020-08-05 13:14:15", person.Birthday3.String())
@@ -351,6 +383,10 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 	assert.Equal(t, "2020-08-05T13:14:15.999+08:00", person.Birthday58.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999+08:00", person.Birthday59.String())
 	assert.Equal(t, "2020-08-05T13:14:15.999999999+08:00", person.Birthday60.String())
+	assert.Equal(t, "1596604455", person.Birthday61.String())
+	assert.Equal(t, "1596604455999", person.Birthday62.String())
+	assert.Equal(t, "1596604455999999", person.Birthday63.String())
+	assert.Equal(t, "1596604455999999999", person.Birthday64.String())
 
 	fmt.Printf("Json string parse to person:\n%+v\n", person)
 }
@@ -361,6 +397,7 @@ func TestError_Json(t *testing.T) {
 		Birthday2 Carbon `json:"birthday2" carbon:"layout:xxx"`
 		Birthday3 Carbon `json:"birthday3" carbon:"format:xxx"`
 		Birthday4 Carbon `json:"birthday4" carbon:"xxx"`
+		Birthday5 Carbon `json:"birthday5" tz:"xxx"`
 	}
 
 	student := Student{
@@ -368,6 +405,7 @@ func TestError_Json(t *testing.T) {
 		Birthday2: Parse("2020-08-05"),
 		Birthday3: Parse("2020-08-05"),
 		Birthday4: Parse("2020-08-05"),
+		Birthday5: Parse("2020-08-05"),
 	}
 
 	_, marshalErr := json.Marshal(student)
@@ -380,7 +418,8 @@ func TestError_Json(t *testing.T) {
 		"birthday1": "2020-08-05 13:14:15",
 		"birthday2": "2020-08-05 13:14:15",
 		"birthday3": "2020-08-05 13:14:15",
-		"birthday4": "2020-08-05 13:14:15"
+		"birthday4": "2020-08-05 13:14:15",
+		"birthday5": "2020-08-05 13:14:15"
 	}`
 
 	unmarshalErr := json.Unmarshal([]byte(str), &student)
