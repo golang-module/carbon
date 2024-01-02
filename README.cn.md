@@ -236,7 +236,7 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 
 ```go
 // 将 time.Time 转换成 Carbon
-carbon.CreateFromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now(), "PRC")
 // 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
 ```
@@ -1267,13 +1267,15 @@ type Person struct {
     Name string `json:"name"`
     Age  int    `json:"age"`
     
-    Birthday0 Carbon `json:"birthday0"`
-    Birthday1 Carbon `json:"birthday1" carbon:"date"`
-    Birthday2 Carbon `json:"birthday2" carbon:"time"`
-    Birthday3 Carbon `json:"birthday3" carbon:"dateTime"`
-    Birthday4 Carbon `json:"birthday4" carbon:"date" tz:"PRC"`
-    Birthday5 Carbon `json:"birthday5" carbon:"time" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"dateTime" tz:"PRC"`
+    Birthday1 Carbon `json:"birthday1"`
+    Birthday2 Carbon `json:"birthday2" carbon:"date" tz:"PRC"`
+    Birthday3 Carbon `json:"birthday3" carbon:"time" tz:"PRC"`
+    Birthday4 Carbon `json:"birthday4" carbon:"dateTime" tz:"PRC"`
+
+    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
 }
 ```
 
@@ -1284,13 +1286,15 @@ type Person struct {
     Name string `json:"name"`
     Age  int    `json:"age"`
     
-    Birthday0 Carbon `json:"birthday0"`
-    Birthday1 Carbon `json:"birthday1" carbon:"layout:2006-01-02"`
-    Birthday2 Carbon `json:"birthday2" carbon:"layout:15:04:05"`
-    Birthday3 Carbon `json:"birthday3" carbon:"layout:2006-01-02 15:04:05"`
-    Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02" tz:"PRC"`
-    Birthday5 Carbon `json:"birthday5" carbon:"layout:15:04:05" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+    Birthday1 Carbon `json:"birthday1"`
+    Birthday2 Carbon `json:"birthday2" carbon:"layout:2006-01-02" tz:"PRC"`
+    Birthday3 Carbon `json:"birthday3" carbon:"layout:15:04:05" tz:"PRC"`
+    Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+	
+    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
 }
 ```
 
@@ -1301,13 +1305,15 @@ type Person struct {
     Name string `json:"name"`
     Age  int    `json:"age"`
     
-    Birthday0 Carbon `json:"birthday0"`
-    Birthday1 Carbon `json:"birthday1" carbon:"format:Y-m-d"`
-    Birthday2 Carbon `json:"birthday2" carbon:"format:H:i:s"`
-    Birthday3 Carbon `json:"birthday3" carbon:"format:Y-m-d H:i:s"`
-    Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d" tz:"PRC"`
-    Birthday5 Carbon `json:"birthday5" carbon:"format:H:i:s" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
+    Birthday1 Carbon `json:"birthday1"`
+    Birthday2 Carbon `json:"birthday2" carbon:"format:Y-m-d" tz:"PRC"`
+    Birthday3 Carbon `json:"birthday3" carbon:"format:H:i:s" tz:"PRC"`
+    Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
+
+    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
 }
 ```
 
@@ -1321,13 +1327,14 @@ person := Person {
     Name:      "gouguoyin",
     Age:       18,
 	
-    Birthday0: now,
     Birthday1: now,
     Birthday2: now,
     Birthday3: now,
     Birthday4: now,
     Birthday5: now,
     Birthday6: now,
+    Birthday7: now,
+    Birthday8: now,
 }
 ```
 
@@ -1349,13 +1356,14 @@ fmt.Printf("%s", data)
 {
     "name": "gouguoyin",
     "age": 18,
-    "birthday0": "2020-08-05 13:14:15",
-    "birthday1": "2020-08-05",
-    "birthday2": "13:14:15",
-    "birthday3": "2020-08-05 13:14:15",
-    "birthday4": "2020-08-05",
-    "birthday5": "213:14:15",
-    "birthday6": "2020-08-05 13:14:15"
+    "birthday1": "2020-08-05 13:14:15",
+    "birthday2": "2020-08-05",
+    "birthday3": "13:14:15",
+    "birthday4": "2020-08-05 13:14:15",
+    "birthday5": 1596604455,
+    "birthday6": 1596604455999,
+    "birthday7": 1596604455999999,
+    "birthday8": 1596604455999999999
 }
 ```
 
@@ -1365,13 +1373,14 @@ fmt.Printf("%s", data)
 str := `{
     "name": "gouguoyin",
     "age": 18,
-    "birthday0": "2020-08-05 13:14:15",
-    "birthday1": "2020-08-05",
-    "birthday2": "13:14:15",
-    "birthday3": "2020-08-05 13:14:15",
-    "birthday4": "2020-08-05",
-    "birthday5": "213:14:15",
-    "birthday6": "2020-08-05 13:14:15"
+    "birthday1": "2020-08-05 13:14:15",
+    "birthday2": "2020-08-05",
+    "birthday3": "13:14:15",
+    "birthday4": "2020-08-05 13:14:15",
+    "birthday5": 1596604455,
+    "birthday6": 1596604455999,
+    "birthday7": 1596604455999999,
+    "birthday8": 1596604455999999999
 }`
 var person Person
 
@@ -1387,13 +1396,15 @@ if unmarshalErr != nil {
     log.Fatal(unmarshalErr)
 }
 
-fmt.Sprintf("%s", person.Birthday0) // 2002-08-05 13:14:15
-fmt.Sprintf("%s", person.Birthday1) // 2020-08-05
-fmt.Sprintf("%s", person.Birthday2) // 13:14:15
-fmt.Sprintf("%s", person.Birthday3) // 2002-08-05 13:14:15
-fmt.Sprintf("%s", person.Birthday4) // 2002-08-05
-fmt.Sprintf("%s", person.Birthday5) // 13:14:15
-fmt.Sprintf("%s", person.Birthday6) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday1) // 2002-08-05 13:14:15
+fmt.Sprintf("%s", person.Birthday2) // 2020-08-05
+fmt.Sprintf("%s", person.Birthday3) // 13:14:15
+fmt.Sprintf("%s", person.Birthday4) // 2002-08-05 13:14:15
+
+fmt.Sprintf("%d", person.Birthday5) // 1596604455
+fmt.Sprintf("%d", person.Birthday6) // 1596604455999
+fmt.Sprintf("%d", person.Birthday7) // 1596604455999999
+fmt.Sprintf("%d", person.Birthday8) // 1596604455999999999
 ```
 
 ##### 国际化

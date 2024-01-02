@@ -9,11 +9,15 @@ import (
 )
 
 func TestCarbon_CreateFromStdTime(t *testing.T) {
-	loc, _ := time.LoadLocation("Asia/Shanghai")
+	loc, _ := time.LoadLocation(PRC)
 	tt := time.Now().In(loc)
-	expected := tt.Format(DateTimeLayout)
-	actual := CreateFromStdTime(tt).ToDateTimeString()
-	assert.Equal(t, expected, actual)
+	expected := tt.Location().String()
+
+	actual1 := CreateFromStdTime(tt).Location()
+	assert.Equal(t, expected, actual1)
+
+	actual2 := CreateFromStdTime(tt, PRC).Location()
+	assert.Equal(t, expected, actual2)
 }
 
 func TestCarbon_CreateFromTimestamp(t *testing.T) {

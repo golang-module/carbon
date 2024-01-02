@@ -10,7 +10,12 @@ import (
 func (c *Carbon) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {
+		loc := time.Local
+		if c.loc != nil {
+			loc = c.loc
+		}
 		*c = CreateFromStdTime(value)
+		c.loc = loc
 		return nil
 	}
 	return fmt.Errorf("can not convert %v to carbon", v)

@@ -12,12 +12,17 @@ func (c Carbon) MarshalJSON() ([]byte, error) {
 		return nil, c.Error
 	}
 	key, value, tz := c.parseTag()
-	data := fmt.Sprintf(`"%s"`, c.ToDateTimeString(tz))
+	data := ""
 	if key == "layout" {
 		data = fmt.Sprintf(`"%s"`, c.Layout(value, tz))
 	}
 	if key == "format" {
-		data = fmt.Sprintf(`"%s"`, c.Format(value, tz))
+		// timestamp without double quotes in json
+		if value == "U" || value == "V" || value == "X" || value == "Z" {
+			data = fmt.Sprintf(`%s`, c.Format(value, tz))
+		} else {
+			data = fmt.Sprintf(`"%s"`, c.Format(value, tz))
+		}
 	}
 	return []byte(data), nil
 }
@@ -32,11 +37,13 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	data := fmt.Sprintf("%s", bytes.Trim(b, `"`))
 	if key == "layout" {
 		*c = ParseByLayout(data, value, tz)
-		c.tag = fmt.Sprintf("layout:%s;tz:%s", value, tz)
 	}
 	if key == "format" {
 		*c = ParseByFormat(data, value, tz)
-		c.tag = fmt.Sprintf("format:%s;tz:%s", value, tz)
+	}
+	c.tag = tag{
+		carbon: fmt.Sprintf("%s:%s", key, value),
+		tz:     tz,
 	}
 	return c.Error
 }
