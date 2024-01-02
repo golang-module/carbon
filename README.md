@@ -234,7 +234,7 @@ carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 20
 
 ```go
 // Convert Time.time into Carbon
-carbon.CreateFromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now(), "PRC")
 // Convert Carbon into Time.time
 carbon.Now().ToStdTime()
 ```

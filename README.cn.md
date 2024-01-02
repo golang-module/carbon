@@ -236,7 +236,7 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 
 ```go
 // 将 time.Time 转换成 Carbon
-carbon.CreateFromStdTime(time.Now())
+carbon.CreateFromStdTime(time.Now(), "PRC")
 // 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
 ```
