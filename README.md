@@ -1541,7 +1541,7 @@ c.Now().ToDateString() // 2020-08-05
 c.Now().IsSetTestNow() // true
 
 c.UnSetTestNow()
-c.Now().ToDateString() // 2023-12-2
+c.Now().ToDateString() // 2023-12-27
 c.Now().IsSetTestNow() // false
 ```
 

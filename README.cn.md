@@ -1430,8 +1430,8 @@ fmt.Sprintf("%d", person.Birthday8) // 1596604455999999999
 * [瑞典语(se)](./lang/se.json "瑞典语"): 由 [jwanglof](https://github.com/jwanglof "jwanglof") 翻译
 * [伊朗语(fa)](./lang/fa.json "伊朗语"): 由 [erfanMomeniii](https://github.com/ErfanMomeniii "ErfanMomeniii") 翻译
 * [波兰语(nl)](./lang/nl.json "波兰语"): 由 [RemcoE33](https://github.com/RemcoE33 "RemcoE33") 翻译
-* [越南语(nl)](./lang/vi.json "越南语"): 由 [culy247](https://github.com/culy247 "culy247") 翻译
-* [印地语(nl)](./lang/hi.json "印地语"): 由 [culy247](https://github.com/culy247 "culy247") 翻译
+* [越南语(vi)](./lang/vi.json "越南语"): 由 [culy247](https://github.com/culy247 "culy247") 翻译
+* [印地语(hi)](./lang/hi.json "印地语"): 由 [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") 翻译
 
 目前支持的方法有
 
@@ -1541,7 +1541,7 @@ c.Now().ToDateString() // 2020-08-05
 c.Now().IsSetTestNow() // true
 
 c.UnSetTestNow()
-c.Now().ToDateString() // 2023-12-2
+c.Now().ToDateString() // 2023-12-27
 c.Now().IsSetTestNow() // false
 ```
 
