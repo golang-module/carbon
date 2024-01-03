@@ -15,8 +15,69 @@ var (
 
 	// invalid tag error
 	// 无效的标签错误
-	invalidTagError = func() error {
-		return fmt.Errorf("invalid carbon tag, please make sure the tag is valid")
+	invalidTagError = func(field string) error {
+		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
+	}
+
+	tagTypes = map[string]string{
+		"dateTime":           "layout:" + DateTimeLayout,
+		"dateTimeMilli":      "layout:" + DateTimeMilliLayout,
+		"dateTimeMicro":      "layout:" + DateTimeMicroLayout,
+		"dateTimeNano":       "layout:" + DateTimeNanoLayout,
+		"shortDateTime":      "layout:" + ShortDateTimeLayout,
+		"shortDateTimeMilli": "layout:" + ShortDateTimeMilliLayout,
+		"shortDateTimeMicro": "layout:" + ShortDateTimeMicroLayout,
+		"shortDateTimeNano":  "layout:" + ShortDateTimeNanoLayout,
+		"dayDateTime":        "layout:" + DayDateTimeLayout,
+
+		"date":           "layout:" + DateLayout,
+		"dateMilli":      "layout:" + DateMilliLayout,
+		"dateMicro":      "layout:" + DateMicroLayout,
+		"dateNano":       "layout:" + DateNanoLayout,
+		"shortDate":      "layout:" + ShortDateLayout,
+		"shortDateMilli": "layout:" + ShortDateMilliLayout,
+		"shortDateMicro": "layout:" + ShortDateMicroLayout,
+		"shortDateNano":  "layout:" + ShortDateNanoLayout,
+
+		"time":           "layout:" + TimeLayout,
+		"timeMilli":      "layout:" + TimeMilliLayout,
+		"timeMicro":      "layout:" + TimeMicroLayout,
+		"timeNano":       "layout:" + TimeNanoLayout,
+		"shortTime":      "layout:" + ShortTimeLayout,
+		"shortTimeMilli": "layout:" + ShortTimeMilliLayout,
+		"shortTimeMicro": "layout:" + ShortTimeMicroLayout,
+		"shortTimeNano":  "layout:" + ShortTimeNanoLayout,
+
+		"atom":     "layout:" + AtomLayout,
+		"ansic":    "layout:" + ANSICLayout,
+		"cookie":   "layout:" + CookieLayout,
+		"kitchen":  "layout:" + KitchenLayout,
+		"rss":      "layout:" + RssLayout,
+		"rubyDate": "layout:" + RubyDateLayout,
+		"unixDate": "layout:" + UnixDateLayout,
+
+		"rfc1036":      "layout:" + RFC1036Layout,
+		"rfc1123":      "layout:" + RFC1123Layout,
+		"rfc1123Z":     "layout:" + RFC1123ZLayout,
+		"rfc2822":      "layout:" + RFC2822Layout,
+		"rfc3339":      "layout:" + RFC3339Layout,
+		"rfc3339Milli": "layout:" + RFC3339MilliLayout,
+		"rfc3339Micro": "layout:" + RFC3339MicroLayout,
+		"rfc3339Nano":  "layout:" + RFC3339NanoLayout,
+		"rfc7231":      "layout:" + RFC7231Layout,
+		"rfc822":       "layout:" + RFC822Layout,
+		"rfc822Z":      "layout:" + RFC822ZLayout,
+		"rfc850":       "layout:" + RFC850Layout,
+
+		"iso8601":      "layout:" + ISO8601Layout,
+		"iso8601Milli": "layout:" + ISO8601MilliLayout,
+		"iso8601Micro": "layout:" + ISO8601MicroLayout,
+		"iso8601Nano":  "layout:" + ISO8601NanoLayout,
+
+		"timestamp":      "format:U",
+		"timestampMilli": "format:V",
+		"timestampMicro": "format:X",
+		"timestampNano":  "format:Z",
 	}
 )
 
@@ -69,121 +130,17 @@ func LoadTag(v interface{}) error {
 		}
 
 		carbon := fieldType.Tag.Get("carbon")
-		switch carbon {
-		case "", "dateTime":
+
+		if carbon == "" {
 			carbon = "layout:" + DateTimeLayout
-		case "dateTimeMilli":
-			carbon = "layout:" + DateTimeMilliLayout
-		case "dateTimeMicro":
-			carbon = "layout:" + DateTimeMicroLayout
-		case "dateTimeNano":
-			carbon = "layout:" + DateTimeNanoLayout
-		case "shortDateTime":
-			carbon = "layout:" + ShortDateTimeLayout
-		case "shortDateTimeMilli":
-			carbon = "layout:" + ShortDateTimeMilliLayout
-		case "shortDateTimeMicro":
-			carbon = "layout:" + ShortDateTimeMicroLayout
-		case "shortDateTimeNano":
-			carbon = "layout:" + ShortDateTimeNanoLayout
-		case "dayDateTime":
-			carbon = "layout:" + DayDateTimeLayout
+		}
 
-		case "date":
-			carbon = "layout:" + DateLayout
-		case "dateMilli":
-			carbon = "layout:" + DateMilliLayout
-		case "dateMicro":
-			carbon = "layout:" + DateMicroLayout
-		case "dateNano":
-			carbon = "layout:" + DateNanoLayout
-		case "shortDate":
-			carbon = "layout:" + ShortDateLayout
-		case "shortDateMilli":
-			carbon = "layout:" + ShortDateMilliLayout
-		case "shortDateMicro":
-			carbon = "layout:" + ShortDateMicroLayout
-		case "shortDateNano":
-			carbon = "layout:" + ShortDateNanoLayout
-
-		case "time":
-			carbon = "layout:" + TimeLayout
-		case "timeMilli":
-			carbon = "layout:" + TimeMilliLayout
-		case "timeMicro":
-			carbon = "layout:" + TimeMicroLayout
-		case "timeNano":
-			carbon = "layout:" + TimeNanoLayout
-		case "shortTime":
-			carbon = "layout:" + ShortTimeLayout
-		case "shortTimeMilli":
-			carbon = "layout:" + ShortTimeMilliLayout
-		case "shortTimeMicro":
-			carbon = "layout:" + ShortTimeMicroLayout
-		case "shortTimeNano":
-			carbon = "layout:" + ShortTimeNanoLayout
-
-		case "atom":
-			carbon = "layout:" + AtomLayout
-		case "ansic":
-			carbon = "layout:" + ANSICLayout
-		case "cookie":
-			carbon = "layout:" + CookieLayout
-		case "kitchen":
-			carbon = "layout:" + KitchenLayout
-		case "rss":
-			carbon = "layout:" + RssLayout
-		case "rubyDate":
-			carbon = "layout:" + RubyDateLayout
-		case "unixDate":
-			carbon = "layout:" + UnixDateLayout
-
-		case "rfc1036":
-			carbon = "layout:" + RFC1036Layout
-		case "rfc1123":
-			carbon = "layout:" + RFC1123Layout
-		case "rfc1123Z":
-			carbon = "layout:" + RFC1123ZLayout
-		case "rfc2822":
-			carbon = "layout:" + RFC2822Layout
-		case "rfc3339":
-			carbon = "layout:" + RFC3339Layout
-		case "rfc3339Milli":
-			carbon = "layout:" + RFC3339MilliLayout
-		case "rfc3339Micro":
-			carbon = "layout:" + RFC3339MicroLayout
-		case "rfc3339Nano":
-			carbon = "layout:" + RFC3339NanoLayout
-		case "rfc7231":
-			carbon = "layout:" + RFC7231Layout
-		case "rfc822":
-			carbon = "layout:" + RFC822Layout
-		case "rfc822Z":
-			carbon = "layout:" + RFC822ZLayout
-		case "rfc850":
-			carbon = "layout:" + RFC850Layout
-
-		case "iso8601":
-			carbon = "layout:" + ISO8601Layout
-		case "iso8601Milli":
-			carbon = "layout:" + ISO8601MilliLayout
-		case "iso8601Micro":
-			carbon = "layout:" + ISO8601MicroLayout
-		case "iso8601Nano":
-			carbon = "layout:" + ISO8601NanoLayout
-
-		case "timestamp":
-			carbon = "format:U"
-		case "timestampMilli":
-			carbon = "format:V"
-		case "timestampMicro":
-			carbon = "format:X"
-		case "timestampNano":
-			carbon = "format:Z"
+		if strings.Contains(carbon, "type:") {
+			carbon = tagTypes[carbon[5:]]
 		}
 
 		if !strings.Contains(carbon, "layout:") && !strings.Contains(carbon, "format:") {
-			return invalidTagError()
+			return invalidTagError(fieldType.Name)
 		}
 
 		tz := fieldType.Tag.Get("tz")
@@ -195,6 +152,7 @@ func LoadTag(v interface{}) error {
 			carbon: carbon,
 			tz:     tz,
 		})
+
 		fieldValue.Set(fieldValue.MethodByName("SetTag").Call(params)[0])
 	}
 	return nil
