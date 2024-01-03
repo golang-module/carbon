@@ -19,6 +19,8 @@ var (
 		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
 	}
 
+	// supported types
+	// 支持的类型
 	tagTypes = map[string]string{
 		"dateTime":           "layout:" + DateTimeLayout,
 		"dateTimeMilli":      "layout:" + DateTimeMilliLayout,
