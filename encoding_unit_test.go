@@ -13,7 +13,7 @@ type Person struct {
 	Age  int    `json:"age"`
 
 	Birthday01 Carbon `json:"birthday01"`
-	Birthday02 Carbon `json:"birthday02" carbon:"dateTime"`
+	Birthday02 Carbon `json:"birthday02" carbon:"type:dateTime"`
 	Birthday03 Carbon `json:"birthday03" tz:"PRC"`
 	Birthday04 Carbon `json:"birthday04" carbon:"" tz:""`
 
@@ -31,59 +31,59 @@ type Person struct {
 	Birthday11 Carbon `json:"birthday11" carbon:"format:H:i:s" tz:"PRC"`
 	Birthday12 Carbon `json:"birthday12" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
 
-	Birthday13 Carbon `json:"birthday13" carbon:"dateTime"`
-	Birthday14 Carbon `json:"birthday14" carbon:"dateTimeMilli"`
-	Birthday15 Carbon `json:"birthday15" carbon:"dateTimeMicro"`
-	Birthday16 Carbon `json:"birthday16" carbon:"dateTimeNano"`
-	Birthday17 Carbon `json:"birthday17" carbon:"shortDateTime"`
-	Birthday18 Carbon `json:"birthday18" carbon:"shortDateTimeMilli"`
-	Birthday19 Carbon `json:"birthday19" carbon:"shortDateTimeMicro"`
-	Birthday20 Carbon `json:"birthday20" carbon:"shortDateTimeNano"`
-	Birthday21 Carbon `json:"birthday21" carbon:"dayDateTime"`
-	Birthday22 Carbon `json:"birthday22" carbon:"date"`
-	Birthday23 Carbon `json:"birthday23" carbon:"dateMilli"`
-	Birthday24 Carbon `json:"birthday24" carbon:"dateMicro"`
-	Birthday25 Carbon `json:"birthday25" carbon:"dateNano"`
-	Birthday26 Carbon `json:"birthday26" carbon:"shortDate"`
-	Birthday27 Carbon `json:"birthday27" carbon:"shortDateMilli"`
-	Birthday28 Carbon `json:"birthday28" carbon:"shortDateMicro"`
-	Birthday29 Carbon `json:"birthday29" carbon:"shortDateNano"`
-	Birthday30 Carbon `json:"birthday30" carbon:"time"`
-	Birthday31 Carbon `json:"birthday31" carbon:"timeMilli"`
-	Birthday32 Carbon `json:"birthday32" carbon:"timeMicro"`
-	Birthday33 Carbon `json:"birthday33" carbon:"timeNano"`
-	Birthday34 Carbon `json:"birthday34" carbon:"shortTime"`
-	Birthday35 Carbon `json:"birthday35" carbon:"shortTimeMilli"`
-	Birthday36 Carbon `json:"birthday36" carbon:"shortTimeMicro"`
-	Birthday37 Carbon `json:"birthday37" carbon:"shortTimeNano"`
-	Birthday38 Carbon `json:"birthday38" carbon:"atom"`
-	Birthday39 Carbon `json:"birthday39" carbon:"ansic"`
-	Birthday40 Carbon `json:"birthday40" carbon:"cookie"`
-	Birthday41 Carbon `json:"birthday41" carbon:"kitchen"`
-	Birthday42 Carbon `json:"birthday42" carbon:"rss"`
-	Birthday43 Carbon `json:"birthday43" carbon:"rubyDate"`
-	Birthday44 Carbon `json:"birthday44" carbon:"unixDate"`
-	Birthday45 Carbon `json:"birthday45" carbon:"rfc1036"`
-	Birthday46 Carbon `json:"birthday46" carbon:"rfc1123"`
-	Birthday47 Carbon `json:"birthday47" carbon:"rfc1123Z"`
-	Birthday48 Carbon `json:"birthday48" carbon:"rfc2822"`
-	Birthday49 Carbon `json:"birthday49" carbon:"rfc3339"`
-	Birthday50 Carbon `json:"birthday50" carbon:"rfc3339Milli"`
-	Birthday51 Carbon `json:"birthday51" carbon:"rfc3339Micro"`
-	Birthday52 Carbon `json:"birthday52" carbon:"rfc3339Nano"`
-	Birthday53 Carbon `json:"birthday53" carbon:"rfc7231"`
-	Birthday54 Carbon `json:"birthday54" carbon:"rfc822"`
-	Birthday55 Carbon `json:"birthday55" carbon:"rfc822Z"`
-	Birthday56 Carbon `json:"birthday56" carbon:"rfc850"`
-	Birthday57 Carbon `json:"birthday57" carbon:"iso8601"`
-	Birthday58 Carbon `json:"birthday58" carbon:"iso8601Milli"`
-	Birthday59 Carbon `json:"birthday59" carbon:"iso8601Micro"`
-	Birthday60 Carbon `json:"birthday60" carbon:"iso8601Nano"`
+	Birthday13 Carbon `json:"birthday13" carbon:"type:dateTime"`
+	Birthday14 Carbon `json:"birthday14" carbon:"type:dateTimeMilli"`
+	Birthday15 Carbon `json:"birthday15" carbon:"type:dateTimeMicro"`
+	Birthday16 Carbon `json:"birthday16" carbon:"type:dateTimeNano"`
+	Birthday17 Carbon `json:"birthday17" carbon:"type:shortDateTime"`
+	Birthday18 Carbon `json:"birthday18" carbon:"type:shortDateTimeMilli"`
+	Birthday19 Carbon `json:"birthday19" carbon:"type:shortDateTimeMicro"`
+	Birthday20 Carbon `json:"birthday20" carbon:"type:shortDateTimeNano"`
+	Birthday21 Carbon `json:"birthday21" carbon:"type:dayDateTime"`
+	Birthday22 Carbon `json:"birthday22" carbon:"type:date"`
+	Birthday23 Carbon `json:"birthday23" carbon:"type:dateMilli"`
+	Birthday24 Carbon `json:"birthday24" carbon:"type:dateMicro"`
+	Birthday25 Carbon `json:"birthday25" carbon:"type:dateNano"`
+	Birthday26 Carbon `json:"birthday26" carbon:"type:shortDate"`
+	Birthday27 Carbon `json:"birthday27" carbon:"type:shortDateMilli"`
+	Birthday28 Carbon `json:"birthday28" carbon:"type:shortDateMicro"`
+	Birthday29 Carbon `json:"birthday29" carbon:"type:shortDateNano"`
+	Birthday30 Carbon `json:"birthday30" carbon:"type:time"`
+	Birthday31 Carbon `json:"birthday31" carbon:"type:timeMilli"`
+	Birthday32 Carbon `json:"birthday32" carbon:"type:timeMicro"`
+	Birthday33 Carbon `json:"birthday33" carbon:"type:timeNano"`
+	Birthday34 Carbon `json:"birthday34" carbon:"type:shortTime"`
+	Birthday35 Carbon `json:"birthday35" carbon:"type:shortTimeMilli"`
+	Birthday36 Carbon `json:"birthday36" carbon:"type:shortTimeMicro"`
+	Birthday37 Carbon `json:"birthday37" carbon:"type:shortTimeNano"`
+	Birthday38 Carbon `json:"birthday38" carbon:"type:atom"`
+	Birthday39 Carbon `json:"birthday39" carbon:"type:ansic"`
+	Birthday40 Carbon `json:"birthday40" carbon:"type:cookie"`
+	Birthday41 Carbon `json:"birthday41" carbon:"type:kitchen"`
+	Birthday42 Carbon `json:"birthday42" carbon:"type:rss"`
+	Birthday43 Carbon `json:"birthday43" carbon:"type:rubyDate"`
+	Birthday44 Carbon `json:"birthday44" carbon:"type:unixDate"`
+	Birthday45 Carbon `json:"birthday45" carbon:"type:rfc1036"`
+	Birthday46 Carbon `json:"birthday46" carbon:"type:rfc1123"`
+	Birthday47 Carbon `json:"birthday47" carbon:"type:rfc1123Z"`
+	Birthday48 Carbon `json:"birthday48" carbon:"type:rfc2822"`
+	Birthday49 Carbon `json:"birthday49" carbon:"type:rfc3339"`
+	Birthday50 Carbon `json:"birthday50" carbon:"type:rfc3339Milli"`
+	Birthday51 Carbon `json:"birthday51" carbon:"type:rfc3339Micro"`
+	Birthday52 Carbon `json:"birthday52" carbon:"type:rfc3339Nano"`
+	Birthday53 Carbon `json:"birthday53" carbon:"type:rfc7231"`
+	Birthday54 Carbon `json:"birthday54" carbon:"type:rfc822"`
+	Birthday55 Carbon `json:"birthday55" carbon:"type:rfc822Z"`
+	Birthday56 Carbon `json:"birthday56" carbon:"type:rfc850"`
+	Birthday57 Carbon `json:"birthday57" carbon:"type:iso8601"`
+	Birthday58 Carbon `json:"birthday58" carbon:"type:iso8601Milli"`
+	Birthday59 Carbon `json:"birthday59" carbon:"type:iso8601Micro"`
+	Birthday60 Carbon `json:"birthday60" carbon:"type:iso8601Nano"`
 
-	Birthday61 Carbon `json:"birthday61" carbon:"timestamp"`
-	Birthday62 Carbon `json:"birthday62" carbon:"timestampMilli"`
-	Birthday63 Carbon `json:"birthday63" carbon:"timestampMicro"`
-	Birthday64 Carbon `json:"birthday64" carbon:"timestampNano"`
+	Birthday61 Carbon `json:"birthday61" carbon:"type:timestamp"`
+	Birthday62 Carbon `json:"birthday62" carbon:"type:timestampMilli"`
+	Birthday63 Carbon `json:"birthday63" carbon:"type:timestampMicro"`
+	Birthday64 Carbon `json:"birthday64" carbon:"type:timestampNano"`
 }
 
 var c = Parse("2020-08-05 13:14:15.999999999", PRC)
