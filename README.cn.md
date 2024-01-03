@@ -1268,14 +1268,14 @@ type Person struct {
     Age  int    `json:"age"`
     
     Birthday1 Carbon `json:"birthday1"`
-    Birthday2 Carbon `json:"birthday2" carbon:"date" tz:"PRC"`
-    Birthday3 Carbon `json:"birthday3" carbon:"time" tz:"PRC"`
-    Birthday4 Carbon `json:"birthday4" carbon:"dateTime" tz:"PRC"`
+    Birthday2 Carbon `json:"birthday2" carbon:"type:date" tz:"PRC"`
+    Birthday3 Carbon `json:"birthday3" carbon:"type:time" tz:"PRC"`
+    Birthday4 Carbon `json:"birthday4" carbon:"type:dateTime" tz:"PRC"`
 
-    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
 
@@ -1291,10 +1291,10 @@ type Person struct {
     Birthday3 Carbon `json:"birthday3" carbon:"layout:15:04:05" tz:"PRC"`
     Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
 	
-    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
 
@@ -1310,10 +1310,10 @@ type Person struct {
     Birthday3 Carbon `json:"birthday3" carbon:"format:H:i:s" tz:"PRC"`
     Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
 
-    Birthday5 Carbon `json:"birthday5" carbon:"timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"timestampNano" tz:"PRC"`
+    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
+    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
+    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
+    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
 
