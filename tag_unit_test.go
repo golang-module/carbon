@@ -34,5 +34,5 @@ func TestError_LoadTag(t *testing.T) {
 	assert.Equal(t, err1, invalidPtrError())
 
 	err2 := LoadTag(&student)
-	assert.Equal(t, err2, invalidTagError())
+	assert.Equal(t, err2, invalidTagError("Birthday"))
 }
