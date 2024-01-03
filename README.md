@@ -1555,7 +1555,6 @@ if c.Error != nil {
     // Error handle...
     log.Fatal(c.Error)
 }
-fmt.Println(c.ToDateTimeString())
 // Output
 invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
