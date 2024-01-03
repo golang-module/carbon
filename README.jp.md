@@ -1297,8 +1297,7 @@ type Person struct {
     Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
-
-または
+> サポートされているすべての type 値については、<a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">ここ</a>をクリックしてご覧ください。
 
 ```go
 type Person struct {

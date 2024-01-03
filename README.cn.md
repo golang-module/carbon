@@ -1278,6 +1278,7 @@ type Person struct {
     Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
+> 所有支持的 type 值请点击 <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">这里</a> 查阅。
 
 或
 
