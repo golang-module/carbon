@@ -1430,6 +1430,7 @@ The following languages are supported
 * [Swedish(se)](./lang/se.json "Swedish"): translated by [jwanglof](https://github.com/jwanglof "jwanglof")
 * [Iranian(fa)](./lang/fa.json "Iranian"): translated by [erfanMomeniii](https://github.com/erfanMomeniii "erfanMomeniii")
 * [Dutch(nl)](./lang/nl.json "Dutch"): translated by [RemcoE33](https://github.com/RemcoE33 "RemcoE33")
+* [VietNamese(vi)](./lang/vi.json "VietNam"): translated by [go-dyn](https://github.com/go-dyn "go-dyn")
 
 The following methods are supported
 
