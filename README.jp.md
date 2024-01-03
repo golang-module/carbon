@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/golang-module/carbon/v2)
 [![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Goproxy.cn](https://goproxy.cn/stats/github.com/golang-module/carbon/badges/download-count.svg)](https://goproxy.cn)
-[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon/v2)
 [![License](https://img.shields.io/github/license/golang-module/carbon)](https://github.com/golang-module/carbon/blob/master/LICENSE)
 
 日本語 | [English](README.md) | [简体中文](README.cn.md)
@@ -1426,7 +1426,8 @@ fmt.Sprintf("%d", person.Birthday8) // 1596604455999999999
 * [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") から翻訳されます
 * [スウェーデン語(se)](./lang/se.json "スウェーデン語"):  [jwanglof](https://github.com/jwanglof "jwanglof") から翻訳されます
 * [イラン語(fa)](./lang/fa.json "イラン語"):  [Iranian](https://github.com/Iranian "Iranian") から翻訳されます
-* [ポーランド語(nl)](./lang/nl.json "ポーランド語"):  [RemcoE33](https://github.com/RemcoE33 "RemcoE33") から翻訳されます
+* [ポーランド語(nl)](./lang/nl.json "ポーランド語"): [RemcoE33](https://github.com/RemcoE33 "RemcoE33") から翻訳されます
+* [ベトナム語(nl)](./lang/vi.json "ベトナム語"): [culy247](https://github.com/culy247 "culy247") から翻訳されます
 
 現在サポートされている方法
 

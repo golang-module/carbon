@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/golang-module/carbon/v2)
 [![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
 [![Goproxy.cn](https://goproxy.cn/stats/github.com/golang-module/carbon/badges/download-count.svg)](https://goproxy.cn)
-[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon)
+[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon/v2)
 [![License](https://img.shields.io/github/license/golang-module/carbon)](https://github.com/golang-module/carbon/blob/master/LICENSE)
 
 English | [简体中文](README.cn.md) | [日本語](README.jp.md)
@@ -1430,7 +1430,7 @@ The following languages are supported
 * [Swedish(se)](./lang/se.json "Swedish"): translated by [jwanglof](https://github.com/jwanglof "jwanglof")
 * [Iranian(fa)](./lang/fa.json "Iranian"): translated by [erfanMomeniii](https://github.com/erfanMomeniii "erfanMomeniii")
 * [Dutch(nl)](./lang/nl.json "Dutch"): translated by [RemcoE33](https://github.com/RemcoE33 "RemcoE33")
-* [VietNamese(vi)](./lang/vi.json "VietNam"): translated by [go-dyn](https://github.com/go-dyn "go-dyn")
+* [VietNamese(vi)](./lang/vi.json "VietNam"): translated by [culy247](https://github.com/culy247 "culy247")
 
 The following methods are supported
 
