@@ -1273,7 +1273,7 @@ type Person struct {
   Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
 }
 ```
-> Please refer to <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">here</a> for all supported type values.
+> Please refer to <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">here</a> for all supported types.
 
 or
 
