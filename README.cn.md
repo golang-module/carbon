@@ -56,7 +56,7 @@ import "gitee.com/golang-module/carbon"
 
 ```go
 // 今天此刻
-fmt.Sprintf("%s", carbon.Now()) // 2020-08-05 13:14:15
+fmt.Printf("%s", carbon.Now()) // 2020-08-05 13:14:15
 carbon.Now().String() // 2020-08-05 13:14:15
 carbon.Now().ToString() // 2020-08-05 13:14:15 +0800 CST
 carbon.Now().ToDateTimeString() // 2020-08-05 13:14:15
@@ -76,7 +76,7 @@ carbon.Now().TimestampMicro() // 1596604455999999
 carbon.Now().TimestampNano() // 1596604455999999999
 
 // 昨天此刻
-fmt.Sprintf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
+fmt.Printf("%s", carbon.Yesterday()) // 2020-08-04 13:14:15
 carbon.Yesterday().String() // 2020-08-04 13:14:15
 carbon.Yesterday().ToString() // 2020-08-04 13:14:15 +0800 CST
 carbon.Yesterday().ToDateTimeString() // 2020-08-04 13:14:15
@@ -98,7 +98,7 @@ carbon.Yesterday().TimestampMicro() // 1596518055999999
 carbon.Yesterday().TimestampNano() // 1596518055999999999
 
 // 明天此刻
-fmt.Sprintf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
+fmt.Printf("%s", carbon.Tomorrow()) // 2020-08-06 13:14:15
 carbon.Tomorrow().String() // 2020-08-06 13:14:15
 carbon.Tomorrow().ToString() // 2020-08-06 13:14:15 +0800 CST
 carbon.Tomorrow().ToDateTimeString() // 2020-08-06 13:14:15
@@ -236,7 +236,7 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 
 ```go
 // 将 time.Time 转换成 Carbon
-carbon.CreateFromStdTime(time.Now(), "PRC")
+carbon.CreateFromStdTime(time.Now())
 // 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
 ```
@@ -1086,7 +1086,7 @@ carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339MicroString() // 20
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339NanoString() // 2020-08-05T13:14:15.999999999+08:00
 
 // 输出日期时间字符串
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
+fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
 
 // 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
@@ -1188,7 +1188,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // 获取农历日日期
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
 // 获取农历 YYYY-MM-DD HH::ii::ss 格式字符串
-fmt.Sprintf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
+fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 
 // 获取农历年字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
@@ -1260,152 +1260,248 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ##### JSON
 
-###### 定义模型
+> 所有支持的 type 值请点击 <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">这里</a> 查阅。 如果 `carbon` 标签没有设置，默认是 `layout:2006-01-02 15:04:05`；如果 `tz` 标签没有设置，默认是 `Local`
 
+###### 场景一: 所有时间字段有相同的格式并且格式都是 `"2006-01-02 15:04:05"`
 ```go
 type Person struct {
-    Name string `json:"name"`
-    Age  int    `json:"age"`
-    
-    Birthday1 Carbon `json:"birthday1"`
-    Birthday2 Carbon `json:"birthday2" carbon:"type:date" tz:"PRC"`
-    Birthday3 Carbon `json:"birthday3" carbon:"type:time" tz:"PRC"`
-    Birthday4 Carbon `json:"birthday4" carbon:"type:dateTime" tz:"PRC"`
-
-    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
+  Name string `json:"name"`
+  Age  int    `json:"age"`
+  
+  Field1 Carbon `json:"field1"`
+  Field2 Carbon `json:"field2"`
+  Field3 Carbon `json:"field3"`
+  Field4 Carbon `json:"field4"`
+  
+  Field5 Carbon `json:"field5"`
+  Field6 Carbon `json:"field6"`
+  Field7 Carbon `json:"field7"`
+  Field8 Carbon `json:"field8"`
 }
-```
-> 所有支持的 type 值请点击 <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">这里</a> 查阅。
 
-或
-
-```go
-type Person struct {
-    Name string `json:"name"`
-    Age  int    `json:"age"`
-    
-    Birthday1 Carbon `json:"birthday1"`
-    Birthday2 Carbon `json:"birthday2" carbon:"layout:2006-01-02" tz:"PRC"`
-    Birthday3 Carbon `json:"birthday3" carbon:"layout:15:04:05" tz:"PRC"`
-    Birthday4 Carbon `json:"birthday4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
-	
-    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
-}
-```
-
-或
-
-```go
-type Person struct {
-    Name string `json:"name"`
-    Age  int    `json:"age"`
-    
-    Birthday1 Carbon `json:"birthday1"`
-    Birthday2 Carbon `json:"birthday2" carbon:"format:Y-m-d" tz:"PRC"`
-    Birthday3 Carbon `json:"birthday3" carbon:"format:H:i:s" tz:"PRC"`
-    Birthday4 Carbon `json:"birthday4" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
-
-    Birthday5 Carbon `json:"birthday5" carbon:"type:timestamp" tz:"PRC"`
-    Birthday6 Carbon `json:"birthday6" carbon:"type:timestampMilli" tz:"PRC"`
-    Birthday7 Carbon `json:"birthday7" carbon:"type:timestampMicro" tz:"PRC"`
-    Birthday8 Carbon `json:"birthday8" carbon:"type:timestampNano" tz:"PRC"`
-}
-```
-
-> 如果 `carbon` 标签没有设置，默认是 `layout:2006-01-02 15:04:05`；如果 `tz` 标签没有设置，默认是 `Local`
-
-###### 实例化模型
-
-```go
-now := Parse("2020-08-05 13:14:15", PRC)
+now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
-    Name:      "gouguoyin",
-    Age:       18,
-	
-    Birthday1: now,
-    Birthday2: now,
-    Birthday3: now,
-    Birthday4: now,
-    Birthday5: now,
-    Birthday6: now,
-    Birthday7: now,
-    Birthday8: now,
+  Name:   "gouguoyin",
+  Age:    18,
+  
+  Field1: now,
+  Field2: now,
+  Field3: now,
+  Field4: now,
+  Field5: now,
+  Field6: now,
+  Field7: now,
+  Field8: now,
 }
-```
 
-###### JSON 编码
-
-```go
-loadErr := carbon.LoadTag(&person)
-if loadErr != nil {
-    // 错误处理
-    log.Fatal(loadErr)
-}
 data, marshalErr := json.Marshal(person)
 if marshalErr != nil {
-    // 错误处理
-    log.Fatal(marshalErr)
+  // 错误处理
+  log.Fatal(marshalErr)
 }
 fmt.Printf("%s", data)
 // 输出
 {
-    "name": "gouguoyin",
-    "age": 18,
-    "birthday1": "2020-08-05 13:14:15",
-    "birthday2": "2020-08-05",
-    "birthday3": "13:14:15",
-    "birthday4": "2020-08-05 13:14:15",
-    "birthday5": 1596604455,
-    "birthday6": 1596604455999,
-    "birthday7": 1596604455999999,
-    "birthday8": 1596604455999999999
+  "name": "gouguoyin",
+  "age": 18,
+  "field1": "2020-08-05 13:14:15",
+  "field2": "2020-08-05 13:14:15",
+  "field3": "2020-08-05 13:14:15",
+  "field4": "2020-08-05 13:14:15",
+  "field5": "2020-08-05 13:14:15",
+  "field6": "2020-08-05 13:14:15",
+  "field7": "2020-08-05 13:14:15",
+  "field8": "2020-08-05 13:14:15"
 }
+
+unmarshalErr := json.Unmarshal(data, &person)
+if unmarshalErr != nil {
+  // 错误处理
+  log.Fatal(unmarshalErr)
+}
+
+fmt.Printf("%s", person.Field1) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field2) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field3) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field4) // 2002-08-05 13:14:15
+
+fmt.Printf("%s", person.Field5) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field6) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field7) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field8) // 2002-08-05 13:14:15
 ```
 
-###### JSON 解码
+###### 场景二: 所有时间字段有相同的格式并且格式不是 `"2006-01-02 15:04:05"`
+```go
+type Person struct {
+  Name string `json:"name"`
+  Age  int    `json:"age"`
+  
+  Field1 Carbon `json:"field1"`
+  Field2 Carbon `json:"field2"`
+  Field3 Carbon `json:"field3"`
+  Field4 Carbon `json:"field4"`
+  
+  Field5 Carbon `json:"field5"`
+  Field6 Carbon `json:"field6"`
+  Field7 Carbon `json:"field7"`
+  Field8 Carbon `json:"field8"`
+}
+
+tag := carbon.NewTag()
+
+tag.SetLayout(carbon.RFC3339Layout).SetTimezone(carbon.PRC)
+// 或者
+tag.SetFormat(carbon.RFC3339Format).SetTimezone(carbon.PRC)
+// 或者
+tag.SetType("rfc3339").SetTimezone(carbon.PRC)
+
+c := carbon.SetTag(tag)
+now := c.Parse("2020-08-05 13:14:15", carbon.PRC)
+person := Person {
+  Name:   "gouguoyin",
+  Age:    18,
+
+  Field1: now,
+  Field2: now,
+  Field3: now,
+  Field4: now,
+  Field5: now,
+  Field6: now,
+  Field7: now,
+  Field8: now,
+}
+
+data, marshalErr := json.Marshal(person)
+if marshalErr != nil {
+  // 错误处理
+  log.Fatal(marshalErr)
+}
+fmt.Printf("%s", data)
+// 输出
+{
+  "name": "gouguoyin",
+  "age": 18,
+  "field1": "2020-08-05T13:14:15+08:00",
+  "field2": "2020-08-05T13:14:15+08:00",
+  "field3": "2020-08-05T13:14:15+08:00",
+  "field4": "2020-08-05T13:14:15+08:00",
+  "field5": "2020-08-05T13:14:15+08:00",
+  "field6": "2020-08-05T13:14:15+08:00",
+  "field7": "2020-08-05T13:14:15+08:00",
+  "field8": "2020-08-05T13:14:15+08:00"
+}
+
+var person Person
+
+unmarshalErr := json.Unmarshal(data, &person)
+if unmarshalErr != nil {
+  // 错误处理
+  log.Fatal(unmarshalErr)
+}
+
+fmt.Printf("%s", person.Field1) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field2) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field3) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field4) // 2020-08-05T13:14:15+08:00
+
+fmt.Printf("%s", person.Field5) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field6) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field7) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field8) // 2020-08-05T13:14:15+08:00
+```
+
+###### 场景三: 不同时间字段有不同的格式
 
 ```go
-str := `{
-    "name": "gouguoyin",
-    "age": 18,
-    "birthday1": "2020-08-05 13:14:15",
-    "birthday2": "2020-08-05",
-    "birthday3": "13:14:15",
-    "birthday4": "2020-08-05 13:14:15",
-    "birthday5": 1596604455,
-    "birthday6": 1596604455999,
-    "birthday7": 1596604455999999,
-    "birthday8": 1596604455999999999
-}`
+type Person struct {
+  Name string `json:"name"`
+  Age  int    `json:"age"`
+  
+  Field1 Carbon `json:"field1"`
+  
+  Field2 Carbon `json:"field2" carbon:"type:date" tz:"PRC"`
+  Field3 Carbon `json:"field3" carbon:"type:time" tz:"PRC"`
+  Field4 Carbon `json:"field4" carbon:"type:dateTime" tz:"PRC"`
+  // 或者
+  Field2 Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
+  Field3 Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
+  Field4 Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+  // 或者
+  Field2 Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
+  Field3 Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
+  Field4 Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+  
+  Field5 Carbon `json:"field5" carbon:"type:timestamp" tz:"PRC"`
+  Field6 Carbon `json:"field6" carbon:"type:timestampMilli" tz:"PRC"`
+  Field7 Carbon `json:"field7" carbon:"type:timestampMicro" tz:"PRC"`
+  Field8 Carbon `json:"field8" carbon:"type:timestampNano" tz:"PRC"`
+}
+
+now := Parse("2020-08-05 13:14:15", carbon.PRC)
+person := Person {
+  Name:   "gouguoyin",
+  Age:    18,
+  
+  Field1: now,
+  Field2: now,
+  Field3: now,
+  Field4: now,
+  Field5: now,
+  Field6: now,
+  Field7: now,
+  Field8: now,
+}
+
+loadErr := carbon.LoadTag(&person)
+if loadErr != nil {
+  // 错误处理
+  log.Fatal(loadErr)
+}
+data, marshalErr := json.Marshal(person)
+if marshalErr != nil {
+  // 错误处理
+  log.Fatal(marshalErr)
+}
+fmt.Printf("%s", data)
+// 输出
+{
+  "name": "gouguoyin",
+  "age": 18,
+  "field1": "2020-08-05 13:14:15",
+  "field2": "2020-08-05",
+  "field3": "13:14:15",
+  "field4": "2020-08-05 13:14:15",
+  "field5": 1596604455,
+  "field6": 1596604455999,
+  "field7": 1596604455999999,
+  "field8": 1596604455999999999
+}
+
 var person Person
 
 loadErr := carbon.LoadTag(&person)
 if loadErr != nil {
-    // 错误处理
-    log.Fatal(loadErr)
+  // 错误处理
+  log.Fatal(loadErr)
 }
 
-unmarshalErr := json.Unmarshal([]byte(str), &person)
+unmarshalErr := json.Unmarshal(data, &person)
 if unmarshalErr != nil {
-    // 错误处理
-    log.Fatal(unmarshalErr)
+  // 错误处理 
+  log.Fatal(unmarshalErr)
 }
 
-fmt.Sprintf("%s", person.Birthday1) // 2002-08-05 13:14:15
-fmt.Sprintf("%s", person.Birthday2) // 2020-08-05
-fmt.Sprintf("%s", person.Birthday3) // 13:14:15
-fmt.Sprintf("%s", person.Birthday4) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field1) // 2002-08-05 13:14:15
+fmt.Printf("%s", person.Field2) // 2020-08-05
+fmt.Printf("%s", person.Field3) // 13:14:15
+fmt.Printf("%s", person.Field4) // 2002-08-05 13:14:15
 
-fmt.Sprintf("%d", person.Birthday5) // 1596604455
-fmt.Sprintf("%d", person.Birthday6) // 1596604455999
-fmt.Sprintf("%d", person.Birthday7) // 1596604455999999
-fmt.Sprintf("%d", person.Birthday8) // 1596604455999999999
+fmt.Printf("%d", person.Field5) // 1596604455
+fmt.Printf("%d", person.Field6) // 1596604455999
+fmt.Printf("%d", person.Field7) // 1596604455999999
+fmt.Printf("%d", person.Field8) // 1596604455999999999
+
 ```
 
 ##### 国际化
@@ -1452,8 +1548,8 @@ lang.SetLocale("zh-CN")
 
 c := carbon.SetLanguage(lang)
 if c.Error != nil {
-	// 错误处理
-	log.Fatal(err)
+  // 错误处理
+  log.Fatal(c.Error)
 }
 
 c.Now().AddHours(1).DiffForHumans() // 1 小时后
@@ -1469,17 +1565,16 @@ c.Now().AddHours(1).Season() // 夏季
 
 ```go
 lang := carbon.NewLanguage()
-lang.SetLocale("en")
 
 resources := map[string]string {
-    "hour": "%dh",
+  "hour": "%dh",
 }
-lang.SetResources(resources)
+lang.SetLocale("en").SetResources(resources)
 
 c := carbon.SetLanguage(lang)
 if c.Error != nil {
-	// 错误处理
-	log.Fatal(err)
+  // 错误处理
+  log.Fatal(c.Error)
 }
 
 c.Now().AddYears(1).DiffForHumans() // 1 year from now
@@ -1497,24 +1592,24 @@ c.Now().Season() // Summer
 ```go
 lang := carbon.NewLanguage()
 resources := map[string]string {
-    "months": "january|february|march|april|may|june|july|august|september|october|november|december",
-    "short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
-    "weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
-    "short_weeks": "sun|mon|tue|wed|thu|fri|sat",
-    "seasons": "spring|summer|autumn|winter",
-    "constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
-    "year": "1 yr|%d yrs",
-    "month": "1 mo|%d mos",
-    "week": "%dw",
-    "day": "%dd",
-    "hour": "%dh",
-    "minute": "%dm",
-    "second": "%ds",
-    "now": "just now",
-    "ago": "%s ago",
-    "from_now": "in %s",
-    "before": "%s before",
-    "after": "%s after",
+  "months": "january|february|march|april|may|june|july|august|september|october|november|december",
+  "short_months": "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec",
+  "weeks": "sunday|monday|tuesday|wednesday|thursday|friday|saturday",
+  "short_weeks": "sun|mon|tue|wed|thu|fri|sat",
+  "seasons": "spring|summer|autumn|winter",
+  "constellations": "aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricornus|aquarius|pisce",
+  "year": "1 yr|%d yrs",
+  "month": "1 mo|%d mos",
+  "week": "%dw",
+  "day": "%dd",
+  "hour": "%dh",
+  "minute": "%dm",
+  "second": "%ds",
+  "now": "just now",
+  "ago": "%s ago",
+  "from_now": "in %s",
+  "before": "%s before",
+  "after": "%s after",
 }
 lang.SetResources(resources)
 
@@ -1553,8 +1648,8 @@ c.Now().IsSetTestNow() // false
 ```go
 c := carbon.SetTimezone("xxx").Parse("2020-08-05")
 if c.Error != nil {
-	// 错误处理...
-	log.Fatal(c.Error)
+  // 错误处理
+  log.Fatal(c.Error)
 }
 // 输出
 invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
@@ -1565,7 +1660,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 ##### <a id="format-sign-table">格式化符号表</a>
 
 | 符号 | 描述 | 长度 |        范围        | 示例 |
-| :------------: | :------------: |:--:|:----------------:| :------------: |
+| :------------: | :------------: |:--------------:|:----------------:| :------------: |
 | d | 月份中的第几天，有前导零 |  2 |      01-31       | 02 |
 | D | 缩写单词表示的周几 |  3 |     Mon-Sun      | Mon |
 | j | 月份中的第几天，没有前导零 |  - |       1-31       | 2 |
