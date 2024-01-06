@@ -200,8 +200,6 @@ func TestCarbon_UnmarshalJSON_SetTag(t *testing.T) {
 	c := NewCarbon().SetTag(tag)
 
 	var person = Person{
-		Name:       "gouguoyin",
-		Age:        18,
 		Birthday1:  c,
 		Birthday2:  c,
 		Birthday3:  c,
