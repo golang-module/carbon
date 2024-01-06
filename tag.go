@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"sync"
 )
 
 var (
@@ -18,6 +19,14 @@ var (
 	invalidTagError = func(field string) error {
 		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
 	}
+
+	// default layout
+	// 默认布局模板
+	defaultLayout = DateTimeLayout
+
+	// default timezone
+	// 默认时区
+	defaultTimezone = Local
 
 	// supported types
 	// 支持的类型
@@ -83,16 +92,73 @@ var (
 	}
 )
 
-// tag defines a tag struct.
-// 定义 tag 结构体
-type tag struct {
+// Tag defines a Tag struct.
+// 定义 Tag 结构体
+type Tag struct {
 	carbon string
 	tz     string
+	rw     *sync.RWMutex
+}
+
+// NewTag returns a new Tag instance.
+// 初始化 Tag 结构体
+func NewTag() *Tag {
+	return &Tag{
+		carbon: "layout:" + defaultLayout,
+		tz:     defaultTimezone,
+		rw:     new(sync.RWMutex),
+	}
+}
+
+// SetLayout sets layout tag.
+// 设置 layout 标签
+func (tag *Tag) SetLayout(layout string) *Tag {
+	tag.rw.Lock()
+	defer tag.rw.Unlock()
+
+	tag.carbon = "layout:" + layout
+	return tag
+}
+
+// SetFormat sets format tag.
+// 设置 format 标签
+func (tag *Tag) SetFormat(format string) *Tag {
+	tag.rw.Lock()
+	defer tag.rw.Unlock()
+
+	tag.carbon = "format:" + format
+	return tag
+}
+
+// SetType sets type tag.
+// 设置 format 标签
+func (tag *Tag) SetType(typ string) *Tag {
+	tag.rw.Lock()
+	defer tag.rw.Unlock()
+
+	tag.carbon = "type:" + typ
+	return tag
+}
+
+// SetTimezone sets tz tag.
+// 设置 tz 标签
+func (tag *Tag) SetTimezone(timezone string) *Tag {
+	tag.rw.Lock()
+	defer tag.rw.Unlock()
+
+	tag.tz = timezone
+	return tag
 }
 
 // SetTag sets tag.
 // 设置标签
-func (c Carbon) SetTag(tag tag) Carbon {
+func SetTag(tag *Tag) Carbon {
+	return NewCarbon().SetTag(tag)
+}
+
+// SetTag sets tag.
+// 设置标签
+func (c Carbon) SetTag(tag *Tag) Carbon {
 	if c.Error != nil {
 		return c
 	}
@@ -103,9 +169,12 @@ func (c Carbon) SetTag(tag tag) Carbon {
 // parseTag parses tag.
 // 解析标签
 func (c Carbon) parseTag() (key, value, tz string) {
+	if c.tag == nil {
+		return "", "", defaultTimezone
+	}
 	tz = strings.TrimSpace(c.tag.tz)
 	if tz == "" {
-		tz = c.Location()
+		tz = defaultTimezone
 	}
 	carbon := strings.TrimSpace(c.tag.carbon)
 	if carbon == "" || len(carbon) <= 7 {
@@ -130,31 +199,24 @@ func LoadTag(v interface{}) error {
 		if reflect.TypeOf(Carbon{}) != fieldValue.Type() {
 			continue
 		}
-
 		carbon := fieldType.Tag.Get("carbon")
-
 		if carbon == "" {
 			carbon = "layout:" + DateTimeLayout
 		}
-
 		if strings.Contains(carbon, "type:") {
 			carbon = tagTypes[carbon[5:]]
 		}
-
 		if !strings.Contains(carbon, "layout:") && !strings.Contains(carbon, "format:") {
 			return invalidTagError(fieldType.Name)
 		}
-
 		tz := fieldType.Tag.Get("tz")
 		if tz == "" {
-			tz = Local
+			tz = defaultTimezone
 		}
-
-		params[0] = reflect.ValueOf(tag{
+		params[0] = reflect.ValueOf(&Tag{
 			carbon: carbon,
 			tz:     tz,
 		})
-
 		fieldValue.Set(fieldValue.MethodByName("SetTag").Call(params)[0])
 	}
 	return nil
