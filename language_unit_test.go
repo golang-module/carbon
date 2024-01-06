@@ -45,7 +45,7 @@ func TestLanguage_SetResources1(t *testing.T) {
 		"before":   "%s before",
 		"after":    "%s after",
 	}
-	lang.SetResources(resources)
+	lang.SetLocale("en").SetResources(resources)
 
 	tests := []struct {
 		input1   string
@@ -97,11 +97,11 @@ func TestLanguage_SetResources2(t *testing.T) {
 	assert := assert.New(t)
 
 	lang := NewLanguage()
+
 	resources := map[string]string{
 		"xxx": "xxx",
 	}
 	lang.SetResources(resources)
-	lang.SetLocale("en")
 
 	tests := []struct {
 		input    string

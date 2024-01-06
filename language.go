@@ -51,38 +51,40 @@ func NewLanguage() *Language {
 
 // SetLocale sets language locale.
 // 设置区域
-func (lang *Language) SetLocale(locale string) {
+func (lang *Language) SetLocale(locale string) *Language {
 	lang.rw.Lock()
 	defer lang.rw.Unlock()
 
 	if len(lang.resources) != 0 {
-		return
+		return lang
 	}
 	lang.locale = locale
 	fileName := lang.dir + locale + ".json"
 	bytes, err := fs.ReadFile(fileName)
 	if err != nil {
 		lang.Error = invalidLocaleError(fileName)
-		return
+		return lang
 	}
 	_ = json.Unmarshal(bytes, &lang.resources)
+	return lang
 }
 
 // SetResources sets language resources.
 // 设置资源
-func (lang *Language) SetResources(resources map[string]string) {
+func (lang *Language) SetResources(resources map[string]string) *Language {
 	lang.rw.Lock()
 	defer lang.rw.Unlock()
 
 	if len(lang.resources) == 0 {
 		lang.resources = resources
-		return
+		return lang
 	}
 	for k, v := range resources {
 		if _, ok := lang.resources[k]; ok {
 			lang.resources[k] = v
 		}
 	}
+	return lang
 }
 
 // returns a translated string.
