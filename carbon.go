@@ -241,6 +241,16 @@ const (
 	ShortTimeNanoFormat  = "His.x"
 )
 
+var (
+	// default layout
+	// 默认布局模板
+	defaultLayout = DateTimeLayout
+
+	// default timezone
+	// 默认时区
+	defaultTimezone = Local
+)
+
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
@@ -256,7 +266,8 @@ type Carbon struct {
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	c := Carbon{weekStartsAt: time.Sunday, loc: time.Local, lang: NewLanguage()}
+	c := Carbon{weekStartsAt: time.Sunday, lang: NewLanguage()}
+	c.loc, c.Error = getLocationByTimezone(defaultTimezone)
 	c.lang.rw.Lock()
 	defer c.lang.rw.Unlock()
 	return c
