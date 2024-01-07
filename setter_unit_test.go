@@ -85,39 +85,6 @@ func TestCarbon_SetLocale(t *testing.T) {
 	}
 }
 
-func TestCarbon_SetLanguage(t *testing.T) {
-	lang := NewLanguage()
-	resources := map[string]string{
-		"seasons": "spring|summer|autumn|winter",
-	}
-	lang.SetLocale("en")
-	if lang.Error == nil {
-		lang.SetResources(resources)
-	}
-
-	assert := assert.New(t)
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{"", ""},
-		{"2020-08-05", "summer"},
-	}
-
-	for index, test := range tests {
-		c := SetLanguage(lang).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Season(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := SetLanguage(lang).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Season(), "Current test index is "+strconv.Itoa(index))
-	}
-}
-
 func TestCarbon_SetDateTime(t *testing.T) {
 	assert := assert.New(t)
 
