@@ -27,7 +27,7 @@ func BenchmarkCarbon_SetLocale(b *testing.B) {
 func BenchmarkCarbon_SetLanguage(b *testing.B) {
 	lang := NewLanguage()
 	for n := 0; n < b.N; n++ {
-		NewCarbon().SetLanguage(lang)
+		SetLanguage(lang)
 	}
 }
 

@@ -59,25 +59,6 @@ func SetLocale(locale string) Carbon {
 	return c
 }
 
-// SetLanguage sets language.
-// 设置语言对象
-func (c Carbon) SetLanguage(lang *Language) Carbon {
-	if c.Error != nil {
-		return c
-	}
-	c.lang, c.Error = lang, lang.Error
-	return c
-}
-
-// SetLanguage sets language.
-// 设置语言对象
-func SetLanguage(lang *Language) Carbon {
-	c := NewCarbon()
-	lang.SetLocale(lang.locale)
-	c.lang, c.Error = lang, lang.Error
-	return c
-}
-
 // SetDateTime sets year, month, day, hour, minute and second.
 // 设置年、月、日、时、分、秒
 func (c Carbon) SetDateTime(year, month, day, hour, minute, second int) Carbon {
