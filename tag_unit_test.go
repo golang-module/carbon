@@ -5,44 +5,8 @@ import (
 	"testing"
 )
 
-func TestTag_SetLayout(t *testing.T) {
-	tag := NewTag()
-	tag.SetLayout(DateTimeLayout)
-
-	now := Now().SetTag(tag)
-	assert.Nil(t, now.Error)
-	assert.Equal(t, "layout:"+DateTimeLayout, now.tag.carbon)
-}
-
-func TestTag_SetFormat(t *testing.T) {
-	tag := NewTag()
-	tag.SetFormat(DateTimeFormat)
-
-	now := Now().SetTag(tag)
-	assert.Nil(t, now.Error)
-	assert.Equal(t, "format:"+DateTimeFormat, now.tag.carbon)
-}
-
-func TestTag_SetType(t *testing.T) {
-	tag := NewTag()
-	tag.SetType("dateTime")
-
-	now := Now().SetTag(tag)
-	assert.Nil(t, now.Error)
-	assert.Equal(t, "type:dateTime", now.tag.carbon)
-}
-
-func TestTag_SetTimezone(t *testing.T) {
-	tag := NewTag()
-	tag.SetTimezone(PRC)
-
-	now := Now().SetTag(tag)
-	assert.Nil(t, now.Error)
-	assert.Equal(t, PRC, now.tag.tz)
-}
-
 func TestCarbon_parseTag(t *testing.T) {
-	now := Now().SetTag(&Tag{
+	now := Now().SetTag(&tag{
 		carbon: "",
 	})
 	key, value, tz := now.parseTag()
@@ -52,16 +16,15 @@ func TestCarbon_parseTag(t *testing.T) {
 }
 
 func TestTag_SetTag(t *testing.T) {
-	tag := NewTag()
-	tag.SetTimezone(PRC)
-
-	newTag := SetTag(tag)
-	assert.Nil(t, newTag.Error)
-	assert.Equal(t, PRC, newTag.tag.tz)
+	c := NewCarbon().SetTag(&tag{
+		tz: PRC,
+	})
+	assert.Nil(t, c.Error)
+	assert.Equal(t, PRC, c.tag.tz)
 }
 
 func TestError_SetTag(t *testing.T) {
-	now := Now("xxx").SetTag(&Tag{
+	now := Now("xxx").SetTag(&tag{
 		carbon: "datetime",
 		tz:     Local,
 	})

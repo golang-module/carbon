@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"sync"
 )
 
 var (
@@ -84,73 +83,16 @@ var (
 	}
 )
 
-// Tag defines a Tag struct.
-// 定义 Tag 结构体
-type Tag struct {
+// tag defines a tag struct.
+// 定义 tag 结构体
+type tag struct {
 	carbon string
 	tz     string
-	rw     *sync.RWMutex
-}
-
-// NewTag returns a new Tag instance.
-// 初始化 Tag 结构体
-func NewTag() *Tag {
-	return &Tag{
-		carbon: "layout:" + defaultLayout,
-		tz:     defaultTimezone,
-		rw:     new(sync.RWMutex),
-	}
-}
-
-// SetLayout sets layout tag.
-// 设置 layout 标签
-func (tag *Tag) SetLayout(layout string) *Tag {
-	tag.rw.Lock()
-	defer tag.rw.Unlock()
-
-	tag.carbon = "layout:" + layout
-	return tag
-}
-
-// SetFormat sets format tag.
-// 设置 format 标签
-func (tag *Tag) SetFormat(format string) *Tag {
-	tag.rw.Lock()
-	defer tag.rw.Unlock()
-
-	tag.carbon = "format:" + format
-	return tag
-}
-
-// SetType sets type tag, refer to https://github.com/golang-module/carbon/blob/master/tag.go#L24 for all supported type values.
-// 设置 type 标签，所有支持的 type 值点击 https://github.com/golang-module/carbon/blob/master/tag.go#L24" 查阅
-func (tag *Tag) SetType(typ string) *Tag {
-	tag.rw.Lock()
-	defer tag.rw.Unlock()
-
-	tag.carbon = "type:" + typ
-	return tag
-}
-
-// SetTimezone sets tz tag.
-// 设置 tz 标签
-func (tag *Tag) SetTimezone(timezone string) *Tag {
-	tag.rw.Lock()
-	defer tag.rw.Unlock()
-
-	tag.tz = timezone
-	return tag
 }
 
 // SetTag sets tag.
 // 设置标签
-func SetTag(tag *Tag) Carbon {
-	return NewCarbon().SetTag(tag)
-}
-
-// SetTag sets tag.
-// 设置标签
-func (c Carbon) SetTag(tag *Tag) Carbon {
+func (c Carbon) SetTag(tag *tag) Carbon {
 	if c.Error != nil {
 		return c
 	}
@@ -208,7 +150,7 @@ func LoadTag(v interface{}) error {
 		if tz == "" {
 			tz = defaultTimezone
 		}
-		params[0] = reflect.ValueOf(&Tag{
+		params[0] = reflect.ValueOf(&tag{
 			carbon: carbon,
 			tz:     tz,
 		})

@@ -41,7 +41,7 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	if key == "format" {
 		*c = ParseByFormat(data, value, tz)
 	}
-	c.tag = &Tag{
+	c.tag = &tag{
 		carbon: fmt.Sprintf("%s:%s", key, value),
 		tz:     tz,
 	}

@@ -5,38 +5,10 @@ import "testing"
 func BenchmarkTag_SetTag(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
-		now.SetTag(&Tag{
+		now.SetTag(&tag{
 			carbon: "datetime",
 			tz:     Local,
 		})
-	}
-}
-
-func BenchmarkTag_SetLayout(b *testing.B) {
-	tag := NewTag()
-	for n := 0; n < b.N; n++ {
-		tag.SetLayout(DateTimeLayout)
-	}
-}
-
-func BenchmarkTag_SetFormat(b *testing.B) {
-	tag := NewTag()
-	for n := 0; n < b.N; n++ {
-		tag.SetFormat(DateTimeFormat)
-	}
-}
-
-func BenchmarkTag_SetType(b *testing.B) {
-	tag := NewTag()
-	for n := 0; n < b.N; n++ {
-		tag.SetType("dateTime")
-	}
-}
-
-func BenchmarkTag_SetTimezone(b *testing.B) {
-	tag := NewTag()
-	for n := 0; n < b.N; n++ {
-		tag.SetTimezone(PRC)
 	}
 }
 

@@ -30,7 +30,7 @@ func TestCarbon_String(t *testing.T) {
 		assert.Equal(test.expected, fmt.Sprintf("%s", Parse(test.input)), "Current test index is "+strconv.Itoa(index))
 	}
 
-	c := Parse("2020-08-05", PRC).SetTag(&Tag{
+	c := Parse("2020-08-05", PRC).SetTag(&tag{
 		carbon: "xxx",
 	})
 	assert.Equal("2020-08-05 00:00:00", c.String())
