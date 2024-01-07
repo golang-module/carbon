@@ -106,7 +106,7 @@ func TestCarbon_SetLanguage(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input).SetLanguage(lang)
+		c := SetLanguage(lang).Parse(test.input)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Season(), "Current test index is "+strconv.Itoa(index))
 	}
@@ -630,7 +630,7 @@ func TestError_Setter(t *testing.T) {
 
 	lang := NewLanguage()
 	lang.SetLocale(locale)
-	assert.NotNil(t, c.SetLanguage(lang).Error, "It should catch an exception in SetLanguage()")
+	assert.NotNil(t, SetLanguage(lang).Error, "It should catch an exception in SetLanguage()")
 
 	assert.NotNil(t, c.SetDateTime(year, month, day, hour, minute, second).Error, "It should catch an exception in SetDateTime()")
 	assert.NotNil(t, c.SetDateTimeMilli(year, month, day, hour, minute, second, millisecond).Error, "It should catch an exception in SetDateTimeMilli()")
