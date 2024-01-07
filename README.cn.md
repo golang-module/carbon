@@ -50,7 +50,19 @@ import "gitee.com/golang-module/carbon"
 
 #### 用法示例
 
-> 默认时区为 Local，即服务器所在时区，假设当前时间为 2020-08-05 13:14:15.999999999 +0800 CST
+> 假设当前时间为 2020-08-05 13:14:15.999999999 +0800 CST
+
+##### 设置全局默认值
+
+```go
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+  Timezone: carbon.PRC,
+  Locale: "zh-CN",
+})
+```
+
+> 如果没有设置，默认布局模板是 `2006-01-02 15:04:05`, 默认时区是 `Local`, 默认语言是 `en`
 
 ##### 昨天、今天、明天
 
@@ -1260,9 +1272,7 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ##### JSON
 
-> 所有支持的 type 值请点击 <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">这里</a> 查阅。 如果 `carbon` 标签没有设置，默认是 `layout:2006-01-02 15:04:05`；如果 `tz` 标签没有设置，默认是 `Local`
-
-###### 场景一: 所有时间字段有相同的格式并且格式都是 `"2006-01-02 15:04:05"`
+###### 场景一: 所有时间字段有相同的格式
 ```go
 type Person struct {
   Name string `json:"name"`
@@ -1278,90 +1288,16 @@ type Person struct {
   Field7 Carbon `json:"field7"`
   Field8 Carbon `json:"field8"`
 }
+
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+})
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
   Name:   "gouguoyin",
   Age:    18,
   
-  Field1: now,
-  Field2: now,
-  Field3: now,
-  Field4: now,
-  Field5: now,
-  Field6: now,
-  Field7: now,
-  Field8: now,
-}
-
-data, marshalErr := json.Marshal(person)
-if marshalErr != nil {
-  // 错误处理
-  log.Fatal(marshalErr)
-}
-fmt.Printf("%s", data)
-// 输出
-{
-  "name": "gouguoyin",
-  "age": 18,
-  "field1": "2020-08-05 13:14:15",
-  "field2": "2020-08-05 13:14:15",
-  "field3": "2020-08-05 13:14:15",
-  "field4": "2020-08-05 13:14:15",
-  "field5": "2020-08-05 13:14:15",
-  "field6": "2020-08-05 13:14:15",
-  "field7": "2020-08-05 13:14:15",
-  "field8": "2020-08-05 13:14:15"
-}
-
-unmarshalErr := json.Unmarshal(data, &person)
-if unmarshalErr != nil {
-  // 错误处理
-  log.Fatal(unmarshalErr)
-}
-
-fmt.Printf("%s", person.Field1) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field2) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field3) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field4) // 2002-08-05 13:14:15
-
-fmt.Printf("%s", person.Field5) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field6) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field7) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field8) // 2002-08-05 13:14:15
-```
-
-###### 场景二: 所有时间字段有相同的格式并且格式不是 `"2006-01-02 15:04:05"`
-```go
-type Person struct {
-  Name string `json:"name"`
-  Age  int    `json:"age"`
-  
-  Field1 Carbon `json:"field1"`
-  Field2 Carbon `json:"field2"`
-  Field3 Carbon `json:"field3"`
-  Field4 Carbon `json:"field4"`
-  
-  Field5 Carbon `json:"field5"`
-  Field6 Carbon `json:"field6"`
-  Field7 Carbon `json:"field7"`
-  Field8 Carbon `json:"field8"`
-}
-
-tag := carbon.NewTag()
-
-tag.SetLayout(carbon.RFC3339Layout).SetTimezone(carbon.PRC)
-// 或者
-tag.SetFormat(carbon.RFC3339Format).SetTimezone(carbon.PRC)
-// 或者
-tag.SetType("rfc3339").SetTimezone(carbon.PRC)
-
-c := carbon.SetTag(tag)
-now := c.Parse("2020-08-05 13:14:15", carbon.PRC)
-person := Person {
-  Name:   "gouguoyin",
-  Age:    18,
-
   Field1: now,
   Field2: now,
   Field3: now,
@@ -1392,8 +1328,6 @@ fmt.Printf("%s", data)
   "field8": "2020-08-05T13:14:15+08:00"
 }
 
-var person Person
-
 unmarshalErr := json.Unmarshal(data, &person)
 if unmarshalErr != nil {
   // 错误处理
@@ -1411,7 +1345,9 @@ fmt.Printf("%s", person.Field7) // 2020-08-05T13:14:15+08:00
 fmt.Printf("%s", person.Field8) // 2020-08-05T13:14:15+08:00
 ```
 
-###### 场景三: 不同时间字段有不同的格式
+###### 场景二: 不同时间字段有不同的格式
+
+> 所有支持的 type 值请点击 <a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">这里</a> 查阅。 如果 `carbon` 标签没有设置，默认是 `layout:2006-01-02 15:04:05`；如果 `tz` 标签没有设置，默认是 `Local`
 
 ```go
 type Person struct {

@@ -54,7 +54,19 @@ import "gitee.com/golang-module/carbon"
 人気のある問題
 #### 使い方の例
 
-> デフォルトのタイムゾーンはLocalです。つまりサーバのタイムゾーンです, 現在の時間は 2020-08-05 13:14:15.999999999 +0800 CST CST と仮定します
+> 現在時刻が 2020-08-05 13:14:15.999999999 +0800 CST であると仮定します。
+
+##### グローバルデフォルトを設定する
+
+```go
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+  Timezone: carbon.PRC,
+  Locale: "jp",
+})
+```
+
+> 設定されていない場合、デフォルトのレイアウト テンプレートは `2006-01-02 15:04:05`、デフォルトのタイム ゾーンは `Local`、デフォルトの言語は `en` になります。
 
 ##### 昨日、今日、明日
 
@@ -1260,9 +1272,7 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ##### JSON
 
-> サポートされているすべての type 値については、<a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">ここ</a>をクリックしてご覧ください。「carbon」タグが設定されていない場合、デフォルトは「layout:2006-01-02 15:04:05」です。「tz」タグが設定されていない場合、デフォルトは「Local」です。
-
-###### シナリオ 1: すべての時刻フィールドは同じ形式であり、形式は「2006-01-02 15:04:05」です
+###### シナリオ 1: すべての時刻フィールドが同じ形式である
 ```go
 type Person struct {
   Name string `json:"name"`
@@ -1278,90 +1288,16 @@ type Person struct {
   Field7 Carbon `json:"field7"`
   Field8 Carbon `json:"field8"`
 }
+
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+})
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
   Name:   "gouguoyin",
   Age:    18,
   
-  Field1: now,
-  Field2: now,
-  Field3: now,
-  Field4: now,
-  Field5: now,
-  Field6: now,
-  Field7: now,
-  Field8: now,
-}
-
-data, marshalErr := json.Marshal(person)
-if marshalErr != nil {
-  // エラー処理...
-  log.Fatal(marshalErr)
-}
-fmt.Printf("%s", data)
-// 出力
-{
-  "name": "gouguoyin",
-  "age": 18,
-  "field1": "2020-08-05 13:14:15",
-  "field2": "2020-08-05 13:14:15",
-  "field3": "2020-08-05 13:14:15",
-  "field4": "2020-08-05 13:14:15",
-  "field5": "2020-08-05 13:14:15",
-  "field6": "2020-08-05 13:14:15",
-  "field7": "2020-08-05 13:14:15",
-  "field8": "2020-08-05 13:14:15"
-}
-
-unmarshalErr := json.Unmarshal(data, &person)
-if unmarshalErr != nil {
-  // エラー処理...
-  log.Fatal(unmarshalErr)
-}
-
-fmt.Printf("%s", person.Field1) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field2) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field3) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field4) // 2002-08-05 13:14:15
-
-fmt.Printf("%s", person.Field5) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field6) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field7) // 2002-08-05 13:14:15
-fmt.Printf("%s", person.Field8) // 2002-08-05 13:14:15
-```
-
-###### シナリオ 2: すべての時刻フィールドが同じ形式であり、形式が「2006-01-02 15:04:05」ではありません
-```go
-type Person struct {
-  Name string `json:"name"`
-  Age  int    `json:"age"`
-  
-  Field1 Carbon `json:"field1"`
-  Field2 Carbon `json:"field2"`
-  Field3 Carbon `json:"field3"`
-  Field4 Carbon `json:"field4"`
-  
-  Field5 Carbon `json:"field5"`
-  Field6 Carbon `json:"field6"`
-  Field7 Carbon `json:"field7"`
-  Field8 Carbon `json:"field8"`
-}
-
-tag := carbon.NewTag()
-
-tag.SetLayout(carbon.RFC3339Layout).SetTimezone(carbon.PRC)
-// または
-tag.SetFormat(carbon.RFC3339Format).SetTimezone(carbon.PRC)
-// または
-tag.SetType("rfc3339").SetTimezone(carbon.PRC)
-
-c := carbon.SetTag(tag)
-now := c.Parse("2020-08-05 13:14:15", carbon.PRC)
-person := Person {
-  Name:   "gouguoyin",
-  Age:    18,
-
   Field1: now,
   Field2: now,
   Field3: now,
@@ -1389,10 +1325,8 @@ fmt.Printf("%s", data)
   "field5": "2020-08-05T13:14:15+08:00",
   "field6": "2020-08-05T13:14:15+08:00",
   "field7": "2020-08-05T13:14:15+08:00",
-  "field8": "2020-08-05T13:14:15+08:00"
+  "field8": "2020-08-05T13:14:15+08:00",
 }
-
-var person Person
 
 unmarshalErr := json.Unmarshal(data, &person)
 if unmarshalErr != nil {
@@ -1411,7 +1345,9 @@ fmt.Printf("%s", person.Field7) // 2020-08-05T13:14:15+08:00
 fmt.Printf("%s", person.Field8) // 2020-08-05T13:14:15+08:00
 ```
 
-###### シナリオ 3: 異なる時刻フィールドは異なる形式を持つ
+###### シナリオ 2: 異なる時刻フィールドは異なる形式を持つ
+
+> サポートされているすべての type 値については、<a href="https://github.com/golang-module/carbon/blob/master/tag.go#L24">ここ</a>をクリックしてご覧ください。「carbon」タグが設定されていない場合、デフォルトは「layout:2006-01-02 15:04:05」です。「tz」タグが設定されていない場合、デフォルトは「Local」です。
 
 ```go
 type Person struct {
