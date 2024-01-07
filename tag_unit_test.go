@@ -46,8 +46,8 @@ func TestCarbon_parseTag(t *testing.T) {
 		carbon: "",
 	})
 	key, value, tz := now.parseTag()
-	assert.Equal(t, "", key)
-	assert.Equal(t, "", value)
+	assert.Equal(t, "layout", key)
+	assert.Equal(t, DateTimeLayout, value)
 	assert.Equal(t, Local, tz)
 }
 
