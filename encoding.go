@@ -15,7 +15,6 @@ func (c Carbon) MarshalJSON() ([]byte, error) {
 	data := ""
 	if key == "layout" {
 		data = fmt.Sprintf(`"%s"`, c.Layout(value, tz))
-		return []byte(data), nil
 	}
 	if key == "format" {
 		// timestamp without double quotes in json
@@ -24,9 +23,7 @@ func (c Carbon) MarshalJSON() ([]byte, error) {
 		} else {
 			data = fmt.Sprintf(`"%s"`, c.Format(value, tz))
 		}
-		return []byte(data), nil
 	}
-	data = fmt.Sprintf(`"%s"`, c.Layout(defaultLayout, tz))
 	return []byte(data), nil
 }
 
