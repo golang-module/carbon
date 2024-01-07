@@ -13,14 +13,6 @@ import (
 var fs embed.FS
 
 var (
-	// default directory
-	// 默认目录
-	defaultDir = "lang/"
-
-	// default locale
-	// 默认区域
-	defaultLocale = "en"
-
 	// invalid locale error
 	// 无效的区域错误
 	invalidLocaleError = func(locale string) error {
@@ -42,7 +34,7 @@ type Language struct {
 // 初始化 Language 结构体
 func NewLanguage() *Language {
 	return &Language{
-		dir:       defaultDir,
+		dir:       "lang/",
 		locale:    defaultLocale,
 		resources: make(map[string]string),
 		rw:        new(sync.RWMutex),

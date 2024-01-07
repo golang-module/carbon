@@ -249,6 +249,10 @@ var (
 	// default timezone
 	// 默认时区
 	defaultTimezone = Local
+
+	// default locale
+	// 默认区域
+	defaultLocale = "en"
 )
 
 // Carbon defines a Carbon struct.
