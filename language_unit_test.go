@@ -11,18 +11,18 @@ func TestLanguage_SetLocale(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := []struct {
-		input    Carbon
+		input    string
 		locale   string
 		expected string
 	}{
-		0: {Now(), "en", "1 day after"},
-		1: {Tomorrow(), "zh-CN", "1 天后"},
+		0: {"now", "en", "1 day after"},
+		1: {"tomorrow", "zh-CN", "1 天后"},
 	}
 
 	for index, test := range tests {
 		lang := NewLanguage()
 		lang.SetLocale(test.locale)
-		assert.Equal(test.expected, (test.input).AddDays(1).SetLanguage(lang).DiffForHumans(test.input), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, SetLanguage(lang).Parse(test.input).AddDays(1).DiffForHumans(Parse(test.input)), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -84,12 +84,13 @@ func TestLanguage_SetResources1(t *testing.T) {
 		24: {"2020-08-05 13:14:15", "2020-08-05 13:14:05", "10s after"},
 	}
 
+	c := SetLanguage(lang)
 	for index, test := range tests {
-		c1 := Parse(test.input1)
-		c2 := Parse(test.input2)
+		c1 := c.Parse(test.input1)
+		c2 := c.Parse(test.input2)
 		assert.Nil(c1.Error)
 		assert.Nil(c2.Error)
-		assert.Equal(test.expected, c1.SetLanguage(lang).DiffForHumans(c2), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c1.DiffForHumans(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -116,31 +117,33 @@ func TestLanguage_SetResources2(t *testing.T) {
 		5: {"2021-08-05 13:14:15", ""},
 	}
 
+	c := SetLanguage(lang)
+
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).DiffForHumans(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).DiffForHumans(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).Constellation(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).Constellation(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).Season(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).Season(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToWeekString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).ToWeekString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToShortWeekString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).ToShortWeekString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToMonthString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).ToMonthString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
-		assert.Equal(test.expected, Parse(test.input).SetLanguage(lang).ToShortMonthString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.Parse(test.input).ToShortMonthString(), "Current test index is "+strconv.Itoa(index))
 	}
 }

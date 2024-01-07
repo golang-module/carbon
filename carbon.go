@@ -241,27 +241,13 @@ const (
 	ShortTimeNanoFormat  = "His.x"
 )
 
-var (
-	// default layout
-	// 默认布局模板
-	defaultLayout = DateTimeLayout
-
-	// default timezone
-	// 默认时区
-	defaultTimezone = Local
-
-	// default locale
-	// 默认区域
-	defaultLocale = "en"
-)
-
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
 	time         time.Time
 	testNow      int64 // nanosecond timestamp of test now time
 	weekStartsAt time.Weekday
-	tag          *Tag
+	tag          *tag
 	loc          *time.Location
 	lang         *Language
 	Error        error
