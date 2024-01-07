@@ -410,7 +410,7 @@ func TestCarbon_DiffInString(t *testing.T) {
 func TestLangError_DiffInString(t *testing.T) {
 	lang := NewLanguage()
 	lang.SetLocale("xxx")
-	c := Now().SetLanguage(lang).AddMonths(1)
+	c := SetLanguage(lang).Now().AddMonths(1)
 	assert.NotNil(t, c.Error, "It should catch an exception in DiffInString()")
 	assert.Equal(t, "", c.DiffInString())
 }
@@ -471,7 +471,7 @@ func TestCarbon_DiffAbsInString(t *testing.T) {
 func TestLangError_DiffAbsInString(t *testing.T) {
 	lang := NewLanguage()
 	lang.SetLocale("xxx")
-	c := Now().SetLanguage(lang).AddMonths(1)
+	c := SetLanguage(lang).Now().AddMonths(1)
 	assert.NotNil(t, c.Error, "It should catch an exception in DiffInStringWithAbs()")
 	assert.Equal(t, "", c.DiffAbsInString())
 }
@@ -526,7 +526,7 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 func TestLangError_DiffForHumans(t *testing.T) {
 	lang := NewLanguage()
 	lang.SetLocale("xxx")
-	c := Now().SetLanguage(lang).AddMonths(1)
+	c := SetLanguage(lang).Now().AddMonths(1)
 	assert.NotNil(t, c.Error, "It should catch an exception in DiffForHumans()")
 	assert.Equal(t, "", c.DiffForHumans())
 }
