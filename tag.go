@@ -20,14 +20,6 @@ var (
 		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
 	}
 
-	// default layout
-	// 默认布局模板
-	defaultLayout = DateTimeLayout
-
-	// default timezone
-	// 默认时区
-	defaultTimezone = Local
-
 	// supported types
 	// 支持的类型
 	tagTypes = map[string]string{
@@ -170,14 +162,17 @@ func (c Carbon) SetTag(tag *Tag) Carbon {
 // 解析标签
 func (c Carbon) parseTag() (key, value, tz string) {
 	if c.tag == nil {
-		return "", "", defaultTimezone
+		return "layout", defaultLayout, defaultTimezone
 	}
 	tz = strings.TrimSpace(c.tag.tz)
 	if tz == "" {
 		tz = defaultTimezone
 	}
 	carbon := strings.TrimSpace(c.tag.carbon)
-	if carbon == "" || len(carbon) <= 7 {
+	if carbon == "" {
+		return "layout", defaultLayout, tz
+	}
+	if len(carbon) <= 7 {
 		return "", "", tz
 	}
 	key = strings.TrimSpace(carbon[:6])
@@ -201,7 +196,7 @@ func LoadTag(v interface{}) error {
 		}
 		carbon := fieldType.Tag.Get("carbon")
 		if carbon == "" {
-			carbon = "layout:" + DateTimeLayout
+			carbon = "layout:" + defaultLayout
 		}
 		if strings.Contains(carbon, "type:") {
 			carbon = tagTypes[carbon[5:]]
