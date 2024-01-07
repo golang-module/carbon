@@ -122,8 +122,8 @@ func (tag *Tag) SetFormat(format string) *Tag {
 	return tag
 }
 
-// SetType sets type tag.
-// 设置 format 标签
+// SetType sets type tag, refer to https://github.com/golang-module/carbon/blob/master/tag.go#L24 for all supported type values.
+// 设置 type 标签，所有支持的 type 值点击 https://github.com/golang-module/carbon/blob/master/tag.go#L24" 查阅
 func (tag *Tag) SetType(typ string) *Tag {
 	tag.rw.Lock()
 	defer tag.rw.Unlock()
