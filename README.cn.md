@@ -247,9 +247,9 @@ carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo)
 ##### Carbon 和 time.Time 互转
 
 ```go
-// 将 time.Time 转换成 Carbon
+// 将标准 time.Time 转换成 Carbon
 carbon.CreateFromStdTime(time.Now())
-// 将 Carbon 转换成 time.Time
+// 将 Carbon 转换成标准 time.Time
 carbon.Now().ToStdTime()
 ```
 
