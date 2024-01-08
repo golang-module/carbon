@@ -1274,6 +1274,10 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ###### 场景一: 所有时间字段有相同的格式
 ```go
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+})
+
 type Person struct {
   Name string `json:"name"`
   Age  int    `json:"age"`
@@ -1288,10 +1292,6 @@ type Person struct {
   Field7 Carbon `json:"field7"`
   Field8 Carbon `json:"field8"`
 }
-
-carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
-})
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
@@ -1468,13 +1468,13 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 目前支持的方法有
 
-* `Constellation()`：获取星座
-* `Season()`：获取季节
-* `DiffForHumans()`：获取对人类友好的可读格式时间差
-* `ToMonthString()`：输出完整月份字符串
-* `ToShortMonthString()`：输出缩写月份字符串
-* `ToWeekString()`：输出完整星期字符串
-* `ToShortWeekString()`：输出缩写星期字符串
+* `Constellation()`：获取星座，如 `白羊座`
+* `Season()`：获取季节，如 `夏季`
+* `DiffForHumans()`：获取对人类友好的可读格式时间差，如 `一小时前`
+* `ToMonthString()`：输出完整月份字符串，如 `一月`
+* `ToShortMonthString()`：输出缩写月份字符串，如 `1月`
+* `ToWeekString()`：输出完整星期字符串，如 `星期一`
+* `ToShortWeekString()`：输出缩写星期字符串，如 `周一`
 
 ###### 设置区域
 

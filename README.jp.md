@@ -1274,6 +1274,10 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ###### シナリオ 1: すべての時刻フィールドが同じ形式である
 ```go
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+})
+
 type Person struct {
   Name string `json:"name"`
   Age  int    `json:"age"`
@@ -1288,10 +1292,6 @@ type Person struct {
   Field7 Carbon `json:"field7"`
   Field8 Carbon `json:"field8"`
 }
-
-carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
-})
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
@@ -1468,13 +1468,13 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 現在サポートされている方法
 
-* `Constellation()`：星座を取得
-* `Season()`：シーズンを取得
-* `DiffForHumans()`：人間に優しい読み取り可能なフォーマットの時間差を取得します
-* `ToMonthString()`：月文字列を出力
-* `ToShortMonthString()`：略語月文字列を出力
-* `ToWeekString()`：週文字列を出力
-* `ToShortWeekString()`：略語週文字列を出力
+* `Constellation()`：星座を取得，例えば `おひつじ座`
+* `Season()`：シーズンを取得，例えば `春`
+* `DiffForHumans()`：人間に優しい読み取り可能なフォーマットの時間差を取得します，例えば `一時間前`
+* `ToMonthString()`：月文字列を出力，例えば `いちがつ`
+* `ToShortMonthString()`：略語月文字列を出力，例えば `1がつ`
+* `ToWeekString()`：週文字列を出力，例えば `日曜日`
+* `ToShortWeekString()`：略語週文字列を出力，例えば `日`
 
 ###### エリアの設定
 

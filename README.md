@@ -1269,6 +1269,10 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 
 ###### Scene one: all time fields have the same format
 ```go
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.RFC3339Layout,
+})
+
 type Person struct {
   Name string `json:"name"`
   Age  int    `json:"age"`
@@ -1283,10 +1287,6 @@ type Person struct {
   Field7 Carbon `json:"field7"`
   Field8 Carbon `json:"field8"`
 }
-
-carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
-})
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
 person := Person {
@@ -1469,13 +1469,13 @@ The following languages are supported
 
 The following methods are supported
 
-* `Constellation()`：get constellation name
-* `Season()`：get season name
-* `DiffForHumans()`：get the difference with human-readable format
-* `ToMonthString()`：output month format string
-* `ToShortMonthString()`：output short month format string
-* `ToWeekString()`：output week format string
-* `ToShortWeekString()`：output short week format string
+* `Constellation()`：get constellation name, like `Aries`
+* `Season()`：get season name, like `Spring`
+* `DiffForHumans()`：get the difference with human-readable format, like `1 year from now`
+* `ToMonthString()`：output month format string, like `January`
+* `ToShortMonthString()`：output short month format string, like `Jan`
+* `ToWeekString()`：output week format string, like `Sunday`
+* `ToShortWeekString()`：output short week format string, like `Sun`
 
 ###### Set locale
 
