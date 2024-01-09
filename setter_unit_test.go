@@ -7,6 +7,61 @@ import (
 	"time"
 )
 
+func TestCarbon_SetWeekStartsAt(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		week     string
+		expected string
+	}{
+		{"", Sunday, ""},
+		{"0000-00-00 00:00:00", Sunday, ""},
+		{"", Monday, ""},
+		{"0000-00-00 00:00:00", Monday, ""},
+
+		{"2021-06-13", Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-14", Sunday, "2021-06-13 00:00:00"},
+		{"2021-06-18", Sunday, "2021-06-13 00:00:00"},
+
+		{"2021-06-13", Monday, "2021-06-07 00:00:00"},
+		{"2021-06-14", Monday, "2021-06-14 00:00:00"},
+		{"2021-06-18", Monday, "2021-06-14 00:00:00"},
+
+		{"2021-06-13", Tuesday, "2021-06-08 00:00:00"},
+		{"2021-06-14", Tuesday, "2021-06-08 00:00:00"},
+		{"2021-06-18", Tuesday, "2021-06-15 00:00:00"},
+
+		{"2021-06-13", Wednesday, "2021-06-09 00:00:00"},
+		{"2021-06-14", Wednesday, "2021-06-09 00:00:00"},
+		{"2021-06-18", Wednesday, "2021-06-16 00:00:00"},
+
+		{"2021-06-13", Thursday, "2021-06-10 00:00:00"},
+		{"2021-06-14", Thursday, "2021-06-10 00:00:00"},
+		{"2021-06-18", Thursday, "2021-06-17 00:00:00"},
+
+		{"2021-06-13", Friday, "2021-06-11 00:00:00"},
+		{"2021-06-14", Friday, "2021-06-11 00:00:00"},
+		{"2021-06-18", Friday, "2021-06-18 00:00:00"},
+
+		{"2021-06-13", Saturday, "2021-06-12 00:00:00"},
+		{"2021-06-14", Saturday, "2021-06-12 00:00:00"},
+		{"2021-06-18", Saturday, "2021-06-12 00:00:00"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input).SetWeekStartsAt(test.week).StartOfWeek()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current1 test index is "+strconv.Itoa(index))
+	}
+
+	for index, test := range tests {
+		c := SetWeekStartsAt(test.week).Parse(test.input).StartOfWeek()
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToDateTimeString(), "Current1 test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_SetTimezone(t *testing.T) {
 	assert := assert.New(t)
 
@@ -399,55 +454,6 @@ func TestCarbon_SetMonthNoOverflow(t *testing.T) {
 	}
 }
 
-func TestCarbon_SetWeekStartsAt(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		input    string
-		week     string
-		expected string
-	}{
-		{"", Sunday, ""},
-		{"0000-00-00 00:00:00", Sunday, ""},
-		{"", Monday, ""},
-		{"0000-00-00 00:00:00", Monday, ""},
-
-		{"2021-06-13", Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-14", Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-18", Sunday, "2021-06-13 00:00:00"},
-
-		{"2021-06-13", Monday, "2021-06-07 00:00:00"},
-		{"2021-06-14", Monday, "2021-06-14 00:00:00"},
-		{"2021-06-18", Monday, "2021-06-14 00:00:00"},
-
-		{"2021-06-13", Tuesday, "2021-06-08 00:00:00"},
-		{"2021-06-14", Tuesday, "2021-06-08 00:00:00"},
-		{"2021-06-18", Tuesday, "2021-06-15 00:00:00"},
-
-		{"2021-06-13", Wednesday, "2021-06-09 00:00:00"},
-		{"2021-06-14", Wednesday, "2021-06-09 00:00:00"},
-		{"2021-06-18", Wednesday, "2021-06-16 00:00:00"},
-
-		{"2021-06-13", Thursday, "2021-06-10 00:00:00"},
-		{"2021-06-14", Thursday, "2021-06-10 00:00:00"},
-		{"2021-06-18", Thursday, "2021-06-17 00:00:00"},
-
-		{"2021-06-13", Friday, "2021-06-11 00:00:00"},
-		{"2021-06-14", Friday, "2021-06-11 00:00:00"},
-		{"2021-06-18", Friday, "2021-06-18 00:00:00"},
-
-		{"2021-06-13", Saturday, "2021-06-12 00:00:00"},
-		{"2021-06-14", Saturday, "2021-06-12 00:00:00"},
-		{"2021-06-18", Saturday, "2021-06-12 00:00:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input).SetWeekStartsAt(test.week).StartOfWeek()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
-	}
-}
-
 func TestCarbon_SetDay(t *testing.T) {
 	assert := assert.New(t)
 
@@ -586,6 +592,7 @@ func TestError_Setter(t *testing.T) {
 	input, timezone, locale, year, month, day, hour, minute, second, millisecond, microsecond, nanosecond := "2020-08-50 13:14:15", "xxx", "xxx", 2020, 8, 50, 13, 14, 15, 999, 999999, 999999999
 	c := Parse(input)
 
+	assert.NotNil(t, Parse("xxx").SetWeekStartsAt(Sunday).Error, "It should catch an exception in SetWeekStartsAt()")
 	assert.NotNil(t, c.SetTimezone(timezone).Error, "It should catch an exception in SetTimezone()")
 
 	loc, _ := time.LoadLocation("xxx")

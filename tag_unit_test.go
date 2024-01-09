@@ -15,7 +15,7 @@ func TestCarbon_parseTag(t *testing.T) {
 	assert.Equal(t, Local, tz)
 }
 
-func TestTag_SetTag(t *testing.T) {
+func TestCarbon_SetTag(t *testing.T) {
 	c := NewCarbon().SetTag(&tag{
 		tz: PRC,
 	})
