@@ -87,6 +87,28 @@ func format2layout(format string) string {
 	return buffer.String()
 }
 
+// converts string to time.Weekday.
+// string 转 time.Weekday
+func string2weekday(day string) (wd time.Weekday) {
+	switch day {
+	case Sunday:
+		wd = time.Sunday
+	case Monday:
+		wd = time.Monday
+	case Tuesday:
+		wd = time.Tuesday
+	case Wednesday:
+		wd = time.Wednesday
+	case Thursday:
+		wd = time.Thursday
+	case Friday:
+		wd = time.Friday
+	case Saturday:
+		wd = time.Saturday
+	}
+	return
+}
+
 // gets a Location instance by a timezone string.
 // 通过时区获取 Location 实例
 func getLocationByTimezone(timezone string) (*time.Location, error) {
