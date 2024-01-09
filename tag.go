@@ -140,10 +140,10 @@ func LoadTag(v interface{}) error {
 		if carbon == "" {
 			carbon = "layout:" + defaultLayout
 		}
-		if strings.Contains(carbon, "type:") {
+		if strings.HasPrefix(carbon, "type:") {
 			carbon = tagTypes[carbon[5:]]
 		}
-		if !strings.Contains(carbon, "layout:") && !strings.Contains(carbon, "format:") {
+		if !strings.HasPrefix(carbon, "layout:") && !strings.HasPrefix(carbon, "format:") {
 			return invalidTagError(fieldType.Name)
 		}
 		tz := fieldType.Tag.Get("tz")
