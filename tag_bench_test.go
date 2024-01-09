@@ -2,7 +2,7 @@ package carbon
 
 import "testing"
 
-func BenchmarkTag_SetTag(b *testing.B) {
+func BenchmarkCarbon_SetTag(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
 		now.SetTag(&tag{
@@ -14,7 +14,7 @@ func BenchmarkTag_SetTag(b *testing.B) {
 
 func BenchmarkCarbon_LoadTag(b *testing.B) {
 	type Student struct {
-		Birthday Carbon `json:"birthday" carbon:"date"`
+		Birthday Carbon `json:"birthday" carbon:"type:date"`
 	}
 	student := Student{
 		Birthday: Now(),

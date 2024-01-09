@@ -2,6 +2,13 @@ package carbon
 
 import "testing"
 
+func BenchmarkCarbon_SetLanguage(b *testing.B) {
+	lang := NewLanguage()
+	for n := 0; n < b.N; n++ {
+		SetLanguage(lang)
+	}
+}
+
 func BenchmarkCarbon_NewLanguage(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		NewLanguage()
