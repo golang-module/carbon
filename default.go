@@ -12,14 +12,19 @@ var (
 	// default locale
 	// 默认区域
 	defaultLocale = "en"
+
+	// default week start date
+	// 默认一周开始日期
+	defaultWeekStartsAt = Sunday
 )
 
 // Default defines a Default struct.
 // 定义 Default 结构体
 type Default struct {
-	Layout   string
-	Timezone string
-	Locale   string
+	Layout       string
+	Timezone     string
+	Locale       string
+	WeekStartsAt string
 }
 
 // SetDefault sets default.
@@ -33,5 +38,8 @@ func SetDefault(d Default) {
 	}
 	if d.Locale != "" {
 		defaultLocale = d.Locale
+	}
+	if d.WeekStartsAt != "" {
+		defaultWeekStartsAt = d.WeekStartsAt
 	}
 }
