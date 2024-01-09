@@ -4,6 +4,22 @@ import (
 	"time"
 )
 
+// SetWeekStartsAt sets start day of the week.
+// 设置一周的开始日期
+func (c Carbon) SetWeekStartsAt(day string) Carbon {
+	if c.Error != nil {
+		return c
+	}
+	c.weekStartsAt = string2weekday(day)
+	return c
+}
+
+// SetWeekStartsAt sets start day of the week.
+// 设置一周的开始日期
+func SetWeekStartsAt(day string) Carbon {
+	return NewCarbon().SetWeekStartsAt(day)
+}
+
 // SetTimezone sets timezone.
 // 设置时区
 func (c Carbon) SetTimezone(name string) Carbon {
@@ -211,31 +227,6 @@ func (c Carbon) SetMonthNoOverflow(month int) Carbon {
 		return c
 	}
 	return c.AddMonthsNoOverflow(month - c.Month())
-}
-
-// SetWeekStartsAt sets start day of the week.
-// 设置一周的开始日期
-func (c Carbon) SetWeekStartsAt(day string) Carbon {
-	if c.IsInvalid() {
-		return c
-	}
-	switch day {
-	case Sunday:
-		c.weekStartsAt = time.Sunday
-	case Monday:
-		c.weekStartsAt = time.Monday
-	case Tuesday:
-		c.weekStartsAt = time.Tuesday
-	case Wednesday:
-		c.weekStartsAt = time.Wednesday
-	case Thursday:
-		c.weekStartsAt = time.Thursday
-	case Friday:
-		c.weekStartsAt = time.Friday
-	case Saturday:
-		c.weekStartsAt = time.Saturday
-	}
-	return c
 }
 
 // SetDay sets day.
