@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.3.4"
+const Version = "2.3.5"
 
 // timezone constants
 // 时区常量
@@ -53,14 +53,22 @@ const (
 	Macao      = "Asia/Macao"          // 澳门
 	Taipei     = "Asia/Taipei"         // 台北
 	Tokyo      = "Asia/Tokyo"          // 东京
+	HoChiMinh  = "Asia/Ho_Chi_Minh"    // 胡志明
+	Hanoi      = "Asia/Hanoi"          // 河内
 	Saigon     = "Asia/Saigon"         // 西贡
 	Seoul      = "Asia/Seoul"          // 首尔
+	Pyongyang  = "Asia/Pyongyang"      // 平壤
 	Bangkok    = "Asia/Bangkok"        // 曼谷
 	Dubai      = "Asia/Dubai"          // 迪拜
-	India      = "Asia/Kolkata"        // 印度
+	Qatar      = "Asia/Qatar"          // 卡塔尔
+	Bangalore  = "Asia/Bangalore"      // 班加罗尔
+	Kolkata    = "Asia/Kolkata"        // 加尔各答
+	Mumbai     = "Asia/Mumbai"         // 孟买
+	MexicoCity = "America/Mexico_City" // 墨西哥
 	NewYork    = "America/New_York"    // 纽约
 	LosAngeles = "America/Los_Angeles" // 洛杉矶
 	Chicago    = "America/Chicago"     // 芝加哥
+	SaoPaulo   = "America/Sao_Paulo"   // 圣保罗
 	Moscow     = "Europe/Moscow"       // 莫斯科
 	London     = "Europe/London"       // 伦敦
 	Berlin     = "Europe/Berlin"       // 柏林
@@ -256,9 +264,8 @@ type Carbon struct {
 // NewCarbon returns a new Carbon instance.
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
-	c := Carbon{weekStartsAt: time.Sunday, lang: NewLanguage()}
+	c := Carbon{lang: NewLanguage()}
+	c.weekStartsAt = string2weekday(defaultWeekStartsAt)
 	c.loc, c.Error = getLocationByTimezone(defaultTimezone)
-	c.lang.rw.Lock()
-	defer c.lang.rw.Unlock()
 	return c
 }
