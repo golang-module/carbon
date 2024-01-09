@@ -56,17 +56,18 @@ import "gitee.com/golang-module/carbon"
 
 > 現在時刻が 2020-08-05 13:14:15.999999999 +0800 CST であると仮定します。
 
-##### グローバルデフォルトを設定する
+##### デフォルト値の設定 (グローバルに有効)
 
 ```go
 carbon.SetDefault(carbon.Default{
   Layout: carbon.RFC3339Layout,
   Timezone: carbon.PRC,
+  WeekStartsAt: carbon.Sunday,
   Locale: "jp",
 })
 ```
 
-> 設定されていない場合、デフォルトのレイアウト テンプレートは `2006-01-02 15:04:05`、デフォルトのタイム ゾーンは `Local`、デフォルトの言語は `en` になります。
+> 設定されていない場合，デフォルトのレイアウト テンプレートは `2006-01-02 15:04:05`，デフォルトのタイムゾーンは `Local`，デフォルトの週の開始日は `日曜日`，デフォルトの言語は `en` です。
 
 ##### 昨日、今日、明日
 
@@ -555,20 +556,21 @@ carbon.Parse("2022-08-05 13:14:15").DiffForHumans(carbon.Now()) // 2 years after
 ##### 时间极值
 
 ```go
-c := carbon.Parse("2023-04-01")
-c0 := carbon.Parse("xxx")
+c0 := carbon.Parse("2023-04-01")
 c1 := carbon.Parse("2023-03-28")
 c2 := carbon.Parse("2023-04-16")
-
 // 最近のCarbonインスタンスを返す
-c.Closest(c0, c1) // c1
-c.Closest(c0, c2) // c2
-c.Closest(c1, c2) // c1
-
+c0.Closest(c1, c2) // c1
 // 最も遠いCarbonインスタンスを返す
-c.Farthest(c0, c1) // c1
-c.Farthest(c0, c2) // c2
-c.Farthest(c1, c2) // c2
+c0.Farthest(c1, c2) // c2
+
+yesterday := carbon.Yesterday()
+today     := carbon.Now()
+tomorrow  := carbon.Tomorrow()
+// 最大の Carbon インスタンスを返します
+carbon.Max(yesterday, today, tomorrow) // tomorrow
+// 最小の Carbon インスタンスを返します
+carbon.Min(yesterday, today, tomorrow) // yesterday
 ```
 
 ##### 时间比較
