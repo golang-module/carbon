@@ -33,3 +33,17 @@ func BenchmarkCarbon_Farthest(b *testing.B) {
 		now.Farthest(Parse("2020-08-05"), Parse("xxx"))
 	}
 }
+
+func BenchmarkCarbon_Max(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		Max(now.SubDay(), now.AddDay())
+	}
+}
+
+func BenchmarkCarbon_Min(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		Min(now.SubDay(), now.AddDay())
+	}
+}

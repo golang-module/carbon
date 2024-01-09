@@ -56,3 +56,15 @@ func TestCarbon_Farthest(t *testing.T) {
 		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
+
+func TestCarbon_Max(t *testing.T) {
+	now := Now()
+	max := Max(now.SubDay(), now, now.AddDay())
+	assert.Equal(t, now.AddDay().Timestamp(), max.Timestamp())
+}
+
+func TestCarbon_Min(t *testing.T) {
+	now := Now()
+	min := Min(now, now.SubDay(), now.AddDay())
+	assert.Equal(t, now.SubDay().Timestamp(), min.Timestamp())
+}
