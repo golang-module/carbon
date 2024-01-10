@@ -10,7 +10,9 @@ func (c Carbon) SetWeekStartsAt(day string) Carbon {
 	if c.Error != nil {
 		return c
 	}
-	c.weekStartsAt = weekdays[day]
+	if weekday, ok := weekdays[day]; ok {
+		c.weekStartsAt = weekday
+	}
 	return c
 }
 
