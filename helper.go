@@ -5,6 +5,18 @@ import (
 	"time"
 )
 
+// week days
+// 工作日
+var weekdays = map[string]time.Weekday{
+	Monday:    time.Monday,
+	Tuesday:   time.Tuesday,
+	Wednesday: time.Wednesday,
+	Thursday:  time.Thursday,
+	Friday:    time.Friday,
+	Saturday:  time.Saturday,
+	Sunday:    time.Sunday,
+}
+
 // common formatting symbols
 // 常规格式化符号
 var formats = map[byte]string{
@@ -85,28 +97,6 @@ func format2layout(format string) string {
 		}
 	}
 	return buffer.String()
-}
-
-// converts string to time.Weekday.
-// string 转 time.Weekday
-func string2weekday(day string) (wd time.Weekday) {
-	switch day {
-	case Sunday:
-		wd = time.Sunday
-	case Monday:
-		wd = time.Monday
-	case Tuesday:
-		wd = time.Tuesday
-	case Wednesday:
-		wd = time.Wednesday
-	case Thursday:
-		wd = time.Thursday
-	case Friday:
-		wd = time.Friday
-	case Saturday:
-		wd = time.Saturday
-	}
-	return
 }
 
 // gets a Location instance by a timezone string.

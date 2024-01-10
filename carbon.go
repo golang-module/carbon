@@ -265,7 +265,7 @@ type Carbon struct {
 // 初始化 Carbon 结构体
 func NewCarbon() Carbon {
 	c := Carbon{lang: NewLanguage()}
-	c.weekStartsAt = string2weekday(defaultWeekStartsAt)
+	c.weekStartsAt = weekdays[defaultWeekStartsAt]
 	c.loc, c.Error = getLocationByTimezone(defaultTimezone)
 	return c
 }
