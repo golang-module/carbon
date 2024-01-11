@@ -616,10 +616,12 @@ carbon.Parse("2020-08-05").IsInvalid() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsInvalid() // true
 
 // 是否是上午
+carbon.Parse("2020-08-05 00:00:00").IsAM() // true
 carbon.Parse("2020-08-05 08:00:00").IsAM() // true
 carbon.Parse("2020-08-05 12:00:00").IsAM() // false
 carbon.Parse("2020-08-05 13:00:00").IsAM() // false
 // 是否是下午
+carbon.Parse("2020-08-05 00:00:00").IsPM() // false
 carbon.Parse("2020-08-05 08:00:00").IsPM() // false
 carbon.Parse("2020-08-05 12:00:00").IsPM() // true
 carbon.Parse("2020-08-05 13:00:00").IsPM() // true
