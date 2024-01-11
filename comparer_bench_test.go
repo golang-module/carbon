@@ -42,6 +42,20 @@ func BenchmarkCarbon_IsInvalid(b *testing.B) {
 	}
 }
 
+func BenchmarkCarbon_IsAM(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.IsAM()
+	}
+}
+
+func BenchmarkCarbon_IsPM(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.IsPM()
+	}
+}
+
 func BenchmarkCarbon_IsNow(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {

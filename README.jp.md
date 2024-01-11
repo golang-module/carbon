@@ -615,6 +615,15 @@ carbon.Parse("2020-08-05 00:00:00").IsInvalid() // false
 carbon.Parse("2020-08-05").IsInvalid() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsInvalid() // true
 
+// 朝かどうかを判断する
+carbon.Parse("2020-08-05 08:00:00").IsAM() // true
+carbon.Parse("2020-08-05 12:00:00").IsAM() // false
+carbon.Parse("2020-08-05 13:00:00").IsAM() // false
+// 午後かどうかを判断します
+carbon.Parse("2020-08-05 08:00:00").IsPM() // false
+carbon.Parse("2020-08-05 12:00:00").IsPM() // true
+carbon.Parse("2020-08-05 13:00:00").IsPM() // true
+
 // 現在かどうか
 carbon.Now().IsNow() // true
 // 未来かどうか

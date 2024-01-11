@@ -108,6 +108,56 @@ func TestCarbon_IsInvalid(t *testing.T) {
 	}
 }
 
+func TestCarbon_IsAM(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
+
+		5: {"2020-08-05 08:00:00", true},
+		6: {"2020-08-05 12:00:00", false},
+		7: {"2020-08-05 13:00:00", false},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.IsAM(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_IsPM(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		0: {"", false},
+		1: {"0", false},
+		2: {"0000-00-00", false},
+		3: {"00:00:00", false},
+		4: {"0000-00-00 00:00:00", false},
+
+		5: {"2020-08-05 08:00:00", false},
+		6: {"2020-08-05 12:00:00", true},
+		7: {"2020-08-05 13:00:00", true},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.IsPM(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_IsNow(t *testing.T) {
 	assert := assert.New(t)
 

@@ -612,6 +612,15 @@ carbon.Parse("2020-08-05 00:00:00").IsInvalid() // false
 carbon.Parse("2020-08-05").IsInvalid() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsInvalid() // true
 
+// Whether is before noon
+carbon.Parse("2020-08-05 08:00:00").IsAM() // true
+carbon.Parse("2020-08-05 12:00:00").IsAM() // false
+carbon.Parse("2020-08-05 13:00:00").IsAM() // false
+// Whether is after noon
+carbon.Parse("2020-08-05 08:00:00").IsPM() // false
+carbon.Parse("2020-08-05 12:00:00").IsPM() // true
+carbon.Parse("2020-08-05 13:00:00").IsPM() // true
+
 // Whether is now time
 carbon.Now().IsNow() // true
 // Whether is future time
