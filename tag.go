@@ -114,7 +114,7 @@ func (c Carbon) parseTag() (key, value, tz string) {
 	if carbon == "" {
 		return "layout", defaultLayout, tz
 	}
-	if len(carbon) <= 7 {
+	if !strings.HasPrefix(carbon, "layout:") && !strings.HasPrefix(carbon, "format:") {
 		return "", "", tz
 	}
 	key = strings.TrimSpace(carbon[:6])
