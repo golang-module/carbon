@@ -1283,7 +1283,7 @@ carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ###### Scene one: all time fields have the same format
 ```go
 carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
+  Layout: carbon.DateTimeLayout,
 })
 
 type Person struct {
@@ -1326,14 +1326,14 @@ fmt.Printf("%s", data)
 {
   "name": "gouguoyin",
   "age": 18,
-  "field1": "2020-08-05T13:14:15+08:00",
-  "field2": "2020-08-05T13:14:15+08:00",
-  "field3": "2020-08-05T13:14:15+08:00",
-  "field4": "2020-08-05T13:14:15+08:00",
-  "field5": "2020-08-05T13:14:15+08:00",
-  "field6": "2020-08-05T13:14:15+08:00",
-  "field7": "2020-08-05T13:14:15+08:00",
-  "field8": "2020-08-05T13:14:15+08:00"
+  "field1": "2020-08-05 13:14:15",
+  "field2": "2020-08-05 13:14:15",
+  "field3": "2020-08-05 13:14:15",
+  "field4": "2020-08-05 13:14:15",
+  "field5": "2020-08-05 13:14:15",
+  "field6": "2020-08-05 13:14:15",
+  "field7": "2020-08-05 13:14:15",
+  "field8": "2020-08-05 13:14:15"
 }
 
 var person Person
@@ -1343,15 +1343,15 @@ if unmarshalErr != nil {
   log.Fatal(unmarshalErr)
 }
 
-fmt.Printf("%s", person.Field1) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field2) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field3) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field4) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field1) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field2) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field3) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field4) // 2020-08-05 13:14:15
 
-fmt.Printf("%s", person.Field5) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field6) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field7) // 2020-08-05T13:14:15+08:00
-fmt.Printf("%s", person.Field8) // 2020-08-05T13:14:15+08:00
+fmt.Printf("%s", person.Field5) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field6) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field7) // 2020-08-05 13:14:15
+fmt.Printf("%s", person.Field8) // 2020-08-05 13:14:15
 ```
 
 ###### Scene two: different time fields have different formats
