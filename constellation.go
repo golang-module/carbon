@@ -41,6 +41,8 @@ func (c Carbon) Constellation() string {
 	case month == 2 && day >= 19, month == 3 && day <= 20:
 		index = 11 // Aquarius
 	}
+	c.lang.rw.Lock()
+	defer c.lang.rw.Unlock()
 	if constellations, ok := c.lang.resources["constellations"]; ok {
 		slice := strings.Split(constellations, "|")
 		if len(slice) == MonthsPerYear {
