@@ -1,94 +1,278 @@
-package carbon
+package lunar
 
 import (
 	"fmt"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLunar_Animal(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		0: {"", ""},
-		1: {"0", ""},
-		2: {"0000-00-00", ""},
-		3: {"00:00:00", ""},
-		4: {"0000-00-00 00:00:00", ""},
-
-		5:  {"2020-05-01", "鼠"},
-		6:  {"2020-08-05", "鼠"},
-		7:  {"2021-07-07", "牛"},
-		8:  {"2010-08-05", "虎"},
-		9:  {"2011-08-05", "兔"},
-		10: {"2012-08-05", "龙"},
-		11: {"2013-08-05", "蛇"},
-		12: {"2014-08-05", "马"},
-		13: {"2015-08-05", "羊"},
-		14: {"2016-08-05", "猴"},
-		15: {"2017-08-05", "鸡"},
-		16: {"2018-08-05", "狗"},
-		17: {"2019-08-05", "猪"},
-		18: {"2020-04-23", "鼠"},
-		19: {"2020-05-23", "鼠"}, // special boundary
-		20: {"2020-06-21", "鼠"}, // special boundary
-		21: {"2020-08-05", "鼠"},
-		22: {"2021-05-12", "牛"},
-		23: {"2021-08-05", "牛"},
-		24: {"2200-08-05", ""},
+func TestCreateFromSolar(t *testing.T) {
+	type args struct {
+		s Solar
 	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "normalMonth",
+			args: args{NewSolar(time.Date(2024, 1, 21, 0, 0, 0, 0, time.Local))},
+			want: "2023-12-11 00:00:00",
+		},
+		{
+			name: "notLeapMonth",
+			args: args{NewSolar(time.Date(2023, 3, 2, 0, 0, 0, 0, time.Local))},
+			want: "2023-02-11 00:00:00",
+		},
+		{
+			name: "isLeapMonth",
+			args: args{NewSolar(time.Date(2023, 4, 1, 0, 0, 0, 0, time.Local))},
+			want: "2023-02-11 00:00:00",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).String(), "CreateFromSolar(%v)", tt.args.s)
+		})
+	}
+}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().Animal(), "Current test index is "+strconv.Itoa(index))
+func TestCreateFromLunar(t *testing.T) {
+	type args struct {
+		l Lunar
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "normalMonth",
+			args: args{NewLunar(2023, 12, 11, 0, 0, 0, false)},
+			want: "2024-01-21 00:00:00",
+		},
+		{
+			name: "notLeapMonth",
+			args: args{NewLunar(2023, 2, 11, 0, 0, 0, false)},
+			want: "2023-03-02 00:00:00",
+		},
+		{
+			name: "isLeapMonth",
+			args: args{NewLunar(2023, 2, 11, 0, 0, 0, true)},
+			want: "2023-04-01 00:00:00",
+		},
+		{
+			name: "ltMinYear",
+			args: args{NewLunar(1800, 2, 11, 0, 0, 0, false)},
+			want: "",
+		},
+		{
+			name: "gtMaxYear",
+			args: args{NewLunar(2500, 2, 11, 0, 0, 0, false)},
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromLunar(tt.args.l).Solar.String(), "CreateFromLunar(%v)", tt.args.l)
+		})
+	}
+}
+
+func TestLunar_Animal(t *testing.T) {
+	type args struct {
+		s Solar
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "zeroTime",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: "",
+		},
+		{
+			name: "ratYear",
+			args: args{NewSolar(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			want: "鼠",
+		},
+		{
+			name: "ratYear",
+			args: args{NewSolar(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "鼠",
+		},
+		{
+			name: "oxYear",
+			args: args{NewSolar(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			want: "牛",
+		},
+		{
+			name: "tigerYear",
+			args: args{NewSolar(time.Date(2010, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "虎",
+		},
+		{
+			name: "rabbitYear",
+			args: args{NewSolar(time.Date(2011, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "兔",
+		},
+		{
+			name: "dragonYear",
+			args: args{NewSolar(time.Date(2012, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "龙",
+		},
+		{
+			name: "snakeYear",
+			args: args{NewSolar(time.Date(2013, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "蛇",
+		},
+		{
+			name: "horseYear",
+			args: args{NewSolar(time.Date(2014, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "马",
+		},
+		{
+			name: "goatYear",
+			args: args{NewSolar(time.Date(2015, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "羊",
+		},
+		{
+			name: "monkeyYear",
+			args: args{NewSolar(time.Date(2016, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "猴",
+		},
+		{
+			name: "roosterYear",
+			args: args{NewSolar(time.Date(2017, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "鸡",
+		},
+		{
+			name: "dogYear",
+			args: args{NewSolar(time.Date(2018, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "狗",
+		},
+		{
+			name: "pigYear",
+			args: args{NewSolar(time.Date(2019, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "猪",
+		},
+		{
+			name: "ratYear",
+			args: args{NewSolar(time.Date(2020, 5, 23, 0, 0, 0, 0, time.Local))},
+			want: "鼠",
+		},
+		{
+			name: "ratYear",
+			args: args{NewSolar(time.Date(2020, 6, 21, 0, 0, 0, 0, time.Local))},
+			want: "鼠",
+		},
+		{
+			name: "ratYear",
+			args: args{NewSolar(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "鼠",
+		},
+		{
+			name: "goatYear",
+			args: args{NewSolar(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: "牛",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).Animal(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_Festival(t *testing.T) {
-	assert := assert.New(t)
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		0: {"", ""},
-		1: {"0", ""},
-		2: {"0000-00-00", ""},
-		3: {"00:00:00", ""},
-		4: {"0000-00-00 00:00:00", ""},
-
-		5:  {"2020-04-23", ""},
-		6:  {"2021-02-12", "春节"},
-		7:  {"2021-02-26", "元宵节"},
-		8:  {"2021-05-12", ""},
-		9:  {"2021-06-14", "端午节"},
-		10: {"2021-08-14", "七夕节"},
-		11: {"2021-08-22", "中元节"},
-		12: {"2021-09-21", "中秋节"},
-		13: {"2021-10-14", "重阳节"},
-		14: {"2021-10-14", "重阳节"},
-		15: {"2021-11-05", "寒衣节"},
-		16: {"2021-11-19", "下元节"},
-		17: {"2022-01-10", "腊八节"},
-		18: {"2022-01-25", "小年"},
+	type args struct {
+		s Solar
 	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().Festival(), "Current test index is "+strconv.Itoa(index))
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "zeroTime",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: "",
+		},
+		{
+			name: "notFestival",
+			args: args{NewSolar(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			want: "",
+		},
+		{
+			name: "springFestival",
+			args: args{NewSolar(time.Date(2021, 2, 12, 0, 0, 0, 0, time.Local))},
+			want: "春节",
+		},
+		{
+			name: "springFestival",
+			args: args{NewSolar(time.Date(2021, 2, 26, 0, 0, 0, 0, time.Local))},
+			want: "元宵节",
+		},
+		{
+			name: "dragonBoatFestival",
+			args: args{NewSolar(time.Date(2021, 6, 14, 0, 0, 0, 0, time.Local))},
+			want: "端午节",
+		},
+		{
+			name: "chineseValentine'sDay",
+			args: args{NewSolar(time.Date(2021, 8, 14, 0, 0, 0, 0, time.Local))},
+			want: "七夕节",
+		},
+		{
+			name: "zhongyuanFestival",
+			args: args{NewSolar(time.Date(2021, 8, 22, 0, 0, 0, 0, time.Local))},
+			want: "中元节",
+		},
+		{
+			name: "zhongyuanFestival",
+			args: args{NewSolar(time.Date(2021, 9, 21, 0, 0, 0, 0, time.Local))},
+			want: "中秋节",
+		},
+		{
+			name: "doubleNinthFestival",
+			args: args{NewSolar(time.Date(2021, 10, 14, 0, 0, 0, 0, time.Local))},
+			want: "重阳节",
+		},
+		{
+			name: "hanyiFestival",
+			args: args{NewSolar(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
+			want: "寒衣节",
+		},
+		{
+			name: "xiaYuanFestival",
+			args: args{NewSolar(time.Date(2021, 11, 19, 0, 0, 0, 0, time.Local))},
+			want: "下元节",
+		},
+		{
+			name: "labaFestival",
+			args: args{NewSolar(time.Date(2022, 1, 10, 0, 0, 0, 0, time.Local))},
+			want: "腊八节",
+		},
+		{
+			name: "lunarYear",
+			args: args{NewSolar(time.Date(2022, 1, 25, 0, 0, 0, 0, time.Local))},
+			want: "小年",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).Festival(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_DateTime(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input                                  string
 		year, month, day, hour, minute, second int
@@ -103,21 +287,20 @@ func TestLunar_DateTime(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		year, month, day, hour, minute, second := c.Lunar().DateTime()
-		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		year, month, day, hour, minute, second := lunar.DateTime()
+		assert.Equal(t, test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.day, day, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.second, second, "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_Date(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input            string
 		year, month, day int
@@ -132,18 +315,17 @@ func TestLunar_Date(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		year, month, day := c.Lunar().Date()
-		assert.Equal(test.year, year, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.month, month, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.day, day, "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		year, month, day := lunar.Date()
+		assert.Equal(t, test.year, year, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.month, month, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.day, day, "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_Time(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input                string
 		hour, minute, second int
@@ -158,18 +340,17 @@ func TestLunar_Time(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		hour, minute, second := c.Lunar().Time()
-		assert.Equal(test.hour, hour, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.minute, minute, "Current test index is "+strconv.Itoa(index))
-		assert.Equal(test.second, second, "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		hour, minute, second := lunar.Time()
+		assert.Equal(t, test.hour, hour, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.minute, minute, "Current test index is "+strconv.Itoa(index))
+		assert.Equal(t, test.second, second, "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_Year(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected int
@@ -189,15 +370,14 @@ func TestLunar_Year(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().Year(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.Year(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_Month(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected int
@@ -223,15 +403,14 @@ func TestLunar_Month(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().Month(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.Month(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_Day(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected int
@@ -276,15 +455,14 @@ func TestLunar_Day(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().Day(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.Day(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_LeapMonth(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected int
@@ -302,15 +480,14 @@ func TestLunar_LeapMonth(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().LeapMonth(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.LeapMonth(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_ToYearString(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
@@ -330,15 +507,14 @@ func TestLunar_ToYearString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().ToYearString(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.ToYearString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_ToMonthString(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
@@ -353,9 +529,9 @@ func TestLunar_ToMonthString(t *testing.T) {
 		6:  {"2020-02-01", "正月"},
 		7:  {"2020-03-01", "二月"},
 		8:  {"2020-04-01", "三月"},
-		9:  {"2020-04-23", "四月"},
-		10: {"2020-05-01", "四月"},
-		11: {"2020-06-01", "四月"},
+		9:  {"2020-04-23", "闰四月"},
+		10: {"2020-05-01", "闰四月"},
+		11: {"2020-06-01", "闰四月"},
 		12: {"2020-07-01", "五月"},
 		13: {"2020-07-07", "五月"},
 		14: {"2020-08-01", "六月"},
@@ -369,15 +545,14 @@ func TestLunar_ToMonthString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().ToMonthString(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.ToMonthString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_ToDayString(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
@@ -407,15 +582,14 @@ func TestLunar_ToDayString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().ToDayString(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.ToDayString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_String(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
@@ -442,15 +616,14 @@ func TestLunar_String(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, fmt.Sprintf("%s", c.Lunar()), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, fmt.Sprintf("%s", lunar), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_ToDateString(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
@@ -465,9 +638,9 @@ func TestLunar_ToDateString(t *testing.T) {
 		6:  {"2020-02-01", "二零二零年正月初八"},
 		7:  {"2020-03-01", "二零二零年二月初八"},
 		8:  {"2020-04-01", "二零二零年三月初九"},
-		9:  {"2020-04-23", "二零二零年四月初一"},
-		10: {"2020-05-01", "二零二零年四月初九"},
-		11: {"2020-06-01", "二零二零年四月初十"},
+		9:  {"2020-04-23", "二零二零年闰四月初一"},
+		10: {"2020-05-01", "二零二零年闰四月初九"},
+		11: {"2020-06-01", "二零二零年闰四月初十"},
 		12: {"2020-07-01", "二零二零年五月十一"},
 		13: {"2020-08-01", "二零二零年六月十二"},
 		14: {"2020-09-01", "二零二零年七月十四"},
@@ -477,15 +650,14 @@ func TestLunar_ToDateString(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().ToDateString(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.ToDateString(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsLeapYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -504,15 +676,14 @@ func TestLunar_IsLeapYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsLeapYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsLeapYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsLeapMonth(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -531,15 +702,14 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsLeapMonth(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsLeapMonth(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsRatYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -557,15 +727,14 @@ func TestLunar_IsRatYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsRatYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsRatYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsOxYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -583,15 +752,14 @@ func TestLunar_IsOxYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsOxYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsOxYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsTigerYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -610,15 +778,14 @@ func TestLunar_IsTigerYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsTigerYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsTigerYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsRabbitYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -637,15 +804,14 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsRabbitYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsRabbitYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsDragonYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -664,15 +830,14 @@ func TestLunar_IsDragonYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsDragonYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsDragonYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsSnakeYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -691,15 +856,14 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsSnakeYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsSnakeYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsHorseYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -718,15 +882,14 @@ func TestLunar_IsHorseYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsHorseYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsHorseYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsGoatYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -745,15 +908,14 @@ func TestLunar_IsGoatYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsGoatYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsGoatYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsMonkeyYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -772,15 +934,14 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsMonkeyYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsMonkeyYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsRoosterYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -799,15 +960,14 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsRoosterYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsRoosterYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsDogYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -826,15 +986,14 @@ func TestLunar_IsDogYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsDogYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsDogYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsPigYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -853,24 +1012,18 @@ func TestLunar_IsPigYear(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsPigYear(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsPigYear(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_DoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected string
 	}{
-		0: {"", ""},
-		1: {"0", ""},
-		2: {"0000-00-00", ""},
-		3: {"00:00:00", ""},
-		4: {"0000-00-00 00:00:00", ""},
 
 		5:  {"2020-01-05 23:23:45", "子时"},
 		6:  {"2020-01-05 00:59:45", "子时"},
@@ -889,15 +1042,14 @@ func TestLunar_DoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().DoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.DoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsFirstDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -915,15 +1067,14 @@ func TestLunar_IsFirstDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsFirstDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsFirstDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsSecondDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -940,15 +1091,14 @@ func TestLunar_IsSecondDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsSecondDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsSecondDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsThirdDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -965,14 +1115,14 @@ func TestLunar_IsThirdDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsThirdDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsThirdDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
-func TestLunar_IsFourthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
 
+func TestLunar_IsFourthDoubleHour(t *testing.T) {
 	tests := []struct {
 		input    string
 		expected bool
@@ -989,15 +1139,14 @@ func TestLunar_IsFourthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsFourthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsFourthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsFifthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1014,15 +1163,14 @@ func TestLunar_IsFifthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsFifthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsFifthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsSixthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1039,15 +1187,14 @@ func TestLunar_IsSixthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsSixthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsSixthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsSeventhDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1064,15 +1211,14 @@ func TestLunar_IsSeventhDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsSeventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsSeventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsEighthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1089,15 +1235,14 @@ func TestLunar_IsEighthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsEighthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsEighthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsNinthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1114,15 +1259,14 @@ func TestLunar_IsNinthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsNinthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsNinthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsTenthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1139,15 +1283,14 @@ func TestLunar_IsTenthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsTenthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsTenthDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsEleventhDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1164,15 +1307,14 @@ func TestLunar_IsEleventhDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsEleventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
+
+		assert.Equal(t, test.expected, lunar.IsEleventhDoubleHour(), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
 func TestLunar_IsTwelfthDoubleHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
 		input    string
 		expected bool
@@ -1189,13 +1331,9 @@ func TestLunar_IsTwelfthDoubleHour(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Lunar().IsTwelfthDoubleHour(), "Current test index is "+strconv.Itoa(index))
-	}
-}
+		tm, _ := time.Parse("2006-01-02 15:04:05", test.input)
+		lunar := CreateFromSolar(NewSolar(tm))
 
-func TestError_Lunar(t *testing.T) {
-	c := CreateFromDate(1840, 1, 1, "xxx").Lunar()
-	assert.NotNil(t, c.Error, "It should catch an exception in Lunar()")
+		assert.Equal(t, test.expected, lunar.IsTwelfthDoubleHour(), "Current test index is "+strconv.Itoa(index))
+	}
 }

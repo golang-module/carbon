@@ -1,15 +1,18 @@
-package carbon
+package lunar
 
 import (
 	"fmt"
 	"strings"
+	"time"
+
+	"github.com/golang-module/v2/calendar"
 )
 
 var (
 	minYear, maxYear = 1900, 2100
 	lunarNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
-	lunarMonths      = []string{"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "腊月"}
-	lunarTimes       = []string{"子时", "丑时", "寅时", "卯时", "辰时", "巳时", "午时", "未时", "申时", "酉时", "戌时", "亥时"}
+	lunarMonths      = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
+	lunarTimes       = []string{"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"}
 	lunarAnimals     = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
 	lunarFestivals   = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
 
@@ -37,129 +40,204 @@ var (
 		0x0d520, // 2100
 	}
 
-	invalidYearError = func(year int) error {
-		return fmt.Errorf("invalid year %d, currently only 200 years from 1900 to 2100 are supported", year)
+	invalidYearError = func() error {
+		return fmt.Errorf("invalid year, currently only 200 years from 1900 to 2100 are supported")
 	}
 )
 
-// lunar defines a lunar struct.
-// 定义 lunar 结构体
-type lunar struct {
-	year, month, day, hour, minute, second int  // 农历年、月、日、时、分、秒
-	isInvalid                              bool // 是否不可利用
-	isLeapMonth                            bool // 是否是闰月
-	Error                                  error
+// Calendar defines a Calendar struct.
+// 定义 Calendar 结构体
+type Calendar struct {
+	Solar Solar
+	Lunar Lunar
+	Error error
 }
 
-// Lunar converts the gregorian calendar to the lunar calendar.
-// 将公历转为农历
-func (c Carbon) Lunar() (l lunar) {
-	l.isInvalid, l.isLeapMonth = false, false
-	if c.IsInvalid() {
-		l.Error = c.Error
-		l.isInvalid = true
-		return
-	}
+// Solar defines a Solar struct.
+// 定义 Solar 结构体
+type Solar struct {
+	calendar.Solar
+}
+
+// Lunar defines a Lunar struct.
+// 定义 Lunar 结构体
+type Lunar struct {
+	year, month, day, hour, minute, second int
+	isLeapMonth                            bool
+}
+
+// NewSolar returns a new Solar instance.
+// 初始化 Solar 结构体
+func NewSolar(t time.Time) (s Solar) {
+	s.Time = t
+	return s
+}
+
+// CreateFromSolar creates a Calendar instance from Solar.
+// 从 公历 创建 Calendar 实例
+func CreateFromSolar(s Solar) (c Calendar) {
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
 	daysInYear, daysInMonth, leapMonth := 365, 30, 0
-	// 有效范围检验
-	year := c.Year()
+	year := s.Year()
 	if year < minYear || year > maxYear {
-		l.Error = invalidYearError(year)
-		l.isInvalid = true
-		return
+		c.Error = invalidYearError()
+		return c
 	}
-	offset := int(c.DiffAbsInDays(c.CreateFromDateTime(minYear, 1, 31, 0, 0, 0)))
-	for l.year = minYear; l.year <= maxYear && offset > 0; l.year++ {
-		daysInYear = l.getDaysInYear()
+	// 与 1900-01-31 相差多少天
+	offset := s.diffInDays(time.Date(minYear, 1, 31, 0, 0, 0, 0, s.Location()))
+	for c.Lunar.year = minYear; c.Lunar.year <= maxYear && offset > 0; c.Lunar.year++ {
+		daysInYear = c.Lunar.getDaysInYear()
 		offset -= daysInYear
 	}
 	if offset < 0 {
 		offset += daysInYear
-		l.year--
+		c.Lunar.year--
 	}
-	leapMonth = l.LeapMonth()
-	for l.month = 1; l.month <= 12 && offset > 0; l.month++ {
-		if leapMonth > 0 && l.month == (leapMonth+1) && !l.isLeapMonth {
-			l.month--
-			l.isLeapMonth = true
-			daysInMonth = l.getDaysInLeapMonth()
+	leapMonth = c.LeapMonth()
+	for c.Lunar.month = 1; c.Lunar.month <= 12 && offset > 0; c.Lunar.month++ {
+		if leapMonth > 0 && c.Lunar.month == (leapMonth+1) && !c.Lunar.isLeapMonth {
+			c.Lunar.month--
+			c.Lunar.isLeapMonth = true
+			daysInMonth = c.Lunar.getDaysInLeapMonth()
 		} else {
-			daysInMonth = l.getDaysInMonth()
+			daysInMonth = c.Lunar.getDaysInMonth()
 		}
 		offset -= daysInMonth
-		if l.isLeapMonth && l.month == (leapMonth+1) {
-			l.isLeapMonth = false
+		if c.Lunar.isLeapMonth && c.Lunar.month == (leapMonth+1) {
+			c.Lunar.isLeapMonth = false
 		}
 	}
 	// offset为0时，并且刚才计算的月份是闰月，要校正
-	if offset == 0 && leapMonth > 0 && l.month == leapMonth+1 {
-		if l.isLeapMonth {
-			l.isLeapMonth = false
+	if offset == 0 && leapMonth > 0 && c.Lunar.month == leapMonth+1 {
+		if c.Lunar.isLeapMonth {
+			c.Lunar.isLeapMonth = false
 		} else {
-			l.isLeapMonth = true
-			l.month--
+			c.Lunar.isLeapMonth = true
+			c.Lunar.month--
 		}
 	}
 	// offset小于0时，也要校正
 	if offset < 0 {
 		offset += daysInMonth
-		l.month--
+		c.Lunar.month--
 	}
-	l.day = offset + 1
-	l.hour, l.minute, l.second = c.Time()
-	return
+	c.Lunar.day = offset + 1
+	c.Lunar.hour, c.Lunar.minute, c.Lunar.second = s.Clock()
+	c.Solar = s
+	return c
 }
 
-// getDaysInYear gets total days in lunar year.
-// 获取该年总天数
-func (l lunar) getDaysInYear() int {
-	var sum = 348
+// diffInDays gets the difference in days.
+// 获取相差天数
+func (s Solar) diffInDays(t time.Time) int {
+	return int(s.Time.Sub(t).Hours() / 24)
+}
+
+// NewLunar returns a new Lunar instance.
+// 初始化 Lunar 结构体
+func NewLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l Lunar) {
+	l.year, l.month, l.day = year, month, day
+	l.hour, l.minute, l.second = hour, minute, second
+	l.isLeapMonth = isLeapMonth
+	return l
+}
+
+// CreateFromLunar creates a Calendar instance from Lunar instance.
+// 从 农历 创建 Calendar 实例
+func CreateFromLunar(l Lunar) (c Calendar) {
+	if l.year < minYear || l.year > maxYear {
+		c.Error = invalidYearError()
+		return c
+	}
+
+	days := l.getDaysInMonth()
+	offset := l.getOffsetInYear()
+	offset += l.getOffsetInMonth()
+	// 转换闰月农历 需补充该年闰月的前一个月的时差
+	if l.isLeapMonth {
+		offset += days
+	}
+
+	ts := (offset+l.day)*86400 + -2206512000 + l.hour*3600 + l.minute*60 + l.second
+	c.Solar.Time = time.Unix(int64(ts), 0)
+	c.Lunar = l
+	return c
+}
+
+func (l Lunar) getOffsetInYear() int {
+	flag := false
+	clone, month, offset := l, 0, 0
+	for month = 1; month < l.month; month++ {
+		leapMonth := l.getLeapMonth()
+		if !flag {
+			// 处理闰月
+			if leapMonth <= month && leapMonth > 0 {
+				offset += l.getDaysInLeapMonth()
+				flag = true
+			}
+		}
+		clone.month = month
+		offset += clone.getDaysInMonth()
+	}
+	return offset
+}
+
+func (l Lunar) getOffsetInMonth() int {
+	clone, year, offset := l, 0, 0
+	for year = minYear; year < l.year; year++ {
+		clone.year = year
+		offset += clone.getDaysInYear()
+	}
+	return offset
+}
+
+func (l Lunar) getDaysInYear() int {
+	var days = 348
 	for i := 0x8000; i > 0x8; i >>= 1 {
 		if (lunarTerms[l.year-minYear] & i) != 0 {
-			sum++
+			days++
 		}
 	}
-	return sum + l.getDaysInLeapMonth()
+	return days + l.getDaysInLeapMonth()
 }
 
-// getDaysInMonth gets total days in lunar month.
-// 获取该月总天数
-func (l lunar) getDaysInMonth() int {
-	if (lunarTerms[l.year-minYear] & (0x10000 >> uint(l.month))) == 0 {
-		return 29
-	}
-	return 30
-}
-
-// getDaysInLeapMonth gets total days in lunar leap month.
-// 获取闰月总天数
-func (l lunar) getDaysInLeapMonth() int {
-	if l.LeapMonth() == 0 {
-		return 0
-	}
-	if (lunarTerms[l.year-minYear] & 0x10000) != 0 {
+func (l Lunar) getDaysInMonth() int {
+	if (lunarTerms[l.year-minYear] & (0x10000 >> uint(l.month))) != 0 {
 		return 30
 	}
 	return 29
 }
 
+func (l Lunar) getDaysInLeapMonth() int {
+	if l.getLeapMonth() == 0 {
+		return 0
+	}
+	if lunarTerms[l.year-minYear]&0x10000 != 0 {
+		return 30
+	}
+	return 29
+}
+
+func (l Lunar) getLeapMonth() int {
+	return lunarTerms[l.year-minYear] & 0xf
+}
+
 // Animal gets lunar animal name like "猴".
 // 获取生肖
-func (l lunar) Animal() string {
-	if l.isInvalid {
+func (c Calendar) Animal() string {
+	if c.Error != nil {
 		return ""
 	}
-	return lunarAnimals[l.year%MonthsPerYear]
+	return lunarAnimals[c.Lunar.year%calendar.MonthsPerYear]
 }
 
 // Festival gets lunar festival name like "春节".
 // 获取农历节日
-func (l lunar) Festival() (festival string) {
-	if l.isInvalid {
+func (c Calendar) Festival() (festival string) {
+	if c.Error != nil {
 		return
 	}
-	month, day := l.month, l.day
+	month, day := c.Lunar.month, c.Lunar.day
 	switch {
 	case month == 1 && day == 1:
 		festival = lunarFestivals[0]
@@ -189,74 +267,74 @@ func (l lunar) Festival() (festival string) {
 
 // DateTime gets lunar year, month, day, hour, minute, and second like 2020, 8, 5, 13, 14, 15.
 // 获取农历年月日时分秒
-func (l lunar) DateTime() (year, month, day, hour, minute, second int) {
-	if l.isInvalid {
+func (c Calendar) DateTime() (year, month, day, hour, minute, second int) {
+	if c.Error != nil {
 		return
 	}
-	return l.year, l.month, l.day, l.hour, l.minute, l.second
+	return c.Lunar.year, c.Lunar.month, c.Lunar.day, c.Lunar.hour, c.Lunar.minute, c.Lunar.second
 }
 
 // Date gets lunar year, month and day like 2020, 8, 5.
 // 获取农历时分秒
-func (l lunar) Date() (year, month, day int) {
-	if l.isInvalid {
+func (c Calendar) Date() (year, month, day int) {
+	if c.Error != nil {
 		return
 	}
-	return l.year, l.month, l.day
+	return c.Lunar.year, c.Lunar.month, c.Lunar.day
 }
 
 // Time gets lunar hour, minute, and second like 13, 14, 15.
 // 获取农历时分秒
-func (l lunar) Time() (hour, minute, second int) {
-	if l.isInvalid {
+func (c Calendar) Time() (hour, minute, second int) {
+	if c.Error != nil {
 		return
 	}
-	return l.hour, l.minute, l.second
+	return c.Lunar.hour, c.Lunar.minute, c.Lunar.second
 }
 
 // Year gets lunar year like 2020.
 // 获取农历年
-func (l lunar) Year() int {
-	if l.isInvalid {
+func (c Calendar) Year() int {
+	if c.Error != nil {
 		return 0
 	}
-	return l.year
+	return c.Lunar.year
 }
 
 // Month gets lunar month like 8.
 // 获取农历月
-func (l lunar) Month() int {
-	if l.isInvalid {
+func (c Calendar) Month() int {
+	if c.Error != nil {
 		return 0
 	}
-	return l.month
+	return c.Lunar.month
 }
 
 // LeapMonth gets lunar leap month like 8.
 // 获取农历闰月月份
-func (l lunar) LeapMonth() int {
-	if l.isInvalid {
+func (c Calendar) LeapMonth() int {
+	if c.Error != nil {
 		return 0
 	}
-	return lunarTerms[l.year-minYear] & 0xf
+	return c.Lunar.getLeapMonth()
 }
 
 // Day gets lunar day like 5.
 // 获取农历日
-func (l lunar) Day() int {
-	if l.isInvalid {
+func (c Calendar) Day() int {
+	if c.Error != nil {
 		return 0
 	}
-	return l.day
+	return c.Lunar.day
 }
 
 // ToYearString outputs a string in lunar year format like "二零二零".
 // 获取农历年字符串
-func (l lunar) ToYearString() string {
-	if l.isInvalid {
+func (c Calendar) ToYearString() string {
+	if c.Error != nil {
 		return ""
 	}
-	year := fmt.Sprintf("%d", l.year)
+	year := fmt.Sprintf("%d", c.Lunar.year)
 	for i, replace := range lunarNumbers {
 		year = strings.Replace(year, fmt.Sprintf("%d", i), replace, -1)
 	}
@@ -265,32 +343,36 @@ func (l lunar) ToYearString() string {
 
 // ToMonthString outputs a string in lunar month format like "正月".
 // 获取农历月字符串
-func (l lunar) ToMonthString() string {
-	if l.isInvalid {
+func (c Calendar) ToMonthString() string {
+	if c.Error != nil {
 		return ""
 	}
-	return lunarMonths[l.month-1]
+	month := lunarMonths[c.Lunar.month-1] + "月"
+	if c.IsLeapMonth() {
+		return "闰" + month
+	}
+	return month
 }
 
 // ToDayString outputs a string in lunar day format like "廿一".
 // 获取农历日字符串
-func (l lunar) ToDayString() (day string) {
-	if l.isInvalid {
+func (c Calendar) ToDayString() (day string) {
+	if c.Error != nil {
 		return
 	}
-	num := lunarNumbers[l.day%10]
+	num := lunarNumbers[c.Lunar.day%10]
 	switch {
-	case l.day == 30:
+	case c.Lunar.day == 30:
 		day = "三十"
-	case l.day > 20:
+	case c.Lunar.day > 20:
 		day = "廿" + num
-	case l.day == 20:
+	case c.Lunar.day == 20:
 		day = "二十"
-	case l.day > 10:
+	case c.Lunar.day > 10:
 		day = "十" + num
-	case l.day == 10:
+	case c.Lunar.day == 10:
 		day = "初十"
-	case l.day < 10:
+	case c.Lunar.day < 10:
 		day = "初" + num
 	}
 	return
@@ -298,47 +380,47 @@ func (l lunar) ToDayString() (day string) {
 
 // ToDateString outputs a string in lunar date format like "二零二零年腊月初五".
 // 获取农历日期字符串
-func (l lunar) ToDateString() string {
-	if l.isInvalid {
+func (c Calendar) ToDateString() string {
+	if c.Error != nil {
 		return ""
 	}
-	return l.ToYearString() + "年" + l.ToMonthString() + l.ToDayString()
+	return c.ToYearString() + "年" + c.ToMonthString() + c.ToDayString()
 }
 
 // String outputs a string in YYYY-MM-DD HH::ii::ss format, implement Stringer interface.
-// 输出 YYYY-MM-DD HH::ii::ss 格式字符串， 实现 Stringer 接口
-func (l lunar) String() string {
-	if l.isInvalid {
+// 输出 YYYY-MM-DD HH::ii::ss 格式字符串，实现 Stringer 接口
+func (c Calendar) String() string {
+	if c.Error != nil {
 		return ""
 	}
-	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d", l.year, l.month, l.day, l.hour, l.minute, l.second)
+	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d", c.Lunar.year, c.Lunar.month, c.Lunar.day, c.Lunar.hour, c.Lunar.minute, c.Lunar.second)
 }
 
 // IsLeapYear reports whether is leap year.
 // 是否是闰年
-func (l lunar) IsLeapYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsLeapYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	return l.LeapMonth() != 0
+	return c.LeapMonth() != 0
 }
 
 // IsLeapMonth reports whether is leap month.
 // 是否是闰月
-func (l lunar) IsLeapMonth() bool {
-	if l.isInvalid {
+func (c Calendar) IsLeapMonth() bool {
+	if c.Error != nil {
 		return false
 	}
-	return l.month == l.LeapMonth()
+	return c.Lunar.month == c.LeapMonth()
 }
 
 // IsRatYear reports whether is year of Rat.
 // 是否是鼠年
-func (l lunar) IsRatYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsRatYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 4 {
+	if c.Lunar.year%calendar.MonthsPerYear == 4 {
 		return true
 	}
 	return false
@@ -346,11 +428,11 @@ func (l lunar) IsRatYear() bool {
 
 // IsOxYear reports whether is year of Ox.
 // 是否是牛年
-func (l lunar) IsOxYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsOxYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 5 {
+	if c.Lunar.year%calendar.MonthsPerYear == 5 {
 		return true
 	}
 	return false
@@ -358,11 +440,11 @@ func (l lunar) IsOxYear() bool {
 
 // IsTigerYear reports whether is year of Tiger.
 // 是否是虎年
-func (l lunar) IsTigerYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsTigerYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 6 {
+	if c.Lunar.year%calendar.MonthsPerYear == 6 {
 		return true
 	}
 	return false
@@ -370,11 +452,11 @@ func (l lunar) IsTigerYear() bool {
 
 // IsRabbitYear reports whether is year of Rabbit.
 // 是否是兔年
-func (l lunar) IsRabbitYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsRabbitYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 7 {
+	if c.Lunar.year%calendar.MonthsPerYear == 7 {
 		return true
 	}
 	return false
@@ -382,11 +464,11 @@ func (l lunar) IsRabbitYear() bool {
 
 // IsDragonYear reports whether is year of Dragon.
 // 是否是龙年
-func (l lunar) IsDragonYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsDragonYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 8 {
+	if c.Lunar.year%calendar.MonthsPerYear == 8 {
 		return true
 	}
 	return false
@@ -394,11 +476,11 @@ func (l lunar) IsDragonYear() bool {
 
 // IsSnakeYear reports whether is year of Snake.
 // 是否是蛇年
-func (l lunar) IsSnakeYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsSnakeYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 9 {
+	if c.Lunar.year%calendar.MonthsPerYear == 9 {
 		return true
 	}
 	return false
@@ -406,11 +488,11 @@ func (l lunar) IsSnakeYear() bool {
 
 // IsHorseYear reports whether is year of Horse.
 // 是否是马年
-func (l lunar) IsHorseYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsHorseYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 10 {
+	if c.Lunar.year%calendar.MonthsPerYear == 10 {
 		return true
 	}
 	return false
@@ -418,11 +500,11 @@ func (l lunar) IsHorseYear() bool {
 
 // IsGoatYear reports whether is year of Goat.
 // 是否是羊年
-func (l lunar) IsGoatYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsGoatYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 11 {
+	if c.Lunar.year%calendar.MonthsPerYear == 11 {
 		return true
 	}
 	return false
@@ -430,11 +512,11 @@ func (l lunar) IsGoatYear() bool {
 
 // IsMonkeyYear reports whether is year of Monkey.
 // 是否是猴年
-func (l lunar) IsMonkeyYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsMonkeyYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 0 {
+	if c.Lunar.year%calendar.MonthsPerYear == 0 {
 		return true
 	}
 	return false
@@ -442,11 +524,11 @@ func (l lunar) IsMonkeyYear() bool {
 
 // IsRoosterYear reports whether is year of Rooster.
 // 是否是鸡年
-func (l lunar) IsRoosterYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsRoosterYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 1 {
+	if c.Lunar.year%calendar.MonthsPerYear == 1 {
 		return true
 	}
 	return false
@@ -454,11 +536,11 @@ func (l lunar) IsRoosterYear() bool {
 
 // IsDogYear reports whether is year of Dog.
 // 是否是狗年
-func (l lunar) IsDogYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsDogYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 2 {
+	if c.Lunar.year%calendar.MonthsPerYear == 2 {
 		return true
 	}
 	return false
@@ -466,11 +548,11 @@ func (l lunar) IsDogYear() bool {
 
 // IsPigYear reports whether is year of Pig.
 // 是否是猪年
-func (l lunar) IsPigYear() bool {
-	if l.isInvalid {
+func (c Calendar) IsPigYear() bool {
+	if c.Error != nil {
 		return false
 	}
-	if l.year%MonthsPerYear == 3 {
+	if c.Lunar.year%calendar.MonthsPerYear == 3 {
 		return true
 	}
 	return false
@@ -478,11 +560,11 @@ func (l lunar) IsPigYear() bool {
 
 // DoubleHour gets double-hour name like "子时".
 // 获取当前时辰
-func (l lunar) DoubleHour() (dh string) {
-	if l.isInvalid {
+func (c Calendar) DoubleHour() (dh string) {
+	if c.Error != nil {
 		return ""
 	}
-	hour, minute := l.hour, l.minute
+	hour, minute := c.Lunar.hour, c.Lunar.minute
 	switch {
 	case hour >= 23, hour == 0 && minute <= 59:
 		dh = lunarTimes[0] // FirstDoubleHour
@@ -509,16 +591,16 @@ func (l lunar) DoubleHour() (dh string) {
 	case hour >= 21 && hour < 23:
 		dh = lunarTimes[11] // TwelfthDoubleHour
 	}
-	return
+	return dh + "时"
 }
 
 // IsFirstDoubleHour reports whether is FirstDoubleHour.
 // 是否是子时
-func (l lunar) IsFirstDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsFirstDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour, minute := l.hour, l.minute
+	hour, minute := c.Lunar.hour, c.Lunar.minute
 	if hour >= 23 {
 		return true
 	}
@@ -530,11 +612,11 @@ func (l lunar) IsFirstDoubleHour() bool {
 
 // IsSecondDoubleHour reports whether is SecondDoubleHour.
 // 是否是丑时
-func (l lunar) IsSecondDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsSecondDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 1 && hour < 3 {
 		return true
 	}
@@ -543,11 +625,11 @@ func (l lunar) IsSecondDoubleHour() bool {
 
 // IsThirdDoubleHour reports whether is ThirdDoubleHour.
 // 是否是寅时
-func (l lunar) IsThirdDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsThirdDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 3 && hour < 5 {
 		return true
 	}
@@ -556,11 +638,11 @@ func (l lunar) IsThirdDoubleHour() bool {
 
 // IsFourthDoubleHour reports whether is FourthDoubleHour.
 // 是否是卯时
-func (l lunar) IsFourthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsFourthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 5 && hour < 7 {
 		return true
 	}
@@ -569,11 +651,11 @@ func (l lunar) IsFourthDoubleHour() bool {
 
 // IsFifthDoubleHour reports whether is FifthDoubleHour.
 // 是否是辰时
-func (l lunar) IsFifthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsFifthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 7 && hour < 9 {
 		return true
 	}
@@ -582,11 +664,11 @@ func (l lunar) IsFifthDoubleHour() bool {
 
 // IsSixthDoubleHour reports whether is SixthDoubleHour.
 // 是否是巳时
-func (l lunar) IsSixthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsSixthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 9 && hour < 11 {
 		return true
 	}
@@ -595,11 +677,11 @@ func (l lunar) IsSixthDoubleHour() bool {
 
 // IsSeventhDoubleHour reports whether is SeventhDoubleHour.
 // 是否是午时
-func (l lunar) IsSeventhDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsSeventhDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 11 && hour < 13 {
 		return true
 	}
@@ -608,11 +690,11 @@ func (l lunar) IsSeventhDoubleHour() bool {
 
 // IsEighthDoubleHour reports whether is EighthDoubleHour.
 // 是否是未时
-func (l lunar) IsEighthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsEighthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 13 && hour < 15 {
 		return true
 	}
@@ -621,11 +703,11 @@ func (l lunar) IsEighthDoubleHour() bool {
 
 // IsNinthDoubleHour reports whether is NinthDoubleHour.
 // 是否是申时
-func (l lunar) IsNinthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsNinthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 15 && hour < 17 {
 		return true
 	}
@@ -634,11 +716,11 @@ func (l lunar) IsNinthDoubleHour() bool {
 
 // IsTenthDoubleHour reports whether is TenthDoubleHour.
 // 是否是酉时
-func (l lunar) IsTenthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsTenthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 17 && hour < 19 {
 		return true
 	}
@@ -647,11 +729,11 @@ func (l lunar) IsTenthDoubleHour() bool {
 
 // IsEleventhDoubleHour reports whether is EleventhDoubleHour.
 // 是否是戌时
-func (l lunar) IsEleventhDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsEleventhDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 19 && hour < 21 {
 		return true
 	}
@@ -660,11 +742,11 @@ func (l lunar) IsEleventhDoubleHour() bool {
 
 // IsTwelfthDoubleHour reports whether is TwelfthDoubleHour.
 // 是否是亥时
-func (l lunar) IsTwelfthDoubleHour() bool {
-	if l.isInvalid {
+func (c Calendar) IsTwelfthDoubleHour() bool {
+	if c.Error != nil {
 		return false
 	}
-	hour := l.hour
+	hour := c.Lunar.hour
 	if hour >= 21 && hour < 23 {
 		return true
 	}
