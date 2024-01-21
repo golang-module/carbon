@@ -1186,103 +1186,6 @@ carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
-##### 中国の旧暦
-
-> 現在は西暦`1900`年`2100`年の`200`年スパンだけをサポートしています
-
-```go
-// 干支を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
-// 中国の旧暦の祝日を獲得します
-carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
-
-// 中国の年月日時分秒を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
-// 中国の年月日を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
-// 中国の時分秒を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
-
-// 中国の年を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// 中国の月を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// 中国の閏月を取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// 中国のああを取得する
-carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// 中国の旧正月 YYYY-MM-DD HH::ii::ss フォーマット文字列を取得します
-fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
-
-// 中国の旧正月文字列を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
-// 中国の旧正月文字列を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
-// 中国の旧正月の日文字列を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
-// 中国の旧正月日付文字列を取得します
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
-
-// 中国の旧正月の閏年ですか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
-// 中国の旧暦の閏月かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
-
-// ねずみ年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
-// 牛年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
-// 寅年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
-// うさぎ年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
-// 龍年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
-// 蛇の年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
-// 馬年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
-// 羊年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
-// 申年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
-// 鶏の年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
-// 犬年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
-// 豚年かどうか
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-
-// 旧正月を取得する
-carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
-
-// であるかどうかね時
-carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
-// であるかどううし時
-carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
-// であるかどうとら時
-carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
-// であるかどうう時
-carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
-// であるかどうたつ時
-carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
-// であるかどうみ時
-carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
-// であるかどううま時
-carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
-// であるかどうひつじ時
-carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
-// であるかどうさる時
-carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
-// であるかどうとり時
-carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
-// であるかどういぬ時
-carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
-// であるかどうい時
-carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
-```
-
 ##### JSON
 
 ###### シナリオ 1: すべての時刻フィールドが同じ形式である
@@ -1452,6 +1355,12 @@ fmt.Printf("%d", person.Field7) // 1596604455999999
 fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 ```
+
+##### カレンダ＃カレンダ＃
+
+現在サポートされているカレンダーは
+
+* [旧暦](./calendar/lunar/README.jp.md "旧暦"): `旧暦` と `西暦` の間で相互変換
 
 ##### 国際化
 

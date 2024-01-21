@@ -1186,103 +1186,6 @@ carbon.Parse("2020-08-05 13:14:15").IsAutumn() // false
 carbon.Parse("2020-08-05 13:14:15").IsWinter() // false
 ```
 
-##### 农历
-
-> 目前仅支持公元`1900`年至`2100`年的`200`年时间跨度
-
-```go
-// 获取农历生肖
-carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
-// 获取农历节日
-carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
-
-// 获取农历年月日时分秒
-carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
-// 获取农历年月日
-carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
-// 获取农历时分秒
-carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
-
-// 获取农历年年份
-carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// 获取农历月月份
-carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
-// 获取农历闰月月份
-carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
-// 获取农历日日期
-carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// 获取农历 YYYY-MM-DD HH::ii::ss 格式字符串
-fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
-
-// 获取农历年字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
-// 获取农历月字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
-// 获取农历天字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
-// 获取农历日期字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
-
-// 是否是农历闰年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
-// 是否是农历闰月
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapMonth() // false
-
-// 是否是鼠年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRatYear() // true
-// 是否是牛年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsOxYear() // false
-// 是否是虎年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsTigerYear() // false
-// 是否是兔年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRabbitYear() // false
-// 是否是龙年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDragonYear() // false
-// 是否是蛇年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsSnakeYear() // false
-// 是否是马年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsHorseYear() // false
-// 是否是羊年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsGoatYear() // false
-// 是否是猴年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsMonkeyYear() // false
-// 是否是鸡年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
-// 是否是狗年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
-// 是否是猪年
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-
-// 获取农历时辰
-carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
-
-// 是否是子时
-carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
-// 是否是丑时
-carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
-// 是否是寅时
-carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
-// 是否是卯时
-carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
-// 是否是辰时
-carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
-// 是否是巳时
-carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
-// 是否是午时
-carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
-// 是否是未时
-carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
-// 是否是申时
-carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
-// 是否是酉时
-carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
-// 是否是戌时
-carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
-// 是否是亥时
-carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
-```
-
 ##### JSON
 
 ###### 场景一: 所有时间字段有相同的格式
@@ -1452,6 +1355,12 @@ fmt.Printf("%d", person.Field7) // 1596604455999999
 fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 ```
+
+##### 日历
+
+目前支持的日历有
+
+* [农历](./calendar/lunar/README.cn.md "农历"): `农历` 和 `公历` 之间相互转换
 
 ##### 国际化
 
