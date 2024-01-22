@@ -16,7 +16,7 @@
 
 [gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
-#### 旧暦
+#### 中国の旧暦
 
 > 現在は西暦` 1900 `年から` 2100 `年までの` 200 `年の時間スパンのみをサポートしている
 

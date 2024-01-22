@@ -19,11 +19,11 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 [gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
-#### Lunar
+#### Chinese Lunar
 
 > Currently only `200` years from `1900` to `2100` are supported
 
-##### Convert Carbon into Lunar
+##### Convert Solar into Lunar
 
 ```go
 // Get Lunar year of animal
@@ -120,13 +120,13 @@ carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
 carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
-##### Convert Lunar into Carbon
+##### Convert Lunar into Solar
 
 ```go
-// Convert the Lunar Calendar Leap February 11, 2023 to the Gregorian Calendar
+// Convert the Lunar Calendar December 11, 2023 to the Solar Calendar
 carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
-// Convert lunar calendar February 11, 2023 to Gregorian calendar
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2023-03-02 00:00:00
-// Convert the Lunar Calendar Leap February 11, 2023 to the Gregorian Calendar
+// Convert lunar calendar February 11, 2023 to Solar calendar
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2024-03-02 00:00:00
+// Convert the Lunar Calendar Leap February 11, 2024 to the Solar Calendar
 carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
 ```

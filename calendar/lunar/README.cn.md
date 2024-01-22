@@ -16,7 +16,7 @@
 
 [gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
-#### 农历
+#### 中国农历
 
 > 目前仅支持公元 `1900` 年至 `2100` 年的 `200` 年时间跨度
 
