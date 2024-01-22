@@ -59,7 +59,6 @@ func (c Carbon) ToMonthString(timezone ...string) string {
 // ToShortMonthString outputs a string in short month layout like "Jan", i18n is supported.
 // 输出缩写月份字符串，支持i18n
 func (c Carbon) ToShortMonthString(timezone ...string) string {
-
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
