@@ -215,7 +215,7 @@ func TestLunar_Festival(t *testing.T) {
 			want: "春节",
 		},
 		{
-			name: "springFestival",
+			name: "lanternFestival",
 			args: args{NewSolar(time.Date(2021, 2, 26, 0, 0, 0, 0, time.Local))},
 			want: "元宵节",
 		},
@@ -225,7 +225,7 @@ func TestLunar_Festival(t *testing.T) {
 			want: "端午节",
 		},
 		{
-			name: "chineseValentine'sDay",
+			name: "doubleSeventhFestival",
 			args: args{NewSolar(time.Date(2021, 8, 14, 0, 0, 0, 0, time.Local))},
 			want: "七夕节",
 		},
@@ -351,204 +351,254 @@ func TestLunar_Time(t *testing.T) {
 }
 
 func TestLunar_Year(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected int
-	}{
-		0: {"", 0},
-		1: {"0", 0},
-		2: {"0000-00-00", 0},
-		3: {"00:00:00", 0},
-		4: {"0000-00-00 00:00:00", 0},
-
-		5:  {"2020-04-23", 2020},
-		6:  {"2020-05-01", 2020},
-		7:  {"2020-08-05", 2020},
-		8:  {"2021-01-01", 2020},
-		9:  {"2021-05-12", 2021},
-		10: {"2021-07-07", 2021},
+	type args struct {
+		s Solar
 	}
-
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.Year(), "Current test index is "+strconv.Itoa(index))
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			name: "2020",
+			args: args{NewSolar(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			want: 2020,
+		},
+		{
+			name: "2021",
+			args: args{NewSolar(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
+			want: 2021,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).Year(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_Month(t *testing.T) {
+	type args struct {
+		s Solar
+	}
 	tests := []struct {
-		input    string
-		expected int
+		name string
+		args args
+		want int
 	}{
-		0: {"", 0},
-		1: {"0", 0},
-		2: {"0000-00-00", 0},
-		3: {"00:00:00", 0},
-		4: {"0000-00-00 00:00:00", 0},
-
-		5:  {"2021-01-05", 11},
-		6:  {"2021-02-05", 12},
-		7:  {"2021-03-05", 1},
-		8:  {"2021-04-05", 2},
-		9:  {"2021-05-05", 3},
-		10: {"2021-06-05", 4},
-		11: {"2021-07-05", 5},
-		12: {"2021-08-05", 6},
-		13: {"2021-09-05", 7},
-		14: {"2021-10-05", 8},
-		15: {"2021-11-05", 10},
-		16: {"2021-12-05", 11},
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			name: "1",
+			args: args{NewSolar(time.Date(2021, 3, 5, 0, 0, 0, 0, time.Local))},
+			want: 1,
+		},
+		{
+			name: "2",
+			args: args{NewSolar(time.Date(2021, 4, 5, 0, 0, 0, 0, time.Local))},
+			want: 2,
+		},
+		{
+			name: "3",
+			args: args{NewSolar(time.Date(2021, 5, 5, 0, 0, 0, 0, time.Local))},
+			want: 3,
+		},
+		{
+			name: "4",
+			args: args{NewSolar(time.Date(2021, 6, 5, 0, 0, 0, 0, time.Local))},
+			want: 4,
+		},
+		{
+			name: "5",
+			args: args{NewSolar(time.Date(2021, 7, 5, 0, 0, 0, 0, time.Local))},
+			want: 5,
+		},
+		{
+			name: "6",
+			args: args{NewSolar(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: 6,
+		},
+		{
+			name: "7",
+			args: args{NewSolar(time.Date(2021, 9, 5, 0, 0, 0, 0, time.Local))},
+			want: 7,
+		},
+		{
+			name: "8",
+			args: args{NewSolar(time.Date(2021, 10, 5, 0, 0, 0, 0, time.Local))},
+			want: 8,
+		},
+		{
+			name: "9",
+			args: args{NewSolar(time.Date(2021, 10, 20, 0, 0, 0, 0, time.Local))},
+			want: 9,
+		},
+		{
+			name: "10",
+			args: args{NewSolar(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
+			want: 10,
+		},
+		{
+			name: "11",
+			args: args{NewSolar(time.Date(2022, 12, 5, 0, 0, 0, 0, time.Local))},
+			want: 11,
+		},
+		{
+			name: "12",
+			args: args{NewSolar(time.Date(2022, 1, 5, 0, 0, 0, 0, time.Local))},
+			want: 12,
+		},
 	}
-
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.Month(), "Current test index is "+strconv.Itoa(index))
-	}
-}
-
-func TestLunar_Day(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected int
-	}{
-		0: {"", 0},
-		1: {"0", 0},
-		2: {"0000-00-00", 0},
-		3: {"00:00:00", 0},
-		4: {"0000-00-00 00:00:00", 0},
-
-		5:  {"2020-08-01", 12},
-		6:  {"2020-08-02", 13},
-		7:  {"2020-08-03", 14},
-		8:  {"2020-08-04", 15},
-		9:  {"2020-08-05", 16},
-		10: {"2020-08-06", 17},
-		11: {"2020-08-07", 18},
-		12: {"2020-08-08", 19},
-		13: {"2020-08-09", 20},
-		14: {"2020-08-10", 21},
-		15: {"2020-08-11", 22},
-		16: {"2020-08-12", 23},
-		17: {"2020-08-13", 24},
-		18: {"2020-08-14", 25},
-		19: {"2020-08-15", 26},
-		20: {"2020-08-16", 27},
-		21: {"2020-08-17", 28},
-		22: {"2020-08-18", 29},
-		23: {"2020-08-19", 1},
-		24: {"2020-08-20", 2},
-		25: {"2020-08-21", 3},
-		26: {"2020-08-22", 4},
-		27: {"2020-08-23", 5},
-		28: {"2020-08-24", 6},
-		29: {"2020-08-25", 7},
-		30: {"2020-08-26", 8},
-		31: {"2020-08-27", 9},
-		32: {"2020-08-28", 10},
-		33: {"2020-08-29", 11},
-		34: {"2020-08-30", 12},
-		35: {"2020-08-31", 13},
-	}
-
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.Day(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).Month(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_LeapMonth(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected int
-	}{
-		0: {"", 0},
-		1: {"0", 0},
-		2: {"0000-00-00", 0},
-		3: {"00:00:00", 0},
-		4: {"0000-00-00 00:00:00", 0},
-
-		5: {"2020-04-23", 4},
-		6: {"2020-05-01", 4},
-		7: {"2020-08-05", 4},
-		8: {"2021-07-07", 0},
+	type args struct {
+		s Solar
 	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			name: "4",
+			args: args{NewSolar(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			want: 4,
+		},
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(2021, 7, 1, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).LeapMonth(), "CreateFromSolar(%v)", tt.args.s)
+		})
+	}
+}
 
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.LeapMonth(), "Current test index is "+strconv.Itoa(index))
+func TestLunar_Day(t *testing.T) {
+	type args struct {
+		s Solar
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			name: "1",
+			args: args{NewSolar(time.Date(2020, 8, 19, 0, 0, 0, 0, time.Local))},
+			want: 1,
+		},
+		{
+			name: "2",
+			args: args{NewSolar(time.Date(2020, 8, 20, 0, 0, 0, 0, time.Local))},
+			want: 2,
+		},
+		{
+			name: "3",
+			args: args{NewSolar(time.Date(2020, 8, 21, 0, 0, 0, 0, time.Local))},
+			want: 3,
+		},
+		{
+			name: "4",
+			args: args{NewSolar(time.Date(2020, 8, 22, 0, 0, 0, 0, time.Local))},
+			want: 4,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).Day(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_ToYearString(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		0: {"", ""},
-		1: {"0", ""},
-		2: {"0000-00-00", ""},
-		3: {"00:00:00", ""},
-		4: {"0000-00-00 00:00:00", ""},
-
-		5:  {"2020-04-23", "二零二零"},
-		6:  {"2020-05-01", "二零二零"},
-		7:  {"2020-08-05", "二零二零"},
-		8:  {"2021-01-01", "二零二零"},
-		9:  {"2021-05-12", "二零二一"},
-		10: {"2021-07-07", "二零二一"},
+	type args struct {
+		s Solar
 	}
-
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.ToYearString(), "Current test index is "+strconv.Itoa(index))
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "0",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: "",
+		},
+		{
+			name: "2020",
+			args: args{NewSolar(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			want: "二零二零",
+		},
+		{
+			name: "2021",
+			args: args{NewSolar(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
+			want: "二零二一",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).ToYearString(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 
 func TestLunar_ToMonthString(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		0: {"", ""},
-		1: {"0", ""},
-		2: {"0000-00-00", ""},
-		3: {"00:00:00", ""},
-		4: {"0000-00-00 00:00:00", ""},
-
-		5:  {"2020-01-01", "腊月"},
-		6:  {"2020-02-01", "正月"},
-		7:  {"2020-03-01", "二月"},
-		8:  {"2020-04-01", "三月"},
-		9:  {"2020-04-23", "闰四月"},
-		10: {"2020-05-01", "闰四月"},
-		11: {"2020-06-01", "闰四月"},
-		12: {"2020-07-01", "五月"},
-		13: {"2020-07-07", "五月"},
-		14: {"2020-08-01", "六月"},
-		15: {"2020-09-01", "七月"},
-		16: {"2020-10-01", "八月"},
-		17: {"2020-11-01", "九月"},
-		18: {"2020-12-01", "十月"},
-		19: {"2021-01-01", "十一月"},
-		20: {"2021-02-01", "腊月"},
-		21: {"2021-05-12", "四月"},
+	type args struct {
+		s Solar
 	}
-
-	for index, test := range tests {
-		tm, _ := time.Parse("2006-01-02", test.input)
-		lunar := CreateFromSolar(NewSolar(tm))
-
-		assert.Equal(t, test.expected, lunar.ToMonthString(), "Current test index is "+strconv.Itoa(index))
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "zeroTime",
+			args: args{NewSolar(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: "",
+		},
+		{
+			name: "normalMonth",
+			args: args{NewSolar(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
+			want: "腊月",
+		},
+		{
+			name: "leapMonth",
+			args: args{NewSolar(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			want: "闰四月",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, CreateFromSolar(tt.args.s).ToMonthString(), "CreateFromSolar(%v)", tt.args.s)
+		})
 	}
 }
 

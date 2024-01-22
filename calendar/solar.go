@@ -120,38 +120,69 @@ type Solar struct {
 	Time time.Time
 }
 
+// NewSolar returns a new Solar instance.
+// 初始化 Solar 结构体
+func NewSolar(t time.Time) (s Solar) {
+	s.Time = t
+	return s
+}
+
 func (s Solar) Date() (year, month, day int) {
+	if s.IsZero() {
+		return 0, 0, 0
+	}
 	var tm time.Month
 	year, tm, day = s.Time.Date()
 	month = int(tm)
 	return
 }
 
-func (s Solar) Clock() (hour, min, sec int) {
+func (s Solar) Clock() (hour, minute, second int) {
+	if s.IsZero() {
+		return 0, 0, 0
+	}
 	return s.Time.Clock()
 }
 
 func (s Solar) Year() int {
+	if s.IsZero() {
+		return 0
+	}
 	return s.Time.Year()
 }
 
 func (s Solar) Month() int {
+	if s.IsZero() {
+		return 0
+	}
 	return int(s.Time.Month())
 }
 
 func (s Solar) Day() int {
+	if s.IsZero() {
+		return 0
+	}
 	return s.Time.Day()
 }
 
 func (s Solar) Hour() int {
+	if s.IsZero() {
+		return 0
+	}
 	return s.Time.Hour()
 }
 
 func (s Solar) Minute() int {
+	if s.IsZero() {
+		return 0
+	}
 	return s.Time.Minute()
 }
 
 func (s Solar) Second() int {
+	if s.IsZero() {
+		return 0
+	}
 	return s.Time.Second()
 }
 
@@ -160,8 +191,12 @@ func (s Solar) Location() *time.Location {
 }
 
 func (s Solar) String() string {
-	if s.Time.IsZero() {
+	if s.IsZero() {
 		return ""
 	}
 	return s.Time.Format(DateTimeLayout)
+}
+
+func (s Solar) IsZero() bool {
+	return s.Time.IsZero()
 }
