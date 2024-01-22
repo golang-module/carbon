@@ -1,7 +1,7 @@
 package carbon
 
 import (
-	"github.com/golang-module/v2/calendar/lunar"
+	"github.com/golang-module/carbon/v2/calendar/lunar"
 )
 
 // Lunar converts the solar calendar to the lunar calendar.

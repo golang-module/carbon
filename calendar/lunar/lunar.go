@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/golang-module/v2/calendar"
+	"github.com/golang-module/carbon/v2/calendar"
 )
 
 var (
