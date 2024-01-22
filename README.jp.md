@@ -1360,7 +1360,7 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 現在サポートされているカレンダーは
 
-* [旧暦](./calendar/lunar/README.jp.md "旧暦"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") による貢献
+* [中国の旧暦](./calendar/lunar/README.jp.md "中国の旧暦"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") による貢献
 
 ##### 国際化
 

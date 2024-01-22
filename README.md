@@ -1452,7 +1452,7 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 The following calendars are supported
 
-* [Lunar](./calendar/lunar/README.md "lunar")：contributed
+* [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")：contributed
   by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
 
 ##### I18n
