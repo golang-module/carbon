@@ -1360,7 +1360,7 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 目前支持的日历有
 
-* [农历](./calendar/lunar/README.cn.md "农历"): `农历` 和 `公历` 之间相互转换
+* [农历](./calendar/lunar/README.cn.md "农历"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 贡献
 
 ##### 国际化
 

@@ -1452,7 +1452,8 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 The following calendars are supported
 
-* [Lunar](./calendar/lunar/README.md "lunar")：convert between `Lunar` and `Solar`
+* [Lunar](./calendar/lunar/README.md "lunar")：contributed
+  by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
 
 ##### I18n
 
