@@ -61,9 +61,9 @@ type Lunar struct {
 
 // NewGregorian returns a new Gregorian instance.
 // 初始化 Gregorian 结构体
-func NewGregorian(t time.Time) (s Gregorian) {
-	s.Time = t
-	return s
+func NewGregorian(t time.Time) (g Gregorian) {
+	g.Time = t
+	return g
 }
 
 // NewLunar returns a new Lunar instance.
@@ -130,10 +130,10 @@ func (g Gregorian) ToLunar() (l Lunar) {
 
 // ToGregorian Convert Lunar calendar into Gregorian calendar
 // 将 农历 转化为 公历
-func (l Lunar) ToGregorian() (s Gregorian) {
+func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.year < minYear || l.year > maxYear {
-		s.Error = invalidYearError()
-		return s
+		g.Error = invalidYearError()
+		return g
 	}
 
 	days := l.getDaysInMonth()
@@ -145,8 +145,8 @@ func (l Lunar) ToGregorian() (s Gregorian) {
 	}
 
 	ts := (offset+l.day)*86400 + -2206512000 + l.hour*3600 + l.minute*60 + l.second
-	s.Time = time.Unix(int64(ts), 0)
-	return s
+	g.Time = time.Unix(int64(ts), 0)
+	return g
 }
 
 func (g Gregorian) diffInDays(t time.Time) int {
