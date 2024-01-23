@@ -4,7 +4,7 @@ import (
 	"github.com/golang-module/carbon/v2/calendar/lunar"
 )
 
-// Lunar converts the solar calendar to the lunar calendar.
+// Lunar converts the solar gregorian to the lunar calendar.
 // 将 公历 转为 农历
 func (c Carbon) Lunar() (l lunar.Lunar) {
 	if c.Error != nil {
