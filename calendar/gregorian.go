@@ -114,89 +114,90 @@ const (
 	ShortTimeNanoLayout  = "150405.999999999"
 )
 
-// Solar defines a Solar struct.
-// 定义 Solar 结构体
-type Solar struct {
-	Time time.Time
+// Gregorian defines a Gregorian struct.
+// 定义 Gregorian 结构体
+type Gregorian struct {
+	Time  time.Time
+	Error error
 }
 
-// NewSolar returns a new Solar instance.
-// 初始化 Solar 结构体
-func NewSolar(t time.Time) (s Solar) {
-	s.Time = t
-	return s
+// NewGregorian returns a new Gregorian instance.
+// 初始化 Gregorian 结构体
+func NewGregorian(t time.Time) (g Gregorian) {
+	g.Time = t
+	return g
 }
 
-func (s Solar) Date() (year, month, day int) {
-	if s.IsZero() {
+func (g Gregorian) Date() (year, month, day int) {
+	if g.IsZero() {
 		return 0, 0, 0
 	}
 	var tm time.Month
-	year, tm, day = s.Time.Date()
+	year, tm, day = g.Time.Date()
 	month = int(tm)
 	return
 }
 
-func (s Solar) Clock() (hour, minute, second int) {
-	if s.IsZero() {
+func (g Gregorian) Clock() (hour, minute, second int) {
+	if g.IsZero() {
 		return 0, 0, 0
 	}
-	return s.Time.Clock()
+	return g.Time.Clock()
 }
 
-func (s Solar) Year() int {
-	if s.IsZero() {
+func (g Gregorian) Year() int {
+	if g.IsZero() {
 		return 0
 	}
-	return s.Time.Year()
+	return g.Time.Year()
 }
 
-func (s Solar) Month() int {
-	if s.IsZero() {
+func (g Gregorian) Month() int {
+	if g.IsZero() {
 		return 0
 	}
-	return int(s.Time.Month())
+	return int(g.Time.Month())
 }
 
-func (s Solar) Day() int {
-	if s.IsZero() {
+func (g Gregorian) Day() int {
+	if g.IsZero() {
 		return 0
 	}
-	return s.Time.Day()
+	return g.Time.Day()
 }
 
-func (s Solar) Hour() int {
-	if s.IsZero() {
+func (g Gregorian) Hour() int {
+	if g.IsZero() {
 		return 0
 	}
-	return s.Time.Hour()
+	return g.Time.Hour()
 }
 
-func (s Solar) Minute() int {
-	if s.IsZero() {
+func (g Gregorian) Minute() int {
+	if g.IsZero() {
 		return 0
 	}
-	return s.Time.Minute()
+	return g.Time.Minute()
 }
 
-func (s Solar) Second() int {
-	if s.IsZero() {
+func (g Gregorian) Second() int {
+	if g.IsZero() {
 		return 0
 	}
-	return s.Time.Second()
+	return g.Time.Second()
 }
 
-func (s Solar) Location() *time.Location {
-	return s.Time.Location()
+func (g Gregorian) Location() *time.Location {
+	return g.Time.Location()
 }
 
-func (s Solar) String() string {
-	if s.IsZero() {
+func (g Gregorian) String() string {
+	if g.IsZero() {
 		return ""
 	}
-	return s.Time.Format(DateTimeLayout)
+	return g.Time.Format(DateTimeLayout)
 }
 
-func (s Solar) IsZero() bool {
-	return s.Time.IsZero()
+func (g Gregorian) IsZero() bool {
+	return g.Time.IsZero()
 }
