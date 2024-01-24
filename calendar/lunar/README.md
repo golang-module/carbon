@@ -23,7 +23,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 > Currently only `200` years from `1900` to `2100` are supported
 
-##### Convert Gregorian into Lunar
+##### Convert `Gregorian` calendar to `Lunar` calendar
 
 ```go
 // Get Lunar year of animal
@@ -92,7 +92,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
 ```
 
-##### Convert Lunar into Gregorian
+##### Convert `Lunar` calendar to `Gregorian` calendar
 
 ```go
 // Convert the Lunar Calendar December 11, 2023 to the gregorian calendar
