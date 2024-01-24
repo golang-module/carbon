@@ -39,9 +39,11 @@ func NewJulian(f float64) (j Julian) {
 	// get length of the integer part of f
 	n := len(strconv.Itoa(int(math.Ceil(f))))
 	switch n {
+	// modified julian day
 	case 5:
 		j.mjd = f
 		j.jd = f + 2400000.5
+	// julian day
 	case 7:
 		j.jd = f
 		j.mjd = f - 2400000.5
@@ -52,7 +54,7 @@ func NewJulian(f float64) (j Julian) {
 	return
 }
 
-// ToJulian Convert Gregorian calendar into Julian calendar
+// ToJulian Convert Gregorian calendar to Julian calendar.
 // 将 公历 转化为 儒略历
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
@@ -74,7 +76,7 @@ func (g Gregorian) ToJulian() (j Julian) {
 	return NewJulian(jd)
 }
 
-// ToGregorian Convert Julian calendar into Gregorian calendar
+// ToGregorian Convert Julian calendar to Gregorian calendar.
 // 将 儒略历 转化为 公历
 func (j Julian) ToGregorian() (g Gregorian) {
 	if j.jd == 0 || j.mjd == 0 {
@@ -112,7 +114,7 @@ func (j Julian) ToGregorian() (g Gregorian) {
 	return NewGregorian(time.Date(year, time.Month(month), day, hour, minute, second, 0, time.Local))
 }
 
-// JD gets julian day like 2460332.5.
+// JD gets julian day like 2460332.5
 // 获取儒略日
 func (j Julian) JD(precision ...int) float64 {
 	if len(precision) > 0 {
@@ -121,7 +123,7 @@ func (j Julian) JD(precision ...int) float64 {
 	return parseFloat64(j.jd, decimalPrecision)
 }
 
-// MJD gets modified julian day like 60332.
+// MJD gets modified julian day like 60332
 // 获取简化儒略日
 func (j Julian) MJD(precision ...int) float64 {
 	if len(precision) > 0 {

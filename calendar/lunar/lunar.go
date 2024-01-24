@@ -74,7 +74,7 @@ func NewLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l L
 	return l
 }
 
-// ToLunar Convert Gregorian calendar into Lunar calendar
+// ToLunar Convert Gregorian calendar to Lunar calendar.
 // 将 公历 转化为 农历
 func (g Gregorian) ToLunar() (l Lunar) {
 	// leapMonths:闰月总数，daysOfYear:年天数，daysOfMonth:月天数，leapMonth:闰月月份
@@ -127,7 +127,7 @@ func (g Gregorian) ToLunar() (l Lunar) {
 	return l
 }
 
-// ToGregorian Convert Lunar calendar into Gregorian calendar
+// ToGregorian Convert Lunar calendar to Gregorian calendar.
 // 将 农历 转化为 公历
 func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.year < minYear || l.year > maxYear {
