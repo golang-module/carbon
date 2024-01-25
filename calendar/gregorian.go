@@ -223,3 +223,16 @@ func (g Gregorian) String() string {
 func (g Gregorian) IsZero() bool {
 	return g.Time.IsZero()
 }
+
+// IsLeapYear reports whether is a leap year.
+// 是否是闰年
+func (g Gregorian) IsLeapYear() bool {
+	if g.IsZero() {
+		return false
+	}
+	year := g.Year()
+	if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
+		return true
+	}
+	return false
+}

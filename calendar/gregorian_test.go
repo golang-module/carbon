@@ -267,3 +267,55 @@ func TestGregorian_Clock(t *testing.T) {
 		})
 	}
 }
+
+func TestGregorian_IsZero(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want bool
+	}{
+		{
+			args: args{NewGregorian(time.Time{})},
+			want: true,
+		},
+		{
+			args: args{NewGregorian(time.Date(2020, 8, 5, 13, 14, 15, 0, time.Local))},
+			want: false,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.IsZero(), "args(%v)", tt.args.g)
+		})
+	}
+}
+
+func TestGregorian_IsLeapYear(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want bool
+	}{
+		{
+			args: args{NewGregorian(time.Time{})},
+			want: false,
+		},
+		{
+			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: true,
+		},
+		{
+			args: args{NewGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: false,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.IsLeapYear(), "args(%v)", tt.args.g)
+		})
+	}
+}
