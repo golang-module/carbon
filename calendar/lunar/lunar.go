@@ -10,10 +10,25 @@ import (
 
 var (
 	minYear, maxYear = 1900, 2100
-	lunarNumbers     = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
-	lunarMonths      = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
-	lunarAnimals     = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
-	lunarFestivals   = []string{"春节", "元宵节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "寒衣节", "下元节", "腊八节", "小年"}
+
+	numbers = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
+	months  = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
+	animals = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
+
+	festivals = map[string]string{
+		"1-1":   "春节",
+		"1-15":  "元宵节",
+		"2-2":   "龙抬头",
+		"3-3":   "上巳节",
+		"5-5":   "端午节",
+		"7-7":   "七夕节",
+		"7-15":  "中元节",
+		"8-15":  "中秋节",
+		"9-9":   "重阳节",
+		"10-1":  "寒衣节",
+		"10-15": "下元节",
+		"12-8":  "腊八节",
+	}
 
 	lunarTerms = []int{
 		0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
@@ -212,41 +227,16 @@ func (l Lunar) Animal() string {
 	if l.Error != nil {
 		return ""
 	}
-	return lunarAnimals[l.year%calendar.MonthsPerYear]
+	return animals[l.year%calendar.MonthsPerYear]
 }
 
 // Festival gets lunar festival name like "春节".
 // 获取农历节日
-func (l Lunar) Festival() (festival string) {
+func (l Lunar) Festival() string {
 	if l.Error != nil {
-		return
+		return ""
 	}
-	month, day := l.month, l.day
-	switch {
-	case month == 1 && day == 1:
-		festival = lunarFestivals[0]
-	case month == 1 && day == 15:
-		festival = lunarFestivals[1]
-	case month == 5 && day == 5:
-		festival = lunarFestivals[2]
-	case month == 7 && day == 7:
-		festival = lunarFestivals[3]
-	case month == 7 && day == 15:
-		festival = lunarFestivals[4]
-	case month == 8 && day == 15:
-		festival = lunarFestivals[5]
-	case month == 9 && day == 9:
-		festival = lunarFestivals[6]
-	case month == 10 && day == 1:
-		festival = lunarFestivals[7]
-	case month == 10 && day == 15:
-		festival = lunarFestivals[8]
-	case month == 12 && day == 8:
-		festival = lunarFestivals[9]
-	case month == 12 && day == 23:
-		festival = lunarFestivals[10]
-	}
-	return
+	return festivals[fmt.Sprintf("%d-%d", l.month, l.day)]
 }
 
 // Year gets lunar year like 2020.
@@ -292,7 +282,7 @@ func (l Lunar) ToYearString() string {
 		return ""
 	}
 	year := fmt.Sprintf("%d", l.year)
-	for i, replace := range lunarNumbers {
+	for i, replace := range numbers {
 		year = strings.Replace(year, fmt.Sprintf("%d", i), replace, -1)
 	}
 	return year
@@ -304,7 +294,7 @@ func (l Lunar) ToMonthString() string {
 	if l.Error != nil {
 		return ""
 	}
-	month := lunarMonths[l.month-1] + "月"
+	month := months[l.month-1] + "月"
 	if l.IsLeapMonth() {
 		return "闰" + month
 	}
@@ -317,7 +307,7 @@ func (l Lunar) ToDayString() (day string) {
 	if l.Error != nil {
 		return
 	}
-	num := lunarNumbers[l.day%10]
+	num := numbers[l.day%10]
 	switch {
 	case l.day == 30:
 		day = "三十"
