@@ -142,9 +142,9 @@ func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.isLeapMonth {
 		offset += days
 	}
-
-	ts := (offset+l.day)*86400 + -2206512000 + l.hour*3600 + l.minute*60 + l.second
-	g.Time = time.Unix(int64(ts), 0)
+	// https://github.com/golang-module/carbon/issues/219
+	ts := int64(offset+l.day)*86400 - int64(2206512000) + int64(l.hour)*3600 + int64(l.minute)*60 + int64(l.second)
+	g.Time = time.Unix(ts, 0)
 	return g
 }
 
