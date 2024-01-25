@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSolar_Year(t *testing.T) {
+func TestGregorian_Year(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -32,7 +32,7 @@ func TestSolar_Year(t *testing.T) {
 	}
 }
 
-func TestSolar_Month(t *testing.T) {
+func TestGregorian_Month(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -56,7 +56,7 @@ func TestSolar_Month(t *testing.T) {
 	}
 }
 
-func TestSolar_Day(t *testing.T) {
+func TestGregorian_Day(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -80,7 +80,7 @@ func TestSolar_Day(t *testing.T) {
 	}
 }
 
-func TestSolar_Hour(t *testing.T) {
+func TestGregorian_Hour(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -104,7 +104,7 @@ func TestSolar_Hour(t *testing.T) {
 	}
 }
 
-func TestSolar_Minute(t *testing.T) {
+func TestGregorian_Minute(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -128,7 +128,7 @@ func TestSolar_Minute(t *testing.T) {
 	}
 }
 
-func TestSolar_Second(t *testing.T) {
+func TestGregorian_Second(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -152,7 +152,7 @@ func TestSolar_Second(t *testing.T) {
 	}
 }
 
-func TestSolar_String(t *testing.T) {
+func TestGregorian_String(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -176,7 +176,7 @@ func TestSolar_String(t *testing.T) {
 	}
 }
 
-func TestSolar_Location(t *testing.T) {
+func TestGregorian_Location(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -200,7 +200,7 @@ func TestSolar_Location(t *testing.T) {
 	}
 }
 
-func TestSolar_Date(t *testing.T) {
+func TestGregorian_Date(t *testing.T) {
 	type args struct {
 		Time time.Time
 	}
@@ -234,7 +234,7 @@ func TestSolar_Date(t *testing.T) {
 	}
 }
 
-func TestSolar_Clock(t *testing.T) {
+func TestGregorian_Clock(t *testing.T) {
 	type args struct {
 		Time time.Time
 	}
