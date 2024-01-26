@@ -65,6 +65,15 @@ carbon.SetDefault(carbon.Default{
 
 > 如果没有设置，默认布局模板是 `2006-01-02 15:04:05`, 默认时区是 `Local`, 默认一周开始日期是 `Sunday(周日)`, 默认语言是 `en`
 
+##### Carbon 和 time.Time 互转
+
+```go
+// 将标准 time.Time 转换成 Carbon
+carbon.CreateFromStdTime(time.Now())
+// 将 Carbon 转换成标准 time.Time
+carbon.Now().ToStdTime()
+```
+
 ##### 昨天、今天、明天
 
 ```go

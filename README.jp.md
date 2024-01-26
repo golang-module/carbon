@@ -60,7 +60,7 @@ import "gitee.com/golang-module/carbon"
 
 ```go
 carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
+  Layout: carbon.DateTimeLayout,
   Timezone: carbon.PRC,
   WeekStartsAt: carbon.Sunday,
   Locale: "jp",
@@ -68,6 +68,15 @@ carbon.SetDefault(carbon.Default{
 ```
 
 > 設定されていない場合，デフォルトのレイアウト テンプレートは `2006-01-02 15:04:05`，デフォルトのタイムゾーンは `Local`，デフォルトの週の開始日は `日曜日`，デフォルトの言語は `en` です。
+
+##### Carbon と time.Time 交換
+
+```go
+// 標準の time.Time を Carbon に変換します
+carbon.CreateFromStdTime(time.Now())
+// Carbon を標準の time.Time に変換します
+carbon.Now().ToStdTime()
+```
 
 ##### 昨日、今日、明日
 
@@ -243,15 +252,6 @@ carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeStr
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-```
-
-##### Carbon と time.Time 交換
-
-```go
-// 標準の time.Time を Carbon に変換します
-carbon.CreateFromStdTime(time.Now())
-// Carbon を標準の time.Time に変換します
-carbon.Now().ToStdTime()
 ```
 
 ##### 始まりと終わり

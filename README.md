@@ -68,6 +68,15 @@ carbon.SetDefault(carbon.Default{
 
 > If not set, the default layout is `2006-01-02 15:04:05`, the default timezone is `Local`, the default week start date is `Sunday` and the default language locale is `en`
 
+##### Convert between Carbon and Time
+
+```go
+// Convert standard Time.time into Carbon
+carbon.CreateFromStdTime(time.Now())
+// Convert Carbon into standard Time.time
+carbon.Now().ToStdTime()
+```
+
 ##### Yesterday, today and tomorrow
 
 ```go
@@ -241,15 +250,6 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
-```
-
-##### Convert between Carbon and Time
-
-```go
-// Convert standard Time.time into Carbon
-carbon.CreateFromStdTime(time.Now())
-// Convert Carbon into standard Time.time
-carbon.Now().ToStdTime()
 ```
 
 ##### Boundary
