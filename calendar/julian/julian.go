@@ -26,15 +26,15 @@ type Julian struct {
 	jd, mjd float64
 }
 
-// FromGregorian creates from a Gregorian instance.
-// 创建 Gregorian 结构体
+// FromGregorian creates a Gregorian instance from time.Time.
+// 从标准 time.Time 创建 Gregorian 结构体
 func FromGregorian(t time.Time) (g Gregorian) {
 	g.Time = t
 	return g
 }
 
-// FromJulian creates from a new Julian instance.
-// 创建 Julian 结构体
+// FromJulian creates a Julian instance from julian day or modified julian day.
+// 从 儒略日 或 简化儒略日 创建 Julian 结构体
 func FromJulian(f float64) (j Julian) {
 	// get length of the integer part of f
 	n := len(strconv.Itoa(int(math.Ceil(f))))
