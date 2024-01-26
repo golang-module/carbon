@@ -54,7 +54,7 @@ func NewJulian(f float64) (j Julian) {
 	return
 }
 
-// ToJulian Convert Gregorian calendar to Julian calendar.
+// ToJulian converts Gregorian calendar to Julian calendar.
 // 将 公历 转化为 儒略历
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
@@ -76,7 +76,7 @@ func (g Gregorian) ToJulian() (j Julian) {
 	return NewJulian(jd)
 }
 
-// ToGregorian Convert Julian calendar to Gregorian calendar.
+// ToGregorian converts Julian calendar to Gregorian calendar.
 // 将 儒略历 转化为 公历
 func (j Julian) ToGregorian() (g Gregorian) {
 	if j.jd == 0 || j.mjd == 0 {
