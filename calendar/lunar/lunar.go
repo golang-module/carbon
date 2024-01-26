@@ -16,6 +16,7 @@ var (
 	animals = []string{"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"}
 
 	festivals = map[string]string{
+		// "month-day": "name"
 		"1-1":   "春节",
 		"1-15":  "元宵节",
 		"2-2":   "龙抬头",
