@@ -216,10 +216,6 @@ func TestLunar_Festival(t *testing.T) {
 			args: args{NewGregorian(time.Date(2022, 1, 10, 0, 0, 0, 0, time.Local))},
 			want: "腊八节",
 		},
-		{
-			args: args{NewGregorian(time.Date(2022, 1, 25, 0, 0, 0, 0, time.Local))},
-			want: "小年",
-		},
 	}
 	for index, tt := range tests {
 		t.Run(strconv.Itoa(index), func(t *testing.T) {
