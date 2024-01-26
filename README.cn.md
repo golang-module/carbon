@@ -56,7 +56,7 @@ import "gitee.com/golang-module/carbon"
 
 ```go
 carbon.SetDefault(carbon.Default{
-  Layout: carbon.RFC3339Layout,
+  Layout: carbon.DateTimeLayout,
   Timezone: carbon.PRC,
   WeekStartsAt: carbon.Sunday,
   Locale: "zh-CN",
@@ -243,15 +243,6 @@ carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeStr
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
-```
-
-##### Carbon 和 time.Time 互转
-
-```go
-// 将标准 time.Time 转换成 Carbon
-carbon.CreateFromStdTime(time.Now())
-// 将 Carbon 转换成标准 time.Time
-carbon.Now().ToStdTime()
 ```
 
 ##### 时间边界
