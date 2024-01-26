@@ -30,7 +30,7 @@ var (
 		"12-8":  "腊八节",
 	}
 
-	lunarTerms = []int{
+	years = []int{
 		0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
 		0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
 		0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
@@ -195,7 +195,7 @@ func (l Lunar) getOffsetInMonth() int {
 func (l Lunar) getDaysInYear() int {
 	var days = 348
 	for i := 0x8000; i > 0x8; i >>= 1 {
-		if (lunarTerms[l.year-minYear] & i) != 0 {
+		if (years[l.year-minYear] & i) != 0 {
 			days++
 		}
 	}
@@ -203,7 +203,7 @@ func (l Lunar) getDaysInYear() int {
 }
 
 func (l Lunar) getDaysInMonth() int {
-	if (lunarTerms[l.year-minYear] & (0x10000 >> uint(l.month))) != 0 {
+	if (years[l.year-minYear] & (0x10000 >> uint(l.month))) != 0 {
 		return 30
 	}
 	return 29
@@ -213,7 +213,7 @@ func (l Lunar) getDaysInLeapMonth() int {
 	if l.LeapMonth() == 0 {
 		return 0
 	}
-	if lunarTerms[l.year-minYear]&0x10000 != 0 {
+	if years[l.year-minYear]&0x10000 != 0 {
 		return 30
 	}
 	return 29
@@ -261,7 +261,7 @@ func (l Lunar) LeapMonth() int {
 	if l.Error != nil {
 		return 0
 	}
-	return lunarTerms[l.year-minYear] & 0xf
+	return years[l.year-minYear] & 0xf
 }
 
 // Day gets lunar day like 5.
