@@ -12,6 +12,10 @@ var (
 	// julian day or modified julian day decimal precision
 	// 儒略日或简化儒略日小数精度
 	decimalPrecision = 6
+
+	// difference between Julian Day and Modified Julian Day
+	// 儒略日和简化儒略日之间的差值
+	diffJdFromMjd = 2400000.5
 )
 
 // Gregorian defines a Gregorian struct.
@@ -42,11 +46,11 @@ func FromJulian(f float64) (j Julian) {
 	// modified julian day
 	case 5:
 		j.mjd = f
-		j.jd = f + 2400000.5
+		j.jd = f + diffJdFromMjd
 	// julian day
 	case 7:
 		j.jd = f
-		j.mjd = f - 2400000.5
+		j.mjd = f - diffJdFromMjd
 	default:
 		j.jd = 0
 		j.mjd = 0
