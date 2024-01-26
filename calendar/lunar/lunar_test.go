@@ -17,15 +17,15 @@ func TestSolarToLunar(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 21, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 21, 0, 0, 0, 0, time.Local))},
 			want: "2023-12-11 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2023, 3, 2, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2023, 3, 2, 0, 0, 0, 0, time.Local))},
 			want: "2023-02-11 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2023, 4, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2023, 4, 1, 0, 0, 0, 0, time.Local))},
 			want: "2023-02-11 00:00:00",
 		},
 	}
@@ -45,23 +45,23 @@ func TestLunarToGregorian(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewLunar(2023, 12, 11, 0, 0, 0, false)},
+			args: args{FromLunar(2023, 12, 11, 0, 0, 0, false)},
 			want: "2024-01-21 00:00:00",
 		},
 		{
-			args: args{NewLunar(2023, 2, 11, 0, 0, 0, false)},
+			args: args{FromLunar(2023, 2, 11, 0, 0, 0, false)},
 			want: "2023-03-02 00:00:00",
 		},
 		{
-			args: args{NewLunar(2023, 2, 11, 0, 0, 0, true)},
+			args: args{FromLunar(2023, 2, 11, 0, 0, 0, true)},
 			want: "2023-04-01 00:00:00",
 		},
 		{
-			args: args{NewLunar(1800, 2, 11, 0, 0, 0, false)},
+			args: args{FromLunar(1800, 2, 11, 0, 0, 0, false)},
 			want: "",
 		},
 		{
-			args: args{NewLunar(2500, 2, 11, 0, 0, 0, false)},
+			args: args{FromLunar(2500, 2, 11, 0, 0, 0, false)},
 			want: "",
 		},
 	}
@@ -81,75 +81,75 @@ func TestLunar_Animal(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "鼠",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "鼠",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: "牛",
 		},
 		{
-			args: args{NewGregorian(time.Date(2010, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2010, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "虎",
 		},
 		{
-			args: args{NewGregorian(time.Date(2011, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2011, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "兔",
 		},
 		{
-			args: args{NewGregorian(time.Date(2012, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2012, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "龙",
 		},
 		{
-			args: args{NewGregorian(time.Date(2013, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2013, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "蛇",
 		},
 		{
-			args: args{NewGregorian(time.Date(2014, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2014, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "马",
 		},
 		{
-			args: args{NewGregorian(time.Date(2015, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2015, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "羊",
 		},
 		{
-			args: args{NewGregorian(time.Date(2016, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2016, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "猴",
 		},
 		{
-			args: args{NewGregorian(time.Date(2017, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2017, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "鸡",
 		},
 		{
-			args: args{NewGregorian(time.Date(2018, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2018, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "狗",
 		},
 		{
-			args: args{NewGregorian(time.Date(2019, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2019, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "猪",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 23, 0, 0, 0, 0, time.Local))},
 			want: "鼠",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 6, 21, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 6, 21, 0, 0, 0, 0, time.Local))},
 			want: "鼠",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "鼠",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: "牛",
 		},
 	}
@@ -169,51 +169,51 @@ func TestLunar_Festival(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 2, 12, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 2, 12, 0, 0, 0, 0, time.Local))},
 			want: "春节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 2, 26, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 2, 26, 0, 0, 0, 0, time.Local))},
 			want: "元宵节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 6, 14, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 6, 14, 0, 0, 0, 0, time.Local))},
 			want: "端午节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 8, 14, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 8, 14, 0, 0, 0, 0, time.Local))},
 			want: "七夕节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 8, 22, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 8, 22, 0, 0, 0, 0, time.Local))},
 			want: "中元节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 9, 21, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 9, 21, 0, 0, 0, 0, time.Local))},
 			want: "中秋节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 10, 14, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 10, 14, 0, 0, 0, 0, time.Local))},
 			want: "重阳节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
 			want: "寒衣节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 11, 19, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 11, 19, 0, 0, 0, 0, time.Local))},
 			want: "下元节",
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 1, 10, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 1, 10, 0, 0, 0, 0, time.Local))},
 			want: "腊八节",
 		},
 	}
@@ -233,15 +233,15 @@ func TestLunar_Year(t *testing.T) {
 		want int
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: 2020,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: 2021,
 		},
 	}
@@ -261,55 +261,55 @@ func TestLunar_Month(t *testing.T) {
 		want int
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 3, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 3, 5, 0, 0, 0, 0, time.Local))},
 			want: 1,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 4, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 4, 5, 0, 0, 0, 0, time.Local))},
 			want: 2,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 5, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 5, 5, 0, 0, 0, 0, time.Local))},
 			want: 3,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 6, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 6, 5, 0, 0, 0, 0, time.Local))},
 			want: 4,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 5, 0, 0, 0, 0, time.Local))},
 			want: 5,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: 6,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 9, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 9, 5, 0, 0, 0, 0, time.Local))},
 			want: 7,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 10, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 10, 5, 0, 0, 0, 0, time.Local))},
 			want: 8,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 10, 20, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 10, 20, 0, 0, 0, 0, time.Local))},
 			want: 9,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 11, 5, 0, 0, 0, 0, time.Local))},
 			want: 10,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 12, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 12, 5, 0, 0, 0, 0, time.Local))},
 			want: 11,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 1, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 1, 5, 0, 0, 0, 0, time.Local))},
 			want: 12,
 		},
 	}
@@ -329,15 +329,15 @@ func TestLunar_LeapMonth(t *testing.T) {
 		want int
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: 4,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 1, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
 	}
@@ -357,23 +357,23 @@ func TestLunar_Day(t *testing.T) {
 		want int
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 19, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 19, 0, 0, 0, 0, time.Local))},
 			want: 1,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 20, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 20, 0, 0, 0, 0, time.Local))},
 			want: 2,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 21, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 21, 0, 0, 0, 0, time.Local))},
 			want: 3,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 22, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 22, 0, 0, 0, 0, time.Local))},
 			want: 4,
 		},
 	}
@@ -393,15 +393,15 @@ func TestLunar_ToYearString(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二一",
 		},
 	}
@@ -421,63 +421,63 @@ func TestLunar_ToMonthString(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: "腊月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
 			want: "正月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
 			want: "二月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
 			want: "三月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: "闰四月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "闰四月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
 			want: "闰四月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
 			want: "五月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
 			want: "六月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
 			want: "七月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
 			want: "八月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
 			want: "九月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
 			want: "十月",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: "十一月",
 		},
 	}
@@ -497,67 +497,67 @@ func TestLunar_ToDayString(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: "初七",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
 			want: "初八",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
 			want: "初八",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
 			want: "初九",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "初九",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
 			want: "初十",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
 			want: "十一",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
 			want: "十二",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
 			want: "十四",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
 			want: "十五",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
 			want: "十六",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
 			want: "十七",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 3, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 3, 0, 0, 0, 0, time.Local))},
 			want: "二十",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 5, 0, 0, 0, 0, time.Local))},
 			want: "廿二",
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 4, 11, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 4, 11, 0, 0, 0, 0, time.Local))},
 			want: "三十",
 		},
 	}
@@ -577,39 +577,39 @@ func TestLunar_String(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: "2019-12-07 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-01-08 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-02-08 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-03-09 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-04-09 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-04-10 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-05-11 00:00:00",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
 			want: "2020-06-12 00:00:00",
 		},
 	}
@@ -629,55 +629,55 @@ func TestLunar_ToDateString(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零一九年腊月初七",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年正月初八",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年二月初八",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年三月初九",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年闰四月初九",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年闰四月初十",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年五月十一",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年六月十二",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年七月十四",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年八月十五",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年九月十六",
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
 			want: "二零二零年十月十七",
 		},
 	}
@@ -697,31 +697,31 @@ func TestLunar_IsLeapYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 	}
@@ -741,31 +741,31 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 	}
@@ -785,31 +785,31 @@ func TestLunar_IsRatYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 	}
@@ -829,31 +829,31 @@ func TestLunar_IsOxYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 	}
@@ -873,31 +873,31 @@ func TestLunar_IsTigerYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2022, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -917,31 +917,31 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2023, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2023, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -961,31 +961,31 @@ func TestLunar_IsDragonYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1005,31 +1005,31 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2025, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2025, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1049,31 +1049,31 @@ func TestLunar_IsHorseYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2026, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2026, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1093,31 +1093,31 @@ func TestLunar_IsGoatYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2027, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2027, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1137,31 +1137,31 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2028, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2028, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1181,31 +1181,31 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2029, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2029, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1225,31 +1225,31 @@ func TestLunar_IsDogYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2030, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2030, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}
@@ -1269,31 +1269,31 @@ func TestLunar_IsPigYear(t *testing.T) {
 		want bool
 	}{
 		{
-			args: args{NewGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2021, 7, 7, 0, 0, 0, 0, time.Local))},
 			want: false,
 		},
 		{
-			args: args{NewGregorian(time.Date(2031, 8, 5, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2031, 8, 5, 0, 0, 0, 0, time.Local))},
 			want: true,
 		},
 	}

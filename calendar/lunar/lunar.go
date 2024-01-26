@@ -74,16 +74,16 @@ type Lunar struct {
 	Error                                  error
 }
 
-// NewGregorian returns a new Gregorian instance.
-// 初始化 Gregorian 结构体
-func NewGregorian(t time.Time) (g Gregorian) {
+// FromGregorian creates from a Gregorian instance.
+// 创建 Gregorian 结构体
+func FromGregorian(t time.Time) (g Gregorian) {
 	g.Time = t
 	return
 }
 
-// NewLunar returns a new Lunar instance.
-// 初始化 Lunar 结构体
-func NewLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l Lunar) {
+// FromLunar creates from a Lunar instance.
+// 创建 Lunar 结构体
+func FromLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l Lunar) {
 	l.year, l.month, l.day = year, month, day
 	l.hour, l.minute, l.second = hour, minute, second
 	l.isLeapMonth = isLeapMonth
