@@ -32,8 +32,8 @@ func (c Carbon) Julian() (j julian.Julian) {
 	return julian.NewGregorian(c.ToStdTime()).ToJulian()
 }
 
-// CreateFromJulian creates a Carbon instance from Julian Day.
-// 从 儒略历 创建 Carbon 实例
+// CreateFromJulian creates a Carbon instance from Julian Day.or Modified Julian Day
+// 从 儒略日/简化儒略日 创建 Carbon 实例
 func CreateFromJulian(f float64) Carbon {
 	c := NewCarbon()
 	c.time = julian.NewJulian(f).ToGregorian().Time
