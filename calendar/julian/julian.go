@@ -20,22 +20,22 @@ type Gregorian struct {
 	calendar.Gregorian
 }
 
-// NewGregorian returns a new Gregorian instance.
-// 初始化 Gregorian 结构体
-func NewGregorian(t time.Time) (g Gregorian) {
-	g.Time = t
-	return g
-}
-
 // Julian defines a Julian struct.
 // 定义 Julian 结构体
 type Julian struct {
 	jd, mjd float64
 }
 
-// NewJulian returns a new Julian instance.
-// 初始化 Julian 结构体
-func NewJulian(f float64) (j Julian) {
+// FromGregorian creates from a Gregorian instance.
+// 创建 Gregorian 结构体
+func FromGregorian(t time.Time) (g Gregorian) {
+	g.Time = t
+	return g
+}
+
+// FromJulian creates from a new Julian instance.
+// 创建 Julian 结构体
+func FromJulian(f float64) (j Julian) {
 	// get length of the integer part of f
 	n := len(strconv.Itoa(int(math.Ceil(f))))
 	switch n {
@@ -73,7 +73,7 @@ func (g Gregorian) ToJulian() (j Julian) {
 		y--
 	}
 	jd := float64(int(365.25*(float64(y)+4716))) + float64(int(30.6001*(float64(m)+1))) + d + float64(n) - 1524.5
-	return NewJulian(jd)
+	return FromJulian(jd)
 }
 
 // ToGregorian converts Julian calendar to Gregorian calendar.
@@ -111,7 +111,7 @@ func (j Julian) ToGregorian() (g Gregorian) {
 	f -= float64(minute)
 	f *= 60
 	second := int(math.Round(f))
-	return NewGregorian(time.Date(year, time.Month(month), day, hour, minute, second, 0, time.Local))
+	return FromGregorian(time.Date(year, time.Month(month), day, hour, minute, second, 0, time.Local))
 }
 
 // JD gets julian day like 2460332.5
