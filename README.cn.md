@@ -1360,7 +1360,8 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 目前支持的日历有
 
-* [中国农历](./calendar/lunar/README.cn.md "中国农历"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 贡献
+* [中国农历](./calendar/lunar/README.cn.md "中国农历")
+* [儒略日/简化儒略日](./calendar/julian/README.cn.md "儒略日/简化儒略日")
 
 ##### 国际化
 

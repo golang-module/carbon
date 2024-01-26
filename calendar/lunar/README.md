@@ -23,7 +23,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 > Currently only `200` years from `1900` to `2100` are supported
 
-##### Convert Gregorian into Lunar
+##### Convert `Gregorian` calendar to `Lunar` calendar
 
 ```go
 // Get Lunar year of animal
@@ -90,37 +90,9 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // Whether is a lunar year of the dig
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-
-// Get lunar double-hour
-carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
-
-// Whether is FirstDoubleHour
-carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
-// Whether is SecondDoubleHour
-carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
-// Whether is ThirdDoubleHour
-carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
-// Whether is FourthDoubleHour
-carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
-// Whether is FifthDoubleHour
-carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
-// Whether is SixthDoubleHour
-carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
-// Whether is SeventhDoubleHour
-carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
-// Whether is EighthDoubleHour
-carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
-// Whether is NinthDoubleHour
-carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
-// Whether is TenthDoubleHour
-carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
-// Whether is EleventhDoubleHour
-carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
-// Whether is TwelfthDoubleHour
-carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
-##### Convert Lunar into Gregorian
+##### Convert `Lunar` calendar to `Gregorian` calendar
 
 ```go
 // Convert the Lunar Calendar December 11, 2023 to the gregorian calendar

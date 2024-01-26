@@ -87,34 +87,6 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // 豚年かどうか
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-
-// 旧正月を取得する
-carbon.Parse("2020-02-05 21:00:00").Lunar().DoubleHour() // 亥时
-
-// であるかどうかね時
-carbon.Parse("2020-03-21 00:00:00").Lunar().IsFirstDoubleHour() // true
-// であるかどううし時
-carbon.Parse("2020-03-21 01:00:00").Lunar().IsSecondDoubleHour() // true
-// であるかどうとら時
-carbon.Parse("2020-03-21 03:00:00").Lunar().IsThirdDoubleHour() // true
-// であるかどうう時
-carbon.Parse("2020-03-21 05:00:00").Lunar().IsFourthDoubleHour() // true
-// であるかどうたつ時
-carbon.Parse("2020-03-21 07:00:00").Lunar().IsFifthDoubleHour() // true
-// であるかどうみ時
-carbon.Parse("2020-03-21 09:00:00").Lunar().IsSixthDoubleHour() // true
-// であるかどううま時
-carbon.Parse("2020-03-21 11:00:00").Lunar().IsSeventhDoubleHour() // true
-// であるかどうひつじ時
-carbon.Parse("2020-03-21 13:00:00").Lunar().IsEighthDoubleHour() // true
-// であるかどうさる時
-carbon.Parse("2020-03-21 15:00:00").Lunar().IsNinthDoubleHour() // true
-// であるかどうとり時
-carbon.Parse("2020-03-21 17:00:00").Lunar().IsTenthDoubleHour() // true
-// であるかどういぬ時
-carbon.Parse("2020-03-21 19:00:00").Lunar().IsEleventhDoubleHour() // true
-// であるかどうい時
-carbon.Parse("2020-03-21 21:00:00").Lunar().IsTwelfthDoubleHour() // true
 ```
 
 ##### `旧暦`を`西暦`に変換する

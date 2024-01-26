@@ -128,6 +128,8 @@ func NewGregorian(t time.Time) (g Gregorian) {
 	return g
 }
 
+// Date gets gregorian year, month, and day like 2020, 8, 5.
+// 获取公历年、月、日
 func (g Gregorian) Date() (year, month, day int) {
 	if g.IsZero() {
 		return 0, 0, 0
@@ -138,6 +140,8 @@ func (g Gregorian) Date() (year, month, day int) {
 	return
 }
 
+// Clock gets gregorian hour, minute, and second like 13, 14, 15.
+// 获取公历时、分、秒
 func (g Gregorian) Clock() (hour, minute, second int) {
 	if g.IsZero() {
 		return 0, 0, 0
@@ -145,6 +149,8 @@ func (g Gregorian) Clock() (hour, minute, second int) {
 	return g.Time.Clock()
 }
 
+// Year gets gregorian year like 2020.
+// 获取公历年
 func (g Gregorian) Year() int {
 	if g.IsZero() {
 		return 0
@@ -152,6 +158,8 @@ func (g Gregorian) Year() int {
 	return g.Time.Year()
 }
 
+// Month gets gregorian month like 8.
+// 获取公历月
 func (g Gregorian) Month() int {
 	if g.IsZero() {
 		return 0
@@ -159,6 +167,8 @@ func (g Gregorian) Month() int {
 	return int(g.Time.Month())
 }
 
+// Day gets gregorian day like 5.
+// 获取公历日
 func (g Gregorian) Day() int {
 	if g.IsZero() {
 		return 0
@@ -166,6 +176,8 @@ func (g Gregorian) Day() int {
 	return g.Time.Day()
 }
 
+// Hour gets gregorian hour like 13.
+// 获取公历小时
 func (g Gregorian) Hour() int {
 	if g.IsZero() {
 		return 0
@@ -173,6 +185,8 @@ func (g Gregorian) Hour() int {
 	return g.Time.Hour()
 }
 
+// Minute gets gregorian minute like 14.
+// 获取公历分钟数
 func (g Gregorian) Minute() int {
 	if g.IsZero() {
 		return 0
@@ -180,6 +194,8 @@ func (g Gregorian) Minute() int {
 	return g.Time.Minute()
 }
 
+// Second gets gregorian second like 15.
+// 获取公历秒数
 func (g Gregorian) Second() int {
 	if g.IsZero() {
 		return 0
@@ -187,10 +203,14 @@ func (g Gregorian) Second() int {
 	return g.Time.Second()
 }
 
+// Location gets gregorian timezone information.
+// 获取时区信息
 func (g Gregorian) Location() *time.Location {
 	return g.Time.Location()
 }
 
+// String implements the interface Stringer for Gregorian struct.
+// 实现 Stringer 接口
 func (g Gregorian) String() string {
 	if g.IsZero() {
 		return ""
@@ -198,6 +218,21 @@ func (g Gregorian) String() string {
 	return g.Time.Format(DateTimeLayout)
 }
 
+// IsZero reports whether is zero time.
+// 是否是零值时间
 func (g Gregorian) IsZero() bool {
 	return g.Time.IsZero()
+}
+
+// IsLeapYear reports whether is a leap year.
+// 是否是闰年
+func (g Gregorian) IsLeapYear() bool {
+	if g.IsZero() {
+		return false
+	}
+	year := g.Year()
+	if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
+		return true
+	}
+	return false
 }
