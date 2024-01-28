@@ -5,8 +5,8 @@ import (
 	"github.com/golang-module/carbon/v2/calendar/lunar"
 )
 
-// Lunar converts gregorian calendar to lunar calendar.
-// 将 公历 转化为 农历
+// Lunar converts Carbon instance to Lunar instance.
+// 将 Carbon 实例转化为 Lunar 实例
 func (c Carbon) Lunar() (l lunar.Lunar) {
 	if c.Error != nil {
 		l.Error = c.Error
@@ -22,8 +22,8 @@ func CreateFromLunar(year, month, day, hour, minute, second int, isLeapMonth boo
 	return CreateFromStdTime(t)
 }
 
-// Julian converts gregorian calendar to Julian calendar
-// 将 公历 转化为 儒略历
+// Julian converts Carbon instance to Julian instance
+// 将 Carbon 实例转化为 Julian 实例
 func (c Carbon) Julian() (j julian.Julian) {
 	if c.Error != nil {
 		return j
