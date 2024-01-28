@@ -22,7 +22,7 @@ func CreateFromLunar(year, month, day, hour, minute, second int, isLeapMonth boo
 	return CreateFromStdTime(t)
 }
 
-// Julian converts Carbon instance to Julian instance
+// Julian converts Carbon instance to Julian instance.
 // 将 Carbon 实例转化为 Julian 实例
 func (c Carbon) Julian() (j julian.Julian) {
 	if c.Error != nil {
@@ -31,7 +31,7 @@ func (c Carbon) Julian() (j julian.Julian) {
 	return julian.FromGregorian(c.StdTime()).ToJulian()
 }
 
-// CreateFromJulian creates a Carbon instance from Julian Day.or Modified Julian Day
+// CreateFromJulian creates a Carbon instance from Julian Day or Modified Julian Day.
 // 从 儒略日/简化儒略日 创建 Carbon 实例
 func CreateFromJulian(f float64) Carbon {
 	t := julian.FromJulian(f).ToGregorian().Time
