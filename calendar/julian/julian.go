@@ -31,18 +31,18 @@ type Julian struct {
 }
 
 // FromGregorian creates a Gregorian instance from time.Time.
-// 从标准 time.Time 创建 Gregorian 结构体
+// 从标准 time.Time 创建 Gregorian 实例
 func FromGregorian(t time.Time) (g Gregorian) {
 	g.Time = t
 	return g
 }
 
 // FromJulian creates a Julian instance from julian day or modified julian day.
-// 从 儒略日 或 简化儒略日 创建 Julian 结构体
+// 从 儒略日 或 简化儒略日 创建 Julian 实例
 func FromJulian(f float64) (j Julian) {
-	// get length of the integer part of f
-	n := len(strconv.Itoa(int(math.Ceil(f))))
-	switch n {
+	// get length of the integer part
+	l := len(strconv.Itoa(int(math.Ceil(f))))
+	switch l {
 	// modified julian day
 	case 5:
 		j.mjd = f
@@ -58,8 +58,8 @@ func FromJulian(f float64) (j Julian) {
 	return
 }
 
-// ToJulian converts Gregorian calendar to Julian calendar.
-// 将 公历 转化为 儒略历
+// ToJulian converts Gregorian instance to Julian instance.
+// 将 Gregorian 实例转化为 Julian 实例
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
 		return j
@@ -80,8 +80,8 @@ func (g Gregorian) ToJulian() (j Julian) {
 	return FromJulian(jd)
 }
 
-// ToGregorian converts Julian calendar to Gregorian calendar.
-// 将 儒略历 转化为 公历
+// ToGregorian converts Julian instance to Gregorian instance.
+// 将 Julian 实例转化为 Gregorian 实例
 func (j Julian) ToGregorian() (g Gregorian) {
 	if j.jd == 0 || j.mjd == 0 {
 		return g

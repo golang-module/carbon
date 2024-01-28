@@ -75,14 +75,14 @@ type Lunar struct {
 }
 
 // FromGregorian creates a Gregorian instance from time.Time.
-// 从标准 time.Time 创建 Gregorian 结构体
+// 从标准 time.Time 创建 Gregorian 实例
 func FromGregorian(t time.Time) (g Gregorian) {
 	g.Time = t
 	return
 }
 
 // FromLunar creates a Lunar instance from lunar datetime.
-// 从 农历日期 创建 Lunar 结构体
+// 从 农历日期 创建 Lunar 实例
 func FromLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l Lunar) {
 	l.year, l.month, l.day = year, month, day
 	l.hour, l.minute, l.second = hour, minute, second
@@ -90,8 +90,8 @@ func FromLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l 
 	return
 }
 
-// ToLunar converts Gregorian calendar to Lunar calendar.
-// 将 公历 转化为 农历
+// ToLunar converts Gregorian instance to Lunar instance.
+// 将 Gregorian 实例转化为 Lunar 实例
 func (g Gregorian) ToLunar() (l Lunar) {
 	daysInYear, daysInMonth, leapMonth := 365, 30, 0
 	if g.Year() < minYear || g.Year() > maxYear {
@@ -141,8 +141,8 @@ func (g Gregorian) ToLunar() (l Lunar) {
 	return
 }
 
-// ToGregorian converts Lunar calendar to Gregorian calendar.
-// 将 农历 转化为 公历
+// ToGregorian converts Lunar instance to Gregorian instance.
+// 将 Lunar 实例转化为 Gregorian 实例
 func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.year < minYear || l.year > maxYear {
 		g.Error = invalidYearError()

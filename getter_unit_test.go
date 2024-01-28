@@ -3,9 +3,16 @@ package carbon
 import (
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func TestCarbon_StdTime(t *testing.T) {
+	expected := time.Now().Format(DateTimeLayout)
+	actual := Now().StdTime().Format(DateTimeLayout)
+	assert.Equal(t, expected, actual)
+}
 
 func TestCarbon_DaysInYear(t *testing.T) {
 	assert := assert.New(t)
