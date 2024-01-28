@@ -55,7 +55,7 @@ import "gitee.com/golang-module/carbon"
 
 > Assuming the current time is 2020-08-05 13:14:15.999999999 +0800 CST
 
-##### Set default values (globally effective)
+##### Set globally default values
 
 ```go
 carbon.SetDefault(carbon.Default{

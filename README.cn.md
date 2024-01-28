@@ -52,7 +52,7 @@ import "gitee.com/golang-module/carbon"
 
 > 假设当前时间为 2020-08-05 13:14:15.999999999 +0800 CST
 
-##### 设置默认值(全局生效)
+##### 设置全局默认值
 
 ```go
 carbon.SetDefault(carbon.Default{
