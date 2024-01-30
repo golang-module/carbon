@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// MarshalJSON implements the interface Marshaler for Carbon struct.
-// 实现 Marshaler 接口
+// MarshalJSON implements the json.Marshaler interface.
+// 实现 json.Marshaler 接口
 func (c Carbon) MarshalJSON() ([]byte, error) {
 	if c.Error != nil {
 		return nil, c.Error
@@ -27,8 +27,8 @@ func (c Carbon) MarshalJSON() ([]byte, error) {
 	return []byte(data), nil
 }
 
-// UnmarshalJSON implements the interface Unmarshaler for Carbon struct.
-// 实现 Unmarshaler 接口
+// UnmarshalJSON implements the json.Unmarshaler interface.
+// 实现 json.Unmarshaler 接口
 func (c *Carbon) UnmarshalJSON(b []byte) error {
 	if c.Error != nil {
 		return c.Error
