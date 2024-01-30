@@ -21,6 +21,7 @@ func TestCarbon_Constellation(t *testing.T) {
 		{"0000-00-00 00:00:00", ""},
 
 		{"2020-01-05", "Capricorn"},
+		{"2020-01-22", "Aquarius"},
 		{"2020-02-05", "Aquarius"},
 		{"2020-03-05", "Pisces"},
 		{"2020-04-05", "Aries"},
@@ -32,6 +33,7 @@ func TestCarbon_Constellation(t *testing.T) {
 		{"2020-10-05", "Libra"},
 		{"2020-11-05", "Scorpio"},
 		{"2020-12-05", "Sagittarius"},
+		{"2020-12-22", "Capricorn"},
 	}
 
 	for index, test := range tests {

@@ -20,16 +20,16 @@ func TestGregorian_ToJulian(t *testing.T) {
 		want want
 	}{
 		{
-			args: args{NewGregorian(time.Time{})},
-			want: want{NewJulian(0)},
+			args: args{FromGregorian(time.Time{})},
+			want: want{FromJulian(0)},
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
-			want: want{NewJulian(2460332.5)},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
+			want: want{FromJulian(2460332.5)},
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
-			want: want{NewJulian(60332)},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
+			want: want{FromJulian(60332)},
 		},
 	}
 	for index, tt := range tests {
@@ -48,36 +48,36 @@ func TestJulian_ToGregorian(t *testing.T) {
 		want string
 	}{
 		{
-			args: args{NewJulian(0)},
+			args: args{FromJulian(0)},
 			want: "",
 		},
 		{
-			args: args{NewJulian(2460332.5)},
+			args: args{FromJulian(2460332.5)},
 			want: "2024-01-23 00:00:00",
 		},
 		{
-			args: args{NewJulian(60332)},
+			args: args{FromJulian(60332)},
 			want: "2024-01-23 00:00:00",
 		},
 		{
-			args: args{NewJulian(2460333)},
+			args: args{FromJulian(2460333)},
 			want: "2024-01-23 12:00:00",
 		},
 		{
-			args: args{NewJulian(60332.5)},
+			args: args{FromJulian(60332.5)},
 			want: "2024-01-23 12:00:00",
 		},
 
 		{
-			args: args{NewJulian(2460333.051563)},
+			args: args{FromJulian(2460333.051563)},
 			want: "2024-01-23 13:14:15",
 		},
 		{
-			args: args{NewJulian(60332.551563)},
+			args: args{FromJulian(60332.551563)},
 			want: "2024-01-23 13:14:15",
 		},
 		{
-			args: args{NewJulian(60232.5)},
+			args: args{FromJulian(60232.5)},
 			want: "2023-10-15 12:00:00",
 		},
 	}
@@ -97,15 +97,15 @@ func TestGregorian_JD(t *testing.T) {
 		want float64
 	}{
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
 			want: 2460332.5,
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.Local))},
 			want: 2460333,
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
 			want: 2460333.051563,
 		},
 	}
@@ -125,15 +125,15 @@ func TestGregorian_MJD(t *testing.T) {
 		want float64
 	}{
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
 			want: 60332,
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.Local))},
 			want: 60332.5,
 		},
 		{
-			args: args{NewGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
 			want: 60332.551563,
 		},
 	}

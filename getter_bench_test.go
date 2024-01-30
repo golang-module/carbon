@@ -2,6 +2,18 @@ package carbon
 
 import "testing"
 
+func BenchmarkCarbon_StdTime(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.StdTime()
+	}
+
+	c := NewCarbon()
+	for n := 0; n < b.N; n++ {
+		c.StdTime()
+	}
+}
+
 func BenchmarkCarbon_DaysInYear(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {

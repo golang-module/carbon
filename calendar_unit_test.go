@@ -8,12 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateFromLunar1(t *testing.T) {
-	l := CreateFromLunar(2023, 12, 11, 0, 0, 0, false)
-	assert.Nil(t, l.Error)
-	assert.Equal(t, "2024-01-21 00:00:00", l.String())
-}
-
 func TestCarbon_Lunar(t *testing.T) {
 	type args struct {
 		c Carbon

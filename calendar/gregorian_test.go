@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSolar_Year(t *testing.T) {
+func TestGregorian_Year(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -32,7 +32,7 @@ func TestSolar_Year(t *testing.T) {
 	}
 }
 
-func TestSolar_Month(t *testing.T) {
+func TestGregorian_Month(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -56,7 +56,7 @@ func TestSolar_Month(t *testing.T) {
 	}
 }
 
-func TestSolar_Day(t *testing.T) {
+func TestGregorian_Day(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -80,7 +80,7 @@ func TestSolar_Day(t *testing.T) {
 	}
 }
 
-func TestSolar_Hour(t *testing.T) {
+func TestGregorian_Hour(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -104,7 +104,7 @@ func TestSolar_Hour(t *testing.T) {
 	}
 }
 
-func TestSolar_Minute(t *testing.T) {
+func TestGregorian_Minute(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -128,7 +128,7 @@ func TestSolar_Minute(t *testing.T) {
 	}
 }
 
-func TestSolar_Second(t *testing.T) {
+func TestGregorian_Second(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -152,7 +152,7 @@ func TestSolar_Second(t *testing.T) {
 	}
 }
 
-func TestSolar_String(t *testing.T) {
+func TestGregorian_String(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -176,7 +176,7 @@ func TestSolar_String(t *testing.T) {
 	}
 }
 
-func TestSolar_Location(t *testing.T) {
+func TestGregorian_Location(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -200,7 +200,7 @@ func TestSolar_Location(t *testing.T) {
 	}
 }
 
-func TestSolar_Date(t *testing.T) {
+func TestGregorian_Date(t *testing.T) {
 	type args struct {
 		Time time.Time
 	}
@@ -234,7 +234,7 @@ func TestSolar_Date(t *testing.T) {
 	}
 }
 
-func TestSolar_Clock(t *testing.T) {
+func TestGregorian_Clock(t *testing.T) {
 	type args struct {
 		Time time.Time
 	}
@@ -264,6 +264,58 @@ func TestSolar_Clock(t *testing.T) {
 			assert.Equalf(t, tt.wantHour, gotHour, "Clock()")
 			assert.Equalf(t, tt.wantMinute, goMinute, "Clock()")
 			assert.Equalf(t, tt.wantSecond, gotSecond, "Clock()")
+		})
+	}
+}
+
+func TestGregorian_IsZero(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want bool
+	}{
+		{
+			args: args{NewGregorian(time.Time{})},
+			want: true,
+		},
+		{
+			args: args{NewGregorian(time.Date(2020, 8, 5, 13, 14, 15, 0, time.Local))},
+			want: false,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.IsZero(), "args(%v)", tt.args.g)
+		})
+	}
+}
+
+func TestGregorian_IsLeapYear(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want bool
+	}{
+		{
+			args: args{NewGregorian(time.Time{})},
+			want: false,
+		},
+		{
+			args: args{NewGregorian(time.Date(2020, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: true,
+		},
+		{
+			args: args{NewGregorian(time.Date(2021, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: false,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.IsLeapYear(), "args(%v)", tt.args.g)
 		})
 	}
 }

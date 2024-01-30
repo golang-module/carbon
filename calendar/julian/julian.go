@@ -12,6 +12,10 @@ var (
 	// julian day or modified julian day decimal precision
 	// 儒略日或简化儒略日小数精度
 	decimalPrecision = 6
+
+	// difference between Julian Day and Modified Julian Day
+	// 儒略日和简化儒略日之间的差值
+	diffJdFromMjd = 2400000.5
 )
 
 // Gregorian defines a Gregorian struct.
@@ -20,33 +24,33 @@ type Gregorian struct {
 	calendar.Gregorian
 }
 
-// NewGregorian returns a new Gregorian instance.
-// 初始化 Gregorian 结构体
-func NewGregorian(t time.Time) (g Gregorian) {
-	g.Time = t
-	return g
-}
-
 // Julian defines a Julian struct.
 // 定义 Julian 结构体
 type Julian struct {
 	jd, mjd float64
 }
 
-// NewJulian returns a new Julian instance.
-// 初始化 Julian 结构体
-func NewJulian(f float64) (j Julian) {
-	// get length of the integer part of f
-	n := len(strconv.Itoa(int(math.Ceil(f))))
-	switch n {
+// FromGregorian creates a Gregorian instance from time.Time.
+// 从标准 time.Time 创建 Gregorian 实例
+func FromGregorian(t time.Time) (g Gregorian) {
+	g.Time = t
+	return g
+}
+
+// FromJulian creates a Julian instance from julian day or modified julian day.
+// 从 儒略日 或 简化儒略日 创建 Julian 实例
+func FromJulian(f float64) (j Julian) {
+	// get length of the integer part
+	l := len(strconv.Itoa(int(math.Ceil(f))))
+	switch l {
 	// modified julian day
 	case 5:
 		j.mjd = f
-		j.jd = f + 2400000.5
+		j.jd = f + diffJdFromMjd
 	// julian day
 	case 7:
 		j.jd = f
-		j.mjd = f - 2400000.5
+		j.mjd = f - diffJdFromMjd
 	default:
 		j.jd = 0
 		j.mjd = 0
@@ -54,8 +58,8 @@ func NewJulian(f float64) (j Julian) {
 	return
 }
 
-// ToJulian Convert Gregorian calendar to Julian calendar.
-// 将 公历 转化为 儒略历
+// ToJulian converts Gregorian instance to Julian instance.
+// 将 Gregorian 实例转化为 Julian 实例
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
 		return j
@@ -73,11 +77,11 @@ func (g Gregorian) ToJulian() (j Julian) {
 		y--
 	}
 	jd := float64(int(365.25*(float64(y)+4716))) + float64(int(30.6001*(float64(m)+1))) + d + float64(n) - 1524.5
-	return NewJulian(jd)
+	return FromJulian(jd)
 }
 
-// ToGregorian Convert Julian calendar to Gregorian calendar.
-// 将 儒略历 转化为 公历
+// ToGregorian converts Julian instance to Gregorian instance.
+// 将 Julian 实例转化为 Gregorian 实例
 func (j Julian) ToGregorian() (g Gregorian) {
 	if j.jd == 0 || j.mjd == 0 {
 		return g
@@ -111,7 +115,7 @@ func (j Julian) ToGregorian() (g Gregorian) {
 	f -= float64(minute)
 	f *= 60
 	second := int(math.Round(f))
-	return NewGregorian(time.Date(year, time.Month(month), day, hour, minute, second, 0, time.Local))
+	return FromGregorian(time.Date(year, time.Month(month), day, hour, minute, second, 0, time.Local))
 }
 
 // JD gets julian day like 2460332.5

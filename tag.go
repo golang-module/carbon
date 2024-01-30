@@ -7,18 +7,6 @@ import (
 )
 
 var (
-	// invalid pointer error
-	// 无效的指针错误
-	invalidPtrError = func() error {
-		return fmt.Errorf("invalid struct pointer, please make sure the struct is a pointer")
-	}
-
-	// invalid tag error
-	// 无效的标签错误
-	invalidTagError = func(field string) error {
-		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
-	}
-
 	// supported types
 	// 支持的类型
 	tagTypes = map[string]string{
@@ -80,6 +68,18 @@ var (
 		"timestampMilli": "format:V",
 		"timestampMicro": "format:X",
 		"timestampNano":  "format:Z",
+	}
+
+	// invalid pointer error
+	// 无效的指针错误
+	invalidPtrError = func() error {
+		return fmt.Errorf("invalid struct pointer, please make sure the struct is a pointer")
+	}
+
+	// invalid tag error
+	// 无效的标签错误
+	invalidTagError = func(field string) error {
+		return fmt.Errorf("invalid carbon tag in %s field, please make sure the tag is valid", field)
 	}
 )
 
