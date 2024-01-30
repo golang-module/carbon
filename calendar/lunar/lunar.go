@@ -56,7 +56,7 @@ var (
 	}
 
 	invalidYearError = func() error {
-		return fmt.Errorf("invalid year, currently only 200 years from 1900 to 2100 are supported")
+		return fmt.Errorf("invalid year, year outside of range [1900,2100]")
 	}
 )
 
