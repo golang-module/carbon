@@ -1,3 +1,4 @@
+// Package lunar is part of the Carbon package.
 package lunar
 
 import (

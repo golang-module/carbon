@@ -1,3 +1,4 @@
+// Package julian is part of the Carbon package.
 package julian
 
 import (
