@@ -40,18 +40,18 @@ func FromGregorian(t time.Time) (g Gregorian) {
 
 // FromJulian creates a Julian instance from julian day or modified julian day.
 // 从 儒略日 或 简化儒略日 创建 Julian 实例
-func FromJulian(f float64) (j Julian) {
+func FromJulian(jdn float64) (j Julian) {
 	// get length of the integer part
-	l := len(strconv.Itoa(int(math.Ceil(f))))
+	l := len(strconv.Itoa(int(math.Ceil(jdn))))
 	switch l {
 	// modified julian day
 	case 5:
-		j.mjd = f
-		j.jd = f + diffJdFromMjd
+		j.mjd = jdn
+		j.jd = jdn + diffJdFromMjd
 	// julian day
 	case 7:
-		j.jd = f
-		j.mjd = f - diffJdFromMjd
+		j.jd = jdn
+		j.mjd = jdn - diffJdFromMjd
 	default:
 		j.jd = 0
 		j.mjd = 0

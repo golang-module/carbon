@@ -160,7 +160,7 @@ func (g Gregorian) Year() int {
 }
 
 // Month gets gregorian month like 8.
-// 获取公历月
+// 获取公历月，如 8
 func (g Gregorian) Month() int {
 	if g.IsZero() {
 		return 0
@@ -168,8 +168,17 @@ func (g Gregorian) Month() int {
 	return int(g.Time.Month())
 }
 
+// Week gets gregorian week day like 0.
+// 获取周
+func (g Gregorian) Week() int {
+	if g.IsZero() {
+		return 0
+	}
+	return int(g.Time.Weekday())
+}
+
 // Day gets gregorian day like 5.
-// 获取公历日
+// 获取公历日，如 0
 func (g Gregorian) Day() int {
 	if g.IsZero() {
 		return 0
@@ -178,7 +187,7 @@ func (g Gregorian) Day() int {
 }
 
 // Hour gets gregorian hour like 13.
-// 获取公历小时
+// 获取公历小时，如 13
 func (g Gregorian) Hour() int {
 	if g.IsZero() {
 		return 0
@@ -187,7 +196,7 @@ func (g Gregorian) Hour() int {
 }
 
 // Minute gets gregorian minute like 14.
-// 获取公历分钟数
+// 获取公历分钟数，如 14
 func (g Gregorian) Minute() int {
 	if g.IsZero() {
 		return 0
@@ -196,7 +205,7 @@ func (g Gregorian) Minute() int {
 }
 
 // Second gets gregorian second like 15.
-// 获取公历秒数
+// 获取公历秒数，如 15
 func (g Gregorian) Second() int {
 	if g.IsZero() {
 		return 0
@@ -210,8 +219,8 @@ func (g Gregorian) Location() *time.Location {
 	return g.Time.Location()
 }
 
-// String implements the interface Stringer for Gregorian struct.
-// 实现 Stringer 接口
+// String implements Stringer interface and outputs a string in YYYY-MM-DD HH::ii::ss format like "2019-12-07 00:00:00".
+// 实现 Stringer 接口, 输出 YYYY-MM-DD HH::ii::ss 格式字符串，如 "2019-12-07 00:00:00"
 func (g Gregorian) String() string {
 	if g.IsZero() {
 		return ""
