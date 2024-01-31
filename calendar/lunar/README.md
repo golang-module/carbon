@@ -47,19 +47,31 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // Get lunar day
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// Get lunar date as YYYY-MM-DD HH::ii::ss format string
-fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
+// Get lunar hour
+carbon.Parse("2020-08-05 13:14:15").Lunar().Hour() // 13
+// Get lunar minute
+carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
+// Get lunar second
+carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
 
+// Get lunar date and time string
+fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 // Get lunar year as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // Get lunar month as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
 // Get lunar leap month as string
 carbon.Parse("2020-04-23 13:14:15").Lunar().ToMonthString() // 闰四月
+// Get lunar week as string
+carbon.Parse("2020-04-23 13:14:15").Lunar().ToWeekString() // 周四
 // Get lunar day as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // Get lunar date as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
+
+// Whether is zero time
+carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
 
 // Whether is a lunar leap year
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true

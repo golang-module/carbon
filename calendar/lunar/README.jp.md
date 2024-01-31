@@ -44,19 +44,31 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
 // 旧暦日の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().Day() // 16
-// 旧暦 YYYY-MM-DD HH::ii::ss フォーマット文字列を取得します
-fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
+// 旧暦時刻の取得
+carbon.Parse("2020-08-05 13:14:15").Lunar().Hour() // 13
+// 旧暦分の取得
+carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
+// 旧暦の取得秒数
+carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
 
+// 旧暦日時文字列の取得
+fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 // 旧正月文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
 // 旧暦月文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToMonthString() // 六月
 // 旧暦うるう月文字列の取得
 carbon.Parse("2020-04-23 13:14:15").Lunar().ToMonthString() // 闰四月
+// 旧暦週文字列の取得
+carbon.Parse("2020-04-23 13:14:15").Lunar().ToWeekString() // 周四
 // 旧暦日文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 旧暦日付文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
+
+// ゼロ値の時間ですか
+carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
 
 // 旧暦うるう年かどうか
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
