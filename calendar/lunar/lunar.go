@@ -231,7 +231,7 @@ func (l Lunar) Animal() string {
 }
 
 // Festival gets lunar festival name like "春节".
-// 获取农历节日
+// 获取节日
 func (l Lunar) Festival() string {
 	if l.Error != nil {
 		return ""
@@ -240,7 +240,7 @@ func (l Lunar) Festival() string {
 }
 
 // Year gets lunar year like 2020.
-// 获取农历年
+// 获取年份
 func (l Lunar) Year() int {
 	if l.Error != nil {
 		return 0
@@ -249,7 +249,7 @@ func (l Lunar) Year() int {
 }
 
 // Month gets lunar month like 8.
-// 获取农历月
+// 获取月份
 func (l Lunar) Month() int {
 	if l.Error != nil {
 		return 0
@@ -258,7 +258,7 @@ func (l Lunar) Month() int {
 }
 
 // LeapMonth gets lunar leap month like 2.
-// 获取农历闰月月份
+// 获取闰月月份，如 2
 func (l Lunar) LeapMonth() int {
 	if l.Error != nil {
 		return 0
@@ -267,7 +267,7 @@ func (l Lunar) LeapMonth() int {
 }
 
 // Day gets lunar day like 5.
-// 获取农历日
+// 获取日，如 5
 func (l Lunar) Day() int {
 	if l.Error != nil {
 		return 0
@@ -276,12 +276,12 @@ func (l Lunar) Day() int {
 }
 
 // ToYearString outputs a string in lunar year format like "二零二零".
-// 获取农历年字符串
-func (l Lunar) ToYearString() string {
+// 获取年份字符串，如 "二零二零"
+func (l Lunar) ToYearString() (year string) {
 	if l.Error != nil {
 		return ""
 	}
-	year := fmt.Sprintf("%d", l.year)
+	year = fmt.Sprintf("%d", l.year)
 	for index, number := range numbers {
 		year = strings.Replace(year, fmt.Sprintf("%d", index), number, -1)
 	}
@@ -289,7 +289,7 @@ func (l Lunar) ToYearString() string {
 }
 
 // ToMonthString outputs a string in lunar month format like "正月".
-// 获取农历月字符串
+// 获取月份字符串
 func (l Lunar) ToMonthString() (month string) {
 	if l.Error != nil {
 		return ""
@@ -302,7 +302,7 @@ func (l Lunar) ToMonthString() (month string) {
 }
 
 // ToDayString outputs a string in lunar day format like "廿一".
-// 获取农历日字符串
+// 获取日字符串，如 "廿一"
 func (l Lunar) ToDayString() (day string) {
 	if l.Error != nil {
 		return
@@ -326,7 +326,7 @@ func (l Lunar) ToDayString() (day string) {
 }
 
 // ToDateString outputs a string in lunar date format like "二零二零年腊月初五".
-// 获取农历日期字符串
+// 获取日期字符串，如 "二零二零年腊月初五"
 func (l Lunar) ToDateString() string {
 	if l.Error != nil {
 		return ""
@@ -334,8 +334,8 @@ func (l Lunar) ToDateString() string {
 	return l.ToYearString() + "年" + l.ToMonthString() + l.ToDayString()
 }
 
-// String outputs a string in YYYY-MM-DD HH::ii::ss format, implement Stringer interface.
-// 输出 YYYY-MM-DD HH::ii::ss 格式字符串，实现 Stringer 接口
+// String implements Stringer interface and outputs a string in YYYY-MM-DD HH::ii::ss format like "2019-12-07 00:00:00".
+// 实现 Stringer 接口, 输出 YYYY-MM-DD HH::ii::ss 格式字符串，如 "2019-12-07 00:00:00"
 func (l Lunar) String() string {
 	if l.Error != nil {
 		return ""
