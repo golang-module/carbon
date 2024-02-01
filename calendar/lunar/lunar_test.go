@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGregorianToLunar(t *testing.T) {
+func TestGregorian_ToLunar(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -36,7 +36,7 @@ func TestGregorianToLunar(t *testing.T) {
 	}
 }
 
-func TestLunarToGregorian(t *testing.T) {
+func TestLunar_ToGregorian(t *testing.T) {
 	type args struct {
 		l Lunar
 	}

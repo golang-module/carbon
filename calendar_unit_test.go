@@ -106,7 +106,7 @@ func TestCarbon_Julian(t *testing.T) {
 	}
 }
 
-func TestCreateFromJulian(t *testing.T) {
+func TestCarbon_CreateFromJulian(t *testing.T) {
 	type args struct {
 		j float64
 	}
@@ -170,7 +170,7 @@ func TestCarbon_Persian(t *testing.T) {
 	}
 }
 
-func TestCreateFromPersian(t *testing.T) {
+func TestCarbon_CreateFromPersian(t *testing.T) {
 	type args struct {
 		year, month, day, hour, minute, second int
 	}

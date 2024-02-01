@@ -1,7 +1,6 @@
 package persian
 
 import (
-	"fmt"
 	"strconv"
 	"testing"
 	"time"
@@ -476,9 +475,4 @@ func TestPersian_IsLeapYear(t *testing.T) {
 			assert.Equalf(t, tt.want, (tt.args.p).IsLeapYear(), "args{%v}", tt.args.p)
 		})
 	}
-}
-
-func TestName(t *testing.T) {
-	p := FromGregorian(time.Date(1800, 1, 1, 0, 0, 0, 0, time.Local)).ToPersian()
-	fmt.Println(p)
 }
