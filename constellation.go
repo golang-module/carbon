@@ -43,7 +43,6 @@ func (c Carbon) Constellation() string {
 			index = constellation.index
 		}
 	}
-
 	c.lang.rw.Lock()
 	defer c.lang.rw.Unlock()
 	if resources, ok := c.lang.resources["constellations"]; ok {
