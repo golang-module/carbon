@@ -64,7 +64,6 @@ func FromJulian(f float64) (j Julian) {
 
 // ToJulian converts Gregorian instance to Julian instance.
 // 将 Gregorian 实例转化为 Julian 实例
-// https://github.com/6tail/lunar-go/blob/master/SolarUtil/SolarUtil.go#L211
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
 		return
