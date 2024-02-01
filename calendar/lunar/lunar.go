@@ -174,7 +174,7 @@ func (l Lunar) ToGregorian() (g Gregorian) {
 }
 
 // Animal gets lunar animal name like "猴".
-// 获取生肖
+// 获取农历生肖
 func (l Lunar) Animal() string {
 	if l.IsZero() {
 		return ""
@@ -183,7 +183,7 @@ func (l Lunar) Animal() string {
 }
 
 // Festival gets lunar festival name like "春节".
-// 获取节日
+// 获取农历节日
 func (l Lunar) Festival() string {
 	if l.IsZero() {
 		return ""
@@ -192,7 +192,7 @@ func (l Lunar) Festival() string {
 }
 
 // Year gets lunar year like 2020.
-// 获取年份
+// 获取农历年份
 func (l Lunar) Year() int {
 	if l.Error != nil {
 		return 0
@@ -201,7 +201,7 @@ func (l Lunar) Year() int {
 }
 
 // Month gets lunar month like 8.
-// 获取月份
+// 获取农历月份
 func (l Lunar) Month() int {
 	if l.Error != nil {
 		return 0
@@ -210,7 +210,7 @@ func (l Lunar) Month() int {
 }
 
 // Day gets lunar day like 5.
-// 获取日，如 5
+// 获取农历日，如 5
 func (l Lunar) Day() int {
 	if l.Error != nil {
 		return 0
@@ -219,7 +219,7 @@ func (l Lunar) Day() int {
 }
 
 // Hour gets current hour like 13.
-// 获取小时
+// 获取农历时辰
 func (l Lunar) Hour() int {
 	if l.Error != nil {
 		return 0
@@ -228,7 +228,7 @@ func (l Lunar) Hour() int {
 }
 
 // Minute gets current minute like 14.
-// 获取分钟数
+// 获取农历分钟数
 func (l Lunar) Minute() int {
 	if l.Error != nil {
 		return 0
@@ -237,7 +237,7 @@ func (l Lunar) Minute() int {
 }
 
 // Second gets current second like 15.
-// 获取秒数
+// 获取农历秒数
 func (l Lunar) Second() int {
 	if l.Error != nil {
 		return 0
@@ -246,7 +246,7 @@ func (l Lunar) Second() int {
 }
 
 // LeapMonth gets lunar leap month like 2.
-// 获取闰月月份，如 2
+// 获取农历闰月月份，如 2
 func (l Lunar) LeapMonth() int {
 	if l.Error != nil {
 		return 0
@@ -267,11 +267,9 @@ func (l Lunar) String() string {
 }
 
 // ToYearString outputs a string in lunar year format like "二零二零".
-// 获取年份字符串，如 "二零二零"
+// 获取农历年份字符串，如 "二零二零"
 func (l Lunar) ToYearString() (year string) {
-	fmt.Println("ll-", l.year)
 	if l.IsZero() {
-		fmt.Println("dd")
 		return
 	}
 	year = fmt.Sprintf("%d", l.year)
@@ -282,7 +280,7 @@ func (l Lunar) ToYearString() (year string) {
 }
 
 // ToMonthString outputs a string in lunar month format like "正月".
-// 获取月份字符串，如 "正月"
+// 获取农历月份字符串，如 "正月"
 func (l Lunar) ToMonthString() (month string) {
 	if l.IsZero() {
 		return
@@ -295,7 +293,7 @@ func (l Lunar) ToMonthString() (month string) {
 }
 
 // ToWeekString outputs a string in week layout like "周一".
-// 输出完整星期字符串，如 "周一"
+// 输出完整农历星期字符串，如 "周一"
 func (l Lunar) ToWeekString() (month string) {
 	if l.IsZero() {
 		return ""
@@ -304,7 +302,7 @@ func (l Lunar) ToWeekString() (month string) {
 }
 
 // ToDayString outputs a string in lunar day format like "廿一".
-// 获取日字符串，如 "廿一"
+// 获取农历日字符串，如 "廿一"
 func (l Lunar) ToDayString() (day string) {
 	if l.IsZero() {
 		return
@@ -328,7 +326,7 @@ func (l Lunar) ToDayString() (day string) {
 }
 
 // ToDateString outputs a string in lunar date format like "二零二零年腊月初五".
-// 获取日期字符串，如 "二零二零年腊月初五"
+// 获取农历日期字符串，如 "二零二零年腊月初五"
 func (l Lunar) ToDateString() string {
 	if l.IsZero() {
 		return ""
@@ -337,7 +335,7 @@ func (l Lunar) ToDateString() string {
 }
 
 // IsZero reports whether is zero time.
-// 是否是零值时间
+// 是否是农历零值时间
 func (l Lunar) IsZero() bool {
 	if l.Error != nil {
 		return true
@@ -349,7 +347,7 @@ func (l Lunar) IsZero() bool {
 }
 
 // IsLeapYear reports whether is leap year.
-// 是否是闰年
+// 是否是农历闰年
 func (l Lunar) IsLeapYear() bool {
 	if l.Error != nil {
 		return false
@@ -358,7 +356,7 @@ func (l Lunar) IsLeapYear() bool {
 }
 
 // IsLeapMonth reports whether is leap month.
-// 是否是闰月
+// 是否是农历闰月
 func (l Lunar) IsLeapMonth() bool {
 	if l.Error != nil {
 		return false

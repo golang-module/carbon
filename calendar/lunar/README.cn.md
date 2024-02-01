@@ -25,20 +25,12 @@
 ```go
 // 获取农历生肖
 carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
 // 获取农历节日
 carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
 
-// 获取农历年月日时分秒
-carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
-// 获取农历年月日
-carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
-// 获取农历时分秒
-carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
-
-// 获取农历年年份
+// 获取农历年份
 carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
-// 获取农历月月份
+// 获取农历月份
 carbon.Parse("2020-08-05 13:14:15").Lunar().Month() // 6
 // 获取农历闰月月份
 carbon.Parse("2020-08-05 13:14:15").Lunar().LeapMonth() // 4
@@ -52,6 +44,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
 carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
 
 // 获取农历日期时间字符串
+carbon.Parse("2020-08-05 13:14:15").Lunar().String() // 2020-06-16 13:14:15
 fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 // 获取农历年字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零

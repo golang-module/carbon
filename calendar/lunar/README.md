@@ -28,16 +28,8 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 ```go
 // Get Lunar year of animal
 carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
 // Get lunar festival
 carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
-
-// Get lunar year, month, day, hour, minute and second
-carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
-// Get lunar year, month and day
-carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
-// Get lunar hour, minute and second
-carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
 
 // Get lunar year
 carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
@@ -55,6 +47,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
 carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
 
 // Get lunar date and time string
+carbon.Parse("2020-08-05 13:14:15").Lunar().String() // 2020-06-16 13:14:15
 fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 // Get lunar year as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
@@ -69,7 +62,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // Get lunar date as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
 
-// Whether is zero time
+// Whether is a lunar zero time
 carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
 

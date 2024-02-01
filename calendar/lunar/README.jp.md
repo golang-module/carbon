@@ -25,16 +25,8 @@
 ```go
 // 旧暦の干支を手に入れる
 carbon.Parse("2020-08-05 13:14:15").Lunar().Animal() // 鼠
-
 // 旧暦の祝日を取得する
 carbon.Parse("2021-02-12 13:14:15").Lunar().Festival() // 春节
-
-// 旧暦年月日取得時分秒
-carbon.Parse("2020-08-05 13:14:15").Lunar().DateTime() // 2020, 6, 16, 13, 14, 15
-// 旧暦年月日の取得
-carbon.Parse("2020-08-05 13:14:15").Lunar().Date() // 2020, 6, 16
-// 旧暦取得時の分秒数
-carbon.Parse("2020-08-05 13:14:15").Lunar().Time() // 13, 14, 15
 
 // 旧正月の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().Year() // 2020
@@ -52,6 +44,7 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
 carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
 
 // 旧暦日時文字列の取得
+carbon.Parse("2020-08-05 13:14:15").Lunar().String() // 2020-06-16 13:14:15
 fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 2020-06-16 13:14:15
 // 旧正月文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToYearString() // 二零二零
