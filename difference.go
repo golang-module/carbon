@@ -46,7 +46,6 @@ func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
 	}
 	startYear, startMonth, _ := c.Date()
 	endYear, endMonth, _ := end.Date()
-
 	diffYear, diffMonth := endYear-startYear, endMonth-startMonth
 	return int64(diffYear*MonthsPerYear + diffMonth)
 }
