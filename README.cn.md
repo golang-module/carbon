@@ -71,7 +71,7 @@ carbon.SetDefault(carbon.Default{
 // 将标准 time.Time 转换成 Carbon
 carbon.CreateFromStdTime(time.Now())
 // 将 Carbon 转换成标准 time.Time
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### 昨天、今天、明天
@@ -1360,8 +1360,9 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 目前支持的日历有
 
-* [中国农历](./calendar/lunar/README.cn.md "中国农历")
 * [儒略日/简化儒略日](./calendar/julian/README.cn.md "儒略日/简化儒略日")
+* [中国农历](./calendar/lunar/README.cn.md "中国农历")
+* [波斯历/伊朗历](./calendar/persian/README.cn.md "波斯历/伊朗历")
 
 ##### 国际化
 
@@ -1380,14 +1381,16 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 * [乌克兰语(uk)](./lang/uk.json "乌克兰语"): 由 [open-git](https://github.com/open-git "open-git") 翻译
 * [罗马尼亚语(ro)](./lang/ro.json "罗马尼亚语"): 由 [DrOctavius](https://github.com/DrOctavius "DrOctavius") 翻译
 * [印度尼西亚语(id)](./lang/id.json "印度尼西亚语"): 由 [justpoypoy](https://github.com/justpoypoy "justpoypoy") 翻译
+* [意大利语(it)](./lang/it.json "意大利语"): 由 [nicoloHevelop](https://github.com/justpoypoy "nicoloHevelop") 翻译
 * [马来西亚巴哈马语(ms-MY)](./lang/ms-MY.json "马来西亚巴哈马语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
 * [法语(fr)](./lang/fr.json "法语"): 由 [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") 翻译
 * [泰语(th)](./lang/th.json "泰语"): 由 [izcream](https://github.com/izcream "izcream") 翻译
 * [瑞典语(se)](./lang/se.json "瑞典语"): 由 [jwanglof](https://github.com/jwanglof "jwanglof") 翻译
-* [伊朗语(fa)](./lang/fa.json "伊朗语"): 由 [erfanMomeniii](https://github.com/ErfanMomeniii "ErfanMomeniii") 翻译
+* [波斯语(fa)](./lang/fa.json "波斯语"): 由 [erfanMomeniii](https://github.com/ErfanMomeniii "ErfanMomeniii") 翻译
 * [波兰语(nl)](./lang/nl.json "波兰语"): 由 [RemcoE33](https://github.com/RemcoE33 "RemcoE33") 翻译
 * [越南语(vi)](./lang/vi.json "越南语"): 由 [culy247](https://github.com/culy247 "culy247") 翻译
 * [印地语(hi)](./lang/hi.json "印地语"): 由 [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") 翻译
+* [波兰语(pl)](./lang/pl.json "波兰语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 
 目前支持的方法有
 

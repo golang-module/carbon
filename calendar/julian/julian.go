@@ -1,3 +1,4 @@
+// Package julian is part of the Carbon package.
 package julian
 
 import (
@@ -33,6 +34,9 @@ type Julian struct {
 // FromGregorian creates a Gregorian instance from time.Time.
 // 从标准 time.Time 创建 Gregorian 实例
 func FromGregorian(t time.Time) (g Gregorian) {
+	if t.IsZero() {
+		return
+	}
 	g.Time = t
 	return g
 }
@@ -62,19 +66,23 @@ func FromJulian(f float64) (j Julian) {
 // 将 Gregorian 实例转化为 Julian 实例
 func (g Gregorian) ToJulian() (j Julian) {
 	if g.IsZero() {
-		return j
+		return
 	}
 	y := g.Year()
 	m := g.Month()
 	d := float64(g.Day()) + ((float64(g.Second())/60+float64(g.Minute()))/60+float64(g.Hour()))/24
 	n := 0
+	f := false
 	if y*372+m*31+int(d) >= 588829 {
-		n = y / 100
-		n = 2 - n + n/4
+		f = true
 	}
 	if m <= 2 {
 		m += 12
 		y--
+	}
+	if f {
+		n = y / 100
+		n = 2 - n + n/4
 	}
 	jd := float64(int(365.25*(float64(y)+4716))) + float64(int(30.6001*(float64(m)+1))) + d + float64(n) - 1524.5
 	return FromJulian(jd)
@@ -83,8 +91,8 @@ func (g Gregorian) ToJulian() (j Julian) {
 // ToGregorian converts Julian instance to Gregorian instance.
 // 将 Julian 实例转化为 Gregorian 实例
 func (j Julian) ToGregorian() (g Gregorian) {
-	if j.jd == 0 || j.mjd == 0 {
-		return g
+	if j.IsZero() {
+		return
 	}
 	d := int(j.jd + 0.5)
 	f := j.jd + 0.5 - float64(d)
@@ -136,9 +144,18 @@ func (j Julian) MJD(precision ...int) float64 {
 	return parseFloat64(j.mjd, decimalPrecision)
 }
 
+// IsZero reports whether is zero time.
+// 是否是零值时间
+func (j Julian) IsZero() bool {
+	if j.jd == 0 || j.mjd == 0 {
+		return true
+	}
+	return false
+}
+
 // parseFloat64 round to n decimal places
 // 四舍五入保留 n 位小数点
 func parseFloat64(f float64, n int) float64 {
-	p := math.Pow10(n)
-	return math.Round(f*p) / p
+	p10 := math.Pow10(n)
+	return math.Round(f*p10) / p10
 }

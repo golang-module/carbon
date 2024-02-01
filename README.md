@@ -71,10 +71,10 @@ carbon.SetDefault(carbon.Default{
 ##### Convert between Carbon and Time
 
 ```go
-// Convert standard Time.time into Carbon
+// Convert standard Time.time to Carbon
 carbon.CreateFromStdTime(time.Now())
 // Convert Carbon to standard Time.time
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### Yesterday, today and tomorrow
@@ -1355,8 +1355,9 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 The following calendars are supported
 
-* [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")
 * [Julian Day/Modified Julian Day](./calendar/julian/README.md "JD/MJD")
+* [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")
+* [Persian/Jalaali](./calendar/persian/README.md "Persian/Jalaali")
 
 ##### I18n
 
@@ -1379,16 +1380,18 @@ The following languages are supported
 * [Ukrainian(uk)](./lang/uk.json "Ukrainian"): translated by [open-git](https://github.com/open-git "open-git")
 * [Romanian(ro)](./lang/ro.json "Romanian"): translated by [DrOctavius](https://github.com/DrOctavius "DrOctavius")
 * [Indonesian(id)](./lang/id.json "Indonesian"): translated by [justpoypoy](https://github.com/justpoypoy "justpoypoy")
+* [Italian(it)](../blob/master/lang/it.json "Italian"): translated by [nicoloHevelop](https://github.com/nicoloHevelop "nicoloHevelop")
 * [Bahasa Malaysia(ms-MY)](./lang/ms-MY.json "Bahasa Malaysia"): translated
   by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
 * [French(fr)](./lang/fr.json "French"): translated
   by [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho")
 * [Thailand(th)](./lang/th.json "Thailand"): translated by [izcream](https://github.com/izcream "izcream")
 * [Swedish(se)](./lang/se.json "Swedish"): translated by [jwanglof](https://github.com/jwanglof "jwanglof")
-* [Iranian(fa)](./lang/fa.json "Iranian"): translated by [erfanMomeniii](https://github.com/erfanMomeniii "erfanMomeniii")
+* [Farsi(fa)](./lang/fa.json "Farsi"): translated by [erfanMomeniii](https://github.com/erfanMomeniii "erfanMomeniii")
 * [Dutch(nl)](./lang/nl.json "Dutch"): translated by [RemcoE33](https://github.com/RemcoE33 "RemcoE33")
 * [VietNamese(vi)](./lang/vi.json "VietNam"): translated by [culy247](https://github.com/culy247 "culy247")
 * [Hindi(hi)](./lang/hi.json "India"): translated by [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin")
+* [Polish(pl)](./lang/pl.json "Polish"): translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
 
 The following methods are supported
 

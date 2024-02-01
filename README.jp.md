@@ -75,7 +75,7 @@ carbon.SetDefault(carbon.Default{
 // 標準の time.Time を Carbon に変換します
 carbon.CreateFromStdTime(time.Now())
 // Carbon を標準の time.Time に変換します
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### 昨日、今日、明日
@@ -1360,8 +1360,9 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 現在サポートされているカレンダーは
 
-* [中国の旧暦](./calendar/lunar/README.jp.md "中国の旧暦")
 * [儒略の日/簡略化儒略の日](./calendar/julian/README.jp.md "儒略日/简化儒略日")
+* [中国の旧暦](./calendar/lunar/README.jp.md "中国の旧暦")
+* [ペルシャ暦/イラン暦](./calendar/persian/README.jp.md "ペルシャ暦/イラン暦")
 
 ##### 国際化
 
@@ -1380,14 +1381,16 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 * [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") から翻訳されます
 * [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") から翻訳されます
 * [インドネシア語(id)](./lang/id.json "インドネシア語"): [justpoypoy](https://github.com/justpoypoy "justpoypoy") から翻訳されます
+* [イタリア語(it)](./lang/it.json "イタリア語"): [nicoloHevelop](https://github.com/hollowaykeanho "nicoloHevelop") から翻訳されます
 * [マレーシアバハマ語(ms-MY)](./lang/ms-MY.json "マレーシアバハマ語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
 * [フランス語(fr)](./lang/fr.json "フランス語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
 * [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") から翻訳されます
 * [スウェーデン語(se)](./lang/se.json "スウェーデン語"):  [jwanglof](https://github.com/jwanglof "jwanglof") から翻訳されます
-* [イラン語(fa)](./lang/fa.json "イラン語"):  [Iranian](https://github.com/Iranian "Iranian") から翻訳されます
+* [ペルシア語(fa)](./lang/fa.json "ペルシア語"):  [Iranian](https://github.com/Iranian "Iranian") から翻訳されます
 * [ポーランド語(nl)](./lang/nl.json "ポーランド語"): [RemcoE33](https://github.com/RemcoE33 "RemcoE33") から翻訳されます
 * [ベトナム語(vi)](./lang/vi.json "ベトナム語"): [culy247](https://github.com/culy247 "culy247") から翻訳されます
 * [ヒンディー語(hi)](./lang/hi.json "ヒンディー語"): [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") から翻訳されます
+* [ポーランド語(pl)](./lang/pl.json "ポーランド語"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 
 現在サポートされている方法
 

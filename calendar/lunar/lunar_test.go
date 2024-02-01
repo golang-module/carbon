@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSolarToLunar(t *testing.T) {
+func TestGregorian_ToLunar(t *testing.T) {
 	type args struct {
 		g Gregorian
 	}
@@ -36,7 +36,7 @@ func TestSolarToLunar(t *testing.T) {
 	}
 }
 
-func TestLunarToGregorian(t *testing.T) {
+func TestLunar_ToGregorian(t *testing.T) {
 	type args struct {
 		l Lunar
 	}
@@ -44,6 +44,14 @@ func TestLunarToGregorian(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{Lunar{}},
+			want: "",
+		},
+		{
+			args: args{FromLunar(0, 0, 0, 0, 0, 0, false)},
+			want: "",
+		},
 		{
 			args: args{FromLunar(2023, 12, 11, 0, 0, 0, false)},
 			want: "2024-01-21 00:00:00",
@@ -80,6 +88,10 @@ func TestLunar_Animal(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
@@ -169,6 +181,10 @@ func TestLunar_Festival(t *testing.T) {
 		want string
 	}{
 		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
+		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
@@ -233,6 +249,10 @@ func TestLunar_Year(t *testing.T) {
 		want int
 	}{
 		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
+		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
 		},
@@ -260,6 +280,10 @@ func TestLunar_Month(t *testing.T) {
 		args args
 		want int
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
@@ -320,34 +344,6 @@ func TestLunar_Month(t *testing.T) {
 	}
 }
 
-func TestLunar_LeapMonth(t *testing.T) {
-	type args struct {
-		g Gregorian
-	}
-	tests := []struct {
-		args args
-		want int
-	}{
-		{
-			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
-			want: 0,
-		},
-		{
-			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
-			want: 4,
-		},
-		{
-			args: args{FromGregorian(time.Date(2021, 7, 1, 0, 0, 0, 0, time.Local))},
-			want: 0,
-		},
-	}
-	for index, tt := range tests {
-		t.Run(strconv.Itoa(index), func(t *testing.T) {
-			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().LeapMonth(), "args{%v}", tt.args.g)
-		})
-	}
-}
-
 func TestLunar_Day(t *testing.T) {
 	type args struct {
 		g Gregorian
@@ -356,6 +352,10 @@ func TestLunar_Day(t *testing.T) {
 		args args
 		want int
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: 0,
@@ -384,6 +384,122 @@ func TestLunar_Day(t *testing.T) {
 	}
 }
 
+func TestLunar_Hour(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want int
+	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(2020, 8, 19, 13, 14, 15, 0, time.Local))},
+			want: 13,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().Hour(), "args{%v}", tt.args.g)
+		})
+	}
+}
+
+func TestLunar_Minute(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want int
+	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(2020, 8, 19, 13, 14, 15, 0, time.Local))},
+			want: 14,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().Minute(), "args{%v}", tt.args.g)
+		})
+	}
+}
+
+func TestLunar_Second(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want int
+	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(2020, 8, 19, 13, 14, 15, 0, time.Local))},
+			want: 15,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().Second(), "args{%v}", tt.args.g)
+		})
+	}
+}
+
+func TestLunar_LeapMonth(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want int
+	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+		{
+			args: args{FromGregorian(time.Date(2020, 4, 23, 0, 0, 0, 0, time.Local))},
+			want: 4,
+		},
+		{
+			args: args{FromGregorian(time.Date(2021, 7, 1, 0, 0, 0, 0, time.Local))},
+			want: 0,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().LeapMonth(), "args{%v}", tt.args.g)
+		})
+	}
+}
+
 func TestLunar_ToYearString(t *testing.T) {
 	type args struct {
 		g Gregorian
@@ -392,6 +508,10 @@ func TestLunar_ToYearString(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
@@ -420,6 +540,10 @@ func TestLunar_ToMonthString(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
@@ -488,6 +612,54 @@ func TestLunar_ToMonthString(t *testing.T) {
 	}
 }
 
+func TestLunar_ToWeekString(t *testing.T) {
+	type args struct {
+		l Lunar
+	}
+	tests := []struct {
+		args args
+		want string
+	}{
+		{
+			args: args{Lunar{}},
+			want: "",
+		},
+		{
+			args: args{FromLunar(0, 0, 0, 0, 0, 0, false)},
+			want: "",
+		},
+		{
+			args: args{FromLunar(2023, 12, 20, 0, 0, 0, false)},
+			want: "周二",
+		},
+		{
+			args: args{FromLunar(2023, 12, 21, 0, 0, 0, false)},
+			want: "周三",
+		},
+		{
+			args: args{FromLunar(2023, 12, 22, 0, 0, 0, false)},
+			want: "周四",
+		},
+		{
+			args: args{FromLunar(2023, 12, 23, 0, 0, 0, false)},
+			want: "周五",
+		},
+		{
+			args: args{FromLunar(2023, 12, 24, 0, 0, 0, false)},
+			want: "周六",
+		},
+		{
+			args: args{FromLunar(2023, 12, 25, 0, 0, 0, false)},
+			want: "周日",
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.l).ToWeekString(), "args{%v}", tt.args.l)
+		})
+	}
+}
+
 func TestLunar_ToDayString(t *testing.T) {
 	type args struct {
 		g Gregorian
@@ -496,6 +668,10 @@ func TestLunar_ToDayString(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
@@ -577,6 +753,10 @@ func TestLunar_String(t *testing.T) {
 		want string
 	}{
 		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
+		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
 		},
@@ -628,6 +808,10 @@ func TestLunar_ToDateString(t *testing.T) {
 		args args
 		want string
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: "",
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: "",
@@ -696,6 +880,14 @@ func TestLunar_IsLeapYear(t *testing.T) {
 		args args
 		want bool
 	}{
+		{
+			args: args{FromGregorian(time.Time{})},
+			want: false,
+		},
+		{
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			want: false,
+		},
 		{
 			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
 			want: false,

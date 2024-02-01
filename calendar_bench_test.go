@@ -27,3 +27,16 @@ func BenchmarkCarbon_CreateFromJulian(b *testing.B) {
 		CreateFromJulian(60332)
 	}
 }
+
+func BenchmarkCarbon_Persian(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.Persian()
+	}
+}
+
+func BenchmarkCarbon_CreateFromPersian(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		CreateFromPersian(1455, 1, 1, 0, 0, 0)
+	}
+}

@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.3.7"
+const Version = "2.3.8"
 
 // timezone constants
 // 时区常量
@@ -143,6 +143,7 @@ const (
 	RssLayout      = time.RFC1123Z
 	RubyDateLayout = time.RubyDate
 	UnixDateLayout = time.UnixDate
+	W3cLayout      = RFC3339Layout
 
 	RFC1036Layout      = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC1123Layout      = time.RFC1123

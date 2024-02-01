@@ -56,6 +56,30 @@ func TestGregorian_Month(t *testing.T) {
 	}
 }
 
+func TestGregorian_Week(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		args args
+		want int
+	}{
+		{
+			args: args{NewGregorian(time.Time{})},
+			want: 0,
+		},
+		{
+			args: args{NewGregorian(time.Date(2020, 8, 5, 13, 14, 15, 0, time.Local))},
+			want: 3,
+		},
+	}
+	for index, tt := range tests {
+		t.Run(strconv.Itoa(index), func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.Week(), "args(%v)", tt.args.g)
+		})
+	}
+}
+
 func TestGregorian_Day(t *testing.T) {
 	type args struct {
 		g Gregorian
