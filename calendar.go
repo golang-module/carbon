@@ -40,7 +40,7 @@ func CreateFromJulian(f float64) Carbon {
 }
 
 // Persian converts Carbon instance to Persian instance.
-// 将 Carbon 实例转化为 Julian 实例
+// 将 Carbon 实例转化为 Persian 实例
 func (c Carbon) Persian() (j persian.Persian) {
 	if c.Error != nil {
 		return j
