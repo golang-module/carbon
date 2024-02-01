@@ -24,6 +24,10 @@ func TestGregorian_ToJulian(t *testing.T) {
 			want: want{FromJulian(0)},
 		},
 		{
+			args: args{FromGregorian(time.Date(1800, 1, 1, 0, 0, 0, 0, time.Local))},
+			want: want{FromJulian(2378496.5)},
+		},
+		{
 			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
 			want: want{FromJulian(2460332.5)},
 		},
@@ -96,6 +100,10 @@ func TestGregorian_JD(t *testing.T) {
 		args args
 		want float64
 	}{
+		{
+			args: args{FromGregorian(time.Date(1800, 1, 1, 0, 0, 0, 0, time.Local))},
+			want: 2378496.5,
+		},
 		{
 			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
 			want: 2460332.5,
