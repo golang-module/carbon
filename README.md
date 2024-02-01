@@ -71,10 +71,10 @@ carbon.SetDefault(carbon.Default{
 ##### Convert between Carbon and Time
 
 ```go
-// Convert standard Time.time into Carbon
+// Convert standard Time.time to Carbon
 carbon.CreateFromStdTime(time.Now())
 // Convert Carbon to standard Time.time
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### Yesterday, today and tomorrow

@@ -71,7 +71,7 @@ carbon.SetDefault(carbon.Default{
 // 将标准 time.Time 转换成 Carbon
 carbon.CreateFromStdTime(time.Now())
 // 将 Carbon 转换成标准 time.Time
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### 昨天、今天、明天

@@ -75,7 +75,7 @@ carbon.SetDefault(carbon.Default{
 // 標準の time.Time を Carbon に変換します
 carbon.CreateFromStdTime(time.Now())
 // Carbon を標準の time.Time に変換します
-carbon.Now().ToStdTime()
+carbon.Now().StdTime()
 ```
 
 ##### 昨日、今日、明日
