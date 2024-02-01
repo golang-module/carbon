@@ -3,6 +3,7 @@ package carbon
 import (
 	"github.com/golang-module/carbon/v2/calendar/julian"
 	"github.com/golang-module/carbon/v2/calendar/lunar"
+	"github.com/golang-module/carbon/v2/calendar/persian"
 )
 
 // Lunar converts Carbon instance to Lunar instance.
@@ -35,5 +36,21 @@ func (c Carbon) Julian() (j julian.Julian) {
 // 从 儒略日/简化儒略日 创建 Carbon 实例
 func CreateFromJulian(f float64) Carbon {
 	t := julian.FromJulian(f).ToGregorian().Time
+	return CreateFromStdTime(t)
+}
+
+// Persian converts Carbon instance to Persian instance.
+// 将 Carbon 实例转化为 Julian 实例
+func (c Carbon) Persian() (j persian.Persian) {
+	if c.Error != nil {
+		return j
+	}
+	return persian.FromGregorian(c.StdTime()).ToPersian()
+}
+
+// CreateFromPersian creates a Carbon instance from Persian date and time.
+// 从 波斯日期 创建 Carbon 实例
+func CreateFromPersian(year, month, day, hour, minute, second int) Carbon {
+	t := persian.FromPersian(year, month, day, hour, minute, second).ToGregorian().Time
 	return CreateFromStdTime(t)
 }

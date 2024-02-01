@@ -1355,8 +1355,9 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 The following calendars are supported
 
-* [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")
 * [Julian Day/Modified Julian Day](./calendar/julian/README.md "JD/MJD")
+* [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")
+* [Persian/Jalaali](./calendar/persian/README.md "Persian/Jalaali")
 
 ##### I18n
 

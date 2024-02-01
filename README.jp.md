@@ -1360,8 +1360,9 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 
 現在サポートされているカレンダーは
 
-* [中国の旧暦](./calendar/lunar/README.jp.md "中国の旧暦")
 * [儒略の日/簡略化儒略の日](./calendar/julian/README.jp.md "儒略日/简化儒略日")
+* [中国の旧暦](./calendar/lunar/README.jp.md "中国の旧暦")
+* [ペルシャ暦/イラン暦](./calendar/persian/README.jp.md "ペルシャ暦/イラン暦")
 
 ##### 国際化
 
