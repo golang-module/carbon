@@ -1,3 +1,4 @@
+// Package persian is part of the Carbon package.
 package persian
 
 import (
@@ -7,23 +8,6 @@ import (
 
 	"github.com/golang-module/carbon/v2/calendar"
 	"github.com/golang-module/carbon/v2/calendar/julian"
-)
-
-type Month int
-
-const (
-	Farvardin Month = 1 + iota
-	Ordibehesht
-	Khordad
-	Tir
-	Mordad
-	Shahrivar
-	Mehr
-	Aban
-	Azar
-	Dey
-	Bahman
-	Esfand
 )
 
 var (
