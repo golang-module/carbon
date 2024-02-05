@@ -1,4 +1,3 @@
-// Package persian is part of the Carbon package.
 package persian
 
 import (
@@ -36,6 +35,9 @@ type Persian struct {
 // FromGregorian creates a Gregorian instance from time.Time.
 // 从标准 time.Time 创建 Gregorian 实例
 func FromGregorian(t time.Time) (g Gregorian) {
+	if t.IsZero() {
+		return
+	}
 	g.Time = t
 	return
 }
@@ -85,7 +87,6 @@ func (p Persian) ToGregorian() (g Gregorian) {
 	if p.IsZero() {
 		return
 	}
-	var year, month, day int
 	jdn := getPersianJdn(p.year, p.month, p.day)
 
 	l := jdn + 68569
@@ -94,12 +95,12 @@ func (p Persian) ToGregorian() (g Gregorian) {
 	i := 4000 * (l + 1) / 1461001
 	l = l - 1461*i/4 + 31
 	j := 80 * l / 2447
-	day = l - 2447*j/80
+	d := l - 2447*j/80
 	l = j / 11
-	month = j + 2 - 12*l
-	year = 100*(n-49) + i + l
+	m := j + 2 - 12*l
+	y := 100*(n-49) + i + l
 
-	g.Time = time.Date(year, time.Month(month), day, p.hour, p.minute, p.second, 0, time.Local)
+	g.Time = time.Date(y, time.Month(m), d, p.hour, p.minute, p.second, 0, time.Local)
 	return
 }
 

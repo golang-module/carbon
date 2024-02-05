@@ -67,6 +67,7 @@ const (
 	RssLayout      = time.RFC1123Z
 	RubyDateLayout = time.RubyDate
 	UnixDateLayout = time.UnixDate
+	W3cLayout      = RFC3339Layout
 
 	RFC1036Layout      = "Mon, 02 Jan 06 15:04:05 -0700"
 	RFC1123Layout      = time.RFC1123
@@ -125,8 +126,11 @@ type Gregorian struct {
 // NewGregorian returns a new Gregorian instance.
 // 初始化 Gregorian 结构体
 func NewGregorian(t time.Time) (g Gregorian) {
+	if t.IsZero() {
+		return
+	}
 	g.Time = t
-	return g
+	return
 }
 
 // Date gets gregorian year, month, and day like 2020, 8, 5.
