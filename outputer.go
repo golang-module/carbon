@@ -476,7 +476,13 @@ func (c Carbon) ToRssString(timezone ...string) string {
 // ToW3cString outputs a string in "2006-01-02T15:04:05Z07:00" layout.
 // 输出 "2006-01-02T15:04:05Z07:00" 格式字符串
 func (c Carbon) ToW3cString(timezone ...string) string {
-	return c.ToRfc3339String(timezone...)
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(W3cLayout)
 }
 
 // ToUnixDateString outputs a string in "Mon Jan _2 15:04:05 MST 2006" layout.
