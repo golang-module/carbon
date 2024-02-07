@@ -1193,15 +1193,15 @@ type Person struct {
   Name string `json:"name"`
   Age  int    `json:"age"`
   
-  Field1 Carbon `json:"field1"`
-  Field2 Carbon `json:"field2"`
-  Field3 Carbon `json:"field3"`
-  Field4 Carbon `json:"field4"`
+  Field1 carbon.Carbon `json:"field1"`
+  Field2 carbon.Carbon `json:"field2"`
+  Field3 carbon.Carbon `json:"field3"`
+  Field4 carbon.Carbon `json:"field4"`
   
-  Field5 Carbon `json:"field5"`
-  Field6 Carbon `json:"field6"`
-  Field7 Carbon `json:"field7"`
-  Field8 Carbon `json:"field8"`
+  Field5 carbon.Carbon `json:"field5"`
+  Field6 carbon.Carbon `json:"field6"`
+  Field7 carbon.Carbon `json:"field7"`
+  Field8 carbon.Carbon `json:"field8"`
 }
 
 now := carbon.Parse("2020-08-05 13:14:15", carbon.PRC)
@@ -1265,24 +1265,24 @@ type Person struct {
   Name string `json:"name"`
   Age  int    `json:"age"`
   
-  Field1 Carbon `json:"field1"`
+  Field1 carbon.Carbon `json:"field1"`
   
-  Field2 Carbon `json:"field2" carbon:"type:date" tz:"PRC"`
-  Field3 Carbon `json:"field3" carbon:"type:time" tz:"PRC"`
-  Field4 Carbon `json:"field4" carbon:"type:dateTime" tz:"PRC"`
+  Field2 carbon.Carbon `json:"field2" carbon:"type:date" tz:"PRC"`
+  Field3 carbon.Carbon `json:"field3" carbon:"type:time" tz:"PRC"`
+  Field4 carbon.Carbon `json:"field4" carbon:"type:dateTime" tz:"PRC"`
   // or
-  Field2 Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
-  Field3 Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
-  Field4 Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+  Field2 carbon.Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
+  Field3 carbon.Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
+  Field4 carbon.Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
   // or
-  Field2 Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
-  Field3 Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
-  Field4 Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+  Field2 carbon.Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
+  Field3 carbon.Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
+  Field4 carbon.Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
   
-  Field5 Carbon `json:"field5" carbon:"type:timestamp" tz:"PRC"`
-  Field6 Carbon `json:"field6" carbon:"type:timestampMilli" tz:"PRC"`
-  Field7 Carbon `json:"field7" carbon:"type:timestampMicro" tz:"PRC"`
-  Field8 Carbon `json:"field8" carbon:"type:timestampNano" tz:"PRC"`
+  Field5 carbon.Carbon `json:"field5" carbon:"type:timestamp" tz:"PRC"`
+  Field6 carbon.Carbon `json:"field6" carbon:"type:timestampMilli" tz:"PRC"`
+  Field7 carbon.Carbon `json:"field7" carbon:"type:timestampMicro" tz:"PRC"`
+  Field8 carbon.Carbon `json:"field8" carbon:"type:timestampNano" tz:"PRC"`
 }
 
 now := Parse("2020-08-05 13:14:15", carbon.PRC)
