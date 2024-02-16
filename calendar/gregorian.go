@@ -1,4 +1,4 @@
-// Package calendar is part of the Carbon package.
+// Package calendar is part of the carbon package.
 package calendar
 
 import (

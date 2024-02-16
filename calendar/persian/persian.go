@@ -1,4 +1,4 @@
-// Package persian is part of the Carbon package.
+// Package persian is part of the carbon package.
 package persian
 
 import (
