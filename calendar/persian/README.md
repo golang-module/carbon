@@ -1,25 +1,8 @@
-# Carbon
-
-[![Carbon Release](https://img.shields.io/github/release/golang-module/carbon.svg)](https://github.com/golang-module/carbon/releases)
-[![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/golang-module/carbon/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/golang-module/carbon/v2)
-[![Go Coverage](https://codecov.io/gh/golang-module/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/golang-module/carbon)
-[![Goproxy.cn](https://goproxy.cn/stats/github.com/golang-module/carbon/badges/download-count.svg)](https://goproxy.cn)
-[![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/golang-module/carbon/v2)
-[![License](https://img.shields.io/github/license/golang-module/carbon)](https://github.com/golang-module/carbon/blob/master/LICENSE)
+# Persian(Jalaali) Calendar
 
 English | [简体中文](README.cn.md) | [日本語](README.jp.md)
 
-#### Introduction
-
-A simple, semantic and developer-friendly golang package for time, has been included
-by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")
-
-[github.com/golang-module/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
-
-[gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
-
-#### Persian(Jalaali) Calendar
+#### Usage and example
 
 ##### Convert `Gregorian` calendar to `Persian` calendar
 
