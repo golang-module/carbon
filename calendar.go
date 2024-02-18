@@ -11,7 +11,7 @@ import (
 func (c Carbon) Lunar() (l lunar.Lunar) {
 	if c.Error != nil {
 		l.Error = c.Error
-		return l
+		return
 	}
 	return lunar.FromGregorian(c.StdTime()).ToLunar()
 }
@@ -27,7 +27,7 @@ func CreateFromLunar(year, month, day, hour, minute, second int, isLeapMonth boo
 // 将 Carbon 实例转化为 Julian 实例
 func (c Carbon) Julian() (j julian.Julian) {
 	if c.Error != nil {
-		return j
+		return
 	}
 	return julian.FromGregorian(c.StdTime()).ToJulian()
 }
@@ -41,9 +41,9 @@ func CreateFromJulian(f float64) Carbon {
 
 // Persian converts Carbon instance to Persian instance.
 // 将 Carbon 实例转化为 Persian 实例
-func (c Carbon) Persian() (j persian.Persian) {
+func (c Carbon) Persian() (p persian.Persian) {
 	if c.Error != nil {
-		return j
+		return
 	}
 	return persian.FromGregorian(c.StdTime()).ToPersian()
 }
