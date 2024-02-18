@@ -7,20 +7,19 @@ import (
 var constellations = []struct {
 	startMonth, startDay int
 	endMonth, endDay     int
-	index                int
 }{
-	{3, 21, 4, 19, 0},   // Aries
-	{4, 20, 5, 20, 1},   // Taurus
-	{5, 21, 6, 21, 2},   // Gemini
-	{6, 22, 7, 22, 3},   // Cancer
-	{7, 23, 8, 22, 4},   // Leo
-	{8, 23, 9, 22, 5},   // Virgo
-	{9, 23, 10, 23, 6},  // Libra
-	{10, 24, 11, 22, 7}, // Scorpio
-	{11, 23, 12, 21, 8}, // Sagittarius
-	{12, 22, 1, 19, 9},  // Capricorn
-	{1, 20, 2, 18, 10},  // Aquarius
-	{2, 19, 3, 20, 11},  // Pisces
+	{3, 21, 4, 19},   // Aries
+	{4, 20, 5, 20},   // Taurus
+	{5, 21, 6, 21},   // Gemini
+	{6, 22, 7, 22},   // Cancer
+	{7, 23, 8, 22},   // Leo
+	{8, 23, 9, 22},   // Virgo
+	{9, 23, 10, 23},  // Libra
+	{10, 24, 11, 22}, // Scorpio
+	{11, 23, 12, 21}, // Sagittarius
+	{12, 22, 1, 19},  // Capricorn
+	{1, 20, 2, 18},   // Aquarius
+	{2, 19, 3, 20},   // Pisces
 }
 
 // Constellation gets constellation name like "Aries", i18n is supported.
@@ -37,10 +36,10 @@ func (c Carbon) Constellation() string {
 	for i := 0; i < len(constellations); i++ {
 		constellation := constellations[i]
 		if month == constellation.startMonth && day >= constellation.startDay {
-			index = constellation.index
+			index = i
 		}
 		if month == constellation.endMonth && day <= constellation.endDay {
-			index = constellation.index
+			index = i
 		}
 	}
 	c.lang.rw.Lock()
