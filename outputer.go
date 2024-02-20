@@ -833,7 +833,7 @@ func (c Carbon) Format(format string, timezone ...string) string {
 // Deprecated: it will be removed in the future, use StdTime instead.
 //
 // ToStdTime converts Carbon to standard time.Time.
-// 将 Carbon 转换成标准 time.Time
+// 将 Carbon 转换成标准 time.Time，未来将移除，请用 StdTime 替换
 func (c Carbon) ToStdTime() time.Time {
 	return c.StdTime()
 }
