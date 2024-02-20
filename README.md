@@ -543,9 +543,9 @@ now.DiffInDuration(now).String() // 0s
 now.AddHour().DiffInDuration(now).String() // 1h0m0s
 now.SubHour().DiffInDuration(now).String() // -1h0m0s
 // Difference in duration with absolute value
-now.DiffAbsInDuration(now) // 0s
-now.AddHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
-now.SubHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+now.DiffAbsInDuration(now).String() // 0s
+now.AddHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.SubHour().DiffAbsInDuration(now).String() // 1h0m0s
 
 // Difference in a human-readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now

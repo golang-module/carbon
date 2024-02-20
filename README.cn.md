@@ -546,9 +546,9 @@ now.DiffInDuration(now).String() // 0s
 now.AddHour().DiffInDuration(now).String() // 1h0m0s
 now.SubHour().DiffInDuration(now).String() // -1h0m0s
 // 相差时长（绝对值）
-now.DiffAbsInDuration(now) // 0s
-now.AddHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
-now.SubHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+now.DiffAbsInDuration(now).String() // 0s
+now.AddHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.SubHour().DiffAbsInDuration(now).String() // 1h0m0s
 
 // 对人类友好的可读格式时间差
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
