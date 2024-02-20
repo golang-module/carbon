@@ -1285,9 +1285,9 @@ type Person struct {
   Field3 carbon.Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
   Field4 carbon.Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
   // or
-  Field2 carbon.Carbon `json:"field2" carbon:"layout:2006-01-02" tz:"PRC"`
-  Field3 carbon.Carbon `json:"field3" carbon:"layout:15:04:05" tz:"PRC"`
-  Field4 carbon.Carbon `json:"field4" carbon:"layout:2006-01-02 15:04:05" tz:"PRC"`
+  Field2 carbon.Carbon `json:"field2" carbon:"format:Y-m-d" tz:"PRC"`
+  Field3 carbon.Carbon `json:"field3" carbon:"format:H:i:s" tz:"PRC"`
+  Field4 carbon.Carbon `json:"field4" carbon:"format:Y-m-d H:i:s" tz:"PRC"`
   
   Field5 carbon.Carbon `json:"field5" carbon:"type:timestamp" tz:"PRC"`
   Field6 carbon.Carbon `json:"field6" carbon:"type:timestampMilli" tz:"PRC"`
