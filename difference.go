@@ -3,6 +3,7 @@ package carbon
 import (
 	"math"
 	"strings"
+	"time"
 )
 
 // DiffInYears gets the difference in years.
@@ -183,6 +184,32 @@ func (c Carbon) DiffAbsInString(carbon ...Carbon) string {
 	}
 	unit, value := c.diff(end)
 	return c.lang.translate(unit, getAbsValue(value))
+}
+
+// DiffInDuration gets the difference in duration.
+// 相差时长
+func (c Carbon) DiffInDuration(carbon ...Carbon) time.Duration {
+	end := c.Now()
+	if c.IsSetTestNow() {
+		end = CreateFromTimestampNano(c.testNow, c.Location())
+	}
+	if len(carbon) > 0 {
+		end = carbon[0]
+	}
+	return end.StdTime().Sub(c.StdTime())
+}
+
+// DiffAbsInDuration gets the difference in duration with absolute value.
+// 相差时长(绝对值)
+func (c Carbon) DiffAbsInDuration(carbon ...Carbon) time.Duration {
+	end := c.Now()
+	if c.IsSetTestNow() {
+		end = CreateFromTimestampNano(c.testNow, c.Location())
+	}
+	if len(carbon) > 0 {
+		end = carbon[0]
+	}
+	return end.StdTime().Sub(c.StdTime()).Abs()
 }
 
 // DiffForHumans gets the difference in a human-readable format, i18n is supported.

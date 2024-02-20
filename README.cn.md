@@ -65,7 +65,7 @@ carbon.SetDefault(carbon.Default{
 
 > 如果没有设置，默认布局模板是 `2006-01-02 15:04:05`, 默认时区是 `Local`, 默认一周开始日期是 `Sunday(周日)`, 默认语言是 `en`
 
-##### Carbon 和 time.Time 互转
+##### `Carbon` 和 `time.Time` 互转
 
 ```go
 // 将标准 time.Time 转换成 Carbon
@@ -142,7 +142,7 @@ carbon.Tomorrow().TimestampMicro() // 1596690855999999
 carbon.Tomorrow().TimestampNano() // 1596690855999999999
 ```
 
-##### 创建 Carbon 实例
+##### 创建 `Carbon` 实例
 
 ```go
 // 从秒级时间戳创建 Carbon 实例
@@ -185,7 +185,7 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### 将时间字符串解析成 Carbon 实例
+##### 将 `时间字符串` 解析成 `Carbon` 实例
 
 ```go
 carbon.Parse("").ToDateTimeString() // 空字符串
@@ -234,7 +234,7 @@ carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15
 
 ```
 
-##### 通过格式模板将时间字符串解析成 Carbon 实例
+##### 通过 `格式模板` 将时间字符串解析成 `Carbon` 实例
 
 > 如果使用的字母与格式模板冲突时，请使用转义符转义该字母
 
@@ -245,7 +245,7 @@ carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y�
 carbon.ParseByFormat("2020-08-05 13:14:15", "Y-m-d H:i:s", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 ```
 
-##### 通过布局模板将时间字符串解析成 Carbon 实例
+##### 通过 `布局模板` 将时间字符串解析成 `Carbon` 实例
 
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -539,6 +539,16 @@ carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
 carbon.Now().DiffAbsInString(carbon.Now()) // just now
 carbon.Now().AddYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
+
+// 相差时长
+now := carbon.Now()
+now.DiffInDuration(now).String() // 0s
+now.AddHour().DiffInDuration(now).String() // 1h0m0s
+now.SubHour().DiffInDuration(now).String() // -1h0m0s
+// 相差时长（绝对值）
+now.DiffAbsInDuration(now) // 0s
+now.AddHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+now.SubHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
 
 // 对人类友好的可读格式时间差
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now

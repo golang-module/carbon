@@ -114,6 +114,20 @@ func BenchmarkCarbon_DiffAbsInString(b *testing.B) {
 	}
 }
 
+func BenchmarkCarbon_DiffInDuration(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.DiffInDuration(Yesterday())
+	}
+}
+
+func BenchmarkCarbon_DiffAbsInDuration(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.DiffAbsInDuration(Yesterday())
+	}
+}
+
 func BenchmarkCarbon_DiffForHumans(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {

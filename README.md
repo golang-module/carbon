@@ -68,7 +68,7 @@ carbon.SetDefault(carbon.Default{
 
 > If not set, the default layout is `2006-01-02 15:04:05`, the default timezone is `Local`, the default week start date is `Sunday` and the default language locale is `en`
 
-##### Convert between Carbon and Time
+##### Convert between `Carbon` and `time.Time`
 
 ```go
 // Convert standard Time.time to Carbon
@@ -145,7 +145,7 @@ carbon.Tomorrow().TimestampMicro() // 1596690855999999
 carbon.Tomorrow().TimestampNano() // 1596690855999999999
 ```
 
-##### Create a Carbon instance
+##### Create a `Carbon` instance
 
 ```go
 // Create a Carbon instance from a given timestamp with second
@@ -188,7 +188,7 @@ carbon.CreateFromTimeMicro(13, 14, 15, 999999).ToString() // 2020-08-05 13:14:15
 carbon.CreateFromTimeNano(13, 14, 15, 999999999).ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a time string as a Carbon instance
+##### Parse a time string as a `Carbon` instance
 
 ```go
 carbon.Parse("").ToDateTimeString() // empty string
@@ -236,7 +236,7 @@ carbon.Parse("20200805131415.999999+08:00").ToString() // 2020-08-05 13:14:15.99
 carbon.Parse("20200805131415.999999999+08:00").ToString() // 2020-08-05 13:14:15.999999999 +0800 CST
 ```
 
-##### Parse a time string as a Carbon instance by format
+##### Parse a time string as a `Carbon` instance by format
 
 ```go
 carbon.ParseByFormat("2020|08|05 13|14|15", "Y|m|d H|i|s").ToDateTimeString() // 2020-08-05 13:14:15
@@ -244,7 +244,7 @@ carbon.ParseByFormat("It is 2020-08-05 13:14:15", "\\I\\t \\i\\s Y-m-d H:i:s").T
 carbon.ParseByFormat("今天是 2020年08月05日13时14分15秒", "今天是 Y年m月d日H时i分s秒").ToDateTimeString() // 2020-08-05 13:14:15
 ```
 
-##### Parse a time string as a Carbon instance by layout
+##### Parse a time string as a `Carbon` instance by layout
 
 ```go
 carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeString() // 2020-08-05 13:14:15
@@ -536,6 +536,16 @@ carbon.Now().SubYearsNoOverflow(1).DiffInString() // 1 year
 carbon.Now().DiffAbsInString(carbon.Now()) // just now
 carbon.Now().AddYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
+
+// Difference in duration
+now := carbon.Now()
+now.DiffInDuration(now).String() // 0s
+now.AddHour().DiffInDuration(now).String() // 1h0m0s
+now.SubHour().DiffInDuration(now).String() // -1h0m0s
+// Difference in duration with absolute value
+now.DiffAbsInDuration(now) // 0s
+now.AddHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+now.SubHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
 
 // Difference in a human-readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now

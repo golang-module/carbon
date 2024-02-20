@@ -540,6 +540,16 @@ carbon.Now().DiffAbsInString(carbon.Now()) // just now
 carbon.Now().AddYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 
+// 相差時間長
+now := carbon.Now()
+now.DiffInDuration(now).String() // 0s
+now.AddHour().DiffInDuration(now).String() // 1h0m0s
+now.SubHour().DiffInDuration(now).String() // -1h0m0s
+// 相差時間長（絶対値）
+now.DiffAbsInDuration(now) // 0s
+now.AddHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+now.SubHour().DiffAbsInDuration(carbon.Now()) // 1h0m0s
+
 // 人間に優しい読み取り可能なフォーマットの時間差を取得します
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
 carbon.Parse("2019-08-05 13:14:15").DiffForHumans() // 1 year ago
