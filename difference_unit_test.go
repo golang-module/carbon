@@ -477,15 +477,15 @@ func TestCarbon_DiffInDuration(t *testing.T) {
 	}{
 		0: {now, "0s"},
 
-		1: {now.AddYearsNoOverflow(1), "-8784h0m0s"},
-		2: {now.SubYearsNoOverflow(1), "8760h0m0s"},
-		3: {now.AddYearsNoOverflow(10), "-87672h0m0s"},
-		4: {now.SubYearsNoOverflow(10), "87648h0m0s"},
+		1: {now.AddYearsNoOverflow(1), "-8760h0m0s"},
+		2: {now.SubYearsNoOverflow(1), "8784h0m0s"},
+		3: {now.AddYearsNoOverflow(10), "-87648h0m0s"},
+		4: {now.SubYearsNoOverflow(10), "87672h0m0s"},
 
-		5: {now.AddMonthsNoOverflow(1), "-696h0m0s"},
-		6: {now.SubMonthsNoOverflow(1), "744h0m0s"},
-		7: {now.AddMonthsNoOverflow(10), "-7296h0m0s"},
-		8: {now.SubMonthsNoOverflow(10), "7344h0m0s"},
+		5: {now.AddMonthsNoOverflow(1), "-744h0m0s"},
+		6: {now.SubMonthsNoOverflow(1), "696h0m0s"},
+		7: {now.AddMonthsNoOverflow(10), "-7344h0m0s"},
+		8: {now.SubMonthsNoOverflow(10), "7320h0m0s"},
 
 		9:  {now.AddDays(1), "-24h0m0s"},
 		10: {now.SubDays(1), "24h0m0s"},
@@ -525,15 +525,15 @@ func TestCarbon_DiffAbsInDuration(t *testing.T) {
 	}{
 		0: {now, "0s"},
 
-		1: {now.AddYearsNoOverflow(1), "8784h0m0s"},
-		2: {now.SubYearsNoOverflow(1), "8760h0m0s"},
-		3: {now.AddYearsNoOverflow(10), "87672h0m0s"},
-		4: {now.SubYearsNoOverflow(10), "87648h0m0s"},
+		1: {now.AddYearsNoOverflow(1), "8760h0m0s"},
+		2: {now.SubYearsNoOverflow(1), "8784h0m0s"},
+		3: {now.AddYearsNoOverflow(10), "87648h0m0s"},
+		4: {now.SubYearsNoOverflow(10), "87672h0m0s"},
 
-		5: {now.AddMonthsNoOverflow(1), "696h0m0s"},
-		6: {now.SubMonthsNoOverflow(1), "744h0m0s"},
-		7: {now.AddMonthsNoOverflow(10), "7296h0m0s"},
-		8: {now.SubMonthsNoOverflow(10), "7344h0m0s"},
+		5: {now.AddMonthsNoOverflow(1), "744h0m0s"},
+		6: {now.SubMonthsNoOverflow(1), "696h0m0s"},
+		7: {now.AddMonthsNoOverflow(10), "7344h0m0s"},
+		8: {now.SubMonthsNoOverflow(10), "7320h0m0s"},
 
 		9:  {now.AddDays(1), "24h0m0s"},
 		10: {now.SubDays(1), "24h0m0s"},
