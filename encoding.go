@@ -33,8 +33,7 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	if c.Error != nil {
 		return c.Error
 	}
-
-	if string(b) == "null" || len(b) == 0 {
+	if len(b) == 0 || string(b) == "null" {
 		return nil
 	}
 	key, value, tz := c.parseTag()
