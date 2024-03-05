@@ -1093,6 +1093,14 @@ carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString() // 2020-08-
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString() // 2020-08-05T13:14:15.999999+08:00
 // 输出 ISO8601Nano 格式字符串
 carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString() // 2020-08-05T13:14:15.999999999+08:00
+// 输出 ISO8601Zulu 格式字符串
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluString() // 2020-08-05T13:14:15Z
+// 输出 ISO8601ZuluMilli 格式字符串
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluMilliString() // 2020-08-05T13:14:15.999Z
+// 输出 ISO8601ZuluMicro 格式字符串
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluMicroString() // 2020-08-05T13:14:15.999999Z
+// 输出 ISO8601ZuluNano 格式字符串
+carbon.Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluNanoString() // 2020-08-05T13:14:15.999999999Z
 
 // 输出 RFC822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc822String() // 05 Aug 20 13:14 CST
@@ -1126,13 +1134,18 @@ fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15")) // 2020-08-05 13:14:15
 // 输出"2006-01-02 15:04:05.999999999 -0700 MST"格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToString() // 2020-08-05 13:14:15.999999 +0800 CST
 
-// 输出指定布局的字符串,Layout()是ToLayoutString()的简写
+// 输出 "Jan 2, 2006" 格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToFormattedDateString() // Aug 5, 2020
+// 输出 "Mon, Jan 2, 2006" 格式字符串
+carbon.Parse("2020-08-05 13:14:15").ToFormattedDayDateString() // Wed, Aug 5, 2020
+
+// 输出指定布局的字符串
 carbon.Parse("2020-08-05 13:14:15").Layout(carbon.ISO8601Layout) // 2020-08-05T13:14:15+08:00
 carbon.Parse("2020-08-05 13:14:15").Layout("20060102150405") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Layout("2006年01月02日 15时04分05秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Layout("It is 2006-01-02 15:04:05") // It is 2020-08-05 13:14:15
 
-// 输出指定格式的字符串,Format()是ToFormatString()的简写(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
+// 输出指定格式的字符串(如果使用的字母与格式化字符冲突时，请使用\符号转义该字符)
 carbon.Parse("2020-08-05 13:14:15").Format("YmdHis") // 20200805131415
 carbon.Parse("2020-08-05 13:14:15").Format("Y年m月d日 H时i分s秒") // 2020年08月05日 13时14分15秒
 carbon.Parse("2020-08-05 13:14:15").Format("l jS \\o\\f F Y h:i:s A") // Wednesday 5th of August 2020 01:14:15 PM
