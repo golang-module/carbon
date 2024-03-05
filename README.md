@@ -65,8 +65,7 @@ carbon.SetDefault(carbon.Default{
   Locale: "en",
 })
 ```
-
-> If not set, the default layout is `2006-01-02 15:04:05`, the default timezone is `Local`, the default week start date is `Sunday` and the default language locale is `en`
+> Suggest setting in the entry file such as `main.go`
 
 ##### Convert between `Carbon` and `time.Time`
 

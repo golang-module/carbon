@@ -62,8 +62,7 @@ carbon.SetDefault(carbon.Default{
   Locale: "zh-CN",
 })
 ```
-
-> 如果没有设置，默认布局模板是 `2006-01-02 15:04:05`, 默认时区是 `Local`, 默认一周开始日期是 `Sunday(周日)`, 默认语言是 `en`
+> 建议在入口文件如 `main.go` 中设置
 
 ##### `Carbon` 和 `time.Time` 互转
 
