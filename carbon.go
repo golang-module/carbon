@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.3.9"
+const Version = "2.3.10"
 
 // timezone constants
 // 时区常量
@@ -163,6 +163,14 @@ const (
 	ISO8601MicroLayout = "2006-01-02T15:04:05.999999-07:00"
 	ISO8601NanoLayout  = "2006-01-02T15:04:05.999999999-07:00"
 
+	ISO8601ZuluLayout      = "2006-01-02T15:04:05Z"
+	ISO8601ZuluMilliLayout = "2006-01-02T15:04:05.999Z"
+	ISO8601ZuluMicroLayout = "2006-01-02T15:04:05.999999Z"
+	ISO8601ZuluNanoLayout  = "2006-01-02T15:04:05.999999999Z"
+
+	FormattedDateLayout    = "Jan 2, 2006"
+	FormattedDayDateLayout = "Mon, Jan 2, 2006"
+
 	DayDateTimeLayout        = "Mon, Jan 2, 2006 3:04 PM"
 	DateTimeLayout           = "2006-01-02 15:04:05"
 	DateTimeMilliLayout      = "2006-01-02 15:04:05.999"
@@ -220,6 +228,14 @@ const (
 	ISO8601MilliFormat = "Y-m-d\\TH:i:s.vP"
 	ISO8601MicroFormat = "Y-m-d\\TH:i:s.uP"
 	ISO8601NanoFormat  = "Y-m-d\\TH:i:s.xP"
+
+	ISO8601ZuluFormat      = "Y-m-d\\TH:i:s\\Z"
+	ISO8601ZuluMilliFormat = "Y-m-d\\TH:i:s.v\\Z"
+	ISO8601ZuluMicroFormat = "Y-m-d\\TH:i:s.u\\Z"
+	ISO8601ZuluNanoFormat  = "Y-m-d\\TH:i:s.x\\Z"
+
+	FormattedDateFormat    = "M j, Y"
+	FormattedDayDateFormat = "D, M j, Y"
 
 	DayDateTimeFormat        = "D, M j, Y g:i A"
 	DateTimeFormat           = "Y-m-d H:i:s"
