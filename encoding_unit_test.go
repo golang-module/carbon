@@ -3,9 +3,8 @@ package carbon
 import (
 	"encoding/json"
 	"fmt"
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 type Person struct {
@@ -283,4 +282,19 @@ func TestError_Json(t *testing.T) {
 	unmarshalErr := json.Unmarshal([]byte(str), &student)
 	fmt.Println("unmarshal error:", unmarshalErr.Error())
 	assert.NotNil(t, unmarshalErr)
+}
+
+// https://github.com/golang-module/carbon/issues/225
+func TestCarbon_Issue225(t *testing.T) {
+	str := `{
+		"birthday1":"",
+		"birthday2":null
+	}`
+
+	var person Person
+	unmarshalErr := json.Unmarshal([]byte(str), &person)
+	assert.Nil(t, unmarshalErr)
+
+	assert.Equal(t, "", person.Birthday1.String())
+	assert.Equal(t, "", person.Birthday2.String())
 }
