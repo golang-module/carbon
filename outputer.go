@@ -21,6 +21,15 @@ func (c Carbon) String() string {
 	return c.ToDateTimeString(c.Location())
 }
 
+// GoString implements fmt.GoStringer and formats c to be printed in Go source code.
+// 实现 fmt.GoStringer 接口，并格式化 c 以在 Go 源代码中打印
+func (c Carbon) GoString() string {
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().GoString()
+}
+
 // ToString outputs a string in "2006-01-02 15:04:05.999999999 -0700 MST" layout.
 // 输出 "2006-01-02 15:04:05.999999999 -0700 MST" 格式字符串
 func (c Carbon) ToString(timezone ...string) string {
@@ -569,6 +578,54 @@ func (c Carbon) ToIso8601NanoString(timezone ...string) string {
 	return c.StdTime().Format(ISO8601NanoLayout)
 }
 
+// ToIso8601ZuluString outputs a string in "2006-01-02T15:04:05Z" layout.
+// 输出 "2006-01-02T15:04:05Z" 格式字符串
+func (c Carbon) ToIso8601ZuluString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(ISO8601ZuluLayout)
+}
+
+// ToIso8601ZuluMilliString outputs a string in "2006-01-02T15:04:05.999Z" layout.
+// 输出 "2006-01-02T15:04:05.999Z" 格式字符串
+func (c Carbon) ToIso8601ZuluMilliString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(ISO8601ZuluMilliLayout)
+}
+
+// ToIso8601ZuluMicroString outputs a string in "2006-01-02T15:04:05.999999Z" layout.
+// 输出 "2006-01-02T15:04:05.999999Z" 格式字符串
+func (c Carbon) ToIso8601ZuluMicroString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(ISO8601ZuluMicroLayout)
+}
+
+// ToIso8601ZuluNanoString outputs a string in "2006-01-02T15:04:05.999999999Z" layout.
+// 输出 "2006-01-02T15:04:05.999999999Z" 格式字符串
+func (c Carbon) ToIso8601ZuluNanoString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(ISO8601ZuluNanoLayout)
+}
+
 // ToRfc822String outputs a string in "02 Jan 06 15:04 MST" layout.
 // 输出 "02 Jan 06 15:04 MST" 格式字符串
 func (c Carbon) ToRfc822String(timezone ...string) string {
@@ -713,9 +770,33 @@ func (c Carbon) ToRfc7231String(timezone ...string) string {
 	return c.StdTime().Format(RFC7231Layout)
 }
 
-// ToLayoutString outputs a string by layout.
+// ToFormattedDateString outputs a string in "Jan 2, 2006" layout.
+// 输出 "Jan 2, 2006" 格式字符串
+func (c Carbon) ToFormattedDateString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(FormattedDateLayout)
+}
+
+// ToFormattedDayDateString outputs a string in "Mon, Jan 2, 2006" layout.
+// 输出 "Jan 2, 2006" 格式字符串
+func (c Carbon) ToFormattedDayDateString(timezone ...string) string {
+	if len(timezone) > 0 {
+		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.IsInvalid() {
+		return ""
+	}
+	return c.StdTime().Format(FormattedDayDateLayout)
+}
+
+// Layout outputs a string by layout.
 // 输出指定布局模板的时间字符串
-func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
+func (c Carbon) Layout(layout string, timezone ...string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
@@ -725,15 +806,9 @@ func (c Carbon) ToLayoutString(layout string, timezone ...string) string {
 	return c.StdTime().Format(layout)
 }
 
-// Layout outputs a string by layout, it is shorthand for ToLayoutString.
-// 输出指定布局模板的时间字符串, 是 ToLayoutString 的简写
-func (c Carbon) Layout(layout string, timezone ...string) string {
-	return c.ToLayoutString(layout, timezone...)
-}
-
-// ToFormatString outputs a string by format.
+// Format outputs a string by format.
 // 输出指定格式模板的时间字符串
-func (c Carbon) ToFormatString(format string, timezone ...string) string {
+func (c Carbon) Format(format string, timezone ...string) string {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
@@ -824,16 +899,10 @@ func (c Carbon) ToFormatString(format string, timezone ...string) string {
 	return buffer.String()
 }
 
-// Format outputs a string by format, it is shorthand for ToFormatString.
-// 输出指定格式模板的时间字符串, 是 ToFormatString 的简写
-func (c Carbon) Format(format string, timezone ...string) string {
-	return c.ToFormatString(format, timezone...)
-}
-
 // Deprecated: it will be removed in the future, use StdTime instead.
 //
 // ToStdTime converts Carbon to standard time.Time.
-// 将 Carbon 转换成标准 time.Time，未来将移除，请用 StdTime 替换
+// 将 Carbon 转换成标准 time.Time
 func (c Carbon) ToStdTime() time.Time {
 	return c.StdTime()
 }

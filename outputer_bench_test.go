@@ -303,6 +303,34 @@ func BenchmarkCarbon_ToIso8601NanoString(b *testing.B) {
 	}
 }
 
+func BenchmarkCarbon_ToIso8601ZuluString(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.ToIso8601ZuluString()
+	}
+}
+
+func BenchmarkCarbon_ToIso8601ZuluMilliString(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.ToIso8601ZuluMilliString()
+	}
+}
+
+func BenchmarkCarbon_ToIso8601ZuluMicroString(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.ToIso8601ZuluMicroString()
+	}
+}
+
+func BenchmarkCarbon_ToIso8601ZuluNanoString(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.ToIso8601ZuluNanoString()
+	}
+}
+
 func BenchmarkCarbon_ToRfc822String(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
@@ -387,10 +415,17 @@ func BenchmarkCarbon_ToRfc7231String(b *testing.B) {
 	}
 }
 
-func BenchmarkCarbon_ToLayoutString(b *testing.B) {
+func BenchmarkCarbon_ToFormattedDateString(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
-		now.ToLayoutString("2006-01-02", "2020-08-05")
+		now.ToFormattedDateString()
+	}
+}
+
+func BenchmarkCarbon_ToFormattedDayDateString(b *testing.B) {
+	now := Now()
+	for n := 0; n < b.N; n++ {
+		now.ToFormattedDayDateString()
 	}
 }
 
@@ -401,13 +436,6 @@ func BenchmarkCarbon_Layout(b *testing.B) {
 	}
 }
 
-func BenchmarkCarbon_ToFormatString(b *testing.B) {
-	now := Now()
-	for n := 0; n < b.N; n++ {
-		now.ToFormatString("2006-01-02", "Y-m-d")
-	}
-}
-
 func BenchmarkCarbon_Format(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
@@ -415,9 +443,9 @@ func BenchmarkCarbon_Format(b *testing.B) {
 	}
 }
 
-func BenchmarkCarbon_ToStdTime(b *testing.B) {
+func BenchmarkCarbon_GoTime(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
-		now.ToStdTime()
+		now.GoString()
 	}
 }

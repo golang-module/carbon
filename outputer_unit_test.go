@@ -36,6 +36,29 @@ func TestCarbon_String(t *testing.T) {
 	assert.Equal("2020-08-05 00:00:00", c.String())
 }
 
+func TestCarbon_GoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15", "time.Date(2020, time.August, 5, 13, 14, 15, 0, time.Local)"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, Parse(test.input).GoString(), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
 func TestCarbon_ToString(t *testing.T) {
 	assert := assert.New(t)
 
@@ -50,12 +73,6 @@ func TestCarbon_ToString(t *testing.T) {
 		{"0000-00-00 00:00:00", ""},
 
 		{"2020-08-05 13:14:15", "2020-08-05 13:14:15 +0800 CST"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -95,12 +112,6 @@ func TestCarbon_ToMonthString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToMonthString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToMonthString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -135,12 +146,6 @@ func TestCarbon_ToShortMonthString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortMonthString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortMonthString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -165,12 +170,6 @@ func TestCarbon_ToWeekString(t *testing.T) {
 		{"2020-08-05", "Wednesday"},
 		{"2020-08-06", "Thursday"},
 		{"2020-08-07", "Friday"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToWeekString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -205,12 +204,6 @@ func TestCarbon_ToShortWeekString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortWeekString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortWeekString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -229,12 +222,6 @@ func TestCarbon_ToDayDateTimeString(t *testing.T) {
 		{"0000-00-00 00:00:00", ""},
 
 		{"2020-08-05 13:14:15", "Wed, Aug 5, 2020 1:14 PM"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDayDateTimeString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -264,12 +251,6 @@ func TestCarbon_ToDateTimeString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -289,12 +270,6 @@ func TestCarbon_ToDateTimeMilliString(t *testing.T) {
 
 		{"2020-08-05T13:14:15.999999999+08:00", "2020-08-05 13:14:15.999"},
 		{"2020-08-05", "2020-08-05 00:00:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -324,12 +299,6 @@ func TestCarbon_ToDateTimeMicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -349,12 +318,6 @@ func TestCarbon_ToDateTimeNanoString(t *testing.T) {
 
 		{"2020-08-05T13:14:15.999999999+08:00", "2020-08-05 13:14:15.999999999"},
 		{"2020-08-05", "2020-08-05 00:00:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -384,12 +347,6 @@ func TestCarbon_ToShortDateTimeString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateTimeString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortDateTimeString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -409,12 +366,6 @@ func TestCarbon_ToShortDateTimeMilliString(t *testing.T) {
 
 		{"2020-08-05T13:14:15.999999999+08:00", "20200805131415.999"},
 		{"2020-08-05", "20200805000000"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -444,12 +395,6 @@ func TestCarbon_ToShortDateTimeMicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortDateTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -469,12 +414,6 @@ func TestCarbon_ToShortDateTimeNanoString(t *testing.T) {
 
 		{"2020-08-05T13:14:15.999999999+08:00", "20200805131415.999999999"},
 		{"2020-08-05", "20200805000000"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -504,12 +443,6 @@ func TestCarbon_ToDateString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -529,12 +462,6 @@ func TestCarbon_ToDateMilliString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "2020-08-05.999"},
 		{"2020-08-05", "2020-08-05"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -564,12 +491,6 @@ func TestCarbon_ToDateMicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateMicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToDateMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -589,12 +510,6 @@ func TestCarbon_ToDateNanoString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "2020-08-05.999999999"},
 		{"2020-08-05", "2020-08-05"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -624,12 +539,6 @@ func TestCarbon_ToShortDateString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortDateString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -649,12 +558,6 @@ func TestCarbon_ToShortDateMilliString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "20200805.999"},
 		{"2020-08-05", "20200805"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -684,12 +587,6 @@ func TestCarbon_ToShortDateNanoString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateNanoString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortDateNanoString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -709,12 +606,6 @@ func TestCarbon_ToShortDateMicroString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "20200805.999999"},
 		{"2020-08-05", "20200805"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortDateMicroString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -744,12 +635,6 @@ func TestCarbon_ToTimeString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToTimeString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToTimeString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -769,12 +654,6 @@ func TestCarbon_ToTimeMilliString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "13:14:15.999"},
 		{"2020-08-05", "00:00:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToTimeMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -804,12 +683,6 @@ func TestCarbon_ToTimeMicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToTimeMicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -829,12 +702,6 @@ func TestCarbon_ToTimeNanoString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "13:14:15.999999999"},
 		{"2020-08-05", "00:00:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToTimeNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -864,12 +731,6 @@ func TestCarbon_ToShortTimeString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortTimeString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortTimeString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -889,12 +750,6 @@ func TestCarbon_ToShortTimeMilliString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "131415.999"},
 		{"2020-08-05", "000000"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortTimeMilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -924,12 +779,6 @@ func TestCarbon_ToShortTimeMicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortTimeMicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToShortTimeMicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -949,12 +798,6 @@ func TestCarbon_ToShortTimeNanoString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "131415.999999999"},
 		{"2020-08-05", "000000"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToShortTimeNanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -984,12 +827,6 @@ func TestCarbon_ToAtomString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToAtomString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToAtomString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1009,12 +846,6 @@ func TestCarbon_ToAnsicString(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wed Aug  5 13:14:15 2020"},
 		{"2020-08-05", "Wed Aug  5 00:00:00 2020"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToAnsicString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1044,12 +875,6 @@ func TestCarbon_ToCookieString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToCookieString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToCookieString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1069,12 +894,6 @@ func TestCarbon_ToRssString(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wed, 05 Aug 2020 13:14:15 +0800"},
 		{"2020-08-05", "Wed, 05 Aug 2020 00:00:00 +0800"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRssString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1104,12 +923,6 @@ func TestCarbon_ToW3cString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToW3cString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToW3cString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1129,12 +942,6 @@ func TestCarbon_ToUnixDateString(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wed Aug  5 13:14:15 CST 2020"},
 		{"2020-08-05", "Wed Aug  5 00:00:00 CST 2020"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToUnixDateString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1164,12 +971,6 @@ func TestCarbon_ToRubyDateString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRubyDateString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRubyDateString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1189,12 +990,6 @@ func TestCarbon_ToKitchenString(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "1:14PM"},
 		{"2020-08-05", "12:00AM"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, test.expected, c.ToKitchenString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1224,12 +1019,6 @@ func TestCarbon_ToIso8601String(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToIso8601String(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToIso8601String(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1249,12 +1038,6 @@ func TestCarbon_ToIso8601MilliString(t *testing.T) {
 
 		{"2020-08-05 13:14:15.999999999", "2020-08-05T13:14:15.999+08:00"},
 		{"2020-08-05", "2020-08-05T00:00:00+08:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToIso8601MilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1284,12 +1067,6 @@ func TestCarbon_ToIso8601MicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToIso8601MicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToIso8601MicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1314,13 +1091,103 @@ func TestCarbon_ToIso8601NanoString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToIso8601NanoString(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToIso8601NanoString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToIso8601ZuluString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15", "2020-08-05T13:14:15Z"},
+		{"2020-08-05", "2020-08-05T00:00:00Z"},
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToIso8601NanoString(PRC), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToIso8601ZuluString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToIso8601ZuluMilliString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05T13:14:15.999Z"},
+		{"2020-08-05", "2020-08-05T00:00:00Z"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToIso8601ZuluMilliString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToIso8601ZuluMicroString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05T13:14:15.999999Z"},
+		{"2020-08-05", "2020-08-05T00:00:00Z"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToIso8601ZuluMicroString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToIso8601ZuluNanoString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15.999999999", "2020-08-05T13:14:15.999999999Z"},
+		{"2020-08-05", "2020-08-05T00:00:00Z"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToIso8601ZuluNanoString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -1339,12 +1206,6 @@ func TestCarbon_ToRfc822String(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "05 Aug 20 13:14 CST"},
 		{"2020-08-05", "05 Aug 20 00:00 CST"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc822String(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1374,12 +1235,6 @@ func TestCarbon_ToRfc822zString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc822zString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRfc822zString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1399,12 +1254,6 @@ func TestCarbon_ToRfc850String(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wednesday, 05-Aug-20 13:14:15 CST"},
 		{"2020-08-05", "Wednesday, 05-Aug-20 00:00:00 CST"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc850String(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1434,12 +1283,6 @@ func TestCarbon_ToRfc1036String(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc1036String(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRfc1036String(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1459,12 +1302,6 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wed, 05 Aug 2020 13:14:15 CST"},
 		{"2020-08-05", "Wed, 05 Aug 2020 00:00:00 CST"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc1123String(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1494,12 +1331,6 @@ func TestCarbon_ToRfc1123zString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc1123zString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRfc1123zString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1519,12 +1350,6 @@ func TestCarbon_ToRfc2822String(t *testing.T) {
 
 		{"2020-08-05 13:14:15", "Wed, 05 Aug 2020 13:14:15 +0800"},
 		{"2020-08-05", "Wed, 05 Aug 2020 00:00:00 +0800"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc2822String(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1553,12 +1378,6 @@ func TestCarbon_ToRfc3339String(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc3339String(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRfc3339String(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1577,12 +1396,6 @@ func TestCarbon_ToRfc3339MilliString(t *testing.T) {
 		{"0000-00-00 00:00:00", ""},
 
 		{"2020-08-05T13:14:15.999999999+08:00", "2020-08-05T13:14:15.999+08:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc3339MilliString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1611,12 +1424,6 @@ func TestCarbon_ToRfc3339MicroString(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc3339MicroString(), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.ToRfc3339MicroString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
@@ -1635,12 +1442,6 @@ func TestCarbon_ToRfc3339NanoString(t *testing.T) {
 		{"0000-00-00 00:00:00", ""},
 
 		{"2020-08-05T13:14:15.999999999+08:00", "2020-08-05T13:14:15.999999999+08:00"},
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc3339NanoString(), "Current test index is "+strconv.Itoa(index))
 	}
 
 	for index, test := range tests {
@@ -1670,13 +1471,55 @@ func TestCarbon_ToRfc7231String(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc7231String(), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToRfc7231String(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToFormattedDateString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15", "Aug 5, 2020"},
+		{"2020-08-05", "Aug 5, 2020"},
 	}
 
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToRfc7231String(PRC), "Current test index is "+strconv.Itoa(index))
+		assert.Equal(test.expected, c.ToFormattedDateString(PRC), "Current test index is "+strconv.Itoa(index))
+	}
+}
+
+func TestCarbon_ToFormattedDayDateString(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"0", ""},
+		{"0000-00-00", ""},
+		{"00:00:00", ""},
+		{"0000-00-00 00:00:00", ""},
+
+		{"2020-08-05 13:14:15", "Wed, Aug 5, 2020"},
+		{"2020-08-05", "Wed, Aug 5, 2020"},
+	}
+
+	for index, test := range tests {
+		c := Parse(test.input, PRC)
+		assert.Nil(c.Error)
+		assert.Equal(test.expected, c.ToFormattedDayDateString(PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -1701,25 +1544,7 @@ func TestCarbon_Layout(t *testing.T) {
 	for index, test := range tests {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Layout(test.param), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToLayoutString(test.param), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.Layout(test.param, PRC), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToLayoutString(test.param, PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
@@ -1779,18 +1604,6 @@ func TestCarbon_Format(t *testing.T) {
 		c := Parse(test.input, PRC)
 		assert.Nil(c.Error)
 		assert.Equal(test.expected, c.SetLocale(test.locale).Format(test.format), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.SetLocale(test.locale).ToFormatString(test.format), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input, PRC)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.SetLocale(test.locale).ToFormatString(test.format, PRC), "Current test index is "+strconv.Itoa(index))
 	}
 }
 
