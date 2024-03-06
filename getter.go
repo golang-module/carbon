@@ -4,8 +4,8 @@ import (
 	"time"
 )
 
-// StdTime converts Carbon to standard time.Time.
-// 将 Carbon 转换成标准 time.Time
+// StdTime gets standard time.Time.
+// 获取标准 time.Time
 func (c Carbon) StdTime() time.Time {
 	return c.time.In(c.loc)
 }
