@@ -139,8 +139,8 @@ func TestCarbon_SetLocation(t *testing.T) {
 		},
 		{
 			name:   "case5",
-			carbon: Parse("2020-08-05 13:14:15").SetLocation(time.Local),
-			want:   "Local",
+			carbon: Parse("2020-08-05 13:14:15").SetLocation(time.UTC),
+			want:   "UTC",
 		},
 		{
 			name:   "case6",
