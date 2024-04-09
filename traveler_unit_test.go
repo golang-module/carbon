@@ -1719,7 +1719,7 @@ func TestCarbon_AddMonths(t *testing.T) {
 			want:   "2020-05-28",
 		},
 		{
-			name:   "case5",
+			name:   "case6",
 			carbon: Parse("2020-02-29").AddMonths(3),
 			want:   "2020-05-29",
 		},
@@ -1764,7 +1764,7 @@ func TestCarbon_AddMonthsNoOverflow(t *testing.T) {
 			want:   "2020-05-28",
 		},
 		{
-			name:   "case5",
+			name:   "case6",
 			carbon: Parse("2020-02-29").AddMonthsNoOverflow(3),
 			want:   "2020-05-29",
 		},

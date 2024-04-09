@@ -2505,14 +2505,9 @@ func TestCarbon_Format(t *testing.T) {
 			want:   "5",
 		},
 		{
-			name:   "case7",
+			name:   "case8",
 			actual: Parse("2020-08-05 13:14:15").Format("W"),
 			want:   "32",
-		},
-		{
-			name:   "case8",
-			actual: Parse("2020-08-05 13:14:15").Format("F"),
-			want:   "August",
 		},
 		{
 			name:   "case9",
@@ -2521,116 +2516,121 @@ func TestCarbon_Format(t *testing.T) {
 		},
 		{
 			name:   "case10",
+			actual: Parse("2020-08-05 13:14:15").Format("F"),
+			want:   "August",
+		},
+		{
+			name:   "case11",
 			actual: Parse("2020-08-05 13:14:15").Format("N"),
 			want:   "03",
 		},
 		{
-			name:   "case11",
+			name:   "case12",
 			actual: Parse("2020-08-05 13:14:15").Format("L"),
 			want:   "1",
 		},
 		{
-			name:   "case12",
+			name:   "case13",
 			actual: Parse("2021-08-05 01:14:15").Format("L"),
 			want:   "0",
 		},
 		{
-			name:   "case13",
+			name:   "case14",
 			actual: Parse("2020-08-05 01:14:15").Format("G"),
 			want:   "1",
 		},
 		{
-			name:   "case14",
+			name:   "case15",
 			actual: Parse("2020-08-05 13:14:15").Format("U"),
 			want:   "1596604455",
 		},
 		{
-			name:   "case15",
+			name:   "case16",
 			actual: Parse("2020-08-05 13:14:15").Format("V"),
 			want:   "1596604455000",
 		},
 		{
-			name:   "case16",
+			name:   "case17",
 			actual: Parse("2020-08-05 13:14:15").Format("X"),
 			want:   "1596604455000000",
 		},
 		{
-			name:   "case17",
+			name:   "case18",
 			actual: Parse("2020-08-05 13:14:15").Format("Z"),
 			want:   "1596604455000000000",
 		},
 		{
-			name:   "case18",
+			name:   "case19",
 			actual: Parse("2020-08-05 13:14:15.999").Format("v"),
 			want:   "999",
 		},
 		{
-			name:   "case19",
+			name:   "case20",
 			actual: Parse("2020-08-05 13:14:15.999999").Format("u"),
 			want:   "999999",
 		},
 		{
-			name:   "case20",
+			name:   "case21",
 			actual: Parse("2020-08-05 13:14:15.999999999").Format("x"),
 			want:   "999999999",
 		},
 		{
-			name:   "case21",
+			name:   "case22",
 			actual: Parse("2020-08-05 13:14:15").Format("w"),
 			want:   "2",
 		},
 		{
-			name:   "case22",
+			name:   "case23",
 			actual: Parse("2020-08-05 13:14:15").Format("t"),
 			want:   "31",
 		},
 		{
-			name:   "case23",
+			name:   "case24",
 			actual: Parse("2020-08-05 13:14:15").Format("z"),
 			want:   "217",
 		},
 		{
-			name:   "case24",
+			name:   "case25",
 			actual: Parse("2020-08-05 13:14:15", PRC).Format("e"),
 			want:   "PRC",
 		},
 		{
-			name:   "case25",
+			name:   "case26",
 			actual: Parse("2020-08-05 13:14:15").Format("Q"),
 			want:   "3",
 		},
 		{
-			name:   "case26",
+			name:   "case27",
 			actual: Parse("2020-08-05 13:14:15").Format("C"),
 			want:   "21",
 		},
 		{
-			name:   "case27",
+			name:   "case28",
 			actual: Parse("2020-08-05 13:14:15").Format("jS"),
 			want:   "5th",
 		},
 		{
-			name:   "case28",
+			name:   "case29",
 			actual: Parse("2020-08-22 13:14:15").Format("jS"),
 			want:   "22nd",
 		},
 		{
-			name:   "case29",
+			name:   "case30",
 			actual: Parse("2020-08-23 13:14:15").Format("jS"),
 			want:   "23rd",
 		},
 		{
-			name:   "case30",
+			name:   "case31",
 			actual: Parse("2020-08-31 13:14:15").Format("jS"),
 			want:   "31st",
 		},
 		{
-			name:   "case31",
+			name:   "case32",
 			actual: Parse("2020-08-31 13:14:15").Format("I\\t \\i\\s Y-m-d H:i:s"),
 			want:   "It is 2020-08-31 13:14:15",
 		},
 		{
-			name:   "case32",
+			name:   "case33",
 			actual: Parse("2020-08-05 13:14:15").Format("上次上报时间:Y-m-d H:i:s，请每日按时打卡"),
 			want:   "上次上报时间:2020-08-05 13:14:15，请每日按时打卡",
 		},
@@ -2641,59 +2641,6 @@ func TestCarbon_Format(t *testing.T) {
 			assert.Equalf(t, tt.want, tt.actual, "Format()")
 		})
 	}
-
-	// assert := assert.New(t)
-	//
-	// tests := []struct {
-	// 	input    string
-	// 	format   string
-	// 	locale   string
-	// 	expected string
-	// }{
-	// 	{"", "Y年m月d日", "en", ""},
-	//
-	// 	{"2020-08-05 01:14:15", "D", "de", "Mi"},
-	// 	{"2020-08-05 01:14:15", "l", "ru", "Среда"},
-	// 	{"2020-08-05 01:14:15", "F", "jp", "はちがつ"},
-	// 	{"2020-08-05 01:14:15", "M", "zh-CN", "8月"},
-	//
-	// 	{"2020-08-05 13:14:15", "Y年m月d日", "en", "2020年08月05日"},
-	// 	{"2020-08-05 01:14:15", "j", "en", "5"},
-	// 	{"2020-08-05 01:14:15", "W", "en", "32"},
-	// 	{"2020-08-05 01:14:15", "M", "en", "Aug"},
-	// 	{"2020-08-05 01:14:15", "F", "en", "August"},
-	// 	{"2020-08-05 01:14:15", "N", "en", "03"},
-	// 	{"2020-08-05 01:14:15", "L", "en", "1"},
-	// 	{"2020-08-05 01:14:15", "L", "en", "1"},
-	// 	{"2021-08-05 01:14:15", "L", "en", "0"},
-	// 	{"2020-08-05 01:14:15", "G", "en", "1"},
-	// 	{"2020-08-05 13:14:15", "U", "en", "1596604455"},
-	// 	{"2020-08-05 13:14:15", "V", "en", "1596604455000"},
-	// 	{"2020-08-05 13:14:15", "X", "en", "1596604455000000"},
-	// 	{"2020-08-05 13:14:15", "Z", "en", "1596604455000000000"},
-	// 	{"2020-08-05 13:14:15.999", "v", "en", "999"},
-	// 	{"2020-08-05 13:14:15.999999", "u", "en", "999999"},
-	// 	{"2020-08-05 13:14:15.999999999", "x", "en", "999999999"},
-	// 	{"2020-08-05 13:14:15", "w", "en", "2"},
-	// 	{"2020-08-05 13:14:15", "t", "en", "31"},
-	// 	{"2020-08-05 13:14:15", "z", "en", "217"},
-	// 	{"2020-08-05 13:14:15", "e", "en", "PRC"},
-	// 	{"2020-08-05 13:14:15", "Q", "en", "3"},
-	// 	{"2020-08-05 13:14:15", "C", "en", "21"},
-	// 	{"2020-08-05 13:14:15", "jS", "en", "5th"},
-	// 	{"2020-08-22 13:14:15", "jS", "en", "22nd"},
-	// 	{"2020-08-23 13:14:15", "jS", "en", "23rd"},
-	// 	{"2020-08-31 13:14:15", "jS", "en", "31st"},
-	// 	{"2020-08-31 13:14:15", "I\\t \\i\\s Y-m-d H:i:s", "en", "It is 2020-08-31 13:14:15"},
-	// 	{"2020-08-05 13:14:15", "上次上报时间:Y-m-d H:i:s，请每日按时打卡", "en", "上次上报时间:2020-08-05 13:14:15，请每日按时打卡"},
-	// 	{"2020-08-05 13:14:15", "l jS of F Y h:i:s A", "en", "Wednesday 5th of August 2020 01:14:15 PM"},
-	// }
-	//
-	// for index, test := range tests {
-	// 	c := Parse(test.input, PRC)
-	//
-	// 	assert.Equal(test.expected, c.SetLocale(test.locale).Format(test.format), "Current test index is "+strconv.Itoa(index))
-	// }
 }
 
 func TestCarbon_ToStdTime(t *testing.T) {
