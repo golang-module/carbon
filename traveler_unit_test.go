@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"strconv"
 	"testing"
 	"time"
 
@@ -9,2032 +8,2971 @@ import (
 )
 
 func TestCarbon_Now(t *testing.T) {
-	assert := assert.New(t)
+	tests := []struct {
+		name   string
+		carbon Carbon
+		want   string
+	}{
+		{
+			name:   "case1",
+			carbon: Now("xxx"),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Now(),
+			want:   time.Now().Format(DateLayout),
+		},
+		{
+			name:   "case3",
+			carbon: Now(Local),
+			want:   time.Now().Format(DateLayout),
+		},
+	}
 
-	actual1 := Now().ToDateString()
-	expected1 := time.Now().Format(DateLayout)
-	assert.Equal(expected1, actual1)
-
-	actual2 := Now(Local).ToDateString()
-	expected2 := time.Now().In(time.Local).Format(DateLayout)
-	assert.Equal(expected2, actual2)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "Now()")
+		})
+	}
 }
 
 func TestCarbon_Yesterday(t *testing.T) {
-	assert := assert.New(t)
+	tests := []struct {
+		name   string
+		carbon Carbon
+		want   string
+	}{
+		{
+			name:   "case1",
+			carbon: Yesterday("xxx"),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Yesterday(),
+			want:   time.Now().AddDate(0, 0, -1).Format(DateLayout),
+		},
+		{
+			name:   "case3",
+			carbon: Yesterday(Local),
+			want:   time.Now().AddDate(0, 0, -1).Format(DateLayout),
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05").Yesterday(),
+			want:   "2020-08-04",
+		},
+	}
 
-	c1 := Yesterday()
-	expected1 := time.Now().AddDate(0, 0, -1).Format(DateLayout)
-	assert.Nil(c1.Error)
-	assert.Equal(expected1, c1.ToDateString())
-
-	c2 := Yesterday(Local)
-	expected2 := time.Now().In(time.Local).AddDate(0, 0, -1).Format(DateLayout)
-	assert.Nil(c2.Error)
-	assert.Equal(expected2, c2.ToDateString())
-
-	c3 := Parse("2020-08-05").Yesterday()
-	assert.Nil(c3.Error)
-	assert.Equal("2020-08-04", c3.ToDateString(), "It should be equal to 2020-08-04")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "Yesterday()")
+		})
+	}
 }
 
 func TestCarbon_Tomorrow(t *testing.T) {
-	assert := assert.New(t)
+	tests := []struct {
+		name   string
+		carbon Carbon
+		want   string
+	}{
+		{
+			name:   "case1",
+			carbon: Tomorrow("xxx"),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Tomorrow(),
+			want:   time.Now().AddDate(0, 0, 1).Format(DateLayout),
+		},
+		{
+			name:   "case3",
+			carbon: Tomorrow(Local),
+			want:   time.Now().AddDate(0, 0, 1).Format(DateLayout),
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05").Tomorrow(),
+			want:   "2020-08-06",
+		},
+	}
 
-	c1 := Tomorrow()
-	expected1 := time.Now().AddDate(0, 0, 1).Format(DateLayout)
-	assert.Nil(c1.Error)
-	assert.Equal(expected1, c1.ToDateString())
-
-	c2 := Tomorrow(Local)
-	expected2 := time.Now().In(time.Local).AddDate(0, 0, 1).Format(DateLayout)
-	assert.Nil(c2.Error)
-	assert.Equal(expected2, c2.ToDateString())
-
-	c3 := Parse("2020-08-05").Tomorrow()
-	assert.Nil(c3.Error)
-	assert.Equal("2020-08-06", c3.ToDateString(), "It should be equal to 2020-08-06")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "Tomorrow()")
+		})
+	}
 }
 
 func TestCarbon_AddDuration(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		duration string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", "10h", ""},
-		{"0", "10h", ""},
-		{"0000-00-00", "10h", ""},
-		{"00:00:00", "10h", ""},
-		{"0000-00-00 00:00:00", "10h", ""},
-
-		{"2020-01-01 13:14:15", "10h", "2020-01-01 23:14:15"},
-		{"2020-01-01 13:14:15", "10.5h", "2020-01-01 23:44:15"},
-
-		{"2020-01-01 13:14:15", "10m", "2020-01-01 13:24:15"},
-		{"2020-01-01 13:14:15", "10.5m", "2020-01-01 13:24:45"},
-
-		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:25"},
-		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:25"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDuration(""),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("now").AddDuration("xxx"),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01 13:14:15").AddDuration("10h"),
+			want:   "2020-01-01 23:14:15",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01 13:14:15").AddDuration("10.5h"),
+			want:   "2020-01-01 23:44:15",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-01-01 13:14:15").AddDuration("10m"),
+			want:   "2020-01-01 13:24:15",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-01-01 13:14:15").AddDuration("10.5m"),
+			want:   "2020-01-01 13:24:45",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDuration(test.duration)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(), "AddDuration()")
+		})
 	}
-
-	duration := time.Duration(3)*time.Hour + time.Duration(30)*time.Minute
-	c := Parse("2020-08-05 13:14:15").AddDuration(duration.String())
-	assert.Nil(c.Error)
-	assert.Equal("2020-08-05 16:44:15", c.ToDateTimeString())
 }
 
 func TestCarbon_SubDuration(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		duration string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", "10h", ""},
-		{"0", "10h", ""},
-		{"0000-00-00", "10h", ""},
-		{"00:00:00", "10h", ""},
-		{"0000-00-00 00:00:00", "10h", ""},
-
-		{"2020-01-01 13:14:15", "10h", "2020-01-01 03:14:15"},
-		{"2020-01-01 13:14:15", "10.5h", "2020-01-01 02:44:15"},
-
-		{"2020-01-01 13:14:15", "10m", "2020-01-01 13:04:15"},
-		{"2020-01-01 13:14:15", "10.5m", "2020-01-01 13:03:45"},
-
-		{"2020-01-01 13:14:15", "10s", "2020-01-01 13:14:05"},
-		{"2020-01-01 13:14:15", "10.5s", "2020-01-01 13:14:04"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDuration(""),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("now").SubDuration("xxx"),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01 13:14:15").SubDuration("10h"),
+			want:   "2020-01-01 03:14:15",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01 13:14:15").SubDuration("10.5h"),
+			want:   "2020-01-01 02:44:15",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-01-01 13:14:15").SubDuration("10m"),
+			want:   "2020-01-01 13:04:15",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-01-01 13:14:15").SubDuration("10.5m"),
+			want:   "2020-01-01 13:03:45",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDuration(test.duration)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(), "SubDuration()")
+		})
 	}
-
-	duration := time.Duration(3)*time.Hour + time.Duration(30)*time.Minute
-	c := Parse("2020-08-05 13:14:15").SubDuration(duration.String())
-	assert.Nil(c.Error)
-	assert.Equal("2020-08-05 09:44:15", c.ToDateTimeString())
 }
 
 func TestCarbon_AddCenturies(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2320-01-01"},
-		{"2020-01-31", 3, "2320-01-31"},
-		{"2020-02-01", 3, "2320-02-01"},
-		{"2020-02-28", 3, "2320-02-28"},
-		{"2020-02-29", 3, "2320-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddCenturies(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddCenturies(3),
+			want:   "2320-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddCenturies(3),
+			want:   "2320-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddCenturies(3),
+			want:   "2320-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddCenturies(3),
+			want:   "2320-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddCenturies(3),
+			want:   "2320-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddCenturies(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddCenturies()")
+		})
 	}
 }
 
 func TestCarbon_AddCenturiesNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2320-01-01"},
-		{"2020-01-31", 3, "2320-01-31"},
-		{"2020-02-01", 3, "2320-02-01"},
-		{"2020-02-28", 3, "2320-02-28"},
-		{"2020-02-29", 3, "2320-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddCenturiesNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddCenturiesNoOverflow(3),
+			want:   "2320-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddCenturiesNoOverflow(3),
+			want:   "2320-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddCenturiesNoOverflow(3),
+			want:   "2320-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddCenturiesNoOverflow(3),
+			want:   "2320-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddCenturiesNoOverflow(3),
+			want:   "2320-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddCenturiesNoOverflow(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddCenturiesNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubCenturies(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "1720-01-01"},
-		{"2020-01-31", 3, "1720-01-31"},
-		{"2020-02-01", 3, "1720-02-01"},
-		{"2020-02-28", 3, "1720-02-28"},
-		{"2020-02-29", 3, "1720-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubCenturies(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubCenturies(3),
+			want:   "1720-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubCenturies(3),
+			want:   "1720-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubCenturies(3),
+			want:   "1720-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubCenturies(3),
+			want:   "1720-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubCenturies(3),
+			want:   "1720-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubCenturies(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubCenturies()")
+		})
 	}
 }
 
 func TestCarbon_SubCenturiesNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "1720-01-01"},
-		{"2020-01-31", 3, "1720-01-31"},
-		{"2020-02-01", 3, "1720-02-01"},
-		{"2020-02-28", 3, "1720-02-28"},
-		{"2020-02-29", 3, "1720-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubCenturiesNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubCenturiesNoOverflow(3),
+			want:   "1720-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubCenturiesNoOverflow(3),
+			want:   "1720-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubCenturiesNoOverflow(3),
+			want:   "1720-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubCenturiesNoOverflow(3),
+			want:   "1720-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubCenturiesNoOverflow(3),
+			want:   "1720-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubCenturiesNoOverflow(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubCenturiesNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddCentury(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2120-01-01"},
-		{"2020-01-31", "2120-01-31"},
-		{"2020-02-01", "2120-02-01"},
-		{"2020-02-28", "2120-02-28"},
-		{"2020-02-29", "2120-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddCentury(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddCentury(),
+			want:   "2120-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddCentury(),
+			want:   "2120-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddCentury(),
+			want:   "2120-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddCentury(),
+			want:   "2120-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddCentury(),
+			want:   "2120-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddCentury()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddCentury()")
+		})
 	}
 }
 
 func TestCarbon_AddCenturyNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2120-01-01"},
-		{"2020-01-31", "2120-01-31"},
-		{"2020-02-01", "2120-02-01"},
-		{"2020-02-28", "2120-02-28"},
-		{"2020-02-29", "2120-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddCenturyNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddCenturyNoOverflow(),
+			want:   "2120-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddCenturyNoOverflow(),
+			want:   "2120-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddCenturyNoOverflow(),
+			want:   "2120-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddCenturyNoOverflow(),
+			want:   "2120-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddCenturyNoOverflow(),
+			want:   "2120-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddCenturyNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddCenturyNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubCentury(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "1920-01-01"},
-		{"2020-01-31", "1920-01-31"},
-		{"2020-02-01", "1920-02-01"},
-		{"2020-02-28", "1920-02-28"},
-		{"2020-02-29", "1920-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubCentury(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubCentury(),
+			want:   "1920-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubCentury(),
+			want:   "1920-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubCentury(),
+			want:   "1920-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubCentury(),
+			want:   "1920-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubCentury(),
+			want:   "1920-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubCentury()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubCentury()")
+		})
 	}
 }
 
 func TestCarbon_SubCenturyNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "1920-01-01"},
-		{"2020-01-31", "1920-01-31"},
-		{"2020-02-01", "1920-02-01"},
-		{"2020-02-28", "1920-02-28"},
-		{"2020-02-29", "1920-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubCenturyNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubCenturyNoOverflow(),
+			want:   "1920-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubCenturyNoOverflow(),
+			want:   "1920-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubCenturyNoOverflow(),
+			want:   "1920-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubCenturyNoOverflow(),
+			want:   "1920-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubCenturyNoOverflow(),
+			want:   "1920-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubCenturyNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubCenturyNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddDecades(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		decades  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2050-01-01"},
-		{"2020-01-31", 3, "2050-01-31"},
-		{"2020-02-01", 3, "2050-02-01"},
-		{"2020-02-28", 3, "2050-02-28"},
-		{"2020-02-29", 3, "2050-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDecades(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDecades(3),
+			want:   "2050-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddDecades(3),
+			want:   "2050-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddDecades(3),
+			want:   "2050-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddDecades(3),
+			want:   "2050-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddDecades(3),
+			want:   "2050-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDecades(test.decades)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDecades()")
+		})
 	}
 }
 
 func TestCarbon_AddDecadesNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2050-01-01"},
-		{"2020-01-31", 3, "2050-01-31"},
-		{"2020-02-01", 3, "2050-02-01"},
-		{"2020-02-28", 3, "2050-02-28"},
-		{"2020-02-29", 3, "2050-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDecadesNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDecadesNoOverflow(3),
+			want:   "2050-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddDecadesNoOverflow(3),
+			want:   "2050-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddDecadesNoOverflow(3),
+			want:   "2050-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddDecadesNoOverflow(3),
+			want:   "2050-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddDecadesNoOverflow(3),
+			want:   "2050-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDecadesNoOverflow(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDecadesNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddDecade(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2030-01-01"},
-		{"2020-01-31", "2030-01-31"},
-		{"2020-02-01", "2030-02-01"},
-		{"2020-02-28", "2030-02-28"},
-		{"2020-02-29", "2030-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDecade(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDecade(),
+			want:   "2030-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddDecade(),
+			want:   "2030-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddDecade(),
+			want:   "2030-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddDecade(),
+			want:   "2030-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddDecade(),
+			want:   "2030-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDecade()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDecade()")
+		})
 	}
 }
 
 func TestCarbon_AddDecadeNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2030-01-01"},
-		{"2020-01-31", "2030-01-31"},
-		{"2020-02-01", "2030-02-01"},
-		{"2020-02-28", "2030-02-28"},
-		{"2020-02-29", "2030-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDecadeNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDecadeNoOverflow(),
+			want:   "2030-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddDecadeNoOverflow(),
+			want:   "2030-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddDecadeNoOverflow(),
+			want:   "2030-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddDecadeNoOverflow(),
+			want:   "2030-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddDecadeNoOverflow(),
+			want:   "2030-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDecadeNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDecadeNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubDecades(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		decades  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "1990-01-01"},
-		{"2020-01-31", 3, "1990-01-31"},
-		{"2020-02-01", 3, "1990-02-01"},
-		{"2020-02-28", 3, "1990-02-28"},
-		{"2020-02-29", 3, "1990-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDecades(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDecades(3),
+			want:   "1990-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubDecades(3),
+			want:   "1990-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubDecades(3),
+			want:   "1990-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubDecades(3),
+			want:   "1990-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubDecades(3),
+			want:   "1990-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDecades(test.decades)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDecades()")
+		})
 	}
 }
 
 func TestCarbon_SubDecadesNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input     string
-		centuries int
-		expected  string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "1990-01-01"},
-		{"2020-01-31", 3, "1990-01-31"},
-		{"2020-02-01", 3, "1990-02-01"},
-		{"2020-02-28", 3, "1990-02-28"},
-		{"2020-02-29", 3, "1990-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDecadesNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDecadesNoOverflow(3),
+			want:   "1990-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubDecadesNoOverflow(3),
+			want:   "1990-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubDecadesNoOverflow(3),
+			want:   "1990-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubDecadesNoOverflow(3),
+			want:   "1990-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubDecadesNoOverflow(3),
+			want:   "1990-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDecadesNoOverflow(test.centuries)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDecadesNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubDecade(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2010-01-01"},
-		{"2020-01-31", "2010-01-31"},
-		{"2020-02-01", "2010-02-01"},
-		{"2020-02-28", "2010-02-28"},
-		{"2020-02-29", "2010-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDecade(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDecade(),
+			want:   "2010-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubDecade(),
+			want:   "2010-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubDecade(),
+			want:   "2010-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubDecade(),
+			want:   "2010-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubDecade(),
+			want:   "2010-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDecade()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDecade()")
+		})
 	}
 }
 
 func TestCarbon_SubDecadeNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2010-01-01"},
-		{"2020-01-31", "2010-01-31"},
-		{"2020-02-01", "2010-02-01"},
-		{"2020-02-28", "2010-02-28"},
-		{"2020-02-29", "2010-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDecadeNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDecadeNoOverflow(),
+			want:   "2010-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubDecadeNoOverflow(),
+			want:   "2010-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubDecadeNoOverflow(),
+			want:   "2010-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubDecadeNoOverflow(),
+			want:   "2010-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubDecadeNoOverflow(),
+			want:   "2010-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDecadeNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDecadeNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddYears(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		years    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2023-01-01"},
-		{"2020-01-31", 3, "2023-01-31"},
-		{"2020-02-01", 3, "2023-02-01"},
-		{"2020-02-28", 3, "2023-02-28"},
-		{"2020-02-29", 3, "2023-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddYears(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddYears(3),
+			want:   "2023-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddYears(3),
+			want:   "2023-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddYears(3),
+			want:   "2023-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddYears(3),
+			want:   "2023-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddYears(3),
+			want:   "2023-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddYears(test.years)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddYears()")
+		})
 	}
 }
 
 func TestCarbon_AddYearsNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		years    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2023-01-01"},
-		{"2020-01-31", 3, "2023-01-31"},
-		{"2020-02-01", 3, "2023-02-01"},
-		{"2020-02-28", 3, "2023-02-28"},
-		{"2020-02-29", 3, "2023-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddYearsNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddYearsNoOverflow(3),
+			want:   "2023-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddYearsNoOverflow(3),
+			want:   "2023-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddYearsNoOverflow(3),
+			want:   "2023-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddYearsNoOverflow(3),
+			want:   "2023-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddYearsNoOverflow(3),
+			want:   "2023-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddYearsNoOverflow(test.years)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddYearsNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubYears(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		years    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2017-01-01"},
-		{"2020-01-31", 3, "2017-01-31"},
-		{"2020-02-01", 3, "2017-02-01"},
-		{"2020-02-28", 3, "2017-02-28"},
-		{"2020-02-29", 3, "2017-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubYears(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubYears(3),
+			want:   "2017-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubYears(3),
+			want:   "2017-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubYears(3),
+			want:   "2017-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubYears(3),
+			want:   "2017-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubYears(3),
+			want:   "2017-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubYears(test.years)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubYears()")
+		})
 	}
 }
 
 func TestCarbon_SubYearsNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		years    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2017-01-01"},
-		{"2020-01-31", 3, "2017-01-31"},
-		{"2020-02-01", 3, "2017-02-01"},
-		{"2020-02-28", 3, "2017-02-28"},
-		{"2020-02-29", 3, "2017-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubYearsNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubYearsNoOverflow(3),
+			want:   "2017-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubYearsNoOverflow(3),
+			want:   "2017-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubYearsNoOverflow(3),
+			want:   "2017-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubYearsNoOverflow(3),
+			want:   "2017-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubYearsNoOverflow(3),
+			want:   "2017-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubYearsNoOverflow(test.years)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubYearsNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2021-01-01"},
-		{"2020-01-31", "2021-01-31"},
-		{"2020-02-01", "2021-02-01"},
-		{"2020-02-28", "2021-02-28"},
-		{"2020-02-29", "2021-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddYear(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddYear(),
+			want:   "2021-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddYear(),
+			want:   "2021-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddYear(),
+			want:   "2021-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddYear(),
+			want:   "2021-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddYear(),
+			want:   "2021-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddYear()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddYear()")
+		})
 	}
 }
 
 func TestCarbon_AddYearNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2021-01-01"},
-		{"2020-01-31", "2021-01-31"},
-		{"2020-02-01", "2021-02-01"},
-		{"2020-02-28", "2021-02-28"},
-		{"2020-02-29", "2021-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddYearNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddYearNoOverflow(),
+			want:   "2021-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddYearNoOverflow(),
+			want:   "2021-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddYearNoOverflow(),
+			want:   "2021-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddYearNoOverflow(),
+			want:   "2021-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddYearNoOverflow(),
+			want:   "2021-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddYearNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddYearNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-01-01"},
-		{"2020-01-31", "2019-01-31"},
-		{"2020-02-01", "2019-02-01"},
-		{"2020-02-28", "2019-02-28"},
-		{"2020-02-29", "2019-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubYear(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubYear(),
+			want:   "2019-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubYear(),
+			want:   "2019-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubYear(),
+			want:   "2019-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubYear(),
+			want:   "2019-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubYear(),
+			want:   "2019-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubYear()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubYear()")
+		})
 	}
 }
 
 func TestCarbon_SubYearNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-01-01"},
-		{"2020-01-31", "2019-01-31"},
-		{"2020-02-01", "2019-02-01"},
-		{"2020-02-28", "2019-02-28"},
-		{"2020-02-29", "2019-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubYearNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubYearNoOverflow(),
+			want:   "2019-01-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubYearNoOverflow(),
+			want:   "2019-01-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubYearNoOverflow(),
+			want:   "2019-02-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubYearNoOverflow(),
+			want:   "2019-02-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubYearNoOverflow(),
+			want:   "2019-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubYearNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubYearNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddQuarters(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		quarters int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 2, ""},
-		{"0", 2, ""},
-		{"0000-00-00", 2, ""},
-		{"00:00:00", 2, ""},
-		{"0000-00-00 00:00:00", 2, ""},
-
-		{"2019-08-01", 2, "2020-02-01"},
-		{"2019-08-31", 2, "2020-03-02"},
-		{"2020-01-01", 2, "2020-07-01"},
-		{"2020-02-28", 2, "2020-08-28"},
-		{"2020-02-29", 2, "2020-08-29"},
-		{"2020-08-05", 2, "2021-02-05"},
-		{"2020-08-31", 2, "2021-03-03"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddQuarters(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-08-01").AddQuarters(2),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-08-31").AddQuarters(2),
+			want:   "2020-03-02",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").AddQuarters(2),
+			want:   "2020-07-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddQuarters(2),
+			want:   "2020-08-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddQuarters(2),
+			want:   "2020-08-29",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-08-05").AddQuarters(2),
+			want:   "2021-02-05",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2020-08-31").AddQuarters(2),
+			want:   "2021-03-03",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddQuarters(test.quarters)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddQuarters()")
+		})
 	}
 }
 
 func TestCarbon_AddQuartersNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		quarters int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 2, ""},
-		{"0", 2, ""},
-		{"0000-00-00", 2, ""},
-		{"00:00:00", 2, ""},
-		{"0000-00-00 00:00:00", 2, ""},
-
-		{"2019-08-01", 2, "2020-02-01"},
-		{"2019-08-31", 2, "2020-02-29"},
-		{"2020-01-01", 2, "2020-07-01"},
-		{"2020-02-28", 2, "2020-08-28"},
-		{"2020-02-29", 2, "2020-08-29"},
-		{"2020-08-05", 2, "2021-02-05"},
-		{"2020-08-31", 2, "2021-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddQuartersNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-08-01").AddQuartersNoOverflow(2),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-08-31").AddQuartersNoOverflow(2),
+			want:   "2020-02-29",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").AddQuartersNoOverflow(2),
+			want:   "2020-07-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddQuartersNoOverflow(2),
+			want:   "2020-08-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddQuartersNoOverflow(2),
+			want:   "2020-08-29",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-08-05").AddQuartersNoOverflow(2),
+			want:   "2021-02-05",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2020-08-31").AddQuartersNoOverflow(2),
+			want:   "2021-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddQuartersNoOverflow(test.quarters)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddQuartersNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubQuarters(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		quarters int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 2, ""},
-		{"0", 2, ""},
-		{"0000-00-00", 2, ""},
-		{"00:00:00", 2, ""},
-		{"0000-00-00 00:00:00", 2, ""},
-
-		{"2019-08-01", 2, "2019-02-01"},
-		{"2019-08-31", 2, "2019-03-03"},
-		{"2020-01-01", 2, "2019-07-01"},
-		{"2020-02-28", 2, "2019-08-28"},
-		{"2020-02-29", 2, "2019-08-29"},
-		{"2020-08-05", 2, "2020-02-05"},
-		{"2020-08-31", 2, "2020-03-02"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubQuarters(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-08-01").SubQuarters(2),
+			want:   "2019-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-08-31").SubQuarters(2),
+			want:   "2019-03-03",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SubQuarters(2),
+			want:   "2019-07-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubQuarters(2),
+			want:   "2019-08-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubQuarters(2),
+			want:   "2019-08-29",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-08-05").SubQuarters(2),
+			want:   "2020-02-05",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2020-08-31").SubQuarters(2),
+			want:   "2020-03-02",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubQuarters(test.quarters)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubQuarters()")
+		})
 	}
 }
 
 func TestCarbon_SubQuartersNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		quarters int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 2, ""},
-		{"0", 2, ""},
-		{"0000-00-00", 2, ""},
-		{"00:00:00", 2, ""},
-		{"0000-00-00 00:00:00", 2, ""},
-
-		{"2019-08-01", 2, "2019-02-01"},
-		{"2019-08-31", 2, "2019-02-28"},
-		{"2020-01-01", 2, "2019-07-01"},
-		{"2020-02-28", 2, "2019-08-28"},
-		{"2020-02-29", 2, "2019-08-29"},
-		{"2020-08-05", 2, "2020-02-05"},
-		{"2020-08-31", 2, "2020-02-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubQuartersNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-08-01").SubQuartersNoOverflow(2),
+			want:   "2019-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-08-31").SubQuartersNoOverflow(2),
+			want:   "2019-02-28",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SubQuartersNoOverflow(2),
+			want:   "2019-07-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubQuartersNoOverflow(2),
+			want:   "2019-08-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubQuartersNoOverflow(2),
+			want:   "2019-08-29",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-08-05").SubQuartersNoOverflow(2),
+			want:   "2020-02-05",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2020-08-31").SubQuartersNoOverflow(2),
+			want:   "2020-02-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubQuartersNoOverflow(test.quarters)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubQuartersNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddQuarter(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2019-11-01", "2020-02-01"},
-		{"2019-11-30", "2020-03-01"},
-		{"2020-02-28", "2020-05-28"},
-		{"2020-02-29", "2020-05-29"},
-		{"2020-08-31", "2020-12-01"},
-		{"2020-11-01", "2021-02-01"},
-		{"2020-11-30", "2021-03-02"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddQuarter(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-11-01").AddQuarter(),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-11-30").AddQuarter(),
+			want:   "2020-03-01",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-28").AddQuarter(),
+			want:   "2020-05-28",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").AddQuarter(),
+			want:   "2020-05-29",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-11-01").AddQuarter(),
+			want:   "2021-02-01",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-11-30").AddQuarter(),
+			want:   "2021-03-02",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddQuarter()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddQuarter()")
+		})
 	}
 }
 
 func TestCarbon_AddQuarterNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2019-11-01", "2020-02-01"},
-		{"2019-11-30", "2020-02-29"},
-		{"2020-02-28", "2020-05-28"},
-		{"2020-02-29", "2020-05-29"},
-		{"2020-08-31", "2020-11-30"},
-		{"2020-11-01", "2021-02-01"},
-		{"2020-11-30", "2021-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddQuarterNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2019-11-01").AddQuarterNoOverflow(),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2019-11-30").AddQuarterNoOverflow(),
+			want:   "2020-02-29",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-28").AddQuarterNoOverflow(),
+			want:   "2020-05-28",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").AddQuarterNoOverflow(),
+			want:   "2020-05-29",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-11-01").AddQuarterNoOverflow(),
+			want:   "2021-02-01",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-11-30").AddQuarterNoOverflow(),
+			want:   "2021-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddQuarterNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddQuarterNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubQuarter(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2019-04-01", "2019-01-01"},
-		{"2019-04-30", "2019-01-30"},
-		{"2020-04-01", "2020-01-01"},
-		{"2020-04-30", "2020-01-30"},
-		{"2020-05-01", "2020-02-01"},
-		{"2020-05-31", "2020-03-02"},
-		{"2020-08-05", "2020-05-05"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubQuarter(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubQuarter(),
+			want:   "2019-10-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubQuarter(),
+			want:   "2019-10-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubQuarter(),
+			want:   "2019-11-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubQuarter(),
+			want:   "2019-11-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubQuarter(),
+			want:   "2019-11-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubQuarter()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubQuarter()")
+		})
 	}
 }
 
 func TestCarbon_SubQuarterNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2019-04-01", "2019-01-01"},
-		{"2019-04-30", "2019-01-30"},
-		{"2020-04-01", "2020-01-01"},
-		{"2020-04-30", "2020-01-30"},
-		{"2020-05-01", "2020-02-01"},
-		{"2020-05-31", "2020-02-29"},
-		{"2020-08-05", "2020-05-05"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubQuarterNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubQuarterNoOverflow(),
+			want:   "2019-10-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubQuarterNoOverflow(),
+			want:   "2019-10-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubQuarterNoOverflow(),
+			want:   "2019-11-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubQuarterNoOverflow(),
+			want:   "2019-11-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubQuarterNoOverflow(),
+			want:   "2019-11-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubQuarterNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubQuarterNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddMonths(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		months   int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2020-04-01"},
-		{"2020-01-31", 3, "2020-05-01"},
-		{"2020-02-01", 3, "2020-05-01"},
-		{"2020-02-28", 3, "2020-05-28"},
-		{"2020-02-29", 3, "2020-05-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMonthsNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddMonths(3),
+			want:   "2020-04-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddMonths(3),
+			want:   "2020-05-01",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddMonths(3),
+			want:   "2020-05-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddMonths(3),
+			want:   "2020-05-28",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").AddMonths(3),
+			want:   "2020-05-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMonths(test.months)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddMonths()")
+		})
 	}
 }
 
 func TestCarbon_AddMonthsNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		months   int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2020-04-01"},
-		{"2020-01-31", 3, "2020-04-30"},
-		{"2020-02-01", 3, "2020-05-01"},
-		{"2020-02-28", 3, "2020-05-28"},
-		{"2020-02-29", 3, "2020-05-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMonthsNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddMonthsNoOverflow(3),
+			want:   "2020-04-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddMonthsNoOverflow(3),
+			want:   "2020-04-30",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddMonthsNoOverflow(3),
+			want:   "2020-05-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddMonthsNoOverflow(3),
+			want:   "2020-05-28",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").AddMonthsNoOverflow(3),
+			want:   "2020-05-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMonthsNoOverflow(test.months)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddMonthsNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubMonths(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		months   int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2019-10-01"},
-		{"2020-01-31", 3, "2019-10-31"},
-		{"2020-02-01", 3, "2019-11-01"},
-		{"2020-02-28", 3, "2019-11-28"},
-		{"2020-02-29", 3, "2019-11-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMonths(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubMonths(1),
+			want:   "2019-12-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SubMonths(2),
+			want:   "2019-11-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMonths(test.months)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubMonths()")
+		})
 	}
 }
 
 func TestCarbon_SubMonthsNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		months   int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2019-10-01"},
-		{"2020-01-31", 3, "2019-10-31"},
-		{"2020-02-01", 3, "2019-11-01"},
-		{"2020-02-28", 3, "2019-11-28"},
-		{"2020-02-29", 3, "2019-11-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMonthsNoOverflow(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubMonthsNoOverflow(1),
+			want:   "2019-12-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SubMonthsNoOverflow(2),
+			want:   "2019-11-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMonthsNoOverflow(test.months)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubMonthsNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddMonth(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2020-02-01"},
-		{"2020-01-31", "2020-03-02"},
-		{"2020-02-01", "2020-03-01"},
-		{"2020-02-28", "2020-03-28"},
-		{"2020-02-29", "2020-03-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMonth(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddMonth(),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddMonth(),
+			want:   "2020-03-02",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddMonth(),
+			want:   "2020-03-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddMonth(),
+			want:   "2020-03-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddMonth(),
+			want:   "2020-03-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMonth()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddMonth()")
+		})
 	}
 }
 
 func TestCarbon_AddMonthNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2020-02-01"},
-		{"2020-01-31", "2020-02-29"},
-		{"2020-02-01", "2020-03-01"},
-		{"2020-02-28", "2020-03-28"},
-		{"2020-02-29", "2020-03-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMonthNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddMonthNoOverflow(),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddMonthNoOverflow(),
+			want:   "2020-02-29",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddMonthNoOverflow(),
+			want:   "2020-03-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddMonthNoOverflow(),
+			want:   "2020-03-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddMonthNoOverflow(),
+			want:   "2020-03-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMonthNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddMonthNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SubMonth(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-12-01"},
-		{"2020-01-31", "2019-12-31"},
-		{"2020-02-01", "2020-01-01"},
-		{"2020-02-28", "2020-01-28"},
-		{"2020-02-29", "2020-01-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMonth(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubMonth(),
+			want:   "2019-12-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubMonth(),
+			want:   "2019-12-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubMonth(),
+			want:   "2020-01-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubMonth(),
+			want:   "2020-01-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubMonth(),
+			want:   "2020-01-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMonth()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubMonth()")
+		})
 	}
 }
 
 func TestCarbon_SubMonthNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-12-01"},
-		{"2020-01-31", "2019-12-31"},
-		{"2020-02-01", "2020-01-01"},
-		{"2020-02-28", "2020-01-28"},
-		{"2020-02-29", "2020-01-29"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMonthNoOverflow(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubMonthNoOverflow(),
+			want:   "2019-12-01",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubMonthNoOverflow(),
+			want:   "2019-12-31",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubMonthNoOverflow(),
+			want:   "2020-01-01",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubMonthNoOverflow(),
+			want:   "2020-01-28",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubMonthNoOverflow(),
+			want:   "2020-01-29",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMonthNoOverflow()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubMonthNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_AddWeeks(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		weeks    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2020-01-22"},
-		{"2020-01-31", 3, "2020-02-21"},
-		{"2020-02-01", 3, "2020-02-22"},
-		{"2020-02-28", 3, "2020-03-20"},
-		{"2020-02-29", 3, "2020-03-21"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddWeeks(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddWeeks(1),
+			want:   "2020-01-08",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").AddWeeks(2),
+			want:   "2020-01-15",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddWeeks(test.weeks)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddWeeks()")
+		})
 	}
 }
 
 func TestCarbon_SubWeeks(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		weeks    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2019-12-11"},
-		{"2020-01-31", 3, "2020-01-10"},
-		{"2020-02-01", 3, "2020-01-11"},
-		{"2020-02-28", 3, "2020-02-07"},
-		{"2020-02-29", 3, "2020-02-08"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubWeeks(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubWeeks(1),
+			want:   "2019-12-25",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SubWeeks(2),
+			want:   "2019-12-18",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubWeeks(test.weeks)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubWeeks()")
+		})
 	}
 }
 
 func TestCarbon_AddWeek(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2020-01-08"},
-		{"2020-01-31", "2020-02-07"},
-		{"2020-02-01", "2020-02-08"},
-		{"2020-02-28", "2020-03-06"},
-		{"2020-02-29", "2020-03-07"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddWeek(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddWeek(),
+			want:   "2020-01-08",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddWeek(),
+			want:   "2020-02-07",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddWeek(),
+			want:   "2020-02-08",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddWeek(),
+			want:   "2020-03-06",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddWeek(),
+			want:   "2020-03-07",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddWeek()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddWeek()")
+		})
 	}
 }
 
 func TestCarbon_SubWeek(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-12-25"},
-		{"2020-01-31", "2020-01-24"},
-		{"2020-02-01", "2020-01-25"},
-		{"2020-02-28", "2020-02-21"},
-		{"2020-02-29", "2020-02-22"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubWeek(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubWeek(),
+			want:   "2019-12-25",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubWeek(),
+			want:   "2020-01-24",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubWeek(),
+			want:   "2020-01-25",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubWeek(),
+			want:   "2020-02-21",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubWeek(),
+			want:   "2020-02-22",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubWeek()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubWeek()")
+		})
 	}
 }
 
 func TestCarbon_AddDays(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		days     int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2020-01-04"},
-		{"2020-01-31", 3, "2020-02-03"},
-		{"2020-02-01", 3, "2020-02-04"},
-		{"2020-02-28", 3, "2020-03-02"},
-		{"2020-02-29", 3, "2020-03-03"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDays(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDays(1),
+			want:   "2020-01-02",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").AddDays(2),
+			want:   "2020-01-03",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDays(test.days)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDays()")
+		})
 	}
 }
 
 func TestCarbon_SubDays(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		days     int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-01-01", 3, "2019-12-29"},
-		{"2020-01-31", 3, "2020-01-28"},
-		{"2020-02-01", 3, "2020-01-29"},
-		{"2020-02-28", 3, "2020-02-25"},
-		{"2020-02-29", 3, "2020-02-26"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddHours(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDays(1),
+			want:   "2019-12-31",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SubDays(2),
+			want:   "2019-12-30",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDays(test.days)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDays()")
+		})
 	}
 }
 
 func TestCarbon_AddDay(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2020-01-02"},
-		{"2020-01-31", "2020-02-01"},
-		{"2020-02-01", "2020-02-02"},
-		{"2020-02-28", "2020-02-29"},
-		{"2020-02-29", "2020-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddDay(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").AddDay(),
+			want:   "2020-01-02",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").AddDay(),
+			want:   "2020-02-01",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").AddDay(),
+			want:   "2020-02-02",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").AddDay(),
+			want:   "2020-02-29",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").AddDay(),
+			want:   "2020-03-01",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddDay()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "AddDay()")
+		})
 	}
 }
 
 func TestCarbon_SubDay(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-01", "2019-12-31"},
-		{"2020-01-31", "2020-01-30"},
-		{"2020-02-01", "2020-01-31"},
-		{"2020-02-28", "2020-02-27"},
-		{"2020-02-29", "2020-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubDay(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-01").SubDay(),
+			want:   "2019-12-31",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-31").SubDay(),
+			want:   "2020-01-30",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SubDay(),
+			want:   "2020-01-31",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SubDay(),
+			want:   "2020-02-27",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-02-29").SubDay(),
+			want:   "2020-02-28",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubDay()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateString(), "SubDay()")
+		})
 	}
 }
 
 func TestCarbon_AddHours(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		hours    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 16:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddHours(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddHours(1),
+			want:   "2020-08-05 14:14:15.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddHours(2),
+			want:   "2020-08-05 15:14:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddHours(test.hours)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddHours()")
+		})
 	}
 }
 
 func TestCarbon_SubHours(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		hours    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 10:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubHours(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubHours(1),
+			want:   "2020-08-05 12:14:15.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubHours(2),
+			want:   "2020-08-05 11:14:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubHours(test.hours)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubHours()")
+		})
 	}
 }
 
 func TestCarbon_AddHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 14:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddHour(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddHour(),
+			want:   "2020-08-05 14:14:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddHour()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddHour()")
+		})
 	}
 }
 
 func TestCarbon_SubHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 12:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubHour(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubHour(),
+			want:   "2020-08-05 12:14:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubHour()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubHour()")
+		})
 	}
 }
 
 func TestCarbon_AddMinutes(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		minutes  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 13:17:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMinutes(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMinutes(1),
+			want:   "2020-08-05 13:15:15.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMinutes(2),
+			want:   "2020-08-05 13:16:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMinutes(test.minutes)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddMinutes()")
+		})
 	}
 }
 
 func TestCarbon_SubMinutes(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		minutes  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 13:11:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMinutes(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMinutes(1),
+			want:   "2020-08-05 13:13:15.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMinutes(2),
+			want:   "2020-08-05 13:12:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMinutes(test.minutes)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMinutes()")
+		})
 	}
 }
 
 func TestCarbon_AddMinute(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 13:15:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMinute(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMinute(),
+			want:   "2020-08-05 13:15:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddMinute()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddMinute()")
+		})
 	}
 }
 
 func TestCarbon_SubMinute(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 13:13:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMinute(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMinute(),
+			want:   "2020-08-05 13:13:15.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubMinute()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMinute()")
+		})
 	}
 }
 
 func TestCarbon_AddSeconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		seconds  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 13:14:18"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddSeconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddSeconds(1),
+			want:   "2020-08-05 13:14:16.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddSeconds(2),
+			want:   "2020-08-05 13:14:17.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddSeconds(test.seconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddSeconds()")
+		})
 	}
 }
 
 func TestCarbon_SubSeconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		seconds  int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15", 3, "2020-08-05 13:14:12"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubSeconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubSeconds(1),
+			want:   "2020-08-05 13:14:14.222222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubSeconds(2),
+			want:   "2020-08-05 13:14:13.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubSeconds(test.seconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubSeconds()")
+		})
 	}
 }
 
 func TestCarbon_AddSecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:16"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddSecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddSecond(),
+			want:   "2020-08-05 13:14:16.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).AddSecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddSecond()")
+		})
 	}
 }
 
 func TestCarbon_SubSecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15", "2020-08-05 13:14:14"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubSecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubSecond(),
+			want:   "2020-08-05 13:14:14.222222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SubSecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubSecond()")
+		})
 	}
 }
 
 func TestCarbon_AddMilliseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input        string
-		milliseconds int
-		expected     string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.225222222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMilliseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMilliseconds(1),
+			want:   "2020-08-05 13:14:15.223222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMilliseconds(2),
+			want:   "2020-08-05 13:14:15.224222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddMilliseconds(test.milliseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddMilliseconds()")
+		})
 	}
 }
 
 func TestCarbon_SubMilliseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input        string
-		milliseconds int
-		expected     string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.219222222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMilliseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMilliseconds(1),
+			want:   "2020-08-05 13:14:15.221222222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMilliseconds(2),
+			want:   "2020-08-05 13:14:15.220222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubMilliseconds(test.milliseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMilliseconds()")
+		})
 	}
 }
 
 func TestCarbon_AddMillisecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.223222222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMillisecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMillisecond(),
+			want:   "2020-08-05 13:14:15.223222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddMillisecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddMillisecond()")
+		})
 	}
 }
 
 func TestCarbon_SubMillisecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.221222222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMillisecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMillisecond(),
+			want:   "2020-08-05 13:14:15.221222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubMillisecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMillisecond()")
+		})
 	}
 }
 
 func TestCarbon_AddMicroseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input        string
-		microseconds int
-		expected     string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222225222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMicroseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMicroseconds(1),
+			want:   "2020-08-05 13:14:15.222223222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMicroseconds(2),
+			want:   "2020-08-05 13:14:15.222224222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddMicroseconds(test.microseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMicroseconds()")
+		})
 	}
 }
 
 func TestCarbon_SubMicroseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input        string
-		microseconds int
-		expected     string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222219222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMicroseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMicroseconds(1),
+			want:   "2020-08-05 13:14:15.222221222 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMicroseconds(2),
+			want:   "2020-08-05 13:14:15.222220222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubMicroseconds(test.microseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMicroseconds()")
+		})
 	}
 }
 
 func TestCarbon_AddMicrosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222223222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddMicrosecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddMicrosecond(),
+			want:   "2020-08-05 13:14:15.222223222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddMicrosecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddMicrosecond()")
+		})
 	}
 }
 
 func TestCarbon_SubMicrosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222221222 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubMicrosecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubMicrosecond(),
+			want:   "2020-08-05 13:14:15.222221222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubMicrosecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubMicrosecond()")
+		})
 	}
 }
 
 func TestCarbon_AddNanoseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input       string
-		nanoseconds int
-		expected    string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222222225 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddNanoseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddNanoseconds(1),
+			want:   "2020-08-05 13:14:15.222222223 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddNanoseconds(2),
+			want:   "2020-08-05 13:14:15.222222224 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddNanoseconds(test.nanoseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddNanoseconds()")
+		})
 	}
 }
 
 func TestCarbon_SubNanoseconds(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input       string
-		nanoseconds int
-		expected    string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", 3, ""},
-		{"0", 3, ""},
-		{"0000-00-00", 3, ""},
-		{"00:00:00", 3, ""},
-		{"0000-00-00 00:00:00", 3, ""},
-
-		{"2020-08-05 13:14:15.222222222", 3, "2020-08-05 13:14:15.222222219 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubNanoseconds(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubNanoseconds(1),
+			want:   "2020-08-05 13:14:15.222222221 +0800 CST",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubNanoseconds(2),
+			want:   "2020-08-05 13:14:15.22222222 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubNanoseconds(test.nanoseconds)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubNanoseconds()")
+		})
 	}
 }
 
 func TestCarbon_AddNanosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222222223 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").AddNanosecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").AddNanosecond(),
+			want:   "2020-08-05 13:14:15.222222223 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).AddNanosecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "AddNanosecond()")
+		})
 	}
 }
 
 func TestCarbon_SubNanosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-08-05 13:14:15.222222222", "2020-08-05 13:14:15.222222221 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SubNanosecond(),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-05 13:14:15.222222222").SubNanosecond(),
+			want:   "2020-08-05 13:14:15.222222221 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SubNanosecond()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(), "SubNanosecond()")
+		})
 	}
-}
-
-func TestError_Traveler(t *testing.T) {
-	duration := "10x"
-	c := Parse("2020-08-05").AddDuration(duration)
-	assert.NotNil(t, c.Error, "It should catch an exception in AddDuration()")
-
-	timezone := "xxx"
-	assert.NotNil(t, Now(timezone).Error, "It should catch an exception in Now()")
-	assert.NotNil(t, Tomorrow(timezone).Error, "It should catch an exception in Tomorrow()")
-	assert.NotNil(t, Yesterday(timezone).Error, "It should catch an exception in Yesterday()")
 }

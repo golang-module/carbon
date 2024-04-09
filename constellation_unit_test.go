@@ -1,345 +1,517 @@
 package carbon
 
 import (
-	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_Constellation(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", ""},
-		{"0", ""},
-		{"0000-00-00", ""},
-		{"00:00:00", ""},
-		{"0000-00-00 00:00:00", ""},
-
-		{"2020-01-05", "Capricorn"},
-		{"2020-01-22", "Aquarius"},
-		{"2020-02-05", "Aquarius"},
-		{"2020-03-05", "Pisces"},
-		{"2020-04-05", "Aries"},
-		{"2020-05-05", "Taurus"},
-		{"2020-06-05", "Gemini"},
-		{"2020-07-05", "Cancer"},
-		{"2020-08-05", "Leo"},
-		{"2020-09-05", "Virgo"},
-		{"2020-10-05", "Libra"},
-		{"2020-11-05", "Scorpio"},
-		{"2020-12-05", "Sagittarius"},
-		{"2020-12-22", "Capricorn"},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-05"),
+			want:   "Capricorn",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-22"),
+			want:   "Aquarius",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-05"),
+			want:   "Aquarius",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-03-05"),
+			want:   "Pisces",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-04-05"),
+			want:   "Aries",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-05-05"),
+			want:   "Taurus",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2020-06-05"),
+			want:   "Gemini",
+		},
+		{
+			name:   "case9",
+			carbon: Parse("2020-07-05"),
+			want:   "Cancer",
+		},
+		{
+			name:   "case10",
+			carbon: Parse("2020-08-05"),
+			want:   "Leo",
+		},
+		{
+			name:   "case11",
+			carbon: Parse("2020-09-05"),
+			want:   "Virgo",
+		},
+		{
+			name:   "case12",
+			carbon: Parse("2020-10-05"),
+			want:   "Libra",
+		},
+		{
+			name:   "case13",
+			carbon: Parse("2020-11-05"),
+			want:   "Scorpio",
+		},
+		{
+			name:   "case14",
+			carbon: Parse("2020-12-05"),
+			want:   "Sagittarius",
+		},
+		{
+			name:   "case15",
+			carbon: Parse("2020-12-22"),
+			want:   "Capricorn",
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Constellation(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.Constellation(), "Constellation()")
+		})
 	}
 }
 
 func TestCarbon_IsAries(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-03-21", true},
-		{"2020-04-19", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-03-21"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-04-19"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsAries(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsAries(), "IsAries()")
+		})
 	}
 }
 
 func TestCarbon_IsTaurus(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-04-20", true},
-		{"2020-05-20", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-04-20"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-05-20"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsTaurus(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsTaurus(), "IsTaurus()")
+		})
 	}
 }
 
 func TestCarbon_IsGemini(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-05-21", true},
-		{"2020-06-21", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-05-21"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-06-21"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsGemini(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsGemini(), "IsGemini()")
+		})
 	}
 }
 
 func TestCarbon_IsCancer(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-06-22", true},
-		{"2020-07-22", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-06-22"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-07-22"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsCancer(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsCancer(), "IsCancer()")
+		})
 	}
 }
 
 func TestCarbon_IsLeo(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-07-23", true},
-		{"2020-08-05", true},
-		{"2020-08-22", true},
-		{"2020-08-23", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-07-23"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-23"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsLeo(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsLeo(), "IsLeo()")
+		})
 	}
 }
 
 func TestCarbon_IsVirgo(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-08-23", true},
-		{"2020-09-22", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-08-23"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-09-22"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsVirgo(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsVirgo(), "IsVirgo()")
+		})
 	}
 }
 
 func TestCarbon_IsLibra(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-09-23", true},
-		{"2020-10-23", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-09-23"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-10-23"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsLibra(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsLibra(), "IsLibra()")
+		})
 	}
 }
 
 func TestCarbon_IsScorpio(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-10-24", true},
-		{"2020-11-22", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-10-24"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-11-22"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsScorpio(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsScorpio(), "IsScorpio()")
+		})
 	}
 }
 
 func TestCarbon_IsSagittarius(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-11-23", true},
-		{"2020-12-21", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-11-23"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-12-21"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsSagittarius(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsSagittarius(), "IsSagittarius()")
+		})
 	}
 }
 
 func TestCarbon_IsCapricorn(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-12-22", true},
-		{"2020-01-19", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-12-22"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-19"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsCapricorn(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsCapricorn(), "IsCapricorn()")
+		})
 	}
 }
 
 func TestCarbon_IsAquarius(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-01-20", true},
-		{"2020-02-18", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-01-20"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-02-18"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsAquarius(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsAquarius(), "IsAquarius()")
+		})
 	}
 }
 
 func TestCarbon_IsPisces(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		expected bool
+		name   string
+		carbon Carbon
+		want   bool
 	}{
-		{"", false},
-		{"0", false},
-		{"0000-00-00", false},
-		{"00:00:00", false},
-		{"0000-00-00 00:00:00", false},
-
-		{"2020-02-19", true},
-		{"2020-03-20", true},
-		{"2020-08-05", false},
+		{
+			name:   "case1",
+			carbon: Parse(""),
+			want:   false,
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2020-02-19"),
+			want:   true,
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-03-20"),
+			want:   true,
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05"),
+			want:   false,
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(PRC).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.IsPisces(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.IsPisces(), "IsPisces()")
+		})
 	}
 }

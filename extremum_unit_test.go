@@ -2,58 +2,130 @@ package carbon
 
 import (
 	"github.com/stretchr/testify/assert"
-	"strconv"
 	"testing"
 )
 
 func TestCarbon_Closest(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input1   string
-		input2   string
-		input3   string
-		expected string
+		name    string
+		carbon1 Carbon
+		carbon2 Carbon
+		carbon3 Carbon
+		want    string
 	}{
-		{"", "2023-03-28", "2023-04-16", "2023-03-28"},
-		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
-		{"2023-04-01", "2023-03-28", "", "2023-03-28"},
-		{"2023-04-01", "", "", ""},
-
-		{"2023-04-01", "2023-03-28", "2023-03-28", "2023-03-28"},
-		{"2023-04-01", "2023-03-28", "2023-04-16", "2023-03-28"},
+		{
+			name:    "case1",
+			carbon1: Parse(""),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-04-16"),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case2",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse(""),
+			carbon3: Parse("2023-04-16"),
+			want:    "2023-04-16",
+		},
+		{
+			name:    "case3",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse(""),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case4",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse(""),
+			carbon3: Parse(""),
+			want:    "",
+		},
+		{
+			name:    "case5",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-03-28"),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case6",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-04-16"),
+			want:    "2023-03-28",
+		},
 	}
-
-	for index, test := range tests {
-		c := Parse(test.input1).Closest(Parse(test.input2), Parse(test.input3))
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon1.Closest(tt.carbon2, tt.carbon3).ToDateString(), "Closest()")
+		})
 	}
 }
 
 func TestCarbon_Farthest(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input1   string
-		input2   string
-		input3   string
-		expected string
+		name    string
+		carbon1 Carbon
+		carbon2 Carbon
+		carbon3 Carbon
+		want    string
 	}{
-		{"", "2023-03-28", "2023-04-16", "2023-04-16"},
-		{"2023-04-01", "", "2023-04-16", "2023-04-16"},
-		{"2023-04-01", "2023-03-28", "", "2023-03-28"},
-		{"2023-04-01", "", "", ""},
-
-		{"2023-04-01", "2023-03-28", "2023-03-28", "2023-03-28"},
-		{"2023-04-01", "2023-03-28", "2023-04-16", "2023-04-16"},
-		{"2023-04-01", "2023-04-05", "2023-04-02", "2023-04-05"},
+		{
+			name:    "case1",
+			carbon1: Parse(""),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-04-16"),
+			want:    "2023-04-16",
+		},
+		{
+			name:    "case2",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse(""),
+			carbon3: Parse("2023-04-16"),
+			want:    "2023-04-16",
+		},
+		{
+			name:    "case3",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse(""),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case4",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse(""),
+			carbon3: Parse(""),
+			want:    "",
+		},
+		{
+			name:    "case5",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-03-28"),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case6",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-03-28"),
+			carbon3: Parse("2023-03-28"),
+			want:    "2023-03-28",
+		},
+		{
+			name:    "case7",
+			carbon1: Parse("2023-04-01"),
+			carbon2: Parse("2023-04-05"),
+			carbon3: Parse("2023-04-02"),
+			want:    "2023-04-05",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input1).Farthest(Parse(test.input2), Parse(test.input3))
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon1.Farthest(tt.carbon2, tt.carbon3).ToDateString(), "Farthest()")
+		})
 	}
 }
 

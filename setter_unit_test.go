@@ -2,634 +2,1061 @@ package carbon
 
 import (
 	"github.com/stretchr/testify/assert"
-	"strconv"
 	"testing"
 	"time"
 )
 
 func TestCarbon_SetWeekStartsAt(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		week     string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"", Sunday, ""},
-		{"0000-00-00 00:00:00", Sunday, ""},
-		{"", Monday, ""},
-		{"0000-00-00 00:00:00", Monday, ""},
-
-		{"2021-06-13", Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-14", Sunday, "2021-06-13 00:00:00"},
-		{"2021-06-18", Sunday, "2021-06-13 00:00:00"},
-
-		{"2021-06-13", Monday, "2021-06-07 00:00:00"},
-		{"2021-06-14", Monday, "2021-06-14 00:00:00"},
-		{"2021-06-18", Monday, "2021-06-14 00:00:00"},
-
-		{"2021-06-13", Tuesday, "2021-06-08 00:00:00"},
-		{"2021-06-14", Tuesday, "2021-06-08 00:00:00"},
-		{"2021-06-18", Tuesday, "2021-06-15 00:00:00"},
-
-		{"2021-06-13", Wednesday, "2021-06-09 00:00:00"},
-		{"2021-06-14", Wednesday, "2021-06-09 00:00:00"},
-		{"2021-06-18", Wednesday, "2021-06-16 00:00:00"},
-
-		{"2021-06-13", Thursday, "2021-06-10 00:00:00"},
-		{"2021-06-14", Thursday, "2021-06-10 00:00:00"},
-		{"2021-06-18", Thursday, "2021-06-17 00:00:00"},
-
-		{"2021-06-13", Friday, "2021-06-11 00:00:00"},
-		{"2021-06-14", Friday, "2021-06-11 00:00:00"},
-		{"2021-06-18", Friday, "2021-06-18 00:00:00"},
-
-		{"2021-06-13", Saturday, "2021-06-12 00:00:00"},
-		{"2021-06-14", Saturday, "2021-06-12 00:00:00"},
-		{"2021-06-18", Saturday, "2021-06-12 00:00:00"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetWeekStartsAt(Sunday),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetWeekStartsAt(Sunday),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Sunday),
+			want:   "2021-06-13",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Monday),
+			want:   "2021-06-07",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Tuesday),
+			want:   "2021-06-08",
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Wednesday),
+			want:   "2021-06-09",
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Thursday),
+			want:   "2021-06-10",
+		},
+		{
+			name:   "case8",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Friday),
+			want:   "2021-06-11",
+		},
+		{
+			name:   "case9",
+			carbon: Parse("2021-06-13").SetWeekStartsAt(Saturday),
+			want:   "2021-06-12",
+		},
+		{
+			name:   "case10",
+			carbon: SetWeekStartsAt(Saturday).Parse("2021-06-13"),
+			want:   "2021-06-12",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetWeekStartsAt(test.week).StartOfWeek()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current1 test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := SetWeekStartsAt(test.week).Parse(test.input).StartOfWeek()
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current1 test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.StartOfWeek().ToDateString(), "SetWeekStartsAt()")
+		})
 	}
 }
 
 func TestCarbon_SetTimezone(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		timezone string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"0000-00-00 00:00:00", PRC, ""},
-		{"2020-08-05 13:14:15", PRC, "2020-08-05 13:14:15"},
-		{"2020-08-05 13:14:15", Tokyo, "2020-08-05 12:14:15"},
-		{"2020-08-05 13:14:15", London, "2020-08-05 20:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetTimezone(PRC),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetTimezone(PRC),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: SetTimezone(PRC).Parse("2020-08-05 13:14:15"),
+			want:   "2020-08-05 13:14:15",
+		},
+		{
+			name:   "case4",
+			carbon: SetTimezone(Tokyo).Parse("2020-08-05 13:14:15"),
+			want:   "2020-08-05 12:14:15",
+		},
+		{
+			name:   "case5",
+			carbon: SetTimezone(London).Parse("2020-08-05 13:14:15"),
+			want:   "2020-08-05 20:14:15",
+		},
 	}
 
-	for index, test := range tests {
-		c := SetTimezone(test.timezone).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(PRC), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(PRC), "SetTimezone()")
+		})
 	}
 }
 
 func TestCarbon_SetLocation(t *testing.T) {
-	assert := assert.New(t)
-
-	getLocation := func(name string) *time.Location {
-		loc, _ := time.LoadLocation(name)
-		return loc
-	}
-
 	tests := []struct {
-		loc      *time.Location
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
 		{
-			loc:      getLocation(UTC),
-			expected: UTC,
+			name:   "case1",
+			carbon: Parse("").SetLocation(time.UTC),
+			want:   "",
 		},
 		{
-			loc:      getLocation(PRC),
-			expected: PRC,
+			name:   "case2",
+			carbon: Parse("xxx").SetLocation(time.UTC),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15").SetLocation(nil),
+			want:   "",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05 13:14:15").SetLocation(time.UTC),
+			want:   "UTC",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-08-05 13:14:15").SetLocation(time.Local),
+			want:   "Local",
+		},
+		{
+			name:   "case6",
+			carbon: SetLocation(time.UTC).Parse("2020-08-05 13:14:15"),
+			want:   "UTC",
 		},
 	}
 
-	for index, test := range tests {
-		loc := test.loc
-		c := SetLocation(loc)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Location(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.Location(), "SetLocation()")
+		})
 	}
 }
 
 func TestCarbon_SetLocale(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		locale   string
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"0000-00-00", "en", ""},
-		{"2020-08-05", "en", "August"},
-		{"2020-08-05", "jp", "はちがつ"},
-		{"2020-08-05", "zh-CN", "八月"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetLocale("en"),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetLocale("en"),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-08-05 13:14:15").SetLocale("en"),
+			want:   "August",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-08-05 13:14:15").SetLocale("zh-CN"),
+			want:   "八月",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-08-05 13:14:15").SetLocale("jp"),
+			want:   "はちがつ",
+		},
+		{
+			name:   "case6",
+			carbon: SetLocale("en").Parse("2020-08-05 13:14:15"),
+			want:   "August",
+		},
 	}
 
-	for index, test := range tests {
-		c := SetLocale(test.locale).Parse(test.input)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToMonthString(PRC), "Current test index is "+strconv.Itoa(index))
-	}
-
-	for index, test := range tests {
-		c := Parse(test.input).SetLocale(test.locale)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToMonthString(PRC), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToMonthString(PRC), "SetLocale()")
+		})
 	}
 }
 
 func TestCarbon_SetDateTime(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                                  string
-		year, month, day, hour, minute, second int
-		expected                               string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 13, 14, 15, "2019-02-02 13:14:15"},
-		{"2020-01-01", 2019, 02, 31, 13, 14, 15, "2019-03-03 13:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateTime(2019, 02, 02, 13, 14, 15),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateTime(2019, 02, 02, 13, 14, 15),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateTime(2019, 02, 02, 13, 14, 15),
+			want:   "2019-02-02 13:14:15",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateTime(2019, 02, 31, 13, 14, 15),
+			want:   "2019-03-03 13:14:15",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDateTime(test.year, test.month, test.day, test.hour, test.minute, test.second)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(PRC), "SetDateTime()")
+		})
 	}
 }
 
 func TestCarbon_SetDateTimeMilli(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                                               string
-		year, month, day, hour, minute, second, millisecond int
-		expected                                            string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999, "2019-02-02 13:14:15.999 +0800 CST"},
-		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999, "2019-03-03 13:14:15.999 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateTimeMilli(2019, 02, 02, 13, 14, 15, 999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateTimeMilli(2019, 02, 02, 13, 14, 15, 999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateTimeMilli(2019, 02, 02, 13, 14, 15, 999),
+			want:   "2019-02-02 13:14:15.999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateTimeMilli(2019, 02, 31, 13, 14, 15, 999),
+			want:   "2019-03-03 13:14:15.999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SetDateTimeMilli(test.year, test.month, test.day, test.hour, test.minute, test.second, test.millisecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateTimeMilli()")
+		})
 	}
 }
 
 func TestCarbon_SetDateTimeMicro(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                                               string
-		year, month, day, hour, minute, second, microsecond int
-		expected                                            string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999999, "2019-02-02 13:14:15.999999 +0800 CST"},
-		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999999, "2019-03-03 13:14:15.999999 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateTimeMicro(2019, 02, 02, 13, 14, 15, 999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateTimeMicro(2019, 02, 02, 13, 14, 15, 999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateTimeMicro(2019, 02, 02, 13, 14, 15, 999999),
+			want:   "2019-02-02 13:14:15.999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateTimeMicro(2019, 02, 31, 13, 14, 15, 999999),
+			want:   "2019-03-03 13:14:15.999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SetDateTimeMicro(test.year, test.month, test.day, test.hour, test.minute, test.second, test.microsecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateTimeMicro()")
+		})
 	}
 }
 
 func TestCarbon_SetDateTimeNano(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                                              string
-		year, month, day, hour, minute, second, nanosecond int
-		expected                                           string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 13, 14, 15, 999999999, "2019-02-02 13:14:15.999999999 +0800 CST"},
-		{"2020-01-01", 2019, 02, 31, 13, 14, 15, 999999999, "2019-03-03 13:14:15.999999999 +0800 CST"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateTimeNano(2019, 02, 02, 13, 14, 15, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateTimeNano(2019, 02, 02, 13, 14, 15, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateTimeNano(2019, 02, 02, 13, 14, 15, 999999999),
+			want:   "2019-02-02 13:14:15.999999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateTimeNano(2019, 02, 31, 13, 14, 15, 999999999),
+			want:   "2019-03-03 13:14:15.999999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input, PRC).SetDateTimeNano(test.year, test.month, test.day, test.hour, test.minute, test.second, test.nanosecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateTimeNano()")
+		})
 	}
 }
 
 func TestCarbon_SetDate(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input            string
-		year, month, day int
-		expected         string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, "2019-02-02 00:00:00"},
-		{"2020-01-01", 2019, 02, 31, "2019-03-03 00:00:00"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDate(2019, 02, 02),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDate(2019, 02, 02),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDate(2019, 02, 02),
+			want:   "2019-02-02 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDate(2019, 02, 31),
+			want:   "2019-03-03 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDate(test.year, test.month, test.day)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDate()")
+		})
 	}
 }
 
 func TestCarbon_SetDateMilli(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                         string
-		year, month, day, millisecond int
-		expected                      string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 999, "2019-02-02 00:00:00.999"},
-		{"2020-01-01", 2019, 02, 31, 999, "2019-03-03 00:00:00.999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateMilli(2019, 02, 02, 999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateMilli(2019, 02, 02, 999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateMilli(2019, 02, 02, 999),
+			want:   "2019-02-02 00:00:00.999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateMilli(2019, 02, 31, 999),
+			want:   "2019-03-03 00:00:00.999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDateMilli(test.year, test.month, test.day, test.millisecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateMilli()")
+		})
 	}
 }
 
 func TestCarbon_SetDateMicro(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                         string
-		year, month, day, microsecond int
-		expected                      string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 999999, "2019-02-02 00:00:00.999999"},
-		{"2020-01-01", 2019, 02, 31, 999999, "2019-03-03 00:00:00.999999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateMicro(2019, 02, 02, 999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateMicro(2019, 02, 02, 999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateMicro(2019, 02, 02, 999999),
+			want:   "2019-02-02 00:00:00.999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateMicro(2019, 02, 31, 999999),
+			want:   "2019-03-03 00:00:00.999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDateMicro(test.year, test.month, test.day, test.microsecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateMicro()")
+		})
 	}
 }
 
 func TestCarbon_SetDateNano(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                        string
-		year, month, day, nanosecond int
-		expected                     string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, 02, 02, 999999999, "2019-02-02 00:00:00.999999999"},
-		{"2020-01-01", 2019, 02, 31, 999999999, "2019-03-03 00:00:00.999999999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDateNano(2019, 02, 02, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDateNano(2019, 02, 02, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDateNano(2019, 02, 02, 999999999),
+			want:   "2019-02-02 00:00:00.999999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetDateNano(2019, 02, 31, 999999999),
+			want:   "2019-03-03 00:00:00.999999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDateNano(test.year, test.month, test.day, test.nanosecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDateNano()")
+		})
 	}
 }
 
 func TestCarbon_SetTime(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                string
-		hour, minute, second int
-		expected             string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05", 13, 14, 15, "2020-08-05 13:14:15"},
-		{"2020-08-05", 13, 14, 90, "2020-08-05 13:15:30"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetTime(13, 14, 15),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetTime(13, 14, 15),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetTime(13, 14, 15),
+			want:   "2020-01-01 13:14:15 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetTime(13, 14, 90),
+			want:   "2020-01-01 13:15:30 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetTime(test.hour, test.minute, test.second)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetTime()")
+		})
 	}
 }
 
 func TestCarbon_SetTimeMilli(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                             string
-		hour, minute, second, millisecond int
-		expected                          string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05", 13, 14, 15, 999, "2020-08-05 13:14:15.999"},
-		{"2020-08-05", 13, 14, 90, 999, "2020-08-05 13:15:30.999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetTimeMilli(13, 14, 15, 999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetTimeMilli(13, 14, 15, 999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetTimeMilli(13, 14, 15, 999),
+			want:   "2020-01-01 13:14:15.999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetTimeMilli(13, 14, 90, 999),
+			want:   "2020-01-01 13:15:30.999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetTimeMilli(test.hour, test.minute, test.second, test.millisecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMilliString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetTimeMilli()")
+		})
 	}
 }
 
 func TestCarbon_SetTimeMicro(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                             string
-		hour, minute, second, microsecond int
-		expected                          string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05", 13, 14, 15, 999999, "2020-08-05 13:14:15.999999"},
-		{"2020-08-05", 13, 14, 90, 999999, "2020-08-05 13:15:30.999999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetTimeMicro(13, 14, 15, 999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetTimeMicro(13, 14, 15, 999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetTimeMicro(13, 14, 15, 999999),
+			want:   "2020-01-01 13:14:15.999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetTimeMicro(13, 14, 90, 999999),
+			want:   "2020-01-01 13:15:30.999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetTimeMicro(test.hour, test.minute, test.second, test.microsecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeMicroString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetTimeMicro()")
+		})
 	}
 }
 
 func TestCarbon_SetTimeNano(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input                            string
-		hour, minute, second, nanosecond int
-		expected                         string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05", 13, 14, 15, 999999999, "2020-08-05 13:14:15.999999999"},
-		{"2020-08-05", 13, 14, 90, 999999999, "2020-08-05 13:15:30.999999999"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetTimeNano(13, 14, 15, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetTimeNano(13, 14, 15, 999999999),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetTimeNano(13, 14, 15, 999999999),
+			want:   "2020-01-01 13:14:15.999999999 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-01").SetTimeNano(13, 14, 90, 999999999),
+			want:   "2020-01-01 13:15:30.999999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetTimeNano(test.hour, test.minute, test.second, test.nanosecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeNanoString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetTimeNano()")
+		})
 	}
 }
 
 func TestCarbon_SetYear(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		year     int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, "2019-01-01"},
-		{"2020-01-31", 2019, "2019-01-31"},
-		{"2020-02-01", 2019, "2019-02-01"},
-		{"2020-02-28", 2019, "2019-02-28"},
-		{"2020-02-29", 2019, "2019-03-01"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetYear(2019),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetYear(2019),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetYear(2019),
+			want:   "2019-01-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-31").SetYear(2019),
+			want:   "2019-01-31 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").SetYear(2019),
+			want:   "2019-03-01 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetYear(test.year)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetYear()")
+		})
 	}
 }
 
 func TestCarbon_SetYearNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		year     int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2019, "2019-01-01"},
-		{"2020-01-31", 2019, "2019-01-31"},
-		{"2020-02-01", 2019, "2019-02-01"},
-		{"2020-02-28", 2019, "2019-02-28"},
-		{"2020-02-29", 2019, "2019-02-28"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetYearNoOverflow(2019),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetYearNoOverflow(2019),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetYearNoOverflow(2019),
+			want:   "2019-01-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-31").SetYearNoOverflow(2019),
+			want:   "2019-01-31 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-29").SetYearNoOverflow(2019),
+			want:   "2019-02-28 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetYearNoOverflow(test.year)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetYearNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SetMonth(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		month    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2, "2020-02-01"},
-		{"2020-01-30", 2, "2020-03-01"},
-		{"2020-01-31", 2, "2020-03-02"},
-		{"2020-08-05", 2, "2020-02-05"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetMonth(2),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetMonth(2),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetMonth(2),
+			want:   "2020-02-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-30").SetMonth(2),
+			want:   "2020-03-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-01-31").SetMonth(2),
+			want:   "2020-03-02 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetMonth(test.month)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetMonth()")
+		})
 	}
 }
 
 func TestCarbon_SetMonthNoOverflow(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		month    int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 2, "2020-02-01"},
-		{"2020-01-30", 2, "2020-02-29"},
-		{"2020-01-31", 2, "2020-02-29"},
-		{"2020-08-05", 2, "2020-02-05"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetMonthNoOverflow(2),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetMonthNoOverflow(2),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetMonthNoOverflow(2),
+			want:   "2020-02-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-01-30").SetMonthNoOverflow(2),
+			want:   "2020-02-29 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-01-31").SetMonthNoOverflow(2),
+			want:   "2020-02-29 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetMonthNoOverflow(test.month)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetMonthNoOverflow()")
+		})
 	}
 }
 
 func TestCarbon_SetDay(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		day      int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-01-01", 31, "2020-01-31"},
-		{"2020-02-01", 31, "2020-03-02"},
-		{"2020-02-28", 31, "2020-03-02"},
-		{"2020-02-29", 31, "2020-03-02"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetDay(31),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetDay(31),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetDay(31),
+			want:   "2020-01-31 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetDay(31),
+			want:   "2020-03-02 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetDay(31),
+			want:   "2020-03-02 00:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetDay(test.day)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetDay()")
+		})
 	}
 }
 
 func TestCarbon_SetHour(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		hour     int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 10, "2020-08-05 10:14:15"},
-		{"2020-08-05 13:14:15", 24, "2020-08-06 00:14:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetHour(10),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetHour(10),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetHour(10),
+			want:   "2020-01-01 10:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetHour(24),
+			want:   "2020-02-02 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetHour(31),
+			want:   "2020-02-29 07:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetHour(test.hour)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetHour()")
+		})
 	}
 }
 
 func TestCarbon_SetMinute(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		minute   int
-		expected string
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 10, "2020-08-05 13:10:15"},
-		{"2020-08-05 13:14:15", 60, "2020-08-05 14:00:15"},
+		{
+			name:   "case1",
+			carbon: Parse("").SetMinute(10),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetMinute(10),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetMinute(10),
+			want:   "2020-01-01 00:10:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetMinute(24),
+			want:   "2020-02-01 00:24:00 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetMinute(60),
+			want:   "2020-02-28 01:00:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetMinute(test.minute)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.ToDateTimeString(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetMinute()")
+		})
 	}
 }
 
 func TestCarbon_SetSecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input    string
-		second   int
-		expected int
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 10, 10},
-		{"2020-08-05 13:14:15", 59, 59},
+		{
+			name:   "case1",
+			carbon: Parse("").SetSecond(10),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetSecond(10),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetSecond(10),
+			want:   "2020-01-01 00:00:10 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetSecond(24),
+			want:   "2020-02-01 00:00:24 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetSecond(60),
+			want:   "2020-02-28 00:01:00 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetSecond(test.second)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Second(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetSecond()")
+		})
 	}
 }
 
 func TestCarbon_SetMillisecond(t *testing.T) {
-	assert := assert.New(t)
 	tests := []struct {
-		input       string
-		millisecond int
-		expected    int
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 100, 100},
-		{"2020-08-05 13:14:15", 999, 999},
+		{
+			name:   "case1",
+			carbon: Parse("").SetMillisecond(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetMillisecond(0),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetMillisecond(0),
+			want:   "2020-01-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetMillisecond(100),
+			want:   "2020-02-01 00:00:00.1 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetMillisecond(999),
+			want:   "2020-02-28 00:00:00.999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetMillisecond(test.millisecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Millisecond(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetMillisecond()")
+		})
 	}
 }
 
 func TestCarbon_SetMicrosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input       string
-		microsecond int
-		expected    int
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 100000, 100000},
-		{"2020-08-05 13:14:15", 999999, 999999},
+		{
+			name:   "case1",
+			carbon: Parse("").SetMicrosecond(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetMicrosecond(0),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetMicrosecond(0),
+			want:   "2020-01-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetMicrosecond(100000),
+			want:   "2020-02-01 00:00:00.1 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetMicrosecond(999999),
+			want:   "2020-02-28 00:00:00.999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetMicrosecond(test.microsecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Microsecond(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetMicrosecond()")
+		})
 	}
 }
 
 func TestCarbon_SetNanosecond(t *testing.T) {
-	assert := assert.New(t)
-
 	tests := []struct {
-		input      string
-		nanosecond int
-		expected   int
+		name   string
+		carbon Carbon
+		want   string
 	}{
-		{"2020-08-05 13:14:15", 100000000, 100000000},
-		{"2020-08-05 13:14:15", 999999999, 999999999},
+		{
+			name:   "case1",
+			carbon: Parse("").SetNanosecond(0),
+			want:   "",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("xxx").SetNanosecond(0),
+			want:   "",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2020-01-01").SetNanosecond(0),
+			want:   "2020-01-01 00:00:00 +0800 CST",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2020-02-01").SetNanosecond(100000),
+			want:   "2020-02-01 00:00:00.0001 +0800 CST",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2020-02-28").SetNanosecond(999999),
+			want:   "2020-02-28 00:00:00.000999999 +0800 CST",
+		},
 	}
 
-	for index, test := range tests {
-		c := Parse(test.input).SetNanosecond(test.nanosecond)
-		assert.Nil(c.Error)
-		assert.Equal(test.expected, c.Nanosecond(), "Current test index is "+strconv.Itoa(index))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.ToString(PRC), "SetNanosecond()")
+		})
 	}
-}
-
-func TestError_Setter(t *testing.T) {
-	input, timezone, locale, year, month, day, hour, minute, second, millisecond, microsecond, nanosecond := "2020-08-50 13:14:15", "xxx", "xxx", 2020, 8, 50, 13, 14, 15, 999, 999999, 999999999
-	c := Parse(input)
-
-	assert.NotNil(t, Parse("xxx").SetWeekStartsAt(Sunday).Error, "It should catch an exception in SetWeekStartsAt()")
-	assert.NotNil(t, c.SetTimezone(timezone).Error, "It should catch an exception in SetTimezone()")
-
-	loc, _ := time.LoadLocation("xxx")
-	assert.NotNil(t, SetLocation(loc).Error, "It should catch an exception in SetLocation()")
-	assert.NotNil(t, c.SetLocation(loc).Error, "It should catch an exception in SetLocation()")
-
-	assert.NotNil(t, SetLocale(locale).Error, "It should catch an exception in SetLocale()")
-	assert.NotNil(t, c.SetLocale(locale).Error, "It should catch an exception in SetLocale()")
-
-	lang := NewLanguage()
-	lang.SetLocale(locale)
-	assert.NotNil(t, SetLanguage(lang).Error, "It should catch an exception in SetLanguage()")
-
-	assert.NotNil(t, c.SetDateTime(year, month, day, hour, minute, second).Error, "It should catch an exception in SetDateTime()")
-	assert.NotNil(t, c.SetDateTimeMilli(year, month, day, hour, minute, second, millisecond).Error, "It should catch an exception in SetDateTimeMilli()")
-	assert.NotNil(t, c.SetDateTimeMicro(year, month, day, hour, minute, second, microsecond).Error, "It should catch an exception in SetDateTimeMicro()")
-	assert.NotNil(t, c.SetDateTimeNano(year, month, day, hour, minute, second, nanosecond).Error, "It should catch an exception in SetDateTimeNano()")
-
-	assert.NotNil(t, c.SetDate(year, month, day).Error, "It should catch an exception in SeDate()")
-	assert.NotNil(t, c.SetDateMilli(year, month, day, millisecond).Error, "It should catch an exception in SetDateMilli()")
-	assert.NotNil(t, c.SetDateMicro(year, month, day, microsecond).Error, "It should catch an exception in SetDateMicro()")
-	assert.NotNil(t, c.SetDateNano(year, month, day, nanosecond).Error, "It should catch an exception in SetDateNano()")
-
-	assert.NotNil(t, c.SetTime(hour, minute, second).Error, "It should catch an exception in SetTime()")
-	assert.NotNil(t, c.SetTimeMilli(hour, minute, second, millisecond).Error, "It should catch an exception in SetTimeMilli()")
-	assert.NotNil(t, c.SetTimeMicro(hour, minute, second, microsecond).Error, "It should catch an exception in SetTimeMicro()")
-	assert.NotNil(t, c.SetTimeNano(hour, minute, second, nanosecond).Error, "It should catch an exception in SetTimeNano()")
-
-	assert.NotNil(t, c.SetYear(year).Error, "It should catch an exception in SetYear()")
-	assert.NotNil(t, c.SetYearNoOverflow(year).Error, "It should catch an exception in SetYearNoOverflow()")
-	assert.NotNil(t, c.SetMonth(month).Error, "It should catch an exception in SetMonth()")
-	assert.NotNil(t, c.SetMonthNoOverflow(month).Error, "It should catch an exception in SetMonthNoOverflow()")
-	assert.NotNil(t, c.SetDay(day).Error, "It should catch an exception in SetDay()")
-	assert.NotNil(t, c.SetHour(hour).Error, "It should catch an exception in SetHour()")
-	assert.NotNil(t, c.SetMinute(minute).Error, "It should catch an exception in SetMinute()")
-	assert.NotNil(t, c.SetSecond(second).Error, "It should catch an exception in SetSecond()")
-	assert.NotNil(t, c.SetMillisecond(millisecond).Error, "It should catch an exception in SetMillisecond()")
-	assert.NotNil(t, c.SetMicrosecond(microsecond).Error, "It should catch an exception in SetMicrosecond()")
-	assert.NotNil(t, c.SetNanosecond(nanosecond).Error, "It should catch an exception in SetNanosecond()")
 }
