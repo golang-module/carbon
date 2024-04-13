@@ -1414,6 +1414,7 @@ The following languages are supported
 * [VietNamese(vi)](./lang/vi.json "VietNam"): translated by [culy247](https://github.com/culy247 "culy247")
 * [Hindi(hi)](./lang/hi.json "India"): translated by [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin")
 * [Polish(pl)](./lang/pl.json "Polish"): translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
+* [Bulgarian(bg)](./lang/bg.json "Bulgarian"): translated by [yuksbg](https://github.com/yuksbg "yuksbg")
 
 The following methods are supported
 

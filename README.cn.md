@@ -1413,6 +1413,7 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 * [越南语(vi)](./lang/vi.json "越南语"): 由 [culy247](https://github.com/culy247 "culy247") 翻译
 * [印地语(hi)](./lang/hi.json "印地语"): 由 [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") 翻译
 * [波兰语(pl)](./lang/pl.json "波兰语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
+* [保加利亚语(bg)](./lang/bg.json "保加利亚语"): 由 [yuksbg](https://github.com/yuksbg "yuksbg") 翻译
 
 目前支持的方法有
 

@@ -1414,6 +1414,7 @@ fmt.Printf("%d", person.Field8) // 1596604455999999999
 * [ベトナム語(vi)](./lang/vi.json "ベトナム語"): [culy247](https://github.com/culy247 "culy247") から翻訳されます
 * [ヒンディー語(hi)](./lang/hi.json "ヒンディー語"): [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") から翻訳されます
 * [ポーランド語(pl)](./lang/pl.json "ポーランド語"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
+* [ブルガリア語(bg)](./lang/bg.json "ブルガリア語"): 由 [yuksbg](https://github.com/yuksbg "yuksbg") 翻译
 
 現在サポートされている方法
 
