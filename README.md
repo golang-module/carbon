@@ -1331,24 +1331,24 @@ if err != nil {
 fmt.Printf("%s", data)
 // Output
 {
-    "name": "gouguoyin",
-    "age": 18,
-    "birthday1": "2003-07-16 13:14:15",
-    "birthday2": "2003-07-16 13:14:15.999",
-    "birthday3": "2003-07-16 13:14:15.999999",
-    "birthday4": "2003-07-16 13:14:15.999999999",
-    "graduated_at1": "2020-08-05",
-    "graduated_at2": "2020-08-05.999",
-    "graduated_at3": "2020-08-05.999999",
-    "graduated_at4": "2020-08-05.999999999",
-    "operated_at1": "13:14:15",
-    "operated_at2": "13:14:15.999",
-    "operated_at3": "13:14:15.999999",
-    "operated_at4": "13:14:15.999999999",
-    "created_at1": 1596604455,
-    "created_at2": 1596604455999,
-    "created_at3": 1596604455999999,
-    "created_at4": 1596604455999999999
+  "name": "gouguoyin",
+  "age": 18,
+  "birthday1": "2003-07-16 13:14:15",
+  "birthday2": "2003-07-16 13:14:15.999",
+  "birthday3": "2003-07-16 13:14:15.999999",
+  "birthday4": "2003-07-16 13:14:15.999999999",
+  "graduated_at1": "2020-08-05",
+  "graduated_at2": "2020-08-05.999",
+  "graduated_at3": "2020-08-05.999999",
+  "graduated_at4": "2020-08-05.999999999",
+  "operated_at1": "13:14:15",
+  "operated_at2": "13:14:15.999",
+  "operated_at3": "13:14:15.999999",
+  "operated_at4": "13:14:15.999999999",
+  "created_at1": 1596604455,
+  "created_at2": 1596604455999,
+  "created_at3": 1596604455999999,
+  "created_at4": 1596604455999999999
 }
 
 err := json.Unmarshal([]byte(data), &person)
