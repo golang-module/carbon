@@ -32,6 +32,26 @@ type Person struct {
 	Birthday15 Carbon `json:"birthday15" carbon:"type:timestampMilli" tz:"PRC"`
 	Birthday16 Carbon `json:"birthday16" carbon:"type:timestampMicro" tz:"PRC"`
 	Birthday17 Carbon `json:"birthday17" carbon:"type:timestampNano" tz:"PRC"`
+
+	Birthday18 DateTime      `json:"birthday18"`
+	Birthday19 DateTimeMilli `json:"birthday19"`
+	Birthday20 DateTimeMicro `json:"birthday20"`
+	Birthday21 DateTimeNano  `json:"birthday21"`
+
+	Birthday22 Date      `json:"birthday22"`
+	Birthday23 DateMilli `json:"birthday23"`
+	Birthday24 DateMicro `json:"birthday24"`
+	Birthday25 DateNano  `json:"birthday25"`
+
+	Birthday26 Time      `json:"birthday26"`
+	Birthday27 TimeMilli `json:"birthday27"`
+	Birthday28 TimeMicro `json:"birthday28"`
+	Birthday29 TimeNano  `json:"birthday29"`
+
+	Birthday30 Timestamp      `json:"birthday30"`
+	Birthday31 TimestampMilli `json:"birthday31"`
+	Birthday32 TimestampMicro `json:"birthday32"`
+	Birthday33 TimestampNano  `json:"birthday33"`
 }
 
 func TestCarbon_MarshalJSON(t *testing.T) {
@@ -56,6 +76,26 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 		Birthday15: c,
 		Birthday16: c,
 		Birthday17: c,
+
+		Birthday18: c.ToDateTimeStruct(),
+		Birthday19: c.ToDateTimeMilliStruct(),
+		Birthday20: c.ToDateTimeMicroStruct(),
+		Birthday21: c.ToDateTimeNanoStruct(),
+
+		Birthday22: c.ToDateStruct(),
+		Birthday23: c.ToDateMilliStruct(),
+		Birthday24: c.ToDateMicroStruct(),
+		Birthday25: c.ToDateNanoStruct(),
+
+		Birthday26: c.ToTimeStruct(),
+		Birthday27: c.ToTimeMilliStruct(),
+		Birthday28: c.ToTimeMicroStruct(),
+		Birthday29: c.ToTimeNanoStruct(),
+
+		Birthday30: c.ToTimestampStruct(),
+		Birthday31: c.ToTimestampMilliStruct(),
+		Birthday32: c.ToTimestampMicroStruct(),
+		Birthday33: c.ToTimestampNanoStruct(),
 	}
 
 	data, marshalErr := json.Marshal(&person)
@@ -152,6 +192,89 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 			actual: person.Birthday17.String(),
 			want:   "2020-08-05 13:14:15",
 		},
+		{
+			name:   "birthday18",
+			actual: person.Birthday18.String(),
+			want:   "2020-08-05 13:14:15",
+		},
+		{
+			name:   "birthday19",
+			actual: person.Birthday19.String(),
+			want:   "2020-08-05 13:14:15.999",
+		},
+		{
+			name:   "birthday20",
+			actual: person.Birthday20.String(),
+			want:   "2020-08-05 13:14:15.999999",
+		},
+		{
+			name:   "birthday21",
+			actual: person.Birthday21.String(),
+			want:   "2020-08-05 13:14:15.999999999",
+		},
+
+		{
+			name:   "birthday22",
+			actual: person.Birthday22.String(),
+			want:   "2020-08-05",
+		},
+		{
+			name:   "birthday23",
+			actual: person.Birthday23.String(),
+			want:   "2020-08-05.999",
+		},
+		{
+			name:   "birthday24",
+			actual: person.Birthday24.String(),
+			want:   "2020-08-05.999999",
+		},
+		{
+			name:   "birthday25",
+			actual: person.Birthday25.String(),
+			want:   "2020-08-05.999999999",
+		},
+
+		{
+			name:   "birthday26",
+			actual: person.Birthday26.String(),
+			want:   "13:14:15",
+		},
+		{
+			name:   "birthday27",
+			actual: person.Birthday27.String(),
+			want:   "13:14:15.999",
+		},
+		{
+			name:   "birthday28",
+			actual: person.Birthday28.String(),
+			want:   "13:14:15.999999",
+		},
+		{
+			name:   "birthday29",
+			actual: person.Birthday29.String(),
+			want:   "13:14:15.999999999",
+		},
+
+		{
+			name:   "birthday30",
+			actual: person.Birthday30.String(),
+			want:   "1596604455",
+		},
+		{
+			name:   "birthday31",
+			actual: person.Birthday31.String(),
+			want:   "1596604455999",
+		},
+		{
+			name:   "birthday32",
+			actual: person.Birthday32.String(),
+			want:   "1596604455999999",
+		},
+		{
+			name:   "birthday33",
+			actual: person.Birthday33.String(),
+			want:   "1596604455999999999",
+		},
 	}
 
 	for _, tt := range tests {
@@ -181,7 +304,23 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 		"birthday14":"2020-08-05 13:14:15",
 		"birthday15":"2020-08-05 13:14:15",
 		"birthday16":"2020-08-05 13:14:15",
-		"birthday17":"2020-08-05 13:14:15"
+		"birthday17":"2020-08-05 13:14:15",
+		"birthday18":"2020-08-05 13:14:15",
+		"birthday19":"2020-08-05 13:14:15.999",
+		"birthday20":"2020-08-05 13:14:15.999999",
+		"birthday21":"2020-08-05 13:14:15.999999999",
+		"birthday22":"2020-08-05",
+		"birthday23":"2020-08-05.999",
+		"birthday24":"2020-08-05.999999",
+		"birthday25":"2020-08-05.999999999",
+		"birthday26":"13:14:15",
+		"birthday27":"13:14:15.999",
+		"birthday28":"13:14:15.999999",
+		"birthday29":"13:14:15.999999999",
+		"birthday30":1596604455,
+		"birthday31":1596604455999,
+		"birthday32":1596604455999999,
+		"birthday33":1596604455999999999
 	}`
 
 	var person Person
@@ -278,6 +417,88 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 			name:   "birthday17",
 			actual: person.Birthday17.String(),
 			want:   "2020-08-05 13:14:15",
+		},
+		{
+			name:   "birthday18",
+			actual: person.Birthday18.String(),
+			want:   "2020-08-05 13:14:15",
+		},
+		{
+			name:   "birthday19",
+			actual: person.Birthday19.String(),
+			want:   "2020-08-05 13:14:15.999",
+		},
+		{
+			name:   "birthday20",
+			actual: person.Birthday20.String(),
+			want:   "2020-08-05 13:14:15.999999",
+		},
+		{
+			name:   "birthday21",
+			actual: person.Birthday21.String(),
+			want:   "2020-08-05 13:14:15.999999999",
+		},
+		{
+			name:   "birthday22",
+			actual: person.Birthday22.String(),
+			want:   "2020-08-05",
+		},
+		{
+			name:   "birthday23",
+			actual: person.Birthday23.String(),
+			want:   "2020-08-05.999",
+		},
+		{
+			name:   "birthday24",
+			actual: person.Birthday24.String(),
+			want:   "2020-08-05.999999",
+		},
+		{
+			name:   "birthday25",
+			actual: person.Birthday25.String(),
+			want:   "2020-08-05.999999999",
+		},
+
+		{
+			name:   "birthday26",
+			actual: person.Birthday26.String(),
+			want:   "13:14:15",
+		},
+		{
+			name:   "birthday27",
+			actual: person.Birthday27.String(),
+			want:   "13:14:15.999",
+		},
+		{
+			name:   "birthday28",
+			actual: person.Birthday28.String(),
+			want:   "13:14:15.999999",
+		},
+		{
+			name:   "birthday29",
+			actual: person.Birthday29.String(),
+			want:   "13:14:15.999999999",
+		},
+
+		{
+			name:   "birthday30",
+			actual: person.Birthday30.String(),
+			want:   "1596604455",
+		},
+		{
+			name:   "birthday31",
+			actual: person.Birthday31.String(),
+			want:   "1596604455999",
+		},
+		{
+			name:   "birthday32",
+			actual: person.Birthday32.String(),
+			want:   "1596604455999999",
+		},
+		{
+			name:   "birthday33",
+			actual: person.Birthday33.String(),
+			want:   "1596604455999999999",
 		},
 	}
 
@@ -310,6 +531,26 @@ func TestCarbon_MarshalJSON_LoadTag(t *testing.T) {
 		Birthday15: c,
 		Birthday16: c,
 		Birthday17: c,
+
+		Birthday18: DateTime{Carbon: c},
+		Birthday19: DateTimeMilli{Carbon: c},
+		Birthday20: DateTimeMicro{Carbon: c},
+		Birthday21: DateTimeNano{Carbon: c},
+
+		Birthday22: Date{Carbon: c},
+		Birthday23: DateMilli{Carbon: c},
+		Birthday24: DateMicro{Carbon: c},
+		Birthday25: DateNano{Carbon: c},
+
+		Birthday26: Time{Carbon: c},
+		Birthday27: TimeMilli{Carbon: c},
+		Birthday28: TimeMicro{Carbon: c},
+		Birthday29: TimeNano{Carbon: c},
+
+		Birthday30: Timestamp{Carbon: c},
+		Birthday31: TimestampMilli{Carbon: c},
+		Birthday32: TimestampMicro{Carbon: c},
+		Birthday33: TimestampNano{Carbon: c},
 	}
 
 	loadErr := LoadTag(&person)
@@ -410,6 +651,11 @@ func TestCarbon_MarshalJSON_LoadTag(t *testing.T) {
 			actual: person.Birthday17.String(),
 			want:   "1596604455999999999",
 		},
+		{
+			name:   "birthday18",
+			actual: person.Birthday18.String(),
+			want:   "2020-08-05 13:14:15",
+		},
 	}
 
 	for _, tt := range tests {
@@ -439,7 +685,8 @@ func TestCarbon_UnmarshalJSON_LoadTag(t *testing.T) {
 		"birthday14":"1596604455",
 		"birthday15":"1596604455999",
 		"birthday16":"1596604455999999",
-		"birthday17":"1596604455999999999"
+		"birthday17":"1596604455999999999",
+		"birthday18":"2020-08-05 13:14:15"
 	}`
 	var person Person
 	loadErr := LoadTag(&person)
@@ -538,6 +785,11 @@ func TestCarbon_UnmarshalJSON_LoadTag(t *testing.T) {
 			actual: person.Birthday17.String(),
 			want:   "1596604455999999999",
 		},
+		{
+			name:   "birthday18",
+			actual: person.Birthday18.String(),
+			want:   "2020-08-05 13:14:15",
+		},
 	}
 
 	for _, tt := range tests {
@@ -547,6 +799,51 @@ func TestCarbon_UnmarshalJSON_LoadTag(t *testing.T) {
 	}
 }
 
+func TestCarbon_TimestampToInt64(t *testing.T) {
+	jsonStr := `{
+		"birthday30":1596604455,
+		"birthday31":1596604455999,
+		"birthday32":1596604455999999,
+		"birthday33":1596604455999999999
+	}`
+	var person Person
+	unmarshalErr := json.Unmarshal([]byte(jsonStr), &person)
+	assert.Nil(t, unmarshalErr)
+	fmt.Printf("json decode:\n%+v\n", person)
+
+	tests := []struct {
+		name   string
+		want   int64
+		actual int64
+	}{
+		{
+			name:   "birthday30",
+			actual: person.Birthday30.Int64(),
+			want:   1596604455,
+		},
+		{
+			name:   "birthday31",
+			actual: person.Birthday31.Int64(),
+			want:   1596604455999,
+		},
+		{
+			name:   "birthday32",
+			actual: person.Birthday32.Int64(),
+			want:   1596604455999999,
+		},
+		{
+			name:   "birthday33",
+			actual: person.Birthday33.Int64(),
+			want:   1596604455999999999,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.actual, "json.Unmarshal()")
+		})
+	}
+}
 func TestError_Json(t *testing.T) {
 	type Student struct {
 		Birthday1 Carbon `json:"birthday1" carbon:"dateTime"`
