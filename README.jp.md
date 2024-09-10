@@ -20,7 +20,7 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 #### インストール使用
 
-##### Golangバージョンは1.16以上です (推奨)
+##### Golangバージョンは1.17以上です (推奨)
 
 ```go
 // github倉庫を使う
@@ -35,7 +35,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Golangバージョンは1.16より小さいです (必要)
+##### Golangバージョンは1.17より小さいです (必要)
 
 ```go
 // github倉庫を使う
@@ -1599,8 +1599,8 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 
 1、v1とv2のバージョンの違いは何ですか？
 > APIのv1バージョンとv2バージョンに違いはありませんが `language.go`
-> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](https://github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.16`
-> の後に組み込みの標準ライブラリ [embed](https://pkg.go.dev/embed) によって実装されています。goバージョンが1.16より大きい場合は、v2バージョンを使用することをお勧めします。それ以外の場合は、v1バージョンを使用する必要があります。
+> での翻訳リソースファイルの実装は異なります。v1は、サードパーティの拡張ライブラリ [packr](https://github.com/gobuffalo/packr) によって実装されています，v2は、 `golang1.17`
+> の後に組み込みの標準ライブラリ [embed](https://pkg.go.dev/embed) によって実装されています。goバージョンが1.17より大きい場合は、v2バージョンを使用することをお勧めします。それ以外の場合は、v1バージョンを使用する必要があります。
 
 #### 参考文献
 

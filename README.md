@@ -21,7 +21,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 #### Installation
 
-##### Go version >= 1.16 (recommend)
+##### Go version >= 1.17 (recommend)
 
 ```go
 // By github
@@ -35,7 +35,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Go version < 1.16 (must)
+##### Go version < 1.17 (must)
 
 ```go
 // By github
@@ -1599,7 +1599,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### FAQ
 
 1、What is the difference between v1 and v2?
-> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files in `language.go` is different. The v1 is implemented by the third-party extension library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard library [embed](https://pkg.go.dev/embed) after `golang1.16`. If your golang version is `1.16+`, the v2 is recommended, otherwise, the v1 is required.
+> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files in `language.go` is different. The v1 is implemented by the third-party extension library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard library [embed](https://pkg.go.dev/embed) after `golang1.17`. If your golang version is `1.17+`, the v2 is recommended, otherwise, the v1 is required.
 
 #### References
 
