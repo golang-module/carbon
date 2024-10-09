@@ -21,7 +21,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 #### Installation
 
-##### Go version >= 1.17 (recommend)
+##### Go version >= 1.16 (recommend)
 
 ```go
 // By github
@@ -35,7 +35,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Go version < 1.17 (must)
+##### Go version < 1.16 (must)
 
 ```go
 // By github
@@ -1425,6 +1425,7 @@ The following languages are supported
 * [Hindi(hi)](./lang/hi.json "India"): translated by [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin")
 * [Polish(pl)](./lang/pl.json "Polish"): translated by [gouguoyin](https://github.com/gouguoyin "gouguoyin")
 * [Bulgarian(bg)](./lang/bg.json "Bulgarian"): translated by [yuksbg](https://github.com/yuksbg "yuksbg")
+* [Arabic(ar)](./lang/ar.json "Arabic"): translated by [zumoshi](https://github.com/zumoshi "zumoshi")
 
 The following methods are supported
 
@@ -1599,7 +1600,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### FAQ
 
 1、What is the difference between v1 and v2?
-> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files in `language.go` is different. The v1 is implemented by the third-party extension library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard library [embed](https://pkg.go.dev/embed) after `golang1.17`. If your golang version is `1.17+`, the v2 is recommended, otherwise, the v1 is required.
+> There is no difference between v1 and v2 of the API, but the implementation of the translation resource files in `language.go` is different. The v1 is implemented by the third-party extension library [packr](https://github.com/gobuffalo/packr), and the v2 is implemented by the standard library [embed](https://pkg.go.dev/embed) after `golang1.16`. If your golang version is `1.16+`, the v2 is recommended, otherwise, the v1 is required.
 
 #### References
 

@@ -18,7 +18,7 @@
 
 #### 安装使用
 
-##### Golang 版本大于等于 1.17 (推荐)
+##### Golang 版本大于等于 1.16 (推荐)
 
 ```go
 // 使用 github 库
@@ -32,7 +32,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Golang 版本小于 1.17 (必须)
+##### Golang 版本小于 1.16 (必须)
 
 ```go
 // 使用 github 库
@@ -1423,6 +1423,7 @@ person.CreatedAt4.Int64() // 1596604455999999999
 * [印地语(hi)](./lang/hi.json "印地语"): 由 [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") 翻译
 * [波兰语(pl)](./lang/pl.json "波兰语"): 由 [gouguoyin](https://github.com/gouguoyin "gouguoyin") 翻译
 * [保加利亚语(bg)](./lang/bg.json "保加利亚语"): 由 [yuksbg](https://github.com/yuksbg "yuksbg") 翻译
+* [阿拉伯语(ar)](./lang/bg.json "阿拉伯语"): 由 [zumoshi](https://github.com/yuksbg "zumoshi") 翻译
 
 目前支持的方法有
 
@@ -1599,7 +1600,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 1、v1 和 v2 版本有什么区别？
 > v1 和 v2 版本的 API 没有任何区别，只是 `language.go` 里翻译资源文件内嵌的实现方式不同，v1 版本是由第三方扩展库 [packr](https://github.com/gobuffalo/packr)
 > 实现的，
-> v2 版本是由 `golang1.17` 后内置标准库 [embed](https://pkg.go.dev/embed) 实现的。如果你的 go 版本大于 1.17推荐使用 v2 版本，否则必须使用 v1 版本。
+> v2 版本是由 `golang1.16` 后内置标准库 [embed](https://pkg.go.dev/embed) 实现的。如果你的 go 版本大于 1.16推荐使用 v2 版本，否则必须使用 v1 版本。
 
 2、window 系统下部署二进制文件时区报错
 
