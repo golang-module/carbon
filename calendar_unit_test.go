@@ -201,3 +201,43 @@ func TestCarbon_CreateFromPersian(t *testing.T) {
 		})
 	}
 }
+
+func TestCarbon_Issue246(t *testing.T) {
+	tests := []struct {
+		name   string
+		carbon Carbon
+		want   string
+	}{
+		{
+			name:   "case1",
+			carbon: Parse("2024-09-21 00:00:00", PRC),
+			want:   "2024-08-19 00:00:00",
+		},
+		{
+			name:   "case2",
+			carbon: Parse("2024-09-21 23:50:00", PRC),
+			want:   "2024-08-19 23:50:00",
+		},
+		{
+			name:   "case3",
+			carbon: Parse("2024-09-21 23:54:00", PRC),
+			want:   "2024-08-19 23:54:00",
+		},
+		{
+			name:   "case4",
+			carbon: Parse("2024-09-21 23:55:00", PRC),
+			want:   "2024-08-19 23:55:00",
+		},
+		{
+			name:   "case5",
+			carbon: Parse("2024-09-21 23:59:00", PRC),
+			want:   "2024-08-19 23:59:00",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.carbon.Lunar().String(), "Lunar()")
+		})
+	}
+}
