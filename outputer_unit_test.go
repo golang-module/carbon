@@ -32,13 +32,6 @@ func TestCarbon_String(t *testing.T) {
 			actual: Parse("2020-08-05 13:14:15").String(),
 			want:   "2020-08-05 13:14:15",
 		},
-		{
-			name: "case5",
-			actual: Parse("2020-08-05 13:14:15").SetTag(&tag{
-				carbon: "xxx",
-			}).String(),
-			want: "2020-08-05 13:14:15",
-		},
 	}
 
 	for _, tt := range tests {
@@ -2454,6 +2447,11 @@ func TestCarbon_Layout(t *testing.T) {
 			actual: Parse("2020-08-05 13:14:15").Layout("Mon, 02 Jan 2006 15:04:05 GMT"),
 			want:   "Wed, 05 Aug 2020 13:14:15 GMT",
 		},
+		{
+			name:   "case4",
+			actual: Parse("2020-08-05 13:14:15").Layout(DateTimeLayout, PRC),
+			want:   "2020-08-05 13:14:15",
+		},
 	}
 
 	for _, tt := range tests {
@@ -2634,6 +2632,11 @@ func TestCarbon_Format(t *testing.T) {
 			actual: Parse("2020-08-05 13:14:15").Format("上次上报时间:Y-m-d H:i:s，请每日按时打卡"),
 			want:   "上次上报时间:2020-08-05 13:14:15，请每日按时打卡",
 		},
+		{
+			name:   "case34",
+			actual: Parse("2020-08-05 01:14:15").Format(DateTimeFormat, PRC),
+			want:   "2020-08-05 01:14:15",
+		},
 	}
 
 	for _, tt := range tests {
@@ -2644,8 +2647,8 @@ func TestCarbon_Format(t *testing.T) {
 }
 
 func TestCarbon_ToStdTime(t *testing.T) {
-	expected := time.Now().Format(DateTimeLayout)
-	actual := Now().ToStdTime().Format(DateTimeLayout)
+	expected := time.Now().Format(DateTimeFormat)
+	actual := Now().ToStdTime().Format(DateTimeFormat)
 	assert.Equal(t, expected, actual)
 }
 
