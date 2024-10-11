@@ -63,7 +63,7 @@ carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.PRC,
   WeekStartsAt: carbon.Sunday,
-  Locale: "jp",
+  Locale: "jp", // 値の範囲：langディレクトリ下の翻訳ファイル名、ファイル接尾辞を含まない
 })
 ```
 

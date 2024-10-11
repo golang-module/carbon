@@ -62,7 +62,7 @@ carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.Local,
   WeekStartsAt: carbon.Sunday,
-  Locale: "en",
+  Locale: "en", // Value range: Translate file name in the lang directory, excluding file suffix
 })
 ```
 > Suggest setting in the entry file such as `main.go`

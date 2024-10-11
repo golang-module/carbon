@@ -59,7 +59,7 @@ carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.PRC,
   WeekStartsAt: carbon.Sunday,
-  Locale: "zh-CN",
+  Locale: "zh-CN", // 取值范围：lang 目录下翻译文件名，不包含文件后缀
 })
 ```
 > 建议在入口文件如 `main.go` 中设置
