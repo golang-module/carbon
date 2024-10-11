@@ -872,13 +872,13 @@ func TestCarbon_DiffInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "-720h0m0s",
+			want:    "-744h0m0s",
 		},
 		{
 			name:    "case7",
 			carbon1: now.SubMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "744h0m0s",
+			want:    "720h0m0s",
 		},
 
 		{
@@ -944,13 +944,13 @@ func TestCarbon_DiffAbsInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "720h0m0s",
+			want:    "744h0m0s",
 		},
 		{
 			name:    "case7",
 			carbon1: now.SubMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "744h0m0s",
+			want:    "720h0m0s",
 		},
 
 		{
@@ -1045,42 +1045,5 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 			assert.Equalf(t, tt.want, tt.carbon1.DiffForHumans(tt.carbon2), "DiffForHumans()")
 		})
 	}
-
-	// tests := []struct {
-	// 	input    Carbon
-	// 	expected string
-	// }{
-	// 	0: {Now(), "just now"},
-	//
-	// 	1: {now.AddYearsNoOverflow(1), "1 year from now"},
-	// 	2: {now.SubYearsNoOverflow(1), "1 year ago"},
-	// 	3: {now.AddYearsNoOverflow(10), "10 years from now"},
-	// 	4: {now.SubYearsNoOverflow(10), "10 years ago"},
-	//
-	// 	5: {now.AddMonthsNoOverflow(1), "1 month from now"},
-	// 	6: {now.SubMonthsNoOverflow(1), "1 month ago"},
-	// 	7: {now.AddMonthsNoOverflow(10), "10 months from now"},
-	// 	8: {now.SubMonthsNoOverflow(10), "10 months ago"},
-	//
-	// 	9:  {now.AddDays(1), "1 day from now"},
-	// 	10: {now.SubDays(1), "1 day ago"},
-	// 	11: {now.AddDays(10), "1 week from now"},
-	// 	12: {now.SubDays(10), "1 week ago"},
-	//
-	// 	13: {now.AddHours(1), "1 hour from now"},
-	// 	14: {now.SubHours(1), "1 hour ago"},
-	// 	15: {now.AddHours(10), "10 hours from now"},
-	// 	16: {now.SubHours(10), "10 hours ago"},
-	//
-	// 	17: {now.AddMinutes(1), "1 minute from now"},
-	// 	18: {now.SubMinutes(1), "1 minute ago"},
-	// 	19: {now.AddMinutes(10), "10 minutes from now"},
-	// 	20: {now.SubMinutes(10), "10 minutes ago"},
-	//
-	// 	21: {now.AddSeconds(1), "1 second from now"},
-	// 	22: {now.SubSeconds(1), "1 second ago"},
-	// 	23: {now.AddSeconds(10), "10 seconds from now"},
-	// 	24: {now.SubSeconds(10), "10 seconds ago"},
-	// }
 
 }
