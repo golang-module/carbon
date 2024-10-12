@@ -18,7 +18,7 @@
 
 #### 安装使用
 
-##### Golang 版本大于等于 1.16 (推荐)
+##### Golang 版本大于等于 1.17 (推荐)
 
 ```go
 // 使用 github 库
@@ -32,7 +32,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Golang 版本小于 1.16 (必须)
+##### Golang 版本小于 1.17 (必须)
 
 ```go
 // 使用 github 库

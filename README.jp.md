@@ -20,7 +20,7 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 #### インストール使用
 
-##### Golangバージョンは1.16以上です (推奨)
+##### Golangバージョンは1.17以上です (推奨)
 
 ```go
 // github倉庫を使う
@@ -35,7 +35,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Golangバージョンは1.16より小さいです (必要)
+##### Golangバージョンは1.17より小さいです (必要)
 
 ```go
 // github倉庫を使う

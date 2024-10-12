@@ -21,7 +21,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 #### Installation
 
-##### Go version >= 1.16 (recommend)
+##### Go version >= 1.17 (recommend)
 
 ```go
 // By github
@@ -35,7 +35,7 @@ go get -u gitee.com/golang-module/carbon/v2
 import "gitee.com/golang-module/carbon/v2"
 ```
 
-##### Go version < 1.16 (must)
+##### Go version < 1.17 (must)
 
 ```go
 // By github
@@ -62,7 +62,7 @@ carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.Local,
   WeekStartsAt: carbon.Sunday,
-  Locale: "en", // Value range: Translate file name in the lang directory, excluding file suffix
+  Locale: "en", // value range: translate file name in the lang directory, excluding file suffix
 })
 ```
 > Suggest setting in the entry file such as `main.go`
