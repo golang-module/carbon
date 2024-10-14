@@ -345,8 +345,6 @@ func TestCarbon_TimestampToInt64(t *testing.T) {
 
 // https://github.com/golang-module/carbon/issues/225
 func TestCarbon_Issue225(t *testing.T) {
-	var person Person
-
 	emptyStr := `{
 		"birthday1":"",
 		"birthday2":"",
@@ -366,9 +364,6 @@ func TestCarbon_Issue225(t *testing.T) {
 		"birthday16":"",
 		"birthday17":""
 	}`
-	emptyErr := json.Unmarshal([]byte(emptyStr), &person)
-	assert.Nil(t, emptyErr)
-
 	nullStr := `{
 		"birthday1":null,
 		"birthday2":null,
@@ -388,6 +383,29 @@ func TestCarbon_Issue225(t *testing.T) {
 		"birthday16":null,
 		"birthday17":null
 	}`
+
+	var person Person
+	emptyErr := json.Unmarshal([]byte(emptyStr), &person)
+	assert.Nil(t, emptyErr)
+
 	nullErr := json.Unmarshal([]byte(nullStr), &person)
 	assert.Nil(t, nullErr)
+}
+
+// https://github.com/golang-module/carbon/issues/240
+func TestCarbon_Issue240(t *testing.T) {
+	jsonStr := `{
+		"birthday1":"",
+		"birthday2":null
+	}`
+
+	var person Person
+	emptyErr := json.Unmarshal([]byte(jsonStr), &person)
+	assert.Nil(t, emptyErr)
+	assert.Equal(t, "0001-01-01 00:00:00 +0000 UTC", person.Birthday1.StdTime().String())
+	assert.Equal(t, "0001-01-01 00:00:00 +0000 UTC", person.Birthday2.StdTime().String())
+	assert.Equal(t, true, person.Birthday1.IsZero())
+	assert.Equal(t, true, person.Birthday2.IsZero())
+	assert.Equal(t, false, person.Birthday1.IsValid())
+	assert.Equal(t, false, person.Birthday2.IsValid())
 }
