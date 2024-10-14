@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.4.0"
+const Version = "2.4.1"
 
 // timezone constants
 // 时区常量
