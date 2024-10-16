@@ -1355,6 +1355,7 @@ person.CreatedAt4.Int64() // 1596604455999999999
 * [ポーランド語(pl)](./lang/pl.json "ポーランド語"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
 * [ブルガリア語(bg)](./lang/bg.json "ブルガリア語"): 由 [yuksbg](https://github.com/yuksbg "yuksbg") 翻译
 * [アラビア語(ar)](./lang/ar.json "アラビア語"): 由 [zumoshi](https://github.com/yuksbg "zumoshi") 翻译
+* [ハンガリー語(hu)](./lang/hu.json "ハンガリー語"): 由 [kenlas](https://github.com/kenlas "kenlas") 翻译
 
 現在サポートされている方法
 
