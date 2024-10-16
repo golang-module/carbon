@@ -1357,8 +1357,7 @@ The following languages are supported
 * [Arabic(ar)](./lang/ar.json "Arabic"): translated by [zumoshi](https://github.com/zumoshi "zumoshi")
 * [Hungarian(hu)](./lang/hu.json "Hungarian"): translated by [kenlas](https://github.com/kenlas "kenlas")
 
-
-* The following methods are supported
+The following methods are supported
 
 * `Constellation()`：get constellation name, like `Aries`
 * `Season()`：get season name, like `Spring`
