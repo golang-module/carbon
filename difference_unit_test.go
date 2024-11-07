@@ -872,13 +872,13 @@ func TestCarbon_DiffInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "-744h0m0s",
+			want:    "-720h0m0s",
 		},
 		{
 			name:    "case7",
 			carbon1: now.SubMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "720h0m0s",
+			want:    "744h0m0s",
 		},
 
 		{
@@ -944,13 +944,13 @@ func TestCarbon_DiffAbsInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "744h0m0s",
+			want:    "720h0m0s",
 		},
 		{
 			name:    "case7",
 			carbon1: now.SubMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "720h0m0s",
+			want:    "744h0m0s",
 		},
 
 		{
