@@ -1359,6 +1359,7 @@ The following languages are supported
 * [Bulgarian(bg)](./lang/bg.json "Bulgarian"): translated by [yuksbg](https://github.com/yuksbg "yuksbg")
 * [Arabic(ar)](./lang/ar.json "Arabic"): translated by [zumoshi](https://github.com/zumoshi "zumoshi")
 * [Hungarian(hu)](./lang/hu.json "Hungarian"): translated by [kenlas](https://github.com/kenlas "kenlas")
+* [Dansk(dk)](./lang/dk.json "Dansk"): translated by [Munk91](https://github.com/Munk91 "Munk91")
 
 The following methods are supported
 
