@@ -185,7 +185,7 @@ func TestCarbon_SetLocale(t *testing.T) {
 		{
 			name:   "case5",
 			carbon: Parse("2020-08-05 13:14:15").SetLocale("jp"),
-			want:   "はちがつ",
+			want:   "8月",
 		},
 		{
 			name:   "case6",
