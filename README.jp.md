@@ -1,8 +1,8 @@
 # Carbon  #
 
 [![Carbon Release](https://img.shields.io/github/release/dromara/carbon.svg)](https://github.com/dromara/carbon/releases)
-[![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/dromara/carbon/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/dromara/carbon/v2)
+[![Go Test](https://github.com/dromara/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/dromara/carbon/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dromara/carbon/v2)](https://goreportcard.com/report/github.com/dromara/carbon/v2)
 [![Go Coverage](https://codecov.io/gh/dromara/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/dromara/carbon)
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/dromara/carbon/v2)
 [![License](https://img.shields.io/github/license/dromara/carbon)](https://github.com/dromara/carbon/blob/master/LICENSE)
@@ -17,9 +17,9 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 #### 倉庫所在地
 
-[github.com/dromara/carbon](https://github.com/golang-module/carbon "github.com/golang-module/carbon")
+[github.com/dromara/carbon](https://github.com/dromara/carbon "github.com/dromara/carbon")
 
-[gitee.com/dromara/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
+[gitee.com/dromara/carbon](https://gitee.com/dromara/carbon "gitee.com/dromara/carbon")
 
 [gitcode.com/dromara/carbon](https://gitcode.com/dromara/carbon "gitcode.com/dromara/carbon")
 
@@ -29,29 +29,29 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 ```go
 // github倉庫を使う
-go get -u github.com/golang-module/carbon/v2
+go get -u github.com/dromara/carbon/v2
 
-import "github.com/golang-module/carbon/v2"
+import "github.com/dromara/carbon/v2"
 
 
 // gitee倉庫を使う
-go get -u gitee.com/golang-module/carbon/v2
+go get -u gitee.com/dromara/carbon/v2
 
-import "gitee.com/golang-module/carbon/v2"
+import "gitee.com/dromara/carbon/v2"
 ```
 
 ##### Golangバージョンは1.17より小さいです (必要)
 
 ```go
 // github倉庫を使う
-go get -u github.com/golang-module/carbon
+go get -u github.com/dromara/carbon
 
-import "github.com/golang-module/carbon"
+import "github.com/dromara/carbon"
 
 // gitee倉庫を使う
-go get -u gitee.com/golang-module/carbon
+go get -u gitee.com/dromara/carbon
 
-import "gitee.com/golang-module/carbon"
+import "gitee.com/dromara/carbon"
 ```
 
 > v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください，v1 は更新されなくなり、維持されるだけです。
@@ -1553,7 +1553,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### 寄稿者
 `Carbon` に貢献してくれた以下のすべてに感謝します：
 
-<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=100&columns=16"/></a>
+<a href="https://github.com/dromara/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=dromara/carbon&max=100&columns=16"/></a>
 
 #### スポンサー
 

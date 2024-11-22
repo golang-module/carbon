@@ -147,7 +147,7 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 	}
 }
 
-// https://github.com/golang-module/carbon/issues/202
+// https://github.com/dromara/carbon/issues/202
 func TestCarbon_Issue202(t *testing.T) {
 	tests := []struct {
 		name   string
@@ -193,7 +193,7 @@ func TestError_ParseByFormat(t *testing.T) {
 	assert.NotNil(t, ParseByFormat("xxx", "Y-m-d", PRC).Error, "It should catch an exception in ParseByFormat")
 }
 
-// https://github.com/golang-module/carbon/issues/206
+// https://github.com/dromara/carbon/issues/206
 func TestCarbon_Issue206(t *testing.T) {
 	tests := []struct {
 		name   string
@@ -230,7 +230,7 @@ func TestCarbon_Issue206(t *testing.T) {
 	}
 }
 
-// https://github.com/golang-module/carbon/issues/232
+// https://github.com/dromara/carbon/issues/232
 func TestCarbon_Issue232(t *testing.T) {
 	tests := []struct {
 		name   string

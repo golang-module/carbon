@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/golang-module/carbon/v2/calendar"
+	"github.com/dromara/carbon/v2/calendar"
 )
 
 var (

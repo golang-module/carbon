@@ -2652,7 +2652,7 @@ func TestCarbon_ToStdTime(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-// https://github.com/golang-module/carbon/issues/200
+// https://github.com/dromara/carbon/issues/200
 func TestCarbon_Issue200(t *testing.T) {
 	tests1 := []struct {
 		name   string

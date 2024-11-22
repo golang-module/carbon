@@ -202,7 +202,7 @@ func TestCarbon_CreateFromPersian(t *testing.T) {
 	}
 }
 
-// https://github.com/golang-module/carbon/issues/246
+// https://github.com/dromara/carbon/issues/246
 func TestCarbon_Issue246(t *testing.T) {
 	tests := []struct {
 		name   string

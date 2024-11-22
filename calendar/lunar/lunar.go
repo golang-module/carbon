@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/golang-module/carbon/v2/calendar"
+	"github.com/dromara/carbon/v2/calendar"
 )
 
 var (
@@ -167,7 +167,7 @@ func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.isLeapMonth {
 		offset += days
 	}
-	// https://github.com/golang-module/carbon/issues/219
+	// https://github.com/dromara/carbon/issues/219
 	ts := int64(offset+l.day)*86400 - int64(2206512000) + int64(l.hour)*3600 + int64(l.minute)*60 + int64(l.second)
 	g.Time = time.Unix(ts, 0)
 	return

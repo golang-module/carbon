@@ -343,7 +343,7 @@ func TestCarbon_TimestampToInt64(t *testing.T) {
 	}
 }
 
-// https://github.com/golang-module/carbon/issues/225
+// https://github.com/dromara/carbon/issues/225
 func TestCarbon_Issue225(t *testing.T) {
 	emptyStr := `{
 		"birthday1":"",
@@ -392,7 +392,7 @@ func TestCarbon_Issue225(t *testing.T) {
 	assert.Nil(t, nullErr)
 }
 
-// https://github.com/golang-module/carbon/issues/240
+// https://github.com/dromara/carbon/issues/240
 func TestCarbon_Issue240(t *testing.T) {
 	jsonStr := `{
 		"birthday1":"",

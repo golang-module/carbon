@@ -6,8 +6,8 @@ import (
 	"math"
 	"time"
 
-	"github.com/golang-module/carbon/v2/calendar"
-	"github.com/golang-module/carbon/v2/calendar/julian"
+	"github.com/dromara/carbon/v2/calendar"
+	"github.com/dromara/carbon/v2/calendar/julian"
 )
 
 var (

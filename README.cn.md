@@ -1,8 +1,8 @@
 # Carbon  #
 
 [![Carbon Release](https://img.shields.io/github/release/dromara/carbon.svg)](https://github.com/dromara/carbon/releases)
-[![Go Test](https://github.com/golang-module/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/dromara/carbon/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/golang-module/carbon/v2)](https://goreportcard.com/report/github.com/dromara/carbon/v2)
+[![Go Test](https://github.com/dromara/carbon/actions/workflows/test.yml/badge.svg)](https://github.com/dromara/carbon/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dromara/carbon/v2)](https://goreportcard.com/report/github.com/dromara/carbon/v2)
 [![Go Coverage](https://codecov.io/gh/dromara/carbon/branch/master/graph/badge.svg)](https://codecov.io/gh/dromara/carbon)
 [![Carbon Doc](https://img.shields.io/badge/go.dev-reference-brightgreen?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/dromara/carbon/v2)
 [![License](https://img.shields.io/github/license/dromara/carbon)](https://github.com/dromara/carbon/blob/master/LICENSE)
@@ -27,28 +27,28 @@
 
 ```go
 // 使用 github 库
-go get -u github.com/golang-module/carbon/v2
+go get -u github.com/dromara/carbon/v2
 
-import "github.com/golang-module/carbon/v2"
+import "github.com/dromara/carbon/v2"
 
 // 使用 gitee 库
-go get -u gitee.com/golang-module/carbon/v2
+go get -u gitee.com/dromara/carbon/v2
 
-import "gitee.com/golang-module/carbon/v2"
+import "gitee.com/dromara/carbon/v2"
 ```
 
 ##### Golang 版本小于 1.17 (必须)
 
 ```go
 // 使用 github 库
-go get -u github.com/golang-module/carbon
+go get -u github.com/dromara/carbon
 
-import "github.com/golang-module/carbon"
+import "github.com/dromara/carbon"
 
 // 使用 gitee 库
-go get -u gitee.com/golang-module/carbon
+go get -u gitee.com/dromara/carbon
 
-import "gitee.com/golang-module/carbon"
+import "gitee.com/dromara/carbon"
 ```
 
 > v1 和 v2 版本区别请查阅 <a href="#常见问题">常见问题</a>，v1 版本不再更新，仅维护。
@@ -1569,7 +1569,7 @@ COPY ./zoneinfo.zip /usr/local/go/lib/time/zoneinfo.zip
 #### 贡献者
 感谢以下所有为 `Carbon` 做出贡献的人：
 
-<a href="https://github.com/golang-module/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=golang-module/carbon&max=100&columns=16"/></a>
+<a href="https://github.com/dromara/carbon/graphs/contributors"><img src="https://contrib.rocks/image?repo=dromara/carbon&max=100&columns=16"/></a>
 
 #### 赞助
 
