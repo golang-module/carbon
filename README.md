@@ -24,7 +24,7 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 
 #### Installation
 
-Go >= 1.20
+##### go version >= 1.17
 
 ```go
 // By github
