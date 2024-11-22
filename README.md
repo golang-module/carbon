@@ -36,23 +36,18 @@ import "github.com/dromara/carbon/v2"
 go get -u gitee.com/dromara/carbon/v2
 
 import "gitee.com/dromara/carbon/v2"
+
+// By gitcode
+go get -u gitcode.com/dromara/carbon/v2
+
+import "gitee.com/dromara/gitcode/v2"
 ```
 
-##### Go version < 1.17 (must)
+Because `carbon` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository url has changed. If the previous repository used was `golang-module/carbon`, please replace the original repository with the new repository in `go.mod`, for example
 
 ```go
-// By github
-go get -u github.com/dromara/carbon
-
-import "github.com/dromara/carbon"
-
-// By gitee
-go get -u gitee.com/dromara/carbon
-
-import "gitee.com/dromara/carbon"
+go mod edit -replace github.com/golang-module/carbon=github.com/dromara/carbon
 ```
-
-> Please refer to <a href="#faq">FAQ</a> for the difference between v1 and v2, v1 is no longer updated, only maintained.
 
 #### Usage and example
 

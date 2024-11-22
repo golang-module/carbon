@@ -28,35 +28,29 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 ##### Golangバージョンは1.17以上です (推奨)
 
 ```go
-// github倉庫を使う
+// github 倉庫を使う
 go get -u github.com/dromara/carbon/v2
 
 import "github.com/dromara/carbon/v2"
 
 
-// gitee倉庫を使う
+// gitee 倉庫を使う
 go get -u gitee.com/dromara/carbon/v2
 
 import "gitee.com/dromara/carbon/v2"
+
+// gitcode 倉庫を使う
+go get -u gitcode.com/dromara/carbon/v2
+
+import "gitcode.com/dromara/carbon/v2"
 ```
 
-##### Golangバージョンは1.17より小さいです (必要)
+`carbon` は [dromara](https://dromara.org/ "dromara") 組織に寄付されたため、倉庫の住所が変更されました。以前使用していた倉庫の住所が `golang-module/carbon` であれば、`go.mod`で元の住所を新しい住所に変更してください
 
 ```go
-// github倉庫を使う
-go get -u github.com/dromara/carbon
-
-import "github.com/dromara/carbon"
-
-// gitee倉庫を使う
-go get -u gitee.com/dromara/carbon
-
-import "gitee.com/dromara/carbon"
+go mod edit -replace github.com/golang-module/carbon=github.com/dromara/carbon
 ```
 
-> v1とv2の違いについては、<a href="#人気のある問題">人気のある問題</a>をご覧ください，v1 は更新されなくなり、維持されるだけです。
-
-人気のある問題
 #### 使い方の例
 
 > 現在時刻が 2020-08-05 13:14:15.999999999 +0800 CST であると仮定します。

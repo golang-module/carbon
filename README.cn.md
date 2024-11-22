@@ -35,23 +35,18 @@ import "github.com/dromara/carbon/v2"
 go get -u gitee.com/dromara/carbon/v2
 
 import "gitee.com/dromara/carbon/v2"
+
+// 使用 gitcode 库
+go get -u gitcode.com/dromara/carbon/v2
+
+import "gitcode.com/dromara/carbon/v2"
 ```
 
-##### Golang 版本小于 1.17 (必须)
+由于 `carbon` 已经捐赠给了 [dromara](https://dromara.org/ "dromara") 组织，仓库地址发生了改变，如果之前用的仓库地址是 `golang-module/carbon`，请在 `go.mod` 里将原地址更换为新地址，如
 
 ```go
-// 使用 github 库
-go get -u github.com/dromara/carbon
-
-import "github.com/dromara/carbon"
-
-// 使用 gitee 库
-go get -u gitee.com/dromara/carbon
-
-import "gitee.com/dromara/carbon"
+go mod edit -replace github.com/golang-module/carbon=github.com/dromara/carbon
 ```
-
-> v1 和 v2 版本区别请查阅 <a href="#常见问题">常见问题</a>，v1 版本不再更新，仅维护。
 
 #### 用法示例
 
