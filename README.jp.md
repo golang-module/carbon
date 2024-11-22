@@ -48,7 +48,7 @@ import "gitcode.com/dromara/carbon/v2"
 `carbon` は [dromara](https://dromara.org/ "dromara") 組織に寄付されたため、倉庫の住所が変更されました。以前使用していた倉庫の住所が `golang-module/carbon` であれば、`go.mod`で元の住所を新しい住所に変更してください
 
 ```go
-go mod edit -replace github.com/golang-module/carbon=github.com/dromara/carbon
+go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbon/v2
 ```
 
 #### 使い方の例

@@ -46,7 +46,7 @@ import "gitee.com/dromara/gitcode/v2"
 Because `carbon` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository url has changed. If the previous repository used was `golang-module/carbon`, please replace the original repository with the new repository in `go.mod`, for example
 
 ```go
-go mod edit -replace github.com/golang-module/carbon=github.com/dromara/carbon
+go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbon/v2
 ```
 
 #### Usage and example
