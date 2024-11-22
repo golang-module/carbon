@@ -39,7 +39,7 @@ go get -u gitcode.com/dromara/carbon/v2
 import "gitcode.com/dromara/carbon/v2"
 ```
 
-`carbon` 已经捐赠给了 [dromara](https://dromara.org/ "dromara") 组织，仓库地址发生了改变，如果之前用的仓库地址是 `golang-module/carbon`，请在 `go.mod` 里将原地址更换为新地址，或执行如下命令
+`Carbon` 已经捐赠给了 [dromara](https://dromara.org/ "dromara") 组织，仓库地址发生了改变，如果之前用的仓库地址是 `golang-module/carbon`，请在 `go.mod` 里将原地址更换为新地址，或执行如下命令
 
 ```go
 go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbon/v2

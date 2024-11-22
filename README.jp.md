@@ -41,7 +41,7 @@ go get -u gitcode.com/dromara/carbon/v2
 import "gitcode.com/dromara/carbon/v2"
 ```
 
-`carbon` は [dromara](https://dromara.org/ "dromara") 組織に寄付されたため、倉庫の住所が変更されました。以前使用していた倉庫の住所が `golang-module/carbon` であれば、`go.mod`で元の住所を新しい住所に変更，または次のコマンドを実行します
+`Carbon` は [dromara](https://dromara.org/ "dromara") 組織に寄付されたため、倉庫の住所が変更されました。以前使用していた倉庫の住所が `golang-module/carbon` であれば、`go.mod`で元の住所を新しい住所に変更，または次のコマンドを実行します
 
 ```go
 go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbon/v2
