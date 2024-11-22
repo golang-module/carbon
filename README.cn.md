@@ -28,17 +28,14 @@
 ```go
 // 使用 github 库
 go get -u github.com/dromara/carbon/v2
-
 import "github.com/dromara/carbon/v2"
 
 // 使用 gitee 库
 go get -u gitee.com/dromara/carbon/v2
-
 import "gitee.com/dromara/carbon/v2"
 
 // 使用 gitcode 库
 go get -u gitcode.com/dromara/carbon/v2
-
 import "gitcode.com/dromara/carbon/v2"
 ```
 

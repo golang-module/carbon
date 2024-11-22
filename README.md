@@ -29,17 +29,14 @@ by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go"
 ```go
 // By github
 go get -u github.com/dromara/carbon/v2
-
 import "github.com/dromara/carbon/v2"
 
 // By gitee
 go get -u gitee.com/dromara/carbon/v2
-
 import "gitee.com/dromara/carbon/v2"
 
 // By gitcode
 go get -u gitcode.com/dromara/carbon/v2
-
 import "gitee.com/dromara/gitcode/v2"
 ```
 

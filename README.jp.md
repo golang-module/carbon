@@ -30,18 +30,15 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 ```go
 // github 倉庫を使う
 go get -u github.com/dromara/carbon/v2
-
 import "github.com/dromara/carbon/v2"
 
 
 // gitee 倉庫を使う
 go get -u gitee.com/dromara/carbon/v2
-
 import "gitee.com/dromara/carbon/v2"
 
 // gitcode 倉庫を使う
 go get -u gitcode.com/dromara/carbon/v2
-
 import "gitcode.com/dromara/carbon/v2"
 ```
 
