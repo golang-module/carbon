@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"log"
 	"testing"
 )
 
@@ -408,4 +409,21 @@ func TestCarbon_Issue240(t *testing.T) {
 	assert.Equal(t, true, person.Birthday2.IsZero())
 	assert.Equal(t, false, person.Birthday1.IsValid())
 	assert.Equal(t, false, person.Birthday2.IsValid())
+}
+
+// https://github.com/dromara/carbon/issues/243
+func TestCarbon_Issue243(t *testing.T) {
+	type Project struct {
+		StartDate DateTime `gorm:"column:start_date" json:"startDate"`
+		EndDate   DateTime `gorm:"column:end_date" json:"endDate"`
+	}
+
+	project := new(Project)
+	jsonStr := `{"startDate":"2024-10-01 00:00:00","endDate":"2024-10-31 23:59:59"}`
+	err := json.Unmarshal([]byte(jsonStr), &project)
+	if err != nil {
+		log.Fatal(err)
+	}
+	assert.Equal(t, "Local", project.StartDate.Location())
+	assert.Equal(t, "Local", project.EndDate.Location())
 }
