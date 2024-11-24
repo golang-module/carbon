@@ -1048,7 +1048,7 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 
 }
 
-// https://github.com/golang-module/carbon/issues/255
+// https://github.com/dromara/carbon/issues/255
 func TestCarbon_Issue255(t *testing.T) {
 	tests := []struct {
 		name  string
