@@ -127,7 +127,7 @@ func TestCarbon_DiffInMonths(t *testing.T) {
 			name:    "case4",
 			carbon1: Parse("2020-08-05 13:14:15"),
 			carbon2: Parse("2018-08-28 13:14:59"),
-			want:    -24,
+			want:    -23,
 		},
 	}
 
@@ -167,7 +167,7 @@ func TestCarbon_DiffAbsInMonths(t *testing.T) {
 			name:    "case4",
 			carbon1: Parse("2020-08-05 13:14:15"),
 			carbon2: Parse("2018-08-28 13:14:59"),
-			want:    24,
+			want:    23,
 		},
 	}
 
@@ -1046,4 +1046,76 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 		})
 	}
 
+}
+
+// https://github.com/golang-module/carbon/issues/255
+func TestCarbon_Issue255(t *testing.T) {
+	tests := []struct {
+		name  string
+		start Carbon
+		end   Carbon
+		want  int64
+	}{
+		{
+			name:  "case1",
+			start: Parse("2024-10-11"),
+			end:   Parse("2024-11-10"),
+			want:  0,
+		},
+		{
+			name:  "case2",
+			start: Parse("2024-11-10"),
+			end:   Parse("2024-10-11"),
+			want:  0,
+		},
+
+		{
+			name:  "case3",
+			start: Parse("2024-10-11"),
+			end:   Parse("2024-11-11"),
+			want:  1,
+		},
+		{
+			name:  "case4",
+			start: Parse("2024-11-11"),
+			end:   Parse("2024-10-11"),
+			want:  -1,
+		},
+		{
+			name:  "case5",
+			start: Parse("2024-10-11 23:59:00"),
+			end:   Parse("2024-11-11 00:00:00"),
+			want:  0,
+		},
+		{
+			name:  "case6",
+			start: Parse("2024-11-11 00:00:00"),
+			end:   Parse("2024-10-11 23:59:00"),
+			want:  0,
+		},
+		{
+			name:  "case7",
+			start: Parse("2024-10-11 00:00:00"),
+			end:   Parse("2024-11-11 23:59:59"),
+			want:  1,
+		},
+		{
+			name:  "case8",
+			start: Parse("2024-11-11 23:59:59"),
+			end:   Parse("2024-10-11 00:00:00"),
+			want:  -1,
+		},
+		{
+			name:  "case9",
+			start: Parse("2020-08-05 13:14:15"),
+			end:   Parse("2018-08-28 13:14:59"),
+			want:  -23,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.start.DiffInMonths(tt.end), "DiffInMonths()")
+		})
+	}
 }

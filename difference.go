@@ -40,20 +40,15 @@ func (c Carbon) DiffAbsInYears(carbon ...Carbon) int64 {
 // DiffInMonths gets the difference in months.
 // 相差多少月
 func (c Carbon) DiffInMonths(carbon ...Carbon) int64 {
+	start := c
 	end := c.Now()
-	if c.IsSetTestNow() {
+	if start.IsSetTestNow() {
 		end = CreateFromTimestampNano(c.testNow, c.Location())
 	}
 	if len(carbon) > 0 {
 		end = carbon[0]
 	}
-	if c.DiffAbsInDays(end) < 28 {
-		return 0
-	}
-	startYear, startMonth, _ := c.Date()
-	endYear, endMonth, _ := end.Date()
-	diffYear, diffMonth := endYear-startYear, endMonth-startMonth
-	return int64(diffYear*MonthsPerYear + diffMonth)
+	return getDiffInMonths(start, end)
 }
 
 // DiffAbsInMonths gets the difference in months with absolute value.
@@ -274,4 +269,30 @@ func (c Carbon) diff(end Carbon) (unit string, value int64) {
 		value = 0
 	}
 	return
+}
+
+func getDiffInMonths(c1 Carbon, c2 Carbon) int64 {
+	if c1.Month() == c2.Month() && c1.Year() == c2.Year() {
+		return 0
+	}
+	diffInDays := c1.DiffInDays(c2)
+	start, end := c2, c1
+	reg := -int64(1)
+	if diffInDays > 0 {
+		start, end = c1, c2
+		reg = int64(1)
+	}
+	months := getMonthsFromMonthToMonth(start, end, 0)
+	return months * reg
+}
+
+func getMonthsFromMonthToMonth(c1 Carbon, c2 Carbon, months int64) int64 {
+	date := c1.AddDays(c1.DaysInMonth())
+	diffInDays := date.DiffInDays(c2)
+	diffInSeconds := date.DiffInSeconds(c2)
+	if diffInDays < 0 || diffInDays == 0 && diffInSeconds < 0 {
+		return months
+	}
+	months += 1
+	return getMonthsFromMonthToMonth(date, c2, months)
 }
