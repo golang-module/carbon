@@ -105,7 +105,7 @@ type TimestampNano struct {
 // MarshalJSON implements the interface json.Marshal for Carbon struct.
 // 实现 json.Marshaler 接口
 func (c Carbon) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, c.Layout(c.layout, c.Location()))), nil
+	return []byte(fmt.Sprintf(`"%s"`, c.Layout(c.layout))), nil
 }
 
 // UnmarshalJSON implements the interface json.Unmarshal for Carbon struct.
