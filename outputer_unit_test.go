@@ -54,18 +54,18 @@ func TestCarbon_GoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15").GoString(),
-			want:   "time.Date(0, time.January, 1, 13, 14, 15, 0, time.Local)",
+			actual: Parse("0000-01-01 13:14:15", UTC).GoString(),
+			want:   "time.Date(0, time.January, 1, 13, 14, 15, 0, time.UTC)",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15").GoString(),
-			want:   "time.Date(1, time.January, 1, 13, 14, 15, 0, time.Local)",
+			actual: Parse("0001-01-01 13:14:15", UTC).GoString(),
+			want:   "time.Date(1, time.January, 1, 13, 14, 15, 0, time.UTC)",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15").GoString(),
-			want:   "time.Date(2020, time.August, 5, 13, 14, 15, 0, time.Local)",
+			actual: Parse("2020-08-05 13:14:15", UTC).GoString(),
+			want:   "time.Date(2020, time.August, 5, 13, 14, 15, 0, time.UTC)",
 		},
 	}
 
