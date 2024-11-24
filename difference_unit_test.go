@@ -831,7 +831,7 @@ func TestCarbon_DiffAbsInString(t *testing.T) {
 }
 
 func TestCarbon_DiffInDuration(t *testing.T) {
-	now := Now()
+	now := Parse("2020-08-05 13:14:15")
 	tests := []struct {
 		name    string
 		carbon1 Carbon
@@ -872,7 +872,7 @@ func TestCarbon_DiffInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "-720h0m0s",
+			want:    "-744h0m0s",
 		},
 		{
 			name:    "case7",
@@ -903,7 +903,7 @@ func TestCarbon_DiffInDuration(t *testing.T) {
 }
 
 func TestCarbon_DiffAbsInDuration(t *testing.T) {
-	now := Now()
+	now := Parse("2020-08-05 13:14:15")
 	tests := []struct {
 		name    string
 		carbon1 Carbon
@@ -944,7 +944,7 @@ func TestCarbon_DiffAbsInDuration(t *testing.T) {
 			name:    "case6",
 			carbon1: now.AddMonthsNoOverflow(1),
 			carbon2: now,
-			want:    "720h0m0s",
+			want:    "744h0m0s",
 		},
 		{
 			name:    "case7",
@@ -952,7 +952,6 @@ func TestCarbon_DiffAbsInDuration(t *testing.T) {
 			carbon2: now,
 			want:    "744h0m0s",
 		},
-
 		{
 			name:    "case8",
 			carbon1: now.AddDays(1),
