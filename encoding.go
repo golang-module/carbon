@@ -115,7 +115,7 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	*c = ParseByLayout(value, c.layout, c.Location())
+	*c = ParseByLayout(value, c.layout)
 	return c.Error
 }
 
@@ -132,7 +132,7 @@ func (t *DateTime) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateTimeLayout, t.Location())
+	c := ParseByLayout(value, DateTimeLayout)
 	if c.Error == nil {
 		*t = DateTime{Carbon: c}
 	}
@@ -152,7 +152,7 @@ func (t *DateTimeMilli) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateTimeMilliLayout, t.Location())
+	c := ParseByLayout(value, DateTimeMilliLayout)
 	if c.Error == nil {
 		*t = DateTimeMilli{Carbon: c}
 	}
@@ -172,7 +172,7 @@ func (t *DateTimeMicro) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateTimeMicroLayout, t.Location())
+	c := ParseByLayout(value, DateTimeMicroLayout)
 	if c.Error == nil {
 		*t = DateTimeMicro{Carbon: c}
 	}
@@ -192,7 +192,7 @@ func (t *DateTimeNano) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateTimeNanoLayout, t.Location())
+	c := ParseByLayout(value, DateTimeNanoLayout)
 	if c.Error == nil {
 		*t = DateTimeNano{Carbon: c}
 	}
@@ -212,7 +212,7 @@ func (t *Date) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateLayout, t.Location())
+	c := ParseByLayout(value, DateLayout)
 	if c.Error == nil {
 		*t = Date{Carbon: c}
 	}
@@ -232,7 +232,7 @@ func (t *DateMilli) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateMilliLayout, t.Location())
+	c := ParseByLayout(value, DateMilliLayout)
 	if c.Error == nil {
 		*t = DateMilli{Carbon: c}
 	}
@@ -252,7 +252,7 @@ func (t *DateMicro) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateMicroLayout, t.Location())
+	c := ParseByLayout(value, DateMicroLayout)
 	if c.Error == nil {
 		*t = DateMicro{Carbon: c}
 	}
@@ -272,7 +272,7 @@ func (t *DateNano) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, DateNanoLayout, t.Location())
+	c := ParseByLayout(value, DateNanoLayout)
 	if c.Error == nil {
 		*t = DateNano{Carbon: c}
 	}
@@ -292,7 +292,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, TimeLayout, t.Location())
+	c := ParseByLayout(value, TimeLayout)
 	if c.Error == nil {
 		*t = Time{Carbon: c}
 	}
@@ -312,7 +312,7 @@ func (t *TimeMilli) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, TimeMilliLayout, t.Location())
+	c := ParseByLayout(value, TimeMilliLayout)
 	if c.Error == nil {
 		*t = TimeMilli{Carbon: c}
 	}
@@ -332,7 +332,7 @@ func (t *TimeMicro) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, TimeMicroLayout, t.Location())
+	c := ParseByLayout(value, TimeMicroLayout)
 	if c.Error == nil {
 		*t = TimeMicro{Carbon: c}
 	}
@@ -352,7 +352,7 @@ func (t *TimeNano) UnmarshalJSON(b []byte) error {
 	if value == "" || value == "null" {
 		return nil
 	}
-	c := ParseByLayout(value, TimeNanoLayout, t.Location())
+	c := ParseByLayout(value, TimeNanoLayout)
 	if c.Error == nil {
 		*t = TimeNano{Carbon: c}
 	}
