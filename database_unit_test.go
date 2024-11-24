@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -23,9 +22,20 @@ func TestCarbon_Value(t *testing.T) {
 }
 
 func TestError_Scan(t *testing.T) {
-	c, v := NewCarbon(), "xxx"
-	err := c.Scan(v)
-	assert.Equal(t, err, fmt.Errorf("can not convert %v to carbon", v))
+	c := NewCarbon()
+	str, bytes, time, dt := "xxx", []byte("xxx"), time.Now(), DateTime{}
+
+	err1 := c.Scan(str)
+	assert.Equal(t, err1, failedScanError(str))
+
+	err2 := c.Scan(bytes)
+	assert.Equal(t, err2, failedScanError(bytes))
+
+	err3 := c.Scan(time)
+	assert.Equal(t, err3, nil)
+
+	err4 := c.Scan(dt)
+	assert.Equal(t, err4, failedScanError(dt))
 }
 
 func TestError_Value(t *testing.T) {

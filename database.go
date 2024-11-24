@@ -2,22 +2,33 @@ package carbon
 
 import (
 	"database/sql/driver"
+	"errors"
 	"fmt"
 	"time"
 )
 
+// returns a failed scan error.
+// 失败的扫描错误
+var failedScanError = func(src interface{}) error {
+	return errors.New(fmt.Sprintf("failed to scan value: %v", src))
+}
+
 // Scan an interface used by Scan in package database/sql for Scanning value from database to local golang variable.
-func (c *Carbon) Scan(v interface{}) error {
-	if value, ok := v.(time.Time); ok {
-		loc, err := getLocationByTimezone(defaultTimezone)
-		if c.loc != nil {
-			loc = c.loc
-		}
-		*c = CreateFromStdTime(value)
-		c.loc, c.Error = loc, err
-		return nil
+func (c *Carbon) Scan(src interface{}) error {
+	switch v := src.(type) {
+	case []byte:
+		*c = Parse(string(v))
+	case string:
+		*c = Parse(v)
+	case time.Time:
+		*c = CreateFromStdTime(v)
+	default:
+		return failedScanError(src)
 	}
-	return fmt.Errorf("can not convert %v to carbon", v)
+	if c.Error != nil {
+		return failedScanError(src)
+	}
+	return nil
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
