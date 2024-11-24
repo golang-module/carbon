@@ -275,22 +275,22 @@ func getDiffInMonths(c1 Carbon, c2 Carbon) int64 {
 	if c1.Month() == c2.Month() && c1.Year() == c2.Year() {
 		return 0
 	}
-	diffInDays := c1.DiffInDays(c2)
+	dd := c1.DiffInDays(c2)
 	start, end := c2, c1
-	reg := -int64(1)
-	if diffInDays > 0 {
+	sign := -int64(1)
+	if dd > 0 {
 		start, end = c1, c2
-		reg = int64(1)
+		sign = int64(1)
 	}
 	months := getMonthsFromMonthToMonth(start, end, 0)
-	return months * reg
+	return months * sign
 }
 
 func getMonthsFromMonthToMonth(c1 Carbon, c2 Carbon, months int64) int64 {
 	date := c1.AddDays(c1.DaysInMonth())
-	diffInDays := date.DiffInDays(c2)
-	diffInSeconds := date.DiffInSeconds(c2)
-	if diffInDays < 0 || diffInDays == 0 && diffInSeconds < 0 {
+	dd := date.DiffInDays(c2)
+	ds := date.DiffInSeconds(c2)
+	if dd < 0 || dd == 0 && ds < 0 {
 		return months
 	}
 	months += 1
