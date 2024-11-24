@@ -14,7 +14,7 @@ import (
 
 // Version current version
 // 当前版本号
-const Version = "2.4.1"
+const Version = "2.5.0"
 
 // timezone constants
 // 时区常量
@@ -271,9 +271,9 @@ const (
 type Carbon struct {
 	time         time.Time
 	testNow      int64 // nanosecond timestamp of test now time
+	layout       string
 	weekStartsAt time.Weekday
 	loc          *time.Location
-	layout       string
 	lang         *Language
 	Error        error
 }
