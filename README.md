@@ -55,7 +55,7 @@ go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbo
 ```go
 carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
-  Timezone: carbon.Local,
+  Timezone: carbon.UTC,
   WeekStartsAt: carbon.Sunday,
   Locale: "en", // value range: translate file name in the lang directory, excluding file suffix
 })
