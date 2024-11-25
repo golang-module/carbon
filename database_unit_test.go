@@ -924,6 +924,6 @@ func TestCarbon_Issue243(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	assert.Equal(t, "Local", project.StartDate.Location())
-	assert.Equal(t, "Local", project.EndDate.Location())
+	assert.Equal(t, "PRC", project.StartDate.Location())
+	assert.Equal(t, "PRC", project.EndDate.Location())
 }
