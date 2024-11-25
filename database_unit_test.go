@@ -913,6 +913,13 @@ func TestCarbon_Issue240(t *testing.T) {
 
 // https://github.com/dromara/carbon/issues/243
 func TestCarbon_Issue243(t *testing.T) {
+	SetDefault(Default{
+		Layout:       DateTimeLayout,
+		Timezone:     PRC,
+		Locale:       "en",
+		WeekStartsAt: Sunday,
+	})
+
 	type Project struct {
 		StartDate DateTime `gorm:"column:start_date" json:"startDate"`
 		EndDate   DateTime `gorm:"column:end_date" json:"endDate"`
@@ -924,6 +931,7 @@ func TestCarbon_Issue243(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("defaultTimezone", defaultTimezone)
 	assert.Equal(t, "PRC", project.StartDate.Location())
 	assert.Equal(t, "PRC", project.EndDate.Location())
 }
