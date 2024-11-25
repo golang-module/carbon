@@ -992,12 +992,12 @@ carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
 // 星座を取得
 carbon.Now().Constellation() // Leo
 carbon.Now().SetLocale("en").Constellation() // Leo
-carbon.Now().SetLocale("jp").Constellation() // 獅子座
+carbon.Now().SetLocale("jp").Constellation() // しし座
 
 // 季節を取得
 carbon.Now().Season() // Summer
 carbon.Now().SetLocale("en").Season() // Summer
-carbon.Now().SetLocale("jp").Season() // 夏季
+carbon.Now().SetLocale("jp").Season() // 夏
 
 // 年齢を取得
 carbon.Parse("2002-01-01 13:14:15").Age() // 17
@@ -1155,29 +1155,29 @@ carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is
 // 星座を取得
 carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
 
-// 牡羊座かどうか
+// おひつじ座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsAries() // false
 // おうし座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsTaurus() // false
-// 双子座かどうか
+// ふたご座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsGemini() // false
 // かに座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsCancer() // false
-// 獅子座かどうか
+// しし座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsLeo() // true
 // おとめ座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsVirgo() // false
-// 天秤座かどうか
+// てんびん座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsLibra() // false
 // さそり座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsScorpio() // false
-// 射手座かどうか
+// いて座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsSagittarius() // false
-// 山羊座かどうか
+// やぎ座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsCapricorn() // false
-// 水瓶座かどうか
+// みずがめ座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsAquarius() // false
-// 魚座かどうか
+// うお座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 ```
 
@@ -1325,33 +1325,33 @@ person.CreatedAt4.Int64() // 1596604455999999999
 
 現在サポートされている言語
 
-* [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [英語(en)](./lang/en.json "英語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [日本語(jp)](./lang/jp.json "日本語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [韓国語(kr)](./lang/kr.json "韓国語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
-* [ドイツ語(de)](./lang/de.json "ドイツ語")：[benzammour](https://github.com/benzammour "benzammour") から翻訳されます
-* [スペイン語(es)](./lang/es.json "スペイン語")：[hgisinger](https://github.com/hgisinger "hgisinger") から翻訳されます
-* [トルコ語(tr)](./lang/tr.json "トルコ語")：[emresenyuva](https://github.com/emresenyuva "emresenyuva") から翻訳されます
-* [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") から翻訳されます
-* [ロシア語(ru)](./lang/ru.json "ロシア語")：[zemlyak](https://github.com/zemlyak "zemlyak") から翻訳されます
-* [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") から翻訳されます
-* [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") から翻訳されます
-* [インドネシア語(id)](./lang/id.json "インドネシア語"): [justpoypoy](https://github.com/justpoypoy "justpoypoy") から翻訳されます
-* [イタリア語(it)](./lang/it.json "イタリア語"): [nicoloHevelop](https://github.com/hollowaykeanho "nicoloHevelop") から翻訳されます
-* [マレーシアバハマ語(ms-MY)](./lang/ms-MY.json "マレーシアバハマ語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
-* [フランス語(fr)](./lang/fr.json "フランス語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") から翻訳されます
-* [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") から翻訳されます
-* [スウェーデン語(se)](./lang/se.json "スウェーデン語"):  [jwanglof](https://github.com/jwanglof "jwanglof") から翻訳されます
-* [ペルシア語(fa)](./lang/fa.json "ペルシア語"):  [Iranian](https://github.com/Iranian "Iranian") から翻訳されます
-* [ポーランド語(nl)](./lang/nl.json "ポーランド語"): [RemcoE33](https://github.com/RemcoE33 "RemcoE33") から翻訳されます
-* [ベトナム語(vi)](./lang/vi.json "ベトナム語"): [culy247](https://github.com/culy247 "culy247") から翻訳されます
-* [ヒンディー語(hi)](./lang/hi.json "ヒンディー語"): [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") から翻訳されます
-* [ポーランド語(pl)](./lang/pl.json "ポーランド語"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") から翻訳されます
-* [ブルガリア語(bg)](./lang/bg.json "ブルガリア語"): [yuksbg](https://github.com/yuksbg "yuksbg") から翻訳されます
-* [アラビア語(ar)](./lang/ar.json "アラビア語"): [zumoshi](https://github.com/zumoshi "zumoshi") から翻訳されます
-* [ハンガリー語(hu)](./lang/hu.json "ハンガリー語"): [kenlas](https://github.com/kenlas "kenlas") から翻訳されます
-* [デンマーク語(dk)](./lang/dk.json "デンマーク語"): [Munk91](https://github.com/Munk91 "Munk91") から翻訳されます
+* [简体中国語(zh-CN)](./lang/zh-CN.json "简体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") に翻訳
+* [繁体中国語(zh-TW)](./lang/zh-TW.json "繁体中国語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") に翻訳
+* [英語(en)](./lang/en.json "英語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") に翻訳
+* [日本語(jp)](./lang/jp.json "日本語")：[gouguoyin](https://github.com/gouguoyin "gouguoyin") に翻訳
+* [韓国語(kr)](./lang/kr.json "韓国語")：[benzammour](https://github.com/benzammour "benzammour") に翻訳
+* [ドイツ語(de)](./lang/de.json "ドイツ語")：[benzammour](https://github.com/benzammour "benzammour") に翻訳
+* [スペイン語(es)](./lang/es.json "スペイン語")：[hgisinger](https://github.com/hgisinger "hgisinger") に翻訳
+* [トルコ語(tr)](./lang/tr.json "トルコ語")：[emresenyuva](https://github.com/emresenyuva "emresenyuva") に翻訳
+* [ポルトガル語(pt)](./lang/pt.json "ポルトガル語")：[felipear89](https://github.com/felipear89 "felipear89") に翻訳
+* [ロシア語(ru)](./lang/ru.json "ロシア語")：[zemlyak](https://github.com/zemlyak "zemlyak") に翻訳
+* [ウクライナ語(uk)](./lang/uk.json "ウクライナ語")：[open-git](https://github.com/open-git "open-git") に翻訳
+* [ルーマニア語(ro)](./lang/ro.json "ルーマニア語"): [DrOctavius](https://github.com/DrOctavius "DrOctavius") に翻訳
+* [インドネシア語(id)](./lang/id.json "インドネシア語"): [justpoypoy](https://github.com/justpoypoy "justpoypoy") に翻訳
+* [イタリア語(it)](./lang/it.json "イタリア語"): [nicoloHevelop](https://github.com/hollowaykeanho "nicoloHevelop") に翻訳
+* [マレーシアバハマ語(ms-MY)](./lang/ms-MY.json "マレーシアバハマ語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") に翻訳
+* [フランス語(fr)](./lang/fr.json "フランス語"): [hollowaykeanho](https://github.com/hollowaykeanho "hollowaykeanho") に翻訳
+* [タイ語(th)](./lang/th.json "タイ語"): [izcream](https://github.com/izcream "izcream") に翻訳
+* [スウェーデン語(se)](./lang/se.json "スウェーデン語"):  [jwanglof](https://github.com/jwanglof "jwanglof") に翻訳
+* [ペルシア語(fa)](./lang/fa.json "ペルシア語"):  [Iranian](https://github.com/Iranian "Iranian") に翻訳
+* [ポーランド語(nl)](./lang/nl.json "ポーランド語"): [RemcoE33](https://github.com/RemcoE33 "RemcoE33") に翻訳
+* [ベトナム語(vi)](./lang/vi.json "ベトナム語"): [culy247](https://github.com/culy247 "culy247") に翻訳
+* [ヒンディー語(hi)](./lang/hi.json "ヒンディー語"): [chauhan17nitin](https://github.com/chauhan17nitin "chauhan17nitin") に翻訳
+* [ポーランド語(pl)](./lang/pl.json "ポーランド語"): [gouguoyin](https://github.com/gouguoyin "gouguoyin") に翻訳
+* [ブルガリア語(bg)](./lang/bg.json "ブルガリア語"): [yuksbg](https://github.com/yuksbg "yuksbg") に翻訳
+* [アラビア語(ar)](./lang/ar.json "アラビア語"): [zumoshi](https://github.com/zumoshi "zumoshi") に翻訳
+* [ハンガリー語(hu)](./lang/hu.json "ハンガリー語"): [kenlas](https://github.com/kenlas "kenlas") に翻訳
+* [デンマーク語(dk)](./lang/dk.json "デンマーク語"): [Munk91](https://github.com/Munk91 "Munk91") に翻訳
 
 現在サポートされている方法
 
