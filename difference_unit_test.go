@@ -1110,6 +1110,12 @@ func TestCarbon_Issue255(t *testing.T) {
 			end:   Parse("2018-08-28 13:14:59"),
 			want:  -23,
 		},
+		{
+			name:  "case10",
+			start: Parse("2018-08-28 13:14:59"),
+			end:   Parse("2020-08-05 13:14:15"),
+			want:  23,
+		},
 	}
 
 	for _, tt := range tests {
