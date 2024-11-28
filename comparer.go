@@ -25,8 +25,7 @@ func (c Carbon) IsValid() bool {
 	if c.time.IsZero() {
 		return false
 	}
-	// 大于零值时间
-	if c.StdTime().Unix() > -62135596800 {
+	if c.Year() >= MinCarbon().Year() && c.Year() <= MaxCarbon().Year() {
 		return true
 	}
 	return false
