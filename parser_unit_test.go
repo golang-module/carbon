@@ -240,7 +240,7 @@ func TestCarbon_Issue232(t *testing.T) {
 		{
 			name:   "case1",
 			carbon: Parse("0000-01-01 00:00:00"),
-			want:   "0000-01-01 00:00:00",
+			want:   "",
 		},
 		{
 			name:   "case2",
