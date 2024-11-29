@@ -83,6 +83,11 @@ func TestCarbon_IsZero(t *testing.T) {
 			carbon: Parse("2020-08-05 00:00:00"),
 			want:   false,
 		},
+		{
+			name:   "case6",
+			carbon: Parse("0000-01-01 13:14:15"),
+			want:   false,
+		},
 	}
 
 	for _, tt := range tests {
@@ -115,8 +120,8 @@ func TestCarbon_IsValid(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			carbon: Parse("0001-01-01 00:00:00 +0000 UTC"),
-			want:   false,
+			carbon: Parse("0001-01-01 13:14:15 +0000 UTC"),
+			want:   true,
 		},
 		{
 			name:   "case5",
@@ -155,8 +160,8 @@ func TestCarbon_IsInvalid(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			carbon: Parse("0001-01-01 00:00:00 +0000 UTC"),
-			want:   true,
+			carbon: Parse("0001-01-01 13:14:15 +0000 UTC"),
+			want:   false,
 		},
 		{
 			name:   "case5",
