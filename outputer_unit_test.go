@@ -3,7 +3,6 @@ package carbon
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"time"
 )
 
 func TestCarbon_String(t *testing.T) {
@@ -2644,12 +2643,6 @@ func TestCarbon_Format(t *testing.T) {
 			assert.Equalf(t, tt.want, tt.actual, "Format()")
 		})
 	}
-}
-
-func TestCarbon_ToStdTime(t *testing.T) {
-	expected := time.Now().Format(DateTimeFormat)
-	actual := Now().ToStdTime().Format(DateTimeFormat)
-	assert.Equal(t, expected, actual)
 }
 
 // https://github.com/dromara/carbon/issues/200
