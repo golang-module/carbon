@@ -80,11 +80,26 @@ func TestCarbon_IsZero(t *testing.T) {
 		},
 		{
 			name:   "case5",
+			carbon: Parse("2020-08-00 00:00:00"),
+			want:   true,
+		},
+		{
+			name:   "case6",
+			carbon: Parse("2020-00-05 00:00:00"),
+			want:   true,
+		},
+		{
+			name:   "case7",
+			carbon: Parse("2020-00-00 00:00:00"),
+			want:   true,
+		},
+		{
+			name:   "case8",
 			carbon: Parse("2020-08-05 00:00:00"),
 			want:   false,
 		},
 		{
-			name:   "case6",
+			name:   "case9",
 			carbon: Parse("0000-01-01 13:14:15"),
 			want:   false,
 		},
