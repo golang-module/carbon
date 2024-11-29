@@ -1536,6 +1536,7 @@ invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for 
 #### References
 
 * [briannesbitt/carbon](https://github.com/briannesbitt/Carbon)
+* [nodatime/nodatime](https://github.com/nodatime/nodatime)
 * [jinzhu/now](https://github.com/jinzhu/now)
 * [goframe/gtime](https://github.com/gogf/gf/tree/master/os/gtime)
 * [jodaOrg/joda-time](https://github.com/jodaOrg/joda-time)
