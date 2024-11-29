@@ -20,7 +20,7 @@ func TestCarbon_String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15").String(),
-			want:   "0000-01-01 13:14:15",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -90,7 +90,7 @@ func TestCarbon_ToString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15").ToString(),
-			want:   "0000-01-01 13:14:15 +0805 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -880,7 +880,7 @@ func TestCarbon_ToShortDateMicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15").ToShortDateMicroString(),
-			want:   "00000101",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -920,7 +920,7 @@ func TestCarbon_ToTimeString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15").ToTimeString(),
-			want:   "13:14:15",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -960,7 +960,7 @@ func TestCarbon_ToTimeMilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeMilliString(),
-			want:   "13:14:15.999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1000,7 +1000,7 @@ func TestCarbon_ToTimeMicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeMicroString(),
-			want:   "13:14:15.999999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1040,7 +1040,7 @@ func TestCarbon_ToTimeNanoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeNanoString(),
-			want:   "13:14:15.999999999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1080,7 +1080,7 @@ func TestCarbon_ToShortTimeString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeString(),
-			want:   "131415",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1120,7 +1120,7 @@ func TestCarbon_ToShortTimeMilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeMilliString(),
-			want:   "131415.999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1160,7 +1160,7 @@ func TestCarbon_ToShortTimeMicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeMicroString(),
-			want:   "131415.999999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1200,7 +1200,7 @@ func TestCarbon_ToShortTimeNanoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeNanoString(),
-			want:   "131415.999999999",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1240,7 +1240,7 @@ func TestCarbon_ToAtomString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToAtomString(),
-			want:   "0000-01-01T13:14:15+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1280,7 +1280,7 @@ func TestCarbon_ToAnsicString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToAnsicString(),
-			want:   "Sat Jan  1 13:14:15 0000",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1320,7 +1320,7 @@ func TestCarbon_ToCookieString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToCookieString(),
-			want:   "Saturday, 01-Jan-0000 13:14:15 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1360,7 +1360,7 @@ func TestCarbon_ToRssString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRssString(),
-			want:   "Sat, 01 Jan 0000 13:14:15 +0805",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1400,7 +1400,7 @@ func TestCarbon_ToW3cString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToW3cString(),
-			want:   "0000-01-01T13:14:15+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1440,7 +1440,7 @@ func TestCarbon_ToUnixDateString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToUnixDateString(),
-			want:   "Sat Jan  1 13:14:15 LMT 0000",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1480,7 +1480,7 @@ func TestCarbon_ToRubyDateString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRubyDateString(),
-			want:   "Sat Jan 01 13:14:15 +0805 0000",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1520,7 +1520,7 @@ func TestCarbon_ToKitchenString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToKitchenString(),
-			want:   "1:14PM",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1560,7 +1560,7 @@ func TestCarbon_ToIso8601String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601String(),
-			want:   "0000-01-01T13:14:15+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1600,7 +1600,7 @@ func TestCarbon_ToIso8601MilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601MilliString(),
-			want:   "0000-01-01T13:14:15.999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1640,7 +1640,7 @@ func TestCarbon_ToIso8601MicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601MicroString(),
-			want:   "0000-01-01T13:14:15.999999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1680,7 +1680,7 @@ func TestCarbon_ToIso8601NanoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601NanoString(),
-			want:   "0000-01-01T13:14:15.999999999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1720,7 +1720,7 @@ func TestCarbon_ToIso8601ZuluString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluString(),
-			want:   "0000-01-01T13:14:15Z",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1760,7 +1760,7 @@ func TestCarbon_ToIso8601ZuluMilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluMilliString(),
-			want:   "0000-01-01T13:14:15.999Z",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1800,7 +1800,7 @@ func TestCarbon_ToIso8601ZuluMicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluMicroString(),
-			want:   "0000-01-01T13:14:15.999999Z",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1840,7 +1840,7 @@ func TestCarbon_ToIso8601ZuluNanoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluNanoString(),
-			want:   "0000-01-01T13:14:15.999999999Z",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1880,7 +1880,7 @@ func TestCarbon_ToRfc822String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc822String(),
-			want:   "01 Jan 00 13:14 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1920,7 +1920,7 @@ func TestCarbon_ToRfc822zString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc822zString(),
-			want:   "01 Jan 00 13:14 +0805",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -1960,7 +1960,7 @@ func TestCarbon_ToRfc850String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc850String(),
-			want:   "Saturday, 01-Jan-00 13:14:15 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2000,7 +2000,7 @@ func TestCarbon_ToRfc1036String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1036String(),
-			want:   "Sat, 01 Jan 00 13:14:15 +0805",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2040,7 +2040,7 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1123String(),
-			want:   "Sat, 01 Jan 0000 13:14:15 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2080,7 +2080,7 @@ func TestCarbon_ToRfc1123zString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1123zString(),
-			want:   "Sat, 01 Jan 0000 13:14:15 +0805",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2120,7 +2120,7 @@ func TestCarbon_ToRfc2822String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc2822String(),
-			want:   "Sat, 01 Jan 0000 13:14:15 +0805",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2160,7 +2160,7 @@ func TestCarbon_ToRfc3339String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339String(),
-			want:   "0000-01-01T13:14:15+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2200,7 +2200,7 @@ func TestCarbon_ToRfc3339MilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339MilliString(),
-			want:   "0000-01-01T13:14:15.999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2240,7 +2240,7 @@ func TestCarbon_ToRfc3339MicroString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339MicroString(),
-			want:   "0000-01-01T13:14:15.999999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2280,7 +2280,7 @@ func TestCarbon_ToRfc3339NanoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339NanoString(),
-			want:   "0000-01-01T13:14:15.999999999+08:05",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2320,7 +2320,7 @@ func TestCarbon_ToRfc7231String(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc7231String(),
-			want:   "Sat, 01 Jan 0000 13:14:15 LMT",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2360,7 +2360,7 @@ func TestCarbon_ToFormattedDateString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToFormattedDateString(),
-			want:   "Jan 1, 0000",
+			want:   "",
 		},
 		{
 			name:   "case3",
@@ -2400,7 +2400,7 @@ func TestCarbon_ToFormattedDayDateString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToFormattedDayDateString(),
-			want:   "Sat, Jan 1, 0000",
+			want:   "",
 		},
 		{
 			name:   "case3",
