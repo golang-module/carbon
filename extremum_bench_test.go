@@ -47,3 +47,15 @@ func BenchmarkCarbon_Min(b *testing.B) {
 		Min(now.SubDay(), now.AddDay())
 	}
 }
+
+func BenchmarkCarbon_MaxCarbon(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		MaxCarbon()
+	}
+}
+
+func BenchmarkCarbon_MinCarbon(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		MinCarbon()
+	}
+}
