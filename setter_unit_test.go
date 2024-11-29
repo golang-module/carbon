@@ -1,7 +1,6 @@
 package carbon
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -198,7 +197,6 @@ func TestCarbon_SetLocale(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fmt.Println("LLL", tt.carbon.Location())
 			assert.Equalf(t, tt.want, tt.carbon.ToMonthString(), "SetLocale()")
 		})
 	}

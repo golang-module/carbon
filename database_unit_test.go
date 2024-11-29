@@ -931,7 +931,6 @@ func TestCarbon_Issue243(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("defaultTimezone", defaultTimezone)
 	assert.Equal(t, "PRC", project.StartDate.Location())
 	assert.Equal(t, "PRC", project.EndDate.Location())
 }
