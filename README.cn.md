@@ -577,6 +577,11 @@ tomorrow  := carbon.Tomorrow()
 carbon.Max(yesterday, today, tomorrow) // tomorrow
 // 返回最小的 Carbon 实例
 carbon.Min(yesterday, today, tomorrow) // yesterday
+
+// 返回 Carbon 的最大值
+carbon.MaxCarbon().ToString() // 9999-12-31 23:59:59.999999999 +0000 UTC
+// 返回 Carbon 的最小值
+carbon.MinCarbon().ToString() // 0001-01-01 00:00:00 +0000 UTC
 ```
 
 ##### 时间判断
