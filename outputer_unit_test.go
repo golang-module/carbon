@@ -19,17 +19,17 @@ func TestCarbon_String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15").String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15", UTC).String(),
+			want:   "0000-01-01 13:14:15",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15").String(),
+			actual: Parse("0001-01-01 13:14:15", UTC).String(),
 			want:   "0001-01-01 13:14:15",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15").String(),
+			actual: Parse("2020-08-05 13:14:15", UTC).String(),
 			want:   "2020-08-05 13:14:15",
 		},
 	}
@@ -55,7 +55,7 @@ func TestCarbon_GoString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15", UTC).GoString(),
-			want:   "",
+			want:   "time.Date(0, time.January, 1, 13, 14, 15, 0, time.UTC)",
 		},
 		{
 			name:   "case3",
@@ -89,18 +89,18 @@ func TestCarbon_ToString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15").ToString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15", UTC).ToString(),
+			want:   "0000-01-01 13:14:15 +0000 UTC",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15").ToString(),
-			want:   "0001-01-01 13:14:15 +0805 LMT",
+			actual: Parse("0001-01-01 13:14:15", UTC).ToString(),
+			want:   "0001-01-01 13:14:15 +0000 UTC",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15").ToString(PRC),
-			want:   "2020-08-05 13:14:15 +0800 CST",
+			actual: Parse("2020-08-05 13:14:15", UTC).ToString(PRC),
+			want:   "2020-08-05 21:14:15 +0800 CST",
 		},
 	}
 
@@ -124,27 +124,27 @@ func TestCarbon_ToMonthString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-01-05").ToMonthString(),
+			actual: Parse("2020-01-05", UTC).ToMonthString(),
 			want:   "January",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-02-05").ToMonthString(),
+			actual: Parse("2020-02-05", UTC).ToMonthString(),
 			want:   "February",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-03-05").ToMonthString(),
+			actual: Parse("2020-03-05", UTC).ToMonthString(),
 			want:   "March",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-04-05").ToMonthString(),
+			actual: Parse("2020-04-05", UTC).ToMonthString(),
 			want:   "April",
 		},
 		{
 			name:   "case6",
-			actual: Parse("2020-05-05").ToMonthString(),
+			actual: Parse("2020-05-05", UTC).ToMonthString(),
 			want:   "May",
 		},
 		{
@@ -154,32 +154,32 @@ func TestCarbon_ToMonthString(t *testing.T) {
 		},
 		{
 			name:   "case8",
-			actual: Parse("2020-07-05").ToMonthString(),
+			actual: Parse("2020-07-05", UTC).ToMonthString(),
 			want:   "July",
 		},
 		{
 			name:   "case9",
-			actual: Parse("2020-08-05").ToMonthString(),
+			actual: Parse("2020-08-05", UTC).ToMonthString(),
 			want:   "August",
 		},
 		{
 			name:   "case10",
-			actual: Parse("2020-09-05").ToMonthString(),
+			actual: Parse("2020-09-05", UTC).ToMonthString(),
 			want:   "September",
 		},
 		{
 			name:   "case11",
-			actual: Parse("2020-10-05").ToMonthString(),
+			actual: Parse("2020-10-05", UTC).ToMonthString(),
 			want:   "October",
 		},
 		{
 			name:   "case12",
-			actual: Parse("2020-11-05").ToMonthString(),
+			actual: Parse("2020-11-05", UTC).ToMonthString(),
 			want:   "November",
 		},
 		{
 			name:   "case13",
-			actual: Parse("2020-12-05").ToMonthString(PRC),
+			actual: Parse("2020-12-05", UTC).ToMonthString(PRC),
 			want:   "December",
 		},
 	}
@@ -204,62 +204,62 @@ func TestCarbon_ToShortMonthString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-01-05").ToShortMonthString(),
+			actual: Parse("2020-01-05", UTC).ToShortMonthString(),
 			want:   "Jan",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-02-05").ToShortMonthString(),
+			actual: Parse("2020-02-05", UTC).ToShortMonthString(),
 			want:   "Feb",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-03-05").ToShortMonthString(),
+			actual: Parse("2020-03-05", UTC).ToShortMonthString(),
 			want:   "Mar",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-04-05").ToShortMonthString(),
+			actual: Parse("2020-04-05", UTC).ToShortMonthString(),
 			want:   "Apr",
 		},
 		{
 			name:   "case6",
-			actual: Parse("2020-05-05").ToShortMonthString(),
+			actual: Parse("2020-05-05", UTC).ToShortMonthString(),
 			want:   "May",
 		},
 		{
 			name:   "case7",
-			actual: Parse("2020-06-05").ToShortMonthString(),
+			actual: Parse("2020-06-05", UTC).ToShortMonthString(),
 			want:   "Jun",
 		},
 		{
 			name:   "case8",
-			actual: Parse("2020-07-05").ToShortMonthString(),
+			actual: Parse("2020-07-05", UTC).ToShortMonthString(),
 			want:   "Jul",
 		},
 		{
 			name:   "case9",
-			actual: Parse("2020-08-05").ToShortMonthString(),
+			actual: Parse("2020-08-05", UTC).ToShortMonthString(),
 			want:   "Aug",
 		},
 		{
 			name:   "case10",
-			actual: Parse("2020-09-05").ToShortMonthString(),
+			actual: Parse("2020-09-05", UTC).ToShortMonthString(),
 			want:   "Sep",
 		},
 		{
 			name:   "case11",
-			actual: Parse("2020-10-05").ToShortMonthString(),
+			actual: Parse("2020-10-05", UTC).ToShortMonthString(),
 			want:   "Oct",
 		},
 		{
 			name:   "case12",
-			actual: Parse("2020-11-05").ToShortMonthString(),
+			actual: Parse("2020-11-05", UTC).ToShortMonthString(),
 			want:   "Nov",
 		},
 		{
 			name:   "case13",
-			actual: Parse("2020-12-05").ToShortMonthString(PRC),
+			actual: Parse("2020-12-05", UTC).ToShortMonthString(PRC),
 			want:   "Dec",
 		},
 	}
@@ -284,37 +284,37 @@ func TestCarbon_ToWeekString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-01").ToWeekString(),
+			actual: Parse("2020-08-01", UTC).ToWeekString(),
 			want:   "Saturday",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-02").ToWeekString(),
+			actual: Parse("2020-08-02", UTC).ToWeekString(),
 			want:   "Sunday",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-03").ToWeekString(),
+			actual: Parse("2020-08-03", UTC).ToWeekString(),
 			want:   "Monday",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-04").ToWeekString(),
+			actual: Parse("2020-08-04", UTC).ToWeekString(),
 			want:   "Tuesday",
 		},
 		{
 			name:   "case6",
-			actual: Parse("2020-08-05").ToWeekString(),
+			actual: Parse("2020-08-05", UTC).ToWeekString(),
 			want:   "Wednesday",
 		},
 		{
 			name:   "case7",
-			actual: Parse("2020-08-06").ToWeekString(),
+			actual: Parse("2020-08-06", UTC).ToWeekString(),
 			want:   "Thursday",
 		},
 		{
 			name:   "case8",
-			actual: Parse("2020-08-07").ToWeekString(PRC),
+			actual: Parse("2020-08-07", UTC).ToWeekString(PRC),
 			want:   "Friday",
 		},
 	}
@@ -339,37 +339,37 @@ func TestCarbon_ToShortWeekString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-01").ToShortWeekString(),
+			actual: Parse("2020-08-01", UTC).ToShortWeekString(),
 			want:   "Sat",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-02").ToShortWeekString(),
+			actual: Parse("2020-08-02", UTC).ToShortWeekString(),
 			want:   "Sun",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-03").ToShortWeekString(),
+			actual: Parse("2020-08-03", UTC).ToShortWeekString(),
 			want:   "Mon",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-04").ToShortWeekString(),
+			actual: Parse("2020-08-04", UTC).ToShortWeekString(),
 			want:   "Tue",
 		},
 		{
 			name:   "case6",
-			actual: Parse("2020-08-05").ToShortWeekString(),
+			actual: Parse("2020-08-05", UTC).ToShortWeekString(),
 			want:   "Wed",
 		},
 		{
 			name:   "case7",
-			actual: Parse("2020-08-06").ToShortWeekString(),
+			actual: Parse("2020-08-06", UTC).ToShortWeekString(),
 			want:   "Thu",
 		},
 		{
 			name:   "case8",
-			actual: Parse("2020-08-07").ToShortWeekString(PRC),
+			actual: Parse("2020-08-07", UTC).ToShortWeekString(PRC),
 			want:   "Fri",
 		},
 	}
@@ -394,13 +394,13 @@ func TestCarbon_ToDayDateTimeString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05 13:14:15").ToDayDateTimeString(),
+			actual: Parse("2020-08-05 13:14:15", UTC).ToDayDateTimeString(),
 			want:   "Wed, Aug 5, 2020 1:14 PM",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDayDateTimeString(PRC),
-			want:   "Wed, Aug 5, 2020 12:00 AM",
+			actual: Parse("2020-08-05", UTC).ToDayDateTimeString(PRC),
+			want:   "Wed, Aug 5, 2020 8:00 AM",
 		},
 	}
 
@@ -424,13 +424,13 @@ func TestCarbon_ToDateTimeString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05 13:14:15").ToDateTimeString(),
+			actual: Parse("2020-08-05 13:14:15", UTC).ToDateTimeString(),
 			want:   "2020-08-05 13:14:15",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateTimeString(PRC),
-			want:   "2020-08-05 00:00:00",
+			actual: Parse("2020-08-05", UTC).ToDateTimeString(PRC),
+			want:   "2020-08-05 08:00:00",
 		},
 	}
 
@@ -454,13 +454,13 @@ func TestCarbon_ToDateTimeMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMilliString(),
-			want:   "2020-08-05 13:14:15.999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateTimeMilliString(),
+			want:   "2020-08-05 05:14:15.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateTimeMilliString(PRC),
-			want:   "2020-08-05 00:00:00",
+			actual: Parse("2020-08-05", UTC).ToDateTimeMilliString(PRC),
+			want:   "2020-08-05 08:00:00",
 		},
 	}
 
@@ -484,13 +484,13 @@ func TestCarbon_ToDateTimeMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeMicroString(),
-			want:   "2020-08-05 13:14:15.999999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateTimeMicroString(),
+			want:   "2020-08-05 05:14:15.999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateTimeMicroString(PRC),
-			want:   "2020-08-05 00:00:00",
+			actual: Parse("2020-08-05", UTC).ToDateTimeMicroString(PRC),
+			want:   "2020-08-05 08:00:00",
 		},
 	}
 
@@ -514,13 +514,13 @@ func TestCarbon_ToDateTimeNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateTimeNanoString(),
-			want:   "2020-08-05 13:14:15.999999999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateTimeNanoString(),
+			want:   "2020-08-05 05:14:15.999999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateTimeNanoString(PRC),
-			want:   "2020-08-05 00:00:00",
+			actual: Parse("2020-08-05", UTC).ToDateTimeNanoString(PRC),
+			want:   "2020-08-05 08:00:00",
 		},
 	}
 
@@ -549,13 +549,13 @@ func TestCarbon_ToShortDateTimeString(t *testing.T) {
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeString(),
-			want:   "20200805131415",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateTimeString(),
+			want:   "20200805051415",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05").ToShortDateTimeString(PRC),
-			want:   "20200805000000",
+			actual: Parse("2020-08-05", UTC).ToShortDateTimeString(PRC),
+			want:   "20200805080000",
 		},
 	}
 
@@ -579,13 +579,13 @@ func TestCarbon_ToShortDateTimeMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMilliString(),
-			want:   "20200805131415.999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateTimeMilliString(),
+			want:   "20200805051415.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateTimeMilliString(PRC),
-			want:   "20200805000000",
+			actual: Parse("2020-08-05", UTC).ToShortDateTimeMilliString(PRC),
+			want:   "20200805080000",
 		},
 	}
 
@@ -609,13 +609,13 @@ func TestCarbon_ToShortDateTimeMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeMicroString(),
-			want:   "20200805131415.999999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateTimeMicroString(),
+			want:   "20200805051415.999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateTimeMicroString(PRC),
-			want:   "20200805000000",
+			actual: Parse("2020-08-05", UTC).ToShortDateTimeMicroString(PRC),
+			want:   "20200805080000",
 		},
 	}
 
@@ -639,13 +639,13 @@ func TestCarbon_ToShortDateTimeNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateTimeNanoString(),
-			want:   "20200805131415.999999999",
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateTimeNanoString(),
+			want:   "20200805051415.999999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateTimeNanoString(PRC),
-			want:   "20200805000000",
+			actual: Parse("2020-08-05", UTC).ToShortDateTimeNanoString(PRC),
+			want:   "20200805080000",
 		},
 	}
 
@@ -669,12 +669,12 @@ func TestCarbon_ToDateString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateString(),
 			want:   "2020-08-05",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateString(PRC),
+			actual: Parse("2020-08-05", UTC).ToDateString(PRC),
 			want:   "2020-08-05",
 		},
 	}
@@ -699,12 +699,12 @@ func TestCarbon_ToDateMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateMilliString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateMilliString(),
 			want:   "2020-08-05.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateMilliString(PRC),
+			actual: Parse("2020-08-05", UTC).ToDateMilliString(PRC),
 			want:   "2020-08-05",
 		},
 	}
@@ -729,12 +729,12 @@ func TestCarbon_ToDateMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateMicroString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateMicroString(),
 			want:   "2020-08-05.999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateMicroString(PRC),
+			actual: Parse("2020-08-05", UTC).ToDateMicroString(PRC),
 			want:   "2020-08-05",
 		},
 	}
@@ -759,12 +759,12 @@ func TestCarbon_ToDateNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToDateNanoString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToDateNanoString(),
 			want:   "2020-08-05.999999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToDateNanoString(PRC),
+			actual: Parse("2020-08-05", UTC).ToDateNanoString(PRC),
 			want:   "2020-08-05",
 		},
 	}
@@ -789,12 +789,12 @@ func TestCarbon_ToShortDateString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateString(),
 			want:   "20200805",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateString(PRC),
+			actual: Parse("2020-08-05", UTC).ToShortDateString(PRC),
 			want:   "20200805",
 		},
 	}
@@ -819,12 +819,12 @@ func TestCarbon_ToShortDateMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateMilliString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateMilliString(),
 			want:   "20200805.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateMilliString(PRC),
+			actual: Parse("2020-08-05", UTC).ToShortDateMilliString(PRC),
 			want:   "20200805",
 		},
 	}
@@ -849,12 +849,12 @@ func TestCarbon_ToShortDateNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateNanoString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateNanoString(),
 			want:   "20200805.999999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("2020-08-05").ToShortDateNanoString(PRC),
+			actual: Parse("2020-08-05", UTC).ToShortDateNanoString(PRC),
 			want:   "20200805",
 		},
 	}
@@ -879,22 +879,22 @@ func TestCarbon_ToShortDateMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15").ToShortDateMicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15", UTC).ToShortDateMicroString(),
+			want:   "00000101",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15").ToShortDateMicroString(),
+			actual: Parse("0001-01-01 13:14:15", UTC).ToShortDateMicroString(),
 			want:   "00010101",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05T13:14:15.999999999+08:00").ToShortDateMicroString(),
+			actual: Parse("2020-08-05T13:14:15.999999999+08:00", UTC).ToShortDateMicroString(),
 			want:   "20200805.999999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToShortDateMicroString(PRC),
+			actual: Parse("2020-08-05", UTC).ToShortDateMicroString(PRC),
 			want:   "20200805",
 		},
 	}
@@ -919,8 +919,8 @@ func TestCarbon_ToTimeString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15").ToTimeString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15", UTC).ToTimeString(),
+			want:   "13:14:15",
 		},
 		{
 			name:   "case3",
@@ -929,13 +929,13 @@ func TestCarbon_ToTimeString(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15").ToTimeString(),
+			actual: Parse("2020-08-05 13:14:15", UTC).ToTimeString(),
 			want:   "13:14:15",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToTimeString(PRC),
-			want:   "00:00:00",
+			actual: Parse("2020-08-05", UTC).ToTimeString(PRC),
+			want:   "08:00:00",
 		},
 	}
 
@@ -959,23 +959,23 @@ func TestCarbon_ToTimeMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeMilliString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToTimeMilliString(),
+			want:   "13:14:15.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToTimeMilliString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToTimeMilliString(),
 			want:   "13:14:15.999",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToTimeMilliString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToTimeMilliString(),
 			want:   "13:14:15.999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToTimeMilliString(PRC),
-			want:   "00:00:00",
+			actual: Parse("2020-08-05", UTC).ToTimeMilliString(PRC),
+			want:   "08:00:00",
 		},
 	}
 
@@ -999,23 +999,23 @@ func TestCarbon_ToTimeMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeMicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToTimeMicroString(),
+			want:   "13:14:15.999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToTimeMicroString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToTimeMicroString(),
 			want:   "13:14:15.999999",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToTimeMicroString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToTimeMicroString(),
 			want:   "13:14:15.999999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToTimeMicroString(PRC),
-			want:   "00:00:00",
+			actual: Parse("2020-08-05", UTC).ToTimeMicroString(PRC),
+			want:   "08:00:00",
 		},
 	}
 
@@ -1039,23 +1039,23 @@ func TestCarbon_ToTimeNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToTimeNanoString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToTimeNanoString(),
+			want:   "13:14:15.999999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToTimeNanoString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToTimeNanoString(),
 			want:   "13:14:15.999999999",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToTimeNanoString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToTimeNanoString(),
 			want:   "13:14:15.999999999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToTimeNanoString(PRC),
-			want:   "00:00:00",
+			actual: Parse("2020-08-05", UTC).ToTimeNanoString(PRC),
+			want:   "08:00:00",
 		},
 	}
 
@@ -1079,23 +1079,23 @@ func TestCarbon_ToShortTimeString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToShortTimeString(),
+			want:   "131415",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToShortTimeString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToShortTimeString(),
 			want:   "131415",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToShortTimeString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToShortTimeString(),
 			want:   "131415",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToShortTimeString(PRC),
-			want:   "000000",
+			actual: Parse("2020-08-05", UTC).ToShortTimeString(PRC),
+			want:   "080000",
 		},
 	}
 
@@ -1119,23 +1119,23 @@ func TestCarbon_ToShortTimeMilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeMilliString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToShortTimeMilliString(),
+			want:   "131415.999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToShortTimeMilliString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToShortTimeMilliString(),
 			want:   "131415.999",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToShortTimeMilliString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToShortTimeMilliString(),
 			want:   "131415.999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToShortTimeMilliString(PRC),
-			want:   "000000",
+			actual: Parse("2020-08-05", UTC).ToShortTimeMilliString(PRC),
+			want:   "080000",
 		},
 	}
 
@@ -1159,23 +1159,23 @@ func TestCarbon_ToShortTimeMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeMicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToShortTimeMicroString(),
+			want:   "131415.999999",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToShortTimeMicroString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToShortTimeMicroString(),
 			want:   "131415.999999",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToShortTimeMicroString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToShortTimeMicroString(),
 			want:   "131415.999999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToShortTimeMicroString(PRC),
-			want:   "000000",
+			actual: Parse("2020-08-05", UTC).ToShortTimeMicroString(PRC),
+			want:   "080000",
 		},
 	}
 
@@ -1199,8 +1199,8 @@ func TestCarbon_ToShortTimeNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToShortTimeNanoString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToShortTimeNanoString(),
+			want:   "131415.999999999",
 		},
 		{
 			name:   "case3",
@@ -1209,13 +1209,13 @@ func TestCarbon_ToShortTimeNanoString(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToShortTimeNanoString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToShortTimeNanoString(),
 			want:   "131415.999999999",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToShortTimeNanoString(PRC),
-			want:   "000000",
+			actual: Parse("2020-08-05", UTC).ToShortTimeNanoString(PRC),
+			want:   "080000",
 		},
 	}
 
@@ -1239,23 +1239,23 @@ func TestCarbon_ToAtomString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToAtomString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToAtomString(),
+			want:   "0000-01-01T13:14:15Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToAtomString(),
-			want:   "0001-01-01T13:14:15+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToAtomString(),
+			want:   "0001-01-01T13:14:15Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToAtomString(),
-			want:   "2020-08-05T13:14:15+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToAtomString(),
+			want:   "2020-08-05T13:14:15Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToAtomString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToAtomString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1279,23 +1279,23 @@ func TestCarbon_ToAnsicString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToAnsicString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToAnsicString(),
+			want:   "Sat Jan  1 13:14:15 0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToAnsicString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToAnsicString(),
 			want:   "Mon Jan  1 13:14:15 0001",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToAnsicString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToAnsicString(),
 			want:   "Wed Aug  5 13:14:15 2020",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToAnsicString(PRC),
-			want:   "Wed Aug  5 00:00:00 2020",
+			actual: Parse("2020-08-05", UTC).ToAnsicString(PRC),
+			want:   "Wed Aug  5 08:00:00 2020",
 		},
 	}
 
@@ -1319,23 +1319,23 @@ func TestCarbon_ToCookieString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToCookieString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToCookieString(),
+			want:   "Saturday, 01-Jan-0000 13:14:15 UTC",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToCookieString(),
-			want:   "Monday, 01-Jan-0001 13:14:15 LMT",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToCookieString(),
+			want:   "Monday, 01-Jan-0001 13:14:15 UTC",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToCookieString(),
-			want:   "Wednesday, 05-Aug-2020 13:14:15 CST",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToCookieString(),
+			want:   "Wednesday, 05-Aug-2020 13:14:15 UTC",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToCookieString(PRC),
-			want:   "Wednesday, 05-Aug-2020 00:00:00 CST",
+			actual: Parse("2020-08-05", UTC).ToCookieString(PRC),
+			want:   "Wednesday, 05-Aug-2020 08:00:00 CST",
 		},
 	}
 
@@ -1359,23 +1359,23 @@ func TestCarbon_ToRssString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRssString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRssString(),
+			want:   "Sat, 01 Jan 0000 13:14:15 +0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRssString(),
-			want:   "Mon, 01 Jan 0001 13:14:15 +0805",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRssString(),
+			want:   "Mon, 01 Jan 0001 13:14:15 +0000",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRssString(),
-			want:   "Wed, 05 Aug 2020 13:14:15 +0800",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRssString(),
+			want:   "Wed, 05 Aug 2020 13:14:15 +0000",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRssString(PRC),
-			want:   "Wed, 05 Aug 2020 00:00:00 +0800",
+			actual: Parse("2020-08-05", UTC).ToRssString(PRC),
+			want:   "Wed, 05 Aug 2020 08:00:00 +0800",
 		},
 	}
 
@@ -1399,23 +1399,23 @@ func TestCarbon_ToW3cString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToW3cString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToW3cString(),
+			want:   "0000-01-01T13:14:15Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToW3cString(),
-			want:   "0001-01-01T13:14:15+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToW3cString(),
+			want:   "0001-01-01T13:14:15Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToW3cString(),
-			want:   "2020-08-05T13:14:15+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToW3cString(),
+			want:   "2020-08-05T13:14:15Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToW3cString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToW3cString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1439,23 +1439,23 @@ func TestCarbon_ToUnixDateString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToUnixDateString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToUnixDateString(),
+			want:   "Sat Jan  1 13:14:15 UTC 0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToUnixDateString(),
-			want:   "Mon Jan  1 13:14:15 LMT 0001",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToUnixDateString(),
+			want:   "Mon Jan  1 13:14:15 UTC 0001",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToUnixDateString(),
-			want:   "Wed Aug  5 13:14:15 CST 2020",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToUnixDateString(),
+			want:   "Wed Aug  5 13:14:15 UTC 2020",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToUnixDateString(PRC),
-			want:   "Wed Aug  5 00:00:00 CST 2020",
+			actual: Parse("2020-08-05", UTC).ToUnixDateString(PRC),
+			want:   "Wed Aug  5 08:00:00 CST 2020",
 		},
 	}
 
@@ -1479,23 +1479,23 @@ func TestCarbon_ToRubyDateString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRubyDateString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRubyDateString(),
+			want:   "Sat Jan 01 13:14:15 +0000 0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRubyDateString(),
-			want:   "Mon Jan 01 13:14:15 +0805 0001",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRubyDateString(),
+			want:   "Mon Jan 01 13:14:15 +0000 0001",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRubyDateString(),
-			want:   "Wed Aug 05 13:14:15 +0800 2020",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRubyDateString(),
+			want:   "Wed Aug 05 13:14:15 +0000 2020",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRubyDateString(PRC),
-			want:   "Wed Aug 05 00:00:00 +0800 2020",
+			actual: Parse("2020-08-05", UTC).ToRubyDateString(PRC),
+			want:   "Wed Aug 05 08:00:00 +0800 2020",
 		},
 	}
 
@@ -1519,23 +1519,23 @@ func TestCarbon_ToKitchenString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToKitchenString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToKitchenString(),
+			want:   "1:14PM",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToKitchenString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToKitchenString(),
 			want:   "1:14PM",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToKitchenString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToKitchenString(),
 			want:   "1:14PM",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToKitchenString(PRC),
-			want:   "12:00AM",
+			actual: Parse("2020-08-05", UTC).ToKitchenString(PRC),
+			want:   "8:00AM",
 		},
 	}
 
@@ -1559,23 +1559,23 @@ func TestCarbon_ToIso8601String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601String(),
+			want:   "0000-01-01T13:14:15+00:00",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601String(),
-			want:   "0001-01-01T13:14:15+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601String(),
+			want:   "0001-01-01T13:14:15+00:00",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601String(),
-			want:   "2020-08-05T13:14:15+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601String(),
+			want:   "2020-08-05T13:14:15+00:00",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601String(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToIso8601String(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1599,8 +1599,8 @@ func TestCarbon_ToIso8601MilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601MilliString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601MilliString(),
+			want:   "0000-01-01T13:14:15.999+00:00",
 		},
 		{
 			name:   "case3",
@@ -1609,13 +1609,13 @@ func TestCarbon_ToIso8601MilliString(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601MilliString(),
-			want:   "2020-08-05T13:14:15.999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601MilliString(),
+			want:   "2020-08-05T13:14:15.999+00:00",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601MilliString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToIso8601MilliString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1639,23 +1639,23 @@ func TestCarbon_ToIso8601MicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601MicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601MicroString(),
+			want:   "0000-01-01T13:14:15.999999+00:00",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601MicroString(),
-			want:   "0001-01-01T13:14:15.999999+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601MicroString(),
+			want:   "0001-01-01T13:14:15.999999+00:00",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601MicroString(),
-			want:   "2020-08-05T13:14:15.999999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601MicroString(),
+			want:   "2020-08-05T13:14:15.999999+00:00",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601MicroString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToIso8601MicroString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1679,23 +1679,23 @@ func TestCarbon_ToIso8601NanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601NanoString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601NanoString(),
+			want:   "0000-01-01T13:14:15.999999999+00:00",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601NanoString(),
-			want:   "0001-01-01T13:14:15.999999999+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601NanoString(),
+			want:   "0001-01-01T13:14:15.999999999+00:00",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601NanoString(),
-			want:   "2020-08-05T13:14:15.999999999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601NanoString(),
+			want:   "2020-08-05T13:14:15.999999999+00:00",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601NanoString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToIso8601NanoString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -1719,23 +1719,23 @@ func TestCarbon_ToIso8601ZuluString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601ZuluString(),
+			want:   "0000-01-01T13:14:15Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601ZuluString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601ZuluString(),
 			want:   "0001-01-01T13:14:15Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601ZuluString(),
 			want:   "2020-08-05T13:14:15Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601ZuluString(PRC),
-			want:   "2020-08-05T00:00:00Z",
+			actual: Parse("2020-08-05", UTC).ToIso8601ZuluString(PRC),
+			want:   "2020-08-05T08:00:00Z",
 		},
 	}
 
@@ -1760,22 +1760,22 @@ func TestCarbon_ToIso8601ZuluMilliString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluMilliString(),
-			want:   "",
+			want:   "0000-01-01T13:14:15.999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601ZuluMilliString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601ZuluMilliString(),
 			want:   "0001-01-01T13:14:15.999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluMilliString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601ZuluMilliString(),
 			want:   "2020-08-05T13:14:15.999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601ZuluMilliString(PRC),
-			want:   "2020-08-05T00:00:00Z",
+			actual: Parse("2020-08-05", UTC).ToIso8601ZuluMilliString(PRC),
+			want:   "2020-08-05T08:00:00Z",
 		},
 	}
 
@@ -1799,23 +1799,23 @@ func TestCarbon_ToIso8601ZuluMicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluMicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601ZuluMicroString(),
+			want:   "0000-01-01T13:14:15.999999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601ZuluMicroString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601ZuluMicroString(),
 			want:   "0001-01-01T13:14:15.999999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluMicroString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601ZuluMicroString(),
 			want:   "2020-08-05T13:14:15.999999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601ZuluMicroString(PRC),
-			want:   "2020-08-05T00:00:00Z",
+			actual: Parse("2020-08-05", UTC).ToIso8601ZuluMicroString(PRC),
+			want:   "2020-08-05T08:00:00Z",
 		},
 	}
 
@@ -1839,23 +1839,23 @@ func TestCarbon_ToIso8601ZuluNanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToIso8601ZuluNanoString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToIso8601ZuluNanoString(),
+			want:   "0000-01-01T13:14:15.999999999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToIso8601ZuluNanoString(),
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToIso8601ZuluNanoString(),
 			want:   "0001-01-01T13:14:15.999999999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToIso8601ZuluNanoString(),
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToIso8601ZuluNanoString(),
 			want:   "2020-08-05T13:14:15.999999999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToIso8601ZuluNanoString(PRC),
-			want:   "2020-08-05T00:00:00Z",
+			actual: Parse("2020-08-05", UTC).ToIso8601ZuluNanoString(PRC),
+			want:   "2020-08-05T08:00:00Z",
 		},
 	}
 
@@ -1879,23 +1879,23 @@ func TestCarbon_ToRfc822String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc822String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc822String(),
+			want:   "01 Jan 00 13:14 UTC",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc822String(),
-			want:   "01 Jan 01 13:14 LMT",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc822String(),
+			want:   "01 Jan 01 13:14 UTC",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc822String(),
-			want:   "05 Aug 20 13:14 CST",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc822String(),
+			want:   "05 Aug 20 13:14 UTC",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc822String(PRC),
-			want:   "05 Aug 20 00:00 CST",
+			actual: Parse("2020-08-05", UTC).ToRfc822String(PRC),
+			want:   "05 Aug 20 08:00 CST",
 		},
 	}
 
@@ -1919,23 +1919,23 @@ func TestCarbon_ToRfc822zString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc822zString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc822zString(),
+			want:   "01 Jan 00 13:14 +0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc822zString(),
-			want:   "01 Jan 01 13:14 +0805",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc822zString(),
+			want:   "01 Jan 01 13:14 +0000",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc822zString(),
-			want:   "05 Aug 20 13:14 +0800",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc822zString(),
+			want:   "05 Aug 20 13:14 +0000",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc822zString(PRC),
-			want:   "05 Aug 20 00:00 +0800",
+			actual: Parse("2020-08-05", UTC).ToRfc822zString(PRC),
+			want:   "05 Aug 20 08:00 +0800",
 		},
 	}
 
@@ -1959,23 +1959,23 @@ func TestCarbon_ToRfc850String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc850String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc850String(),
+			want:   "Saturday, 01-Jan-00 13:14:15 UTC",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc850String(),
-			want:   "Monday, 01-Jan-01 13:14:15 LMT",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc850String(),
+			want:   "Monday, 01-Jan-01 13:14:15 UTC",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc850String(),
-			want:   "Wednesday, 05-Aug-20 13:14:15 CST",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc850String(),
+			want:   "Wednesday, 05-Aug-20 13:14:15 UTC",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc850String(PRC),
-			want:   "Wednesday, 05-Aug-20 00:00:00 CST",
+			actual: Parse("2020-08-05", UTC).ToRfc850String(PRC),
+			want:   "Wednesday, 05-Aug-20 08:00:00 CST",
 		},
 	}
 
@@ -1999,23 +1999,23 @@ func TestCarbon_ToRfc1036String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1036String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc1036String(),
+			want:   "Sat, 01 Jan 00 13:14:15 +0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc1036String(),
-			want:   "Mon, 01 Jan 01 13:14:15 +0805",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc1036String(),
+			want:   "Mon, 01 Jan 01 13:14:15 +0000",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc1036String(),
-			want:   "Wed, 05 Aug 20 13:14:15 +0800",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc1036String(),
+			want:   "Wed, 05 Aug 20 13:14:15 +0000",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc1036String(PRC),
-			want:   "Wed, 05 Aug 20 00:00:00 +0800",
+			actual: Parse("2020-08-05", UTC).ToRfc1036String(PRC),
+			want:   "Wed, 05 Aug 20 08:00:00 +0800",
 		},
 	}
 
@@ -2039,8 +2039,8 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1123String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc1123String(),
+			want:   "Sat, 01 Jan 0000 13:14:15 UTC",
 		},
 		{
 			name:   "case3",
@@ -2049,13 +2049,13 @@ func TestCarbon_ToRfc1123String(t *testing.T) {
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc1123String(),
-			want:   "Wed, 05 Aug 2020 13:14:15 CST",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc1123String(),
+			want:   "Wed, 05 Aug 2020 13:14:15 UTC",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc1123String(PRC),
-			want:   "Wed, 05 Aug 2020 00:00:00 CST",
+			actual: Parse("2020-08-05", UTC).ToRfc1123String(PRC),
+			want:   "Wed, 05 Aug 2020 08:00:00 CST",
 		},
 	}
 
@@ -2079,18 +2079,18 @@ func TestCarbon_ToRfc1123zString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc1123zString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc1123zString(),
+			want:   "Sat, 01 Jan 0000 13:14:15 +0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc1123zString(),
-			want:   "Mon, 01 Jan 0001 13:14:15 +0805",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc1123zString(),
+			want:   "Mon, 01 Jan 0001 13:14:15 +0000",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc1123zString(),
-			want:   "Wed, 05 Aug 2020 13:14:15 +0800",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc1123zString(),
+			want:   "Wed, 05 Aug 2020 13:14:15 +0000",
 		},
 		{
 			name:   "case5",
@@ -2119,23 +2119,23 @@ func TestCarbon_ToRfc2822String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc2822String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc2822String(),
+			want:   "Sat, 01 Jan 0000 13:14:15 +0000",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc2822String(),
-			want:   "Mon, 01 Jan 0001 13:14:15 +0805",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc2822String(),
+			want:   "Mon, 01 Jan 0001 13:14:15 +0000",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc2822String(),
-			want:   "Wed, 05 Aug 2020 13:14:15 +0800",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc2822String(),
+			want:   "Wed, 05 Aug 2020 13:14:15 +0000",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc2822String(PRC),
-			want:   "Wed, 05 Aug 2020 00:00:00 +0800",
+			actual: Parse("2020-08-05", UTC).ToRfc2822String(PRC),
+			want:   "Wed, 05 Aug 2020 08:00:00 +0800",
 		},
 	}
 
@@ -2159,23 +2159,23 @@ func TestCarbon_ToRfc3339String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc3339String(),
+			want:   "0000-01-01T13:14:15Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc3339String(),
-			want:   "0001-01-01T13:14:15+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc3339String(),
+			want:   "0001-01-01T13:14:15Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc3339String(),
-			want:   "2020-08-05T13:14:15+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc3339String(),
+			want:   "2020-08-05T13:14:15Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc3339String(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToRfc3339String(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -2199,23 +2199,23 @@ func TestCarbon_ToRfc3339MilliString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339MilliString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc3339MilliString(),
+			want:   "0000-01-01T13:14:15.999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc3339MilliString(),
-			want:   "0001-01-01T13:14:15.999+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc3339MilliString(),
+			want:   "0001-01-01T13:14:15.999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc3339MilliString(),
-			want:   "2020-08-05T13:14:15.999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc3339MilliString(),
+			want:   "2020-08-05T13:14:15.999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc3339MilliString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToRfc3339MilliString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -2239,23 +2239,23 @@ func TestCarbon_ToRfc3339MicroString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339MicroString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc3339MicroString(),
+			want:   "0000-01-01T13:14:15.999999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc3339MicroString(),
-			want:   "0001-01-01T13:14:15.999999+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc3339MicroString(),
+			want:   "0001-01-01T13:14:15.999999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc3339MicroString(),
-			want:   "2020-08-05T13:14:15.999999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc3339MicroString(),
+			want:   "2020-08-05T13:14:15.999999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc3339MicroString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToRfc3339MicroString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -2279,23 +2279,23 @@ func TestCarbon_ToRfc3339NanoString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc3339NanoString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc3339NanoString(),
+			want:   "0000-01-01T13:14:15.999999999Z",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc3339NanoString(),
-			want:   "0001-01-01T13:14:15.999999999+08:05",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc3339NanoString(),
+			want:   "0001-01-01T13:14:15.999999999Z",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc3339NanoString(),
-			want:   "2020-08-05T13:14:15.999999999+08:00",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc3339NanoString(),
+			want:   "2020-08-05T13:14:15.999999999Z",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc3339NanoString(PRC),
-			want:   "2020-08-05T00:00:00+08:00",
+			actual: Parse("2020-08-05", UTC).ToRfc3339NanoString(PRC),
+			want:   "2020-08-05T08:00:00+08:00",
 		},
 	}
 
@@ -2319,23 +2319,23 @@ func TestCarbon_ToRfc7231String(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToRfc7231String(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToRfc7231String(),
+			want:   "Sat, 01 Jan 0000 13:14:15 UTC",
 		},
 		{
 			name:   "case3",
-			actual: Parse("0001-01-01 13:14:15.999999999").ToRfc7231String(),
-			want:   "Mon, 01 Jan 0001 13:14:15 LMT",
+			actual: Parse("0001-01-01 13:14:15.999999999", UTC).ToRfc7231String(),
+			want:   "Mon, 01 Jan 0001 13:14:15 UTC",
 		},
 		{
 			name:   "case4",
-			actual: Parse("2020-08-05 13:14:15.999999999").ToRfc7231String(),
-			want:   "Wed, 05 Aug 2020 13:14:15 CST",
+			actual: Parse("2020-08-05 13:14:15.999999999", UTC).ToRfc7231String(),
+			want:   "Wed, 05 Aug 2020 13:14:15 UTC",
 		},
 		{
 			name:   "case5",
-			actual: Parse("2020-08-05").ToRfc7231String(PRC),
-			want:   "Wed, 05 Aug 2020 00:00:00 CST",
+			actual: Parse("2020-08-05", UTC).ToRfc7231String(PRC),
+			want:   "Wed, 05 Aug 2020 08:00:00 CST",
 		},
 	}
 
@@ -2360,7 +2360,7 @@ func TestCarbon_ToFormattedDateString(t *testing.T) {
 		{
 			name:   "case2",
 			actual: Parse("0000-01-01 13:14:15.999999999").ToFormattedDateString(),
-			want:   "",
+			want:   "Jan 1, 0000",
 		},
 		{
 			name:   "case3",
@@ -2399,8 +2399,8 @@ func TestCarbon_ToFormattedDayDateString(t *testing.T) {
 		},
 		{
 			name:   "case2",
-			actual: Parse("0000-01-01 13:14:15.999999999").ToFormattedDayDateString(),
-			want:   "",
+			actual: Parse("0000-01-01 13:14:15.999999999", UTC).ToFormattedDayDateString(),
+			want:   "Sat, Jan 1, 0000",
 		},
 		{
 			name:   "case3",
