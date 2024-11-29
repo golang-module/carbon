@@ -115,16 +115,21 @@ func TestCarbon_IsValid(t *testing.T) {
 		},
 		{
 			name:   "case3",
-			carbon: Parse("0000-01-01 00:00:00 +0000 UTC"),
+			carbon: Parse("2024-00-00 00:00:00 +0000 UTC"),
 			want:   false,
 		},
 		{
 			name:   "case4",
-			carbon: Parse("0001-01-01 13:14:15 +0000 UTC"),
+			carbon: Parse("0000-01-01 00:00:00 +0000 UTC"),
 			want:   true,
 		},
 		{
 			name:   "case5",
+			carbon: Parse("0001-01-01 13:14:15 +0000 UTC"),
+			want:   true,
+		},
+		{
+			name:   "case6",
 			carbon: Parse("2020-08-05"),
 			want:   true,
 		},
@@ -156,7 +161,7 @@ func TestCarbon_IsInvalid(t *testing.T) {
 		{
 			name:   "case3",
 			carbon: Parse("0000-01-01 00:00:00 +0000 UTC"),
-			want:   true,
+			want:   false,
 		},
 		{
 			name:   "case4",

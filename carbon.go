@@ -290,18 +290,6 @@ func NewCarbon() Carbon {
 	return c
 }
 
-// MaxCarbon returns a Carbon instance for the greatest supported date.
-// 获取 Carbon 的最大值
-func MaxCarbon() Carbon {
-	return NewCarbon().create(9999, 12, 31, 23, 59, 59, 999999999, UTC)
-}
-
-// MinCarbon returns a Carbon instance for the lowest supported date.
-// 获取 Carbon 的最小值
-func MinCarbon() Carbon {
-	return NewCarbon().create(1, 1, 1, 0, 0, 0, 0, UTC)
-}
-
 // DateTime defines a DateTime struct.
 // 定义 DateTime 结构体
 type DateTime struct {

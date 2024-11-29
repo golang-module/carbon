@@ -19,10 +19,10 @@ func (c Carbon) IsZero() bool {
 // IsValid reports whether is valid time.
 // 是否是有效时间
 func (c Carbon) IsValid() bool {
-	if c.Error != nil || c.IsZero() {
+	if c.IsZero() {
 		return false
 	}
-	if c.Year() >= MinCarbon().Year() && c.Year() <= MaxCarbon().Year() && c.Month() > 0 && c.Day() > 0 {
+	if c.Year() >= MinValue().Year() && c.Year() <= MaxValue().Year() && c.Month() > 0 && c.Day() > 0 {
 		return true
 	}
 	return false

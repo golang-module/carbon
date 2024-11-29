@@ -48,14 +48,14 @@ func BenchmarkCarbon_Min(b *testing.B) {
 	}
 }
 
-func BenchmarkCarbon_MaxCarbon(b *testing.B) {
+func BenchmarkCarbon_MaxValue(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		MaxCarbon()
+		MaxValue()
 	}
 }
 
-func BenchmarkCarbon_MinCarbon(b *testing.B) {
+func BenchmarkCarbon_MinValue(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		MinCarbon()
+		MinValue()
 	}
 }
