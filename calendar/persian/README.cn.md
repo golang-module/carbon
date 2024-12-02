@@ -16,17 +16,33 @@ carbon.Parse("2020-08-05 13:14:15").Persian().Day() // 15
 // 获取波斯历小时
 carbon.Parse("2020-08-05 13:14:15").Persian().Hour() // 13
 // 获取波斯历分钟
-carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
+carbon.Parse("2020-08-05 13:14:15").Persian().Minute() // 14
 // 获取波斯历秒数
-carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
+carbon.Parse("2020-08-05 13:14:15").Persian().Second() // 15
 
 // 获取波斯历日期时间字符串
-carbon.Parse("2020-08-05 13:14:15").Lunar().String() // 1399-05-15 13:14:15
-fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Lunar()) // 1399-05-15 13:14:15
+carbon.Parse("2020-08-05 13:14:15").Persian().String() // 1399-05-15 13:14:15
+fmt.Printf("%s", carbon.Parse("2020-08-05 13:14:15").Persian()) // 1399-05-15 13:14:15
+
 // 获取波斯历月字符串
-carbon.Parse("2020-08-05 13:14:15").Persian().ToMonthString() // مرداد
+carbon.Parse("2020-08-05 13:14:15").Persian().ToMonthString() // Mordad
+carbon.Parse("2020-08-05 13:14:15").Persian().ToMonthString("en") // Mordad
+carbon.Parse("2020-08-05 13:14:15").Persian().ToMonthString("fa") // مرداد
+
+// 获取简写波斯历月字符串
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortMonthString() // Mor
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortMonthString("en") // Mor
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortMonthString("fa") // مرد
+
 // 获取波斯历周字符串
-carbon.Parse("2020-08-05 13:14:15").Persian().ToWeekString() // چهارشنبه
+carbon.Parse("2020-08-05 13:14:15").Persian().ToWeekString() // Chaharshanbeh
+carbon.Parse("2020-08-05 13:14:15").Persian().ToWeekString("en") // Chaharshanbeh
+carbon.Parse("2020-08-05 13:14:15").Persian().ToWeekString("fa") // چهارشنبه
+
+// 获取简写波斯历周字符串
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortWeekString() // Cha
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortWeekString("en") // Cha
+carbon.Parse("2020-08-05 13:14:15").Persian().ToShortWeekString("fa") // د
 
 ```
 

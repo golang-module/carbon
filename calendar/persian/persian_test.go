@@ -342,6 +342,7 @@ func TestPersian_Second(t *testing.T) {
 func TestPersian_ToMonthString(t *testing.T) {
 	type args struct {
 		g Gregorian
+		l string
 	}
 	tests := []struct {
 		name string
@@ -350,90 +351,176 @@ func TestPersian_ToMonthString(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{FromGregorian(time.Time{})},
+			args: args{FromGregorian(time.Time{}), ""},
 			want: "",
 		},
 		{
 			name: "case2",
-			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Time{}), "en"},
 			want: "",
 		},
 		{
 			name: "case3",
-			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
-			want: "دی",
+			args: args{FromGregorian(time.Time{}), "fa"},
+			want: "",
 		},
 		{
 			name: "case4",
-			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), ""},
+			want: "",
+		},
+		{
+			name: "case5",
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), "en"},
+			want: "",
+		},
+		{
+			name: "case6",
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "",
+		},
+		{
+			name: "case7",
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Dey",
+		},
+		{
+			name: "case8",
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "دی",
+		},
+		{
+			name: "case9",
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Bahman",
+		},
+		{
+			name: "case10",
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local)), "fa"},
 			want: "بهمن",
 		},
 		{
-			name: "case5",
-			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
-			want: "اسفند",
-		},
-		{
-			name: "case6",
-			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
-			want: "فروردین",
-		},
-		{
-			name: "case7",
-			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
-			want: "اردیبهشت",
-		},
-		{
-			name: "case8",
-			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
-			want: "خرداد",
-		},
-		{
-			name: "case9",
-			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
-			want: "تیر",
-		},
-		{
-			name: "case10",
-			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
-			want: "مرداد",
-		},
-		{
 			name: "case11",
-			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
-			want: "شهریور",
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Esfand",
 		},
 		{
 			name: "case12",
-			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
-			want: "مهر",
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "اسفند",
 		},
 		{
 			name: "case13",
-			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
-			want: "آبان",
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Farvardin",
 		},
 		{
 			name: "case14",
-			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
-			want: "آذر",
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "فروردین",
 		},
 		{
 			name: "case15",
-			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Ordibehesht",
+		},
+		{
+			name: "case16",
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "اردیبهشت",
+		},
+		{
+			name: "case17",
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Khordad",
+		},
+		{
+			name: "case18",
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "خرداد",
+		},
+		{
+			name: "case19",
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Tir",
+		},
+		{
+			name: "case20",
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "تیر",
+		},
+		{
+			name: "case21",
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Mordad",
+		},
+		{
+			name: "case22",
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "مرداد",
+		},
+		{
+			name: "case23",
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Shahrivar",
+		},
+		{
+			name: "case24",
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "شهریور",
+		},
+		{
+			name: "case25",
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Mehr",
+		},
+		{
+			name: "case26",
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "مهر",
+		},
+		{
+			name: "case27",
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Aban",
+		},
+		{
+			name: "case28",
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "آبان",
+		},
+		{
+			name: "case29",
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Azar",
+		},
+		{
+			name: "case30",
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "آذر",
+		},
+		{
+			name: "case31",
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Dey",
+		},
+		{
+			name: "case32",
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local)), "fa"},
 			want: "دی",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, (tt.args.g).ToPersian().ToMonthString(), "args{%v}", tt.args.g)
+			assert.Equalf(t, tt.want, (tt.args.g).ToPersian().ToMonthString(tt.args.l), "args{%v}", tt.args.g)
 		})
 	}
 }
 
-func TestPersian_ToWeekString(t *testing.T) {
+func TestPersian_ToShortMonthString(t *testing.T) {
 	type args struct {
 		g Gregorian
+		l string
 	}
 	tests := []struct {
 		name string
@@ -442,87 +529,376 @@ func TestPersian_ToWeekString(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{FromGregorian(time.Time{})},
+			args: args{FromGregorian(time.Time{}), ""},
 			want: "",
 		},
 		{
 			name: "case2",
-			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Time{}), "en"},
 			want: "",
 		},
 		{
 			name: "case3",
-			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local))},
-			want: "چهارشنبه",
+			args: args{FromGregorian(time.Time{}), "fa"},
+			want: "",
 		},
 		{
 			name: "case4",
-			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local))},
-			want: "شنبه",
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), ""},
+			want: "",
 		},
 		{
 			name: "case5",
-			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local))},
-			want: "یکشنبه",
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), "en"},
+			want: "",
 		},
 		{
 			name: "case6",
-			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local))},
-			want: "چهارشنبه",
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "",
 		},
 		{
 			name: "case7",
-			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local))},
-			want: "جمعه",
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Dey",
 		},
 		{
 			name: "case8",
-			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local))},
-			want: "دوشنبه",
+			args: args{FromGregorian(time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "دی",
 		},
 		{
 			name: "case9",
-			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local))},
-			want: "چهارشنبه",
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Bah",
 		},
 		{
 			name: "case10",
-			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local))},
-			want: "شنبه",
+			args: args{FromGregorian(time.Date(2020, 2, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "بهم",
 		},
 		{
 			name: "case11",
-			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local))},
-			want: "سه شنبه",
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Esf",
 		},
 		{
 			name: "case12",
-			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local))},
-			want: "پنجشنبه",
+			args: args{FromGregorian(time.Date(2020, 3, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "اسف",
 		},
 		{
 			name: "case13",
-			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local))},
-			want: "یکشنبه",
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Far",
 		},
 		{
 			name: "case14",
-			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local))},
-			want: "سه شنبه",
+			args: args{FromGregorian(time.Date(2020, 4, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "فرو",
 		},
 		{
 			name: "case15",
-			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local))},
-			want: "جمعه",
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Ord",
+		},
+		{
+			name: "case16",
+			args: args{FromGregorian(time.Date(2020, 5, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "ارد",
+		},
+		{
+			name: "case17",
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Kho",
+		},
+		{
+			name: "case18",
+			args: args{FromGregorian(time.Date(2020, 6, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "خرد",
+		},
+		{
+			name: "case19",
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Tir",
+		},
+		{
+			name: "case20",
+			args: args{FromGregorian(time.Date(2020, 7, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "تیر",
+		},
+		{
+			name: "case21",
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Mor",
+		},
+		{
+			name: "case22",
+			args: args{FromGregorian(time.Date(2020, 8, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "مرد",
+		},
+		{
+			name: "case23",
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Sha",
+		},
+		{
+			name: "case24",
+			args: args{FromGregorian(time.Date(2020, 9, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "شهر",
+		},
+		{
+			name: "case25",
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Meh",
+		},
+		{
+			name: "case26",
+			args: args{FromGregorian(time.Date(2020, 10, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "مهر",
+		},
+		{
+			name: "case27",
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Aba",
+		},
+		{
+			name: "case28",
+			args: args{FromGregorian(time.Date(2020, 11, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "آبا",
+		},
+		{
+			name: "case29",
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Aza",
+		},
+		{
+			name: "case30",
+			args: args{FromGregorian(time.Date(2020, 12, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "آذر",
+		},
+		{
+			name: "case31",
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local)), "en"},
+			want: "Dey",
+		},
+		{
+			name: "case32",
+			args: args{FromGregorian(time.Date(2021, 1, 1, 0, 0, 0, 0, time.Local)), "fa"},
+			want: "دی",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, (tt.args.g).ToPersian().ToWeekString(), "args{%v}", tt.args.g)
+			assert.Equalf(t, tt.want, (tt.args.g).ToPersian().ToShortMonthString(tt.args.l), "args{%v}", tt.args.g)
+		})
+	}
+}
+func TestPersian_ToWeekString(t *testing.T) {
+	type args struct {
+		p Persian
+		l string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "case1",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), ""},
+			want: "",
+		},
+		{
+			name: "case2",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), "en"},
+			want: "",
+		},
+		{
+			name: "case3",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), "fa"},
+			want: "",
+		},
+		{
+			name: "case4",
+			args: args{FromPersian(2020, 1, 1, 0, 0, 0), "en"},
+			want: "Yekshanbeh",
+		},
+		{
+			name: "case5",
+			args: args{FromPersian(2020, 1, 1, 0, 0, 0), "fa"},
+			want: "نجشنبه",
+		},
+		{
+			name: "case6",
+			args: args{FromPersian(2020, 1, 2, 0, 0, 0), "en"},
+			want: "Doshanbeh",
+		},
+		{
+			name: "case7",
+			args: args{FromPersian(2020, 1, 2, 0, 0, 0), "fa"},
+			want: "دوشنبه",
+		},
+		{
+			name: "case8",
+			args: args{FromPersian(2020, 1, 3, 0, 0, 0), "en"},
+			want: "Seshanbeh",
+		},
+		{
+			name: "case9",
+			args: args{FromPersian(2020, 1, 3, 0, 0, 0), "fa"},
+			want: "سه شنبه",
+		},
+		{
+			name: "case10",
+			args: args{FromPersian(2020, 1, 4, 0, 0, 0), "en"},
+			want: "Chaharshanbeh",
+		},
+		{
+			name: "case11",
+			args: args{FromPersian(2020, 1, 4, 0, 0, 0), "fa"},
+			want: "چهارشنبه",
+		},
+		{
+			name: "case12",
+			args: args{FromPersian(2020, 1, 5, 0, 0, 0), "en"},
+			want: "Panjshanbeh",
+		},
+		{
+			name: "case13",
+			args: args{FromPersian(2020, 1, 5, 0, 0, 0), "fa"},
+			want: "پنجشنبه",
+		},
+		{
+			name: "case14",
+			args: args{FromPersian(2020, 1, 6, 0, 0, 0), "en"},
+			want: "Jomeh",
+		},
+		{
+			name: "case15",
+			args: args{FromPersian(2020, 1, 6, 0, 0, 0), "fa"},
+			want: "جمعه",
+		},
+		{
+			name: "case16",
+			args: args{FromPersian(2020, 1, 7, 0, 0, 0), "en"},
+			want: "Shanbeh",
+		},
+		{
+			name: "case17",
+			args: args{FromPersian(2020, 1, 7, 0, 0, 0), "fa"},
+			want: "شنبه",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.p).ToWeekString(tt.args.l), "args{%v}", tt.args.p)
 		})
 	}
 }
 
+func TestPersian_ToShortWeekString(t *testing.T) {
+	type args struct {
+		p Persian
+		l string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "case1",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), ""},
+			want: "",
+		},
+		{
+			name: "case2",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), "en"},
+			want: "",
+		},
+		{
+			name: "case3",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0), "fa"},
+			want: "",
+		},
+		{
+			name: "case4",
+			args: args{FromPersian(2020, 1, 1, 0, 0, 0), "en"},
+			want: "Yek",
+		},
+		{
+			name: "case5",
+			args: args{FromPersian(2020, 1, 1, 0, 0, 0), "fa"},
+			want: "پ",
+		},
+		{
+			name: "case6",
+			args: args{FromPersian(2020, 1, 2, 0, 0, 0), "en"},
+			want: "Dos",
+		},
+		{
+			name: "case7",
+			args: args{FromPersian(2020, 1, 2, 0, 0, 0), "fa"},
+			want: "چ",
+		},
+		{
+			name: "case8",
+			args: args{FromPersian(2020, 1, 3, 0, 0, 0), "en"},
+			want: "Ses",
+		},
+		{
+			name: "case9",
+			args: args{FromPersian(2020, 1, 3, 0, 0, 0), "fa"},
+			want: "س",
+		},
+		{
+			name: "case10",
+			args: args{FromPersian(2020, 1, 4, 0, 0, 0), "en"},
+			want: "Cha",
+		},
+		{
+			name: "case11",
+			args: args{FromPersian(2020, 1, 4, 0, 0, 0), "fa"},
+			want: "د",
+		},
+		{
+			name: "case12",
+			args: args{FromPersian(2020, 1, 5, 0, 0, 0), "en"},
+			want: "Pan",
+		},
+		{
+			name: "case13",
+			args: args{FromPersian(2020, 1, 5, 0, 0, 0), "fa"},
+			want: "ی",
+		},
+		{
+			name: "case14",
+			args: args{FromPersian(2020, 1, 6, 0, 0, 0), "en"},
+			want: "Jom",
+		},
+		{
+			name: "case15",
+			args: args{FromPersian(2020, 1, 6, 0, 0, 0), "fa"},
+			want: "ش",
+		},
+		{
+			name: "case16",
+			args: args{FromPersian(2020, 1, 7, 0, 0, 0), "en"},
+			want: "Sha",
+		},
+		{
+			name: "case17",
+			args: args{FromPersian(2020, 1, 7, 0, 0, 0), "fa"},
+			want: "ج",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.p).ToShortWeekString(tt.args.l), "args{%v}", tt.args.p)
+		})
+	}
+}
 func TestPersian_IsValid(t *testing.T) {
 	type args struct {
 		p Persian
@@ -638,4 +1014,13 @@ func TestGregorian_Year_Error(t *testing.T) {
 			assert.Equalf(t, tt.want, InvalidDateError(), "args(%v)", tt.args.p)
 		})
 	}
+}
+
+func TestError_Locale_Error(t *testing.T) {
+	p, l := FromPersian(622, 1, 1, 0, 0, 0), "xx"
+
+	assert.Equal(t, "", p.ToMonthString(l))
+	assert.Equal(t, "", p.ToShortMonthString(l))
+	assert.Equal(t, "", p.ToWeekString(l))
+	assert.Equal(t, "", p.ToShortWeekString(l))
 }

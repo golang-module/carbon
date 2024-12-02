@@ -11,8 +11,17 @@ import (
 )
 
 var (
-	months = []string{"فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"}
-	weeks  = []string{"یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"}
+	EnMonths      = []string{"Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad", "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand"}
+	ShortEnMonths = []string{"Far", "Ord", "Kho", "Tir", "Mor", "Sha", "Meh", "Aba", "Aza", "Dey", "Bah", "Esf"}
+
+	FaMonths      = []string{"فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"}
+	ShortFaMonths = []string{"فرو", "ارد", "خرد", "تیر", "مرد", "شهر", "مهر", "آبا", "آذر", "دی", "بهم", "اسف"}
+
+	EnWeeks      = []string{"Yekshanbeh", "Doshanbeh", "Seshanbeh", "Chaharshanbeh", "Panjshanbeh", "Jomeh", "Shanbeh"}
+	ShortEnWeeks = []string{"Yek", "Dos", "Ses", "Cha", "Pan", "Jom", "Sha"}
+
+	FaWeeks      = []string{"نجشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"}
+	ShortFaWeeks = []string{"پ", "چ", "س", "د", "ی", "ش", "ج"}
 
 	InvalidDateError = func() error {
 		return fmt.Errorf("invalid persian date, please make sure the date is valid")
@@ -195,20 +204,78 @@ func (p Persian) String() string {
 
 // ToMonthString outputs a string in persian month format like "فروردین".
 // 获取完整月份字符串，如 "فروردین"
-func (p Persian) ToMonthString() (month string) {
+func (p Persian) ToMonthString(locale ...string) (month string) {
 	if !p.IsValid() {
 		return ""
 	}
-	return months[p.month-1]
+	loc := "en"
+	if len(locale) > 0 {
+		loc = locale[0]
+	}
+	switch loc {
+	case "en":
+		return EnMonths[p.month-1]
+	case "fa":
+		return FaMonths[p.month-1]
+	}
+	return ""
+}
+
+// ToShortMonthString outputs a short string in persian month format like "فروردین".
+// 获取缩写月份字符串，如 "فروردین"
+func (p Persian) ToShortMonthString(locale ...string) (month string) {
+	if !p.IsValid() {
+		return ""
+	}
+	loc := "en"
+	if len(locale) > 0 {
+		loc = locale[0]
+	}
+	switch loc {
+	case "en":
+		return ShortEnMonths[p.month-1]
+	case "fa":
+		return ShortFaMonths[p.month-1]
+	}
+	return ""
 }
 
 // ToWeekString outputs a string in week layout like "چهارشنبه".
 // 输出完整星期字符串，如 "چهارشنبه"
-func (p Persian) ToWeekString() (month string) {
+func (p Persian) ToWeekString(locale ...string) (month string) {
 	if !p.IsValid() {
 		return ""
 	}
-	return weeks[p.ToGregorian().Week()]
+	loc := "en"
+	if len(locale) > 0 {
+		loc = locale[0]
+	}
+	switch loc {
+	case "en":
+		return EnWeeks[p.ToGregorian().Week()]
+	case "fa":
+		return FaWeeks[p.ToGregorian().Week()]
+	}
+	return ""
+}
+
+// ToShortWeekString outputs a short string in week layout like "چهارشنبه".
+// 输出缩写星期字符串，如 "چهارشنبه"
+func (p Persian) ToShortWeekString(locale ...string) (month string) {
+	if !p.IsValid() {
+		return ""
+	}
+	loc := "en"
+	if len(locale) > 0 {
+		loc = locale[0]
+	}
+	switch loc {
+	case "en":
+		return ShortEnWeeks[p.ToGregorian().Week()]
+	case "fa":
+		return ShortFaWeeks[p.ToGregorian().Week()]
+	}
+	return ""
 }
 
 // IsValid reports whether is a valid persian date.
