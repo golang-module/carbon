@@ -16,9 +16,9 @@ carbon.Parse("2020-08-05 13:14:15").Persian().Day() // 15
 // ペルシャ暦時間の取得
 carbon.Parse("2020-08-05 13:14:15").Persian().Hour() // 13
 // ペルシャ暦分の取得
-carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
+carbon.Parse("2020-08-05 13:14:15").Persian().Minute() // 14
 // ペルシャ暦秒の取得
-carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
+carbon.Parse("2020-08-05 13:14:15").Persian().Second() // 15
 
 // ペルシャ暦日時文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Persian().String() // 1399-05-15 13:14:15

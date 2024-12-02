@@ -16,9 +16,9 @@ carbon.Parse("2020-08-05 13:14:15").Persian().Day() // 15
 // Get persian hour
 carbon.Parse("2020-08-05 13:14:15").Persian().Hour() // 13
 // Get persian minute
-carbon.Parse("2020-08-05 13:14:15").Lunar().Minute() // 14
+carbon.Parse("2020-08-05 13:14:15").Persian().Minute() // 14
 // Get persian second
-carbon.Parse("2020-08-05 13:14:15").Lunar().Second() // 15
+carbon.Parse("2020-08-05 13:14:15").Persian().Second() // 15
 
 // Get persian date and time string
 carbon.Parse("2020-08-05 13:14:15").Persian().String() // 1399-05-15 13:14:15
