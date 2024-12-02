@@ -62,6 +62,8 @@ carbon.CreateFromPersian(1, 1, 1, 0, 0, 0).IsValid() // true
 carbon.CreateFromPersian(622, 1, 1, 0, 0, 0).IsValid() // true
 carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).IsValid() // true
 carbon.CreateFromPersian(9999, 1, 1, 0, 0, 0).IsValid() // false
+carbon.CreateFromPersian(2024, 0, 1, 0, 0, 0).IsValid() // false
+carbon.CreateFromPersian(2024, 1, 0, 0, 0, 0).IsValid() // false
 
 // 是否是波斯历闰年
 carbon.CreateFromPersian(1395, 1, 1, 0, 0, 0).IsLeapYear() // true
