@@ -50,7 +50,12 @@ func (c Carbon) Persian() (p persian.Persian) {
 
 // CreateFromPersian creates a Carbon instance from Persian date and time.
 // 从 波斯日期 创建 Carbon 实例
-func CreateFromPersian(year, month, day, hour, minute, second int) Carbon {
-	t := persian.FromPersian(year, month, day, hour, minute, second).ToGregorian().Time
+func CreateFromPersian(year, month, day, hour, minute, second int) (c Carbon) {
+	p := persian.FromPersian(year, month, day, hour, minute, second)
+	if p.Error != nil {
+		c.Error = p.Error
+		return
+	}
+	t := p.ToGregorian().Time
 	return CreateFromStdTime(t)
 }

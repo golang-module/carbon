@@ -62,6 +62,11 @@ func TestCreateFromLunar(t *testing.T) {
 			carbon: CreateFromLunar(2023, 12, 14, 12, 0, 0, false),
 			want:   "2024-01-24 12:00:00",
 		},
+		{
+			name:   "case4",
+			carbon: CreateFromLunar(2200, 12, 14, 12, 0, 0, false),
+			want:   "",
+		},
 	}
 
 	for _, tt := range tests {
@@ -192,6 +197,11 @@ func TestCarbon_CreateFromPersian(t *testing.T) {
 			name:   "case3",
 			carbon: CreateFromPersian(1403, 5, 15, 12, 0, 0),
 			want:   "2024-08-05 12:00:00",
+		},
+		{
+			name:   "case4",
+			carbon: CreateFromPersian(9999, 12, 14, 12, 0, 0),
+			want:   "",
 		},
 	}
 
