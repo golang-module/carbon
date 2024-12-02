@@ -591,7 +591,7 @@ carbon.Parse("00:00:00").IsDST() // false
 carbon.Parse("2023-01-01", "Australia/Brisbane").IsDST() // false
 carbon.Parse("2023-01-01", "Australia/Sydney").IsDST() // true
 
-// Whether is zero time
+// Whether is zero time(0001-01-01 00:00:00 +0000 UTC)
 carbon.Parse("").IsZero() // true
 carbon.Parse("0").IsZero() // true
 carbon.Parse("0000-00-00 00:00:00").IsZero() // true
