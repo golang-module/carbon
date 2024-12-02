@@ -523,6 +523,53 @@ func TestPersian_ToWeekString(t *testing.T) {
 	}
 }
 
+func TestPersian_IsValid(t *testing.T) {
+	type args struct {
+		p Persian
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "case1",
+			args: args{Persian{}},
+			want: false,
+		},
+		{
+			name: "cas2",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0)},
+			want: false,
+		},
+		{
+			name: "case3",
+			args: args{FromPersian(620, 1, 1, 0, 0, 0)},
+			want: true,
+		},
+		{
+			name: "case4",
+			args: args{FromPersian(9378, 1, 1, 0, 0, 0)},
+			want: false,
+		},
+		{
+			name: "case5",
+			args: args{FromPersian(622, 1, 1, 0, 0, 0)},
+			want: true,
+		},
+		{
+			name: "case6",
+			args: args{FromPersian(9377, 1, 1, 0, 0, 0)},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.p).IsValid(), "args{%v}", tt.args.p)
+		})
+	}
+}
+
 func TestPersian_IsLeapYear(t *testing.T) {
 	type args struct {
 		p Persian
@@ -556,6 +603,39 @@ func TestPersian_IsLeapYear(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			assert.Equalf(t, tt.want, (tt.args.p).IsLeapYear(), "args{%v}", tt.args.p)
+		})
+	}
+}
+
+func TestGregorian_Year_Error(t *testing.T) {
+	type args struct {
+		p Persian
+	}
+	tests := []struct {
+		name string
+		args args
+		want error
+	}{
+		{
+			name: "case1",
+			args: args{FromPersian(0, 0, 0, 0, 0, 0)},
+			want: InvalidDateError(),
+		},
+		{
+			name: "case2",
+			args: args{FromPersian(621, 10, 10, 0, 0, 0)},
+			want: InvalidDateError(),
+		},
+
+		{
+			name: "case3",
+			args: args{FromPersian(9378, 10, 10, 0, 0, 0)},
+			want: InvalidDateError(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, InvalidDateError(), "args(%v)", tt.args.p)
 		})
 	}
 }

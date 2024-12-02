@@ -28,18 +28,29 @@ carbon.Parse("2020-08-05 13:14:15").Persian().ToMonthString() // مرداد
 // 获取波斯历周字符串
 carbon.Parse("2020-08-05 13:14:15").Persian().ToWeekString() // چهارشنبه
 
-// 是否是波斯历零值时间
-carbon.Parse("0000-00-00 00:00:00").Persian().IsZero() // true
-carbon.Parse("2020-08-05 13:14:15").Persian().IsZero() // false
-
-// 是否是波斯历闰年
-carbon.Parse("2016-03-20 00:00:00").Persian().IsLeapYear() // true
-carbon.Parse("2020-08-05 13:14:15").Persian().IsLeapYear() // false
 ```
 
 ##### 将 `波斯历` 转化成 `公历`
 
 ```go
+carbon.CreateFromPersian(1, 1, 1, 0, 0, 0).ToDateTimeString() // 2016-03-20 00:00:00
+carbon.CreateFromPersian(622, 1, 1, 0, 0, 0).ToDateTimeString() // 1243-03-21 00:00:00
 carbon.CreateFromPersian(1395, 1, 1, 0, 0, 0).ToDateTimeString() // 2016-03-20 00:00:00
-carbon.CreateFromPersian(1399, 5, 15, 13, 14, 15).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).ToDateTimeString() // 9998-03-19 00:00:00
+```
+
+##### 日期判断
+```go
+// 是否是合法的波斯历日期
+carbon.CreateFromPersian(1, 1, 1, 0, 0, 0).IsValid() // true
+carbon.CreateFromPersian(622, 1, 1, 0, 0, 0).IsValid() // true
+carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).IsValid() // true
+carbon.CreateFromPersian(9999, 1, 1, 0, 0, 0).IsValid() // false
+
+// 是否是波斯历闰年
+carbon.CreateFromPersian(1395, 1, 1, 0, 0, 0).IsLeapYear() // true
+carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).IsLeapYear() // true
+carbon.CreateFromPersian(622, 1, 1, 0, 0, 0).IsLeapYear() // false
+carbon.CreateFromPersian(9999, 1, 1, 0, 0, 0).IsLeapYear() // false
+
 ```
