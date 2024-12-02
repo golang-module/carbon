@@ -211,8 +211,8 @@ func (p Persian) ToWeekString() (month string) {
 	return weeks[p.ToGregorian().Week()]
 }
 
-// IsValid reports whether is a valid date.
-// 是否是有效的年份
+// IsValid reports whether is a valid persian date.
+// 是否是有效的日期
 func (p Persian) IsValid() bool {
 	if p.Year() >= MinValue().year && p.Year() <= MaxValue().year && p.month >= MinValue().month && p.month <= MaxValue().month && p.day >= MinValue().day && p.day <= MaxValue().day {
 		return true
@@ -220,7 +220,7 @@ func (p Persian) IsValid() bool {
 	return false
 }
 
-// IsLeapYear reports whether is a leap year.
+// IsLeapYear reports whether is a persian leap year.
 // 是否是闰年
 func (p Persian) IsLeapYear() bool {
 	if !p.IsValid() {

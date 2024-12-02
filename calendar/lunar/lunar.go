@@ -360,7 +360,7 @@ func (l Lunar) ToDateString() string {
 	return l.ToYearString() + "年" + l.ToMonthString() + l.ToDayString()
 }
 
-// IsValid reports whether is a valid date.
+// IsValid reports whether is a valid lunar date.
 // 是否是有效的年份
 func (l Lunar) IsValid() bool {
 	if l.Year() >= MinValue().year && l.Year() <= MaxValue().year && l.month >= MinValue().month && l.month <= MaxValue().month && l.day >= MinValue().day && l.day <= MaxValue().day {
@@ -369,7 +369,7 @@ func (l Lunar) IsValid() bool {
 	return false
 }
 
-// IsLeapYear reports whether is leap year.
+// IsLeapYear reports whether is a lunar leap year.
 // 是否是农历闰年
 func (l Lunar) IsLeapYear() bool {
 	if l.Error != nil {
@@ -378,7 +378,7 @@ func (l Lunar) IsLeapYear() bool {
 	return l.LeapMonth() != 0
 }
 
-// IsLeapMonth reports whether is leap month.
+// IsLeapMonth reports whether is a lunar leap month.
 // 是否是农历闰月
 func (l Lunar) IsLeapMonth() bool {
 	if l.Error != nil {
@@ -387,7 +387,7 @@ func (l Lunar) IsLeapMonth() bool {
 	return l.month == l.LeapMonth()
 }
 
-// IsRatYear reports whether is year of Rat.
+// IsRatYear reports whether is lunar year of Rat.
 // 是否是鼠年
 func (l Lunar) IsRatYear() bool {
 	if l.Error != nil {
@@ -399,7 +399,7 @@ func (l Lunar) IsRatYear() bool {
 	return false
 }
 
-// IsOxYear reports whether is year of Ox.
+// IsOxYear reports whether is lunar year of Ox.
 // 是否是牛年
 func (l Lunar) IsOxYear() bool {
 	if l.Error != nil {
@@ -411,7 +411,7 @@ func (l Lunar) IsOxYear() bool {
 	return false
 }
 
-// IsTigerYear reports whether is year of Tiger.
+// IsTigerYear reports whether is lunar year of Tiger.
 // 是否是虎年
 func (l Lunar) IsTigerYear() bool {
 	if l.Error != nil {
@@ -423,7 +423,7 @@ func (l Lunar) IsTigerYear() bool {
 	return false
 }
 
-// IsRabbitYear reports whether is year of Rabbit.
+// IsRabbitYear reports whether is lunar year of Rabbit.
 // 是否是兔年
 func (l Lunar) IsRabbitYear() bool {
 	if l.Error != nil {
@@ -435,7 +435,7 @@ func (l Lunar) IsRabbitYear() bool {
 	return false
 }
 
-// IsDragonYear reports whether is year of Dragon.
+// IsDragonYear reports whether is lunar year of Dragon.
 // 是否是龙年
 func (l Lunar) IsDragonYear() bool {
 	if l.Error != nil {
@@ -447,7 +447,7 @@ func (l Lunar) IsDragonYear() bool {
 	return false
 }
 
-// IsSnakeYear reports whether is year of Snake.
+// IsSnakeYear reports whether is lunar year of Snake.
 // 是否是蛇年
 func (l Lunar) IsSnakeYear() bool {
 	if l.Error != nil {
@@ -459,7 +459,7 @@ func (l Lunar) IsSnakeYear() bool {
 	return false
 }
 
-// IsHorseYear reports whether is year of Horse.
+// IsHorseYear reports whether is lunar year of Horse.
 // 是否是马年
 func (l Lunar) IsHorseYear() bool {
 	if l.Error != nil {
@@ -471,7 +471,7 @@ func (l Lunar) IsHorseYear() bool {
 	return false
 }
 
-// IsGoatYear reports whether is year of Goat.
+// IsGoatYear reports whether is lunar year of Goat.
 // 是否是羊年
 func (l Lunar) IsGoatYear() bool {
 	if l.Error != nil {
@@ -483,7 +483,7 @@ func (l Lunar) IsGoatYear() bool {
 	return false
 }
 
-// IsMonkeyYear reports whether is year of Monkey.
+// IsMonkeyYear reports whether is lunar year of Monkey.
 // 是否是猴年
 func (l Lunar) IsMonkeyYear() bool {
 	if l.Error != nil {
@@ -495,7 +495,7 @@ func (l Lunar) IsMonkeyYear() bool {
 	return false
 }
 
-// IsRoosterYear reports whether is year of Rooster.
+// IsRoosterYear reports whether is lunar year of Rooster.
 // 是否是鸡年
 func (l Lunar) IsRoosterYear() bool {
 	if l.Error != nil {
@@ -507,7 +507,7 @@ func (l Lunar) IsRoosterYear() bool {
 	return false
 }
 
-// IsDogYear reports whether is year of Dog.
+// IsDogYear reports whether is lunar year of Dog.
 // 是否是狗年
 func (l Lunar) IsDogYear() bool {
 	if l.Error != nil {
@@ -519,7 +519,7 @@ func (l Lunar) IsDogYear() bool {
 	return false
 }
 
-// IsPigYear reports whether is year of Pig.
+// IsPigYear reports whether is lunar year of Pig.
 // 是否是猪年
 func (l Lunar) IsPigYear() bool {
 	if l.Error != nil {

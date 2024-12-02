@@ -60,7 +60,7 @@ carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04
 
 ##### Comparison
 ```go
-// Whether is a lunar valid date
+// Whether is a valid lunar date
 carbon.Parse("0000-00-00 00:00:00").Lunar().IsValid() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsValid() // true
 

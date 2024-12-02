@@ -41,7 +41,7 @@ carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).ToDateTimeString() // 9998-03-19 0
 
 ##### Comparison
 ```go
-// Whether is a persian valid date
+// Whether is a valid persian date
 carbon.CreateFromPersian(1, 1, 1, 0, 0, 0).IsValid() // true
 carbon.CreateFromPersian(622, 1, 1, 0, 0, 0).IsValid() // true
 carbon.CreateFromPersian(9377, 1, 1, 0, 0, 0).IsValid() // true
