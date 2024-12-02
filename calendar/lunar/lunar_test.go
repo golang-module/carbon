@@ -301,7 +301,7 @@ func TestLunar_Year(t *testing.T) {
 		},
 		{
 			name: "case2",
-			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(0, 0, 0, 0, 0, 0, 0, time.UTC))},
 			want: 0,
 		},
 		{
@@ -1031,6 +1031,43 @@ func TestLunar_ToDateString(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			assert.Equalf(t, tt.want, (tt.args.g).ToLunar().ToDateString(), "args{%v}", tt.args.g)
+		})
+	}
+}
+
+func TestLunar_IsValidYear(t *testing.T) {
+	type args struct {
+		l Lunar
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "case1",
+			args: args{FromLunar(0, 0, 0, 0, 0, 0, false)},
+			want: false,
+		},
+		{
+			name: "case2",
+			args: args{FromLunar(1800, 8, 5, 0, 0, 0, false)},
+			want: false,
+		},
+		{
+			name: "case4",
+			args: args{FromLunar(2200, 8, 5, 0, 0, 0, false)},
+			want: false,
+		},
+		{
+			name: "case5",
+			args: args{FromLunar(2024, 8, 05, 0, 0, 0, false)},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, (tt.args.l).IsValid(), "args{%v}", tt.args.l)
 		})
 	}
 }

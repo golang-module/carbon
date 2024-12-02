@@ -10,8 +10,6 @@ import (
 )
 
 var (
-	minYear, maxYear = 1900, 2100
-
 	numbers = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
 	months  = []string{"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"}
 	weeks   = []string{"周日", "周一", "周二", "周三", "周四", "周五", "周六"}
@@ -57,8 +55,8 @@ var (
 		0x0d520, // 2100
 	}
 
-	invalidYearError = func() error {
-		return fmt.Errorf("invalid year, outside of range [1900,2100]")
+	InvalidDateError = func() error {
+		return fmt.Errorf("invalid invalid date, please make sure the date is valid")
 	}
 )
 
@@ -74,6 +72,32 @@ type Lunar struct {
 	year, month, day, hour, minute, second int
 	isLeapMonth                            bool
 	Error                                  error
+}
+
+// MaxValue returns a Lunar instance for the greatest supported date.
+// 返回 Carbon 的最大值
+func MaxValue() Lunar {
+	return Lunar{
+		year:   2100,
+		month:  12,
+		day:    31,
+		hour:   23,
+		minute: 59,
+		second: 59,
+	}
+}
+
+// MinValue returns a Lunar instance for the lowest supported date.
+// 返回 Lunar 的最小值
+func MinValue() Lunar {
+	return Lunar{
+		year:   1900,
+		month:  1,
+		day:    1,
+		hour:   0,
+		minute: 0,
+		second: 0,
+	}
 }
 
 // FromGregorian creates a Gregorian instance from time.Time.
@@ -92,6 +116,10 @@ func FromLunar(year, month, day, hour, minute, second int, isLeapMonth bool) (l 
 	l.year, l.month, l.day = year, month, day
 	l.hour, l.minute, l.second = hour, minute, second
 	l.isLeapMonth = isLeapMonth
+	if !l.IsValid() {
+		l.Error = InvalidDateError()
+		return
+	}
 	return
 }
 
@@ -102,10 +130,8 @@ func (g Gregorian) ToLunar() (l Lunar) {
 		return
 	}
 	daysInYear, daysInMonth, leapMonth := 365, 30, 0
-	if g.Year() < minYear || g.Year() > maxYear {
-		l.Error = invalidYearError()
-		return
-	}
+	maxYear, minYear := MaxValue().year, MinValue().year
+
 	// 与 1900-01-31 相差多少天
 	offset := g.diffInDays(time.Date(minYear, 1, 31, 0, 0, 0, 0, g.Location()))
 	for l.year = minYear; l.year <= maxYear && offset > 0; l.year++ {
@@ -146,20 +172,19 @@ func (g Gregorian) ToLunar() (l Lunar) {
 	}
 	l.day = offset + 1
 	l.hour, l.minute, l.second = g.Clock()
+	if !l.IsValid() {
+		l.Error = InvalidDateError()
+		return
+	}
 	return
 }
 
 // ToGregorian converts Lunar instance to Gregorian instance.
 // 将 Lunar 实例转化为 Gregorian 实例
 func (l Lunar) ToGregorian() (g Gregorian) {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return
 	}
-	if l.year < minYear || l.year > maxYear {
-		g.Error = invalidYearError()
-		return
-	}
-
 	days := l.getDaysInMonth()
 	offset := l.getOffsetInYear()
 	offset += l.getOffsetInMonth()
@@ -167,7 +192,7 @@ func (l Lunar) ToGregorian() (g Gregorian) {
 	if l.isLeapMonth {
 		offset += days
 	}
-	// https://github.com/dromara/carbon/issues/219
+	// https://github.com/golang-module/carbon/issues/219
 	ts := int64(offset+l.day)*86400 - int64(2206512000) + int64(l.hour)*3600 + int64(l.minute)*60 + int64(l.second)
 	g.Time = time.Unix(ts, 0)
 	return
@@ -176,7 +201,7 @@ func (l Lunar) ToGregorian() (g Gregorian) {
 // Animal gets lunar animal name like "猴".
 // 获取农历生肖
 func (l Lunar) Animal() string {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return ""
 	}
 	return animals[l.year%calendar.MonthsPerYear]
@@ -185,7 +210,7 @@ func (l Lunar) Animal() string {
 // Festival gets lunar festival name like "春节".
 // 获取农历节日
 func (l Lunar) Festival() string {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return ""
 	}
 	return festivals[fmt.Sprintf("%d-%d", l.month, l.day)]
@@ -251,6 +276,7 @@ func (l Lunar) LeapMonth() int {
 	if l.Error != nil {
 		return 0
 	}
+	minYear := MinValue().year
 	if l.year-minYear < 0 {
 		return 0
 	}
@@ -260,7 +286,7 @@ func (l Lunar) LeapMonth() int {
 // String implements Stringer interface and outputs a string in YYYY-MM-DD HH::ii::ss format like "2019-12-07 00:00:00".
 // 实现 Stringer 接口, 输出 YYYY-MM-DD HH::ii::ss 格式字符串，如 "2019-12-07 00:00:00"
 func (l Lunar) String() string {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return ""
 	}
 	return fmt.Sprintf("%04d-%02d-%02d %02d:%02d:%02d", l.year, l.month, l.day, l.hour, l.minute, l.second)
@@ -269,8 +295,8 @@ func (l Lunar) String() string {
 // ToYearString outputs a string in lunar year format like "二零二零".
 // 获取农历年份字符串，如 "二零二零"
 func (l Lunar) ToYearString() (year string) {
-	if l.IsZero() {
-		return
+	if !l.IsValid() {
+		return ""
 	}
 	year = fmt.Sprintf("%d", l.year)
 	for index, number := range numbers {
@@ -282,8 +308,8 @@ func (l Lunar) ToYearString() (year string) {
 // ToMonthString outputs a string in lunar month format like "正月".
 // 获取农历月份字符串，如 "正月"
 func (l Lunar) ToMonthString() (month string) {
-	if l.IsZero() {
-		return
+	if !l.IsValid() {
+		return ""
 	}
 	month = months[l.month-1] + "月"
 	if l.IsLeapMonth() {
@@ -295,7 +321,7 @@ func (l Lunar) ToMonthString() (month string) {
 // ToWeekString outputs a string in week layout like "周一".
 // 输出完整农历星期字符串，如 "周一"
 func (l Lunar) ToWeekString() (month string) {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return ""
 	}
 	return weeks[l.ToGregorian().Week()]
@@ -304,8 +330,8 @@ func (l Lunar) ToWeekString() (month string) {
 // ToDayString outputs a string in lunar day format like "廿一".
 // 获取农历日字符串，如 "廿一"
 func (l Lunar) ToDayString() (day string) {
-	if l.IsZero() {
-		return
+	if !l.IsValid() {
+		return ""
 	}
 	num := numbers[l.day%10]
 	switch {
@@ -328,19 +354,16 @@ func (l Lunar) ToDayString() (day string) {
 // ToDateString outputs a string in lunar date format like "二零二零年腊月初五".
 // 获取农历日期字符串，如 "二零二零年腊月初五"
 func (l Lunar) ToDateString() string {
-	if l.IsZero() {
+	if !l.IsValid() {
 		return ""
 	}
 	return l.ToYearString() + "年" + l.ToMonthString() + l.ToDayString()
 }
 
-// IsZero reports whether is zero time.
-// 是否是农历零值时间
-func (l Lunar) IsZero() bool {
-	if l.Error != nil {
-		return true
-	}
-	if l.year == 0 || l.month == 0 || l.day == 0 {
+// IsValid reports whether is a valid date.
+// 是否是有效的年份
+func (l Lunar) IsValid() bool {
+	if l.Year() >= MinValue().year && l.Year() <= MaxValue().year && l.month >= MinValue().month && l.month <= MaxValue().month && l.day >= MinValue().day && l.day <= MaxValue().day {
 		return true
 	}
 	return false
@@ -532,7 +555,7 @@ func (l Lunar) getOffsetInYear() int {
 
 func (l Lunar) getOffsetInMonth() int {
 	clone, year, offset := l, 0, 0
-	for year = minYear; year < l.year; year++ {
+	for year = MinValue().year; year < l.year; year++ {
 		clone.year = year
 		offset += clone.getDaysInYear()
 	}
@@ -542,7 +565,7 @@ func (l Lunar) getOffsetInMonth() int {
 func (l Lunar) getDaysInYear() int {
 	var days = 348
 	for i := 0x8000; i > 0x8; i >>= 1 {
-		if (years[l.year-minYear] & i) != 0 {
+		if (years[l.year-MinValue().year] & i) != 0 {
 			days++
 		}
 	}
@@ -550,7 +573,7 @@ func (l Lunar) getDaysInYear() int {
 }
 
 func (l Lunar) getDaysInMonth() int {
-	if (years[l.year-minYear] & (0x10000 >> uint(l.month))) != 0 {
+	if (years[l.year-MinValue().year] & (0x10000 >> uint(l.month))) != 0 {
 		return 30
 	}
 	return 29
@@ -560,7 +583,7 @@ func (l Lunar) getDaysInLeapMonth() int {
 	if l.LeapMonth() == 0 {
 		return 0
 	}
-	if years[l.year-minYear]&0x10000 != 0 {
+	if years[l.year-MinValue().year]&0x10000 != 0 {
 		return 30
 	}
 	return 29

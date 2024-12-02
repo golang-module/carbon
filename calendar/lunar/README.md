@@ -45,9 +45,24 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // Get lunar date as string
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
 
-// Whether is a lunar zero time
-carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
+```
+
+##### Convert `Lunar` calendar to `Gregorian` calendar
+
+```go
+// Convert the Lunar Calendar December 11, 2023 to the gregorian calendar
+carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
+// Convert lunar calendar February 11, 2023 to gregorian calendar
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2024-03-02 00:00:00
+// Convert the Lunar Calendar Leap February 11, 2024 to the gregorian calendar
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
+```
+
+##### Comparison
+```go
+// Whether is a lunar valid date
+carbon.Parse("0000-00-00 00:00:00").Lunar().IsValid() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsValid() // true
 
 // Whether is a lunar leap year
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
@@ -78,15 +93,5 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // Whether is a lunar year of the dig
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-```
 
-##### Convert `Lunar` calendar to `Gregorian` calendar
-
-```go
-// Convert the Lunar Calendar December 11, 2023 to the gregorian calendar
-carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
-// Convert lunar calendar February 11, 2023 to gregorian calendar
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2024-03-02 00:00:00
-// Convert the Lunar Calendar Leap February 11, 2024 to the gregorian calendar
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
 ```

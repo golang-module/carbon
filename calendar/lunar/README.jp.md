@@ -45,9 +45,24 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 旧暦日付文字列の取得
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
 
-// ゼロ値の時間ですか
-carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
+```
+
+##### `旧暦`を`西暦`に変換する
+
+```go
+// 2023 年の旧暦 12 月 11 日をグレゴリオ暦に変換します
+carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
+// 旧暦の 2023 年 2 月 11 日をグレゴリオ暦に変換します
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2023-03-02 00:00:00
+// 旧暦 2023 年、閏 2 月 11 日をグレゴリオ暦に変換します
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
+```
+
+##### 日付判断
+```go
+// 合法的なペルシャ暦の日付かどうか
+carbon.Parse("0000-00-00 00:00:00").Lunar().IsValid() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsValid() // true
 
 // 旧暦うるう年かどうか
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
@@ -78,15 +93,5 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // 豚年かどうか
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-```
 
-##### `旧暦`を`西暦`に変換する
-
-```go
-// 2023 年の旧暦 12 月 11 日をグレゴリオ暦に変換します
-carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
-// 旧暦の 2023 年 2 月 11 日をグレゴリオ暦に変換します
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2023-03-02 00:00:00
-// 旧暦 2023 年、閏 2 月 11 日をグレゴリオ暦に変換します
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
 ```

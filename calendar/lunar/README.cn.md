@@ -45,9 +45,26 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().ToDayString() // 十六
 // 获取农历日期字符串
 carbon.Parse("2020-08-05 13:14:15").Lunar().ToDateString() // 二零二零年六月十六
 
-// 是否是零值时间
-carbon.Parse("0000-00-00 00:00:00").Lunar().IsZero() // true
-carbon.Parse("2020-08-05 13:14:15").Lunar().IsZero() // false
+```
+
+##### 将 `农历` 转化成 `公历`
+
+```go
+// 将农历 二零二三年腊月十一 转化为 公历
+carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
+// 将农历 二零二三年二月十一 转化为 公历
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2023-03-02 00:00:00
+// 将农历 二零二三年闰二月十一 转化为 公历
+carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
+```
+
+##### 日期判断
+
+```go
+
+// 是否是合法农历日期
+carbon.Parse("0000-00-00 00:00:00").Lunar().IsValid() // false
+carbon.Parse("2020-08-05 13:14:15").Lunar().IsValid() // true
 
 // 是否是农历闰年
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsLeapYear() // true
@@ -78,15 +95,4 @@ carbon.Parse("2020-08-05 13:14:15").Lunar().IsRoosterYear() // false
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsDogYear() // false
 // 是否是猪年
 carbon.Parse("2020-08-05 13:14:15").Lunar().IsPigYear() // false
-```
-
-##### 将 `农历` 转化成 `公历`
-
-```go
-// 将农历 二零二三年腊月十一 转化为 公历
-carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString() // 2024-01-21 00:00:00
-// 将农历 二零二三年二月十一 转化为 公历
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, false).ToDateTimeString() // 2023-03-02 00:00:00
-// 将农历 二零二三年闰二月十一 转化为 公历
-carbon.CreateFromLunar(2023, 2, 11, 0, 0, 0, true).ToDateTimeString() // 2023-04-01 00:00:00
 ```
