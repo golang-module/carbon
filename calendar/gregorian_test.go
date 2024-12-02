@@ -351,6 +351,48 @@ func TestGregorian_IsZero(t *testing.T) {
 	}
 }
 
+func TestGregorian_IsValid(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "case1",
+			args: args{NewGregorian(time.Time{})},
+			want: false,
+		},
+		{
+			name: "case2",
+			args: args{NewGregorian(time.Date(-9998, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: true,
+		},
+		{
+			name: "case3",
+			args: args{NewGregorian(time.Date(-9999, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: false,
+		},
+		{
+			name: "case4",
+			args: args{NewGregorian(time.Date(9999, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: true,
+		},
+		{
+			name: "case5",
+			args: args{NewGregorian(time.Date(10000, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, tt.args.g.IsValid(), "args(%v)", tt.args.g)
+		})
+	}
+}
+
 func TestGregorian_IsLeapYear(t *testing.T) {
 	type args struct {
 		g Gregorian
@@ -379,6 +421,39 @@ func TestGregorian_IsLeapYear(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			assert.Equalf(t, tt.want, tt.args.g.IsLeapYear(), "args(%v)", tt.args.g)
+		})
+	}
+}
+
+func TestGregorian_Year_Error(t *testing.T) {
+	type args struct {
+		g Gregorian
+	}
+	tests := []struct {
+		name string
+		args args
+		want error
+	}{
+		{
+			name: "case1",
+			args: args{NewGregorian(time.Time{})},
+			want: InvalidDateError(),
+		},
+		{
+			name: "case2",
+			args: args{NewGregorian(time.Date(-9999, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: InvalidDateError(),
+		},
+
+		{
+			name: "case3",
+			args: args{NewGregorian(time.Date(10000, 8, 5, 0, 0, 0, 0, time.Local))},
+			want: InvalidDateError(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, InvalidDateError(), "args(%v)", tt.args.g)
 		})
 	}
 }

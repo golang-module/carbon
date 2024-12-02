@@ -2,8 +2,13 @@
 package calendar
 
 import (
+	"fmt"
 	"time"
 )
+
+var InvalidDateError = func() error {
+	return fmt.Errorf("invalid calendar date, please make sure the date is valid")
+}
 
 // month constants
 // 月份常量
@@ -34,6 +39,8 @@ const (
 	Sunday    = "Sunday"    // 周日
 )
 
+// number constants
+// 数字常量
 const (
 	YearsPerMillennium = 1000   // 每千年1000年
 	YearsPerCentury    = 100    // 每世纪100年
@@ -131,6 +138,18 @@ func NewGregorian(t time.Time) (g Gregorian) {
 	}
 	g.Time = t
 	return
+}
+
+// MaxValue returns a Gregorian instance for the greatest supported date.
+// 返回 Gregorian 的最大值
+func MaxValue() Gregorian {
+	return NewGregorian(time.Date(9999, 12, 31, 23, 59, 59, 999999999, time.UTC))
+}
+
+// MinValue returns a Gregorian instance for the lowest supported date.
+// 返回 Gregorian 的最小值
+func MinValue() Gregorian {
+	return NewGregorian(time.Date(-9998, 1, 1, 0, 0, 0, 0, time.UTC))
 }
 
 // Date gets gregorian year, month, and day like 2020, 8, 5.
@@ -236,6 +255,15 @@ func (g Gregorian) String() string {
 // 是否是零值时间
 func (g Gregorian) IsZero() bool {
 	return g.Time.IsZero()
+}
+
+// IsValid reports whether is a valid gregorian date.
+// 是否是有效的年份
+func (g Gregorian) IsValid() bool {
+	if g.Year() >= MinValue().Year() && g.Year() <= MaxValue().Year() && g.Month() >= MinValue().Month() && g.Month() <= MaxValue().Month() && g.Day() >= MinValue().Day() && g.Day() <= MaxValue().Day() {
+		return true
+	}
+	return false
 }
 
 // IsLeapYear reports whether is a leap year.
