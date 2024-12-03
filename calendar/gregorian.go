@@ -7,7 +7,7 @@ import (
 )
 
 var InvalidDateError = func() error {
-	return fmt.Errorf("invalid calendar date, please make sure the date is valid")
+	return fmt.Errorf("invalid gregorian date, please make sure the date is valid")
 }
 
 // month constants
