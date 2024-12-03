@@ -446,7 +446,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 	year, month, day := Now().Date()
-	c := ParseByLayout(fmt.Sprintf("%d-%02d-%02d %s", year, month, day, value), DateTimeLayout)
+	c := ParseByLayout(fmt.Sprintf("%04d-%02d-%02d %s", year, month, day, value), DateTimeLayout)
 	fmt.Println("c", c)
 	if c.Error == nil {
 		*t = NewTime(c)
@@ -492,7 +492,7 @@ func (t *TimeMilli) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 	year, month, day := Now().Date()
-	c := ParseByLayout(fmt.Sprintf("%d-%02d-%02d %s", year, month, day, value), DateTimeMilliLayout)
+	c := ParseByLayout(fmt.Sprintf("%04d-%02d-%02d %s", year, month, day, value), DateTimeMilliLayout)
 	if c.Error == nil {
 		*t = NewTimeMilli(c)
 	}
@@ -537,7 +537,7 @@ func (t *TimeMicro) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 	year, month, day := Now().Date()
-	c := ParseByLayout(fmt.Sprintf("%d-%02d-%02d %s", year, month, day, value), DateTimeMicroLayout)
+	c := ParseByLayout(fmt.Sprintf("%04d-%02d-%02d %s", year, month, day, value), DateTimeMicroLayout)
 	if c.Error == nil {
 		*t = NewTimeMicro(c)
 	}
@@ -582,7 +582,7 @@ func (t *TimeNano) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 	year, month, day := Now().Date()
-	c := ParseByLayout(fmt.Sprintf("%d-%02d-%02d %s", year, month, day, value), DateTimeNanoLayout)
+	c := ParseByLayout(fmt.Sprintf("%04d-%02d-%02d %s", year, month, day, value), DateTimeNanoLayout)
 	if c.Error == nil {
 		*t = NewTimeNano(c)
 	}
