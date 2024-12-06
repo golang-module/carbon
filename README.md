@@ -40,7 +40,7 @@ go get -u gitcode.com/dromara/carbon/v2
 import "gitee.com/dromara/gitcode/v2"
 ```
 
-`Carbon` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository url has changed. If the previous repository used was `golang-module/carbon`, please replace the original repository with the new repository in `go.mod`, or execute the following command
+`Carbon` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository URL has changed. If the previous repository used was `golang-module/carbon`, please replace the original repository with the new repository in `go.mod`, or execute the following command:
 
 ```go
 go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbon/v2
@@ -1320,7 +1320,7 @@ The following calendars are supported
 * [Chinese Lunar](./calendar/lunar/README.md "Chinese Lunar")
 * [Persian/Jalaali](./calendar/persian/README.md "Persian/Jalaali")
 
-##### I18n
+##### i18n
 
 The following languages are supported
 
