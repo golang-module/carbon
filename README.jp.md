@@ -11,7 +11,7 @@
 
 #### イントロ
 
-シンプルでセマンティックで開発者に優しい golang 時間処理ライブラリ
+軽量、セマンティック、開発者に優しい `golang` 時間処理ライブラリ
 
 Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go") に含まれています
 

@@ -11,7 +11,7 @@
 
 #### 项目简介
 
-一个轻量级、语义化、对开发者友好的 golang 时间处理库，支持链式调用，已被 [awesome-go](https://github.com/yinggaozhen/awesome-go-cn#日期和时间 "awesome-go-cn") 收录，并获得 `gitee` 2024 年最有价值项目（`GVP`）和 `gitcode` 2024 年度开源摘星计划 (`G-Star`) 项目 
+一个轻量级、语义化、对开发者友好的 `golang` 时间处理库，支持链式调用，已被 [awesome-go](https://github.com/yinggaozhen/awesome-go-cn#日期和时间 "awesome-go-cn") 收录，并获得 `gitee` 2024 年最有价值项目（`GVP`）和 `gitcode` 2024 年度开源摘星计划 (`G-Star`) 项目 
 
 #### 仓库地址
 

@@ -11,7 +11,7 @@ English | [简体中文](README.cn.md) | [日本語](README.jp.md)
 
 #### Introduction
 
-A simple, semantic and developer-friendly golang package for time, has been included
+A simple, semantic and developer-friendly time package for `golang`, has been included
 by [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awesome-go")
 
 #### Repository

@@ -1,11 +1,11 @@
 // @Package carbon
-// @Description a simple, semantic and developer-friendly golang package for datetime
+// @Description a simple, semantic and developer-friendly time package for golang
 // @Page github.com/dromara/carbon
 // @Developer gouguoyin
 // @Blog www.gouguoyin.com
 // @Email 245629560@qq.com
 
-// Package carbon is a simple, semantic and developer-friendly golang package for datetime.
+// Package carbon is a simple, semantic and developer-friendly time package for golang.
 package carbon
 
 import (
