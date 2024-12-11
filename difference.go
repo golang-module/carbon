@@ -287,6 +287,6 @@ func getDiffInMonths(start, end Carbon, months int64) int64 {
 	if days < 0 || (days == 0 && seconds < 0) {
 		return months
 	}
-	months += 1
+	months++
 	return getDiffInMonths(next, end, months)
 }
