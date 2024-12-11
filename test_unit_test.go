@@ -1,8 +1,9 @@
 package carbon
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCarbon_SetTestNow(t *testing.T) {
@@ -42,8 +43,8 @@ func TestCarbon_UnSetTestNow(t *testing.T) {
 
 func TestCarbon_IsSetTestNow(t *testing.T) {
 	carbon := NewCarbon()
-	assert.Equal(t, false, Now().IsSetTestNow(), "It should be equal to false")
+	assert.False(t, Now().IsSetTestNow(), "It should be equal to false")
 
 	carbon.SetTestNow(Parse("2020-08-05"))
-	assert.Equal(t, true, carbon.IsSetTestNow(), "It should be equal to true")
+	assert.True(t, carbon.IsSetTestNow(), "It should be equal to true")
 }
