@@ -3,29 +3,31 @@ package carbon
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"log"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCarbon_Scan(t *testing.T) {
 	c := NewCarbon()
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestCarbon_Value(t *testing.T) {
 	c := Now()
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -33,19 +35,19 @@ func TestDateTime_Scan(t *testing.T) {
 	c := NewDateTime(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateTime_Value(t *testing.T) {
 	c := NewDateTime(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -53,19 +55,19 @@ func TestDateTimeMilli_Scan(t *testing.T) {
 	c := NewDateTimeMilli(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateTimeMilli_Value(t *testing.T) {
 	c := NewDateTimeMilli(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -73,19 +75,19 @@ func TestDateTimeMicro_Scan(t *testing.T) {
 	c := NewDateTimeMicro(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateTimeMicro_Value(t *testing.T) {
 	c := NewDateTimeMicro(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -93,19 +95,19 @@ func TestDateTimeNano_Scan(t *testing.T) {
 	c := NewDateTimeNano(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateTimeNano_Value(t *testing.T) {
 	c := NewDateTimeNano(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -113,19 +115,19 @@ func TestDate_Scan(t *testing.T) {
 	c := NewDate(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDate_Value(t *testing.T) {
 	c := NewDate(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -133,19 +135,19 @@ func TestDateMilli_Scan(t *testing.T) {
 	c := NewDateMilli(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateMilli_Value(t *testing.T) {
 	c := NewDateMilli(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -153,19 +155,19 @@ func TestDateMicro_Scan(t *testing.T) {
 	c := NewDateMicro(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateMicro_Value(t *testing.T) {
 	c := NewDateMicro(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -173,19 +175,19 @@ func TestDateNano_Scan(t *testing.T) {
 	c := NewDateNano(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestDateNano_Value(t *testing.T) {
 	c := NewDateNano(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -193,19 +195,19 @@ func TestTime_Scan(t *testing.T) {
 	c := NewTime(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTime_Value(t *testing.T) {
 	c := NewTime(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -213,19 +215,19 @@ func TestTimeMilli_Scan(t *testing.T) {
 	c := NewTimeMilli(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimeMilli_Value(t *testing.T) {
 	c := NewTimeMilli(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -233,19 +235,19 @@ func TestTimeMicro_Scan(t *testing.T) {
 	c := NewTimeMicro(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimeMicro_Value(t *testing.T) {
 	c := NewTimeMicro(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -253,19 +255,19 @@ func TestTimeNano_Scan(t *testing.T) {
 	c := NewTimeNano(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimeNano_Value(t *testing.T) {
 	c := NewTimeNano(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -273,19 +275,19 @@ func TestTimestamp_Scan(t *testing.T) {
 	c := NewTimestamp(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimestamp_Value(t *testing.T) {
 	c := NewTimestamp(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -293,19 +295,19 @@ func TestTimestampMilli_Scan(t *testing.T) {
 	c := NewTimestampMilli(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimestampMilli_Value(t *testing.T) {
 	c := NewTimestampMilli(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -313,19 +315,19 @@ func TestTimestampMicro_Scan(t *testing.T) {
 	c := NewTimestampMicro(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimestampMicro_Value(t *testing.T) {
 	c := NewTimestampMicro(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -333,19 +335,19 @@ func TestTimestampNano_Scan(t *testing.T) {
 	c := NewTimestampNano(Now())
 
 	e1 := c.Scan(Now().ToDateString())
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 
 	e2 := c.Scan([]byte(Now().ToDateString()))
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 
 	e3 := c.Scan(time.Now())
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 }
 
 func TestTimestampNano_Value(t *testing.T) {
 	c := NewTimestampNano(Now())
 	v, err := c.Value()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, v, c.time)
 }
 
@@ -424,87 +426,87 @@ func TestError_Scan(t *testing.T) {
 func TestError_Value(t *testing.T) {
 	c1 := Parse("")
 	v1, e1 := c1.Value()
-	assert.Nil(t, e1)
+	require.NoError(t, e1)
 	assert.Equal(t, v1, nil)
 
 	c2 := NewDateTime(c1)
 	v2, e2 := c2.Value()
-	assert.Nil(t, e2)
+	require.NoError(t, e2)
 	assert.Equal(t, v2, nil)
 
 	c3 := NewDateTimeMilli(c1)
 	v3, e3 := c3.Value()
-	assert.Nil(t, e3)
+	require.NoError(t, e3)
 	assert.Equal(t, v3, nil)
 
 	c4 := NewDateTimeMicro(c1)
 	v4, e4 := c4.Value()
-	assert.Nil(t, e4)
+	require.NoError(t, e4)
 	assert.Equal(t, v4, nil)
 
 	c5 := NewDateTimeNano(c1)
 	v5, e5 := c5.Value()
-	assert.Nil(t, e5)
+	require.NoError(t, e5)
 	assert.Equal(t, v5, nil)
 
 	c6 := NewDate(c1)
 	v6, e6 := c6.Value()
-	assert.Nil(t, e6)
+	require.NoError(t, e6)
 	assert.Equal(t, v6, nil)
 
 	c7 := NewDateMilli(c1)
 	v7, e7 := c7.Value()
-	assert.Nil(t, e7)
+	require.NoError(t, e7)
 	assert.Equal(t, v7, nil)
 
 	c8 := NewDateMicro(c1)
 	v8, e8 := c8.Value()
-	assert.Nil(t, e8)
+	require.NoError(t, e8)
 	assert.Equal(t, v8, nil)
 
 	c9 := NewDateNano(c1)
 	v9, e9 := c9.Value()
-	assert.Nil(t, e9)
+	require.NoError(t, e9)
 	assert.Equal(t, v9, nil)
 
 	c10 := NewTime(c1)
 	v10, e10 := c10.Value()
-	assert.Nil(t, e10)
+	require.NoError(t, e10)
 	assert.Equal(t, v10, nil)
 
 	c11 := NewTimeMilli(c1)
 	v11, e11 := c11.Value()
-	assert.Nil(t, e11)
+	require.NoError(t, e11)
 	assert.Equal(t, v11, nil)
 
 	c12 := NewTimeMicro(c1)
 	v12, e12 := c12.Value()
-	assert.Nil(t, e12)
+	require.NoError(t, e12)
 	assert.Equal(t, v12, nil)
 
 	c13 := NewTimeNano(c1)
 	v13, e13 := c13.Value()
-	assert.Nil(t, e13)
+	require.NoError(t, e13)
 	assert.Equal(t, v13, nil)
 
 	c14 := NewTimestamp(c1)
 	v14, e14 := c14.Value()
-	assert.Nil(t, e14)
+	require.NoError(t, e14)
 	assert.Equal(t, v14, nil)
 
 	c15 := NewTimestampMilli(c1)
 	v15, e15 := c15.Value()
-	assert.Nil(t, e15)
+	require.NoError(t, e15)
 	assert.Equal(t, v15, nil)
 
 	c16 := NewTimestampMicro(c1)
 	v16, e16 := c16.Value()
-	assert.Nil(t, e16)
+	require.NoError(t, e16)
 	assert.Equal(t, v16, nil)
 
 	c17 := NewTimestampNano(c1)
 	v17, e17 := c17.Value()
-	assert.Nil(t, e17)
+	require.NoError(t, e17)
 	assert.Equal(t, v17, nil)
 }
 
@@ -564,7 +566,7 @@ func TestCarbon_MarshalJSON(t *testing.T) {
 	}
 
 	data, marshalErr := json.Marshal(&person)
-	assert.Nil(t, marshalErr)
+	require.NoError(t, marshalErr)
 	fmt.Printf("json encode:\n%s\n", data)
 
 	tests := []struct {
@@ -694,7 +696,7 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 
 	var person Person
 	unmarshalErr := json.Unmarshal([]byte(jsonStr), &person)
-	assert.Nil(t, unmarshalErr)
+	require.NoError(t, unmarshalErr)
 	fmt.Printf("json decode:\n%+v\n", person)
 
 	tests := []struct {
@@ -807,7 +809,7 @@ func TestCarbon_TimestampToInt64(t *testing.T) {
 	}`
 	var person Person
 	unmarshalErr := json.Unmarshal([]byte(jsonStr), &person)
-	assert.Nil(t, unmarshalErr)
+	require.NoError(t, unmarshalErr)
 	fmt.Printf("json decode:\n%+v\n", person)
 
 	tests := []struct {
@@ -887,10 +889,10 @@ func TestCarbon_Issue225(t *testing.T) {
 
 	var person Person
 	emptyErr := json.Unmarshal([]byte(emptyStr), &person)
-	assert.Nil(t, emptyErr)
+	require.NoError(t, emptyErr)
 
 	nullErr := json.Unmarshal([]byte(nullStr), &person)
-	assert.Nil(t, nullErr)
+	require.NoError(t, nullErr)
 }
 
 // https://github.com/dromara/carbon/issues/240
@@ -902,7 +904,7 @@ func TestCarbon_Issue240(t *testing.T) {
 
 	var person Person
 	emptyErr := json.Unmarshal([]byte(jsonStr), &person)
-	assert.Nil(t, emptyErr)
+	require.NoError(t, emptyErr)
 	assert.Equal(t, "0001-01-01 00:00:00 +0000 UTC", person.Birthday1.StdTime().String())
 	assert.Equal(t, "0001-01-01 00:00:00 +0000 UTC", person.Birthday2.StdTime().String())
 	assert.Equal(t, true, person.Birthday1.IsZero())
