@@ -88,8 +88,8 @@ func TestLanguage_SetResources1(t *testing.T) {
 	for index, test := range tests {
 		c1 := c.Parse(test.input1)
 		c2 := c.Parse(test.input2)
-		assert.Nil(c1.Error)
-		assert.Nil(c2.Error)
+		assert.NoError(c1.Error)
+		assert.NoError(c2.Error)
 		assert.Equal(test.expected, c1.DiffForHumans(c2), "Current test index is "+strconv.Itoa(index))
 	}
 }
