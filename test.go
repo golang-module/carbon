@@ -1,5 +1,9 @@
 package carbon
 
+import (
+	"testing"
+)
+
 // SetTestNow sets a test Carbon instance (real or mock) to be returned when a "now" instance is created.
 // 设置当前测试时间
 func (c *Carbon) SetTestNow(carbon Carbon) {
@@ -16,4 +20,20 @@ func (c *Carbon) UnSetTestNow() {
 // 是否设置过当前测试时间
 func (c Carbon) IsSetTestNow() bool {
 	return c.testNow > 0
+}
+
+func prepareTest(tb testing.TB) {
+	tb.Helper()
+
+	// Store the current default
+	savedDefault := Default{
+		Layout:       defaultLayout,
+		Timezone:     defaultTimezone,
+		Locale:       defaultLocale,
+		WeekStartsAt: defaultWeekStartsAt,
+	}
+	tb.Cleanup(func() {
+		// restore the default when test is done
+		SetDefault(savedDefault)
+	})
 }
