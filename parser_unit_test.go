@@ -147,13 +147,13 @@ func TestCarbon_ParseByLayout(t *testing.T) {
 }
 
 func TestError_ParseByLayout(t *testing.T) {
-	assert.NotNil(t, ParseByLayout("2020-08-05", "2006-03-04", "xxx").Error, "It should catch an exception in ParseByLayout")
-	assert.NotNil(t, ParseByLayout("xxx", "2006-03-04", PRC).Error, "It should catch an exception in ParseByLayout")
+	assert.Error(t, ParseByLayout("2020-08-05", "2006-03-04", "xxx").Error, "It should catch an exception in ParseByLayout")
+	assert.Error(t, ParseByLayout("xxx", "2006-03-04", PRC).Error, "It should catch an exception in ParseByLayout")
 }
 
 func TestError_ParseByFormat(t *testing.T) {
-	assert.NotNil(t, ParseByFormat("2020-08-05", "Y-m-d", "xxx").Error, "It should catch an exception in ParseByFormat()")
-	assert.NotNil(t, ParseByFormat("xxx", "Y-m-d", PRC).Error, "It should catch an exception in ParseByFormat")
+	assert.Error(t, ParseByFormat("2020-08-05", "Y-m-d", "xxx").Error, "It should catch an exception in ParseByFormat()")
+	assert.Error(t, ParseByFormat("xxx", "Y-m-d", PRC).Error, "It should catch an exception in ParseByFormat")
 }
 
 // https://github.com/dromara/carbon/issues/202
