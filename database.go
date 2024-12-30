@@ -55,6 +55,23 @@ func (c *Carbon) UnmarshalJSON(b []byte) error {
 	return c.Error
 }
 
+// MarshalBinary implements the interface encoding.BinaryMarshaler for Carbon struct.
+// 实现 encoding.BinaryMarshaler 接口
+func (c Carbon) MarshalBinary() ([]byte, error) {
+	return []byte(c.String()), nil
+}
+
+// UnmarshalBinary implements the interface encoding.BinaryUnmarshaler for Carbon struct
+// 实现 encoding.BinaryUnmarshaler 接口
+func (c *Carbon) UnmarshalBinary(b []byte) error {
+	src := bytes.Clone(b)
+	if len(src) == 0 {
+		return nil
+	}
+	*c = ParseByLayout(string(src), c.layout)
+	return c.Error
+}
+
 // Scan an interface used by Scan in package database/sql for Scanning value from database to local golang variable.
 func (t *DateTime) Scan(src interface{}) error {
 	switch v := src.(type) {
