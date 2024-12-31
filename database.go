@@ -89,7 +89,7 @@ func (t *DateTime) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateTime) Value() (driver.Value, error) {
+func (t DateTime) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -133,7 +133,7 @@ func (t *DateTimeMilli) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateTimeMilli) Value() (driver.Value, error) {
+func (t DateTimeMilli) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -177,7 +177,7 @@ func (t *DateTimeMicro) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateTimeMicro) Value() (driver.Value, error) {
+func (t DateTimeMicro) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -221,7 +221,7 @@ func (t *DateTimeNano) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateTimeNano) Value() (driver.Value, error) {
+func (t DateTimeNano) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -265,7 +265,7 @@ func (t *Date) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *Date) Value() (driver.Value, error) {
+func (t Date) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -309,7 +309,7 @@ func (t *DateMilli) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateMilli) Value() (driver.Value, error) {
+func (t DateMilli) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -353,7 +353,7 @@ func (t *DateMicro) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateMicro) Value() (driver.Value, error) {
+func (t DateMicro) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -397,7 +397,7 @@ func (t *DateNano) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *DateNano) Value() (driver.Value, error) {
+func (t DateNano) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -441,7 +441,7 @@ func (t *Time) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *Time) Value() (driver.Value, error) {
+func (t Time) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -487,7 +487,7 @@ func (t *TimeMilli) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimeMilli) Value() (driver.Value, error) {
+func (t TimeMilli) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -532,7 +532,7 @@ func (t *TimeMicro) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimeMicro) Value() (driver.Value, error) {
+func (t TimeMicro) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -577,7 +577,7 @@ func (t *TimeNano) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimeNano) Value() (driver.Value, error) {
+func (t TimeNano) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -622,7 +622,7 @@ func (t *Timestamp) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *Timestamp) Value() (driver.Value, error) {
+func (t Timestamp) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -667,7 +667,7 @@ func (t *TimestampMilli) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimestampMilli) Value() (driver.Value, error) {
+func (t TimestampMilli) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -712,7 +712,7 @@ func (t *TimestampMicro) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimestampMicro) Value() (driver.Value, error) {
+func (t TimestampMicro) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
@@ -757,7 +757,7 @@ func (t *TimestampNano) Scan(src interface{}) error {
 }
 
 // Value the interface providing the Value method for package database/sql/driver.
-func (t *TimestampNano) Value() (driver.Value, error) {
+func (t TimestampNano) Value() (driver.Value, error) {
 	if t.IsZero() {
 		return nil, nil
 	}
