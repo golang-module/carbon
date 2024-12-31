@@ -226,20 +226,6 @@ func BenchmarkNewTimestampNano_Value(b *testing.B) {
 	}
 }
 
-func BenchmarkCarbon_MarshalBinary(b *testing.B) {
-	now := Now()
-	for n := 0; n < b.N; n++ {
-		now.MarshalBinary()
-	}
-}
-
-func BenchmarkCarbon_UnmarshalBinary(b *testing.B) {
-	now := Now()
-	for n := 0; n < b.N; n++ {
-		now.UnmarshalBinary(nil)
-	}
-}
-
 func BenchmarkCarbon_MarshalJSON(b *testing.B) {
 	now := Now()
 	for n := 0; n < b.N; n++ {
