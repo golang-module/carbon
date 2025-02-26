@@ -44,9 +44,9 @@ func SetDefault(d Default) {
 	}
 }
 
-// GetDefault gets default.
+// getDefault gets default.
 // 获取全局默认值
-func GetDefault() Default {
+func getDefault() Default {
 	return Default{
 		Layout:       defaultLayout,
 		Timezone:     defaultTimezone,
