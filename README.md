@@ -1358,6 +1358,7 @@ The following languages are supported
 * [Hungarian(hu)](./lang/hu.json "Hungarian"): translated by [kenlas](https://github.com/kenlas "kenlas")
 * [Dansk(dk)](./lang/dk.json "Dansk"): translated by [Munk91](https://github.com/Munk91 "Munk91")
 * [Norwegian(nb)](./lang/nb.json "Norwegian"): translated by [bendikrb](https://github.com/bendikrb "bendikrb")
+
 The following methods are supported
 
 * `Constellation()`：get constellation name, like `Aries`
