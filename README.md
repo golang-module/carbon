@@ -66,9 +66,7 @@ carbon.SetDefault(carbon.Default{
 
 ```go
 // Convert standard Time.time to Carbon
-carbon.NewCarbon(time.Now())
-or
-carbon.CreateFromStdTime(time.Now())
+carbon.NewCarbon(time.Now()) or carbon.CreateFromStdTime(time.Now())
 // Convert Carbon to standard Time.time
 carbon.Now().StdTime()
 ```
