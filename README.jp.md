@@ -68,6 +68,8 @@ carbon.SetDefault(carbon.Default{
 
 ```go
 // time.Time を Carbon に変換
+carbon.NewCarbon(time.Now())
+または
 carbon.CreateFromStdTime(time.Now())
 // Carbon を time.Time に変換
 carbon.Now().StdTime()
