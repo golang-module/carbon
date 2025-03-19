@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+// returns an empty timezone error.
+// 空时区错误
+var emptyTimezoneError = func() error {
+	return fmt.Errorf("timezone cannot be empty")
+}
+
 // returns an invalid timezone error.
 // 无效的时区错误
 var invalidTimezoneError = func(timezone string) error {
