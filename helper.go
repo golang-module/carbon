@@ -50,10 +50,11 @@ var formats = map[byte]string{
 // common layout symbols
 // 常规布局模板符号
 var layouts = []string{
-	DayDateTimeLayout,
-	DateTimeLayout, DateTimeNanoLayout, ShortDateTimeLayout, ShortDateTimeNanoLayout,
+	DateTimeLayout, DateLayout, TimeLayout,
+	ISO8601Layout, DayDateTimeLayout, ISO8601NanoLayout,
+	DateTimeNanoLayout, ShortDateTimeLayout, ShortDateTimeNanoLayout,
 	DateLayout, DateNanoLayout, ShortDateLayout, ShortDateNanoLayout,
-	ISO8601Layout, ISO8601NanoLayout,
+	TimeMicroLayout, TimeMilliLayout, TimeNanoLayout,
 	RFC822Layout, RFC822ZLayout, RFC850Layout, RFC1123Layout, RFC1123ZLayout, RFC3339Layout, RFC3339NanoLayout, RFC1036Layout, RFC7231Layout,
 	KitchenLayout,
 	CookieLayout,
@@ -103,6 +104,10 @@ func format2layout(format string) string {
 // gets a Location instance by a timezone string.
 // 通过时区获取 Location 实例
 func getLocationByTimezone(timezone string) (*time.Location, error) {
+	if timezone == "" {
+		err := emptyTimezoneError()
+		return nil, err
+	}
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
 		err = invalidTimezoneError(timezone)
