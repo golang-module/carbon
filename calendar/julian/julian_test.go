@@ -9,10 +9,10 @@ import (
 
 func TestGregorian_ToJulian(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	type want struct {
-		j Julian
+		j *Julian
 	}
 	tests := []struct {
 		name string
@@ -49,7 +49,7 @@ func TestGregorian_ToJulian(t *testing.T) {
 
 func TestJulian_ToGregorian(t *testing.T) {
 	type args struct {
-		j Julian
+		j *Julian
 	}
 	tests := []struct {
 		name string
@@ -106,7 +106,7 @@ func TestJulian_ToGregorian(t *testing.T) {
 
 func TestGregorian_JD(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -143,7 +143,7 @@ func TestGregorian_JD(t *testing.T) {
 
 func TestGregorian_MJD(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string

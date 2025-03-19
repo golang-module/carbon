@@ -9,6 +9,11 @@ import (
 	"github.com/dromara/carbon/v2/calendar"
 )
 
+const (
+	MinYear = -9997
+	MaxYear = 9998
+)
+
 var (
 	// julian day or modified julian day decimal precision
 	// 儒略日或简化儒略日小数精度
@@ -33,9 +38,10 @@ type Julian struct {
 
 // FromGregorian creates a Gregorian instance from time.Time.
 // 从标准 time.Time 创建 Gregorian 实例
-func FromGregorian(t time.Time) (g Gregorian) {
+func FromGregorian(t time.Time) *Gregorian {
+	g := new(Gregorian)
 	if t.IsZero() {
-		return
+		return g
 	}
 	g.Time = t
 	return g
@@ -43,7 +49,8 @@ func FromGregorian(t time.Time) (g Gregorian) {
 
 // FromJulian creates a Julian instance from julian day or modified julian day.
 // 从 儒略日 或 简化儒略日 创建 Julian 实例
-func FromJulian(f float64) (j Julian) {
+func FromJulian(f float64) (j *Julian) {
+	j = new(Julian)
 	// get length of the integer part
 	l := len(strconv.Itoa(int(math.Ceil(f))))
 	switch l {
@@ -64,7 +71,8 @@ func FromJulian(f float64) (j Julian) {
 
 // ToJulian converts Gregorian instance to Julian instance.
 // 将 Gregorian 实例转化为 Julian 实例
-func (g Gregorian) ToJulian() (j Julian) {
+func (g *Gregorian) ToJulian() (j *Julian) {
+	j = new(Julian)
 	if g.IsZero() {
 		return
 	}
@@ -90,7 +98,8 @@ func (g Gregorian) ToJulian() (j Julian) {
 
 // ToGregorian converts Julian instance to Gregorian instance.
 // 将 Julian 实例转化为 Gregorian 实例
-func (j Julian) ToGregorian() (g Gregorian) {
+func (j *Julian) ToGregorian() (g *Gregorian) {
+	g = new(Gregorian)
 	if j.IsZero() {
 		return
 	}
@@ -110,7 +119,7 @@ func (j Julian) ToGregorian() (g Gregorian) {
 		month -= 13
 		year -= 4715
 	} else {
-		month--
+		month -= 1
 		year -= 4716
 	}
 	f *= 24
@@ -128,7 +137,7 @@ func (j Julian) ToGregorian() (g Gregorian) {
 
 // JD gets julian day like 2460332.5
 // 获取儒略日
-func (j Julian) JD(precision ...int) float64 {
+func (j *Julian) JD(precision ...int) float64 {
 	if len(precision) > 0 {
 		decimalPrecision = precision[0]
 	}
@@ -137,7 +146,7 @@ func (j Julian) JD(precision ...int) float64 {
 
 // MJD gets modified julian day like 60332
 // 获取简化儒略日
-func (j Julian) MJD(precision ...int) float64 {
+func (j *Julian) MJD(precision ...int) float64 {
 	if len(precision) > 0 {
 		decimalPrecision = precision[0]
 	}
@@ -146,7 +155,7 @@ func (j Julian) MJD(precision ...int) float64 {
 
 // IsZero reports whether is zero time.
 // 是否是零值时间
-func (j Julian) IsZero() bool {
+func (j *Julian) IsZero() bool {
 	if j.jd == 0 || j.mjd == 0 {
 		return true
 	}

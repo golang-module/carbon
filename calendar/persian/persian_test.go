@@ -9,7 +9,7 @@ import (
 
 func TestGregorian_ToPersian(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -61,7 +61,7 @@ func TestGregorian_ToPersian(t *testing.T) {
 
 func TestPersian_ToGregorian(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 	}
 	tests := []struct {
 		name string
@@ -70,7 +70,7 @@ func TestPersian_ToGregorian(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{Persian{}},
+			args: args{&Persian{}},
 			want: "",
 		},
 		{
@@ -119,7 +119,7 @@ func TestPersian_ToGregorian(t *testing.T) {
 
 func TestPersian_Year(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -161,7 +161,7 @@ func TestPersian_Year(t *testing.T) {
 
 func TestPersian_Month(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -203,7 +203,7 @@ func TestPersian_Month(t *testing.T) {
 
 func TestPersian_Day(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -245,7 +245,7 @@ func TestPersian_Day(t *testing.T) {
 
 func TestPersian_Hour(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -277,7 +277,7 @@ func TestPersian_Hour(t *testing.T) {
 
 func TestPersian_Minute(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -309,7 +309,7 @@ func TestPersian_Minute(t *testing.T) {
 
 func TestPersian_Second(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -341,7 +341,7 @@ func TestPersian_Second(t *testing.T) {
 
 func TestPersian_ToMonthString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 		l string
 	}
 	tests := []struct {
@@ -519,7 +519,7 @@ func TestPersian_ToMonthString(t *testing.T) {
 
 func TestPersian_ToShortMonthString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 		l string
 	}
 	tests := []struct {
@@ -696,7 +696,7 @@ func TestPersian_ToShortMonthString(t *testing.T) {
 }
 func TestPersian_ToWeekString(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 		l string
 	}
 	tests := []struct {
@@ -799,7 +799,7 @@ func TestPersian_ToWeekString(t *testing.T) {
 
 func TestPersian_ToShortWeekString(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 		l string
 	}
 	tests := []struct {
@@ -901,7 +901,7 @@ func TestPersian_ToShortWeekString(t *testing.T) {
 }
 func TestPersian_IsValid(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 	}
 	tests := []struct {
 		name string
@@ -910,7 +910,7 @@ func TestPersian_IsValid(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{Persian{}},
+			args: args{&Persian{}},
 			want: false,
 		},
 		{
@@ -948,7 +948,7 @@ func TestPersian_IsValid(t *testing.T) {
 
 func TestPersian_IsLeapYear(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 	}
 	tests := []struct {
 		name string
@@ -957,7 +957,7 @@ func TestPersian_IsLeapYear(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{Persian{}},
+			args: args{&Persian{}},
 			want: false,
 		},
 		{
@@ -985,7 +985,7 @@ func TestPersian_IsLeapYear(t *testing.T) {
 
 func TestGregorian_Year_Error(t *testing.T) {
 	type args struct {
-		p Persian
+		p *Persian
 	}
 	tests := []struct {
 		name string
@@ -1019,8 +1019,8 @@ func TestGregorian_Year_Error(t *testing.T) {
 func TestError_Locale_Error(t *testing.T) {
 	p, l := FromPersian(622, 1, 1, 0, 0, 0), "xx"
 
-	assert.Equal(t, "", p.ToMonthString(l))
-	assert.Equal(t, "", p.ToShortMonthString(l))
-	assert.Equal(t, "", p.ToWeekString(l))
-	assert.Equal(t, "", p.ToShortWeekString(l))
+	assert.Empty(t, p.ToMonthString(l))
+	assert.Empty(t, p.ToShortMonthString(l))
+	assert.Empty(t, p.ToWeekString(l))
+	assert.Empty(t, p.ToShortWeekString(l))
 }

@@ -9,7 +9,7 @@ import (
 
 func TestGregorian_ToLunar(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -41,7 +41,7 @@ func TestGregorian_ToLunar(t *testing.T) {
 
 func TestLunar_ToGregorian(t *testing.T) {
 	type args struct {
-		l Lunar
+		l *Lunar
 	}
 	tests := []struct {
 		name string
@@ -50,7 +50,7 @@ func TestLunar_ToGregorian(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{Lunar{}},
+			args: args{&Lunar{}},
 			want: "",
 		},
 		{
@@ -93,7 +93,7 @@ func TestLunar_ToGregorian(t *testing.T) {
 
 func TestLunar_Animal(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -205,7 +205,7 @@ func TestLunar_Animal(t *testing.T) {
 
 func TestLunar_Festival(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -287,7 +287,7 @@ func TestLunar_Festival(t *testing.T) {
 
 func TestLunar_Year(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -324,7 +324,7 @@ func TestLunar_Year(t *testing.T) {
 
 func TestLunar_Month(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -410,7 +410,7 @@ func TestLunar_Month(t *testing.T) {
 
 func TestLunar_Day(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -457,7 +457,7 @@ func TestLunar_Day(t *testing.T) {
 
 func TestLunar_Hour(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -489,7 +489,7 @@ func TestLunar_Hour(t *testing.T) {
 
 func TestLunar_Minute(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -521,7 +521,7 @@ func TestLunar_Minute(t *testing.T) {
 
 func TestLunar_Second(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -553,7 +553,7 @@ func TestLunar_Second(t *testing.T) {
 
 func TestLunar_LeapMonth(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -590,7 +590,7 @@ func TestLunar_LeapMonth(t *testing.T) {
 
 func TestLunar_ToYearString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -627,7 +627,7 @@ func TestLunar_ToYearString(t *testing.T) {
 
 func TestLunar_ToMonthString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -724,7 +724,7 @@ func TestLunar_ToMonthString(t *testing.T) {
 
 func TestLunar_ToWeekString(t *testing.T) {
 	type args struct {
-		l Lunar
+		l *Lunar
 	}
 	tests := []struct {
 		name string
@@ -733,7 +733,7 @@ func TestLunar_ToWeekString(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{Lunar{}},
+			args: args{&Lunar{}},
 			want: "",
 		},
 		{
@@ -781,7 +781,7 @@ func TestLunar_ToWeekString(t *testing.T) {
 
 func TestLunar_ToDayString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -883,7 +883,7 @@ func TestLunar_ToDayString(t *testing.T) {
 
 func TestLunar_String(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -950,7 +950,7 @@ func TestLunar_String(t *testing.T) {
 
 func TestLunar_ToDateString(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1037,7 +1037,7 @@ func TestLunar_ToDateString(t *testing.T) {
 
 func TestLunar_IsValidYear(t *testing.T) {
 	type args struct {
-		l Lunar
+		l *Lunar
 	}
 	tests := []struct {
 		name string
@@ -1074,7 +1074,7 @@ func TestLunar_IsValidYear(t *testing.T) {
 
 func TestLunar_IsLeapYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1136,7 +1136,7 @@ func TestLunar_IsLeapYear(t *testing.T) {
 
 func TestLunar_IsLeapMonth(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1188,7 +1188,7 @@ func TestLunar_IsLeapMonth(t *testing.T) {
 
 func TestLunar_IsRatYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1240,7 +1240,7 @@ func TestLunar_IsRatYear(t *testing.T) {
 
 func TestLunar_IsOxYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1292,7 +1292,7 @@ func TestLunar_IsOxYear(t *testing.T) {
 
 func TestLunar_IsTigerYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1344,7 +1344,7 @@ func TestLunar_IsTigerYear(t *testing.T) {
 
 func TestLunar_IsRabbitYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1396,7 +1396,7 @@ func TestLunar_IsRabbitYear(t *testing.T) {
 
 func TestLunar_IsDragonYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1448,7 +1448,7 @@ func TestLunar_IsDragonYear(t *testing.T) {
 
 func TestLunar_IsSnakeYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1500,7 +1500,7 @@ func TestLunar_IsSnakeYear(t *testing.T) {
 
 func TestLunar_IsHorseYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1552,7 +1552,7 @@ func TestLunar_IsHorseYear(t *testing.T) {
 
 func TestLunar_IsGoatYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1604,7 +1604,7 @@ func TestLunar_IsGoatYear(t *testing.T) {
 
 func TestLunar_IsMonkeyYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1656,7 +1656,7 @@ func TestLunar_IsMonkeyYear(t *testing.T) {
 
 func TestLunar_IsRoosterYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1708,7 +1708,7 @@ func TestLunar_IsRoosterYear(t *testing.T) {
 
 func TestLunar_IsDogYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -1760,7 +1760,7 @@ func TestLunar_IsDogYear(t *testing.T) {
 
 func TestLunar_IsPigYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
