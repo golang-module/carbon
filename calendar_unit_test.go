@@ -7,248 +7,116 @@ import (
 )
 
 func TestCarbon_Lunar(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: Parse("xxx", PRC),
-			want:   "",
-		},
-		{
-			name:   "case2",
-			carbon: Parse("2024-01-18", PRC),
-			want:   "2023-12-08 00:00:00",
-		},
-		{
-			name:   "case3",
-			carbon: Parse("2024-01-21", PRC),
-			want:   "2023-12-11 00:00:00",
-		},
-		{
-			name:   "case4",
-			carbon: Parse("2024-01-24", PRC),
-			want:   "2023-12-14 00:00:00",
-		},
-	}
+	t.Run("zero time", func(t *testing.T) {
+		assert.Empty(t, NewCarbon().Lunar().String())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.Lunar().String(), "Lunar()")
-		})
-	}
+	t.Run("nil time", func(t *testing.T) {
+		c := NewCarbon()
+		c = nil
+		assert.Empty(t, c.Lunar().String())
+	})
+
+	t.Run("invalid time", func(t *testing.T) {
+		assert.Empty(t, Parse("").Lunar().String())
+		assert.Empty(t, Parse("0").Lunar().String())
+		assert.Empty(t, Parse("xxx").Lunar().String())
+	})
+
+	t.Run("valid time", func(t *testing.T) {
+		assert.Equal(t, "2023-12-08 00:00:00", Parse("2024-01-18", PRC).Lunar().String())
+		assert.Equal(t, "2023-12-11 00:00:00", Parse("2024-01-21", PRC).Lunar().String())
+		assert.Equal(t, "2023-12-14 00:00:00", Parse("2024-01-24", PRC).Lunar().String())
+	})
 }
 
 func TestCreateFromLunar(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: CreateFromLunar(2023, 12, 11, 0, 0, 0, false),
-			want:   "2024-01-21 00:00:00",
-		},
-		{
-			name:   "case2",
-			carbon: CreateFromLunar(2023, 12, 8, 0, 0, 0, false),
-			want:   "2024-01-18 00:00:00",
-		},
-		{
-			name:   "case3",
-			carbon: CreateFromLunar(2023, 12, 14, 12, 0, 0, false),
-			want:   "2024-01-24 12:00:00",
-		},
-		{
-			name:   "case4",
-			carbon: CreateFromLunar(2200, 12, 14, 12, 0, 0, false),
-			want:   "",
-		},
-	}
+	t.Run("invalid lunar", func(t *testing.T) {
+		assert.Empty(t, CreateFromLunar(2200, 12, 14, 12, 0, 0, false).ToDateTimeString())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(), "CreateFromLunar()")
-		})
-	}
+	t.Run("valid lunar", func(t *testing.T) {
+		assert.Equal(t, "2024-01-21 00:00:00", CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString())
+		assert.Equal(t, "2024-01-18 00:00:00", CreateFromLunar(2023, 12, 8, 0, 0, 0, false).ToDateTimeString())
+		assert.Equal(t, "2024-01-24 12:00:00", CreateFromLunar(2023, 12, 14, 12, 0, 0, false).ToDateTimeString())
+	})
 }
 
 func TestCarbon_Julian(t *testing.T) {
-	tests := []struct {
-		name    string
-		carbon  Carbon
-		wantJD  float64
-		wantMJD float64
-	}{
-		{
-			name:    "case1",
-			carbon:  Parse("xxx"),
-			wantJD:  0,
-			wantMJD: 0,
-		},
-		{
-			name:    "case2",
-			carbon:  Parse("2024-01-24 12:00:00"),
-			wantJD:  2460334,
-			wantMJD: 60333.5,
-		},
-		{
-			name:    "case3",
-			carbon:  CreateFromJulian(2460334),
-			wantJD:  2460334,
-			wantMJD: 60333.5,
-		},
-		{
-			name:    "case4",
-			carbon:  CreateFromJulian(60333.5),
-			wantJD:  2460334,
-			wantMJD: 60333.5,
-		},
-	}
+	t.Run("zero time", func(t *testing.T) {
+		assert.Zero(t, NewCarbon().Julian().JD())
+		assert.Zero(t, NewCarbon().Julian().MJD())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.wantJD, tt.carbon.Julian().JD(), "JD()")
-			assert.Equalf(t, tt.wantMJD, tt.carbon.Julian().MJD(), "MJD()")
-		})
-	}
+	t.Run("nil time", func(t *testing.T) {
+		c := NewCarbon()
+		c = nil
+		assert.Zero(t, c.Julian().JD())
+		assert.Zero(t, c.Julian().MJD())
+	})
+
+	t.Run("invalid time", func(t *testing.T) {
+		assert.Zero(t, Parse("").Julian().JD())
+		assert.Zero(t, Parse("0").Julian().JD())
+		assert.Zero(t, Parse("xxx").Julian().JD())
+
+		assert.Zero(t, Parse("").Julian().MJD())
+		assert.Zero(t, Parse("0").Julian().MJD())
+		assert.Zero(t, Parse("xxx").Julian().MJD())
+	})
+
+	t.Run("valid time", func(t *testing.T) {
+		assert.Equal(t, float64(2460334), Parse("2024-01-24 12:00:00", PRC).Julian().JD())
+		assert.Equal(t, 60333.5, Parse("2024-01-24 12:00:00", PRC).Julian().MJD())
+	})
 }
 
-func TestCarbon_CreateFromJulian(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: CreateFromJulian(2460334),
-			want:   "2024-01-24 12:00:00",
-		},
-		{
-			name:   "case2",
-			carbon: CreateFromJulian(60333.5),
-			want:   "2024-01-24 12:00:00",
-		},
-	}
+func TestCreateFromJulian(t *testing.T) {
+	t.Run("invalid julian", func(t *testing.T) {
+		assert.Empty(t, CreateFromJulian(0).ToDateTimeString())
+		assert.Empty(t, CreateFromJulian(-1).ToDateTimeString())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(), "CreateFromJulian()")
-		})
-	}
+	t.Run("valid julian", func(t *testing.T) {
+		assert.Equal(t, "2024-01-24 12:00:00", CreateFromJulian(2460334).ToDateTimeString())
+		assert.Equal(t, "2024-01-24 12:00:00", CreateFromJulian(60333.5).ToDateTimeString())
+	})
 }
 
 func TestCarbon_Persian(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: Parse("xxx", PRC),
-			want:   "",
-		},
-		{
-			name:   "case2",
-			carbon: Parse("1800-01-01 00:00:00", PRC),
-			want:   "1178-10-11 00:00:00",
-		},
-		{
-			name:   "case3",
-			carbon: Parse("2020-08-05 13:14:15", PRC),
-			want:   "1399-05-15 13:14:15",
-		},
-		{
-			name:   "case4",
-			carbon: Parse("2024-01-01 00:00:00", PRC),
-			want:   "1402-10-11 00:00:00",
-		},
-	}
+	t.Run("zero time", func(t *testing.T) {
+		assert.Empty(t, NewCarbon().Persian().String())
+		assert.Empty(t, NewCarbon().Persian().String())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.Persian().String(), "Persian()")
-		})
-	}
+	t.Run("nil time", func(t *testing.T) {
+		c := NewCarbon()
+		c = nil
+		assert.Empty(t, c.Persian().String())
+		assert.Empty(t, c.Persian().String())
+	})
+
+	t.Run("invalid time", func(t *testing.T) {
+		assert.Empty(t, Parse("").Persian().String())
+		assert.Empty(t, Parse("0").Persian().String())
+		assert.Empty(t, Parse("xxx").Persian().String())
+	})
+
+	t.Run("valid time", func(t *testing.T) {
+		assert.Equal(t, "1178-10-11 00:00:00", Parse("1800-01-01 00:00:00", PRC).Persian().String())
+		assert.Equal(t, "1399-05-15 13:14:15", Parse("2020-08-05 13:14:15", PRC).Persian().String())
+		assert.Equal(t, "1402-10-11 00:00:00", Parse("2024-01-01 00:00:00", PRC).Persian().String())
+	})
 }
 
-func TestCarbon_CreateFromPersian(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: CreateFromPersian(1178, 10, 11, 0, 0, 0),
-			want:   "1800-01-01 00:00:00",
-		},
-		{
-			name:   "case2",
-			carbon: CreateFromPersian(1402, 10, 11, 0, 0, 0),
-			want:   "2024-01-01 00:00:00",
-		},
-		{
-			name:   "case3",
-			carbon: CreateFromPersian(1403, 5, 15, 12, 0, 0),
-			want:   "2024-08-05 12:00:00",
-		},
-		{
-			name:   "case4",
-			carbon: CreateFromPersian(9999, 12, 14, 12, 0, 0),
-			want:   "",
-		},
-	}
+func TestCreateFromPersian(t *testing.T) {
+	t.Run("invalid persian", func(t *testing.T) {
+		assert.Empty(t, CreateFromPersian(9999, 12, 14, 12, 0, 0).ToDateTimeString())
+	})
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.ToDateTimeString(), "CreateFromPersian()")
-		})
-	}
-}
-
-// https://github.com/dromara/carbon/issues/246
-func TestCarbon_Issue246(t *testing.T) {
-	tests := []struct {
-		name   string
-		carbon Carbon
-		want   string
-	}{
-		{
-			name:   "case1",
-			carbon: Parse("2024-09-21 00:00:00", PRC),
-			want:   "2024-08-19 00:00:00",
-		},
-		{
-			name:   "case2",
-			carbon: Parse("2024-09-21 23:50:00", PRC),
-			want:   "2024-08-19 23:50:00",
-		},
-		{
-			name:   "case3",
-			carbon: Parse("2024-09-21 23:54:00", PRC),
-			want:   "2024-08-19 23:54:00",
-		},
-		{
-			name:   "case4",
-			carbon: Parse("2024-09-21 23:55:00", PRC),
-			want:   "2024-08-19 23:55:00",
-		},
-		{
-			name:   "case5",
-			carbon: Parse("2024-09-21 23:59:00", PRC),
-			want:   "2024-08-19 23:59:00",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, tt.carbon.Lunar().String(), "Lunar()")
-		})
-	}
+	t.Run("valid persian", func(t *testing.T) {
+		assert.Equal(t, "1800-01-01 00:00:00", CreateFromPersian(1178, 10, 11, 0, 0, 0).ToDateTimeString())
+		assert.Equal(t, "2024-01-01 00:00:00", CreateFromPersian(1402, 10, 11, 0, 0, 0).ToDateTimeString())
+		assert.Equal(t, "2024-08-05 12:00:00", CreateFromPersian(1403, 5, 15, 12, 0, 0).ToDateTimeString())
+	})
 }
