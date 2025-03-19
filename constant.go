@@ -1,20 +1,10 @@
-// @Package carbon
-// @Description a simple, semantic and developer-friendly time package for golang
-// @Page github.com/dromara/carbon
-// @Developer gouguoyin
-// @Blog www.gouguoyin.com
-// @Email 245629560@qq.com
-
-// Package carbon is a simple, semantic and developer-friendly time package for golang.
 package carbon
 
-import (
-	"time"
-)
+import "time"
 
 // Version current version
 // 当前版本号
-const Version = "2.5.4"
+const Version = "2.6.0"
 
 // timezone constants
 // 时区常量
@@ -96,6 +86,23 @@ const (
 	December  = "December"  // 十二月
 )
 
+// constellation constants
+// 星座常量
+const (
+	Aries       = "Aries"       // 白羊座
+	Taurus      = "Taurus"      // 金牛座
+	Gemini      = "Gemini"      // 双子座
+	Cancer      = "Cancer"      // 巨蟹座
+	Leo         = "Leo"         // 狮子座
+	Virgo       = "Virgo"       // 处女座
+	Libra       = "Libra"       // 天秤座
+	Scorpio     = "Scorpio"     // 天蝎座
+	Sagittarius = "Sagittarius" // 射手座
+	Capricorn   = "Capricorn"   // 摩羯座
+	Aquarius    = "Aquarius"    // 水瓶座
+	Pisces      = "Pisces"      // 双鱼座
+)
+
 // week constants
 // 星期常量
 const (
@@ -106,6 +113,15 @@ const (
 	Friday    = "Friday"    // 周五
 	Saturday  = "Saturday"  // 周六
 	Sunday    = "Sunday"    // 周日
+)
+
+// season constants
+// 季节常量
+const (
+	Spring = "Spring" // 春季
+	Summer = "Summer" // 夏季
+	Autumn = "Autumn" // 秋季
+	Winter = "Winter" // 冬季
 )
 
 // number constants
