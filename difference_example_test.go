@@ -2,7 +2,8 @@ package carbon_test
 
 import (
 	"fmt"
-	"gitee.com/golang-package/carbon/v2"
+
+	"github.com/dromara/carbon/v2"
 )
 
 func ExampleCarbon_DiffInYears() {
