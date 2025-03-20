@@ -22,7 +22,7 @@ func TestGregorian_ToJulian(t *testing.T) {
 		{
 			name: "case1",
 			args: args{FromGregorian(time.Time{})},
-			want: want{FromJulian(0)},
+			want: want{FromJulian(1721423.5)},
 		},
 		{
 			name: "case2",
@@ -133,6 +133,11 @@ func TestGregorian_JD(t *testing.T) {
 			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
 			want: 2460333.051563,
 		},
+		{
+			name: "case5",
+			args: args{nil},
+			want: 0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -164,6 +169,11 @@ func TestGregorian_MJD(t *testing.T) {
 			name: "case3",
 			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.UTC))},
 			want: 60332.551563,
+		},
+		{
+			name: "case4",
+			args: args{nil},
+			want: 0,
 		},
 	}
 	for _, tt := range tests {

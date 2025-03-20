@@ -40,9 +40,6 @@ type Julian struct {
 // 从标准 time.Time 创建 Gregorian 实例
 func FromGregorian(t time.Time) *Gregorian {
 	g := new(Gregorian)
-	if t.IsZero() {
-		return g
-	}
 	g.Time = t
 	return g
 }
@@ -73,7 +70,12 @@ func FromJulian(f float64) (j *Julian) {
 // 将 Gregorian 实例转化为 Julian 实例
 func (g *Gregorian) ToJulian() (j *Julian) {
 	j = new(Julian)
+	if g == nil {
+		return nil
+	}
 	if g.IsZero() {
+		j.jd = 1721423.5
+		j.mjd = -678577
 		return
 	}
 	y := g.Year()
@@ -100,8 +102,8 @@ func (g *Gregorian) ToJulian() (j *Julian) {
 // 将 Julian 实例转化为 Gregorian 实例
 func (j *Julian) ToGregorian() (g *Gregorian) {
 	g = new(Gregorian)
-	if j.IsZero() {
-		return
+	if g == nil || j.jd == 0 {
+		return g
 	}
 	d := int(j.jd + 0.5)
 	f := j.jd + 0.5 - float64(d)
@@ -141,10 +143,11 @@ func (j *Julian) JD(precision ...int) float64 {
 	if j == nil {
 		return 0
 	}
+	p := decimalPrecision
 	if len(precision) > 0 {
-		decimalPrecision = precision[0]
+		p = precision[0]
 	}
-	return parseFloat64(j.jd, decimalPrecision)
+	return parseFloat64(j.jd, p)
 }
 
 // MJD gets modified julian day like 60332
@@ -153,19 +156,11 @@ func (j *Julian) MJD(precision ...int) float64 {
 	if j == nil {
 		return 0
 	}
+	p := decimalPrecision
 	if len(precision) > 0 {
-		decimalPrecision = precision[0]
+		p = precision[0]
 	}
-	return parseFloat64(j.mjd, decimalPrecision)
-}
-
-// IsZero reports whether is zero time.
-// 是否是零值时间
-func (j *Julian) IsZero() bool {
-	if j.jd == 0 || j.mjd == 0 {
-		return true
-	}
-	return false
+	return parseFloat64(j.mjd, p)
 }
 
 // parseFloat64 round to n decimal places
