@@ -30,9 +30,11 @@ func ExampleCreateFromLunar() {
 
 func ExampleCarbon_Julian() {
 	fmt.Println(carbon.Parse("2024-01-24 12:00:00").Julian().JD())
+	fmt.Println(carbon.Parse("2024-01-24 12:00:00").Julian().MJD())
 
 	// Output:
 	// 2.460334e+06
+	// 60333.5
 }
 
 func ExampleCreateFromJulian() {
