@@ -72,31 +72,14 @@ carbon.DefaultLocale = "jp"
 ```go
 // time.Time を Carbon に変換
 carbon.NewCarbon(time.Now())
-または
-carbon.CreateFromStdTime(time.Now())
-
 // Carbon を time.Time に変換
 carbon.Now().StdTime()
-```
 
-##### 時間凍結
-
-```go
-now := carbon.Parse("2020-08-05")
-carbon.SetTestNow(now)
-
-carbon.IsTestNow() // true
-carbon.Now().ToDateString() // 2020-08-05
-carbon.Yesterday().ToDateString() // 2020-08-04
-carbon.Tomorrow().ToDateString() // 2020-08-05
-carbon.Now().DiffForHumans() // just now
-carbon.Yesterday().DiffForHumans() // 1 day ago
-carbon.Tomorrow().DiffForHumans() // 1 day from now
-carbon.Parse("2020-10-05").DiffForHumans() // 2 months from now
-now.DiffForHumans(carbon.Parse("2020-10-05")) // 2 months before
-
-carbon.CleanTestNow()
-carbon.IsTestNow() // false
+または
+// time.Time を Carbon に変換
+carbon.CreateFromStdTime(time.Now())
+// Carbon を time.Time に変換
+carbon.Now().StdTime()
 ```
 
 ##### 昨日、現在、明日
@@ -274,6 +257,26 @@ carbon.ParseByLayout("2020|08|05 13|14|15", "2006|01|02 15|04|05").ToDateTimeStr
 carbon.ParseByLayout("It is 2020-08-05 13:14:15", "It is 2006-01-02 15:04:05").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒").ToDateTimeString() // 2020-08-05 13:14:15
 carbon.ParseByLayout("2020-08-05 13:14:15", "2006-01-02 15:04:05", carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+```
+
+##### 時間凍結
+
+```go
+now := carbon.Parse("2020-08-05")
+carbon.SetTestNow(now)
+
+carbon.IsTestNow() // true
+carbon.Now().ToDateString() // 2020-08-05
+carbon.Yesterday().ToDateString() // 2020-08-04
+carbon.Tomorrow().ToDateString() // 2020-08-05
+carbon.Now().DiffForHumans() // just now
+carbon.Yesterday().DiffForHumans() // 1 day ago
+carbon.Tomorrow().DiffForHumans() // 1 day from now
+carbon.Parse("2020-10-05").DiffForHumans() // 2 months from now
+now.DiffForHumans(carbon.Parse("2020-10-05")) // 2 months before
+
+carbon.CleanTestNow()
+carbon.IsTestNow() // false
 ```
 
 ##### 境界
