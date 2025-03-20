@@ -615,6 +615,14 @@ carbon.MinValue().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ##### Comparison
 
 ```go
+// Whether has error
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
+carbon.NewCarbon().HasError() // false
+carbon.Parse("").HasError() // true
+carbon.Parse("0").HasError() // true
+carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
+
 // Whether is nil time
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
 carbon.NewCarbon().IsNil() // false

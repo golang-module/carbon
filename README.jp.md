@@ -616,6 +616,14 @@ carbon.MinCarbon().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ##### 時間比較
 
 ```go
+// エラーがありますか
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
+carbon.NewCarbon().HasError() // false
+carbon.Parse("").HasError() // true
+carbon.Parse("0").HasError() // true
+carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
+
 // nil 時間かどうか
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
 carbon.NewCarbon().IsNil() // false

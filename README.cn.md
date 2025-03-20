@@ -619,13 +619,21 @@ carbon.MinValue().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ##### 时间判断
 
 ```go
+// 是否有错误
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
+carbon.NewCarbon().HasError() // false
+carbon.Parse("").HasError() // true
+carbon.Parse("0").HasError() // true
+carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
+
 // 是否是 nil 时间
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
 carbon.NewCarbon().IsNil() // false
 carbon.Parse("").IsNil() // true
 carbon.Parse("0").IsNil() // false
 carbon.Parse("xxx").IsNil() // false
-carbon.NewCarbon().IsNil() // false
+carbon.Parse("2020-08-05").IsNil() // false
 
 // 是否是零值时间(0001-01-01 00:00:00 +0000 UTC)
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsZero() // true
