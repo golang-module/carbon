@@ -34,9 +34,8 @@ func CreateFromLunar(year, month, day, hour, minute, second int, isLeapMonth boo
 // Julian converts Carbon instance to Julian instance.
 // 将 Carbon 实例转化为 Julian 实例
 func (c *Carbon) Julian() *julian.Julian {
-	j := new(julian.Julian)
 	if c.IsInvalid() {
-		return j
+		return nil
 	}
 	return julian.FromGregorian(c.StdTime()).ToJulian()
 }
