@@ -138,6 +138,9 @@ func (j *Julian) ToGregorian() (g *Gregorian) {
 // JD gets julian day like 2460332.5
 // 获取儒略日
 func (j *Julian) JD(precision ...int) float64 {
+	if j == nil {
+		return 0
+	}
 	if len(precision) > 0 {
 		decimalPrecision = precision[0]
 	}
@@ -147,6 +150,9 @@ func (j *Julian) JD(precision ...int) float64 {
 // MJD gets modified julian day like 60332
 // 获取简化儒略日
 func (j *Julian) MJD(precision ...int) float64 {
+	if j == nil {
+		return 0
+	}
 	if len(precision) > 0 {
 		decimalPrecision = precision[0]
 	}

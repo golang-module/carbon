@@ -152,17 +152,17 @@ func TestGregorian_MJD(t *testing.T) {
 	}{
 		{
 			name: "case1",
-			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 0, 0, 0, 0, time.UTC))},
 			want: 60332,
 		},
 		{
 			name: "case2",
-			args: args{FromGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 12, 0, 0, 0, time.UTC))},
 			want: 60332.5,
 		},
 		{
 			name: "case3",
-			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.Local))},
+			args: args{FromGregorian(time.Date(2024, 1, 23, 13, 14, 15, 0, time.UTC))},
 			want: 60332.551563,
 		},
 	}
