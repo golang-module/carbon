@@ -44,11 +44,50 @@ func ExampleSetTimezone() {
 	fmt.Println(carbon.SetTimezone(carbon.UTC).Timezone())
 	fmt.Println(carbon.SetTimezone(carbon.PRC).Timezone())
 
+	fmt.Println(carbon.SetTimezone(carbon.UTC).Location())
+	fmt.Println(carbon.SetTimezone(carbon.PRC).Location())
+
 	defer carbon.SetTimezone(carbon.UTC)
 
 	// Output:
 	// UTC
 	// LMT
+	// UTC
+	// PRC
+}
+
+func ExampleSetLocation() {
+	loc, _ := time.LoadLocation(carbon.PRC)
+	carbon.SetLocation(loc)
+	c := carbon.Parse("2020-08-05")
+
+	fmt.Println(carbon.DefaultTimezone)
+	fmt.Println(c.Location())
+	fmt.Println(c.Timezone())
+
+	defer carbon.SetLocation(time.UTC)
+
+	// Output:
+	// PRC
+	// PRC
+	// CST
+}
+
+func ExampleCarbon_SetLocation() {
+	c := carbon.Parse("2020-08-05")
+
+	loc, _ := time.LoadLocation(carbon.PRC)
+	c.SetLocation(loc)
+	fmt.Println(carbon.DefaultTimezone)
+	fmt.Println(c.Location())
+	fmt.Println(c.Timezone())
+
+	defer carbon.SetLocation(time.UTC)
+
+	// Output:
+	// UTC
+	// PRC
+	// CST
 }
 
 func ExampleSetLocale() {
@@ -86,36 +125,6 @@ func ExampleSetLanguage() {
 	// Output:
 	// August
 	// 八月
-}
-
-func ExampleSetLocation() {
-	loc, _ := time.LoadLocation(carbon.PRC)
-	carbon.SetLocation(loc)
-	c := carbon.Parse("2020-08-05")
-
-	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Timezone())
-
-	defer carbon.SetLocation(time.UTC)
-
-	// Output:
-	// PRC
-	// CST
-}
-
-func ExampleCarbon_SetLocation() {
-	c := carbon.Parse("2020-08-05")
-
-	loc, _ := time.LoadLocation(carbon.PRC)
-	c.SetLocation(loc)
-	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Timezone())
-
-	defer carbon.SetLocation(time.UTC)
-
-	// Output:
-	// UTC
-	// CST
 }
 
 func ExampleCarbon_SetDateTime() {

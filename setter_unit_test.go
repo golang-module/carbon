@@ -206,10 +206,12 @@ func TestCarbon_SetTimezone(t *testing.T) {
 		c := Parse("2020-08-05")
 
 		assert.Equal(t, PRC, DefaultTimezone)
+		assert.Equal(t, PRC, c.Location())
 		assert.Equal(t, CST, c.Timezone())
 
 		c.SetTimezone(UTC)
 		assert.Equal(t, PRC, DefaultTimezone)
+		assert.Equal(t, UTC, c.Location())
 		assert.Equal(t, UTC, c.Timezone())
 	})
 }
@@ -248,10 +250,12 @@ func TestCarbon_SetLocation(t *testing.T) {
 		c := Parse("2020-08-05")
 
 		assert.Equal(t, PRC, DefaultTimezone)
+		assert.Equal(t, PRC, c.Location())
 		assert.Equal(t, CST, c.Timezone())
 
 		c.SetLocation(time.UTC)
 		assert.Equal(t, PRC, DefaultTimezone)
+		assert.Equal(t, UTC, c.Location())
 		assert.Equal(t, UTC, c.Timezone())
 	})
 }
