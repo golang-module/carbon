@@ -1279,7 +1279,6 @@ type User struct {
 var user User
 
 c := carbon.Parse("2020-08-05 13:14:15")
-
 user.Date = carbon.NewFormatType[carbon.Date](c)
 user.Time = carbon.NewLayoutType[carbon.Time](c)
 user.DateTime = carbon.NewLayoutType[carbon.DateTime](c)
@@ -1327,9 +1326,9 @@ type User struct {
     Customer2 carbon.FormatType[CustomerFormat] `json:"customer2"`
 }
 
-c := carbon.Parse("2020-08-05 13:14:15")
-
 var user User
+
+c := carbon.Parse("2020-08-05 13:14:15")
 user.Customer1 = carbon.NewLayoutType[CustomerLayout](c)
 user.Customer2 = carbon.NewFormatType[CustomerFormat](c)
 
