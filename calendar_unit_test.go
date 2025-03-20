@@ -44,8 +44,8 @@ func TestCreateFromLunar(t *testing.T) {
 
 func TestCarbon_Julian(t *testing.T) {
 	t.Run("zero time", func(t *testing.T) {
-		assert.Zero(t, NewCarbon().Julian().JD())
-		assert.Zero(t, NewCarbon().Julian().MJD())
+		assert.Equal(t, 1.7214235e+06, NewCarbon().Julian().JD())
+		assert.Equal(t, float64(-678577), NewCarbon().Julian().MJD())
 	})
 
 	t.Run("nil time", func(t *testing.T) {
