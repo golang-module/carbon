@@ -47,9 +47,9 @@ func TestCarbon_Copy(t *testing.T) {
 		assert.Equal(t, PRC, oldCarbon.Location())
 		assert.Equal(t, UTC, newCarbon.Location())
 
-		newCarbon = newCarbon.SetTimezone(Local)
+		newCarbon = newCarbon.SetTimezone(Japan)
 		assert.Equal(t, PRC, oldCarbon.Location())
-		assert.Equal(t, Local, newCarbon.Location())
+		assert.Equal(t, Japan, newCarbon.Location())
 	})
 
 	t.Run("copy layout", func(t *testing.T) {
