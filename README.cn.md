@@ -620,6 +620,8 @@ carbon.MinValue().ToString() // -9998-01-01 00:00:00 +0000 UTC
 
 ```go
 // 是否是 nil 时间
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
+carbon.NewCarbon().IsNil() // false
 carbon.Parse("").IsNil() // true
 carbon.Parse("0").IsNil() // false
 carbon.Parse("xxx").IsNil() // false
@@ -639,6 +641,8 @@ carbon.Parse("2020-08-05").IsZero() // false
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsZero() // false
 
 // 是否是有效时间
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsValid() // true
+carbon.NewCarbon().IsValid() // true
 carbon.Parse("").IsValid() // false
 carbon.Parse("0").IsValid() // false
 carbon.Parse("xxx").IsValid() // false
@@ -650,6 +654,8 @@ carbon.Parse("2020-08-05").IsValid() // true
 carbon.Parse("2020-08-05").SetTimezone("xxx").IsValid() // false
 
 // 是否是无效时间
+carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsValid() // false
+carbon.NewCarbon().IsValid() // false
 carbon.Parse("").IsInvalid() // true
 carbon.Parse("0").IsInvalid() // true
 carbon.Parse("xxx").IsInvalid() // true
