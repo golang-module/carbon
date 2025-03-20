@@ -18,9 +18,9 @@ func ExampleCarbon_Lunar() {
 }
 
 func ExampleCreateFromLunar() {
-	fmt.Println(carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString())
-	fmt.Println(carbon.CreateFromLunar(2023, 12, 8, 0, 0, 0, false).ToDateTimeString())
-	fmt.Println(carbon.CreateFromLunar(2023, 12, 14, 12, 0, 0, false).ToDateTimeString())
+	fmt.Println(carbon.CreateFromLunar(2023, 12, 11, 0, 0, 0, false).ToDateTimeString(carbon.PRC))
+	fmt.Println(carbon.CreateFromLunar(2023, 12, 8, 0, 0, 0, false).ToDateTimeString(carbon.PRC))
+	fmt.Println(carbon.CreateFromLunar(2023, 12, 14, 12, 0, 0, false).ToDateTimeString(carbon.PRC))
 
 	// Output:
 	// 2024-01-21 00:00:00
@@ -29,12 +29,10 @@ func ExampleCreateFromLunar() {
 }
 
 func ExampleCarbon_Julian() {
-	fmt.Println(carbon.Parse("2024-01-24 12:00:00", carbon.PRC).Julian().JD())
-	fmt.Println(carbon.Parse("2024-01-24 12:00:00", carbon.PRC).Julian().MJD())
+	fmt.Println(carbon.Parse("2024-01-24 12:00:00").Julian().JD())
 
 	// Output:
 	// 2.460334e+06
-	// 60333.5
 }
 
 func ExampleCreateFromJulian() {
@@ -47,9 +45,9 @@ func ExampleCreateFromJulian() {
 }
 
 func ExampleCarbon_Persian() {
-	fmt.Println(carbon.Parse("1800-01-01 00:00:00", carbon.PRC).Persian().String())
-	fmt.Println(carbon.Parse("2020-08-05 13:14:15", carbon.PRC).Persian().String())
-	fmt.Println(carbon.Parse("2024-01-01 00:00:00", carbon.PRC).Persian().String())
+	fmt.Println(carbon.Parse("1800-01-01 00:00:00").Persian().String())
+	fmt.Println(carbon.Parse("2020-08-05 13:14:15").Persian().String())
+	fmt.Println(carbon.Parse("2024-01-01 00:00:00").Persian().String())
 
 	// Output:
 	// 1178-10-11 00:00:00
