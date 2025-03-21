@@ -207,7 +207,7 @@ func TestCarbon_SetTimezone(t *testing.T) {
 
 		assert.Equal(t, PRC, DefaultTimezone)
 		assert.Equal(t, PRC, c.Location())
-		assert.Equal(t, CST, c.Timezone())
+		assert.Equal(t, "CST", c.Timezone())
 
 		c.SetTimezone(UTC)
 		assert.Equal(t, PRC, DefaultTimezone)
@@ -251,7 +251,7 @@ func TestCarbon_SetLocation(t *testing.T) {
 
 		assert.Equal(t, PRC, DefaultTimezone)
 		assert.Equal(t, PRC, c.Location())
-		assert.Equal(t, CST, c.Timezone())
+		assert.Equal(t, "CST", c.Timezone())
 
 		c.SetLocation(time.UTC)
 		assert.Equal(t, PRC, DefaultTimezone)

@@ -1,6 +1,8 @@
 package carbon
 
-import "time"
+import (
+	"time"
+)
 
 // Version current version
 // 当前版本号
@@ -11,13 +13,16 @@ const Version = "2.6.0"
 const (
 	Local = "Local" // 本地时间
 	UTC   = "UTC"   // 世界协调时间
-	GMT   = "GMT"   // 格林尼治标准时间
-	CST   = "CST"   // 中国标准时间
-	EET   = "EET"   // 欧洲东部标准时间
-	WET   = "WET"   // 欧洲西部标准时间
-	CET   = "CET"   // 欧洲中部标准时间
-	EST   = "EST"   // 美国东部标准时间
-	MST   = "MST"   // 美国山地标准时间
+
+	CET  = "CET"  // 欧洲中部标准时间
+	EET  = "EET"  // 欧洲东部标准时间
+	EST  = "EST"  // 美国东部标准时间
+	GMT  = "GMT"  // 格林尼治标准时间
+	MET  = "MET"  // 欧洲中部标准时间
+	MST  = "MST"  // 美国山地标准时间
+	UCT  = "MST"  // 世界协调时间
+	WET  = "WET"  // 欧洲西部标准时间
+	Zulu = "Zulu" // 世界协调时间
 
 	Cuba      = "Cuba"      // 古巴
 	Egypt     = "Egypt"     // 埃及
