@@ -23,45 +23,45 @@ var failedScanError = func(src interface{}) error {
 	return fmt.Errorf("failed to scan value: %v", src)
 }
 
-// LayoutFactory defines a LayoutFactory interface
-// 定义 LayoutFactory 接口
-type LayoutFactory interface {
+// layoutFactory defines a layoutFactory interface
+// 定义 layoutFactory 接口
+type layoutFactory interface {
 	SetLayout() string
 }
 
 // LayoutType defines a LayoutType generic struct
 // 定义 LayoutType 泛型结构体
-type LayoutType[T LayoutFactory] struct {
+type LayoutType[T layoutFactory] struct {
 	*Carbon
 }
 
-// FormatFactory defines a FormatFactory interface.
-// 定义 FormatFactory 接口
-type FormatFactory interface {
+// formatFactory defines a formatFactory interface.
+// 定义 formatFactory 接口
+type formatFactory interface {
 	SetFormat() string
 }
 
 // FormatType defines a FormatType generic struct.
 // 定义 FormatType 泛型结构体
-type FormatType[T FormatFactory] struct {
+type FormatType[T formatFactory] struct {
 	*Carbon
 }
 
-// TimestampFactory defines a TimestampFactory interface.
-// 定义 TimestampFactory 接口
-type TimestampFactory interface {
+// timestampFactory defines a timestampFactory interface.
+// 定义 timestampFactory 接口
+type timestampFactory interface {
 	SetPrecision() string
 }
 
 // TimestampType defines a TimestampType generic struct.
 // 定义 TimestampType 泛型结构体
-type TimestampType[T TimestampFactory] struct {
+type TimestampType[T timestampFactory] struct {
 	*Carbon
 }
 
 // NewLayoutType returns a new LayoutType generic instance.
 // 返回 LayoutType 泛型实例
-func NewLayoutType[T LayoutFactory](carbon *Carbon) LayoutType[T] {
+func NewLayoutType[T layoutFactory](carbon *Carbon) LayoutType[T] {
 	return LayoutType[T]{
 		Carbon: carbon,
 	}
@@ -69,7 +69,7 @@ func NewLayoutType[T LayoutFactory](carbon *Carbon) LayoutType[T] {
 
 // NewFormatType returns a new FormatType generic instance.
 // 返回 FormatType 泛型实例
-func NewFormatType[T FormatFactory](carbon *Carbon) FormatType[T] {
+func NewFormatType[T formatFactory](carbon *Carbon) FormatType[T] {
 	return FormatType[T]{
 		Carbon: carbon,
 	}
@@ -77,7 +77,7 @@ func NewFormatType[T FormatFactory](carbon *Carbon) FormatType[T] {
 
 // NewTimestampType returns a new TimestampType generic instance.
 // 返回 TimestampType 泛型实例
-func NewTimestampType[T TimestampFactory](carbon *Carbon) TimestampType[T] {
+func NewTimestampType[T timestampFactory](carbon *Carbon) TimestampType[T] {
 	return TimestampType[T]{
 		Carbon: carbon,
 	}
@@ -140,7 +140,7 @@ func (t *LayoutType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for LayoutType generic struct.
 // 为 LayoutType 泛型结构体实现 Stringer 接口
-func (t *LayoutType[T]) String() string {
+func (t LayoutType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
@@ -149,15 +149,15 @@ func (t *LayoutType[T]) String() string {
 
 // GormDataType sets gorm data type for LayoutType generic struct.
 // 为 LayoutType 泛型结构体设置 gorm 数据类型
-func (t *LayoutType[T]) GormDataType() string {
+func (t LayoutType[T]) GormDataType() string {
 	return "carbonLayout"
 }
 
 // getLayout returns the set layout.
 // 返回设置的布局模板
-func (t *LayoutType[T]) getLayout() string {
-	var layoutFactory T
-	return layoutFactory.SetLayout()
+func (t LayoutType[T]) getLayout() string {
+	var factory T
+	return factory.SetLayout()
 }
 
 // Scan implements driver.Scanner interface for FormatType generic struct.
@@ -217,7 +217,7 @@ func (t *FormatType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for FormatType generic struct.
 // 为 FormatType 泛型结构体实现 Stringer 接口
-func (t *FormatType[T]) String() string {
+func (t FormatType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
@@ -226,15 +226,15 @@ func (t *FormatType[T]) String() string {
 
 // GormDataType sets gorm data type for FormatType generic struct.
 // 为 FormatType 泛型结构体设置 gorm 数据类型
-func (t *FormatType[T]) GormDataType() string {
+func (t FormatType[T]) GormDataType() string {
 	return "carbonFormat"
 }
 
 // getFormat returns the set format.
 // 返回设置的格式模板
-func (t *FormatType[T]) getFormat() string {
-	var formatFactory T
-	return formatFactory.SetFormat()
+func (t FormatType[T]) getFormat() string {
+	var factory T
+	return factory.SetFormat()
 }
 
 // Scan implements driver.Scanner interface for TimestampType generic struct.
@@ -338,11 +338,11 @@ func (t *TimestampType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for TimestampType generic struct.
 // 为 TimestampType 泛型结构体实现 Stringer 接口
-func (t *TimestampType[T]) String() string {
+func (t TimestampType[T]) String() string {
 	return strconv.FormatInt(t.Int64(), 10)
 }
 
-func (t *TimestampType[T]) Int64() int64 {
+func (t TimestampType[T]) Int64() int64 {
 	ts := int64(0)
 	if t.IsZero() || t.IsInvalid() {
 		return ts
@@ -362,15 +362,15 @@ func (t *TimestampType[T]) Int64() int64 {
 
 // GormDataType sets gorm data type for TimestampType generic struct.
 // 为 TimestampType 泛型结构体设置 gorm 数据类型
-func (t *TimestampType[T]) GormDataType() string {
+func (t TimestampType[T]) GormDataType() string {
 	return "carbonTimestamp"
 }
 
 // getPrecision returns the set timestamp precision.
 // 返回设置的时间戳精度
-func (t *TimestampType[T]) getPrecision() string {
-	var timestampFactory T
-	return timestampFactory.SetPrecision()
+func (t TimestampType[T]) getPrecision() string {
+	var factory T
+	return factory.SetPrecision()
 }
 
 // DateTime defines a DateTime struct.
@@ -378,14 +378,14 @@ func (t *TimestampType[T]) getPrecision() string {
 type DateTime struct {
 }
 
-// SetFormat implements FormatFactory interface for DateTime struct.
-// 为 DateTime 结构体实现 FormatFactory 接口
+// SetFormat implements formatFactory interface for DateTime struct.
+// 为 DateTime 结构体实现 formatFactory 接口
 func (t DateTime) SetFormat() string {
 	return DateTimeFormat
 }
 
-// SetLayout implements LayoutFactory interface for DateTime struct.
-// 为 DateTime 结构体实现 LayoutFactory 接口
+// SetLayout implements layoutFactory interface for DateTime struct.
+// 为 DateTime 结构体实现 layoutFactory 接口
 func (t DateTime) SetLayout() string {
 	return DateTimeLayout
 }
@@ -395,14 +395,14 @@ func (t DateTime) SetLayout() string {
 type Date struct {
 }
 
-// SetFormat implements FormatFactory interface for Date struct.
-// 为 Date 结构体实现 FormatFactory 接口
+// SetFormat implements formatFactory interface for Date struct.
+// 为 Date 结构体实现 formatFactory 接口
 func (t Date) SetFormat() string {
 	return DateFormat
 }
 
-// SetLayout implements LayoutFactory interface for Date struct.
-// 为 Date 结构体实现 LayoutFactory 接口
+// SetLayout implements layoutFactory interface for Date struct.
+// 为 Date 结构体实现 layoutFactory 接口
 func (t Date) SetLayout() string {
 	return DateLayout
 }
@@ -412,14 +412,14 @@ func (t Date) SetLayout() string {
 type Time struct {
 }
 
-// SetFormat implements FormatFactory interface for Time struct.
-// 为 Time 结构体实现 FormatFactory 接口
+// SetFormat implements formatFactory interface for Time struct.
+// 为 Time 结构体实现 formatFactory 接口
 func (t Time) SetFormat() string {
 	return TimeFormat
 }
 
-// SetLayout implements LayoutFactory interface for Time struct.
-// 为 Time 结构体实现 LayoutFactory 接口
+// SetLayout implements layoutFactory interface for Time struct.
+// 为 Time 结构体实现 layoutFactory 接口
 func (t Time) SetLayout() string {
 	return TimeLayout
 }
@@ -444,26 +444,26 @@ type TimestampMicro struct {
 type TimestampNano struct {
 }
 
-// SetPrecision implements TimestampFactory interface for Timestamp struct.
-// 为 Timestamp 结构体实现 TimestampFactory 接口
+// SetPrecision implements timestampFactory interface for Timestamp struct.
+// 为 Timestamp 结构体实现 timestampFactory 接口
 func (t Timestamp) SetPrecision() string {
 	return PrecisionSecond
 }
 
-// SetPrecision implements TimestampFactory interface for TimestampMilli struct.
-// 为 TimestampMilli 结构体实现 TimestampFactory 接口
+// SetPrecision implements timestampFactory interface for TimestampMilli struct.
+// 为 TimestampMilli 结构体实现 timestampFactory 接口
 func (t TimestampMilli) SetPrecision() string {
 	return PrecisionMillisecond
 }
 
-// SetPrecision implements TimestampFactory interface for TimestampMicro struct.
-// 为 TimestampMicro 结构体实现 TimestampFactory 接口
+// SetPrecision implements timestampFactory interface for TimestampMicro struct.
+// 为 TimestampMicro 结构体实现 timestampFactory 接口
 func (t TimestampMicro) SetPrecision() string {
 	return PrecisionMicrosecond
 }
 
-// SetPrecision implements TimestampFactory interface for TimestampNano struct.
-// 为 TimestampNano 结构体实现 TimestampFactory 接口
+// SetPrecision implements timestampFactory interface for TimestampNano struct.
+// 为 TimestampNano 结构体实现 timestampFactory 接口
 func (t TimestampNano) SetPrecision() string {
 	return PrecisionNanosecond
 }
