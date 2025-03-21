@@ -140,7 +140,7 @@ func (t *LayoutType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for LayoutType generic struct.
 // 为 LayoutType 泛型结构体实现 Stringer 接口
-func (t LayoutType[T]) String() string {
+func (t *LayoutType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
@@ -155,7 +155,7 @@ func (t *LayoutType[T]) GormDataType() string {
 
 // getLayout returns the set layout.
 // 返回设置的布局模板
-func (t LayoutType[T]) getLayout() string {
+func (t *LayoutType[T]) getLayout() string {
 	var layoutFactory T
 	return layoutFactory.SetLayout()
 }
@@ -217,7 +217,7 @@ func (t *FormatType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for FormatType generic struct.
 // 为 FormatType 泛型结构体实现 Stringer 接口
-func (t FormatType[T]) String() string {
+func (t *FormatType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
@@ -232,7 +232,7 @@ func (t *FormatType[T]) GormDataType() string {
 
 // getFormat returns the set format.
 // 返回设置的格式模板
-func (t FormatType[T]) getFormat() string {
+func (t *FormatType[T]) getFormat() string {
 	var formatFactory T
 	return formatFactory.SetFormat()
 }
@@ -243,15 +243,9 @@ func (t *TimestampType[T]) Scan(src interface{}) (err error) {
 	ts := int64(0)
 	switch v := src.(type) {
 	case []byte:
-		ts, err = strconv.ParseInt(string(v), 10, 64)
-		if err != nil {
-			return err
-		}
+		ts, _ = strconv.ParseInt(string(v), 10, 64)
 	case string:
-		ts, err = strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return err
-		}
+		ts, _ = strconv.ParseInt(v, 10, 64)
 	case int64:
 		ts = v
 	case time.Time:
@@ -344,11 +338,11 @@ func (t *TimestampType[T]) UnmarshalJSON(b []byte) error {
 
 // String implements Stringer interface for TimestampType generic struct.
 // 为 TimestampType 泛型结构体实现 Stringer 接口
-func (t TimestampType[T]) String() string {
+func (t *TimestampType[T]) String() string {
 	return strconv.FormatInt(t.Int64(), 10)
 }
 
-func (t TimestampType[T]) Int64() int64 {
+func (t *TimestampType[T]) Int64() int64 {
 	ts := int64(0)
 	if t.IsZero() || t.IsInvalid() {
 		return ts
@@ -374,7 +368,7 @@ func (t *TimestampType[T]) GormDataType() string {
 
 // getPrecision returns the set timestamp precision.
 // 返回设置的时间戳精度
-func (t TimestampType[T]) getPrecision() string {
+func (t *TimestampType[T]) getPrecision() string {
 	var timestampFactory T
 	return timestampFactory.SetPrecision()
 }
