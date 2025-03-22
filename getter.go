@@ -378,18 +378,18 @@ func (c *Carbon) TimestampNano() int64 {
 	return c.StdTime().UnixNano()
 }
 
-// Location gets location name like "PRC".
-// 获取位置
-func (c *Carbon) Location() string {
+// Timezone gets timezone name like "CST".
+// 获取时区
+func (c *Carbon) Timezone() string {
 	if c.IsInvalid() {
 		return ""
 	}
 	return c.loc.String()
 }
 
-// Timezone gets timezone name like "CST".
-// 获取时区
-func (c *Carbon) Timezone() string {
+// ZoneName gets timezone name like "CST".
+// 获取时区名
+func (c *Carbon) ZoneName() string {
 	if c.IsInvalid() {
 		return ""
 	}
@@ -397,9 +397,9 @@ func (c *Carbon) Timezone() string {
 	return name
 }
 
-// Offset gets offset seconds from the UTC timezone like 28800.
+// ZoneOffset gets timezone offset seconds from the UTC timezone like 28800.
 // 获取距离UTC时区的偏移量，单位秒
-func (c *Carbon) Offset() int {
+func (c *Carbon) ZoneOffset() int {
 	if c.IsInvalid() {
 		return 0
 	}

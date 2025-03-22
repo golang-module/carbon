@@ -1195,30 +1195,6 @@ func TestCarbon_TimestampNano(t *testing.T) {
 	})
 }
 
-func TestCarbon_Location(t *testing.T) {
-	t.Run("zero time", func(t *testing.T) {
-		assert.Equal(t, UTC, NewCarbon().Location())
-	})
-
-	t.Run("nil time", func(t *testing.T) {
-		c := NewCarbon()
-		c = nil
-		assert.Empty(t, c.Location())
-	})
-
-	t.Run("invalid time", func(t *testing.T) {
-		assert.Empty(t, Parse("").Location())
-		assert.Empty(t, Parse("0").Location())
-		assert.Empty(t, Parse("xxx").Location())
-	})
-
-	t.Run("valid time", func(t *testing.T) {
-		assert.Equal(t, UTC, Now().Location())
-		assert.Equal(t, Tokyo, Now(Tokyo).Location())
-		assert.Equal(t, PRC, Now(PRC).Location())
-	})
-}
-
 func TestCarbon_Timezone(t *testing.T) {
 	t.Run("zero time", func(t *testing.T) {
 		assert.Equal(t, UTC, NewCarbon().Timezone())
@@ -1237,33 +1213,57 @@ func TestCarbon_Timezone(t *testing.T) {
 	})
 
 	t.Run("valid time", func(t *testing.T) {
-		assert.Equal(t, "UTC", Now().Timezone())
-		assert.Equal(t, "JST", Now(Tokyo).Timezone())
-		assert.Equal(t, "CST", Now(PRC).Timezone())
+		assert.Equal(t, UTC, Now().Timezone())
+		assert.Equal(t, Tokyo, Now(Tokyo).Timezone())
+		assert.Equal(t, PRC, Now(PRC).Timezone())
 	})
 }
 
-func TestCarbon_Offset(t *testing.T) {
+func TestCarbon_ZoneName(t *testing.T) {
 	t.Run("zero time", func(t *testing.T) {
-		assert.Zero(t, NewCarbon().Offset())
+		assert.Equal(t, UTC, NewCarbon().ZoneName())
 	})
 
 	t.Run("nil time", func(t *testing.T) {
 		c := NewCarbon()
 		c = nil
-		assert.Zero(t, c.Offset())
+		assert.Empty(t, c.ZoneName())
 	})
 
 	t.Run("invalid time", func(t *testing.T) {
-		assert.Zero(t, Parse("").Offset())
-		assert.Zero(t, Parse("0").Offset())
-		assert.Zero(t, Parse("xxx").Offset())
+		assert.Empty(t, Parse("").ZoneName())
+		assert.Empty(t, Parse("0").ZoneName())
+		assert.Empty(t, Parse("xxx").ZoneName())
 	})
 
 	t.Run("valid time", func(t *testing.T) {
-		assert.Zero(t, Parse("2020-08-05").Offset())
-		assert.Equal(t, 32400, Parse("2020-08-05", Tokyo).Offset())
-		assert.Equal(t, 28800, Parse("2020-08-05", PRC).Offset())
+		assert.Equal(t, "UTC", Now().ZoneName())
+		assert.Equal(t, "JST", Now(Tokyo).ZoneName())
+		assert.Equal(t, "CST", Now(PRC).ZoneName())
+	})
+}
+
+func TestCarbon_ZoneOffset(t *testing.T) {
+	t.Run("zero time", func(t *testing.T) {
+		assert.Zero(t, NewCarbon().ZoneOffset())
+	})
+
+	t.Run("nil time", func(t *testing.T) {
+		c := NewCarbon()
+		c = nil
+		assert.Zero(t, c.ZoneOffset())
+	})
+
+	t.Run("invalid time", func(t *testing.T) {
+		assert.Zero(t, Parse("").ZoneOffset())
+		assert.Zero(t, Parse("0").ZoneOffset())
+		assert.Zero(t, Parse("xxx").ZoneOffset())
+	})
+
+	t.Run("valid time", func(t *testing.T) {
+		assert.Zero(t, Parse("2020-08-05").ZoneOffset())
+		assert.Equal(t, 32400, Parse("2020-08-05", Tokyo).ZoneOffset())
+		assert.Equal(t, 28800, Parse("2020-08-05", PRC).ZoneOffset())
 	})
 }
 

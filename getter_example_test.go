@@ -478,17 +478,6 @@ func ExampleCarbon_TimestampNano() {
 	// 1596633255999999999
 }
 
-func ExampleCarbon_Location() {
-	fmt.Println(carbon.Now().Location())
-	fmt.Println(carbon.Now(carbon.Tokyo).Location())
-	fmt.Println(carbon.Now(carbon.PRC).Location())
-
-	// Output:
-	// UTC
-	// Asia/Tokyo
-	// PRC
-}
-
 func ExampleCarbon_Timezone() {
 	fmt.Println(carbon.Now().Timezone())
 	fmt.Println(carbon.Now(carbon.Tokyo).Timezone())
@@ -496,14 +485,25 @@ func ExampleCarbon_Timezone() {
 
 	// Output:
 	// UTC
+	// Asia/Tokyo
+	// PRC
+}
+
+func ExampleCarbon_ZoneName() {
+	fmt.Println(carbon.Now().ZoneName())
+	fmt.Println(carbon.Now(carbon.Tokyo).ZoneName())
+	fmt.Println(carbon.Now(carbon.PRC).ZoneName())
+
+	// Output:
+	// UTC
 	// JST
 	// CST
 }
 
-func ExampleCarbon_Offset() {
-	fmt.Println(carbon.Parse("2020-08-05").Offset())
-	fmt.Println(carbon.Parse("2020-08-05", carbon.Tokyo).Offset())
-	fmt.Println(carbon.Parse("2020-08-05", carbon.PRC).Offset())
+func ExampleCarbon_ZoneOffset() {
+	fmt.Println(carbon.Parse("2020-08-05").ZoneOffset())
+	fmt.Println(carbon.Parse("2020-08-05", carbon.Tokyo).ZoneOffset())
+	fmt.Println(carbon.Parse("2020-08-05", carbon.PRC).ZoneOffset())
 
 	// Output:
 	// 0
