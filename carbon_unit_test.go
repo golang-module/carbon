@@ -40,16 +40,16 @@ func TestCarbon_Copy(t *testing.T) {
 		oldCarbon := Parse("2020-08-05")
 		newCarbon := oldCarbon.Copy()
 
-		assert.Equal(t, UTC, oldCarbon.Location())
-		assert.Equal(t, UTC, newCarbon.Location())
+		assert.Equal(t, UTC, oldCarbon.Timezone())
+		assert.Equal(t, UTC, newCarbon.Timezone())
 
 		oldCarbon = oldCarbon.SetTimezone(PRC)
-		assert.Equal(t, PRC, oldCarbon.Location())
-		assert.Equal(t, UTC, newCarbon.Location())
+		assert.Equal(t, PRC, oldCarbon.Timezone())
+		assert.Equal(t, UTC, newCarbon.Timezone())
 
 		newCarbon = newCarbon.SetTimezone(Japan)
-		assert.Equal(t, PRC, oldCarbon.Location())
-		assert.Equal(t, Japan, newCarbon.Location())
+		assert.Equal(t, PRC, oldCarbon.Timezone())
+		assert.Equal(t, Japan, newCarbon.Timezone())
 	})
 
 	t.Run("copy layout", func(t *testing.T) {
