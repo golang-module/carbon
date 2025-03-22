@@ -59,10 +59,12 @@ carbon.SetLocale("zh-CN")
 
 或
 
-carbon.DefaultLayout = carbon.DateTimeLayout
-carbon.DefaultTimezone = carbon.PRC
-carbon.DefaultWeekStartsAt = carbon.Sunday
-carbon.DefaultLocale = "zh-CN" 
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.DateTimeLayout,
+  Timezone: carbon.PRC,
+  WeekStartsAt: carbon.Sunday,
+  Locale: "zh-CN", 
+})
 ```
 
 ##### `Carbon` 和 `time.Time` 互转

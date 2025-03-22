@@ -60,10 +60,12 @@ carbon.SetLocale("en")
 
 or
 
-carbon.DefaultLayout = carbon.DateTimeLayout
-carbon.DefaultTimezone = carbon.UTC
-carbon.DefaultWeekStartsAt = carbon.Sunday
-carbon.DefaultLocale = "en" 
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.DateTimeLayout,
+  Timezone: carbon.UTC,
+  WeekStartsAt: carbon.Sunday,
+  Locale: "en", 
+})
 ```
 
 ##### Convert between `Carbon` and `time.Time`

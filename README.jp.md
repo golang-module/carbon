@@ -61,10 +61,12 @@ carbon.SetLocale("jp")
 
 または
 
-carbon.DefaultLayout = carbon.DateTimeLayout
-carbon.DefaultTimezone = carbon.Japan
-carbon.DefaultWeekStartsAt = carbon.Sunday
-carbon.DefaultLocale = "jp" 
+carbon.SetDefault(carbon.Default{
+  Layout: carbon.DateTimeLayout,
+  Timezone: carbon.Japan,
+  WeekStartsAt: carbon.Sunday,
+  Locale: "jp", 
+})
 ```
 
 ##### Carbon と time.Time 間の変換
