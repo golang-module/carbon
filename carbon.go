@@ -12,24 +12,6 @@ import (
 	"time"
 )
 
-var (
-	// DefaultLayout default layout
-	// 默认布局模板
-	DefaultLayout = DateTimeLayout
-
-	// DefaultTimezone default timezone
-	// 默认时区
-	DefaultTimezone = UTC
-
-	// DefaultWeekStartsAt default default week start date
-	// 默认一周开始日期
-	DefaultWeekStartsAt = Sunday
-
-	// DefaultLocale default language locale
-	// 默认语言区域
-	DefaultLocale = "en"
-)
-
 // Carbon defines a Carbon struct.
 // 定义 Carbon 结构体
 type Carbon struct {
