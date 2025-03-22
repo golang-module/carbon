@@ -1325,26 +1325,26 @@ fmt.Printf("%+v", person)
 ###### 自定义输出格式
 
 ```go
-type CustomerLayout struct {}
+type RFC3339Layout struct {}
 func (t CustomerLayout) SetLayout() string {
     return carbon.RFC3339Layout
 }
 
-type CustomerFormat struct {}
+type ISO8601Format struct {}
 func (t CustomerFormat) SetFormat() string {
     return carbon.ISO8601Format
 }
 
 type User struct {
-    Customer1 carbon.LayoutType[CustomerLayout] `json:"customer1"`
-    Customer2 carbon.FormatType[CustomerFormat] `json:"customer2"`
+    Customer1 carbon.LayoutType[RFC3339Layout] `json:"customer1"`
+    Customer2 carbon.FormatType[ISO8601Format] `json:"customer2"`
 }
 
 var user User
 
 c := carbon.Parse("2020-08-05 13:14:15")
-user.Customer1 = carbon.NewLayoutType[CustomerLayout](c)
-user.Customer2 = carbon.NewFormatType[CustomerFormat](c)
+user.Customer1 = carbon.NewLayoutType[RFC3339Layout](c)
+user.Customer2 = carbon.NewFormatType[ISO8601Format](c)
 
 data, err := json.Marshal(&user)
 if err != nil {
