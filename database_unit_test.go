@@ -2,6 +2,7 @@ package carbon_test
 
 import (
 	"encoding/json"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -379,38 +380,44 @@ func TestFormatType_GormDataType(t *testing.T) {
 func TestTimestampType_Scan(t *testing.T) {
 	t.Run("[]byte type", func(t *testing.T) {
 		c1 := carbon.NewTimestampType[carbon.Timestamp](carbon.Now())
-		e1 := c1.Scan([]byte(carbon.Now().ToDateString()))
+		e1 := c1.Scan([]byte(strconv.Itoa(int(c1.Timestamp()))))
 		assert.Nil(t, e1)
 
 		c2 := carbon.NewTimestampType[carbon.TimestampMilli](carbon.Now())
-		e2 := c2.Scan([]byte(carbon.Now().ToDateString()))
+		e2 := c2.Scan([]byte(strconv.Itoa(int(c2.Timestamp()))))
 		assert.Nil(t, e2)
 
 		c3 := carbon.NewTimestampType[carbon.TimestampMicro](carbon.Now())
-		e3 := c3.Scan([]byte(carbon.Now().ToDateString()))
+		e3 := c3.Scan([]byte(strconv.Itoa(int(c3.Timestamp()))))
 		assert.Nil(t, e3)
 
 		c4 := carbon.NewTimestampType[carbon.TimestampNano](carbon.Now())
-		e4 := c4.Scan([]byte(carbon.Now().ToDateString()))
+		e4 := c4.Scan([]byte(strconv.Itoa(int(c4.Timestamp()))))
 		assert.Nil(t, e4)
+
+		e5 := c4.Scan([]byte("xxx"))
+		assert.Error(t, e5)
 	})
 
 	t.Run("string type", func(t *testing.T) {
 		c1 := carbon.NewTimestampType[carbon.Timestamp](carbon.Now())
-		e1 := c1.Scan(carbon.Now().ToDateString())
+		e1 := c1.Scan(strconv.Itoa(int(c1.Timestamp())))
 		assert.Nil(t, e1)
 
 		c2 := carbon.NewTimestampType[carbon.TimestampMilli](carbon.Now())
-		e2 := c2.Scan(carbon.Now().ToDateString())
+		e2 := c2.Scan(strconv.Itoa(int(c2.Timestamp())))
 		assert.Nil(t, e2)
 
 		c3 := carbon.NewTimestampType[carbon.TimestampMicro](carbon.Now())
-		e3 := c3.Scan(carbon.Now().ToDateString())
+		e3 := c3.Scan(strconv.Itoa(int(c3.Timestamp())))
 		assert.Nil(t, e3)
 
 		c4 := carbon.NewTimestampType[carbon.TimestampNano](carbon.Now())
-		e4 := c4.Scan(carbon.Now().ToDateString())
+		e4 := c4.Scan(strconv.Itoa(int(c4.Timestamp())))
 		assert.Nil(t, e4)
+
+		e5 := c4.Scan("xxx")
+		assert.Error(t, e5)
 	})
 
 	t.Run("int64 type", func(t *testing.T) {
@@ -713,4 +720,58 @@ func TestTimestamp_GormDataType(t *testing.T) {
 
 	c4 := carbon.NewTimestampType[carbon.TimestampNano](c)
 	assert.Equal(t, dataType, c4.GormDataType())
+}
+
+type RFC3339Layout struct{}
+
+func (t RFC3339Layout) SetLayout() string {
+	return carbon.RFC3339Layout
+}
+
+func TestLayoutType_Customer(t *testing.T) {
+	type User struct {
+		Customer carbon.LayoutType[RFC3339Layout] `json:"customer"`
+	}
+
+	var user User
+
+	c := carbon.Parse("2020-08-05 13:14:15")
+	user.Customer = carbon.NewLayoutType[RFC3339Layout](c)
+
+	data, err := json.Marshal(&user)
+	assert.NoError(t, err)
+	assert.Equal(t, `{"customer":"2020-08-05T13:14:15Z"}`, string(data))
+
+	var person User
+	err = json.Unmarshal(data, &person)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "2020-08-05T13:14:15Z", person.Customer.String())
+}
+
+type ISO8601Format struct{}
+
+func (t ISO8601Format) SetFormat() string {
+	return carbon.ISO8601Format
+}
+
+func TestFormatType_Customer(t *testing.T) {
+	type User struct {
+		Customer carbon.FormatType[ISO8601Format] `json:"customer"`
+	}
+
+	var user User
+
+	c := carbon.Parse("2020-08-05 13:14:15")
+	user.Customer = carbon.NewFormatType[ISO8601Format](c)
+
+	data, err := json.Marshal(&user)
+	assert.NoError(t, err)
+	assert.Equal(t, `{"customer":"2020-08-05T13:14:15+00:00"}`, string(data))
+
+	var person User
+	err = json.Unmarshal(data, &person)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "2020-08-05T13:14:15+00:00", person.Customer.String())
 }

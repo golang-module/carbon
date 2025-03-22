@@ -243,9 +243,15 @@ func (t *TimestampType[T]) Scan(src interface{}) (err error) {
 	ts := int64(0)
 	switch v := src.(type) {
 	case []byte:
-		ts, _ = strconv.ParseInt(string(v), 10, 64)
+		ts, err = strconv.ParseInt(string(v), 10, 64)
+		if err != nil {
+			return err
+		}
 	case string:
-		ts, _ = strconv.ParseInt(v, 10, 64)
+		ts, err = strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return err
+		}
 	case int64:
 		ts = v
 	case time.Time:
