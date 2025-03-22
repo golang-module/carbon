@@ -60,7 +60,6 @@ carbon.SetWeekStartsAt(carbon.Sunday)
 carbon.SetLocale("jp")
 
 または
-
 carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.Japan,
@@ -620,11 +619,11 @@ carbon.MinCarbon().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ```go
 // エラーがありますか
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
+carbon.Parse("2020-08-05").IsNil() // false
 carbon.NewCarbon().HasError() // false
-carbon.Parse("").HasError() // true
+carbon.Parse("").HasError() // false
 carbon.Parse("0").HasError() // true
 carbon.Parse("xxx").HasError() // true
-carbon.Parse("2020-08-05").IsNil() // false
 
 // nil 時間かどうか
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
