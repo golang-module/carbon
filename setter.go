@@ -1,11 +1,8 @@
 package carbon
 
 import (
-	"sync"
 	"time"
 )
-
-var mu sync.RWMutex
 
 // SetLayout sets layout.
 // 设置布局模板
@@ -22,8 +19,6 @@ func (c *Carbon) SetLayout(layout string) *Carbon {
 func SetLayout(layout string) *Carbon {
 	c := NewCarbon().SetLayout(layout)
 	if !c.HasError() {
-		mu.Lock()
-		defer mu.Unlock()
 		DefaultLayout = layout
 	}
 	return c
@@ -45,8 +40,6 @@ func SetFormat(format string) *Carbon {
 	layout := format2layout(format)
 	c := NewCarbon().SetLayout(layout)
 	if !c.HasError() {
-		mu.Lock()
-		defer mu.Unlock()
 		DefaultLayout = layout
 	}
 	return c
@@ -62,8 +55,6 @@ func (c *Carbon) SetWeekStartsAt(day string) *Carbon {
 		return nil
 	}
 	if weekday, ok := weekdays[day]; ok {
-		mu.Lock()
-		defer mu.Unlock()
 		c.weekStartsAt = weekday
 	} else {
 		return nil
@@ -76,8 +67,6 @@ func (c *Carbon) SetWeekStartsAt(day string) *Carbon {
 func SetWeekStartsAt(day string) *Carbon {
 	c := NewCarbon().SetWeekStartsAt(day)
 	if !c.HasError() {
-		mu.Lock()
-		defer mu.Unlock()
 		DefaultWeekStartsAt = day
 	}
 	return c
@@ -99,8 +88,6 @@ func SetTimezone(name string) *Carbon {
 	c := NewCarbon().SetTimezone(name)
 	if !c.HasError() {
 		time.Local = c.loc
-		mu.Lock()
-		defer mu.Unlock()
 		DefaultTimezone = name
 	}
 	return c
@@ -124,8 +111,6 @@ func (c *Carbon) SetLocation(loc *time.Location) *Carbon {
 func SetLocation(loc *time.Location) *Carbon {
 	c := NewCarbon().SetLocation(loc)
 	if !c.HasError() {
-		mu.Lock()
-		defer mu.Unlock()
 		time.Local = loc
 		DefaultTimezone = loc.String()
 	}
@@ -170,8 +155,6 @@ func (c *Carbon) SetLocale(locale string) *Carbon {
 func SetLocale(locale string) *Carbon {
 	c := NewCarbon().SetLocale(locale)
 	if !c.HasError() {
-		mu.Lock()
-		defer mu.Unlock()
 		DefaultLocale = locale
 	}
 	return c
