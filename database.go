@@ -144,7 +144,7 @@ func (t LayoutType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
-	return t.Layout(t.getLayout(), t.Location())
+	return t.Layout(t.getLayout(), t.Timezone())
 }
 
 // GormDataType sets gorm data type for LayoutType generic struct.
@@ -221,7 +221,7 @@ func (t FormatType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
 	}
-	return t.Format(t.getFormat(), t.Location())
+	return t.Format(t.getFormat(), t.Timezone())
 }
 
 // GormDataType sets gorm data type for FormatType generic struct.
