@@ -1,5 +1,7 @@
 package carbon
 
+import "time"
+
 var (
 	// DefaultLayout default layout
 	// 默认布局模板
@@ -34,7 +36,11 @@ func SetDefault(d Default) {
 		DefaultLayout = d.Layout
 	}
 	if d.Timezone != "" {
-		DefaultTimezone = d.Timezone
+		loc, err := getLocationByTimezone(d.Timezone)
+		if err == nil {
+			time.Local = loc
+			DefaultTimezone = d.Timezone
+		}
 	}
 	if d.WeekStartsAt != "" {
 		DefaultWeekStartsAt = d.WeekStartsAt
