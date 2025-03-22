@@ -619,11 +619,11 @@ carbon.MinValue().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ```go
 // Whether has error
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
-carbon.Parse("2020-08-05").IsNil() // false
 carbon.NewCarbon().HasError() // false
 carbon.Parse("").HasError() // false
 carbon.Parse("0").HasError() // true
 carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
 
 // Whether is nil time
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
@@ -1033,17 +1033,17 @@ carbon.Parse("2020-08-05 13:14:15").TimestampMicro() // 1596604455000000
 // Get timestamp with nanosecond
 carbon.Parse("2020-08-05 13:14:15").TimestampNano() // 1596604455000000000
 
+// Get timezone location
+carbon.SetTimezone(carbon.PRC).Timezone() // PRC
+carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
+
 // Get timezone name
-carbon.SetTimezone(carbon.PRC).Timezone() // CST
-carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+carbon.SetTimezone(carbon.PRC).ZoneName() // CST
+carbon.SetTimezone(carbon.Tokyo).ZoneName() // JST
 
-// Get location name
-carbon.SetTimezone(carbon.PRC).Location() // PRC
-carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
-
-// Get offset seconds from the UTC timezone
-carbon.SetTimezone(carbon.PRC).Offset() // 28800
-carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+// Get timezone offset seconds from the UTC timezone
+carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
+carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
 // Get locale name
 carbon.Now().SetLocale("en").Locale() // en

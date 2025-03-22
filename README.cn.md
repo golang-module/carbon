@@ -623,11 +623,11 @@ carbon.MinValue().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ```go
 // 是否有错误
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
-carbon.Parse("2020-08-05").IsNil() // false
 carbon.NewCarbon().HasError() // false
 carbon.Parse("").HasError() // false
 carbon.Parse("0").HasError() // true
 carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
 
 // 是否是 nil 时间
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
@@ -1039,17 +1039,17 @@ carbon.Parse("2020-08-05 13:14:15").TimestampMicro() // 1596604455000000
 // 获取纳秒级时间戳
 carbon.Parse("2020-08-05 13:14:15").TimestampNano() // 1596604455000000000
 
-// 获取时区
-carbon.SetTimezone(carbon.PRC).Timezone() // CST
-carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+// 获取时区定位
+carbon.SetTimezone(carbon.PRC).Timezone() // PRC
+carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 
-// 获取位置
-carbon.SetTimezone(carbon.PRC).Location() // PRC
-carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+// 获取时区名称
+carbon.SetTimezone(carbon.PRC).ZoneName() // CST
+carbon.SetTimezone(carbon.Tokyo).ZoneName() // JST
 
 // 获取距离UTC时区的偏移量，单位秒
-carbon.SetTimezone(carbon.PRC).Offset() // 28800
-carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
+carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
 // 获取当前区域
 carbon.Now().Locale() // en

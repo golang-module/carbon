@@ -60,6 +60,7 @@ carbon.SetWeekStartsAt(carbon.Sunday)
 carbon.SetLocale("jp")
 
 または
+
 carbon.SetDefault(carbon.Default{
   Layout: carbon.DateTimeLayout,
   Timezone: carbon.Japan,
@@ -619,11 +620,11 @@ carbon.MinCarbon().ToString() // -9998-01-01 00:00:00 +0000 UTC
 ```go
 // エラーがありますか
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").HasError() // false
-carbon.Parse("2020-08-05").IsNil() // false
 carbon.NewCarbon().HasError() // false
 carbon.Parse("").HasError() // false
 carbon.Parse("0").HasError() // true
 carbon.Parse("xxx").HasError() // true
+carbon.Parse("2020-08-05").IsNil() // false
 
 // nil 時間かどうか
 carbon.Parse("0001-01-01 00:00:00 +0000 UTC").IsNil() // false
@@ -1035,17 +1036,17 @@ carbon.Parse("2020-08-05 13:14:15").TimestampMicro() // 1596604455000000
 // ナノ秒タイムスタンプを取得
 carbon.Parse("2020-08-05 13:14:15").TimestampNano() // 1596604455000000000
 
-// タイムゾーン名を取得
-carbon.SetTimezone(carbon.PRC).Timezone() // CST
-carbon.SetTimezone(carbon.Tokyo).Timezone() // JST
+// タイムゾーンロケーションの取得
+carbon.SetTimezone(carbon.PRC).Timezone() // PRC
+carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 
-// ロケーション名を取得
-carbon.SetTimezone(carbon.PRC).Location() // PRC
-carbon.SetTimezone(carbon.Tokyo).Location() // Asia/Tokyo
+// タイムゾーン名の取得
+carbon.SetTimezone(carbon.PRC).ZoneName() // CST
+carbon.SetTimezone(carbon.Tokyo).ZoneName() // JST
 
 // UTCタイムゾーンオフセットの秒を取得
-carbon.SetTimezone(carbon.PRC).Offset() // 28800
-carbon.SetTimezone(carbon.Tokyo).Offset() // 32400
+carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
+carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
 // ロケール名を取得
 carbon.Now().Locale() // en
