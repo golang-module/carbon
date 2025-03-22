@@ -8,20 +8,20 @@ import (
 // Parse parses a standard time string as a Carbon instance.
 // 将标准格式时间字符串解析成 Carbon 实例
 func Parse(value string, timezone ...string) *Carbon {
+	c := NewCarbon()
 	if len(value) == 0 {
 		return nil
 	}
-	c := NewCarbon()
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
 	switch value {
 	case "now":
-		return Now(timezone...)
+		return Now(c.Timezone())
 	case "yesterday":
-		return Yesterday(timezone...)
+		return Yesterday(c.Timezone())
 	case "tomorrow":
-		return Tomorrow(timezone...)
+		return Tomorrow(c.Timezone())
 	}
 	for _, layout := range layouts {
 		t, err := time.ParseInLocation(layout, value, c.loc)
@@ -38,44 +38,67 @@ func Parse(value string, timezone ...string) *Carbon {
 // ParseByFormat parses a time string as a Carbon instance by format.
 // 通过格式模板将时间字符串解析成 Carbon 实例
 func ParseByFormat(value, format string, timezone ...string) *Carbon {
+	c := NewCarbon()
 	if len(value) == 0 {
 		return nil
 	}
-	carbon := ParseByLayout(value, format2layout(format), timezone...)
-	if carbon.Error != nil {
-		carbon.Error = invalidFormatError(value, format)
+	if len(format) == 0 {
+		c.Error = emptyFormatError()
+		return c
 	}
-	return carbon
+	c = ParseByLayout(value, format2layout(format), timezone...)
+	if c.Error != nil {
+		c.Error = invalidFormatError(value, format)
+		return c
+	}
+	return c
 }
 
 // ParseByLayout parses a time string as a Carbon instance by layout.
 // 通过布局模板将时间字符串解析成 Carbon 实例
 func ParseByLayout(value, layout string, timezone ...string) *Carbon {
+	c := NewCarbon()
 	if len(value) == 0 {
 		return nil
 	}
-	c := NewCarbon()
+	if len(layout) == 0 {
+		c.Error = emptyLayoutError()
+		return c
+	}
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
-	if len(layout) == 0 {
-		layout = DefaultLayout
-	}
 	if layout == "timestamp" {
-		timestamp, _ := strconv.ParseInt(value, 10, 64)
-		return CreateFromTimestamp(timestamp, c.Timezone())
+		ts, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			c.Error = err
+			return c
+		}
+		return CreateFromTimestamp(ts, c.Timezone())
 	}
 	if layout == "timestampMilli" {
-		timestamp, _ := strconv.ParseInt(value, 10, 64)
-		return CreateFromTimestampMilli(timestamp, c.Timezone())
+		ts, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			c.Error = err
+			return c
+		}
+		return CreateFromTimestampMilli(ts, c.Timezone())
 	}
 	if layout == "timestampMicro" {
-		timestamp, _ := strconv.ParseInt(value, 10, 64)
-		return CreateFromTimestampMicro(timestamp, c.Timezone())
+		ts, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			c.Error = err
+			return c
+		}
+		return CreateFromTimestampMicro(ts, c.Timezone())
 	}
 	if layout == "timestampNano" {
-		timestamp, _ := strconv.ParseInt(value, 10, 64)
-		return CreateFromTimestampNano(timestamp, c.Timezone())
+		ts, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			c.Error = err
+			return c
+		}
+		return CreateFromTimestampNano(ts, c.Timezone())
 	}
 	tt, err := time.ParseInLocation(layout, value, c.loc)
 	if err != nil {
