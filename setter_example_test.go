@@ -41,11 +41,11 @@ func ExampleSetWeekStartsAt() {
 }
 
 func ExampleSetTimezone() {
+	fmt.Println(carbon.SetTimezone(carbon.UTC).ZoneName())
+	fmt.Println(carbon.SetTimezone(carbon.PRC).ZoneName())
+
 	fmt.Println(carbon.SetTimezone(carbon.UTC).Timezone())
 	fmt.Println(carbon.SetTimezone(carbon.PRC).Timezone())
-
-	fmt.Println(carbon.SetTimezone(carbon.UTC).Location())
-	fmt.Println(carbon.SetTimezone(carbon.PRC).Location())
 
 	defer carbon.SetTimezone(carbon.UTC)
 
@@ -62,8 +62,8 @@ func ExampleSetLocation() {
 	c := carbon.Parse("2020-08-05")
 
 	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Location())
 	fmt.Println(c.Timezone())
+	fmt.Println(c.ZoneName())
 
 	defer carbon.SetLocation(time.UTC)
 
@@ -79,8 +79,8 @@ func ExampleCarbon_SetLocation() {
 	loc, _ := time.LoadLocation(carbon.PRC)
 	c.SetLocation(loc)
 	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Location())
 	fmt.Println(c.Timezone())
+	fmt.Println(c.ZoneName())
 
 	defer carbon.SetLocation(time.UTC)
 
