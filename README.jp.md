@@ -851,15 +851,14 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 
 ```go
 // タイムゾーンを設定
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+carbon.Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Now().SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
 // リージョンを設定
 utc, _ := time.LoadLocation(carbon.UTC)
-carbon.SetLocation(utc).Now().ToDateTimeString() // 2022-06-28 09:25:38
+carbon.Now().SetLocation(utc).ToDateTimeString() // 2022-06-28 09:25:38
 tokyo, _ := time.LoadLocation(carbon.Tokyo)
-carbon.SetLocation(tokyo).Now().ToDateTimeString() // 2022-06-28 18:25:38
+carbon.Now().SetLocation(tokyo).ToDateTimeString() // 2022-06-28 18:25:38
 
 // ロケールを設定
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans()) // 1 month ago

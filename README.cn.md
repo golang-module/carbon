@@ -854,15 +854,14 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 
 ```go
 // 设置时区
-carbon.SetTimezone(carbon.PRC).Now().ToDateTimeString() // 2020-08-05 13:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().ToDateTimeString() // 2020-08-05 14:14:15
-carbon.SetTimezone(carbon.Tokyo).Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 12:14:15
+carbon.Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Now().SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
 // 设置地区
 utc, _ := time.LoadLocation(carbon.UTC)
-carbon.SetLocation(utc).Now().ToDateTimeString() // 2022-06-28 09:25:38
+carbon.Now().SetLocation(utc).ToDateTimeString() // 2022-06-28 09:25:38
 tokyo, _ := time.LoadLocation(carbon.Tokyo)
-carbon.SetLocation(tokyo).Now().ToDateTimeString() // 2022-06-28 18:25:38
+carbon.Now().SetLocation(tokyo).ToDateTimeString() // 2022-06-28 18:25:38
 
 // 设置区域
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month ago
@@ -1509,7 +1508,7 @@ c.Now().Season() // summer
 > 如果有多个错误发生，只返回第一个错误，前一个错误排除后才返回下一个错误
 
 ```go
-c := carbon.SetTimezone("xxx").Parse("2020-08-05")
+c := carbon.Parse("2020-08-05").SetTimezone("xxx")
 if c.Error != nil {
   // 错误处理
   log.Fatal(c.Error)
