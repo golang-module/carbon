@@ -10,6 +10,10 @@ func (c *Carbon) SetLayout(layout string) *Carbon {
 	if c.IsInvalid() {
 		return c
 	}
+	if layout == "" {
+		c.Error = emptyLayoutError()
+		return c
+	}
 	c.layout = layout
 	return c
 }
@@ -28,6 +32,10 @@ func SetLayout(layout string) *Carbon {
 // 设置格式模板
 func (c *Carbon) SetFormat(format string) *Carbon {
 	if c.IsInvalid() {
+		return c
+	}
+	if format == "" {
+		c.Error = emptyFormatError()
 		return c
 	}
 	c.layout = format2layout(format)
@@ -123,6 +131,10 @@ func SetLocation(loc *time.Location) *Carbon {
 // 设置语言区域
 func (c *Carbon) SetLocale(locale string) *Carbon {
 	if c.IsInvalid() {
+		return c
+	}
+	if locale == "" {
+		c.Error = emptyLocaleError()
 		return c
 	}
 	c.lang.SetLocale(locale)

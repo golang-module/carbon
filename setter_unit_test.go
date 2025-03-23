@@ -21,6 +21,11 @@ func TestCarbon_SetLayout(t *testing.T) {
 		assert.Empty(t, c.SetLayout(DateLayout).CurrentLayout())
 	})
 
+	t.Run("empty layout", func(t *testing.T) {
+		assert.True(t, Now().SetLayout("").HasError())
+		assert.Empty(t, Now().SetLayout("").CurrentLayout())
+	})
+
 	t.Run("invalid time", func(t *testing.T) {
 		assert.Empty(t, Parse("").SetLayout(DateLayout).CurrentLayout())
 		assert.Empty(t, Parse("0").SetLayout(DateLayout).CurrentLayout())
@@ -52,6 +57,11 @@ func TestCarbon_SetFormat(t *testing.T) {
 		c := NewCarbon()
 		c = nil
 		assert.Empty(t, c.SetFormat(DateFormat).CurrentLayout())
+	})
+
+	t.Run("empty format", func(t *testing.T) {
+		assert.True(t, Now().SetFormat("").HasError())
+		assert.Empty(t, Now().SetFormat("").CurrentLayout())
 	})
 
 	t.Run("invalid time", func(t *testing.T) {
@@ -138,8 +148,11 @@ func TestCarbon_SetLocale(t *testing.T) {
 	})
 
 	t.Run("invalid locale", func(t *testing.T) {
-		assert.Empty(t, Parse("").SetLocale("").ToString())
-		assert.Empty(t, Parse("xxx").SetLocale("xxx").ToString())
+		assert.True(t, Now().SetLocale("").HasError())
+		assert.True(t, Now().SetLocale("xxx").HasError())
+
+		assert.Empty(t, Now().SetLocale("").ToString())
+		assert.Empty(t, Now().SetLocale("xxx").ToString())
 	})
 
 	t.Run("invalid time", func(t *testing.T) {
@@ -194,6 +207,10 @@ func TestCarbon_SetTimezone(t *testing.T) {
 	})
 
 	t.Run("invalid timezone", func(t *testing.T) {
+		assert.True(t, Parse("2020-08-05").SetTimezone("").HasError())
+		assert.True(t, Parse("2020-08-05").SetTimezone("0").HasError())
+		assert.True(t, Parse("2020-08-05").SetTimezone("XXX").HasError())
+
 		assert.Empty(t, Parse("2020-08-05").SetTimezone("").ToString())
 		assert.Empty(t, Parse("2020-08-05").SetTimezone("0").ToString())
 		assert.Empty(t, Parse("2020-08-05").SetTimezone("XXX").ToString())
