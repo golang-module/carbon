@@ -84,7 +84,7 @@ func NewTimestampType[T timestampFactory](carbon *Carbon) TimestampType[T] {
 }
 
 // Scan implements driver.Scanner interface for LayoutType generic struct.
-// 为 LayoutType 泛型结构体实现 driver.Scanner 接口
+// 实现 driver.Scanner 接口
 func (t *LayoutType[T]) Scan(src interface{}) error {
 	switch v := src.(type) {
 	case []byte:
@@ -102,7 +102,7 @@ func (t *LayoutType[T]) Scan(src interface{}) error {
 }
 
 // Value implements driver.Valuer interface for LayoutType generic struct.
-// 为 LayoutType 泛型结构体实现 driver.Valuer 接口
+// 实现 driver.Valuer 接口
 func (t LayoutType[T]) Value() (driver.Value, error) {
 	if t.IsNil() || t.IsZero() {
 		return nil, nil
@@ -114,7 +114,7 @@ func (t LayoutType[T]) Value() (driver.Value, error) {
 }
 
 // MarshalJSON implements json.Marshal interface for LayoutType generic struct.
-// 为 LayoutType 泛型结构体实现 json.Marshaler 接口
+// 实现 json.Marshaler 接口
 func (t LayoutType[T]) MarshalJSON() ([]byte, error) {
 	emptyBytes := []byte(`""`)
 	if t.IsNil() || t.IsZero() {
@@ -126,8 +126,8 @@ func (t LayoutType[T]) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, t.Layout(t.getLayout(), t.Timezone()))), nil
 }
 
-// UnmarshalJSON implements the interface json.Unmarshal for LayoutType generic struct.
-// 为 LayoutType 泛型结构体实现 json.Unmarshaler 接口
+// UnmarshalJSON implements json.Unmarshal interface for LayoutType generic struct.
+// 实现 json.Unmarshaler 接口
 func (t *LayoutType[T]) UnmarshalJSON(b []byte) error {
 	value := string(bytes.Trim(b, `"`))
 	if value == "" || value == "null" || value == "0" {
@@ -139,7 +139,7 @@ func (t *LayoutType[T]) UnmarshalJSON(b []byte) error {
 }
 
 // String implements Stringer interface for LayoutType generic struct.
-// 为 LayoutType 泛型结构体实现 Stringer 接口
+// 实现 Stringer 接口
 func (t LayoutType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
@@ -148,7 +148,7 @@ func (t LayoutType[T]) String() string {
 }
 
 // GormDataType sets gorm data type for LayoutType generic struct.
-// 为 LayoutType 泛型结构体设置 gorm 数据类型
+// 设置 gorm 数据类型
 func (t LayoutType[T]) GormDataType() string {
 	return "carbonLayout"
 }
@@ -161,7 +161,7 @@ func (t LayoutType[T]) getLayout() string {
 }
 
 // Scan implements driver.Scanner interface for FormatType generic struct.
-// 为 FormatType 泛型结构体实现 driver.Scanner 接口
+// 实现 driver.Scanner 接口
 func (t *FormatType[T]) Scan(src interface{}) error {
 	switch v := src.(type) {
 	case []byte:
@@ -179,7 +179,7 @@ func (t *FormatType[T]) Scan(src interface{}) error {
 }
 
 // Value implements driver.Valuer interface for FormatType generic struct.
-// 为 FormatType 泛型结构体实现 driver.Valuer 接口
+// 实现 driver.Valuer 接口
 func (t FormatType[T]) Value() (driver.Value, error) {
 	if t.IsNil() || t.IsZero() {
 		return nil, nil
@@ -191,7 +191,7 @@ func (t FormatType[T]) Value() (driver.Value, error) {
 }
 
 // MarshalJSON implements json.Marshal interface for FormatType generic struct.
-// 为 FormatType 泛型结构体实现 json.Marshaler 接口
+// 实现 json.Marshaler 接口
 func (t FormatType[T]) MarshalJSON() ([]byte, error) {
 	emptyBytes := []byte(`""`)
 	if t.IsNil() || t.IsZero() {
@@ -204,7 +204,7 @@ func (t FormatType[T]) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON implements json.Unmarshal interface for FormatType generic struct.
-// 为 FormatType 泛型结构体实现 json.Unmarshaler 接口
+// 实现 json.Unmarshaler 接口
 func (t *FormatType[T]) UnmarshalJSON(b []byte) error {
 	value := string(bytes.Trim(b, `"`))
 	if value == "" || value == "null" || value == "0" {
@@ -216,7 +216,7 @@ func (t *FormatType[T]) UnmarshalJSON(b []byte) error {
 }
 
 // String implements Stringer interface for FormatType generic struct.
-// 为 FormatType 泛型结构体实现 Stringer 接口
+// 实现 Stringer 接口
 func (t FormatType[T]) String() string {
 	if t.IsZero() || t.IsInvalid() {
 		return ""
@@ -225,7 +225,7 @@ func (t FormatType[T]) String() string {
 }
 
 // GormDataType sets gorm data type for FormatType generic struct.
-// 为 FormatType 泛型结构体设置 gorm 数据类型
+// 设置 gorm 数据类型
 func (t FormatType[T]) GormDataType() string {
 	return "carbonFormat"
 }
@@ -238,7 +238,7 @@ func (t FormatType[T]) getFormat() string {
 }
 
 // Scan implements driver.Scanner interface for TimestampType generic struct.
-// 为 TimestampType 泛型结构体实现 driver.Scanner 接口
+// 实现 driver.Scanner 接口
 func (t *TimestampType[T]) Scan(src interface{}) (err error) {
 	ts := int64(0)
 	switch v := src.(type) {
@@ -274,7 +274,7 @@ func (t *TimestampType[T]) Scan(src interface{}) (err error) {
 }
 
 // Value implements driver.Valuer interface for TimestampType generic struct.
-// 为 TimestampType 泛型结构体实现 driver.Valuer 接口
+// 实现 driver.Valuer 接口
 func (t TimestampType[T]) Value() (driver.Value, error) {
 	if t.IsNil() || t.IsZero() {
 		return nil, nil
@@ -297,7 +297,7 @@ func (t TimestampType[T]) Value() (driver.Value, error) {
 }
 
 // MarshalJSON implements json.Marshal interface for TimestampType generic struct.
-// 为 TimestampType 泛型结构体实现 json.Marshaler 接口
+// 实现 json.Marshaler 接口
 func (t TimestampType[T]) MarshalJSON() ([]byte, error) {
 	ts := int64(0)
 	if t.IsNil() || t.IsZero() {
@@ -320,7 +320,7 @@ func (t TimestampType[T]) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON implements json.Unmarshal interface for TimestampType generic struct.
-// 为 TimestampType 泛型结构体实现 json.Unmarshaler 接口
+// 实现 json.Unmarshaler 接口
 func (t *TimestampType[T]) UnmarshalJSON(b []byte) error {
 	value := string(bytes.Trim(b, `"`))
 	if value == "" || value == "null" || value == "0" {
@@ -343,7 +343,7 @@ func (t *TimestampType[T]) UnmarshalJSON(b []byte) error {
 }
 
 // String implements Stringer interface for TimestampType generic struct.
-// 为 TimestampType 泛型结构体实现 Stringer 接口
+// 实现 Stringer 接口
 func (t TimestampType[T]) String() string {
 	return strconv.FormatInt(t.Int64(), 10)
 }
@@ -367,7 +367,7 @@ func (t TimestampType[T]) Int64() int64 {
 }
 
 // GormDataType sets gorm data type for TimestampType generic struct.
-// 为 TimestampType 泛型结构体设置 gorm 数据类型
+// 设置 gorm 数据类型
 func (t TimestampType[T]) GormDataType() string {
 	return "carbonTimestamp"
 }
@@ -385,13 +385,13 @@ type DateTime struct {
 }
 
 // SetFormat implements formatFactory interface for DateTime struct.
-// 为 DateTime 结构体实现 formatFactory 接口
+// 实现 formatFactory 接口
 func (t DateTime) SetFormat() string {
 	return DateTimeFormat
 }
 
 // SetLayout implements layoutFactory interface for DateTime struct.
-// 为 DateTime 结构体实现 layoutFactory 接口
+// 实现 layoutFactory 接口
 func (t DateTime) SetLayout() string {
 	return DateTimeLayout
 }
@@ -402,13 +402,13 @@ type Date struct {
 }
 
 // SetFormat implements formatFactory interface for Date struct.
-// 为 Date 结构体实现 formatFactory 接口
+// 实现 formatFactory 接口
 func (t Date) SetFormat() string {
 	return DateFormat
 }
 
 // SetLayout implements layoutFactory interface for Date struct.
-// 为 Date 结构体实现 layoutFactory 接口
+// 实现 layoutFactory 接口
 func (t Date) SetLayout() string {
 	return DateLayout
 }
@@ -419,13 +419,13 @@ type Time struct {
 }
 
 // SetFormat implements formatFactory interface for Time struct.
-// 为 Time 结构体实现 formatFactory 接口
+// 实现 formatFactory 接口
 func (t Time) SetFormat() string {
 	return TimeFormat
 }
 
 // SetLayout implements layoutFactory interface for Time struct.
-// 为 Time 结构体实现 layoutFactory 接口
+// 实现 layoutFactory 接口
 func (t Time) SetLayout() string {
 	return TimeLayout
 }
@@ -451,25 +451,25 @@ type TimestampNano struct {
 }
 
 // SetPrecision implements timestampFactory interface for Timestamp struct.
-// 为 Timestamp 结构体实现 timestampFactory 接口
+// 实现 timestampFactory 接口
 func (t Timestamp) SetPrecision() string {
 	return PrecisionSecond
 }
 
 // SetPrecision implements timestampFactory interface for TimestampMilli struct.
-// 为 TimestampMilli 结构体实现 timestampFactory 接口
+// 实现 timestampFactory 接口
 func (t TimestampMilli) SetPrecision() string {
 	return PrecisionMillisecond
 }
 
 // SetPrecision implements timestampFactory interface for TimestampMicro struct.
-// 为 TimestampMicro 结构体实现 timestampFactory 接口
+// 实现 timestampFactory 接口
 func (t TimestampMicro) SetPrecision() string {
 	return PrecisionMicrosecond
 }
 
 // SetPrecision implements timestampFactory interface for TimestampNano struct.
-// 为 TimestampNano 结构体实现 timestampFactory 接口
+// 实现 timestampFactory 接口
 func (t TimestampNano) SetPrecision() string {
 	return PrecisionNanosecond
 }
