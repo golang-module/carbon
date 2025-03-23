@@ -38,7 +38,7 @@ func (c *Carbon) ToString(timezone ...string) string {
 }
 
 // ToMonthString outputs a string in month layout like "January", i18n is supported.
-// 输出完整月份字符串，支持i18n
+// 输出完整月份字符串，支持 i18n
 func (c *Carbon) ToMonthString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
@@ -62,7 +62,7 @@ func (c *Carbon) ToMonthString(timezone ...string) string {
 }
 
 // ToShortMonthString outputs a string in short month layout like "Jan", i18n is supported.
-// 输出缩写月份字符串，支持i18n
+// 输出缩写月份字符串，支持 i18n
 func (c *Carbon) ToShortMonthString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
@@ -85,7 +85,7 @@ func (c *Carbon) ToShortMonthString(timezone ...string) string {
 }
 
 // ToWeekString outputs a string in week layout like "Sunday", i18n is supported.
-// 输出完整星期字符串，支持i18n
+// 输出完整星期字符串，支持 i18n
 func (c *Carbon) ToWeekString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""
@@ -108,7 +108,7 @@ func (c *Carbon) ToWeekString(timezone ...string) string {
 }
 
 // ToShortWeekString outputs a string in short week layout like "Sun", i18n is supported.
-// 输出缩写星期字符串，支持i18n
+// 输出缩写星期字符串，支持 i18n
 func (c *Carbon) ToShortWeekString(timezone ...string) string {
 	if c.IsInvalid() {
 		return ""

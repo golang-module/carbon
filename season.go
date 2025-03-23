@@ -22,7 +22,7 @@ var seasons = []struct {
 }
 
 // Season gets season name according to the meteorological division method like "Spring", i18n is supported.
-// 获取当前季节(以气象划分)，支持i18n
+// 获取当前季节(以气象划分)，支持 i18n
 func (c *Carbon) Season() string {
 	if c.IsInvalid() {
 		return ""

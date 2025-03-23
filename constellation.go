@@ -23,7 +23,7 @@ var constellations = []struct {
 }
 
 // Constellation gets constellation name like "Aries", i18n is supported.
-// 获取星座，支持i18n
+// 获取星座，支持 i18n
 func (c *Carbon) Constellation() string {
 	if c.IsInvalid() {
 		return ""

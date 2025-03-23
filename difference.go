@@ -162,7 +162,7 @@ func (c *Carbon) DiffAbsInSeconds(carbon ...*Carbon) int64 {
 }
 
 // DiffInString gets the difference in string, i18n is supported.
-// 相差字符串，支持i18n
+// 相差字符串，支持 i18n
 func (c *Carbon) DiffInString(carbon ...*Carbon) string {
 	start, end := c, Now(c.Timezone())
 	if len(carbon) > 0 {
@@ -176,7 +176,7 @@ func (c *Carbon) DiffInString(carbon ...*Carbon) string {
 }
 
 // DiffAbsInString gets the difference in string with absolute value, i18n is supported.
-// 相差字符串，支持i18n(绝对值)
+// 相差字符串，支持 i18n(绝对值)
 func (c *Carbon) DiffAbsInString(carbon ...*Carbon) string {
 	start, end := c, Now(c.Timezone())
 	if len(carbon) > 0 {
@@ -213,7 +213,7 @@ func (c *Carbon) DiffAbsInDuration(carbon ...*Carbon) time.Duration {
 }
 
 // DiffForHumans gets the difference in a human-readable format, i18n is supported.
-// 获取对人类友好的可读格式时间差，支持i18n
+// 获取对人类友好的可读格式时间差，支持 i18n
 func (c *Carbon) DiffForHumans(carbon ...*Carbon) string {
 	start, end := c, Now(c.Timezone())
 	if len(carbon) > 0 {
