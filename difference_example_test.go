@@ -301,6 +301,8 @@ func ExampleCarbon_DiffAbsInDuration() {
 }
 
 func ExampleCarbon_DiffForHumans() {
+	defer carbon.CleanTestNow()
+
 	carbon.SetTestNow(carbon.Parse("2020-08-05 13:14:15"))
 	now := carbon.Now()
 
@@ -313,8 +315,6 @@ func ExampleCarbon_DiffForHumans() {
 	fmt.Println(now.Copy().SubMonthsNoOverflow(1).DiffForHumans(now))
 	fmt.Println(now.Copy().AddDays(1).DiffForHumans(now))
 	fmt.Println(now.Copy().SubDays(1).DiffForHumans(now))
-
-	defer carbon.CleanTestNow()
 
 	// Output:
 	// just now

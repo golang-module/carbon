@@ -7,6 +7,8 @@ import (
 )
 
 func ExampleSetTestNow() {
+	defer carbon.CleanTestNow()
+
 	now := carbon.Parse("2020-08-05")
 	carbon.SetTestNow(now)
 
@@ -18,8 +20,6 @@ func ExampleSetTestNow() {
 	fmt.Println(carbon.Tomorrow().DiffForHumans())
 	fmt.Println(carbon.Parse("2020-10-05").DiffForHumans())
 	fmt.Println(now.DiffForHumans(carbon.Parse("2020-10-05")))
-
-	defer carbon.CleanTestNow()
 
 	// Output:
 	// 2020-08-05

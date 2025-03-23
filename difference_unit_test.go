@@ -447,6 +447,8 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 	})
 
 	t.Run("valid time", func(t *testing.T) {
+		defer CleanTestNow()
+
 		SetTestNow(Parse("2020-08-05 13:14:15"))
 		now := Now()
 		assert.Equal(t, "just now", Parse("2020-08-05 13:14:15").DiffForHumans(Parse("2020-08-05 13:14:15")))
@@ -458,8 +460,6 @@ func TestCarbon_DiffForHumans(t *testing.T) {
 		assert.Equal(t, "1 month before", now.Copy().SubMonthsNoOverflow(1).DiffForHumans(now))
 		assert.Equal(t, "1 day after", now.Copy().AddDays(1).DiffForHumans(now))
 		assert.Equal(t, "1 day before", now.Copy().SubDays(1).DiffForHumans(now))
-
-		defer CleanTestNow()
 	})
 }
 
