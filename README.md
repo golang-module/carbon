@@ -849,8 +849,8 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 
 ```go
 // Set timezone
-carbon.Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Now().SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
 // Set location
 utc, _ := time.LoadLocation(carbon.UTC)
