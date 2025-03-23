@@ -379,7 +379,7 @@ func (c *Carbon) TimestampNano() int64 {
 }
 
 // Timezone gets timezone location like "CST".
-// 获取时区定位
+// 获取时区位置
 func (c *Carbon) Timezone() string {
 	if c.IsInvalid() {
 		return ""
@@ -388,7 +388,7 @@ func (c *Carbon) Timezone() string {
 }
 
 // ZoneName gets timezone name like "CST".
-// 获取时区名
+// 获取时区名称
 func (c *Carbon) ZoneName() string {
 	if c.IsInvalid() {
 		return ""
@@ -398,7 +398,7 @@ func (c *Carbon) ZoneName() string {
 }
 
 // ZoneOffset gets timezone offset seconds from the UTC timezone like 28800.
-// 获取距离UTC时区的偏移量，单位秒
+// 获取时区偏移量，单位秒
 func (c *Carbon) ZoneOffset() int {
 	if c.IsInvalid() {
 		return 0

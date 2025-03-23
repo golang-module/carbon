@@ -1038,7 +1038,7 @@ carbon.Parse("2020-08-05 13:14:15").TimestampMicro() // 1596604455000000
 // 获取纳秒级时间戳
 carbon.Parse("2020-08-05 13:14:15").TimestampNano() // 1596604455000000000
 
-// 获取时区定位
+// 获取时区位置
 carbon.SetTimezone(carbon.PRC).Timezone() // PRC
 carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 
