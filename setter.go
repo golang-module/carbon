@@ -7,11 +7,10 @@ import (
 // SetLayout sets layout.
 // 设置布局模板
 func (c *Carbon) SetLayout(layout string) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if layout == "" {
 		c.Error = emptyLayoutError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	c.layout = layout
@@ -31,11 +30,10 @@ func SetLayout(layout string) *Carbon {
 // SetFormat sets format.
 // 设置格式模板
 func (c *Carbon) SetFormat(format string) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if format == "" {
 		c.Error = emptyFormatError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	c.layout = format2layout(format)
@@ -56,11 +54,10 @@ func SetFormat(format string) *Carbon {
 // SetWeekStartsAt sets start day of the week.
 // 设置周起始日期
 func (c *Carbon) SetWeekStartsAt(day string) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if day == "" {
 		c.Error = emptyWeekStartsDayError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	if weekday, ok := weekdays[day]; ok {
@@ -84,6 +81,9 @@ func SetWeekStartsAt(day string) *Carbon {
 // SetTimezone sets timezone.
 // 设置时区
 func (c *Carbon) SetTimezone(name string) *Carbon {
+	if name == "" {
+		c.Error = emptyTimezoneError()
+	}
 	if c.IsInvalid() {
 		return c
 	}
@@ -105,11 +105,10 @@ func SetTimezone(name string) *Carbon {
 // SetLocation sets location.
 // 设置位置
 func (c *Carbon) SetLocation(loc *time.Location) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if loc == nil {
 		c.Error = nilLocationError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	c.loc = loc
@@ -130,11 +129,10 @@ func SetLocation(loc *time.Location) *Carbon {
 // SetLocale sets locale.
 // 设置语言区域
 func (c *Carbon) SetLocale(locale string) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if locale == "" {
 		c.Error = emptyLocaleError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	c.lang.SetLocale(locale)
@@ -161,11 +159,10 @@ func SetLanguage(lang *Language) *Carbon {
 // SetLanguage sets language.
 // 设置语言对象
 func (c *Carbon) SetLanguage(lang *Language) *Carbon {
-	if c.IsInvalid() {
-		return c
-	}
 	if lang == nil {
 		c.Error = nilLanguageError()
+	}
+	if c.IsInvalid() {
 		return c
 	}
 	c.lang.dir = lang.dir

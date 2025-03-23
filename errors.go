@@ -23,7 +23,7 @@ var nilLanguageError = func() error {
 }
 
 // returns an empty timezone error.
-// 空时区错误
+// 空的时区错误
 var emptyTimezoneError = func() error {
 	return fmt.Errorf("timezone cannot be empty")
 }
