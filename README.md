@@ -849,14 +849,17 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 
 ```go
 // Set timezone
-carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
-carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.URC).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 21:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 22:14:15
 
 // Set location
 utc, _ := time.LoadLocation(carbon.UTC)
-carbon.Now().SetLocation(utc).ToDateTimeString() // 2022-06-28 09:25:38
+carbon.Parse("2020-08-05 13:14:15").SetLocation(utc).ToDateTimeString() // 2020-08-05 13:14:15
+prc, _ := time.LoadLocation(carbon.PRC)
+carbon.Parse("2020-08-05 13:14:15").SetLocation(prc).ToDateTimeString() // 2020-08-05 21:14:15
 tokyo, _ := time.LoadLocation(carbon.Tokyo)
-carbon.Now().SetLocation(tokyo).ToDateTimeString() // 2022-06-28 18:25:38
+carbon.Parse("2020-08-05 13:14:15").SetLocation(tokyo).ToDateTimeString() // 2020-08-05 22:14:15
 
 // Set locale
 carbon.Parse("2020-07-05 13:14:15").SetLocale("en").DiffForHumans() // 1 month before
