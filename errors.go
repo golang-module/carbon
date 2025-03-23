@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+// returns a parse error.
+// 解析错误
+var parseValueError = func(value string) error {
+	return fmt.Errorf("cannot parse %q as carbon, please make sure the value is valid", value)
+}
+
 // returns an empty timezone error.
 // 空时区错误
 var emptyTimezoneError = func() error {
@@ -32,12 +38,6 @@ var emptyDurationError = func() error {
 // 无效的时长错误
 var invalidDurationError = func(duration string) error {
 	return fmt.Errorf("invalid duration %q, please make sure the duration is valid", duration)
-}
-
-// returns an invalid value error.
-// 无效的时间字符串错误
-var invalidValueError = func(value string) error {
-	return fmt.Errorf("cannot parse string %q as carbon, please make sure the value is valid", value)
 }
 
 // returns an empty layout error.
