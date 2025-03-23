@@ -4,9 +4,9 @@ import (
 	"fmt"
 )
 
-// returns a parse error.
-// 解析错误
-var parseError = func(value string) error {
+// returns a failed parse error.
+// 解析失败错误
+var failedParseError = func(value string) error {
 	return fmt.Errorf("cannot parse %q as carbon, please make sure the value is valid", value)
 }
 
