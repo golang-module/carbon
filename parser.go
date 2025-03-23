@@ -31,7 +31,7 @@ func Parse(value string, timezone ...string) *Carbon {
 			return c
 		}
 	}
-	c.Error = parseValueError(value)
+	c.Error = parseError(value)
 	return c
 }
 

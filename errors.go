@@ -6,7 +6,7 @@ import (
 
 // returns a parse error.
 // 解析错误
-var parseValueError = func(value string) error {
+var parseError = func(value string) error {
 	return fmt.Errorf("cannot parse %q as carbon, please make sure the value is valid", value)
 }
 
