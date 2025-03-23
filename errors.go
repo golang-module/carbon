@@ -10,6 +10,18 @@ var failedParseError = func(value string) error {
 	return fmt.Errorf("cannot parse %q as carbon, please make sure the value is valid", value)
 }
 
+// returns an nil location error.
+// 无效的位置错误
+var nilLocationError = func() error {
+	return fmt.Errorf("location cannot be nil")
+}
+
+// returns an nil language error.
+// 无效的语言错误
+var nilLanguageError = func() error {
+	return fmt.Errorf("language cannot be nil")
+}
+
 // returns an empty timezone error.
 // 空时区错误
 var emptyTimezoneError = func() error {
@@ -20,12 +32,6 @@ var emptyTimezoneError = func() error {
 // 无效的时区错误
 var invalidTimezoneError = func(timezone string) error {
 	return fmt.Errorf("invalid timezone %q, please see the file %q for all valid timezones", timezone, "$GOROOT/lib/time/zoneinfo.zip")
-}
-
-// returns an invalid location error.
-// 无效的地区错误
-var invalidLocationError = func() error {
-	return fmt.Errorf("invalid location, please make sure the location is valid")
 }
 
 // returns an empty duration error.

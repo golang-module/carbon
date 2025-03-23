@@ -101,7 +101,8 @@ func (c *Carbon) SetLocation(loc *time.Location) *Carbon {
 		return c
 	}
 	if loc == nil {
-		c.Error = invalidLocationError()
+		c.Error = nilLocationError()
+		return c
 	}
 	c.loc = loc
 	return c
@@ -131,7 +132,8 @@ func (c *Carbon) SetLanguage(lang *Language) *Carbon {
 		return c
 	}
 	if lang == nil {
-		return nil
+		c.Error = nilLanguageError()
+		return c
 	}
 	c.lang.dir = lang.dir
 	c.lang.locale = lang.locale
