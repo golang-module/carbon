@@ -857,7 +857,7 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 carbon.Now().SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Now().SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 14:14:15
 
-// 设置地区
+// 设置位置
 utc, _ := time.LoadLocation(carbon.UTC)
 carbon.Now().SetLocation(utc).ToDateTimeString() // 2022-06-28 09:25:38
 tokyo, _ := time.LoadLocation(carbon.Tokyo)
@@ -1046,7 +1046,7 @@ carbon.SetTimezone(carbon.Tokyo).Timezone() // Asia/Tokyo
 carbon.SetTimezone(carbon.PRC).ZoneName() // CST
 carbon.SetTimezone(carbon.Tokyo).ZoneName() // JST
 
-// 获取距离UTC时区的偏移量，单位秒
+// 获取时区偏移量，单位秒
 carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
 carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
