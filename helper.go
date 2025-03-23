@@ -105,8 +105,7 @@ func format2layout(format string) string {
 // 通过时区获取 Location 实例
 func getLocationByTimezone(timezone string) (*time.Location, error) {
 	if timezone == "" {
-		err := emptyTimezoneError()
-		return nil, err
+		return nil, emptyTimezoneError()
 	}
 	loc, err := time.LoadLocation(timezone)
 	if err != nil {
@@ -118,6 +117,9 @@ func getLocationByTimezone(timezone string) (*time.Location, error) {
 // parses as a Duration instance by a duration string.
 // 通过时长解析
 func parseByDuration(duration string) (time.Duration, error) {
+	if duration == "" {
+		return 0, emptyDurationError()
+	}
 	td, err := time.ParseDuration(duration)
 	if err != nil {
 		err = invalidDurationError(duration)
