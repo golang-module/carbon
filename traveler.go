@@ -11,14 +11,13 @@ func Now(timezone ...string) *Carbon {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
+	if c.HasError() {
+		return c
+	}
 	if IsTestNow() {
 		return testNow.frozenNow
 	}
-	if c.loc != nil {
-		c.time = time.Now().In(c.loc)
-	} else {
-		c.time = time.Now()
-	}
+	c.time = time.Now().In(c.loc)
 	return c
 }
 
