@@ -91,6 +91,10 @@ func TestCarbon_SetWeekStartsAt(t *testing.T) {
 	})
 
 	t.Run("invalid day", func(t *testing.T) {
+		assert.True(t, Parse("2020-08-05").SetWeekStartsAt("").HasError())
+		assert.True(t, Parse("2020-08-05").SetWeekStartsAt("0").HasError())
+		assert.True(t, Parse("2020-08-05").SetWeekStartsAt("xxx").HasError())
+
 		assert.Empty(t, Parse("2020-08-05").SetWeekStartsAt("").ToString())
 		assert.Empty(t, Parse("2020-08-05").SetWeekStartsAt("0").ToString())
 		assert.Empty(t, Parse("2020-08-05").SetWeekStartsAt("xxx").ToString())

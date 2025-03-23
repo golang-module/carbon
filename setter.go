@@ -52,12 +52,13 @@ func (c *Carbon) SetWeekStartsAt(day string) *Carbon {
 		return c
 	}
 	if day == "" {
-		return nil
+		c.Error = emptyWeekStartsDayError()
+		return c
 	}
 	if weekday, ok := weekdays[day]; ok {
 		c.weekStartsAt = weekday
 	} else {
-		return nil
+		c.Error = invalidWeekStartsDayError(day)
 	}
 	return c
 }
