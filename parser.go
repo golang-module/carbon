@@ -9,7 +9,7 @@ import (
 // 将标准格式时间字符串解析成 Carbon 实例
 func Parse(value string, timezone ...string) *Carbon {
 	c := NewCarbon()
-	if len(value) == 0 {
+	if value == "" {
 		return nil
 	}
 	if len(timezone) > 0 {
@@ -41,10 +41,10 @@ func Parse(value string, timezone ...string) *Carbon {
 // 通过格式模板将时间字符串解析成 Carbon 实例
 func ParseByFormat(value, format string, timezone ...string) *Carbon {
 	c := NewCarbon()
-	if len(value) == 0 {
+	if value == "" {
 		return nil
 	}
-	if len(format) == 0 {
+	if format == "" {
 		c.Error = emptyFormatError()
 		return c
 	}
@@ -59,10 +59,10 @@ func ParseByFormat(value, format string, timezone ...string) *Carbon {
 // 通过布局模板将时间字符串解析成 Carbon 实例
 func ParseByLayout(value, layout string, timezone ...string) *Carbon {
 	c := NewCarbon()
-	if len(value) == 0 {
+	if value == "" {
 		return nil
 	}
-	if len(layout) == 0 {
+	if layout == "" {
 		c.Error = emptyLayoutError()
 		return c
 	}
