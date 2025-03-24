@@ -63,7 +63,7 @@ func (c *Carbon) SetWeekStartsAt(day string) *Carbon {
 	if weekday, ok := weekdays[day]; ok {
 		c.weekStartsAt = weekday
 	} else {
-		c.Error = invalidWeekStartsDayError(day)
+		c.Error = invalidWeekStartsAtError(day)
 	}
 	return c
 }

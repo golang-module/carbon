@@ -10,6 +10,12 @@ var failedParseError = func(value string) error {
 	return fmt.Errorf("cannot parse %q as carbon, please make sure the value is valid", value)
 }
 
+// returns a invalid timestamp error.
+// 无效的时间戳错误
+var invalidTimestampError = func(value string) error {
+	return fmt.Errorf("invalid timestamp %s, please make sure the timestamp is valid", value)
+}
+
 // returns an nil location error.
 // 无效的位置错误
 var nilLocationError = func() error {
@@ -76,8 +82,8 @@ var emptyWeekStartsDayError = func() error {
 	return fmt.Errorf("week start day cannot be empty")
 }
 
-// returns an invalid week starts day error.
+// returns an invalid week starts at day error.
 // 无效的周起始日期错误
-var invalidWeekStartsDayError = func(day string) error {
-	return fmt.Errorf("invalid week start day %s, please make sure the day is valid", day)
+var invalidWeekStartsAtError = func(day string) error {
+	return fmt.Errorf("invalid week starts at day %s, please make sure the day is valid", day)
 }
