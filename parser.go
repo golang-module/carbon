@@ -75,7 +75,7 @@ func ParseByLayout(value, layout string, timezone ...string) *Carbon {
 	if layout == "timestamp" {
 		ts, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
-			c.Error = err
+			c.Error = invalidTimestampError(value)
 			return c
 		}
 		return CreateFromTimestamp(ts, c.Timezone())
