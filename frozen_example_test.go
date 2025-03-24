@@ -33,8 +33,7 @@ func ExampleSetTestNow() {
 }
 
 func ExampleCleanTestNow() {
-	now := carbon.Parse("2020-08-05")
-	carbon.SetTestNow(now)
+	carbon.SetTestNow(carbon.Parse("2020-08-05"))
 
 	fmt.Println(carbon.IsTestNow())
 

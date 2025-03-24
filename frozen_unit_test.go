@@ -9,6 +9,7 @@ import (
 
 func TestSetTestNow(t *testing.T) {
 	now := Parse("2020-08-05")
+
 	SetTestNow(now)
 	assert.Equal(t, "2020-08-05", Now().ToDateString())
 	assert.Equal(t, "2020-08-04", Yesterday().ToDateString())
