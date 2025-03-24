@@ -73,6 +73,47 @@ func ExampleSetLocation() {
 	// CST
 }
 
+func ExampleCarbon_SetLayout() {
+	fmt.Println(carbon.Now().SetLayout(carbon.DateTimeLayout).CurrentLayout())
+	fmt.Println(carbon.Now().SetLayout(carbon.TimeLayout).CurrentLayout())
+
+	// Output:
+	// 2006-01-02 15:04:05
+	// 15:04:05
+}
+
+func ExampleCarbon_SetFormat() {
+	fmt.Println(carbon.Now().SetFormat(carbon.DateTimeFormat).CurrentLayout())
+	fmt.Println(carbon.Now().SetFormat(carbon.TimeFormat).CurrentLayout())
+
+	// Output:
+	// 2006-01-02 15:04:05
+	// 15:04:05
+}
+
+func ExampleCarbon_SetWeekStartsAt() {
+	fmt.Println(carbon.Now().SetWeekStartsAt(carbon.Sunday).WeekStartsAt())
+	fmt.Println(carbon.Now().SetWeekStartsAt(carbon.Monday).WeekStartsAt())
+
+	// Output:
+	// Sunday
+	// Monday
+}
+
+func ExampleCarbon_SetTimezone() {
+	fmt.Println(carbon.Now().SetTimezone(carbon.UTC).ZoneName())
+	fmt.Println(carbon.Now().SetTimezone(carbon.PRC).ZoneName())
+
+	fmt.Println(carbon.Now().SetTimezone(carbon.UTC).Timezone())
+	fmt.Println(carbon.Now().SetTimezone(carbon.PRC).Timezone())
+
+	// Output:
+	// UTC
+	// CST
+	// UTC
+	// PRC
+}
+
 func ExampleCarbon_SetLocation() {
 	defer carbon.SetLocation(time.UTC)
 
