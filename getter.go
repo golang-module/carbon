@@ -378,7 +378,7 @@ func (c *Carbon) TimestampNano() int64 {
 	return c.StdTime().UnixNano()
 }
 
-// Timezone gets timezone location like "CST".
+// Timezone gets timezone location like "Asia/Shanghai".
 // 获取时区位置
 func (c *Carbon) Timezone() string {
 	if c.IsInvalid() {
