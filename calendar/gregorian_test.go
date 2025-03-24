@@ -9,7 +9,7 @@ import (
 
 func TestGregorian_Year(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -36,7 +36,7 @@ func TestGregorian_Year(t *testing.T) {
 
 func TestGregorian_Month(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -63,7 +63,7 @@ func TestGregorian_Month(t *testing.T) {
 
 func TestGregorian_Week(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -90,7 +90,7 @@ func TestGregorian_Week(t *testing.T) {
 
 func TestGregorian_Day(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -117,7 +117,7 @@ func TestGregorian_Day(t *testing.T) {
 
 func TestGregorian_Hour(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -144,7 +144,7 @@ func TestGregorian_Hour(t *testing.T) {
 
 func TestGregorian_Minute(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -171,7 +171,7 @@ func TestGregorian_Minute(t *testing.T) {
 
 func TestGregorian_Second(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -198,7 +198,7 @@ func TestGregorian_Second(t *testing.T) {
 
 func TestGregorian_String(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -225,7 +225,7 @@ func TestGregorian_String(t *testing.T) {
 
 func TestGregorian_Location(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -326,7 +326,7 @@ func TestGregorian_Clock(t *testing.T) {
 
 func TestGregorian_IsZero(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -353,7 +353,7 @@ func TestGregorian_IsZero(t *testing.T) {
 
 func TestGregorian_IsValid(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -395,7 +395,7 @@ func TestGregorian_IsValid(t *testing.T) {
 
 func TestGregorian_IsLeapYear(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
@@ -427,7 +427,7 @@ func TestGregorian_IsLeapYear(t *testing.T) {
 
 func TestGregorian_Year_Error(t *testing.T) {
 	type args struct {
-		g Gregorian
+		g *Gregorian
 	}
 	tests := []struct {
 		name string
