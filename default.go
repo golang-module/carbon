@@ -50,9 +50,9 @@ func SetDefault(d Default) {
 	}
 }
 
-// ReSetDefault resets default.
+// ResetDefault resets default.
 // 重置全局默认值
-func ReSetDefault() {
+func ResetDefault() {
 	DefaultLayout = DateTimeLayout
 	DefaultTimezone = UTC
 	DefaultWeekStartsAt = Sunday

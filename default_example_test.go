@@ -7,7 +7,7 @@ import (
 )
 
 func ExampleSetDefault() {
-	defer carbon.ReSetDefault()
+	defer carbon.ResetDefault()
 
 	carbon.SetDefault(carbon.Default{
 		Layout:       carbon.DateTimeLayout,
@@ -16,14 +16,14 @@ func ExampleSetDefault() {
 		WeekStartsAt: carbon.Sunday,
 	})
 
-	fmt.Println(carbon.DefaultLayout)
-	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(carbon.DefaultWeekStartsAt)
-	fmt.Println(carbon.DefaultLocale)
+	fmt.Println("default layout:", carbon.DefaultLayout)
+	fmt.Println("default timezone:", carbon.DefaultTimezone)
+	fmt.Println("default week starts at:", carbon.DefaultWeekStartsAt)
+	fmt.Println("default locale:", carbon.DefaultLocale)
 
 	// Output:
-	// 2006-01-02 15:04:05
-	// PRC
-	// Sunday
-	// zh-CN
+	// default layout: 2006-01-02 15:04:05
+	// default timezone: PRC
+	// default week starts at: Sunday
+	// default locale: zh-CN
 }

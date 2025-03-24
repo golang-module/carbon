@@ -9,7 +9,7 @@ import (
 )
 
 func TestSetDefault(t *testing.T) {
-	defer carbon.ReSetDefault()
+	defer carbon.ResetDefault()
 
 	carbon.SetDefault(carbon.Default{
 		Layout:       carbon.DateTimeLayout,
