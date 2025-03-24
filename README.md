@@ -1508,11 +1508,9 @@ c.Now().Season() // summer
 
 ##### Error
 
-> If more than one error occurs, only the first error is returned
-
 ```go
 c := carbon.SetTimezone("xxx").Parse("2020-08-05")
-if c.Error != nil {
+if c.HasError() {
   // Error handle...
   log.Fatal(c.Error)
 }
