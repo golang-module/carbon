@@ -54,7 +54,11 @@ func (c *Carbon) AddDuration(duration string) *Carbon {
 		return c
 	}
 	td, err := parseByDuration(duration)
-	c.time, c.Error = c.StdTime().Add(td), err
+	if err != nil {
+		c.Error = err
+		return c
+	}
+	c.time = c.StdTime().Add(td)
 	return c
 }
 
