@@ -34,14 +34,10 @@ func (c *Carbon) IsZero() bool {
 // IsValid reports whether is valid time.
 // 是否是有效时间
 func (c *Carbon) IsValid() bool {
-	if c.IsNil() || c.HasError() {
-		return false
+	if !c.IsNil() && !c.HasError() {
+		return true
 	}
-
-	currentTime := c.StdTime()
-	minTime, maxTime := MinValue().StdTime(), MaxValue().StdTime()
-
-	return (currentTime.Equal(minTime) || currentTime.After(minTime)) && (currentTime.Equal(maxTime) || currentTime.Before(maxTime))
+	return false
 }
 
 // IsInvalid reports whether is invalid time.
