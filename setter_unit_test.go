@@ -194,9 +194,11 @@ func TestCarbon_SetTimezone(t *testing.T) {
 
 	t.Run("zero time", func(t *testing.T) {
 		c := NewCarbon().SetTimezone(UTC)
+		assert.Equal(t, UTC, c.Timezone())
 		assert.Equal(t, "0001-01-01 00:00:00 +0000 UTC", c.ToString())
 
 		c.SetTimezone(PRC)
+		assert.Equal(t, PRC, c.Timezone())
 		assert.Equal(t, "0001-01-01 08:05:43 +0805 LMT", c.ToString())
 	})
 

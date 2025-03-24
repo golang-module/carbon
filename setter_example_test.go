@@ -10,23 +10,23 @@ import (
 func ExampleSetLayout() {
 	defer carbon.SetLayout(carbon.DateTimeLayout)
 
-	fmt.Println(carbon.SetLayout(carbon.DateTimeLayout).CurrentLayout())
-	fmt.Println(carbon.SetLayout(carbon.TimeLayout).CurrentLayout())
+	fmt.Println("current layout:", carbon.SetLayout(carbon.DateTimeLayout).CurrentLayout())
+	fmt.Println("current layout:", carbon.SetLayout(carbon.TimeLayout).CurrentLayout())
 
 	// Output:
-	// 2006-01-02 15:04:05
-	// 15:04:05
+	// current layout: 2006-01-02 15:04:05
+	// current layout: 15:04:05
 }
 
 func ExampleSetFormat() {
 	defer carbon.SetFormat(carbon.DateTimeFormat)
 
-	fmt.Println(carbon.SetFormat(carbon.DateTimeFormat).CurrentLayout())
-	fmt.Println(carbon.SetFormat(carbon.TimeFormat).CurrentLayout())
+	fmt.Println("current layout:", carbon.SetFormat(carbon.DateTimeFormat).CurrentLayout())
+	fmt.Println("current layout:", carbon.SetFormat(carbon.TimeFormat).CurrentLayout())
 
 	// Output:
-	// 2006-01-02 15:04:05
-	// 15:04:05
+	// current layout: 2006-01-02 15:04:05
+	// current layout: 15:04:05
 }
 
 func ExampleSetWeekStartsAt() {
@@ -81,30 +81,30 @@ func ExampleSetLocation() {
 }
 
 func ExampleCarbon_SetLayout() {
-	fmt.Println(carbon.Now().SetLayout(carbon.DateTimeLayout).CurrentLayout())
-	fmt.Println(carbon.Now().SetLayout(carbon.TimeLayout).CurrentLayout())
+	fmt.Println("current layout:", carbon.Now().SetLayout(carbon.DateTimeLayout).CurrentLayout())
+	fmt.Println("current layout:", carbon.Now().SetLayout(carbon.TimeLayout).CurrentLayout())
 
 	// Output:
-	// 2006-01-02 15:04:05
-	// 15:04:05
+	// current layout: 2006-01-02 15:04:05
+	// current layout: 15:04:05
 }
 
 func ExampleCarbon_SetFormat() {
-	fmt.Println(carbon.Now().SetFormat(carbon.DateTimeFormat).CurrentLayout())
-	fmt.Println(carbon.Now().SetFormat(carbon.TimeFormat).CurrentLayout())
+	fmt.Println("current layout:", carbon.Now().SetFormat(carbon.DateTimeFormat).CurrentLayout())
+	fmt.Println("current layout:", carbon.Now().SetFormat(carbon.TimeFormat).CurrentLayout())
 
 	// Output:
-	// 2006-01-02 15:04:05
-	// 15:04:05
+	// current layout: 2006-01-02 15:04:05
+	// current layout: 15:04:05
 }
 
 func ExampleCarbon_SetWeekStartsAt() {
-	fmt.Println(carbon.Now().SetWeekStartsAt(carbon.Sunday).WeekStartsAt())
-	fmt.Println(carbon.Now().SetWeekStartsAt(carbon.Monday).WeekStartsAt())
+	fmt.Println("week starts at:", carbon.Now().SetWeekStartsAt(carbon.Sunday).WeekStartsAt())
+	fmt.Println("week starts at:", carbon.Now().SetWeekStartsAt(carbon.Monday).WeekStartsAt())
 
 	// Output:
-	// Sunday
-	// Monday
+	// week starts at: Sunday
+	// week starts at: Monday
 }
 
 func ExampleCarbon_SetTimezone() {
@@ -133,14 +133,16 @@ func ExampleCarbon_SetLocation() {
 
 	loc, _ := time.LoadLocation(carbon.PRC)
 	c.SetLocation(loc)
-	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Timezone())
-	fmt.Println(c.ZoneName())
+	fmt.Println("default location:", carbon.DefaultTimezone)
+	fmt.Println("zone location:", c.Timezone())
+	fmt.Println("zone name:", c.ZoneName())
+	fmt.Println("zone offset:", c.ZoneOffset())
 
 	// Output:
-	// UTC
-	// PRC
-	// CST
+	// default location: UTC
+	// zone location: PRC
+	// zone name: CST
+	// zone offset: 28800
 }
 
 func ExampleSetLocale() {
