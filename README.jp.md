@@ -851,7 +851,7 @@ carbon.Parse("2020-08-05 13:14:15").BetweenIncludedBoth(carbon.Parse("2020-08-04
 
 ```go
 // タイムゾーンを設定
-carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.URC).ToDateTimeString() // 2020-08-05 13:14:15
+carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.UTC).ToDateTimeString() // 2020-08-05 13:14:15
 carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.PRC).ToDateTimeString() // 2020-08-05 21:14:15
 carbon.Parse("2020-08-05 13:14:15").SetTimezone(carbon.Tokyo).ToDateTimeString() // 2020-08-05 22:14:15
 
