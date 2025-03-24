@@ -43,17 +43,22 @@ func ExampleSetWeekStartsAt() {
 func ExampleSetTimezone() {
 	defer carbon.SetTimezone(carbon.UTC)
 
-	fmt.Println(carbon.SetTimezone(carbon.UTC).ZoneName())
-	fmt.Println(carbon.SetTimezone(carbon.PRC).ZoneName())
+	fmt.Println("zone location:", carbon.SetTimezone(carbon.UTC).Timezone())
+	fmt.Println("zone location:", carbon.SetTimezone(carbon.PRC).Timezone())
 
-	fmt.Println(carbon.SetTimezone(carbon.UTC).Timezone())
-	fmt.Println(carbon.SetTimezone(carbon.PRC).Timezone())
+	fmt.Println("zone name:", carbon.SetTimezone(carbon.UTC).ZoneName())
+	fmt.Println("zone name:", carbon.SetTimezone(carbon.PRC).ZoneName())
+
+	fmt.Println("zone offset:", carbon.SetTimezone(carbon.UTC).ZoneOffset())
+	fmt.Println("zone offset:", carbon.SetTimezone(carbon.PRC).ZoneOffset())
 
 	// Output:
-	// UTC
-	// LMT
-	// UTC
-	// PRC
+	// zone location: UTC
+	// zone location: PRC
+	// zone name: UTC
+	// zone name: CST
+	// zone offset: 0
+	// zone offset: 28800
 }
 
 func ExampleSetLocation() {
@@ -63,14 +68,16 @@ func ExampleSetLocation() {
 	carbon.SetLocation(loc)
 	c := carbon.Parse("2020-08-05")
 
-	fmt.Println(carbon.DefaultTimezone)
-	fmt.Println(c.Timezone())
-	fmt.Println(c.ZoneName())
+	fmt.Println("default location:", carbon.DefaultTimezone)
+	fmt.Println("zone location:", c.Timezone())
+	fmt.Println("zone name:", c.ZoneName())
+	fmt.Println("zone offset:", c.ZoneOffset())
 
 	// Output:
-	// PRC
-	// PRC
-	// CST
+	// default location: PRC
+	// zone location: PRC
+	// zone name: CST
+	// zone offset: 28800
 }
 
 func ExampleCarbon_SetLayout() {
@@ -101,17 +108,22 @@ func ExampleCarbon_SetWeekStartsAt() {
 }
 
 func ExampleCarbon_SetTimezone() {
-	fmt.Println(carbon.Now().SetTimezone(carbon.UTC).ZoneName())
-	fmt.Println(carbon.Now().SetTimezone(carbon.PRC).ZoneName())
+	fmt.Println("zone location:", carbon.Now().SetTimezone(carbon.UTC).Timezone())
+	fmt.Println("zone location:", carbon.Now().SetTimezone(carbon.PRC).Timezone())
 
-	fmt.Println(carbon.Now().SetTimezone(carbon.UTC).Timezone())
-	fmt.Println(carbon.Now().SetTimezone(carbon.PRC).Timezone())
+	fmt.Println("zone name:", carbon.Now().SetTimezone(carbon.UTC).ZoneName())
+	fmt.Println("zone name:", carbon.Now().SetTimezone(carbon.PRC).ZoneName())
+
+	fmt.Println("zone offset:", carbon.Now().SetTimezone(carbon.UTC).ZoneOffset())
+	fmt.Println("zone offset:", carbon.Now().SetTimezone(carbon.PRC).ZoneOffset())
 
 	// Output:
-	// UTC
-	// CST
-	// UTC
-	// PRC
+	// zone location: UTC
+	// zone location: PRC
+	// zone name: UTC
+	// zone name: CST
+	// zone offset: 0
+	// zone offset: 28800
 }
 
 func ExampleCarbon_SetLocation() {
