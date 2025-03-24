@@ -1054,16 +1054,16 @@ carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
 carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
 // 获取当前区域
-carbon.Now().Locale() // en
-carbon.Now().SetLocale("zh-CN").Locale() // zh-CN
+carbon.Now().Locale() // zh-CN
+carbon.Now().SetLocale("en").Locale() // en
 
 // 获取当前星座
-carbon.Now().Constellation() // Leo
+carbon.Now().Constellation() // 狮子座
 carbon.Now().SetLocale("en").Constellation() // Leo
 carbon.Now().SetLocale("zh-CN").Constellation() // 狮子座
 
 // 获取当前季节
-carbon.Now().Season() // Summer
+carbon.Now().Season() // 夏季
 carbon.Now().SetLocale("en").Season() // Summer
 carbon.Now().SetLocale("zh-CN").Season() // 夏季
 
@@ -1188,7 +1188,7 @@ carbon.Parse("2020-08-05 13:14:15").ToRfc1123zString() // Wed, 05 Aug 2020 13:14
 // 输出 RFC2822 格式字符串
 carbon.Parse("2020-08-05 13:14:15").ToRfc2822String() // Wed, 05 Aug 2020 13:14:15 +0800
 // 输出 RFC7231 格式字符串
-carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 GMT
+carbon.Parse("2020-08-05 13:14:15").ToRfc7231String() // Wed, 05 Aug 2020 13:14:15 CST
 
 // 输出 RFC3339 格式字符串
 carbon.Parse("2020-08-05T13:14:15.999999999+08:00").ToRfc3339String() // 2020-08-05T13:14:15+08:00
@@ -1229,7 +1229,7 @@ carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is
 
 ```go
 // 获取星座
-carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
+carbon.Parse("2020-08-05 13:14:15").Constellation() // 狮子座
 
 // 是否是白羊座
 carbon.Parse("2020-08-05 13:14:15").IsAries() // false
@@ -1263,7 +1263,7 @@ carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 
 ```go
 // 获取季节
-carbon.Parse("2020-08-05 13:14:15").Season() // Summer
+carbon.Parse("2020-08-05 13:14:15").Season() // 夏季
 
 // 本季节开始时间
 carbon.Parse("2020-08-05 13:14:15").StartOfSeason().ToDateTimeString() // 2020-06-01 00:00:00

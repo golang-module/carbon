@@ -49,7 +49,7 @@ go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbo
 
 #### 使い方と例
 
-> 現在時刻が 2020-08-05 13:14:15.999999999 +0800 CST であると仮定します。
+> 現在時刻が 2020-08-05 13:14:15.999999999 +0900 JST であると仮定します。
 
 ##### グローバルのデフォルト値設定
 
@@ -205,7 +205,7 @@ carbon.Parse("00:00:00").ToDateTimeString() // 空の文字列
 carbon.Parse("0000-00-00").ToDateTimeString() // 空の文字列
 carbon.Parse("0000-00-00 00:00:00").ToDateTimeString() // 空の文字列
 
-carbon.Parse("now").ToString() // 2020-08-05 13:14:15 +0800 CST
+carbon.Parse("now").ToString() // 2020-08-05 13:14:15 +0900 JST
 carbon.Parse("yesterday").ToString() // 2020-08-04 13:14:15 +0900 JST
 carbon.Parse("tomorrow").ToString() // 2020-08-06 13:14:15 +0900 JST
 
@@ -1051,16 +1051,16 @@ carbon.SetTimezone(carbon.PRC).ZoneOffset() // 28800
 carbon.SetTimezone(carbon.Tokyo).ZoneOffset() // 32400
 
 // ロケール名を取得
-carbon.Now().Locale() // en
-carbon.Now().SetLocale("jp").Locale() // jp
+carbon.Now().Locale() // jp
+carbon.Now().SetLocale("en").Locale() // en
 
 // 星座を取得
-carbon.Now().Constellation() // Leo
+carbon.Now().Constellation() // しし座
 carbon.Now().SetLocale("en").Constellation() // Leo
 carbon.Now().SetLocale("jp").Constellation() // しし座
 
 // 季節を取得
-carbon.Now().Season() // Summer
+carbon.Now().Season() // 夏
 carbon.Now().SetLocale("en").Season() // Summer
 carbon.Now().SetLocale("jp").Season() // 夏
 
@@ -1226,7 +1226,7 @@ carbon.Parse("2020-08-05 13:14:15").Format("\\I\\t \\i\\s Y-m-d H:i:s") // It is
 
 ```go
 // 星座を取得
-carbon.Parse("2020-08-05 13:14:15").Constellation() // Leo
+carbon.Parse("2020-08-05 13:14:15").Constellation() // しし座
 
 // おひつじ座かどうか
 carbon.Parse("2020-08-05 13:14:15").IsAries() // false
@@ -1260,7 +1260,7 @@ carbon.Parse("2020-08-05 13:14:15").IsPisces() // false
 
 ```go
 // 季節を取得
-carbon.Parse("2020-08-05 13:14:15").Season() // Summer
+carbon.Parse("2020-08-05 13:14:15").Season() // 夏季
 
 // この季節の開始日
 carbon.Parse("2020-08-05 13:14:15").StartOfSeason().ToDateTimeString() // 2020-06-01 00:00:00
@@ -1407,7 +1407,7 @@ fmt.Printf("%+v", person)
 * [アラビア語(ar)](./lang/ar.json "アラビア語"): [zumoshi](https://github.com/zumoshi "zumoshi") に翻訳
 * [ハンガリー語(hu)](./lang/hu.json "ハンガリー語"): [kenlas](https://github.com/kenlas "kenlas") に翻訳
 * [デンマーク語(dk)](./lang/dk.json "デンマーク語"): [Munk91](https://github.com/Munk91 "Munk91") に翻訳
-* [ノルウェー語(dk)](./lang/nb.json "ノルウェー語"): [bendikrb](https://github.com/bendikrb "bendikrb") に翻訳
+* [ノルウェー語(nb)](./lang/nb.json "ノルウェー語"): [bendikrb](https://github.com/bendikrb "bendikrb") に翻訳
 
 現在サポートされている方法
 

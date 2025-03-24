@@ -48,7 +48,7 @@ go mod edit -replace github.com/golang-module/carbon/v2=github.com/dromara/carbo
 
 #### Usage and example
 
-> Assuming the current time is 2020-08-05 13:14:15.999999999 +0800 CST
+> Assuming the current time is 2020-08-05 13:14:15.999999999 +0000 UTC
 
 ##### Set globally default
 
