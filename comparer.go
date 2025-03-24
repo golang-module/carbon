@@ -53,7 +53,7 @@ func (c *Carbon) IsInvalid() bool {
 // IsDST reports whether is daylight saving time.
 // 是否是夏令时
 func (c *Carbon) IsDST() bool {
-	if c.IsNil() || c.HasError() {
+	if c.IsInvalid() {
 		return false
 	}
 	return c.time.IsDST()
