@@ -15,6 +15,9 @@ func Parse(value string, timezone ...string) *Carbon {
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
 	}
+	if c.HasError() {
+		return c
+	}
 	switch value {
 	case "now":
 		return Now(c.Timezone())
@@ -24,9 +27,8 @@ func Parse(value string, timezone ...string) *Carbon {
 		return Tomorrow(c.Timezone())
 	}
 	for _, layout := range layouts {
-		t, err := time.ParseInLocation(layout, value, c.loc)
-		if err == nil {
-			c.time = t
+		if tt, err := time.ParseInLocation(layout, value, c.loc); err == nil {
+			c.time = tt
 			c.layout = layout
 			return c
 		}
@@ -47,9 +49,8 @@ func ParseByFormat(value, format string, timezone ...string) *Carbon {
 		return c
 	}
 	c = ParseByLayout(value, format2layout(format), timezone...)
-	if c.Error != nil {
+	if c.HasError() {
 		c.Error = invalidFormatError(value, format)
-		return c
 	}
 	return c
 }
@@ -67,6 +68,9 @@ func ParseByLayout(value, layout string, timezone ...string) *Carbon {
 	}
 	if len(timezone) > 0 {
 		c.loc, c.Error = getLocationByTimezone(timezone[0])
+	}
+	if c.HasError() {
+		return c
 	}
 	if layout == "timestamp" {
 		ts, err := strconv.ParseInt(value, 10, 64)
