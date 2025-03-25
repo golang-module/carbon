@@ -159,10 +159,11 @@ func SetLanguage(lang *Language) *Carbon {
 // SetLanguage sets language.
 // 设置语言对象
 func (c *Carbon) SetLanguage(lang *Language) *Carbon {
+	if c.IsInvalid() {
+		return c
+	}
 	if lang == nil {
 		c.Error = nilLanguageError()
-	}
-	if c.IsInvalid() {
 		return c
 	}
 	c.lang.dir = lang.dir
