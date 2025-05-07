@@ -9,19 +9,21 @@
 package carbon
 
 import (
+	"time"
+
 	"github.com/dromara/carbon/v2"
 )
 
 type StdTime = carbon.StdTime
 type Weekday = carbon.Weekday
 type Location = carbon.Location
-type Duration = carbon.Duration
+type Duration = time.Duration
 type Carbon = carbon.Carbon
 type Default = carbon.Default
 type Language = carbon.Language
 
 // NewCarbon returns a new Carbon instance.
-func NewCarbon(time ...StdTime) *Carbon {
+func NewCarbon(time ...StdTime) Carbon {
 	return carbon.NewCarbon(time...)
 }
 
@@ -29,130 +31,130 @@ func NewLanguage() *Language {
 	return carbon.NewLanguage()
 }
 
-func Now(timezone ...string) *Carbon {
+func Now(timezone ...string) Carbon {
 	return carbon.Now(timezone...)
 }
 
-func Tomorrow(timezone ...string) *Carbon {
+func Tomorrow(timezone ...string) Carbon {
 	return carbon.Tomorrow(timezone...)
 }
 
-func Yesterday(timezone ...string) *Carbon {
+func Yesterday(timezone ...string) Carbon {
 	return carbon.Yesterday(timezone...)
 }
 
 // Parse parses a standard time string as a Carbon instance.
-func Parse(value string, timezone ...string) *Carbon {
+func Parse(value string, timezone ...string) Carbon {
 	return carbon.Parse(value, timezone...)
 }
 
 // ParseByLayout parses a time string as a Carbon instance by a confirmed layout
-func ParseByLayout(value, layout string, timezone ...string) *Carbon {
+func ParseByLayout(value, layout string, timezone ...string) Carbon {
 	return carbon.ParseByLayout(value, layout, timezone...)
 }
 
 // ParseByFormat parses a time string as a Carbon instance by a confirmed format.
-func ParseByFormat(value, format string, timezone ...string) *Carbon {
+func ParseByFormat(value, format string, timezone ...string) Carbon {
 	return carbon.ParseByFormat(value, format, timezone...)
 }
 
 // ParseWithLayouts parses a time string as a Carbon instance with multiple fuzzy layouts.
-func ParseWithLayouts(value string, layouts []string, timezone ...string) *Carbon {
+func ParseWithLayouts(value string, layouts []string, timezone ...string) Carbon {
 	return carbon.ParseWithLayouts(value, layouts, timezone...)
 }
 
 // ParseWithFormats parses a time string as a Carbon instance with multiple fuzzy formats.
-func ParseWithFormats(value string, formats []string, timezone ...string) *Carbon {
+func ParseWithFormats(value string, formats []string, timezone ...string) Carbon {
 	return carbon.ParseWithFormats(value, formats, timezone...)
 }
 
 // CreateFromStdTime creates a Carbon instance from standard time.Time.
-func CreateFromStdTime(stdTime StdTime, timezone ...string) *Carbon {
+func CreateFromStdTime(stdTime StdTime, timezone ...string) Carbon {
 	return carbon.CreateFromStdTime(stdTime, timezone...)
 }
 
 // CreateFromTimestamp creates a Carbon instance from a given timestamp with second precision.
-func CreateFromTimestamp(timestamp int64, timezone ...string) *Carbon {
+func CreateFromTimestamp(timestamp int64, timezone ...string) Carbon {
 	return carbon.CreateFromTimestamp(timestamp, timezone...)
 }
 
 // CreateFromTimestampMilli creates a Carbon instance from a given timestamp with millisecond precision.
-func CreateFromTimestampMilli(timestampMilli int64, timezone ...string) *Carbon {
+func CreateFromTimestampMilli(timestampMilli int64, timezone ...string) Carbon {
 	return carbon.CreateFromTimestampMilli(timestampMilli, timezone...)
 }
 
 // CreateFromTimestampMicro creates a Carbon instance from a given timestamp with microsecond precision.
-func CreateFromTimestampMicro(timestampMicro int64, timezone ...string) *Carbon {
+func CreateFromTimestampMicro(timestampMicro int64, timezone ...string) Carbon {
 	return carbon.CreateFromTimestampMicro(timestampMicro, timezone...)
 }
 
 // CreateFromTimestampNano creates a Carbon instance from a given timestamp with nanosecond precision.
-func CreateFromTimestampNano(timestampNano int64, timezone ...string) *Carbon {
+func CreateFromTimestampNano(timestampNano int64, timezone ...string) Carbon {
 	return carbon.CreateFromTimestampNano(timestampNano, timezone...)
 }
 
 // CreateFromDateTime creates a Carbon instance from a given date and time.
-func CreateFromDateTime(year, month, day, hour, minute, second int, timezone ...string) *Carbon {
+func CreateFromDateTime(year, month, day, hour, minute, second int, timezone ...string) Carbon {
 	return carbon.CreateFromDateTime(year, month, day, hour, minute, second, timezone...)
 }
 
 // CreateFromDateTimeMilli creates a Carbon instance from a given date, time and millisecond.
-func CreateFromDateTimeMilli(year, month, day, hour, minute, second, millisecond int, timezone ...string) *Carbon {
+func CreateFromDateTimeMilli(year, month, day, hour, minute, second, millisecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateTimeMilli(year, month, day, hour, minute, second, millisecond, timezone...)
 }
 
 // CreateFromDateTimeMicro creates a Carbon instance from a given date, time and microsecond.
-func CreateFromDateTimeMicro(year, month, day, hour, minute, second, microsecond int, timezone ...string) *Carbon {
+func CreateFromDateTimeMicro(year, month, day, hour, minute, second, microsecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateTimeMicro(year, month, day, hour, minute, second, microsecond, timezone...)
 }
 
 // CreateFromDateTimeNano creates a Carbon instance from a given date, time and nanosecond.
-func CreateFromDateTimeNano(year, month, day, hour, minute, second, nanosecond int, timezone ...string) *Carbon {
+func CreateFromDateTimeNano(year, month, day, hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateTimeNano(year, month, day, hour, minute, second, nanosecond, timezone...)
 }
 
 // CreateFromDate creates a Carbon instance from a given date.
-func CreateFromDate(year, month, day int, timezone ...string) *Carbon {
+func CreateFromDate(year, month, day int, timezone ...string) Carbon {
 	return carbon.CreateFromDate(year, month, day, timezone...)
 }
 
 // CreateFromDateMilli creates a Carbon instance from a given date and millisecond.
-func CreateFromDateMilli(year, month, day, millisecond int, timezone ...string) *Carbon {
+func CreateFromDateMilli(year, month, day, millisecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateMilli(year, month, day, millisecond, timezone...)
 }
 
 // CreateFromDateMicro creates a Carbon instance from a given date and microsecond.
-func CreateFromDateMicro(year, month, day, microsecond int, timezone ...string) *Carbon {
+func CreateFromDateMicro(year, month, day, microsecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateMicro(year, month, day, microsecond, timezone...)
 }
 
 // CreateFromDateNano creates a Carbon instance from a given date and nanosecond.
-func CreateFromDateNano(year, month, day, nanosecond int, timezone ...string) *Carbon {
+func CreateFromDateNano(year, month, day, nanosecond int, timezone ...string) Carbon {
 	return carbon.CreateFromDateNano(year, month, day, nanosecond, timezone...)
 }
 
 // CreateFromTime creates a Carbon instance from a given time(year, month and day are taken from the current time).
-func CreateFromTime(hour, minute, second int, timezone ...string) *Carbon {
+func CreateFromTime(hour, minute, second int, timezone ...string) Carbon {
 	return carbon.CreateFromTime(hour, minute, second, timezone...)
 }
 
 // CreateFromTimeMilli creates a Carbon instance from a given time and millisecond(year, month and day are taken from the current time).
-func CreateFromTimeMilli(hour, minute, second, millisecond int, timezone ...string) *Carbon {
+func CreateFromTimeMilli(hour, minute, second, millisecond int, timezone ...string) Carbon {
 	return carbon.CreateFromTimeMilli(hour, minute, second, millisecond, timezone...)
 }
 
 // CreateFromTimeMicro creates a Carbon instance from a given time and microsecond(year, month and day are taken from the current time).
-func CreateFromTimeMicro(hour, minute, second, microsecond int, timezone ...string) *Carbon {
+func CreateFromTimeMicro(hour, minute, second, microsecond int, timezone ...string) Carbon {
 	return carbon.CreateFromTimeMicro(hour, minute, second, microsecond, timezone...)
 }
 
 // CreateFromTimeNano creates a Carbon instance from a given time and nanosecond(year, month and day are taken from the current time).
-func CreateFromTimeNano(hour, minute, second, nanosecond int, timezone ...string) *Carbon {
+func CreateFromTimeNano(hour, minute, second, nanosecond int, timezone ...string) Carbon {
 	return carbon.CreateFromTimeNano(hour, minute, second, nanosecond, timezone...)
 }
 
 // SetLayout sets globally default layout.
-func SetLayout(layout string) *Carbon {
+func SetLayout(layout string) Carbon {
 	c := carbon.SetLayout(layout)
 	if !c.HasError() {
 		DefaultLayout = layout
@@ -161,7 +163,7 @@ func SetLayout(layout string) *Carbon {
 }
 
 // SetFormat sets globally default format.
-func SetFormat(format string) *Carbon {
+func SetFormat(format string) Carbon {
 	c := carbon.SetFormat(format)
 	if !c.HasError() {
 		DefaultLayout = c.CurrentLayout()
@@ -170,7 +172,7 @@ func SetFormat(format string) *Carbon {
 }
 
 // SetTimezone sets globally default timezone.
-func SetTimezone(name string) *Carbon {
+func SetTimezone(name string) Carbon {
 	c := carbon.SetTimezone(name)
 	if !c.HasError() {
 		DefaultTimezone = name
@@ -179,7 +181,7 @@ func SetTimezone(name string) *Carbon {
 }
 
 // SetLocation sets globally default location.
-func SetLocation(loc *Location) *Carbon {
+func SetLocation(loc *Location) Carbon {
 	c := carbon.SetLocation(loc)
 	if !c.HasError() {
 		DefaultTimezone = loc.String()
@@ -188,7 +190,7 @@ func SetLocation(loc *Location) *Carbon {
 }
 
 // SetLocale sets globally default locale.
-func SetLocale(locale string) *Carbon {
+func SetLocale(locale string) Carbon {
 	c := carbon.SetLocale(locale)
 	if !c.HasError() {
 		DefaultLocale = locale
@@ -197,7 +199,7 @@ func SetLocale(locale string) *Carbon {
 }
 
 // SetWeekStartsAt sets globally default start day of the week.
-func SetWeekStartsAt(weekday Weekday) *Carbon {
+func SetWeekStartsAt(weekday Weekday) Carbon {
 	c := carbon.SetWeekStartsAt(weekday)
 	if !c.HasError() {
 		DefaultWeekStartsAt = weekday
@@ -206,7 +208,7 @@ func SetWeekStartsAt(weekday Weekday) *Carbon {
 }
 
 // SetWeekendDays sets globally default weekend days of the week.
-func SetWeekendDays(weekDays []Weekday) *Carbon {
+func SetWeekendDays(weekDays []Weekday) Carbon {
 	c := carbon.SetWeekendDays(weekDays)
 	if !c.HasError() {
 		DefaultWeekendDays = weekDays
@@ -215,7 +217,7 @@ func SetWeekendDays(weekDays []Weekday) *Carbon {
 }
 
 // SetTestNow sets a test Carbon instance for now, remember to clear after use.
-func SetTestNow(c *Carbon) {
+func SetTestNow(c Carbon) {
 	carbon.SetTestNow(c)
 }
 
@@ -254,12 +256,12 @@ func ResetDefault() {
 }
 
 // MaxValue returns a Carbon instance for the greatest supported date.
-func MaxValue() *Carbon {
+func MaxValue() Carbon {
 	return carbon.MaxValue()
 }
 
 // MinValue returns a Carbon instance for the lowest supported date.
-func MinValue() *Carbon {
+func MinValue() Carbon {
 	return carbon.MinValue()
 }
 
@@ -274,11 +276,11 @@ func MinDuration() Duration {
 }
 
 // Max returns the maximum Carbon instance from the given Carbon instance.
-func Max(c1 *Carbon, c2 ...*Carbon) (c *Carbon) {
+func Max(c1 Carbon, c2 ...Carbon) (c Carbon) {
 	return carbon.Max(c1, c2...)
 }
 
 // Min returns the minimum Carbon instance from the given Carbon instance.
-func Min(c1 *Carbon, c2 ...*Carbon) (c *Carbon) {
+func Min(c1 Carbon, c2 ...Carbon) (c Carbon) {
 	return carbon.Min(c1, c2...)
 }

@@ -16,8 +16,8 @@ func TestCarbonType(t *testing.T) {
 
 	var model1 Model
 	c := carbon.Parse("2020-08-05 13:14:15.999999999")
-	model1.Carbon1 = *c
-	model1.Carbon2 = c
+	model1.Carbon1 = c
+	model1.Carbon2 = &c
 
 	v, e := json.Marshal(&model1)
 	assert.Nil(t, e)
@@ -62,29 +62,31 @@ func TestBuiltinType(t *testing.T) {
 	var model1 Model
 	c := carbon.Parse("2020-08-05 13:14:15.999999999")
 
-	model1.Date = *carbon.NewDate(c)
-	model1.DateMilli = *carbon.NewDateMilli(c)
-	model1.DateMicro = *carbon.NewDateMicro(c)
-	model1.DateNano = *carbon.NewDateNano(c)
+	model1.Date = carbon.NewDate(c)
+	model1.DateMilli = carbon.NewDateMilli(c)
+	model1.DateMicro = carbon.NewDateMicro(c)
+	model1.DateNano = carbon.NewDateNano(c)
 
-	model1.Time = *carbon.NewTime(c)
-	model1.TimeMilli = *carbon.NewTimeMilli(c)
-	model1.TimeMicro = *carbon.NewTimeMicro(c)
-	model1.TimeNano = *carbon.NewTimeNano(c)
+	model1.Time = carbon.NewTime(c)
+	model1.TimeMilli = carbon.NewTimeMilli(c)
+	model1.TimeMicro = carbon.NewTimeMicro(c)
+	model1.TimeNano = carbon.NewTimeNano(c)
 
-	model1.DateTime = *carbon.NewDateTime(c)
-	model1.DateTimeMilli = *carbon.NewDateTimeMilli(c)
-	model1.DateTimeMicro = *carbon.NewDateTimeMicro(c)
-	model1.DateTimeNano = *carbon.NewDateTimeNano(c)
+	model1.DateTime = carbon.NewDateTime(c)
+	model1.DateTimeMilli = carbon.NewDateTimeMilli(c)
+	model1.DateTimeMicro = carbon.NewDateTimeMicro(c)
+	model1.DateTimeNano = carbon.NewDateTimeNano(c)
 
-	model1.Timestamp = *carbon.NewTimestamp(c)
-	model1.TimestampMilli = *carbon.NewTimestampMilli(c)
-	model1.TimestampMicro = *carbon.NewTimestampMicro(c)
-	model1.TimestampNano = *carbon.NewTimestampNano(c)
+	model1.Timestamp = carbon.NewTimestamp(c)
+	model1.TimestampMilli = carbon.NewTimestampMilli(c)
+	model1.TimestampMicro = carbon.NewTimestampMicro(c)
+	model1.TimestampNano = carbon.NewTimestampNano(c)
 
-	model1.CreatedAt = carbon.NewDateTime(c)
-	model1.UpdatedAt = carbon.NewDateTime(c)
-	model1.DeletedAt = carbon.NewTimestamp(c)
+	dateTime := carbon.NewDateTime(c)
+	timestamp := carbon.NewTimestamp(c)
+	model1.CreatedAt = &dateTime
+	model1.UpdatedAt = &dateTime
+	model1.DeletedAt = &timestamp
 
 	v, e := json.Marshal(&model1)
 	assert.Nil(t, e)
