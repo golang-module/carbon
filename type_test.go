@@ -123,3 +123,46 @@ func TestBuiltinType(t *testing.T) {
 	assert.Equal(t, "1596633255", model2.DeletedAt.String())
 	assert.Equal(t, int64(1596633255), model2.DeletedAt.Int64())
 }
+
+type iso8601Type string
+
+func (t iso8601Type) Format() string {
+	return carbon.ISO8601Format
+}
+
+type rfc3339Type string
+
+func (t rfc3339Type) Layout() string {
+	return carbon.RFC3339Layout
+}
+
+func TestCustomerType(t *testing.T) {
+	type Model struct {
+		Customer1 carbon.FormatType[iso8601Type] `json:"customer1"`
+		Customer2 carbon.LayoutType[rfc3339Type] `json:"customer2"`
+
+		CreatedAt *carbon.FormatType[iso8601Type] `json:"created_at"`
+		UpdatedAt *carbon.LayoutType[rfc3339Type] `json:"updated_at"`
+	}
+
+	var model1 Model
+	c := carbon.Parse("2020-08-05 13:14:15.999999999")
+
+	model1.Customer1 = *carbon.NewFormatType[iso8601Type](c)
+	model1.Customer2 = *carbon.NewLayoutType[rfc3339Type](c)
+
+	model1.CreatedAt = carbon.NewFormatType[iso8601Type](c)
+	model1.UpdatedAt = carbon.NewLayoutType[rfc3339Type](c)
+
+	v, e := json.Marshal(&model1)
+	assert.Nil(t, e)
+	assert.Equal(t, `{"customer1":"2020-08-05T13:14:15+00:00","customer2":"2020-08-05T13:14:15Z","created_at":"2020-08-05T13:14:15+00:00","updated_at":"2020-08-05T13:14:15Z"}`, string(v))
+
+	var model2 Model
+	assert.NoError(t, json.Unmarshal(v, &model2))
+	//
+	assert.Equal(t, "2020-08-05T13:14:15+00:00", model2.Customer1.String())
+	assert.Equal(t, "2020-08-05T13:14:15Z", model2.Customer2.String())
+	assert.Equal(t, "2020-08-05T13:14:15+00:00", model2.CreatedAt.String())
+	assert.Equal(t, "2020-08-05T13:14:15Z", model2.UpdatedAt.String())
+}

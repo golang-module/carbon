@@ -1,6 +1,8 @@
 package carbon
 
-import "github.com/dromara/carbon/v2"
+import (
+	"github.com/dromara/carbon/v2"
+)
 
 type (
 	Timestamp      = carbon.Timestamp
@@ -74,4 +76,20 @@ func NewTimeMicro(c *Carbon) *TimeMicro {
 }
 func NewTimeNano(c *Carbon) *TimeNano {
 	return carbon.NewTimeNano(c)
+}
+
+type LayoutTyper = carbon.LayoutTyper
+
+type LayoutType[T LayoutTyper] = carbon.LayoutType[T]
+
+func NewLayoutType[T LayoutTyper](c *Carbon) *LayoutType[T] {
+	return (*LayoutType[T])(carbon.NewLayoutType[T](c))
+}
+
+type FormatTyper = carbon.FormatTyper
+
+type FormatType[T FormatTyper] = carbon.FormatType[T]
+
+func NewFormatType[T FormatTyper](c *Carbon) *FormatType[T] {
+	return (*FormatType[T])(carbon.NewFormatType[T](c))
 }
