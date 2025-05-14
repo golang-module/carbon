@@ -95,6 +95,26 @@ func TestParseByLayout(t *testing.T) {
 	assert.Equal(t, "2020-08-05 13:14:15 +0800 CST", ParseByLayout("今天是 2020年08月05日13时14分15秒", "今天是 2006年01月02日15时04分05秒", PRC).ToString())
 }
 
+func TestParseByLayouts(t *testing.T) {
+	c1 := ParseByLayouts("2020|08|05 13|14|15", []string{"2006|01|02 15|04|05", "2006|1|2 3|4|5"})
+	assert.Equal(t, "2020-08-05 13:14:15 +0000 UTC", c1.ToString())
+	assert.Equal(t, "2006|01|02 15|04|05", c1.CurrentLayout())
+
+	c2 := ParseByLayouts("2020|08|05 13|14|15", []string{"2006|01|02 15|04|05", "2006|1|2 3|4|5"}, PRC)
+	assert.Equal(t, "2020-08-05 13:14:15 +0800 CST", c2.ToString())
+	assert.Equal(t, "2006|01|02 15|04|05", c2.CurrentLayout())
+}
+
+func TestParseByFormats(t *testing.T) {
+	c1 := ParseByFormats("2020|08|05 13|14|15", []string{"Y|m|d H|i|s", "y|m|d h|i|s"})
+	assert.Equal(t, "2020-08-05 13:14:15 +0000 UTC", c1.ToString())
+	assert.Equal(t, "2006|01|02 15|04|05", c1.CurrentLayout())
+
+	c2 := ParseByFormats("2020|08|05 13|14|15", []string{"Y|m|d H|i|s", "y|m|d h|i|s"}, PRC)
+	assert.Equal(t, "2020-08-05 13:14:15 +0800 CST", c2.ToString())
+	assert.Equal(t, "2006|01|02 15|04|05", c2.CurrentLayout())
+}
+
 func TestParseWithLayouts(t *testing.T) {
 	c1 := ParseWithLayouts("2020|08|05 13|14|15", []string{"2006|01|02 15|04|05", "2006|1|2 3|4|5"})
 	assert.Equal(t, "2020-08-05 13:14:15 +0000 UTC", c1.ToString())
@@ -436,6 +456,7 @@ func TestSetTestNow(t *testing.T) {
 	assert.Equal(t, time.Now().In(time.UTC).Add(time.Hour*-24).Format(DateLayout), Yesterday().ToDateString())
 	assert.Equal(t, time.Now().In(time.UTC).Add(time.Hour*24).Format(DateLayout), Tomorrow().ToDateString())
 	assert.False(t, IsTestNow())
+	ClearTestNow()
 }
 
 func TestSetDefault(t *testing.T) {
