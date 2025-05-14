@@ -1,9 +1,11 @@
 module github.com/golang-module/carbon/v2
 
-go 1.18
+go 1.21
+
+toolchain go1.24.2
 
 require (
-	github.com/dromara/carbon/v2 v2.5.9
+	github.com/dromara/carbon/v2 v2.5.10
 	github.com/stretchr/testify v1.10.0
 )
 

@@ -58,12 +58,24 @@ func ParseByFormat(value, format string, timezone ...string) Carbon {
 	return carbon.ParseByFormat(value, format, timezone...)
 }
 
-// ParseWithLayouts parses a time string as a Carbon instance with multiple fuzzy layouts.
+// ParseByLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
+func ParseByLayouts(value string, layouts []string, timezone ...string) Carbon {
+	return carbon.ParseByLayouts(value, layouts, timezone...)
+}
+
+// ParseByFormats parses a time string as a Carbon instance by multiple fuzzy formats.
+func ParseByFormats(value string, formats []string, timezone ...string) Carbon {
+	return carbon.ParseByFormats(value, formats, timezone...)
+}
+
+// ParseWithLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
+// Deprecated: it will be removed in the future, use ParseByLayouts instead.
 func ParseWithLayouts(value string, layouts []string, timezone ...string) Carbon {
 	return carbon.ParseWithLayouts(value, layouts, timezone...)
 }
 
-// ParseWithFormats parses a time string as a Carbon instance with multiple fuzzy formats.
+// ParseWithFormats parses a time string as a Carbon instance by multiple fuzzy formats.
+// Deprecated: it will be removed in the future, use ParseByFormats instead.
 func ParseWithFormats(value string, formats []string, timezone ...string) Carbon {
 	return carbon.ParseWithFormats(value, formats, timezone...)
 }
@@ -216,12 +228,18 @@ func SetWeekendDays(weekDays []Weekday) Carbon {
 	return c
 }
 
-// SetTestNow sets a test Carbon instance for now, remember to clear after use.
+// SetTestNow sets a test Carbon instance for now.
 func SetTestNow(c Carbon) {
 	carbon.SetTestNow(c)
 }
 
-// CleanTestNow clears the test Carbon instance for now.
+// ClearTestNow clears the test Carbon instance for now.
+func ClearTestNow() {
+	carbon.ClearTestNow()
+}
+
+// CleanTestNow cleans the test Carbon instance for now.
+// Deprecated: it will be removed in the future, use ClearTestNow instead.
 func CleanTestNow() {
 	carbon.CleanTestNow()
 }
