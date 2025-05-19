@@ -54,16 +54,22 @@ func ParseByLayout(value, layout string, timezone ...string) Carbon {
 }
 
 // ParseByFormat parses a time string as a Carbon instance by a confirmed format.
+//
+// Note: If the letter used conflicts with the format sign, please use the escape character "\" to escape the letter
 func ParseByFormat(value, format string, timezone ...string) Carbon {
 	return carbon.ParseByFormat(value, format, timezone...)
 }
 
 // ParseByLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
+//
+// Note: it doesn't support parsing by timestamp layouts.
 func ParseByLayouts(value string, layouts []string, timezone ...string) Carbon {
 	return carbon.ParseByLayouts(value, layouts, timezone...)
 }
 
 // ParseByFormats parses a time string as a Carbon instance by multiple fuzzy formats.
+//
+// Note: it doesn't support parsing by timestamp formats.
 func ParseByFormats(value string, formats []string, timezone ...string) Carbon {
 	return carbon.ParseByFormats(value, formats, timezone...)
 }
