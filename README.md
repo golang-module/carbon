@@ -580,12 +580,12 @@ carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 // Difference in duration
 now := carbon.Now()
 now.DiffInDuration(now).String() // 0s
-now.AddHour().DiffInDuration(now).String() // 1h0m0s
-now.SubHour().DiffInDuration(now).String() // -1h0m0s
+now.Copy().AddHour().DiffInDuration(now).String() // 1h0m0s
+now.Copy().SubHour().DiffInDuration(now).String() // -1h0m0s
 // Difference in duration with absolute value
 now.DiffAbsInDuration(now).String() // 0s
-now.AddHour().DiffAbsInDuration(now).String() // 1h0m0s
-now.SubHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.Copy().AddHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.Copy().SubHour().DiffAbsInDuration(now).String() // 1h0m0s
 
 // Difference in a human-readable format
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
@@ -1547,13 +1547,13 @@ lang.SetLocale("en")
 carbon.SetTestNow(carbon.Parse("2020-08-05 13:14:15"))
 now := carbon.Now().SetLanguage(lang)
 
-now.AddHours(1).DiffForHumans() // 1 hour from now
-now.AddHours(1).ToMonthString() // August
-now.AddHours(1).ToShortMonthString() // Aug
-now.AddHours(1).ToWeekString() // Wednesday
-now.AddHours(1).ToShortWeekString() // Wed
-now.AddHours(1).Constellation() // Leo
-now.AddHours(1).Season() // Summer
+now.Copy().AddHours(1).DiffForHumans() // 1 hour from now
+now.Copy().AddHours(1).ToMonthString() // August
+now.Copy().AddHours(1).ToShortMonthString() // Aug
+now.Copy().AddHours(1).ToWeekString() // Wednesday
+now.Copy().AddHours(1).ToShortWeekString() // Wed
+now.Copy().AddHours(1).Constellation() // Leo
+now.Copy().AddHours(1).Season() // Summer
 ```
 
 ###### Reset some resources(the rests still translate from the given locale)
@@ -1569,8 +1569,8 @@ lang.SetLocale("en").SetResources(resources)
 carbon.SetTestNow(carbon.Parse("2020-08-05 13:14:15"))
 now := carbon.Now().SetLanguage(lang)
 
-now.AddYears(1).DiffForHumans() // 1 year from now
-now.AddHours(1).DiffForHumans() // 1h from now
+now.Copy().AddYears(1).DiffForHumans() // 1 year from now
+now.Copy().AddHours(1).DiffForHumans() // 1h from now
 now.ToMonthString() // August
 now.ToShortMonthString() // Aug
 now.ToWeekString() // Tuesday
@@ -1608,8 +1608,8 @@ lang.SetResources(resources)
 carbon.SetTestNow(carbon.Parse("2020-08-05 13:14:15"))
 now := carbon.Now().SetLanguage(lang)
 
-now.AddYears(1).DiffForHumans() // in 1 yr
-now.AddHours(1).DiffForHumans() // in 1h
+now.Copy().AddYears(1).DiffForHumans() // in 1 yr
+now.Copy().AddHours(1).DiffForHumans() // in 1h
 now.ToMonthString() // august
 now.ToShortMonthString() // aug
 now.ToWeekString() // tuesday
@@ -1627,7 +1627,7 @@ if c.HasError() {
   log.Fatal(c.Error)
 }
 // Output
-timezone "xxx" is invalid, please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 
 #### Appendix

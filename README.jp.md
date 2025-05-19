@@ -579,12 +579,12 @@ carbon.Now().SubYearsNoOverflow(1).DiffAbsInString(carbon.Now()) // 1 year
 // 継続時間差
 now := carbon.Now()
 now.DiffInDuration(now).String() // 0s
-now.AddHour().DiffInDuration(now).String() // 1h0m0s
-now.SubHour().DiffInDuration(now).String() // -1h0m0s
+now.Copy().AddHour().DiffInDuration(now).String() // 1h0m0s
+now.Copy().SubHour().DiffInDuration(now).String() // -1h0m0s
 // 継続時間差（絶対値）
 now.DiffAbsInDuration(now).String() // 0s
-now.AddHour().DiffAbsInDuration(now).String() // 1h0m0s
-now.SubHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.Copy().AddHour().DiffAbsInDuration(now).String() // 1h0m0s
+now.Copy().SubHour().DiffAbsInDuration(now).String() // 1h0m0s
 
 // 人が読みやすいフォーマットで時間差を取得
 carbon.Parse("2020-08-05 13:14:15").DiffForHumans() // just now
@@ -1566,10 +1566,10 @@ now := carbon.Now().SetLanguage(lang)
 
 now.Copy().AddYears(1).DiffForHumans() // 1 year from now
 now.Copy().AddHours(1).DiffForHumans() // 1h from now
-now.Copy().ToMonthString() // August
-now.Copy().ToShortMonthString() // Aug
-now.Copy().ToWeekString() // Tuesday
-now.Copy().ToShortWeekString() // Tue
+now.ToMonthString() // August
+now.ToShortMonthString() // Aug
+now.ToWeekString() // Tuesday
+now.ToShortWeekString() // Tue
 now.Copy().Constellation() // Leo
 now.Copy().Season() // Summer
 ```
@@ -1605,12 +1605,12 @@ now := carbon.Now().SetLanguage(lang)
 
 now.Copy().AddYears(1).DiffForHumans() // in 1 yr
 now.Copy().AddHours(1).DiffForHumans() // in 1h
-now.Copy().ToMonthString() // august
-now.Copy().ToShortMonthString() // aug
-now.Copy().ToWeekString() // tuesday
-now.Copy().ToShortWeekString() // tue
-now.Copy().Constellation() // leo
-now.Copy().Season() // summer
+now.ToMonthString() // august
+now.ToShortMonthString() // aug
+now.ToWeekString() // tuesday
+now.ToShortWeekString() // tue
+now.Constellation() // leo
+now.Season() // summer
 ```
 
 ##### エラー処理
@@ -1622,7 +1622,7 @@ if c.HasError() {
   log.Fatal(c.Error)
 }
 // 出力
-timezone "xxx" is invalid, please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
+invalid timezone "xxx", please see the file "$GOROOT/lib/time/zoneinfo.zip" for all valid timezones
 ```
 
 #### 付録

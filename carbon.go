@@ -51,28 +51,34 @@ func ParseByLayout(value, layout string, timezone ...string) *Carbon {
 	return carbon.ParseByLayout(value, layout, timezone...)
 }
 
-// ParseByLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
-func ParseByLayouts(value string, layouts []string, timezone ...string) *Carbon {
-	return carbon.ParseByLayouts(value, layouts, timezone...)
-}
-
 // ParseByFormat parses a time string as a Carbon instance by a confirmed format.
 func ParseByFormat(value, format string, timezone ...string) *Carbon {
 	return carbon.ParseByFormat(value, format, timezone...)
 }
 
+// ParseByLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
+//
+// Note: it doesn't support parsing by timestamp layouts.
+func ParseByLayouts(value string, layouts []string, timezone ...string) *Carbon {
+	return carbon.ParseByLayouts(value, layouts, timezone...)
+}
+
 // ParseByFormats parses a time string as a Carbon instance by multiple fuzzy formats.
+//
+// Note: it doesn't support parsing by timestamp formats.
 func ParseByFormats(value string, formats []string, timezone ...string) *Carbon {
 	return carbon.ParseByFormats(value, formats, timezone...)
 }
 
 // ParseWithLayouts parses a time string as a Carbon instance by multiple fuzzy layouts.
+//
 // Deprecated: it will be removed in the future, use ParseByLayouts instead.
 func ParseWithLayouts(value string, layouts []string, timezone ...string) *Carbon {
 	return carbon.ParseWithLayouts(value, layouts, timezone...)
 }
 
 // ParseWithFormats parses a time string as a Carbon instance by multiple fuzzy formats.
+//
 // Deprecated: it will be removed in the future, use ParseByFormats instead.
 func ParseWithFormats(value string, formats []string, timezone ...string) *Carbon {
 	return carbon.ParseWithFormats(value, formats, timezone...)

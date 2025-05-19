@@ -3,7 +3,7 @@ module github.com/golang-module/carbon/v2
 go 1.23
 
 require (
-	github.com/dromara/carbon/v2 v2.6.5
+	github.com/dromara/carbon/v2 v2.6.6
 	github.com/stretchr/testify v1.10.0
 )
 
