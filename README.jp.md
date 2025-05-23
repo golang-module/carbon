@@ -11,7 +11,7 @@
 
 #### イントロ
 
-軽量、セマンティック、開発者に優しい `golang` 時間処理ライブラリ, `いかなる`第三者ライブラリにも依存せず、` 100%`ユニットテストカバレッジ率は
+軽量、でセマンティック、開発者に優しい `golang` 時間処理ライブラリ，は [dromara/carbon](https://github.com/dromara/carbon "github.com/dromara/carbon") ライブラリの2次カプセル化
 
 #### リポジトリ
 

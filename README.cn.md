@@ -11,7 +11,7 @@
 
 #### 项目简介
 
-一个轻量级、语义化、对开发者友好的 `golang` 时间处理库，不依赖于 `任何` 第三方库， `100%` 单元测试覆盖率
+一个轻量级、语义化、对开发者友好的 `golang` 时间处理库，是对 [dromara/carbon](https://github.com/dromara/carbon "github.com/dromara/carbon") 库的二次封装
 
 #### 仓库地址
 
@@ -20,6 +20,7 @@
 [gitee.com/golang-module/carbon](https://gitee.com/golang-module/carbon "gitee.com/golang-module/carbon")
 
 [gitcode.com/golang-module/carbon](https://gitcode.com/golang-module/carbon "gitcode.com/golang-module/carbon")
+
 
 #### 安装使用
 

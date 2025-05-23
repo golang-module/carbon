@@ -11,7 +11,7 @@ English | [简体中文](README.cn.md) | [日本語](README.jp.md)
 
 #### Introduction
 
-A simple, semantic and developer-friendly time package for `golang`, `100%` unit test coverage, doesn't depend on `any` third-party library
+A simple, semantic and developer-friendly time package for `golang`, it is a secondary encapsulation of the [dromara/carbon](https://github.com/dromara/carbon "github.com/dromara/carbon") library
 
 #### Repository
 
@@ -38,6 +38,8 @@ import "gitee.com/golang-module/carbon/v2"
 go get -u gitcode.com/dromara/carbon/v2
 import "gitee.com/golang-module/gitcode/v2"
 ```
+
+`Carbon` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository URL has changed. If the previous repository used was `golang-module/carbon`, please replace the original repository with the new repository in `go.mod`, or execute the following command:
 
 #### Usage and example
 
